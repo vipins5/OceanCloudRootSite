@@ -46,7 +46,11 @@
   /* â”€â”€ News page styles â”€â”€ */
   .news-section { padding: 80px 0 100px; }
 
-  .news-header { text-align: center; margin-bottom: 60px; }
+  .news-header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: card-in .6s ease-out both;
+  }
   .news-header .section-label { justify-content: center; }
   .news-header h2 {
     font-size: clamp(2rem, 5vw, 3.2rem);
@@ -296,7 +300,7 @@
 <section class="news-section">
   <div class="container">
 
-    <div class="news-header reveal">
+    <div class="news-header">
       <span class="section-label">Weekly Roundup</span>
       <h2>What's new in <span class="grad-text">Microsoft 365</span></h2>
       <p>Sourced directly from Microsoft's official SharePoint Blog and the M365 Release Communications feed â€” with our expert take on what each update means for your business.</p>
