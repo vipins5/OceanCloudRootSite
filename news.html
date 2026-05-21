@@ -303,7 +303,7 @@
     <div class="news-header">
       <span class="section-label">Weekly Roundup</span>
       <h2>What's new in <span class="grad-text">Microsoft 365</span></h2>
-      <p>Sourced directly from Microsoft's official SharePoint Blog and the M365 Release Communications feed â€” with our expert take on what each update means for your business.</p>
+      <p>Sourced directly from Microsoft's official SharePoint Blog and the M365 Release Communications feed &mdash; with our expert take on what each update means for your business.</p>
     </div>
 
     <div class="news-filters">
@@ -553,7 +553,7 @@
 <!-- ===== ARCHIVE CALLOUT ===== -->
 <div class="archive-callout-wrap">
   <div class="container">
-    <div class="arc-inner glass reveal">
+    <div class="arc-inner glass">
       <span class="arc-icon">&#128196;</span>
       <div class="arc-text">
         <strong>Looking for older updates?</strong>
@@ -620,14 +620,14 @@
           <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
           <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
           <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
-          <li><span style="color:var(--text-dim)">Monâ€“Fri 9 AMâ€“6 PM EST</span></li>
+          <li><span style=”color:var(--text-dim)”>Mon&ndash;Fri, 9 AM&ndash;6 PM EST</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
         <div class="fb-left">
-          <span class="fb-copy">&copy; 2026 OceanCloud LLC â€” All rights reserved.</span>
+          <span class=”fb-copy”>&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span>
           <span class="fb-craft">Turning Microsoft complexity into clarity, one deployment at a time.</span>
         </div>
         <div class="status-pill">
@@ -636,9 +636,9 @@
         </div>
         <div class="fb-right">
           <a href="privacy">Privacy</a>
-          <span class="fb-sep">Â·</span>
+          <span class="fb-sep">&middot;</span>
           <a href="terms">Terms</a>
-          <span class="fb-sep">Â·</span>
+          <span class="fb-sep">&middot;</span>
           <a href="cookies">Cookies</a>
         </div>
       </div>
@@ -668,6 +668,24 @@
 <script src=”js/chat.js”></script>
 
 <script>
+/* ── Backfill data-source / data-topic on cards that predate these attributes ── */
+(function () {
+  document.querySelectorAll('.news-card').forEach(function (card) {
+    if (!card.hasAttribute('data-source')) {
+      card.setAttribute('data-source', card.querySelector('.tag-blog') ? 'blog' : 'roadmap');
+    }
+    if (!card.hasAttribute('data-topic')) {
+      var img = card.querySelector('.nc-image');
+      var topic = 'other';
+      if (img) {
+        var m = img.src.match(/\/([^/.]+)\.svg$/);
+        if (m && m[1] !== 'm365' && m[1] !== 'm365-roadmap') topic = m[1];
+      }
+      card.setAttribute('data-topic', topic);
+    }
+  });
+})();
+
 /* ── News filter tabs (source + topic) ── */
 (function () {
   var srcBtns   = document.querySelectorAll('.nf-src');
