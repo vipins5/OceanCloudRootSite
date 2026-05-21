@@ -14,7 +14,9 @@
       "PowerShell(git config --global user.name 2>&1)",
       "PowerShell(git config --global user.email 2>&1)",
       "WebFetch(domain:oceancloudconsults.com)",
-      "WebFetch(domain:aistudio.google.com)"
+      "WebFetch(domain:aistudio.google.com)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
