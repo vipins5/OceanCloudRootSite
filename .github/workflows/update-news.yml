@@ -6,7 +6,6 @@ on:
     - cron: '0 8 * * 1'
   workflow_dispatch:
 
-# Allow the workflow to commit back to the repo
 permissions:
   contents: write
 
@@ -30,7 +29,7 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r scripts/requirements.txt
 
-      - name: Fetch and rewrite news
+      - name: Fetch, rewrite, and update news + archive
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/fetch-news.py
@@ -39,24 +38,17 @@ jobs:
         run: |
           echo "=== git status ==="
           git status
-          echo "=== news.html diff (first 60 lines) ==="
-          git diff news.html | head -60 || echo "(no diff)"
+          echo "=== changed lines ==="
+          git diff --stat || echo "(no diff)"
 
-      - name: Check if news.html changed
-        id: diff
-        run: |
-          git diff --quiet news.html \
-            && echo "changed=false" >> "$GITHUB_OUTPUT" \
-            || echo "changed=true"  >> "$GITHUB_OUTPUT"
-
-      - name: Report outcome
-        run: echo "news.html changed = ${{ steps.diff.outputs.changed }}"
-
-      - name: Commit and push updated news page
-        if: steps.diff.outputs.changed == 'true'
+      - name: Commit and push if anything changed
         run: |
           git config user.name  "OceanCloud News Bot"
           git config user.email "bot@oceancloudconsults.com"
-          git add news.html
-          git commit -m "chore: auto-update M365 news $(date -u +%Y-%m-%d)"
-          git push
+          git add news.html archive.html data/archive.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit — all content is already up to date."
+          else
+            git commit -m "chore: auto-update M365 news + archive $(date -u +%Y-%m-%d)"
+            git push
+          fi

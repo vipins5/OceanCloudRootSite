@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <!-- ═══ PRIMARY SEO ═══ -->
+  <!-- â•â•â• PRIMARY SEO â•â•â• -->
   <title>Microsoft 365 News & Roadmap Updates | OceanCloud</title>
   <meta name="description" content="Latest Microsoft SharePoint blog posts and M365 roadmap updates, curated and explained by OceanCloud's certified consultants. Updated weekly." />
   <meta name="keywords" content="Microsoft 365 news, SharePoint blog, M365 roadmap updates, SharePoint consultant news, Microsoft 365 updates" />
@@ -15,7 +15,7 @@
   <meta name="geo.placename" content="Dallas, TX" />
   <link rel="canonical" href="https://www.oceancloudconsults.com/news" />
 
-  <!-- ═══ OPEN GRAPH ═══ -->
+  <!-- â•â•â• OPEN GRAPH â•â•â• -->
   <meta property="og:type"        content="website" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="Microsoft 365 News & Roadmap | OceanCloud" />
@@ -27,7 +27,7 @@
   <meta property="og:image:alt"    content="OceanCloud Microsoft 365 news and roadmap updates" />
   <meta property="og:locale"      content="en_US" />
 
-  <!-- ═══ TWITTER CARD ═══ -->
+  <!-- â•â•â• TWITTER CARD â•â•â• -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Microsoft 365 News & Roadmap | OceanCloud" />
   <meta name="twitter:description" content="Weekly SharePoint and M365 updates, curated and explained by OceanCloud's certified consultants." />
@@ -43,7 +43,7 @@
   <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
 
   <style>
-  /* ── News page styles ── */
+  /* â”€â”€ News page styles â”€â”€ */
   .news-section { padding: 80px 0 100px; }
 
   .news-header { text-align: center; margin-bottom: 60px; }
@@ -94,13 +94,25 @@
   }
 
   /* individual card */
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
   .news-card {
     display: flex;
     flex-direction: column;
     gap: 14px;
     padding: 28px;
     border-radius: 16px;
+    animation: card-in .45s ease-out both;
   }
+  .news-card:nth-child(1)  { animation-delay: .04s; }
+  .news-card:nth-child(2)  { animation-delay: .09s; }
+  .news-card:nth-child(3)  { animation-delay: .14s; }
+  .news-card:nth-child(4)  { animation-delay: .19s; }
+  .news-card:nth-child(5)  { animation-delay: .24s; }
+  .news-card:nth-child(6)  { animation-delay: .29s; }
+  .news-card:nth-child(n+7){ animation-delay: .34s; }
 
   .nc-meta {
     display: flex;
@@ -232,7 +244,7 @@
     <div class="news-header reveal">
       <span class="section-label">Weekly Roundup</span>
       <h2>What's new in <span class="grad-text">Microsoft 365</span></h2>
-      <p>Sourced directly from Microsoft's official SharePoint Blog and the M365 Release Communications feed — with our expert take on what each update means for your business.</p>
+      <p>Sourced directly from Microsoft's official SharePoint Blog and the M365 Release Communications feed â€” with our expert take on what each update means for your business.</p>
     </div>
 
     <div class="news-filters">
@@ -242,7 +254,7 @@
     </div>
 
 <!-- BEGIN:NEWS-CONTENT -->
-    <div class="news-grid stagger-grid" id="news-grid">
+    <div class="news-grid" id="news-grid">
       <article class="news-card glass">
         <div class="nc-meta">
           <span class="nc-tag tag-blog">SharePoint Blog</span>
@@ -253,7 +265,7 @@
             Proven intranet framework - Involv Intranet - SharePoint Partner Showcase
           </a>
         </h3>
-        <p class="nc-body">We are excited to share a new episode on our &amp;nbsp;partner showcase series focused on SharePoint in Microsoft 365 . In this brief discussion Tim Bogemans and&amp;nbsp; Pascal Herreweghe from Involv Intranet are joining Vesa Juvonen from Microsoft to highlight&amp;nbsp; capabilities they&#x27;…</p>
+        <p class="nc-body">We are excited to share a new episode on our &amp;nbsp;partner showcase series focused on SharePoint in Microsoft 365 . In this brief discussion Tim Bogemans and&amp;nbsp; Pascal Herreweghe from Involv Intranet are joining Vesa Juvonen from Microsoft to highlight&amp;nbsp; capabilities they&#x27;â€¦</p>
         <a class="nc-link" href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/proven-intranet-framework-involv-intranet-sharepoint-partner/ba-p/4519241" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -265,10 +277,10 @@
         </div>
         <h3 class="nc-title">
           <a href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252" target="_blank" rel="noopener noreferrer">
-            Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management
+            Microsoft named a Leader in the 2026 GartnerÂ® Magic Quadrantâ„¢ for Document Management
           </a>
         </h3>
-        <p class="nc-body">AI is raising the bar for document management. It’s no longer enough to store and share files— content needs to be governed, structured, and connected to the way teams actually work so AI can reason over it responsibly and help people move from information to action. That’s why w…</p>
+        <p class="nc-body">AI is raising the bar for document management. Itâ€™s no longer enough to store and share filesâ€” content needs to be governed, structured, and connected to the way teams actually work so AI can reason over it responsibly and help people move from information to action. Thatâ€™s why wâ€¦</p>
         <a class="nc-link" href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -283,7 +295,7 @@
             SharePoint Showcase: AI-Forward Content Creation &amp; Curation for the Modern Intranet
           </a>
         </h3>
-        <p class="nc-body">More than 2,700 Microsoft 365 customers joined us at the Microsoft 365 Community Conference in Orlando to learn what’s new across Microsoft 365. In one of our sessions, AI ‑ Forward Content Creation &amp;amp; Curation for the Modern Intranet , we shared how SharePoint is evolving fro…</p>
+        <p class="nc-body">More than 2,700 Microsoft 365 customers joined us at the Microsoft 365 Community Conference in Orlando to learn whatâ€™s new across Microsoft 365. In one of our sessions, AI â€‘ Forward Content Creation &amp;amp; Curation for the Modern Intranet , we shared how SharePoint is evolving froâ€¦</p>
         <a class="nc-link" href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-ai-forward-content-creation-curation-for-the/ba-p/4515947" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -298,7 +310,7 @@
             Solutions for document-centric business processes - Portal Systems - SharePoint Partner Showcase
           </a>
         </h3>
-        <p class="nc-body">We are excited to share a new episode on our &amp;nbsp;partner showcase series focused on SharePoint in Microsoft 365 . In this brief discussion Patrick Carl from Portal Systems AG join Vesa Juvonen from Microsoft to showcase different features and capabilities they&#x27;ve built for Micr…</p>
+        <p class="nc-body">We are excited to share a new episode on our &amp;nbsp;partner showcase series focused on SharePoint in Microsoft 365 . In this brief discussion Patrick Carl from Portal Systems AG join Vesa Juvonen from Microsoft to showcase different features and capabilities they&#x27;ve built for Micrâ€¦</p>
         <a class="nc-link" href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/solutions-for-document-centric-business-processes-portal-systems/ba-p/4515217" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -313,7 +325,7 @@
             AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act
           </a>
         </h3>
-        <p class="nc-body">In March, we shared our vision for AI in SharePoint : We’re transforming how teams build solutions, publish content, and organize information using AI. With AI in SharePoint, you start with intent, describe it in natural language, and move directly to working solutions that refle…</p>
+        <p class="nc-body">In March, we shared our vision for AI in SharePoint : Weâ€™re transforming how teams build solutions, publish content, and organize information using AI. With AI in SharePoint, you start with intent, describe it in natural language, and move directly to working solutions that refleâ€¦</p>
         <a class="nc-link" href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoint/ba-p/4512532" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -328,7 +340,7 @@
             Building a modern digital workplace on Microsoft 365 - WebVine - SharePoint Partner Showcase
           </a>
         </h3>
-        <p class="nc-body">We are excited to share a new episode on our &amp;nbsp;partner showcase series focused on SharePoint in Microsoft 365 . In this brief discussion Chloe Dervin and James Dellow from WebVine join Vesa Juvonen from Microsoft to showcase different features and capabilities they&#x27;ve built f…</p>
+        <p class="nc-body">We are excited to share a new episode on our &amp;nbsp;partner showcase series focused on SharePoint in Microsoft 365 . In this brief discussion Chloe Dervin and James Dellow from WebVine join Vesa Juvonen from Microsoft to showcase different features and capabilities they&#x27;ve built fâ€¦</p>
         <a class="nc-link" href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/building-a-modern-digital-workplace-on-microsoft-365-webvine/ba-p/4511679" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -343,7 +355,7 @@
             Microsoft Teams: Interpreter agent support in Teams Rooms on Android
           </a>
         </h3>
-        <p class="nc-body">The Interpreter agent acts as a translator in Microsoft Teams meetings, allowing participants to listen to the meeting in their chosen language with real-time translation so speaking different languages isn’t a barrier to effective understanding and collaboration. It&#x27;s now availa…</p>
+        <p class="nc-body">The Interpreter agent acts as a translator in Microsoft Teams meetings, allowing participants to listen to the meeting in their chosen language with real-time translation so speaking different languages isnâ€™t a barrier to effective understanding and collaboration. It&#x27;s now availaâ€¦</p>
         <a class="nc-link" href="https://www.microsoft.com/microsoft-365/roadmap?id=562665" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -355,10 +367,10 @@
         </div>
         <h3 class="nc-title">
           <a href="https://www.microsoft.com/microsoft-365/roadmap?id=560707" target="_blank" rel="noopener noreferrer">
-            Microsoft Purview: Information Protection – Auto-labeling Simulation Evaluation
+            Microsoft Purview: Information Protection â€“ Auto-labeling Simulation Evaluation
           </a>
         </h3>
-        <p class="nc-body">The Simulation Grader helps admins understand and improve auto‑labeling accuracy before enforcing a policy. When enabled during simulation, matched items are evaluated by an AI-powered grader to determine whether each match is a true positive or false positive, along with an expl…</p>
+        <p class="nc-body">The Simulation Grader helps admins understand and improve autoâ€‘labeling accuracy before enforcing a policy. When enabled during simulation, matched items are evaluated by an AI-powered grader to determine whether each match is a true positive or false positive, along with an explâ€¦</p>
         <a class="nc-link" href="https://www.microsoft.com/microsoft-365/roadmap?id=560707" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -403,7 +415,7 @@
             Microsoft Purview: Data Lifecycle Management - DLM Meter Change
           </a>
         </h3>
-        <p class="nc-body">Data Lifecycle Management (DLM) billing will be based on the volume of data retained. For example, any number of non‑Microsoft 365 generative AI prompts and responses that collectively amount to 1 GB of retained data will be billed at $0.25 per GB per month (equivalent to ~$0.008…</p>
+        <p class="nc-body">Data Lifecycle Management (DLM) billing will be based on the volume of data retained. For example, any number of nonâ€‘Microsoft 365 generative AI prompts and responses that collectively amount to 1 GB of retained data will be billed at $0.25 per GB per month (equivalent to ~$0.008â€¦</p>
         <a class="nc-link" href="https://www.microsoft.com/microsoft-365/roadmap?id=560324" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -418,7 +430,7 @@
             Microsoft Teams: Preloaded video for Teams Events and Meetings
           </a>
         </h3>
-        <p class="nc-body">Users can now upload videos directly into a Teams event or meeting from OneDrive from the &quot;Manage view&quot; options when an organizer has turned on Manage What Attendees See mode. This ensures a smoother high quality video playback with a more consistent experience for attendees. GA …</p>
+        <p class="nc-body">Users can now upload videos directly into a Teams event or meeting from OneDrive from the &quot;Manage view&quot; options when an organizer has turned on Manage What Attendees See mode. This ensures a smoother high quality video playback with a more consistent experience for attendees. GA â€¦</p>
         <a class="nc-link" href="https://www.microsoft.com/microsoft-365/roadmap?id=562340" target="_blank" rel="noopener noreferrer">
           Read on Microsoft &#8599;
         </a>
@@ -476,6 +488,7 @@
           <li><a href="about">About Us</a></li>
           <li><a href="case-studies">Case Studies</a></li>
           <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="archive">News Archive</a></li>
           <li><a href="contact">Contact</a></li>
         </ul>
       </div>
@@ -485,14 +498,14 @@
           <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
           <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
           <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
-          <li><span style="color:var(--text-dim)">Mon–Fri 9 AM–6 PM EST</span></li>
+          <li><span style="color:var(--text-dim)">Monâ€“Fri 9 AMâ€“6 PM EST</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
         <div class="fb-left">
-          <span class="fb-copy">&copy; 2026 OceanCloud LLC — All rights reserved.</span>
+          <span class="fb-copy">&copy; 2026 OceanCloud LLC â€” All rights reserved.</span>
           <span class="fb-craft">Turning Microsoft complexity into clarity, one deployment at a time.</span>
         </div>
         <div class="status-pill">
@@ -501,9 +514,9 @@
         </div>
         <div class="fb-right">
           <a href="privacy">Privacy</a>
-          <span class="fb-sep">·</span>
+          <span class="fb-sep">Â·</span>
           <a href="terms">Terms</a>
-          <span class="fb-sep">·</span>
+          <span class="fb-sep">Â·</span>
           <a href="cookies">Cookies</a>
         </div>
       </div>
@@ -532,7 +545,7 @@
 <script src="js/consent.js"></script>
 
 <script>
-/* ── News filter tabs ── */
+/* â”€â”€ News filter tabs â”€â”€ */
 (function () {
   var btns  = document.querySelectorAll('.nf-btn');
   var cards = document.querySelectorAll('.news-card');
