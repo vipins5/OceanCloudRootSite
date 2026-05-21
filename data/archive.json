@@ -1,1 +1,113 @@
-{"items": [], "last_updated": ""}
+{
+  "items": [
+    {
+      "title": "Microsoft Teams: Interpreter agent support in Teams Rooms on Android",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562665",
+      "date_friendly": "May 20, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap"
+    },
+    {
+      "title": "Microsoft Purview: Information Protection – Auto-labeling Simulation Evaluation",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560707",
+      "date_friendly": "May 20, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap"
+    },
+    {
+      "title": "Microsoft Teams: Support human interpreter listening mode in Microsoft Teams Rooms on Windows",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562050",
+      "date_friendly": "May 18, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap"
+    },
+    {
+      "title": "Microsoft Teams: Searchable keyboard shortcuts from the dialog in Teams",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562413",
+      "date_friendly": "May 15, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap"
+    },
+    {
+      "title": "Microsoft Purview: Data Lifecycle Management - DLM Meter Change",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560324",
+      "date_friendly": "May 15, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap"
+    },
+    {
+      "title": "Microsoft Teams: Preloaded video for Teams Events and Meetings",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562340",
+      "date_friendly": "May 14, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap"
+    },
+    {
+      "title": "Proven intranet framework - Involv Intranet - SharePoint Partner Showcase",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/proven-intranet-framework-involv-intranet-sharepoint-partner/ba-p/4519241",
+      "date_friendly": "May 13, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog"
+    },
+    {
+      "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252",
+      "date_friendly": "April 30, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog"
+    },
+    {
+      "title": "SharePoint Showcase: AI-Forward Content Creation & Curation for the Modern Intranet",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-ai-forward-content-creation-curation-for-the/ba-p/4515947",
+      "date_friendly": "April 30, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog"
+    },
+    {
+      "title": "Solutions for document-centric business processes - Portal Systems - SharePoint Partner Showcase",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/solutions-for-document-centric-business-processes-portal-systems/ba-p/4515217",
+      "date_friendly": "April 29, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog"
+    },
+    {
+      "title": "Building a modern digital workplace on Microsoft 365 - WebVine - SharePoint Partner Showcase",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/building-a-modern-digital-workplace-on-microsoft-365-webvine/ba-p/4511679",
+      "date_friendly": "April 27, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog"
+    },
+    {
+      "title": "AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoint/ba-p/4512532",
+      "date_friendly": "April 21, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog"
+    }
+  ],
+  "last_updated": "2026-05-21"
+}
