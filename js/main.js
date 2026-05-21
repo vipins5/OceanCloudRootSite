@@ -82,6 +82,17 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+/* ─── Stagger grid reveal ─── */
+const staggerObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      staggerObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.stagger-grid').forEach(el => staggerObs.observe(el));
+
 /* ─── Counter animation ─── */
 function animateCounter(el) {
   const target   = parseFloat(el.dataset.target);

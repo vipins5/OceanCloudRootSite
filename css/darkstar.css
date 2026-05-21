@@ -77,8 +77,12 @@
 .stagger-grid.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.30s; }
 .stagger-grid.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.40s; }
 .stagger-grid.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:.50s; }
-.stagger-grid.visible > *:nth-child(7) { opacity:1; transform:none; transition-delay:.60s; }
-.stagger-grid.visible > *:nth-child(8) { opacity:1; transform:none; transition-delay:.70s; }
+.stagger-grid.visible > *:nth-child(7)  { opacity:1; transform:none; transition-delay:.60s; }
+.stagger-grid.visible > *:nth-child(8)  { opacity:1; transform:none; transition-delay:.70s; }
+.stagger-grid.visible > *:nth-child(9)  { opacity:1; transform:none; transition-delay:.70s; }
+.stagger-grid.visible > *:nth-child(10) { opacity:1; transform:none; transition-delay:.70s; }
+.stagger-grid.visible > *:nth-child(11) { opacity:1; transform:none; transition-delay:.70s; }
+.stagger-grid.visible > *:nth-child(12) { opacity:1; transform:none; transition-delay:.70s; }
 
 /* ── FLOAT ANIMATION ── */
 @keyframes ds-float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
