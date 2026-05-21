@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title>Free SharePoint & M365 Consultation | OceanCloud</title>
+  <meta name="description" content="Book a free 60-min SharePoint & M365 consultation with OceanCloud. Certified M365 architects — migration, intranet, Copilot & security. Call +1 (469) 809-4053." />
+  <meta name="keywords" content="free SharePoint consultation, contact SharePoint consultant, Microsoft 365 consulting inquiry, book M365 consultant, SharePoint support contact, OceanCloud contact" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="OceanCloud" />
+  <meta name="geo.region" content="US" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/contact.html" />
+
+  <!-- ═══ OPEN GRAPH ═══ -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Free SharePoint Consultation | Contact OceanCloud" />
+  <meta property="og:description" content="Book a free 60-minute SharePoint or M365 consultation. Certified Microsoft consultants ready to help — call, WhatsApp, or fill in our quick form." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/contact.html" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-contact.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"    content="Book a free SharePoint consultation with OceanCloud" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- ═══ TWITTER CARD ═══ -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Free SharePoint Consultation | OceanCloud" />
+  <meta name="twitter:description" content="Talk to a certified M365 consultant for free. SharePoint, migration, Teams, Power Platform — get expert advice in 60 minutes." />
+  <meta name="twitter:image"       content="https://www.oceancloudconsults.com/assets/og-contact.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
+  <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <!-- EmailJS SDK — https://www.emailjs.com -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+
+  <style>
+  /* ============================================================
+     CONVERSATIONAL CONTACT FORM
+  ============================================================ */
+
+  /* page-scoped tokens that aren't in the global dark system */
+  :root {
+    --gray-50:      #f7f8fa;
+    --gray-100:     #e8eaed;
+    --gray-400:     #9ca3af;
+    --transition:   .38s ease;
+    --shadow-sm:    0 2px 10px rgba(0,0,0,.10);
+    --accent-teal:  #06d6a0;
+  }
+
+  /* ── Page layout ── */
+  .contact-split {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: calc(100vh - 80px);
+  }
+
+  /* ── Left sidebar ── */
+  .contact-aside {
+    background: var(--gray-50);
+    border-right: 1px solid var(--border);
+    padding: 72px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .contact-aside .section-tag { margin-bottom: 10px; }
+
+  .contact-aside .section-title {
+    font-size: 1.7rem;
+    margin-bottom: 14px;
+  }
+
+  .contact-aside .intro-text {
+    font-size: .92rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin-bottom: 40px;
+  }
+
+  .ci-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+
+  .ci-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .ci-item:hover { border-color: var(--ocean-blue); box-shadow: var(--shadow-sm); }
+
+  .ci-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .ci-item h4 { font-size: .83rem; font-weight: 700; color: var(--bg); margin-bottom: 2px; }
+  .ci-item p  { font-size: .82rem; color: var(--text-mid); }
+  .ci-item a  { color: var(--ocean-blue); font-weight: 600; }
+
+  .oh-block {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .oh-block h4 { font-size: .85rem; font-weight: 700; color: var(--bg); margin-bottom: 12px; }
+
+  .oh-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: .82rem;
+    color: var(--text-mid);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .oh-row:last-child { border-bottom: none; }
+  .oh-row .day { font-weight: 600; color: var(--bg); }
+
+  /* ── Right: conversational form panel ── */
+  .conv-panel {
+    background: #050e1a;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* subtle grid overlay */
+  .conv-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,180,216,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,180,216,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  /* top bar */
+  .conv-topbar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 48px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .conv-title {
+    font-size: .82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.4);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* progress dots */
+  .conv-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .prog-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    border: 1.5px solid rgba(255,255,255,.12);
+    transition: background .4s, border-color .4s, transform .4s;
+  }
+
+  .prog-dot.done  { background: var(--accent-teal); border-color: var(--accent-teal); }
+  .prog-dot.active{
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.35);
+    box-shadow: 0 0 10px rgba(0,180,216,.6);
+  }
+
+  .prog-label {
+    font-size: .75rem;
+    color: rgba(255,255,255,.35);
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 8px;
+  }
+
+  /* form stage — fills remaining space */
+  .conv-stage {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    overflow: hidden;
+  }
+
+  /* each step card */
+  .conv-step {
+    width: 100%;
+    max-width: 560px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity .45s ease, transform .45s cubic-bezier(.4,0,.2,1);
+  }
+
+  .conv-step.hidden-below {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 60px));
+    pointer-events: none;
+  }
+
+  .conv-step.hidden-above {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 60px));
+    pointer-events: none;
+  }
+
+  .conv-step.active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+  }
+
+  /* step counter badge */
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: .7;
+  }
+
+  .step-badge::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1.5px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* typewriter question */
+  .conv-question {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.25;
+    margin-bottom: 10px;
+    min-height: 2.6em;
+    letter-spacing: -.02em;
+  }
+
+  .conv-question .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink .75s step-end infinite;
+    border-radius: 1px;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+
+  .conv-hint {
+    font-size: .85rem;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 28px;
+    min-height: 1.3em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* text / email / textarea input */
+  .conv-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255,255,255,.15);
+    padding: 14px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--white);
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    caret-color: var(--accent);
+    transition: border-color .3s;
+  }
+
+  .conv-input::placeholder { color: rgba(255,255,255,.2); font-weight: 400; }
+  .conv-input:focus { border-color: var(--accent); }
+
+  .conv-textarea {
+    width: 100%;
+    background: rgba(255,255,255,.04);
+    border: 1.5px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 18px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    caret-color: var(--accent);
+    resize: vertical;
+    min-height: 130px;
+    transition: border-color .3s;
+    line-height: 1.7;
+  }
+
+  .conv-textarea::placeholder { color: rgba(255,255,255,.2); font-weight: 400; }
+  .conv-textarea:focus { border-color: var(--accent); }
+
+  /* option cards (service / org size selection) */
+  .conv-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .conv-options.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+  .conv-option {
+    padding: 14px 16px;
+    border: 1.5px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,.04);
+    color: rgba(255,255,255,.75);
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .25s, background .25s, color .25s, transform .25s;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    user-select: none;
+  }
+
+  .conv-option .opt-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  .conv-option:hover {
+    border-color: rgba(0,180,216,.5);
+    background: rgba(0,180,216,.08);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .conv-option.selected {
+    border-color: var(--accent);
+    background: rgba(0,180,216,.14);
+    color: var(--white);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .conv-option .check {
+    margin-left: auto;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem;
+    flex-shrink: 0;
+    transition: background .25s, border-color .25s;
+  }
+
+  .conv-option.selected .check {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* action row */
+  .conv-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .btn-conv-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: linear-gradient(135deg, var(--ocean-blue), var(--accent));
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 700;
+    padding: 13px 28px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: box-shadow .3s, transform .3s, opacity .3s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-conv-next:hover:not(:disabled) {
+    box-shadow: 0 6px 28px rgba(0,180,216,.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-conv-next:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+  }
+
+  .btn-conv-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.35);
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: color .25s;
+    padding: 0;
+  }
+
+  .btn-conv-back:hover { color: rgba(255,255,255,.7); }
+
+  .enter-hint {
+    margin-left: auto;
+    font-size: .75rem;
+    color: rgba(255,255,255,.22);
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* ── Success screen ── */
+  .conv-success {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .6s ease .2s;
+  }
+
+  .conv-success.visible { opacity: 1; pointer-events: auto; }
+
+  .success-ring {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ocean-blue), var(--accent-teal));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 28px;
+    box-shadow: 0 0 0 16px rgba(6,214,160,.08), 0 0 0 32px rgba(6,214,160,.04);
+    animation: ring-pop .6s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  @keyframes ring-pop {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .conv-success h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -.02em;
+  }
+
+  .conv-success p {
+    font-size: 1rem;
+    color: rgba(255,255,255,.55);
+    line-height: 1.75;
+    margin-bottom: 32px;
+  }
+
+  .summary-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+
+  .summary-chip {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: .8rem;
+    color: rgba(255,255,255,.6);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .summary-chip span { color: var(--accent); }
+
+  /* ── Bottom bar ── */
+  .conv-bottom {
+    position: relative;
+    z-index: 2;
+    padding: 18px 48px;
+    border-top: 1px solid rgba(255,255,255,.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .conv-bottom-left {
+    font-size: .75rem;
+    color: rgba(255,255,255,.2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .privacy-note {
+    font-size: .75rem;
+    color: rgba(255,255,255,.2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .privacy-note a { color: rgba(0,180,216,.6); }
+
+  /* ── Responsive ── */
+  @media (max-width: 1050px) {
+    .contact-split { grid-template-columns: 1fr; }
+    .contact-aside { padding: 52px 32px; border-right: none; border-bottom: 1px solid var(--border); }
+    .conv-panel    { min-height: 680px; }
+    .conv-topbar, .conv-bottom { padding: 18px 28px; }
+    .conv-stage    { padding: 36px 28px; }
+  }
+
+  @media (max-width: 600px) {
+    .conv-options        { grid-template-columns: 1fr; }
+    .conv-options.cols-3 { grid-template-columns: 1fr 1fr; }
+    .conv-question       { font-size: 1.4rem; }
+    .enter-hint          { display: none; }
+  }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>&#10;<!-- custom cursor -->
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">OC</div>
+      <span class="logo-text">Ocean<span>Cloud</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services.html"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about.html"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies.html"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="contact.html" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===== MAIN SPLIT LAYOUT ===== -->
+<main style="padding-top:80px;">
+  <div class="contact-split">
+
+    <!-- ── LEFT SIDEBAR ── -->
+    <aside class="contact-aside">
+      <span class="section-tag">Get in Touch</span>
+      <h2 class="section-title">Let's talk <span>Microsoft</span></h2>
+      <p class="intro-text">
+        Book a free 60-minute discovery call. No sales pitch — just an honest
+        conversation about what you're trying to achieve and how we can help.
+      </p>
+
+      <div class="ci-list">
+        <div class="ci-item">
+          <div class="ci-icon">&#128231;</div>
+          <div>
+            <h4>Email</h4>
+            <p><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">&#128222;</div>
+          <div>
+            <h4>Phone</h4>
+            <p><a href="tel:+14698094053">+1 (469) 809-4053</a></p>
+          </div>
+        </div>
+        <div class="ci-item" style="background:linear-gradient(135deg,rgba(37,211,102,.06),rgba(37,211,102,.02));border-color:rgba(37,211,102,.2);">
+          <div class="ci-icon" style="background:linear-gradient(135deg,rgba(37,211,102,.2),rgba(37,211,102,.1));">&#128172;</div>
+          <div>
+            <h4 style="color:#128c7e;">WhatsApp</h4>
+            <p><a href="https://wa.me/19176753126" target="_blank" rel="noopener" style="color:#128c7e;font-weight:700;">+1 (917) 675-3126</a></p>
+            <p style="font-size:.75rem;color:var(--gray-400);margin-top:2px;">Tap to chat instantly</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">&#127759;</div>
+          <div>
+            <h4>Location</h4>
+            <p>United States</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">&#128279;</div>
+          <div>
+            <h4>LinkedIn</h4>
+            <p><a href="#">linkedin.com/company/oceancloud</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="oh-block">
+        <h4>&#128336; &nbsp;Office Hours <small style="font-weight:500;color:var(--gray-400);">(EST)</small></h4>
+        <div class="oh-row"><span class="day">Mon – Thu</span><span>9:00 AM – 5:30 PM</span></div>
+        <div class="oh-row"><span class="day">Friday</span><span>9:00 AM – 4:00 PM</span></div>
+        <div class="oh-row"><span class="day">Weekend</span><span>Closed</span></div>
+      </div>
+    </aside>
+
+    <!-- ── RIGHT: CONVERSATIONAL FORM ── -->
+    <div class="conv-panel">
+
+      <!-- Top bar -->
+      <div class="conv-topbar">
+        <span class="conv-title">&#47;&#47;&nbsp;start_conversation</span>
+        <div class="conv-progress">
+          <div class="prog-dot active" id="d0"></div>
+          <div class="prog-dot" id="d1"></div>
+          <div class="prog-dot" id="d2"></div>
+          <div class="prog-dot" id="d3"></div>
+          <div class="prog-dot" id="d4"></div>
+          <div class="prog-dot" id="d5"></div>
+          <span class="prog-label" id="progLabel">1 / 6</span>
+        </div>
+      </div>
+
+      <!-- Stage -->
+      <div class="conv-stage">
+
+        <!-- Step 0: Name -->
+        <div class="conv-step active" id="step-0">
+          <div class="step-badge">Step 01</div>
+          <div class="conv-question" id="q0"></div>
+          <div class="conv-hint">Press <strong style="color:rgba(255,255,255,.5);">Enter ↵</strong> to continue</div>
+          <input class="conv-input" id="inp-name" type="text" placeholder="Your full name…" autocomplete="name" />
+          <div class="conv-actions">
+            <button class="btn-conv-next" id="next-0" disabled>Continue &nbsp;&#8594;</button>
+            <span class="enter-hint">or press Enter ↵</span>
+          </div>
+        </div>
+
+        <!-- Step 1: Email -->
+        <div class="conv-step hidden-below" id="step-1">
+          <div class="step-badge">Step 02</div>
+          <div class="conv-question" id="q1"></div>
+          <div class="conv-hint">We'll only use this to reply to you</div>
+          <input class="conv-input" id="inp-email" type="email" placeholder="your@company.com" autocomplete="email" />
+          <div class="conv-actions">
+            <button class="btn-conv-back" id="back-1">&#8592; Back</button>
+            <button class="btn-conv-next" id="next-1" disabled>Continue &nbsp;&#8594;</button>
+            <span class="enter-hint">or press Enter ↵</span>
+          </div>
+        </div>
+
+        <!-- Step 2: Company -->
+        <div class="conv-step hidden-below" id="step-2">
+          <div class="step-badge">Step 03</div>
+          <div class="conv-question" id="q2"></div>
+          <div class="conv-hint">Organisation or company name</div>
+          <input class="conv-input" id="inp-company" type="text" placeholder="Your organisation…" autocomplete="organization" />
+          <div class="conv-actions">
+            <button class="btn-conv-back" id="back-2">&#8592; Back</button>
+            <button class="btn-conv-next" id="next-2" disabled>Continue &nbsp;&#8594;</button>
+            <span class="enter-hint">or press Enter ↵</span>
+          </div>
+        </div>
+
+        <!-- Step 3: Service -->
+        <div class="conv-step hidden-below" id="step-3">
+          <div class="step-badge">Step 04</div>
+          <div class="conv-question" id="q3"></div>
+          <div class="conv-hint">Pick one — or a few</div>
+          <div class="conv-options" id="service-opts">
+            <div class="conv-option" data-value="SharePoint Consulting"><span class="opt-icon">&#128190;</span>SharePoint Consulting<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="M365 Migration"><span class="opt-icon">&#9729;</span>M365 Migration<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="Teams &amp; Viva"><span class="opt-icon">&#128101;</span>Teams &amp; Viva<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="Power Platform"><span class="opt-icon">&#9889;</span>Power Platform<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="Security &amp; Compliance"><span class="opt-icon">&#128274;</span>Security &amp; Compliance<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="Not sure yet"><span class="opt-icon">&#128173;</span>Not sure yet<span class="check">&#10003;</span></div>
+          </div>
+          <div class="conv-actions">
+            <button class="btn-conv-back" id="back-3">&#8592; Back</button>
+            <button class="btn-conv-next" id="next-3" disabled>Continue &nbsp;&#8594;</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Org size -->
+        <div class="conv-step hidden-below" id="step-4">
+          <div class="step-badge">Step 05</div>
+          <div class="conv-question" id="q4"></div>
+          <div class="conv-hint">Roughly how many people are in your organisation?</div>
+          <div class="conv-options cols-3" id="size-opts">
+            <div class="conv-option" data-value="&lt;100"><span class="opt-icon">&#128100;</span>Under 100<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="100–500"><span class="opt-icon">&#128104;&#8205;&#128105;</span>100 – 500<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="500–2k"><span class="opt-icon">&#127970;</span>500 – 2,000<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="2k–10k"><span class="opt-icon">&#127981;</span>2,000 – 10k<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="10k+"><span class="opt-icon">&#127760;</span>10,000+<span class="check">&#10003;</span></div>
+          </div>
+          <div class="conv-actions">
+            <button class="btn-conv-back" id="back-4">&#8592; Back</button>
+            <button class="btn-conv-next" id="next-4" disabled>Continue &nbsp;&#8594;</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Message -->
+        <div class="conv-step hidden-below" id="step-5">
+          <div class="step-badge">Step 06</div>
+          <div class="conv-question" id="q5"></div>
+          <div class="conv-hint">No need to be precise — just tell us what's on your mind</div>
+          <textarea class="conv-textarea" id="inp-message" placeholder="We're currently on SharePoint 2016 on-prem and want to migrate to SPO, but we're not sure where to start…"></textarea>
+          <div class="conv-actions">
+            <button class="btn-conv-back" id="back-5">&#8592; Back</button>
+            <button class="btn-conv-next" id="next-5" disabled>Send it &#8594;</button>
+            <span class="enter-hint">Ctrl + Enter to send</span>
+          </div>
+        </div>
+
+        <!-- Success screen -->
+        <div class="conv-success" id="conv-success">
+          <div class="success-ring">&#10003;</div>
+          <h2>You're all set!</h2>
+          <p>Thanks, <strong id="success-name" style="color:#fff;"></strong>. We've received your message and one of our consultants will reach out to <strong id="success-email" style="color:var(--accent);"></strong> within one working day.</p>
+          <div class="summary-chips" id="summary-chips"></div>
+          <a href="index.html" class="btn-primary" style="display:inline-flex;margin:0 auto;">&#8592; Back to Home</a>
+        </div>
+
+      </div><!-- /conv-stage -->
+
+      <!-- Bottom bar -->
+      <div class="conv-bottom">
+        <span class="conv-bottom-left" id="conv-bottom-txt">&#47;&#47;&nbsp;oceancloud_consultation_form</span>
+        <span class="privacy-note">Your data is safe. <a href="#">Privacy policy</a></span>
+      </div>
+
+    </div><!-- /conv-panel -->
+  </div><!-- /contact-split -->
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">
+          <div class="logo-mark">OC</div>
+          Ocean<span>Cloud</span>
+        </div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation.</p>
+        <div class="social-links">
+          <a href="#" class="social-link">in</a>
+          <a href="#" class="social-link">&#x1D54F;</a>
+          <a href="#" class="social-link">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services.html#migration">M365 Migration</a></li>
+          <li><a href="services.html#teams">Teams &amp; Viva</a></li>
+          <li><a href="services.html#power">Power Platform</a></li>
+          <li><a href="services.html#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="#">United States</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left">
+          <span class="fb-copy">&copy; 2026 OceanCloud LLC — All rights reserved.</span>
+          <span class="fb-craft">Turning Microsoft complexity into clarity, one deployment at a time.</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot-anim"></span>
+          Accepting new engagements
+        </div>
+        <div class="fb-right">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="fb-sep">·</span>
+          <a href="terms.html">Terms of Service</a>
+          <span class="fb-sep">·</span>
+          <a href="cookies.html">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<script src="js/main.js"></script>
+<script src="js/chat.js"></script>
+
+<script>
+/* ============================================================
+   CONVERSATIONAL FORM ENGINE
+============================================================ */
+(function () {
+
+  /* ─── Step definitions ─── */
+  const steps = [
+    {
+      id: 'step-0', qEl: 'q0',
+      question: "Hey there! What's your name?",
+      inputId: 'inp-name',
+      validate: v => v.trim().length >= 2,
+    },
+    {
+      id: 'step-1', qEl: 'q1',
+      question: name => `Nice to meet you, ${name}! What's your work email?`,
+      inputId: 'inp-email',
+      validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    },
+    {
+      id: 'step-2', qEl: 'q2',
+      question: "Which company or organisation are you from?",
+      inputId: 'inp-company',
+      validate: v => v.trim().length >= 2,
+    },
+    {
+      id: 'step-3', qEl: 'q3',
+      question: "What are you looking to achieve?",
+      optionsId: 'service-opts',
+      validate: () => getSelected('service-opts').length > 0,
+    },
+    {
+      id: 'step-4', qEl: 'q4',
+      question: "How large is your organisation?",
+      optionsId: 'size-opts',
+      validate: () => getSelected('size-opts').length > 0,
+    },
+    {
+      id: 'step-5', qEl: 'q5',
+      question: "Last one — tell us a bit about your project.",
+      inputId: 'inp-message',
+      validate: v => v.trim().length >= 10,
+    },
+  ];
+
+  let current = 0;
+  const DOTS    = 6;
+  const dots    = Array.from({length: DOTS}, (_, i) => document.getElementById('d' + i));
+  const label   = document.getElementById('progLabel');
+  const success = document.getElementById('conv-success');
+
+  /* ─── Typewriter ─── */
+  function typewrite(el, text, done) {
+    el.innerHTML = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    el.appendChild(cursor);
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        el.insertBefore(document.createTextNode(text[i]), cursor);
+        i++;
+      } else {
+        clearInterval(interval);
+        cursor.remove();
+        if (done) done();
+      }
+    }, 28);
+  }
+
+  /* ─── Options helper ─── */
+  function getSelected(containerId) {
+    return Array.from(
+      document.querySelectorAll(`#${containerId} .conv-option.selected`)
+    ).map(el => el.dataset.value);
+  }
+
+  /* ─── Bind option clicks ─── */
+  function bindOptions(containerId, nextBtnId, singleSelect) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.querySelectorAll('.conv-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (singleSelect) {
+          container.querySelectorAll('.conv-option').forEach(o => o.classList.remove('selected'));
+        }
+        opt.classList.toggle('selected');
+        const nextBtn = document.getElementById(nextBtnId);
+        nextBtn.disabled = getSelected(containerId).length === 0;
+      });
+    });
+  }
+
+  bindOptions('service-opts', 'next-3', false);
+  bindOptions('size-opts',    'next-4', true);
+
+  /* ─── Progress dots ─── */
+  function updateProgress(idx) {
+    dots.forEach((d, i) => {
+      d.classList.remove('active', 'done');
+      if (i < idx)  d.classList.add('done');
+      if (i === idx) d.classList.add('active');
+    });
+    label.textContent = `${idx + 1} / ${DOTS}`;
+  }
+
+  /* ─── Show step ─── */
+  function showStep(idx, dir) {
+    // dir: 'forward' | 'backward'
+    const allSteps = document.querySelectorAll('.conv-step');
+    allSteps.forEach((el, i) => {
+      el.classList.remove('active', 'hidden-below', 'hidden-above');
+      if (i < idx)  el.classList.add('hidden-above');
+      if (i > idx)  el.classList.add('hidden-below');
+    });
+
+    const stepEl = document.getElementById(steps[idx].id);
+    stepEl.classList.add('active');
+
+    // focus input
+    const inp = steps[idx].inputId ? document.getElementById(steps[idx].inputId) : null;
+
+    // typewrite question
+    const qEl = document.getElementById(steps[idx].qEl);
+    const rawQ = steps[idx].question;
+    const name = document.getElementById('inp-name')?.value.trim().split(' ')[0] || '';
+    const questionText = typeof rawQ === 'function' ? rawQ(name) : rawQ;
+
+    setTimeout(() => {
+      typewrite(qEl, questionText, () => {
+        if (inp) inp.focus();
+      });
+    }, 80);
+
+    updateProgress(idx);
+  }
+
+  /* ─── Validate & enable next button ─── */
+  function bindInput(inputId, nextBtnId, validateFn) {
+    const inp = document.getElementById(inputId);
+    const btn = document.getElementById(nextBtnId);
+    if (!inp || !btn) return;
+    inp.addEventListener('input', () => {
+      btn.disabled = !validateFn(inp.value);
+    });
+  }
+
+  bindInput('inp-name',    'next-0', v => v.trim().length >= 2);
+  bindInput('inp-email',   'next-1', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()));
+  bindInput('inp-company', 'next-2', v => v.trim().length >= 2);
+  bindInput('inp-message', 'next-5', v => v.trim().length >= 10);
+
+  /* ─── Enter key to advance ─── */
+  ['inp-name', 'inp-email', 'inp-company'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const btn = document.getElementById(`next-${i}`);
+        if (!btn.disabled) btn.click();
+      }
+    });
+  });
+
+  // Ctrl+Enter for textarea
+  document.getElementById('inp-message')?.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      const btn = document.getElementById('next-5');
+      if (!btn.disabled) btn.click();
+    }
+  });
+
+  /* ─── Navigation: next buttons ─── */
+  function goNext() {
+    if (current < steps.length - 1) {
+      current++;
+      showStep(current, 'forward');
+    }
+  }
+
+  function goBack() {
+    if (current > 0) {
+      current--;
+      showStep(current, 'backward');
+    }
+  }
+
+  for (let i = 0; i < steps.length; i++) {
+    document.getElementById(`next-${i}`)?.addEventListener('click', () => {
+      if (i === steps.length - 1) {
+        submitForm();
+      } else {
+        goNext();
+      }
+    });
+    if (i > 0) {
+      document.getElementById(`back-${i}`)?.addEventListener('click', goBack);
+    }
+  }
+
+  /* ─── EmailJS config ─────────────────────────────────────────
+     1. Sign up free at https://www.emailjs.com
+     2. Create an Email Service (Gmail, Outlook, SMTP, etc.)
+     3. Create an Email Template — use these template variables:
+          {{from_name}}     {{from_email}}    {{from_company}}
+          {{service}}       {{org_size}}      {{message}}
+     4. Replace the three placeholder strings below with your
+        actual Public Key, Service ID, and Template ID.
+  ──────────────────────────────────────────────────────────── */
+  const EMAILJS_PUBLIC_KEY  = 'po2e_r9yJwQwg2kgs';
+  const EMAILJS_SERVICE_ID  = 'service_10wt1jp';
+  const EMAILJS_TEMPLATE_ID = 'template_waede2s';
+
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+  /* ─── Submit ─── */
+  function submitForm() {
+    const name    = document.getElementById('inp-name').value.trim();
+    const email   = document.getElementById('inp-email').value.trim();
+    const company = document.getElementById('inp-company').value.trim();
+    const service = getSelected('service-opts').join(', ');
+    const size    = getSelected('size-opts')[0] || '';
+    const message = document.getElementById('inp-message').value.trim();
+
+    // Show sending state on the last button
+    const sendBtn = document.getElementById('next-5');
+    const origText = sendBtn.innerHTML;
+    sendBtn.innerHTML = 'Sending&hellip;';
+    sendBtn.disabled = true;
+
+    const templateParams = {
+      from_name:    name,
+      from_email:   email,
+      from_company: company,
+      service:      service,
+      org_size:     size,
+      message:      message,
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+      .then(() => {
+        showSuccessScreen(name, email, company, service, size);
+      })
+      .catch((err) => {
+        // ── Error: restore button, show inline error ──
+        sendBtn.innerHTML = origText;
+        sendBtn.disabled = false;
+        const hint = document.querySelector('#step-5 .conv-hint');
+        if (hint) {
+          hint.innerHTML = '<span style="color:#f87171;">&#9888; Send failed — please try again or email us directly.</span>';
+          setTimeout(() => { hint.textContent = 'No need to be precise — just tell us what’s on your mind'; }, 5000);
+        }
+        console.error('EmailJS error:', err);
+      });
+
+    return; // prevent fall-through to old inline success code
+  }
+
+  function showSuccessScreen(name, email, company, service, size) {
+    // hide all steps, mark progress complete
+    document.querySelectorAll('.conv-step').forEach(el => {
+      el.classList.remove('active');
+      el.classList.add('hidden-above');
+    });
+
+    // update progress: all done
+    dots.forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+    label.textContent = 'Complete';
+    document.getElementById('conv-bottom-txt').textContent = '// thank_you ✓';
+
+    // populate success screen
+    document.getElementById('success-name').textContent  = name.split(' ')[0];
+    document.getElementById('success-email').textContent = email;
+
+    const chips = document.getElementById('summary-chips');
+    chips.innerHTML = '';
+    const data = [
+      { label: 'name', val: name },
+      { label: 'company', val: company },
+      { label: 'service', val: service },
+      { label: 'size', val: size },
+    ];
+    data.forEach(({ label: lbl, val }) => {
+      if (!val) return;
+      const chip = document.createElement('div');
+      chip.className = 'summary-chip';
+      chip.innerHTML = `${lbl}: <span>${val}</span>`;
+      chips.appendChild(chip);
+    });
+
+    setTimeout(() => success.classList.add('visible'), 120);
+  }
+
+  /* ─── Kick off step 0 ─── */
+  showStep(0, 'forward');
+
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": "https://www.oceancloudconsults.com/contact.html",
+      "url": "https://www.oceancloudconsults.com/contact.html",
+      "name": "Free SharePoint Consultation | Contact OceanCloud — M365 Experts",
+      "description": "Book a free 60-minute SharePoint and Microsoft 365 consultation with OceanCloud. Talk to a certified M365 consultant about your migration, intranet, or support needs.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.oceancloudconsults.com/contact.html" }
+        ]
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.oceancloudconsults.com/#localbusiness",
+      "name": "OceanCloud",
+      "url": "https://www.oceancloudconsults.com/",
+      "description": "Microsoft Solutions Partner offering SharePoint consulting, Microsoft 365 migration, and M365 support across the United States.",
+      "telephone": "+14698094053",
+      "email": "oceancloudconsults@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+14698094053",
+          "contactType": "sales",
+          "availableLanguage": "English"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+19176753126",
+          "contactType": "customer support",
+          "contactOption": "WhatsApp",
+          "availableLanguage": "English"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "47",
+        "bestRating": "5"
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>
