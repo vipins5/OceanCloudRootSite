@@ -1,0 +1,19 @@
+<svg width="800" height="280" viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b3a96"/>
+      <stop offset="100%" stop-color="#7857dc"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="1.4" fill="white" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="280" fill="url(#g)"/>
+  <rect width="800" height="280" fill="url(#dots)"/>
+  <circle cx="700" cy="-30" r="220" fill="white" fill-opacity="0.06"/>
+  <circle cx="80" cy="310" r="160" fill="white" fill-opacity="0.06"/>
+  <text x="30" y="220" font-family="system-ui,sans-serif" font-weight="900" font-size="140" fill="white" fill-opacity="0.09" letter-spacing="-4">Teams</text>
+  <rect x="40" y="30" width="44" height="44" rx="9" fill="white" fill-opacity="0.18"/>
+  <text x="50" y="62" font-family="system-ui,sans-serif" font-weight="900" font-size="20" fill="white">OC</text>
+  <text x="96" y="61" font-family="system-ui,sans-serif" font-weight="700" font-size="18" fill="white" fill-opacity="0.88">Microsoft Teams</text>
+</svg>

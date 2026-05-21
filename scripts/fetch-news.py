@@ -117,6 +117,34 @@ def month_parts(raw: str) -> tuple[str, str]:
     return now.strftime("%Y-%m"), now.strftime("%B %Y")
 
 
+# Keyword → SVG thumbnail mapping (checked in order, first match wins)
+TOPIC_IMAGES: list[tuple[str, str]] = [
+    ("copilot",        "copilot"),
+    ("viva",           "viva"),
+    ("onedrive",       "onedrive"),
+    ("power automate", "power-platform"),
+    ("power apps",     "power-platform"),
+    ("power platform", "power-platform"),
+    ("purview",        "purview"),
+    ("entra",          "purview"),
+    ("defender",       "purview"),
+    ("teams",          "teams"),
+    ("loop",           "teams"),
+    ("syntex",         "sharepoint"),
+    ("intranet",       "sharepoint"),
+    ("sharepoint",     "sharepoint"),
+    ("document",       "sharepoint"),
+]
+
+
+def image_for_item(item: dict) -> str:
+    haystack = (item["title"] + " " + item.get("summary", "")).lower()
+    for keyword, img_name in TOPIC_IMAGES:
+        if keyword in haystack:
+            return f"assets/news/{img_name}.svg"
+    return "assets/news/m365-roadmap.svg" if item["css_tag"] == "tag-roadmap" else "assets/news/m365.svg"
+
+
 def is_relevant(entry) -> bool:
     haystack = (
         entry.get("title", "") + " " + strip_html(entry.get("summary", ""))
@@ -227,21 +255,27 @@ def fetch_roadmap() -> list[dict]:
 
 def card_html(item: dict, commentary: str) -> str:
     date_str = friendly_date(item["date"])
+    img = image_for_item(item)
     return f"""\
       <article class="news-card glass">
-        <div class="nc-meta">
-          <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
-          {f'<span class="nc-date">{escape(date_str)}</span>' if date_str else ''}
+        <div class="nc-image-wrap">
+          <img class="nc-image" src="{escape(img)}" alt="{escape(item['source'])}" loading="lazy" />
         </div>
-        <h3 class="nc-title">
-          <a href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
-            {escape(item['title'])}
+        <div class="nc-content">
+          <div class="nc-meta">
+            <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
+            {f'<span class="nc-date">{escape(date_str)}</span>' if date_str else ''}
+          </div>
+          <h3 class="nc-title">
+            <a href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
+              {escape(item['title'])}
+            </a>
+          </h3>
+          <p class="nc-body">{escape(commentary)}</p>
+          <a class="nc-link" href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
+            Read on Microsoft &#8599;
           </a>
-        </h3>
-        <p class="nc-body">{escape(commentary)}</p>
-        <a class="nc-link" href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
-          Read on Microsoft &#8599;
-        </a>
+        </div>
       </article>"""
 
 
