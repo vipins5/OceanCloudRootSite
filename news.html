@@ -66,15 +66,31 @@
   /* filter tabs */
   .news-filters {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
     margin-bottom: 48px;
   }
+  .nf-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nf-row-label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-right: 2px;
+    white-space: nowrap;
+  }
   .nf-btn {
-    padding: 8px 22px;
+    padding: 7px 18px;
     border-radius: 50px;
-    font-size: .82rem;
+    font-size: .8rem;
     font-weight: 600;
     cursor: pointer;
     border: 1.5px solid rgba(120,160,220,.18);
@@ -85,6 +101,35 @@
   }
   .nf-btn.active,
   .nf-btn:hover { background: rgba(0,180,216,.12); border-color: var(--accent); color: var(--accent); }
+
+  /* archive callout strip */
+  .archive-callout-wrap { padding: 0 0 56px; }
+  .arc-inner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 26px;
+    border-radius: 14px;
+    flex-wrap: wrap;
+  }
+  .arc-icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
+  .arc-text { flex: 1; min-width: 180px; }
+  .arc-text strong { display: block; font-weight: 700; font-size: .96rem; margin-bottom: 3px; color: var(--white); }
+  .arc-text span { font-size: .84rem; color: var(--text-mid); }
+  .arc-btn {
+    padding: 9px 20px;
+    background: rgba(0,180,216,.1);
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    border-radius: 50px;
+    font-size: .83rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .2s;
+    flex-shrink: 0;
+  }
+  .arc-btn:hover { background: rgba(0,180,216,.22); }
 
   /* card grid */
   .news-grid {
@@ -258,9 +303,22 @@
     </div>
 
     <div class="news-filters">
-      <button class="nf-btn active" data-filter="all">All Updates</button>
-      <button class="nf-btn" data-filter="blog">SharePoint Blog</button>
-      <button class="nf-btn" data-filter="roadmap">M365 Roadmap</button>
+      <div class="nf-row">
+        <span class="nf-row-label">Source:</span>
+        <button class="nf-btn nf-src active" data-source="all">All Updates</button>
+        <button class="nf-btn nf-src" data-source="blog">SharePoint Blog</button>
+        <button class="nf-btn nf-src" data-source="roadmap">M365 Roadmap</button>
+      </div>
+      <div class="nf-row">
+        <span class="nf-row-label">Topic:</span>
+        <button class="nf-btn nf-topic active" data-topic="all">All Topics</button>
+        <button class="nf-btn nf-topic" data-topic="sharepoint">SharePoint</button>
+        <button class="nf-btn nf-topic" data-topic="teams">Teams</button>
+        <button class="nf-btn nf-topic" data-topic="copilot">Copilot</button>
+        <button class="nf-btn nf-topic" data-topic="power-platform">Power Platform</button>
+        <button class="nf-btn nf-topic" data-topic="purview">Purview</button>
+        <button class="nf-btn nf-topic" data-topic="viva">Viva</button>
+      </div>
     </div>
 
 <!-- BEGIN:NEWS-CONTENT -->
@@ -488,6 +546,20 @@
   </div>
 </section>
 
+<!-- ===== ARCHIVE CALLOUT ===== -->
+<div class="archive-callout-wrap">
+  <div class="container">
+    <div class="arc-inner glass reveal">
+      <span class="arc-icon">&#128196;</span>
+      <div class="arc-text">
+        <strong>Looking for older updates?</strong>
+        <span>Browse our full archive &mdash; all past Microsoft 365 news organised by month and indexed for search.</span>
+      </div>
+      <a href="archive" class="arc-btn">Browse Archive &#8594;</a>
+    </div>
+  </div>
+</div>
+
 <!-- ===== CTA ===== -->
 <section id="cta-banner" class="cta-border-top">
   <div class="cta-full">
@@ -586,31 +658,46 @@
   </div>
 </div>
 
-<script src="js/main.js"></script>
-<script src="js/particles.js"></script>
-<script src="js/consent.js"></script>
+<script src=”js/main.js”></script>
+<script src=”js/particles.js”></script>
+<script src=”js/consent.js”></script>
+<script src=”js/chat.js”></script>
 
 <script>
-/* â”€â”€ News filter tabs â”€â”€ */
+/* ── News filter tabs (source + topic) ── */
 (function () {
-  var btns  = document.querySelectorAll('.nf-btn');
-  var cards = document.querySelectorAll('.news-card');
+  var srcBtns   = document.querySelectorAll('.nf-src');
+  var topicBtns = document.querySelectorAll('.nf-topic');
+  var cards     = document.querySelectorAll('.news-card');
 
-  btns.forEach(function (btn) {
+  var activeSrc   = 'all';
+  var activeTopic = 'all';
+
+  function applyFilters() {
+    cards.forEach(function (card) {
+      var src   = card.getAttribute('data-source') || 'blog';
+      var topic = card.getAttribute('data-topic')  || 'other';
+      var srcOk   = (activeSrc   === 'all' || activeSrc   === src);
+      var topicOk = (activeTopic === 'all' || activeTopic === topic);
+      card.style.display = (srcOk && topicOk) ? '' : 'none';
+    });
+  }
+
+  srcBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      btns.forEach(function (b) { b.classList.remove('active'); });
+      srcBtns.forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
+      activeSrc = btn.getAttribute('data-source');
+      applyFilters();
+    });
+  });
 
-      var f = btn.getAttribute('data-filter');
-      cards.forEach(function (card) {
-        if (f === 'all') {
-          card.style.display = '';
-        } else if (f === 'blog') {
-          card.style.display = card.querySelector('.tag-blog') ? '' : 'none';
-        } else if (f === 'roadmap') {
-          card.style.display = card.querySelector('.tag-roadmap') ? '' : 'none';
-        }
-      });
+  topicBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      topicBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeTopic = btn.getAttribute('data-topic');
+      applyFilters();
     });
   });
 })();

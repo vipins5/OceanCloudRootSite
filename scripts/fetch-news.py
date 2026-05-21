@@ -146,6 +146,14 @@ def image_for_item(item: dict) -> str:
     return "assets/news/m365-roadmap.svg" if item["css_tag"] == "tag-roadmap" else "assets/news/m365.svg"
 
 
+def topic_for_item(item: dict) -> str:
+    haystack = (item["title"] + " " + item.get("summary", "")).lower()
+    for keyword, img_name in TOPIC_IMAGES:
+        if keyword in haystack:
+            return img_name  # e.g. "sharepoint", "teams", "copilot", "power-platform" …
+    return "other"
+
+
 def is_relevant(entry) -> bool:
     haystack = (
         entry.get("title", "") + " " + strip_html(entry.get("summary", ""))
@@ -255,10 +263,12 @@ def fetch_roadmap() -> list[dict]:
 # ── News HTML ─────────────────────────────────────────────────────────────────
 
 def card_html(item: dict, commentary: str) -> str:
-    date_str = friendly_date(item["date"])
-    img = image_for_item(item)
+    date_str    = friendly_date(item["date"])
+    img         = image_for_item(item)
+    source_slug = "roadmap" if item["css_tag"] == "tag-roadmap" else "blog"
+    topic_slug  = topic_for_item(item)
     return f"""\
-      <article class="news-card glass">
+      <article class="news-card glass" data-source="{source_slug}" data-topic="{topic_slug}">
         <div class="nc-image-wrap">
           <img class="nc-image" src="{escape(img)}" alt="{escape(item['source'])}" loading="lazy" />
         </div>
