@@ -26,7 +26,7 @@ import sys
 import time
 import textwrap
 from datetime import datetime, timezone
-from html import escape
+from html import escape, unescape
 from pathlib import Path
 
 import requests
@@ -74,6 +74,7 @@ HEADERS         = {"User-Agent": "OceanCloudBot/1.0 (+https://oceancloudconsults
 
 def strip_html(text: str) -> str:
     text = re.sub(r"<[^>]+>", " ", text)
+    text = unescape(text)          # convert &nbsp; &amp; &#x27; etc. to real chars
     return re.sub(r"\s+", " ", text).strip()
 
 
@@ -261,21 +262,19 @@ def card_html(item: dict, commentary: str) -> str:
         <div class="nc-image-wrap">
           <img class="nc-image" src="{escape(img)}" alt="{escape(item['source'])}" loading="lazy" />
         </div>
-        <div class="nc-content">
-          <div class="nc-meta">
-            <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
-            {f'<span class="nc-date">{escape(date_str)}</span>' if date_str else ''}
-          </div>
-          <h3 class="nc-title">
-            <a href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
-              {escape(item['title'])}
-            </a>
-          </h3>
-          <p class="nc-body">{escape(commentary)}</p>
-          <a class="nc-link" href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
-            Read on Microsoft &#8599;
-          </a>
+        <div class="nc-meta">
+          <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
+          {f'<span class="nc-date">{escape(date_str)}</span>' if date_str else ''}
         </div>
+        <h3 class="nc-title">
+          <a href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
+            {escape(item['title'])}
+          </a>
+        </h3>
+        <p class="nc-body">{escape(commentary)}</p>
+        <a class="nc-link" href="{escape(item['url'])}" target="_blank" rel="noopener noreferrer">
+          Read on Microsoft &#8599;
+        </a>
       </article>"""
 
 
