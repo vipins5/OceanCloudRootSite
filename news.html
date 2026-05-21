@@ -675,10 +675,11 @@
 
   function applyFilters() {
     cards.forEach(function (card) {
-      var src   = card.getAttribute('data-source') || 'blog';
-      var topic = card.getAttribute('data-topic')  || 'other';
-      var srcOk   = (activeSrc   === 'all' || activeSrc   === src);
-      var topicOk = (activeTopic === 'all' || activeTopic === topic);
+      var src   = card.getAttribute('data-source');
+      var topic = card.getAttribute('data-topic');
+      // Cards without data attributes (pre-workflow) are always shown
+      var srcOk   = (activeSrc   === 'all' || src   === null || activeSrc   === src);
+      var topicOk = (activeTopic === 'all' || topic === null || activeTopic === topic);
       card.style.display = (srcOk && topicOk) ? '' : 'none';
     });
   }
