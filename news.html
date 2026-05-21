@@ -702,7 +702,12 @@
       // Cards without data attributes (pre-workflow) are always shown
       var srcOk   = (activeSrc   === 'all' || src   === null || activeSrc   === src);
       var topicOk = (activeTopic === 'all' || topic === null || activeTopic === topic);
-      card.style.display = (srcOk && topicOk) ? '' : 'none';
+      if (srcOk && topicOk) {
+        card.style.display = '';
+        card.style.animation = 'none'; // prevent card-in restart on re-show
+      } else {
+        card.style.display = 'none';
+      }
     });
   }
 
