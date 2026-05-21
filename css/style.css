@@ -4,14 +4,14 @@
 
 /* ===== TOKENS ===== */
 :root {
-  --bg:           #090909;
-  --bg-2:         #0f0f10;
-  --bg-3:         #141416;
-  --border:       rgba(255,255,255,.07);
-  --border-hover: rgba(255,255,255,.18);
-  --text:         #ededef;
-  --text-dim:     rgba(237,237,239,.38);
-  --text-mid:     rgba(237,237,239,.62);
+  --bg:           #080c14;
+  --bg-2:         #0d1220;
+  --bg-3:         #121828;
+  --border:       rgba(120,160,220,.10);
+  --border-hover: rgba(120,160,220,.25);
+  --text:         #dde4f0;
+  --text-dim:     rgba(213,220,235,.50);
+  --text-mid:     rgba(213,220,235,.72);
   --accent:       #00b4d8;
   --accent-2:     #06d6a0;
   --accent-warm:  #ffd166;
