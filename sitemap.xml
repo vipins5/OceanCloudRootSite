@@ -40,6 +40,13 @@
   </url>
 
   <url>
+    <loc>https://www.oceancloudconsults.com/news</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://www.oceancloudconsults.com/privacy</loc>
     <lastmod>2026-05-21</lastmod>
     <changefreq>yearly</changefreq>

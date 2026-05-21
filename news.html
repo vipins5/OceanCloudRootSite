@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title>Microsoft 365 News & Roadmap Updates | OceanCloud</title>
+  <meta name="description" content="Latest Microsoft SharePoint blog posts and M365 roadmap updates, curated and explained by OceanCloud's certified consultants. Updated weekly." />
+  <meta name="keywords" content="Microsoft 365 news, SharePoint blog, M365 roadmap updates, SharePoint consultant news, Microsoft 365 updates" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <meta name="author" content="OceanCloud" />
+  <meta name="geo.region" content="US" />
+  <meta name="geo.placename" content="Dallas, TX" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/news" />
+
+  <!-- ═══ OPEN GRAPH ═══ -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Microsoft 365 News & Roadmap | OceanCloud" />
+  <meta property="og:description" content="Latest SharePoint and M365 updates curated by OceanCloud's certified consultants. Weekly roundup of what matters for your business." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/news" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"    content="OceanCloud Microsoft 365 news and roadmap updates" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- ═══ TWITTER CARD ═══ -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Microsoft 365 News & Roadmap | OceanCloud" />
+  <meta name="twitter:description" content="Weekly SharePoint and M365 updates, curated and explained by OceanCloud's certified consultants." />
+  <meta name="twitter:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/darkstar.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
+  <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+
+  <style>
+  /* ── News page styles ── */
+  .news-section { padding: 80px 0 100px; }
+
+  .news-header { text-align: center; margin-bottom: 60px; }
+  .news-header .section-label { justify-content: center; }
+  .news-header h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    line-height: 1.1;
+    margin: 12px 0 16px;
+  }
+  .news-header p {
+    color: var(--text-mid);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.75;
+  }
+
+  /* filter tabs */
+  .news-filters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .nf-btn {
+    padding: 8px 22px;
+    border-radius: 50px;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid rgba(120,160,220,.18);
+    background: transparent;
+    color: var(--text-mid);
+    font-family: inherit;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .nf-btn.active,
+  .nf-btn:hover { background: rgba(0,180,216,.12); border-color: var(--accent); color: var(--accent); }
+
+  /* card grid */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* individual card */
+  .news-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px;
+    border-radius: 16px;
+  }
+
+  .nc-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .nc-tag {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+  .tag-blog    { background: rgba(0,180,216,.12); color: #00b4d8; }
+  .tag-roadmap { background: rgba(120,87,220,.12); color: #a78bfa; }
+
+  .nc-date {
+    font-size: .75rem;
+    color: var(--text-dim);
+  }
+
+  .nc-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: -.02em;
+  }
+  .nc-title a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nc-title a:hover { color: var(--accent); }
+
+  .nc-body {
+    font-size: .88rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  .nc-link {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity .2s;
+    margin-top: auto;
+  }
+  .nc-link:hover { opacity: .75; }
+
+  .news-updated {
+    text-align: center;
+    margin-top: 48px;
+    font-size: .8rem;
+    color: var(--text-dim);
+  }
+  .news-updated a { color: var(--text-mid); }
+  .news-updated a:hover { color: var(--accent); }
+
+  /* loading / empty state */
+  .news-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 0;
+    color: var(--text-dim);
+    font-size: .95rem;
+  }
+  .news-loading .spin {
+    display: inline-block;
+    width: 32px; height: 32px;
+    border: 3px solid rgba(0,180,216,.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 900px) { .news-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 580px) { .news-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">OC</div>
+      <span class="logo-text">Ocean<span>Cloud</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news" class="active-link"><span class="nav-num">05</span>News</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":55,"color":"0,180,216","maxDist":110,"speed":0.18,"opacity":0.28}'></canvas>
+  <div class="orb orb-cyan"   style="width:420px;height:420px;top:-100px;right:-80px;"></div>
+  <div class="orb orb-purple" style="width:320px;height:320px;bottom:-60px;left:15%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><span>News</span></nav>
+      <h1>M365 &amp; SharePoint <span class="grad-text">News</span></h1>
+      <p>The latest from Microsoft, curated and explained in plain English by our certified consultants. Updated every week.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEWS SECTION ===== -->
+<section class="news-section">
+  <div class="container">
+
+    <div class="news-header reveal">
+      <span class="section-label">Weekly Roundup</span>
+      <h2>What's new in <span class="grad-text">Microsoft 365</span></h2>
+      <p>Sourced directly from Microsoft's official SharePoint Blog and the M365 Release Communications feed — with our expert take on what each update means for your business.</p>
+    </div>
+
+    <div class="news-filters">
+      <button class="nf-btn active" data-filter="all">All Updates</button>
+      <button class="nf-btn" data-filter="blog">SharePoint Blog</button>
+      <button class="nf-btn" data-filter="roadmap">M365 Roadmap</button>
+    </div>
+
+<!-- BEGIN:NEWS-CONTENT -->
+    <div class="news-grid stagger-grid" id="news-grid">
+      <div class="news-loading">
+        <div class="spin"></div>
+        <p>Content is updated automatically every Monday by our GitHub Actions workflow.<br>
+        The first update will appear after the workflow runs for the first time.</p>
+      </div>
+    </div>
+    <p class="news-updated">Auto-updated weekly &nbsp;&middot;&nbsp; Sources: <a href="https://techcommunity.microsoft.com/category/content_management/blog/spblog" target="_blank" rel="noopener">Microsoft TechCommunity SharePoint Blog</a> &amp; <a href="https://www.microsoft.com/en-us/microsoft-365/roadmap" target="_blank" rel="noopener">M365 Roadmap</a></p>
+<!-- END:NEWS-CONTENT -->
+
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="cta-banner" class="cta-border-top">
+  <div class="cta-full">
+    <div class="cta-glow"></div>
+    <div class="container cta-inner">
+      <h2 class="reveal">Need help with a <em>specific update?</em></h2>
+      <p class="reveal">Our consultants can assess how any Microsoft 365 change affects your environment and plan the right response.</p>
+      <div class="reveal">
+        <a href="contact" class="btn-primary">Book a Free Call &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">
+          <div class="logo-mark">OC</div>
+          Ocean<span>Cloud</span>
+        </div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Twitter">&#x1D54F;</a>
+          <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+          <li><span style="color:var(--text-dim)">Mon–Fri 9 AM–6 PM EST</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left">
+          <span class="fb-copy">&copy; 2026 OceanCloud LLC — All rights reserved.</span>
+          <span class="fb-craft">Turning Microsoft complexity into clarity, one deployment at a time.</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot-anim"></span>
+          Accepting new engagements
+        </div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a>
+          <span class="fb-sep">·</span>
+          <a href="terms">Terms</a>
+          <span class="fb-sep">·</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+
+<!-- ===== COOKIE CONSENT BANNER ===== -->
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/consent.js"></script>
+
+<script>
+/* ── News filter tabs ── */
+(function () {
+  var btns  = document.querySelectorAll('.nf-btn');
+  var cards = document.querySelectorAll('.news-card');
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      var f = btn.getAttribute('data-filter');
+      cards.forEach(function (card) {
+        if (f === 'all') {
+          card.style.display = '';
+        } else if (f === 'blog') {
+          card.style.display = card.querySelector('.tag-blog') ? '' : 'none';
+        } else if (f === 'roadmap') {
+          card.style.display = card.querySelector('.tag-roadmap') ? '' : 'none';
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

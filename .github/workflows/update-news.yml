@@ -1,0 +1,51 @@
+name: Update Microsoft 365 News
+
+# Runs every Monday at 08:00 UTC, or trigger manually from GitHub Actions tab
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+# Allow the workflow to commit back to the repo
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install Python dependencies
+        run: pip install requests feedparser
+
+      - name: Fetch and rewrite news
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/fetch-news.py
+
+      - name: Check if news.html changed
+        id: diff
+        run: |
+          git diff --quiet news.html \
+            && echo "changed=false" >> "$GITHUB_OUTPUT" \
+            || echo "changed=true"  >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push updated news page
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "OceanCloud News Bot"
+          git config user.email "bot@oceancloudconsults.com"
+          git add news.html
+          git commit -m "chore: auto-update M365 news $(date -u +%Y-%m-%d)"
+          git push
