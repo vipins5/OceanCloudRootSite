@@ -37,6 +37,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/darkstar.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
   <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
 </head>
@@ -65,8 +66,11 @@
 </nav>
 
 <!-- ===== PAGE HERO ===== -->
-<section id="main-content" class="page-hero">
-  <div class="container">
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":55,"color":"0,180,216","maxDist":110,"speed":0.18,"opacity":0.30}'></canvas>
+  <div class="orb orb-cyan" style="width:400px;height:400px;top:-80px;right:-80px;"></div>
+  <div class="orb orb-purple" style="width:350px;height:350px;bottom:-60px;left:10%;"></div>
+  <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><span>About</span></nav>
       <h1>Your Certified <span>SharePoint &amp; M365</span><br>Consulting Partner</h1>
@@ -91,7 +95,7 @@
 
       <div class="about-content reveal">
         <span class="section-tag">Our Story</span>
-        <h2 class="section-title">A Decade of <span>Microsoft Excellence</span></h2>
+        <h2 class="section-title">A Decade of <span class="grad-text">Microsoft Excellence</span></h2>
         <p class="section-desc">
           OceanCloud was born in 2013 when our founders — former Microsoft engineers and enterprise architects — recognised that most organisations were barely scratching the surface of what SharePoint and Office 365 could do for them.
         </p>
@@ -166,7 +170,7 @@
   <div class="container">
     <div class="timeline-header reveal">
       <span class="section-tag">Our Journey</span>
-      <h2 class="section-title">Twelve Years of <span>Microsoft Excellence</span></h2>
+      <h2 class="section-title">Twelve Years of <span class="grad-text">Microsoft Excellence</span></h2>
     </div>
     <div class="timeline reveal">
       <div class="tl-item">
@@ -234,14 +238,14 @@
   <div class="container">
     <div class="team-header reveal">
       <span class="section-tag">Our People</span>
-      <h2 class="section-title">Meet the <span>Experts</span></h2>
+      <h2 class="section-title">Meet the <span class="grad-text">Experts</span></h2>
       <p class="section-desc" style="margin:16px auto 0;">
         Our consultants hold the highest Microsoft certifications and bring real-world delivery experience to every engagement.
       </p>
     </div>
 
-    <div class="team-grid">
-      <div class="team-card reveal">
+    <div class="team-grid stagger-grid">
+      <div class="team-card glass reveal">
         <div class="team-avatar" style="background:linear-gradient(135deg,#0077b6,#00b4d8);">AR</div>
         <h3>Amir Rashid</h3>
         <div class="role">Founder &amp; Principal Architect</div>
@@ -253,7 +257,7 @@
         </div>
       </div>
 
-      <div class="team-card reveal">
+      <div class="team-card glass reveal">
         <div class="team-avatar" style="background:linear-gradient(135deg,#06d6a0,#0077b6);">SC</div>
         <h3>Sophie Clarke</h3>
         <div class="role">Head of Migration Practice</div>
@@ -265,7 +269,7 @@
         </div>
       </div>
 
-      <div class="team-card reveal">
+      <div class="team-card glass reveal">
         <div class="team-avatar" style="background:linear-gradient(135deg,#7857dc,#0077b6);">BN</div>
         <h3>Ben Nguyen</h3>
         <div class="role">Power Platform Lead</div>
@@ -277,7 +281,7 @@
         </div>
       </div>
 
-      <div class="team-card reveal">
+      <div class="team-card glass reveal">
         <div class="team-avatar" style="background:linear-gradient(135deg,#f59e0b,#0077b6);">LP</div>
         <h3>Laura Patel</h3>
         <div class="role">Security &amp; Compliance Consultant</div>
@@ -289,7 +293,7 @@
         </div>
       </div>
 
-      <div class="team-card reveal">
+      <div class="team-card glass reveal">
         <div class="team-avatar" style="background:linear-gradient(135deg,#ec4899,#0077b6);">KW</div>
         <h3>Kate Whitmore</h3>
         <div class="role">Adoption &amp; Change Manager</div>
@@ -300,7 +304,7 @@
         </div>
       </div>
 
-      <div class="team-card reveal">
+      <div class="team-card glass reveal">
         <div class="team-avatar" style="background:linear-gradient(135deg,#06b6d4,#0077b6);">TM</div>
         <h3>Tom Murray</h3>
         <div class="role">SharePoint Developer</div>
@@ -319,7 +323,7 @@
   <div class="container">
     <div class="cert-header reveal">
       <span class="section-tag">Credentials</span>
-      <h2 class="section-title">Recognised at the <span>Highest Level</span></h2>
+      <h2 class="section-title">Recognised at the <span class="grad-text">Highest Level</span></h2>
       <p class="section-desc" style="margin:14px auto 0;">
         Our designations are re-validated annually, so you know our expertise is current.
       </p>
@@ -511,6 +515,7 @@
     </div>
   </div>
 </div>
+<script src="js/particles.js"></script>
 <script src="js/consent.js"></script>
 </body>
 </html>

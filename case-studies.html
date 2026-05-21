@@ -37,6 +37,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/darkstar.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
   <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
 </head>
@@ -65,8 +66,11 @@
 </nav>
 
 <!-- ===== PAGE HERO ===== -->
-<section id="main-content" class="page-hero">
-  <div class="container">
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":55,"color":"0,180,216","maxDist":110,"speed":0.18,"opacity":0.30}'></canvas>
+  <div class="orb orb-cyan" style="width:400px;height:400px;top:-80px;right:-80px;"></div>
+  <div class="orb orb-purple" style="width:350px;height:350px;bottom:-60px;left:10%;"></div>
+  <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><span>Case Studies</span></nav>
       <h1>SharePoint &amp; M365 <span>Case Studies</span></h1>
@@ -509,6 +513,7 @@
     </div>
   </div>
 </div>
+<script src="js/particles.js"></script>
 <script src="js/consent.js"></script>
 </body>
 </html>

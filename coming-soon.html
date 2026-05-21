@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+  <title>Coming Soon | OceanCloud</title>
+  <meta name="description" content="OceanCloud — Microsoft 365 consulting specialists. Something new is coming. Stay tuned." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/darkstar.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
+  <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+</head>
+<body>
+<div id="c-dot"></div><div id="c-ring"></div>
+
+<main class="cs-page" id="main-content">
+  <canvas data-particles='{"count":70,"color":"0,180,216","maxDist":130,"speed":0.22,"opacity":0.32}'></canvas>
+  <div class="orb orb-cyan"   style="width:600px;height:600px;top:-200px;right:-100px;"></div>
+  <div class="orb orb-purple" style="width:500px;height:500px;bottom:-150px;left:-100px;"></div>
+
+  <a href="/" class="cs-logo-wrap" style="position:relative;z-index:2;">
+    <div class="logo-mark">OC</div>
+    <span class="logo-text" style="font-size:1.4rem;font-weight:900;color:#fff;">Ocean<span style="color:#00b4d8;">Cloud</span></span>
+  </a>
+
+  <div style="position:relative;z-index:2;width:100%;max-width:640px;">
+    <p class="cs-tagline">Something exciting is coming</p>
+    <h1 class="cs-heading">Coming Soon</h1>
+    <p class="cs-desc">We're working on something new to help you get even more from Microsoft 365. Be the first to know when we launch.</p>
+
+    <div class="countdown" id="countdown">
+      <div class="cd-block">
+        <span class="cd-num" id="cd-d">00</span>
+        <span class="cd-lbl">Days</span>
+      </div>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-h">00</span>
+        <span class="cd-lbl">Hours</span>
+      </div>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-m">00</span>
+        <span class="cd-lbl">Minutes</span>
+      </div>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-s">00</span>
+        <span class="cd-lbl">Seconds</span>
+      </div>
+    </div>
+
+    <form class="cs-form" onsubmit="handleNotify(event)">
+      <input type="email" placeholder="Enter your email address…" required />
+      <button type="submit">Notify Me</button>
+    </form>
+
+    <div class="cs-social">
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="Twitter / X">&#x1D54F;</a>
+      <a href="#" aria-label="YouTube">&#9654;</a>
+    </div>
+
+    <p class="cs-footer-note">
+      &copy; 2026 OceanCloud LLC &nbsp;&middot;&nbsp;
+      <a href="/">Home</a> &nbsp;&middot;&nbsp;
+      <a href="privacy">Privacy Policy</a>
+    </p>
+  </div>
+</main>
+
+<!-- ===== COOKIE CONSENT BANNER ===== -->
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Countdown to October 1, 2026 09:00 UTC ── */
+(function () {
+  var target = new Date('2026-10-01T09:00:00');
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function tick() {
+    var now  = new Date();
+    var diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cd-d').textContent = '00';
+      document.getElementById('cd-h').textContent = '00';
+      document.getElementById('cd-m').textContent = '00';
+      document.getElementById('cd-s').textContent = '00';
+      return;
+    }
+    var days    = Math.floor(diff / 86400000);
+    var hours   = Math.floor((diff % 86400000) / 3600000);
+    var minutes = Math.floor((diff % 3600000)  / 60000);
+    var seconds = Math.floor((diff % 60000)    / 1000);
+    document.getElementById('cd-d').textContent = pad(days);
+    document.getElementById('cd-h').textContent = pad(hours);
+    document.getElementById('cd-m').textContent = pad(minutes);
+    document.getElementById('cd-s').textContent = pad(seconds);
+  }
+  tick();
+  setInterval(tick, 1000);
+}());
+
+function handleNotify(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('button');
+  btn.textContent = 'You\'re on the list!';
+  btn.disabled = true;
+  e.target.querySelector('input').disabled = true;
+}
+</script>
+<script src="js/main.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/consent.js"></script>
+</body>
+</html>
