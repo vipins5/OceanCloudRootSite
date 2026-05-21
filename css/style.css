@@ -1394,6 +1394,9 @@ footer {
 
 /* panel */
 #oc-panel {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 0;
   width: 370px;
   height: 560px;
   background: var(--bg-2);
