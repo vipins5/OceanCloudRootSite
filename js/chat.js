@@ -39,7 +39,7 @@ CONTACT:
 - WhatsApp: +1 (917) 675-3126
 - Email: oceancloudconsults@gmail.com
 - Hours: Monday-Friday, 9am-6pm EST
-- Book a call: contact.html
+- Book a call: contact
 
 RESPONSE RULES:
 - Answer questions about SharePoint, Microsoft 365, Power Platform, Teams, security, and OceanCloud's services
@@ -139,19 +139,19 @@ RESPONSE RULES:
   const fallbackText = 'That\'s a great question! Let me look that up for you…';
 
   const chipActions = {
-    'Book a call':            () => navigate('contact.html'),
-    'Book a free call':       () => navigate('contact.html'),
-    'Book discovery call':    () => navigate('contact.html'),
-    'Book now':               () => navigate('contact.html'),
-    'Contact us':             () => navigate('contact.html'),
+    'Book a call':            () => navigate('contact'),
+    'Book a free call':       () => navigate('contact'),
+    'Book discovery call':    () => navigate('contact'),
+    'Book now':               () => navigate('contact'),
+    'Contact us':             () => navigate('contact'),
     'Send us an email':       () => { window.location.href = 'mailto:oceancloudconsults@gmail.com'; },
-    'See case studies':       () => navigate('case-studies.html'),
-    'See case study':         () => navigate('case-studies.html'),
-    'View all services':      () => navigate('services.html'),
-    'View services':          () => navigate('services.html'),
-    'Meet the team':          () => navigate('about.html'),
-    'About OceanCloud':       () => navigate('about.html'),
-    'Our process':            () => navigate('index.html#process'),
+    'See case studies':       () => navigate('case-studies'),
+    'See case study':         () => navigate('case-studies'),
+    'View all services':      () => navigate('services'),
+    'View services':          () => navigate('services'),
+    'Meet the team':          () => navigate('about'),
+    'About OceanCloud':       () => navigate('about'),
+    'Our process':            () => navigate('/#process'),
     'SharePoint':             () => sendUserMsg('Tell me about SharePoint'),
     'M365 Migration':         () => sendUserMsg('Tell me about M365 migration'),
     'Services & pricing':     () => sendUserMsg('What services do you offer?'),
@@ -201,7 +201,7 @@ RESPONSE RULES:
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </div>
-      <div id="oc-footer-note">Powered by <strong>Gemini Flash</strong> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a></div>
+      <div id="oc-footer-note">Powered by <strong>Gemini Flash</strong> &nbsp;·&nbsp; <a href="privacy">Privacy</a></div>
     </div>`;
   document.body.appendChild(widget);
 
@@ -394,7 +394,7 @@ RESPONSE RULES:
       hideTyping();
       console.warn('OceanBot Gemini error:', err.message);
       appendMsg(
-        'I couldn\'t reach the AI right now. Our team can answer this directly — <a href="contact.html" style="color:var(--accent)">get in touch here</a>.',
+        'I couldn\'t reach the AI right now. Our team can answer this directly — <a href="contact" style="color:var(--accent)">get in touch here</a>.',
         'bot'
       );
       renderChips(['Book a free call', 'Contact us']);
