@@ -139,6 +139,9 @@
   .oh-row:last-child { border-bottom: none; }
   .oh-row .day { font-weight: 600; color: #111827; }
 
+  .map-block { margin-top: 20px; }
+  .map-label { font-size: .85rem; font-weight: 700; color: #111827; margin-bottom: 10px; }
+
   /* ── Right: conversational form panel ── */
   .conv-panel {
     background: #050e1a;
@@ -637,7 +640,8 @@
           <div class="ci-icon">&#127759;</div>
           <div>
             <h4>Location</h4>
-            <p>United States</p>
+            <p>Dallas, TX · United States</p>
+            <p style="font-size:.75rem;color:#6b7280;margin-top:2px;">Serving clients nationwide</p>
           </div>
         </div>
         <div class="ci-item">
@@ -654,6 +658,19 @@
         <div class="oh-row"><span class="day">Mon – Thu</span><span>9:00 AM – 5:30 PM</span></div>
         <div class="oh-row"><span class="day">Friday</span><span>9:00 AM – 4:00 PM</span></div>
         <div class="oh-row"><span class="day">Weekend</span><span>Closed</span></div>
+      </div>
+
+      <div class="map-block">
+        <h4 class="map-label">&#128205; &nbsp;Our Location</h4>
+        <iframe
+          src="https://www.google.com/maps?q=Dallas,TX,USA&output=embed"
+          width="100%"
+          height="200"
+          style="border:0;border-radius:10px;display:block;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="OceanCloud office location — Dallas, TX"></iframe>
       </div>
     </aside>
 
