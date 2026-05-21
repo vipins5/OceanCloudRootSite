@@ -149,8 +149,14 @@ def gemini_rewrite(title: str, summary: str) -> str:
 def fetch_blog() -> list[dict]:
     """Fetch the latest SharePoint TechCommunity blog posts via RSS."""
     print("Fetching SharePoint blog RSS…")
+    print(f"  URL: {BLOG_RSS_URL}")
     try:
-        feed = feedparser.parse(BLOG_RSS_URL)
+        feed = feedparser.parse(BLOG_RSS_URL, request_headers=HEADERS)
+        status = getattr(feed, 'status', 'unknown')
+        bozo   = getattr(feed, 'bozo', False)
+        print(f"  HTTP status: {status}  |  bozo: {bozo}  |  entries: {len(feed.entries)}")
+        if bozo and feed.entries == []:
+            print(f"  [warn] bozo_exception: {getattr(feed, 'bozo_exception', '')}", file=sys.stderr)
         posts = []
         for entry in feed.entries[:MAX_BLOG]:
             posts.append({
@@ -161,7 +167,7 @@ def fetch_blog() -> list[dict]:
                 "source":  "SharePoint Blog",
                 "css_tag": "tag-blog",
             })
-        print(f"  → {len(posts)} blog posts")
+        print(f"  → {len(posts)} blog posts selected")
         return posts
     except Exception as exc:
         print(f"  [error] Blog fetch failed: {exc}", file=sys.stderr)
@@ -171,10 +177,18 @@ def fetch_blog() -> list[dict]:
 def fetch_roadmap() -> list[dict]:
     """Fetch relevant M365 roadmap items from the official Release Comms RSS."""
     print("Fetching M365 Release Communications RSS…")
+    print(f"  URL: {ROADMAP_RSS_URL}")
     try:
-        feed = feedparser.parse(ROADMAP_RSS_URL)
+        feed = feedparser.parse(ROADMAP_RSS_URL, request_headers=HEADERS)
+        status = getattr(feed, 'status', 'unknown')
+        bozo   = getattr(feed, 'bozo', False)
+        print(f"  HTTP status: {status}  |  bozo: {bozo}  |  entries: {len(feed.entries)}")
+        if bozo and feed.entries == []:
+            print(f"  [warn] bozo_exception: {getattr(feed, 'bozo_exception', '')}", file=sys.stderr)
         items = []
+        matched = 0
         for entry in feed.entries:
+            matched += 1 if is_relevant(entry) else 0
             if not is_relevant(entry):
                 continue
             items.append({
@@ -187,7 +201,7 @@ def fetch_roadmap() -> list[dict]:
             })
             if len(items) >= MAX_ROADMAP:
                 break
-        print(f"  → {len(items)} roadmap items (after relevance filter)")
+        print(f"  → {len(items)} roadmap items selected (relevance matched {matched}/{len(feed.entries)})")
         return items
     except Exception as exc:
         print(f"  [error] Roadmap fetch failed: {exc}", file=sys.stderr)
@@ -247,8 +261,9 @@ def main() -> None:
     all_items      = blog_items + roadmap_items
 
     if not all_items:
-        print("No content fetched — skipping update.")
-        sys.exit(0)
+        print("[warn] No content fetched from either RSS source — news.html not updated.", file=sys.stderr)
+        print("  Check that the RSS URLs are reachable and returning entries (see HTTP status above).")
+        sys.exit(1)
 
     print(f"\nRewriting {len(all_items)} items with Gemini…")
     for item in all_items:
