@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>How to Build a Modern SharePoint Intranet in 2026 | OceanCloud</title>
+  <meta name="description" content="A practical guide to building a SharePoint intranet that employees actually use — covering hub site architecture, navigation design, news, search, mobile, governance, and common mistakes to avoid." />
+  <meta name="keywords" content="SharePoint intranet guide, build SharePoint intranet, modern SharePoint intranet, SharePoint intranet best practices, SharePoint hub sites, SharePoint 2026" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-intranet" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="How to Build a Modern SharePoint Intranet in 2026" />
+  <meta property="og:description" content="Architecture, navigation, news, search, mobile, and governance — the eight steps to a SharePoint intranet that employees actually use." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-intranet" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-intranet#article",
+        "headline": "How to Build a Modern SharePoint Intranet in 2026: Best Practices and Common Mistakes",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-intranet",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Architecture, navigation, news, search, mobile, and governance — the eight steps to a SharePoint intranet employees actually use, plus common mistakes to avoid.",
+        "keywords": ["SharePoint intranet", "intranet best practices", "hub sites", "SharePoint navigation", "SharePoint governance"],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Intranet Guide", "item": "https://www.oceancloudconsults.com/guide-sharepoint-intranet" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(0,180,216,.12);color:#00b4d8;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#c8daea;font-size:.92rem;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(0,180,216,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.25}'></canvas>
+  <div class="orb orb-cyan"   style="width:340px;height:340px;top:-80px;right:-60px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Intranet</span></nav>
+      <h1>How to Build a Modern <span class="grad-text">SharePoint Intranet</span> in 2026</h1>
+      <p>Eight practical steps to a SharePoint intranet your employees actually use — from architecture to governance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">9 min read</span>
+      </div>
+
+      <p class="article-intro">Most intranets fail not because of technology, but because of adoption. We've audited hundreds of SharePoint environments where the intranet existed but was barely used — staff still emailed policies around, managers still printed org charts, and IT still answered "where is the X form?" daily. A SharePoint intranet that works requires good architecture, intentional design, and a governance model that keeps it useful over time. This guide covers all three.</p>
+
+      <h2>Step 1: Start with Information Architecture</h2>
+      <p>Before creating a single page, map out the structure. Modern SharePoint offers three site types, each with a distinct purpose:</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Site type</th><th>Purpose</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Hub site</strong></td><td>Aggregates associated sites; shared navigation and search scope</td><td>Company intranet hub</td></tr>
+            <tr><td><strong>Communication site</strong></td><td>Publishing content to a broad audience; read-heavy</td><td>HR portal, IT service desk, News</td></tr>
+            <tr><td><strong>Team site</strong></td><td>Collaborative workspace for a group; edit-heavy</td><td>Marketing team, Finance team</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>A typical intranet hierarchy: one <strong>root hub site</strong> (the homepage) associated with department-level communication sites (HR, IT, Finance, Operations) and team sites for individual working groups. The hub association means navigation, search, and news can be scoped to the whole intranet or filtered by department.</p>
+
+      <div class="art-callout">
+        <p><strong>Architecture principle:</strong> Flat is better than deep. Aim for no more than two levels of site hierarchy below the hub. Deep nesting creates navigation complexity that users give up on and search can't compensate for.</p>
+      </div>
+
+      <h2>Step 2: Design Navigation Intentionally</h2>
+      <p>Navigation is where most intranets lose users. SharePoint supports three navigation levels: global navigation (across the tenant via Viva Connections), hub navigation (across all hub-associated sites), and local navigation (within a single site).</p>
+      <p>Design rules that work in practice:</p>
+      <ul>
+        <li><strong>Maximum 7 items at the top level.</strong> Users won't scroll horizontal navigation menus. Prioritise the most-visited destinations.</li>
+        <li><strong>Use megamenus for complex sites.</strong> A SharePoint megamenu allows two columns of links per top-level item — far more scannable than nested dropdowns.</li>
+        <li><strong>Label by task, not by org structure.</strong> "Find a Form" is more useful than "HR Department." Users navigate by what they need to do, not by who owns it internally.</li>
+        <li><strong>Test with real users before launch.</strong> Run a simple card-sorting exercise with 5 employees who aren't on the project team. Their surprises tell you more than any committee review.</li>
+      </ul>
+
+      <h2>Step 3: Build a Homepage That Works Hard</h2>
+      <p>The intranet homepage is the most visited page and the one that sets first impressions. Effective modern SharePoint homepages typically include:</p>
+      <ul>
+        <li><strong>Hero web part</strong> — 3–5 rotating items featuring the most important current announcements, campaigns, or priorities. Change this at least monthly.</li>
+        <li><strong>News web part</strong> — Latest posts from the organisation news site and department sites. Configure audience targeting so Finance staff see Finance news prominently.</li>
+        <li><strong>Quick Links web part</strong> — The 8–12 most-clicked destinations, discovered from SharePoint analytics. Review and update quarterly.</li>
+        <li><strong>People search</strong> — A People web part or direct link to the M365 people directory. "Find a colleague" is consistently one of the top 5 intranet use cases.</li>
+        <li><strong>Events</strong> — A SharePoint list web part showing upcoming company events, all-hands meetings, and deadlines.</li>
+      </ul>
+      <p>Avoid homepage clutter. A page with 20 web parts overwhelms rather than helps. Ruthlessly prioritise based on actual usage analytics, not stakeholder requests.</p>
+
+      <h2>Step 4: Configure News and Announcements</h2>
+      <p>SharePoint's news feature is its most powerful built-in publishing tool. Set up correctly, it creates a structured, searchable, subscription-worthy news experience. Key configurations:</p>
+      <ul>
+        <li><strong>Designate an organisational news site.</strong> In SharePoint Admin Center → Settings → Organisation News Sites, designate your root hub as the org news source. Posts here appear with a special indicator in search and on other sites.</li>
+        <li><strong>Use audience targeting.</strong> Add target audiences to news posts so HR news appears prominently to HR staff and IT announcements reach IT — without hiding them from others.</li>
+        <li><strong>Enable news digest.</strong> Microsoft 365 can automatically email a weekly digest of news posts to employees who haven't visited recently. This is one of the most effective adoption tools available out of the box.</li>
+        <li><strong>Set a news cadence.</strong> Assign a content owner per department responsible for at least one post per fortnight. An intranet with no news is an intranet nobody checks.</li>
+      </ul>
+
+      <h2>Step 5: Make Search Work</h2>
+      <p>Microsoft Search is the backbone of intranet findability. Out of the box it's good; with configuration it becomes excellent:</p>
+      <ul>
+        <li><strong>Managed properties:</strong> Expose custom metadata columns (department, document type, author) as searchable and refinable properties via the SharePoint Admin Center search schema. This allows users to filter search results by column values.</li>
+        <li><strong>Synonyms:</strong> Add synonyms for common terms — "CV" / "resume," "invoice" / "bill," "procedure" / "SOP." Configure in Search &amp; Intelligence → Acronyms and Answer types.</li>
+        <li><strong>Promoted results (Bookmarks):</strong> For the top 20 most-searched queries, pin an official result to the top of the page. "Expense form" should immediately surface the correct form, not 50 variations.</li>
+        <li><strong>Vertical search:</strong> Create custom search verticals (e.g., "Policies," "People," "IT Resources") that scope results to specific content types or sites. Accessible from the search results page tabs.</li>
+      </ul>
+
+      <h2>Step 6: Plan for Mobile</h2>
+      <p>If your workforce includes frontline workers, field staff, or remote employees, mobile access is not optional. SharePoint Online is responsive — modern pages render correctly on mobile browsers — but a deliberate mobile experience requires additional thought:</p>
+      <ul>
+        <li><strong>SharePoint mobile app:</strong> Available on iOS and Android. Shows pinned sites, recent documents, and news. Configure Viva Connections in the app for a branded homescreen experience.</li>
+        <li><strong>Viva Connections card layout:</strong> Design your intranet dashboard as a card-based layout in Viva Connections — this becomes the mobile homescreen when accessed via the Teams mobile app. Prioritise the most mobile-relevant cards (shift times, quick links, news).</li>
+        <li><strong>Test every homepage web part on a real phone.</strong> Some web parts (particularly custom ones) don't render well on small screens. Identify and replace them before launch.</li>
+      </ul>
+
+      <h2>Step 7: Establish Governance from Day One</h2>
+      <p>An intranet without governance degrades. Content goes stale, navigation links break, site owners change jobs and nobody inherits the site, and the number of sites grows uncontrolled. Governance prevents all of this:</p>
+      <ul>
+        <li><strong>Named site owners:</strong> Every SharePoint site has two named owners in a registry. Owners are accountable for keeping content current. The registry is itself a SharePoint list.</li>
+        <li><strong>Content review policy:</strong> All pages have a "Review by" date. When the date passes, SharePoint sends an automated reminder (Power Automate flow) to the page author. Unreviewed pages are flagged in an admin report.</li>
+        <li><strong>Site creation control:</strong> Require a request process for new SharePoint sites. Prevent self-service creation at the tenant level, or use Azure AD groups to control who can create new teams and sites.</li>
+        <li><strong>Lifecycle management:</strong> Sites inactive for 12 months trigger an owner confirmation flow. If no response is received, the site is archived. Microsoft 365 Lifecycle Workflows can automate portions of this.</li>
+      </ul>
+
+      <h2>Step 8: Measure and Improve</h2>
+      <p>SharePoint provides built-in analytics for every page and site — accessible from the site's gear icon → Site Usage. Track weekly:</p>
+      <ul>
+        <li><strong>Page views and unique visitors</strong> — which pages are used and which are ignored</li>
+        <li><strong>Top search queries</strong> — what users search for tells you what they can't find via navigation</li>
+        <li><strong>Failed searches</strong> — queries with no results identify content gaps</li>
+        <li><strong>Microsoft 365 Adoption Score</strong> — org-wide M365 adoption metrics including SharePoint active users</li>
+      </ul>
+      <p>Run a user survey 90 days after launch and annually thereafter. Combine quantitative analytics with qualitative feedback to prioritise your roadmap. The intranet should improve measurably each quarter.</p>
+
+      <h2>Common Intranet Mistakes (and How to Avoid Them)</h2>
+      <ul>
+        <li><strong>Building by committee without user research.</strong> Stakeholders describe what they want to publish; users describe what they need to find. These are different. Involve users from the first workshop.</li>
+        <li><strong>Too many sites with no clear ownership.</strong> Every site needs an owner before it goes live — not after. Ownerless sites become ghost towns within six months.</li>
+        <li><strong>Copying the old intranet structure into SharePoint.</strong> A migration is an opportunity to redesign. Don't replicate a broken IA just because it's familiar.</li>
+        <li><strong>Ignoring launch communications.</strong> The intranet launch needs internal marketing: email campaigns, manager briefings, departmental champions, and ideally a live demonstration event. A quiet "it's live" email achieves nothing.</li>
+        <li><strong>No content lifecycle.</strong> Publishing content with no expiry review process fills the intranet with outdated policies, superseded forms, and broken links within a year.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Ready to build or redesign your SharePoint intranet?</h3>
+        <p>We've delivered 60+ SharePoint intranet projects, from 50-person companies to global organisations with 10,000 users. Our approach covers architecture, design, configuration, launch, and governance — not just the build. Start with a free 60-minute consultation.</p>
+        <a href="contact" class="btn-primary">Book a Free Consultation &#8594;</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a class="related-card glass" href="guide-sharepoint-permissions">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">The Complete Guide to SharePoint Permissions</span>
+            <span class="rc-read">8 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-sharepoint-vs-teams">
+            <span class="rc-topic">SharePoint &amp; Teams</span>
+            <span class="rc-title">SharePoint vs Microsoft Teams: When to Use Which</span>
+            <span class="rc-read">6 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-power-automate-sharepoint">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Admin Should Build</span>
+            <span class="rc-read">8 min read</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Twitter">&#x1D54F;</a>
+          <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="guides">Guides &amp; Tips</a></li>
+          <li><a href="faq">FAQ</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left"><span class="fb-copy">&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span></div>
+        <div class="status-pill"><span class="status-dot-anim"></span>Accepting new engagements</div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a><span class="fb-sep">&middot;</span>
+          <a href="terms">Terms</a><span class="fb-sep">&middot;</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+<script src="js/main.js?v=3"></script>
+<script src="js/particles.js?v=3"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

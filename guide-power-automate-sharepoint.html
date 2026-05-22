@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>5 Power Automate Flows Every SharePoint Admin Should Build | OceanCloud</title>
+  <meta name="description" content="Five practical Power Automate workflows for SharePoint — document approvals, contract expiry reminders, employee onboarding, stale content alerts, and multi-level escalation. With step-by-step setup notes." />
+  <meta name="keywords" content="Power Automate SharePoint, SharePoint workflow automation, Power Automate flows, SharePoint approval workflow, Microsoft 365 automation, Power Automate examples" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-power-automate-sharepoint" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="5 Power Automate Flows Every SharePoint Admin Should Build" />
+  <meta property="og:description" content="Five practical Power Automate workflows for SharePoint — approvals, expiry reminders, onboarding, stale content alerts, and escalation." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-power-automate-sharepoint" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-power-automate-sharepoint#article",
+        "headline": "5 Power Automate Flows Every SharePoint Admin Should Build This Week",
+        "url": "https://www.oceancloudconsults.com/guide-power-automate-sharepoint",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Five practical Power Automate workflows for SharePoint — document approvals, contract expiry reminders, employee onboarding, stale content alerts, and multi-level escalation.",
+        "keywords": ["Power Automate", "SharePoint automation", "SharePoint workflows", "Microsoft 365 automation"],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Power Automate SharePoint Flows", "item": "https://www.oceancloudconsults.com/guide-power-automate-sharepoint" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#c8daea;font-size:.92rem;}
+  .flow-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px 28px;margin:28px 0;}
+  .flow-num{font-size:.72rem;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+  .flow-title{font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:14px;letter-spacing:-.02em;}
+  .flow-steps{list-style:none;padding:0;margin:12px 0 0;}
+  .flow-steps li{display:flex;gap:10px;padding:6px 0;font-size:.88rem;color:var(--text-mid);border-bottom:1px solid rgba(255,255,255,.04);}
+  .flow-steps li:last-child{border-bottom:none;}
+  .flow-step-icon{color:#00b4d8;font-weight:700;flex-shrink:0;}
+  .art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.25}'></canvas>
+  <div class="orb orb-cyan"   style="width:340px;height:340px;top:-80px;right:-60px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Power Automate Flows</span></nav>
+      <h1>5 Power Automate Flows Every <span class="grad-text">SharePoint Admin</span> Should Build</h1>
+      <p>Practical, immediately usable automation workflows that reduce manual work and improve document governance — with step-by-step setup notes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">8 min read</span>
+      </div>
+
+      <p class="article-intro">Power Automate and SharePoint together form one of the most underutilised combinations in Microsoft 365. Organisations pay for Power Automate as part of their M365 licence but leave it untouched while staff manually chase approvals by email, forget to review expiring contracts, and spend hours on onboarding tasks that could be automated in an afternoon. These five flows fix the most common manual bottlenecks in SharePoint-heavy environments.</p>
+
+      <h2>Before You Start: Power Automate Basics for SharePoint</h2>
+      <p>Power Automate flows have three parts: a <strong>trigger</strong> (what starts the flow), <strong>conditions</strong> (optional logic), and <strong>actions</strong> (what happens). SharePoint triggers include "When an item is created," "When a file is created," "When a file is modified," and a recurrence trigger for scheduled flows.</p>
+      <p>All five flows below require a Microsoft 365 business licence that includes Power Automate (Business Basic, Standard, Premium, or any Enterprise plan). Build and test in the Power Automate maker portal at <em>make.powerautomate.com</em>. Always test with a sample item before turning on flows that send emails or modify data.</p>
+
+      <h2>Flow 1: Document Approval Workflow</h2>
+      <div class="flow-card">
+        <div class="flow-num">Flow 01</div>
+        <div class="flow-title">New document submitted &rarr; manager approves &rarr; file moves to Approved folder</div>
+        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">The most common SharePoint workflow request. Without automation, approval requests get lost in email threads. This flow creates a structured, auditable approval chain.</p>
+        <ul class="flow-steps">
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Trigger:</strong> When a file is created in a SharePoint library (e.g., "Pending Approval" folder)</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Start and wait for an approval — send to the document's author's manager (use Office 365 Users connector to look up manager automatically)</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Condition (Approved):</strong> Move file to "Approved" library folder; update a Status column to "Approved"; notify the submitter via Teams or email</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Condition (Rejected):</strong> Move file back to "Drafts" folder; send rejection reason to submitter; log outcome in a SharePoint list for audit trail</span></li>
+        </ul>
+      </div>
+      <p><strong>Pro tip:</strong> Add a 3-day timeout on the approval action. If no response is received, send a reminder email and re-request. If still no response after 5 days, auto-escalate to the manager's manager.</p>
+
+      <h2>Flow 2: Contract &amp; Document Expiry Reminders</h2>
+      <div class="flow-card">
+        <div class="flow-num">Flow 02</div>
+        <div class="flow-title">Date column approaches expiry &rarr; alerts sent to document owner at 90, 30, and 7 days</div>
+        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">Contracts, certifications, licences, and policies all have expiry dates. Without reminders, they expire unnoticed. This recurrence-triggered flow runs daily and catches expiries before they become problems.</p>
+        <ul class="flow-steps">
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Trigger:</strong> Recurrence — run daily at 8 AM</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Get items from SharePoint list where "Expiry Date" is within the next 90 days and "Status" is not "Expired"</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Loop:</strong> For each item, calculate days remaining using the DateDiff expression</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Condition:</strong> If days remaining = 90, 30, or 7 — send an email to the "Owner" column value with a direct link to the document and expiry date</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action (Day 0):</strong> Update "Status" column to "Expired" and send final alert with escalation copy to line manager</span></li>
+        </ul>
+      </div>
+
+      <h2>Flow 3: New Employee Onboarding Automation</h2>
+      <div class="flow-card">
+        <div class="flow-num">Flow 03</div>
+        <div class="flow-title">HR creates new hire record &rarr; SharePoint site provisioned, welcome email sent, Teams channel created</div>
+        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">Manual onboarding typically takes HR and IT 4–6 hours per new employee. This flow reduces it to minutes while ensuring nothing is missed.</p>
+        <ul class="flow-steps">
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Trigger:</strong> When a new item is created in the HR "New Employees" SharePoint list</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Send a welcome email to the new hire's personal email (pre-start) with first day information and a link to the onboarding portal</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Create a private Teams channel in the department team named "Onboarding-[FirstName]" and add the new hire, their manager, and an HR rep</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Post an onboarding checklist as a message in the new channel — including IT setup tasks, policy acknowledgement links, and first-week meeting schedule</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Create a Planner task list assigned to IT with hardware provisioning steps and a due date of the start date minus 2 days</span></li>
+        </ul>
+      </div>
+      <p><strong>Pro tip:</strong> Add a parallel branch that sends notifications to IT, payroll, and facilities simultaneously — each with only the fields relevant to their role — rather than one long email to everyone.</p>
+
+      <h2>Flow 4: Stale Content Governance Alert</h2>
+      <div class="flow-card">
+        <div class="flow-num">Flow 04</div>
+        <div class="flow-title">Files unmodified for 180+ days &rarr; owner alerted to review, archive, or delete</div>
+        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">Stale content is the enemy of SharePoint search quality and governance. This flow surfaces neglected documents before they become compliance risks.</p>
+        <ul class="flow-steps">
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Trigger:</strong> Recurrence — run monthly on the 1st</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Get files from target library where "Modified" date is more than 180 days ago and "Reviewed" column is empty or older than 180 days</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Loop:</strong> For each item, retrieve the "Author" or site owner from SharePoint metadata</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Send a digest email to each owner listing their stale files with direct links. Include three action buttons: "Still needed," "Archive this," "Delete this" — each triggering a follow-up flow action via Power Automate HTTP triggers</span></li>
+        </ul>
+      </div>
+
+      <h2>Flow 5: Multi-Level Approval with Escalation</h2>
+      <div class="flow-card">
+        <div class="flow-num">Flow 05</div>
+        <div class="flow-title">Request submitted &rarr; L1 approval with timeout &rarr; auto-escalate to L2 &rarr; final decision logged</div>
+        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">For high-value decisions — budget requests, policy exceptions, vendor contracts — single-approver flows aren't sufficient. This pattern enforces accountability with automatic escalation.</p>
+        <ul class="flow-steps">
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Trigger:</strong> When an item is created in a "Requests" SharePoint list with "Approval Required" = Yes</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Start approval — send to L1 approver (e.g., direct manager). Set a 48-hour timeout</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Condition (timeout reached, not approved):</strong> Send reminder to L1. Start a second 48-hour wait. If still no response, send to L2 (skip-level manager) with "Escalated due to non-response" context</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Condition (approved at any level):</strong> Update "Status" to Approved, log approver name and timestamp to the SharePoint item, notify submitter</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Condition (rejected):</strong> Update "Status" to Rejected, log rejection reason, notify submitter with reason and guidance on resubmission</span></li>
+        </ul>
+      </div>
+
+      <h2>Pro Tips for All Five Flows</h2>
+      <ul>
+        <li><strong>Use variables for repeated values.</strong> Set your document library name, approver email, and notification prefix as variables at the start of the flow — not hardcoded in each action. Changing a library name means updating one variable, not hunting through 12 actions.</li>
+        <li><strong>Always test with a sample item first.</strong> Use the "Test" button in Power Automate with a manual trigger before enabling. Run through both the approval and rejection paths.</li>
+        <li><strong>Add error handling.</strong> Use a "Run after" condition on critical actions so the flow sends an alert to an admin if an action fails instead of silently stopping.</li>
+        <li><strong>Document your flows.</strong> Add a description to every flow and note the SharePoint site, list, and columns it depends on. Undocumented flows become unmaintainable when the person who built them leaves.</li>
+        <li><strong>Review run history monthly.</strong> Power Automate's run history shows every execution. A flow that fails silently 40% of the time needs investigation — not just occasional spot checks.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need Power Automate flows built for your SharePoint environment?</h3>
+        <p>We design and build production-ready Power Automate workflows scoped to your specific processes — with error handling, testing, documentation, and knowledge transfer included. Start with a free 60-minute consultation.</p>
+        <a href="contact" class="btn-primary">Book a Free Consultation &#8594;</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a class="related-card glass" href="guide-sharepoint-permissions">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">The Complete Guide to SharePoint Permissions</span>
+            <span class="rc-read">8 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-sharepoint-vs-teams">
+            <span class="rc-topic">SharePoint &amp; Teams</span>
+            <span class="rc-title">SharePoint vs Microsoft Teams: When to Use Which</span>
+            <span class="rc-read">6 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-m365-migration-checklist">
+            <span class="rc-topic">Migration</span>
+            <span class="rc-title">The 10-Step Microsoft 365 Migration Checklist</span>
+            <span class="rc-read">7 min read</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Twitter">&#x1D54F;</a>
+          <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="guides">Guides &amp; Tips</a></li>
+          <li><a href="faq">FAQ</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left"><span class="fb-copy">&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span></div>
+        <div class="status-pill"><span class="status-dot-anim"></span>Accepting new engagements</div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a><span class="fb-sep">&middot;</span>
+          <a href="terms">Terms</a><span class="fb-sep">&middot;</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+<script src="js/main.js?v=3"></script>
+<script src="js/particles.js?v=3"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

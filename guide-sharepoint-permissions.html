@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title>The Complete Guide to SharePoint Permissions in Microsoft 365 | OceanCloud</title>
+  <meta name="description" content="Master SharePoint permission levels, groups, sharing links, inheritance, and governance best practices. A practical guide for IT admins and site owners managing Microsoft 365." />
+  <meta name="keywords" content="SharePoint permissions guide, SharePoint permission levels, SharePoint groups, SharePoint external sharing, M365 permissions, SharePoint governance" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-permissions" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="The Complete Guide to SharePoint Permissions in Microsoft 365" />
+  <meta property="og:description" content="Master SharePoint permission levels, groups, sharing links, inheritance, and governance best practices." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-permissions" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-permissions#article",
+        "headline": "The Complete Guide to SharePoint Permissions in Microsoft 365",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-permissions",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Master SharePoint permission levels, groups, sharing links, inheritance, and governance best practices — a practical guide for IT admins and site owners.",
+        "keywords": ["SharePoint permissions", "SharePoint groups", "M365 governance", "SharePoint sharing"],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Permissions Guide", "item": "https://www.oceancloudconsults.com/guide-sharepoint-permissions" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(0,180,216,.12);color:#00b4d8;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#c8daea;font-size:.92rem;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(0,180,216,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">OC</div>
+      <span class="logo-text">Ocean<span>Cloud</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.25}'></canvas>
+  <div class="orb orb-cyan"   style="width:340px;height:340px;top:-80px;right:-60px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Permissions</span></nav>
+      <h1>The Complete Guide to <span class="grad-text">SharePoint Permissions</span></h1>
+      <p>Master permission levels, groups, sharing links, and governance — so access is always right, never too broad and never too narrow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARTICLE ===== -->
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">8 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint permissions can feel like a maze — especially when you're managing dozens of sites, libraries, and users across an organisation. Get them wrong and you either lock people out of content they need, or expose sensitive documents to the wrong audience. This guide explains how SharePoint permissions actually work, from the basic building blocks to enterprise-level governance.</p>
+
+      <h2>Permission Levels: The Building Blocks</h2>
+      <p>SharePoint uses predefined <strong>permission levels</strong> — each a bundle of individual rights — assigned to users or groups. Rather than toggling 33 separate rights per user, you assign a permission level that maps to a role.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr>
+              <th>Permission Level</th>
+              <th>What it allows</th>
+              <th>Typical use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Full Control</strong></td><td>Manage site settings, users, and all content</td><td>Site owners, IT admins</td></tr>
+            <tr><td><strong>Design</strong></td><td>Edit pages, apply themes, manage minor versions</td><td>Intranet designers</td></tr>
+            <tr><td><strong>Edit</strong></td><td>Add, edit, and delete lists, libraries, and content</td><td>Team power users</td></tr>
+            <tr><td><strong>Contribute</strong></td><td>Add and edit content but not create new lists</td><td>Standard team members</td></tr>
+            <tr><td><strong>Read</strong></td><td>View and download content</td><td>General staff, stakeholders</td></tr>
+            <tr><td><strong>View Only</strong></td><td>View content in browser, no download</td><td>External reviewers, audit trails</td></tr>
+            <tr><td><strong>Limited Access</strong></td><td>Access to a specific item when parent has unique permissions</td><td>System-assigned automatically</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>You can create <strong>custom permission levels</strong> in Site Settings → Site Permissions → Permission Levels if none of the defaults fit your needs — for example, a level that allows reading and downloading but not editing.</p>
+
+      <h2>The Three Default SharePoint Groups</h2>
+      <p>Every new SharePoint site creates three permission groups automatically:</p>
+      <ul>
+        <li><strong>[Site Name] Owners</strong> — Full Control. Reserved for IT staff or department heads who manage the site itself.</li>
+        <li><strong>[Site Name] Members</strong> — Edit (or Contribute, depending on template). Day-to-day users who create and manage content.</li>
+        <li><strong>[Site Name] Visitors</strong> — Read. Anyone who should view content but not edit it.</li>
+      </ul>
+
+      <div class="art-callout">
+        <p><strong>Best practice:</strong> Always add users to SharePoint groups rather than granting permissions directly to individuals. Group-based permissions are far easier to audit, update, and offboard from.</p>
+      </div>
+
+      <p>You can also connect SharePoint groups to <strong>Microsoft 365 Groups</strong> or <strong>Azure AD security groups</strong>, which means membership is managed in one place (Entra ID) and automatically reflected across all connected SharePoint sites.</p>
+
+      <h2>Inheritance and Unique Permissions</h2>
+      <p>SharePoint permissions flow <em>downward</em> by default. A site's permission settings are inherited by its libraries, which are inherited by folders, which are inherited by individual files. This is called permission inheritance.</p>
+
+      <p>Sometimes you need a specific library, folder, or item to have different permissions from its parent — for example, a restricted HR library on an otherwise general intranet site. To do this, you "break inheritance" and set unique permissions on that item.</p>
+
+      <div class="art-callout">
+        <p><strong>Important:</strong> Every broken inheritance point becomes a separate governance responsibility. Unique permissions at the item or folder level create complexity that grows exponentially with site size. Our rule: break inheritance only at the <em>library</em> level, never at the folder or file level.</p>
+      </div>
+
+      <h2>Sharing Links: How Most Permissions Get Set Today</h2>
+      <p>In modern SharePoint, many users share content by generating sharing links rather than editing permissions directly. There are three link types:</p>
+
+      <ul>
+        <li><strong>Anyone links (anonymous)</strong> — No sign-in required. Use only for fully public content such as public downloads. Can be disabled at the tenant level.</li>
+        <li><strong>People in your organisation links</strong> — Any signed-in Microsoft 365 user in your tenant can access the link. Safe for broad internal sharing.</li>
+        <li><strong>Specific people links</strong> — Only named individuals can access. Best for sensitive documents shared with a defined audience.</li>
+      </ul>
+
+      <p>Each link type can be configured with View or Edit access, an optional expiry date, and a password. Administrators control which link types are available at the <strong>tenant level</strong> in SharePoint Admin Center → Policies → Sharing, and can restrict this further per site.</p>
+
+      <h2>External Sharing</h2>
+      <p>SharePoint lets external users (guests) access content without a Microsoft 365 licence. The guest accepts an email invitation and signs in with any Microsoft or personal account. External sharing is controlled at two levels:</p>
+
+      <ol>
+        <li><strong>Tenant level</strong> — Sets the maximum sharing capability. Configured in SharePoint Admin Center → Policies → Sharing.</li>
+        <li><strong>Site level</strong> — Can only be <em>equal to or more restrictive</em> than the tenant setting. Configured per site in Site Settings → Site Permissions.</li>
+      </ol>
+
+      <p>For most organisations we recommend setting the tenant to <em>"New and existing guests"</em> (requiring sign-in rather than anonymous access), and restricting sensitive sites to <em>"Only people in your organisation"</em>. Guest access expiry of 60–90 days with auto-renewal on activity is a sensible default.</p>
+
+      <h2>Best Practices for SharePoint Permissions</h2>
+      <ul>
+        <li><strong>Use groups, not individuals.</strong> Add Microsoft 365 groups or Entra ID security groups to SharePoint groups. When someone joins or leaves a team, update the group — not 12 separate site permissions.</li>
+        <li><strong>Principle of least privilege.</strong> Grant the lowest permission level that allows someone to do their job. Default to Contribute rather than Edit; Read rather than Contribute.</li>
+        <li><strong>Avoid unique permissions below the library level.</strong> Break inheritance at the library level only. Document every exception in your governance log.</li>
+        <li><strong>Set sharing link defaults carefully.</strong> Configure sharing link defaults per site to "Specific people" for sensitive libraries, and limit expiry to 30–90 days for Anyone links.</li>
+        <li><strong>Disable legacy features you don't need.</strong> If your organisation doesn't use anonymous sharing, disable it tenant-wide. Fewer available options means fewer accidental mistakes.</li>
+      </ul>
+
+      <h2>Governance: Keeping Permissions Under Control Long-Term</h2>
+      <p>Permissions drift over time. People move roles, projects end, and guest accounts go stale. A permissions governance plan must include:</p>
+
+      <ul>
+        <li><strong>Named site ownership:</strong> Every SharePoint site has two named owners (redundancy for holidays and departures). Owners are accountable for the site's content and permissions.</li>
+        <li><strong>Quarterly access reviews:</strong> Owners attest that each group member still requires access. Microsoft Entra ID Access Reviews can automate this — guest users receive a self-service prompt and accounts with no response are automatically disabled.</li>
+        <li><strong>Guest lifecycle policy:</strong> Guests expire after a defined period (90 days is common) unless their access is renewed by a site owner.</li>
+        <li><strong>Offboarding checklist:</strong> When employees leave, their Entra ID account is disabled — but their named sharing links may remain active. IT should revoke active sharing links and remove departing users from any groups with external access during offboarding.</li>
+      </ul>
+
+      <div class="art-callout">
+        <p>The Microsoft Purview compliance portal provides a Permissions activity report that shows who accessed what content and when — invaluable during access reviews and security incidents.</p>
+      </div>
+
+      <h2>Common Permission Mistakes (and How to Avoid Them)</h2>
+      <ul>
+        <li><strong>Granting Full Control too broadly.</strong> Full Control should be reserved for site owners — not everyone who asks for elevated access. Most requests can be satisfied with Edit.</li>
+        <li><strong>Copying permissions from a person rather than from a group.</strong> Copying individual permissions creates ungoverned, invisible access that never gets cleaned up.</li>
+        <li><strong>Ignoring the default sharing link type.</strong> If your tenant's default sharing link is "Anyone", every document shared via the share button is potentially public. Audit this immediately.</li>
+        <li><strong>Using SharePoint groups differently per site.</strong> If "Members" means Edit on one site and Contribute on another, your governance model is inconsistent. Standardise permission levels across sites.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help auditing or restructuring your SharePoint permissions?</h3>
+        <p>We run SharePoint permissions health checks as standalone engagements — typically completed within two weeks. We'll identify over-privileged accounts, ungoverned guest access, and broken inheritance chains, then provide a remediation plan.</p>
+        <a href="contact" class="btn-primary">Book a Free Consultation &#8594;</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a class="related-card glass" href="guide-sharepoint-intranet">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">How to Build a Modern SharePoint Intranet in 2026</span>
+            <span class="rc-read">9 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-m365-migration-checklist">
+            <span class="rc-topic">Migration</span>
+            <span class="rc-title">The 10-Step Microsoft 365 Migration Checklist</span>
+            <span class="rc-read">7 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-sharepoint-vs-teams">
+            <span class="rc-topic">SharePoint &amp; Teams</span>
+            <span class="rc-title">SharePoint vs Microsoft Teams: When to Use Which</span>
+            <span class="rc-read">6 min read</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Twitter">&#x1D54F;</a>
+          <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="guides">Guides &amp; Tips</a></li>
+          <li><a href="faq">FAQ</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left">
+          <span class="fb-copy">&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span>
+        </div>
+        <div class="status-pill"><span class="status-dot-anim"></span>Accepting new engagements</div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a><span class="fb-sep">&middot;</span>
+          <a href="terms">Terms</a><span class="fb-sep">&middot;</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+<script src="js/main.js?v=3"></script>
+<script src="js/particles.js?v=3"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>
