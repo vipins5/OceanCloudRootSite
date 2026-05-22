@@ -1,14 +1,12 @@
 (function () {
   'use strict';
 
-  // ── Google Gemini AI Config ────────────────────────────────────────────────
-  // 1. Go to https://aistudio.google.com/app/apikey (free Google account)
-  // 2. Click "Create API Key" and paste it below
-  // 3. Free tier: 1,500 requests/day, 15 requests/min — no credit card needed
-  // 4. Restrict the key to your domain in Google Cloud Console for safety
-  const GEMINI_API_KEY = 'AIzaSyB6U0ZXYNaS3fcWmmVZLhkAfRCZEVClxGM';
-  const GEMINI_MODEL   = 'gemini-2.0-flash';
-  const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+  // ── Groq AI Config ────────────────────────────────────────────────────────
+  // 1. Go to https://console.groq.com → API Keys → Create API key (free)
+  // 2. Free tier: 14,400 requests/day, 30 requests/min — no credit card needed
+  const GROQ_API_KEY  = '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';
+  const GROQ_MODEL    = 'llama-3.3-70b-versatile';
+  const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
 
   const SYSTEM_PROMPT = `You are OceanBot, the AI assistant for OceanCloud — a Microsoft Solutions Partner based in the United States specialising in SharePoint Online, Microsoft 365, Power Platform, Microsoft Teams, Viva, and workplace transformation.
 
@@ -110,8 +108,8 @@ RESPONSE RULES:
       chips: ['About OceanCloud', 'Our services', 'Book a call']
     },
     {
-      keywords: ['gemini', 'ai', 'artificial intelligence', 'connected to', 'how do you work', 'are you a bot', 'are you a robot'],
-      text: 'Yes — I\'m <strong>OceanBot</strong>, powered by <strong>Google Gemini 2.0 Flash</strong>.\n\nFor common M365 questions I answer instantly from my knowledge base. For deeper research, just ask naturally and I\'ll pass it to Gemini.\n\nTip: start your message with <strong>search</strong> to always go straight to AI — e.g. <em>search SharePoint migration best practices</em>.',
+      keywords: ['groq', 'llama', 'ai', 'artificial intelligence', 'connected to', 'how do you work', 'are you a bot', 'are you a robot'],
+      text: 'Yes — I\'m <strong>OceanBot</strong>, powered by <strong>Llama 3.3</strong> via Groq.\n\nFor common M365 questions I answer instantly from my knowledge base. For deeper research, just ask naturally and I\'ll pass it to AI.\n\nTip: start your message with <strong>search</strong> to always go straight to AI — e.g. <em>search SharePoint migration best practices</em>.',
       chips: ['Services & pricing', 'SharePoint', 'Book a call']
     },
     {
@@ -201,7 +199,7 @@ RESPONSE RULES:
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </div>
-      <div id="oc-footer-note">Powered by <strong>Gemini Flash</strong> &nbsp;·&nbsp; <a href="privacy">Privacy</a></div>
+      <div id="oc-footer-note">Powered by <strong>Llama 3.3</strong> &nbsp;·&nbsp; <a href="privacy">Privacy</a></div>
     </div>`;
   document.body.appendChild(widget);
 
@@ -319,53 +317,34 @@ RESPONSE RULES:
     if (history.length > 8) history.splice(0, history.length - 8);
   }
 
-  // ── Gemini AI Call ─────────────────────────────────────────────────────────
-  async function respondWithGemini(userText) {
-    if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
-      scheduleBot(
-        'I don\'t have an answer for that right now, but our team does. Book a <strong>free 60-minute discovery call</strong> and speak directly with one of our M365 architects.',
-        ['Book a free call', 'Contact us', 'View services']
-      );
-      return;
-    }
-
+  // ── Groq AI Call ──────────────────────────────────────────────────────────
+  async function respondWithGroq(userText) {
     isWaiting = true;
     inputEl.disabled = true;
     sendBtn.disabled = true;
     statusText.textContent = 'Thinking…';
-    showTyping('Researching with Gemini');
+    showTyping('Researching with AI');
 
-    // Build Gemini-format conversation history
-    // Gemini uses "user" / "model" roles (not "assistant")
-    const contents = history.slice(-6).map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
-    }));
-    // Add the current user message
-    contents.push({ role: 'user', parts: [{ text: userText }] });
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      ...history.slice(-6).map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+      { role: 'user', content: userText }
+    ];
 
     const body = {
-      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-      contents,
-      generationConfig: {
-        maxOutputTokens: 420,
-        temperature: 0.6,
-        topP: 0.9
-      },
-      safetySettings: [
-        { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-      ]
+      model: GROQ_MODEL,
+      messages,
+      max_tokens: 420,
+      temperature: 0.6,
+      top_p: 0.9
     };
 
     try {
-      const res = await fetch(GEMINI_ENDPOINT, {
+      const res = await fetch(GROQ_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-goog-api-key': GEMINI_API_KEY
+          'Authorization': `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify(body)
       });
@@ -378,9 +357,9 @@ RESPONSE RULES:
       }
 
       const data = await res.json();
-      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+      const raw = data.choices?.[0]?.message?.content?.trim() || '';
 
-      if (!raw) throw new Error('Empty response from Gemini');
+      if (!raw) throw new Error('Empty response');
 
       const html = formatAIResponse(raw);
       appendMsg(html, 'bot', true);
@@ -392,7 +371,7 @@ RESPONSE RULES:
 
     } catch (err) {
       hideTyping();
-      console.warn('OceanBot Gemini error:', err.message);
+      console.warn('OceanBot AI error:', err.message);
       appendMsg(
         'I couldn\'t reach the AI right now. Our team can answer this directly — <a href="contact" style="color:var(--accent)">get in touch here</a>.',
         'bot'
@@ -432,7 +411,7 @@ RESPONSE RULES:
     const prefixMatch = text.trim().match(AI_PREFIX);
     if (prefixMatch) {
       const query = text.trim().slice(prefixMatch[0].length).trim();
-      respondWithGemini(query || text);
+      respondWithGroq(query || text);
       return;
     }
 
@@ -444,7 +423,7 @@ RESPONSE RULES:
       scheduleBot(match.text, match.chips);
     } else {
       // Fallback: hand off to Gemini AI
-      respondWithGemini(text);
+      respondWithGroq(text);
     }
   }
 
