@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,23 +10,23 @@
   <meta name="keywords" content="pnp powershell app registration, connect-pnponline certificate, pnp powershell thumbprint, pnp entra app registration, pnp powershell client id certificate, sharepoint powershell automation, pnp powershell pfx" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
-  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-pnp-entra-app-registration" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/articles/guide-pnp-entra-app-registration" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide" />
   <meta property="og:description" content="Install PowerShell 7 and PnP.PowerShell, register an Entra app, create self-signed certificates, and connect to SharePoint three ways — Interactive, PFX, or Thumbprint." />
-  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-pnp-entra-app-registration" />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/articles/guide-pnp-entra-app-registration" />
   <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=3" />
-  <link rel="stylesheet" href="css/pages.css?v=3" />
-  <link rel="stylesheet" href="css/darkstar.css?v=3" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=3" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
 
   <script type="application/ld+json">
@@ -35,9 +35,9 @@
     "@graph": [
       {
         "@type": "Article",
-        "@id": "https://www.oceancloudconsults.com/guide-pnp-entra-app-registration#article",
+        "@id": "https://www.oceancloudconsults.com/articles/guide-pnp-entra-app-registration#article",
         "headline": "PnP PowerShell: Complete Entra App Registration & Certificate Guide",
-        "url": "https://www.oceancloudconsults.com/guide-pnp-entra-app-registration",
+        "url": "https://www.oceancloudconsults.com/articles/guide-pnp-entra-app-registration",
         "datePublished": "2026-05-23",
         "dateModified": "2026-05-23",
         "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
@@ -57,7 +57,7 @@
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home",   "item": "https://www.oceancloudconsults.com" },
           { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "PnP Entra App Registration", "item": "https://www.oceancloudconsults.com/guide-pnp-entra-app-registration" }
+          { "@type": "ListItem", "position": 3, "name": "PnP Entra App Registration", "item": "https://www.oceancloudconsults.com/articles/guide-pnp-entra-app-registration" }
         ]
       }
     ]
@@ -199,14 +199,14 @@
     <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="/"><span class="nav-num">01</span>Home</a></li>
-      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
-      <li><a href="about"><span class="nav-num">03</span>About</a></li>
-      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
-      <li><a href="news"><span class="nav-num">05</span>News</a></li>
-      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
-      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
     </ul>
-    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
     <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -217,7 +217,7 @@
   <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
-      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>PnP Entra App Registration</span></nav>
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>PnP Entra App Registration</span></nav>
       <h1>PnP PowerShell: <span class="grad-text">Complete Entra App Registration</span> &amp; Certificate Guide</h1>
       <p>Everything in one place — install PowerShell 7, install the PnP module, register your Entra app, generate a self-signed certificate, upload it, and connect with your method of choice.</p>
     </div>
@@ -584,27 +584,89 @@ New-PnPAzureCertificate `
       <p>Replace the placeholder values with your actual Application (client) ID and Tenant ID from Step 4.</p>
 
       <h3>Method 1 — Interactive (browser sign-in)</h3>
-      <p>Opens a browser window. The signed-in user must have the required SharePoint permissions. MFA is supported.</p>
+      <p>Interactive authentication opens a browser window, signs in as a real user, and runs commands under that user's identity. It uses <strong>delegated permissions</strong> — the app can only access what the signed-in user is already allowed to access in SharePoint. Two variants exist depending on whether you supply <code>-ClientId</code>.</p>
 
-      <div class="code-label">PowerShell 7 — Connect-PnPOnline Interactive</div>
-      <div class="code-block"><pre># Using the PnP Management Shell (Microsoft's pre-registered app)
-# On first use this prompts you to grant consent in the browser
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Variant</th><th>-ClientId needed?</th><th>App registration needed?</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A &mdash; PnP Management Shell</strong></td><td>No — omit it</td><td>No (uses Microsoft's pre-built app)</td><td>Ad-hoc scripts, testing, first-time use</td></tr>
+            <tr><td><strong>B &mdash; Your own app</strong></td><td>Yes</td><td>Yes &mdash; must have <em>delegated</em> permissions + Redirect URI</td><td>Controlled scope, audit trail, custom consent</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="color:var(--white);font-size:.95rem;margin:24px 0 8px;">Variant A &mdash; No ClientId (uses PnP Management Shell)</h4>
+      <p>The PnP open-source team maintains a pre-registered Entra application called <strong>PnP Management Shell</strong>. You do not need to create your own app registration. The browser popup handles sign-in and MFA automatically. The first time this app is used in your tenant, a Global Administrator must grant tenant-wide consent once.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; Interactive (no ClientId, PnP Management Shell)</div>
+      <div class="code-block"><pre># No -ClientId required — PnP uses its own pre-registered app
 Connect-PnPOnline `
     -Url "https://contoso.sharepoint.com" `
     -Interactive
 
-# Using your own app registration (recommended — you control the permissions)
-Connect-PnPOnline `
-    -Url         "https://contoso.sharepoint.com" `
-    -ClientId    "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
-    -Interactive
-
-# Verify the connection
+# Verify
 $web = Get-PnPWeb
 Write-Host "Connected to: $($web.Title)"</pre></div>
 
-      <div class="art-callout">
-        <p><strong>First-time Interactive consent:</strong> The first time you connect interactively with your own app registration, Entra shows a permissions consent screen. You must sign in as a user who can consent to the required permissions (or a Global Admin grants tenant-wide consent in the Entra portal). After initial consent, subsequent interactive logins skip the consent screen.</p>
+      <div class="art-callout tip">
+        <p><strong>First-run tenant consent:</strong> On the very first use of the PnP Management Shell app in your tenant, Entra presents a consent screen. A Global Administrator must approve it. This is a one-time step — all subsequent users can connect interactively without seeing the consent screen (assuming they have the required SharePoint permissions on the target site).</p>
+      </div>
+
+      <h4 style="color:var(--white);font-size:.95rem;margin:28px 0 8px;">Variant B &mdash; Your own ClientId (delegated permissions)</h4>
+      <p>If you need full control over which permissions the app requests, register your own Entra app and add <strong>delegated</strong> permissions to it. This is fundamentally different from the certificate-based methods (Methods 2 and 3): delegated permissions act on behalf of the signed-in user, meaning the user's own SharePoint access is the effective ceiling — the app cannot do more than the user can.</p>
+
+      <p>Before this variant will work your app registration needs two things in Entra:</p>
+
+      <ul>
+        <li><strong>A Redirect URI:</strong> In your app &rarr; Authentication &rarr; <em>+ Add a platform</em> &rarr; <em>Mobile and desktop applications</em> &rarr; tick <code>https://login.microsoftonline.com/common/oauth2/nativeclient</code> &rarr; Configure. Then scroll to <em>Advanced settings</em> and set <em>Allow public client flows</em> to <strong>Yes</strong>.</li>
+        <li><strong>Delegated permissions</strong> (not Application permissions — those are for cert-based auth only):</li>
+      </ul>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>API</th><th>Delegated permission</th><th>When you need it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>Sites.ReadWrite.All</code></td><td>Read and write SharePoint sites as the signed-in user</td></tr>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>Sites.FullControl.All</code></td><td>Manage permissions — user must already be a site owner or higher</td></tr>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>User.ReadBasic.All</code></td><td>Resolve users by name or email in scripts</td></tr>
+            <tr><td><strong>SharePoint</strong></td><td><code>AllSites.FullControl</code></td><td>SharePoint REST / CSOM tenant admin operations as the signed-in user</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="portal-path">
+        <span class="pp-icon">&#128274;</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Your app</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">API permissions</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">+ Add a permission</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Delegated permissions</span>
+      </div>
+
+      <div class="code-label">PowerShell 7 &mdash; Interactive with your own app (delegated permissions)</div>
+      <div class="code-block"><pre># -ClientId is your own app registration that has:
+#   - Redirect URI configured (Public client / native platform)
+#   - Delegated permissions (Sites.ReadWrite.All, etc.) — NOT Application permissions
+#   - "Allow public client flows" set to Yes in Authentication settings
+Connect-PnPOnline `
+    -Url      "https://contoso.sharepoint.com" `
+    -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -Interactive
+
+# Verify
+$web = Get-PnPWeb
+Write-Host "Connected to: $($web.Title)"</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Delegated vs Application permissions &mdash; common mistake:</strong> The app registration created in Steps 4&ndash;7 of this guide was configured with <em>Application</em> permissions for certificate-based (non-interactive) use. If you pass that same ClientId to <code>-Interactive</code>, the sign-in will fail or return a token without the correct SharePoint scopes. Interactive auth requires <em>Delegated</em> permissions. You can add both permission types to the same app, or keep a separate app registration for interactive vs automated use.</p>
       </div>
 
       <h3>Method 2 — Client ID + Certificate Path (PFX file)</h3>
@@ -769,7 +831,7 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
       <div class="art-cta-box">
         <h3>Need help setting up PnP PowerShell automation for your tenant?</h3>
         <p>OceanCloud builds and maintains SharePoint automation scripts for organisations of all sizes — from simple scheduled reports to complex multi-tenant governance pipelines. We handle the Entra app setup, certificate management, and Power Automate integration so your team doesn't have to.</p>
-        <a href="contact" class="btn btn-primary">Talk to a SharePoint Automation Expert</a>
+        <a href="../contact" class="btn btn-primary">Talk to a SharePoint Automation Expert</a>
       </div>
 
       <div class="related-section">
@@ -806,30 +868,30 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
     <div class="footer-col">
       <h4>Company</h4>
       <ul>
-        <li><a href="about">About Us</a></li>
-        <li><a href="case-studies">Case Studies</a></li>
-        <li><a href="news">News</a></li>
-        <li><a href="archive">News Archive</a></li>
-        <li><a href="guides">Guides &amp; Tips</a></li>
-        <li><a href="faq">FAQ</a></li>
+        <li><a href="../about">About Us</a></li>
+        <li><a href="../case-studies">Case Studies</a></li>
+        <li><a href="../news">News</a></li>
+        <li><a href="../archive">News Archive</a></li>
+        <li><a href="../guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="services">SharePoint Development</a></li>
-        <li><a href="services">Teams Configuration</a></li>
-        <li><a href="services">M365 Migration</a></li>
-        <li><a href="services">Power Platform</a></li>
+        <li><a href="../services">SharePoint Development</a></li>
+        <li><a href="../services">Teams Configuration</a></li>
+        <li><a href="../services">M365 Migration</a></li>
+        <li><a href="../services">Power Platform</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Legal</h4>
       <ul>
-        <li><a href="privacy">Privacy Policy</a></li>
-        <li><a href="terms">Terms of Service</a></li>
-        <li><a href="cookies">Cookie Policy</a></li>
-        <li><a href="contact">Contact Us</a></li>
+        <li><a href="../privacy">Privacy Policy</a></li>
+        <li><a href="../terms">Terms of Service</a></li>
+        <li><a href="../cookies">Cookie Policy</a></li>
+        <li><a href="../contact">Contact Us</a></li>
       </ul>
     </div>
   </div>
@@ -838,8 +900,8 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
 
 <button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script src="js/main.js?v=6"></script>
-<script src="js/particles.js?v=6"></script>
-<script src="js/weather.js?v=6"></script>
+<script src="../js/main.js?v=6"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
 </body>
 </html>
