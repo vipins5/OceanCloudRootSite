@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
 
-# Block legal boilerplate pages from index
-Disallow: /privacy
-Disallow: /cookies
-Disallow: /terms
-
 Sitemap: https://www.oceancloudconsults.com/sitemap.xml
