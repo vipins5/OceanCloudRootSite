@@ -49,6 +49,49 @@
   line-height: 1.75;
 }
 
+/* ===== ARTICLE HERO ===== */
+.article-hero {
+  padding: 148px 0 88px;
+}
+
+.article-hero .page-hero-content {
+  max-width: 1080px;
+}
+
+.article-hero h1 {
+  max-width: 1080px;
+  font-size: clamp(2.25rem, 4.8vw, 4.35rem);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.article-hero h1 .grad-text {
+  display: inline;
+}
+
+.article-hero p {
+  max-width: 640px;
+  font-size: 1rem;
+}
+
+@media (min-width: 1280px) {
+  .article-hero h1 {
+    font-size: clamp(2.35rem, 4.05vw, 4.25rem);
+  }
+}
+
+@media (max-width: 680px) {
+  .article-hero {
+    padding: 132px 0 72px;
+  }
+
+  .article-hero h1 {
+    font-size: clamp(2.1rem, 10vw, 3.15rem);
+    line-height: 1.08;
+  }
+}
+
 .breadcrumb {
   display: flex;
   align-items: center;
