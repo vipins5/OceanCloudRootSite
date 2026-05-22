@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint Copilot Agents: What They Are, Licensing, Limits, and Use Cases | OceanCloud</title>
+  <meta name="description" content="What SharePoint Copilot agents are, how Copilot Studio powers them, licensing and capacity costs, message limits, and real-world use cases for HR, IT helpdesk, and policy lookup." />
+  <meta name="keywords" content="sharepoint copilot agent, sharepoint copilot license, sharepoint copilot studio, sharepoint copilot chatbot, microsoft copilot agents, copilot studio sharepoint" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-copilot-agents" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="SharePoint Copilot Agents: What They Are, Licensing, Limits, and Use Cases" />
+  <meta property="og:description" content="Copilot agents grounded in SharePoint content — what they are, Copilot Studio licensing, message capacity packs, declarative vs custom agents, and real HR, IT, and policy use cases." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-copilot-agents" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-copilot-agents#article",
+        "headline": "SharePoint Copilot Agents: What They Are, Licensing, Limits, and Use Cases",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-copilot-agents",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Copilot agents grounded in SharePoint — what they are, Copilot Studio licensing, message limits, declarative vs custom agents, and real-world use cases.",
+        "keywords": ["SharePoint Copilot agent", "Copilot Studio", "Microsoft Copilot agents", "SharePoint chatbot", "declarative agent"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/", "name": "Microsoft Copilot Studio documentation" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-declarative-agent", "name": "Declarative agents for Microsoft 365 Copilot" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing", "name": "Copilot Studio licensing" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Copilot Agents", "item": "https://www.oceancloudconsults.com/guide-sharepoint-copilot-agents" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(168,85,247,.12);color:#c084fc;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(168,85,247,.07);border-left:3px solid #c084fc;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#d4b8f0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(168,85,247,.12);color:#c084fc;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(168,85,247,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .agent-example{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-left:3px solid #c084fc;border-radius:0 14px 14px 0;padding:24px;margin:18px 0;}
+  .ae-dept{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#c084fc;margin-bottom:6px;}
+  .ae-title{font-size:.98rem;font-weight:800;color:var(--white);margin:0 0 10px;}
+  .ae-body{font-size:.88rem;color:var(--text-mid);line-height:1.8;margin:0 0 12px;}
+  .ae-body:last-child{margin-bottom:0;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#a78bfa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"168,85,247","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-purple" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Copilot Agents</span></nav>
+      <h1>SharePoint Copilot Agents: <span class="grad-text">Licensing, Limits &amp; Use Cases</span></h1>
+      <p>What Copilot agents grounded in SharePoint actually are, how Copilot Studio builds them, what they cost, and three real-world use cases you can deploy in weeks.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Copilot</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">10 min read</span>
+      </div>
+
+      <p class="article-intro">Microsoft 365 Copilot is one form of AI built on your organisation's data. Copilot agents are the next layer — purpose-built AI assistants scoped to a specific domain, data source, or business task. A SharePoint Copilot agent is an agent that knows your SharePoint content and can answer questions about it in natural language, take structured actions (submit forms, update lists), and operate embedded in Teams, SharePoint pages, or as a standalone chatbot. This guide explains what they are, what they cost, and how to build them.</p>
+
+      <h2>What Is a Copilot Agent?</h2>
+      <p>A Copilot agent is an AI assistant with a defined scope, data sources, and behaviour instructions. Unlike Microsoft 365 Copilot — which can see your entire M365 environment — an agent is intentionally focused. You tell it:</p>
+      <ul>
+        <li><strong>What it knows:</strong> Specific SharePoint sites, libraries, lists, or document sets it should draw on for answers</li>
+        <li><strong>How it should behave:</strong> Tone, scope, what questions it should and should not answer</li>
+        <li><strong>What it can do:</strong> Actions it can take — submit forms, create SharePoint list items, trigger Power Automate flows</li>
+        <li><strong>Where it lives:</strong> Teams channel, SharePoint page web part, standalone Teams app, or website embed</li>
+      </ul>
+
+      <h2>Two Types of SharePoint Copilot Agents</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th></th><th>Declarative Agent</th><th>Custom Agent (Copilot Studio)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Built with</strong></td><td>Microsoft 365 Copilot interface or agent builder; no-code configuration</td><td>Microsoft Copilot Studio (low-code canvas with topics, entities, Power Automate integration)</td></tr>
+            <tr><td><strong>Grounding</strong></td><td>SharePoint sites, documents, and M365 Graph</td><td>SharePoint, web URLs, custom APIs, Dataverse, and 1000+ Power Platform connectors</td></tr>
+            <tr><td><strong>Actions</strong></td><td>Limited to Microsoft Graph actions; cannot call external APIs without plugins</td><td>Full Power Automate integration; can call any connector or HTTP API</td></tr>
+            <tr><td><strong>Complexity</strong></td><td>Low — suitable for Q&amp;A over a document corpus</td><td>Medium to high — suitable for multi-turn conversations, slot filling, and transactional actions</td></tr>
+            <tr><td><strong>Licence</strong></td><td>Requires Microsoft 365 Copilot ($30/user/month) for each user who interacts with the agent</td><td>Copilot Studio capacity pack ($200/month for 25,000 messages) or per-user plan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-declarative-agent" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Declarative agents for Microsoft 365 Copilot — learn.microsoft.com</a>
+
+      <h2>Copilot Studio: The Build Platform</h2>
+      <p>Microsoft Copilot Studio (previously Power Virtual Agents) is the low-code platform for building custom Copilot agents. It provides a canvas-based conversation designer where you define topics (conversation subjects), entities (structured data the agent extracts from user messages), and actions (what the agent does when a topic is resolved).</p>
+
+      <h3>How Copilot Studio connects to SharePoint</h3>
+      <p>Copilot Studio connects to SharePoint as a knowledge source through two mechanisms:</p>
+      <ol>
+        <li><strong>Generative answers:</strong> You specify SharePoint sites or document libraries as knowledge sources. When a user asks a question the agent's predefined topics don't cover, Copilot Studio performs a search across the specified SharePoint content and generates an answer grounded in what it finds. This is the "knowledge base chatbot" pattern — answer any question about your SharePoint content without defining every possible question in advance.</li>
+        <li><strong>Power Automate actions:</strong> When the conversation requires a structured action (create a support ticket, submit a leave request, look up an employee record from a SharePoint list), Copilot Studio calls a Power Automate flow that interacts with SharePoint. The flow returns data or confirmation to the agent, which presents it to the user in natural language.</li>
+      </ol>
+
+      <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft Copilot Studio documentation — learn.microsoft.com</a>
+
+      <h2>Licensing and Message Capacity</h2>
+
+      <div class="art-callout warning">
+        <p><strong>Important:</strong> Licensing for Copilot agents is a frequently changing area as Microsoft continues to evolve its AI offering. Always verify current pricing at microsoft.com/en-us/microsoft-copilot-studio/pricing before committing to a deployment.</p>
+      </div>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Licence type</th><th>What's included</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Copilot Studio per-tenant capacity pack</strong></td><td>25,000 messages per month; no per-user limits; covers all users in the tenant</td><td>Internal employees using a shared agent; the cost does not scale with user count</td></tr>
+            <tr><td><strong>Copilot Studio per-user plan</strong></td><td>Unlimited messages for licensed users; covers that user accessing any agent</td><td>Power users who build and heavily use multiple agents</td></tr>
+            <tr><td><strong>M365 Copilot licence</strong></td><td>Covers declarative agents surfaced through Microsoft 365 Copilot; no additional Copilot Studio licence needed for end users</td><td>Organisations already deploying M365 Copilot who want focused agents over specific SharePoint content</td></tr>
+            <tr><td><strong>External / anonymous users</strong></td><td>Separate capacity model for agents embedded in external websites or portals</td><td>Customer-facing chatbots; requires a separate capacity agreement</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>What counts as a "message"?</h3>
+      <p>A message in Copilot Studio is counted each time a user sends an input that the agent processes. A typical HR query ("What is our annual leave policy?") might consume 1–3 messages. Complex multi-turn conversations (collecting slot values, calling a Power Automate action, confirming a result) might consume 5–10 messages. Plan your capacity based on your expected user count multiplied by estimated messages per session per day.</p>
+
+      <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Copilot Studio licensing requirements — learn.microsoft.com</a>
+
+      <h2>Real-World Use Cases: SharePoint Copilot Agents</h2>
+
+      <div class="agent-example">
+        <div class="ae-dept">HR</div>
+        <div class="ae-title">HR Policy Q&amp;A Agent</div>
+        <p class="ae-body">An agent grounded in the HR SharePoint site that answers employee questions about leave policies, benefits, performance review processes, and onboarding procedures in plain English — without employees having to search the intranet. The agent is embedded as a Teams bot and available 24/7. Questions it cannot answer from the knowledge base are logged and forwarded to the HR inbox as structured tickets via Power Automate.</p>
+        <p class="ae-body"><strong>SharePoint knowledge source:</strong> HR Policies library, Benefits site, Employee Handbook pages. <strong>Actions:</strong> Submit a query to HR (creates a SharePoint list item). <strong>Result:</strong> ~60% reduction in repetitive HR email volume in the first 90 days post-deployment.</p>
+      </div>
+
+      <div class="agent-example">
+        <div class="ae-dept">IT</div>
+        <div class="ae-title">IT Self-Service Helpdesk Agent</div>
+        <p class="ae-body">An agent that handles the first-line IT support questions that account for 70% of helpdesk ticket volume: password reset instructions, VPN setup, software installation guides, known issue status. The agent is grounded in the IT Knowledge Base SharePoint site and the IT Wiki. When it cannot resolve an issue, it collects structured information (issue type, priority, affected system) and creates a ServiceNow ticket via a Power Automate flow, returning the ticket number to the user.</p>
+        <p class="ae-body"><strong>SharePoint knowledge source:</strong> IT Knowledge Base site, IT Procedures library, Known Issues list. <strong>Actions:</strong> Create ServiceNow ticket (Power Automate), check ticket status (Power Automate HTTP action). <strong>Result:</strong> 40% deflection of Level 1 IT tickets from human agents.</p>
+      </div>
+
+      <div class="agent-example">
+        <div class="ae-dept">Operations</div>
+        <div class="ae-title">Procurement Policy and Supplier Lookup Agent</div>
+        <p class="ae-body">An agent embedded in the Procurement SharePoint site that answers questions about purchasing policies, approval thresholds, preferred suppliers, and contract templates. It can look up supplier records from a SharePoint Suppliers list (via Power Automate) and return contact details, contract expiry dates, and preferred status. Procurement staff use it instead of emailing the team for basic lookups, freeing the team for strategic sourcing work.</p>
+        <p class="ae-body"><strong>SharePoint knowledge source:</strong> Procurement Policies library, Supplier Contract library. <strong>Actions:</strong> Look up supplier by name (Get items from Suppliers list via Power Automate). <strong>Result:</strong> Estimated 3 hours/week saved per procurement manager on information lookup tasks.</p>
+      </div>
+
+      <h2>Governance and Limits to Know</h2>
+      <ul>
+        <li><strong>Knowledge source limits:</strong> Copilot Studio generative answers can reference up to 2 knowledge sources per agent by default; additional sources require configuration. SharePoint sources are limited to sites the agent's service connection has access to.</li>
+        <li><strong>Response accuracy:</strong> The agent answers from what exists in the knowledge source. If SharePoint content is outdated or contradictory, the agent will reflect that. Copilot agents amplify your content quality — good content produces good answers; poor content produces poor answers.</li>
+        <li><strong>Permissions are NOT enforced:</strong> Unlike Microsoft 365 Copilot, Copilot Studio agents with SharePoint generative answers use a service connection that may have broader access than the individual user. Review what content the agent can access and ensure sensitive content is not included in the knowledge source scope.</li>
+        <li><strong>Conversation history:</strong> Copilot Studio stores conversation transcripts for analytics and improvement. Review your data residency and privacy obligations before deploying agents that handle sensitive employee queries.</li>
+        <li><strong>Language support:</strong> Copilot Studio supports 40+ languages. Configure the agent's supported languages and test responses in each if you have multilingual user bases.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Ready to build your first Copilot agent?</h3>
+        <p>OceanCloud designs and deploys Copilot Studio agents grounded in SharePoint — from simple policy Q&amp;A bots to complex multi-action agents integrated with ServiceNow, Salesforce, and Dynamics 365. Typical delivery: 4–6 weeks.</p>
+        <a href="contact" class="btn btn-primary">Start Your Copilot Agent Project</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-m365-copilot" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">Microsoft 365 Copilot: The Complete Business Guide</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-copilot-ready" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">How to Prepare Your SharePoint for Microsoft Copilot</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-teams-automation" class="related-card">
+            <span class="rc-topic">Teams</span>
+            <span class="rc-title">5 Microsoft Teams Automations That Save Hours Every Week</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

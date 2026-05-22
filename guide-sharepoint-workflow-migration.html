@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>How to Replace Legacy SharePoint Workflows with Power Automate | OceanCloud</title>
+  <meta name="description" content="SharePoint 2010 and 2013 workflow retirement guide — discover which workflows are retiring, how to inventory them, and migrate to Power Automate equivalents step by step." />
+  <meta name="keywords" content="sharepoint workflow migration to power automate, sharepoint workflow end of life, sharepoint workflow retirement, sharepoint 2010 workflow migration, replace sharepoint designer workflow" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-workflow-migration" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="How to Replace Legacy SharePoint Workflows with Power Automate" />
+  <meta property="og:description" content="SharePoint Designer workflow retirement, inventory methodology, feature mapping, and step-by-step migration to Power Automate — for every size of organisation." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-workflow-migration" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-workflow-migration#article",
+        "headline": "How to Replace Legacy SharePoint Workflows with Power Automate",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-workflow-migration",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "SharePoint Designer workflow retirement, inventory, feature mapping, and migration to Power Automate — a complete guide for every organisation size.",
+        "keywords": ["SharePoint workflow migration", "SharePoint workflow retirement", "SharePoint Designer Power Automate", "legacy workflow migration"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/general-development/sharepoint-2010-workflows-are-no-longer-supported", "name": "SharePoint 2010 workflows no longer supported" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview", "name": "Use SharePoint with Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-365/admin/misc/power-automate-sharepoint-workflows", "name": "Migrate SharePoint workflows to Power Automate" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Workflow Migration", "item": "https://www.oceancloudconsults.com/guide-sharepoint-workflow-migration" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-callout.danger{background:rgba(239,68,68,.07);border-left-color:#f87171;}
+  .art-callout.danger p{color:#fecaca;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(74,222,128,.12);color:#4ade80;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(74,222,128,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(74,222,128,.18);color:#4ade80;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Workflow Migration</span></nav>
+      <h1>How to Replace Legacy SharePoint Workflows <span class="grad-text">with Power Automate</span></h1>
+      <p>SharePoint Designer workflows are retired. This guide covers the retirement timeline, how to inventory your existing workflows, and how to rebuild them in Power Automate.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">9 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint Designer workflows — the click-to-configure automation tool that millions of organisations used from SharePoint 2007 through SharePoint Online — have been retired by Microsoft. The SharePoint 2010 workflow platform reached end-of-life in November 2020 and was disabled in SharePoint Online. The SharePoint 2013 workflow platform followed in April 2026. If your organisation still depends on SharePoint Designer workflows or Nintex on SharePoint Online, you need a migration plan. This guide gives you one.</p>
+
+      <div class="art-callout danger">
+        <p><strong>Retirement status (as of May 2026):</strong> SharePoint 2010 workflows — disabled in SharePoint Online since November 2020. SharePoint 2013 workflows (including Nintex for SP Online built on the 2013 platform) — disabled in SharePoint Online since April 2026. New workflow creation was blocked before these dates; execution is now blocked.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/dev/general-development/sharepoint-2010-workflows-are-no-longer-supported" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint 2010 workflows no longer supported — learn.microsoft.com</a>
+
+      <h2>Step 1: Inventory Your Existing Workflows</h2>
+      <p>Before you can migrate workflows, you need a complete picture of what exists across your tenant. Most organisations underestimate this — they know about their 5 "important" workflows but have forgotten the 40 others built over the years.</p>
+
+      <h3>Automated inventory using PowerShell</h3>
+      <p>The SharePoint Online Management Shell and PnP PowerShell can enumerate all workflow associations across all sites in your tenant:</p>
+      <ul>
+        <li>Use PnP PowerShell's <code>Get-PnPWorkflowSubscription</code> to list all workflow subscriptions (associations) on a site</li>
+        <li>Use <code>Get-PnPWorkflowDefinition</code> to retrieve workflow templates</li>
+        <li>Combine with <code>Get-PnPTenantSite</code> to iterate across all sites</li>
+        <li>Export results to CSV: site URL, workflow name, list association, workflow platform version (2010 vs 2013), last run date</li>
+      </ul>
+
+      <h3>Classify workflows by priority</h3>
+      <p>Not all discovered workflows need immediate migration. Classify each one:</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Classification</th><th>Criteria</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Critical</strong></td><td>Used daily or weekly; touches regulated data or approvals; business stops without it</td><td>Migrate immediately to Power Automate</td></tr>
+            <tr><td><strong>Important</strong></td><td>Used monthly; affects business efficiency; manual workaround exists but is painful</td><td>Migrate within 3 months</td></tr>
+            <tr><td><strong>Low priority</strong></td><td>Rarely triggered; notification-only; easy manual equivalent</td><td>Evaluate: migrate or retire?</td></tr>
+            <tr><td><strong>Orphaned</strong></td><td>Last run date &gt;12 months ago; no active owner; list may no longer exist</td><td>Retire — do not migrate</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step 2: Map Legacy Workflow Features to Power Automate</h2>
+      <p>SharePoint Designer workflows had their own set of actions and conditions. Most have direct Power Automate equivalents; some require a different approach.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>SharePoint Designer action</th><th>Power Automate equivalent</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Start Approval Process</strong></td><td>"Start and wait for an approval" (Approvals connector)</td><td>Power Automate approvals are richer — Teams integration, mobile, comments</td></tr>
+            <tr><td><strong>Send Email</strong></td><td>"Send an email" (Outlook connector)</td><td>Power Automate emails support HTML formatting and attachments</td></tr>
+            <tr><td><strong>Update List Item</strong></td><td>"Update item" (SharePoint connector)</td><td>Direct equivalent</td></tr>
+            <tr><td><strong>Create List Item</strong></td><td>"Create item" (SharePoint connector)</td><td>Direct equivalent</td></tr>
+            <tr><td><strong>Copy List Item</strong></td><td>"Create item" + field mapping</td><td>No direct copy — must map fields explicitly</td></tr>
+            <tr><td><strong>Set Time Portion of Date/Time Field</strong></td><td>formatDateTime() expression</td><td>Expression-based; more flexible</td></tr>
+            <tr><td><strong>Calculate Date</strong></td><td>addDays(), addHours() expressions</td><td>Much more powerful; works with any date arithmetic</td></tr>
+            <tr><td><strong>Wait for Field Change</strong></td><td>No direct equivalent — use "When item is modified" trigger with a condition</td><td>Redesign required: move logic to a separate item-modified flow</td></tr>
+            <tr><td><strong>Call HTTP Web Service</strong></td><td>HTTP action or "Send an HTTP request to SharePoint"</td><td>Requires premium licence for generic HTTP; SharePoint HTTP action is standard</td></tr>
+            <tr><td><strong>Build Dynamic String</strong></td><td>concat() expression or string interpolation in dynamic content</td><td>Expressions are more flexible but have a learning curve</td></tr>
+            <tr><td><strong>Log to History List</strong></td><td>"Create item" in a custom audit SharePoint list</td><td>No built-in history list; design a logging list explicitly</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step 3: The Migration Process — Workflow by Workflow</h2>
+      <ul class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Document the existing workflow</strong>
+            <p>Open the workflow in SharePoint Designer (if still accessible) and screenshot or transcribe every step, condition, and action. Many older workflows have no other documentation. This is your specification for the Power Automate rebuild.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Identify the business owner</strong>
+            <p>Find who owns the business process the workflow supports. They will need to validate the migrated flow before go-live and may have requirements or edge cases the original workflow handled incorrectly.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Build in a development environment</strong>
+            <p>Create the Power Automate flow in a development/test environment pointing at a test SharePoint site. Never build and test against the production list — you cannot undo test approvals sent to real users.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Test every path</strong>
+            <p>Test the happy path (expected input, approved outcome), the rejection path, the timeout/escalation path, and edge cases (null fields, special characters in text, very long text in comments). Run at least 5 full end-to-end tests before UAT.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>User acceptance testing</strong>
+            <p>Have the business owner and 2–3 regular users test the flow in the test environment. Their feedback often reveals undocumented edge cases the original workflow handled (or mishandled).</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Go live and monitor</strong>
+            <p>Enable the Power Automate flow in production. For the first 2 weeks, review the flow run history daily — check for failed runs and any unexpected error patterns. Keep the old workflow disabled (not deleted) for 30 days in case rollback is needed.</p>
+          </div>
+        </li>
+      </ul>
+
+      <h2>Common Migration Challenges</h2>
+
+      <h3>"Wait for Field Change" — the hardest pattern to migrate</h3>
+      <p>SharePoint Designer's "Wait for field change" action allowed a single workflow to pause indefinitely until a column reached a specified value. Power Automate has no equivalent waiting pattern within a single flow. The solution is to split the logic into two flows: one that starts the initial process (triggered by item creation), and a second that continues the process (triggered by item modification with a condition checking the field value). This "two-flow" pattern is more reliable than the original waiting approach anyway — the old wait pattern was notoriously brittle under heavy load.</p>
+
+      <h3>Workflow history and audit trail</h3>
+      <p>SharePoint Designer wrote all workflow actions to a built-in History list. Power Automate has no equivalent. Design an explicit audit log list in SharePoint and write to it from the flow — this is actually better because you control what gets logged, the format, and the retention policy.</p>
+
+      <h3>Impersonation steps</h3>
+      <p>SharePoint Designer allowed "impersonation steps" that ran as the workflow administrator rather than the item submitter. Power Automate flows always run as the connection owner — typically a service account. Ensure your service account has the permissions needed (at minimum Contribute on the target lists) and document this in the flow description.</p>
+
+      <a href="https://learn.microsoft.com/en-us/microsoft-365/admin/misc/power-automate-sharepoint-workflows" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Migrate SharePoint workflows to Power Automate — learn.microsoft.com</a>
+
+      <div class="art-cta-box">
+        <h3>Need help migrating your SharePoint workflows?</h3>
+        <p>OceanCloud has migrated hundreds of SharePoint Designer and Nintex workflows to Power Automate — including complex multi-stage approval chains, impersonation-based workflows, and third-party connector integrations. We deliver a full inventory, prioritised migration plan, and end-to-end build.</p>
+        <a href="contact" class="btn btn-primary">Start Your Workflow Migration</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-approval-workflow" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">How to Build a SharePoint Approval Workflow</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-power-automate-triggers-actions" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">Power Automate SharePoint Triggers and Actions Explained</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-m365-migration-checklist" class="related-card">
+            <span class="rc-topic">Migration</span>
+            <span class="rc-title">The 10-Step Microsoft 365 Migration Checklist</span>
+            <span class="rc-read">7 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

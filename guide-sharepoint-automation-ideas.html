@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>10 SharePoint Automation Ideas Using Power Automate | OceanCloud</title>
+  <meta name="description" content="10 practical SharePoint automation examples built with Power Automate — HR onboarding, contract management, IT requests, compliance alerts, site provisioning, and more." />
+  <meta name="keywords" content="sharepoint automation ideas, sharepoint automation examples, sharepoint automation flows, power automate sharepoint examples, sharepoint automation use cases" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-automation-ideas" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="10 SharePoint Automation Ideas Using Power Automate" />
+  <meta property="og:description" content="Ten actionable SharePoint automation examples for HR, finance, IT, legal, and operations — with trigger, action, and ROI notes for each flow." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-automation-ideas" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-automation-ideas#article",
+        "headline": "10 SharePoint Automation Ideas Using Power Automate",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-automation-ideas",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Ten actionable SharePoint automation examples for HR, finance, IT, legal, and operations — with trigger, action, and ROI notes for each.",
+        "keywords": ["SharePoint automation", "Power Automate SharePoint", "SharePoint automation examples", "SharePoint workflows"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview", "name": "Power Automate SharePoint overview" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approvals-overview", "name": "Approvals in Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/email-overview", "name": "Email with Power Automate" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Automation Ideas", "item": "https://www.oceancloudconsults.com/guide-sharepoint-automation-ideas" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .idea-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:26px;margin:20px 0;}
+  .idea-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:rgba(74,222,128,.15);color:#4ade80;font-weight:800;font-size:.9rem;margin-bottom:12px;}
+  .idea-dept{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#4ade80;margin-bottom:6px;}
+  .idea-title{font-size:1.02rem;font-weight:800;color:var(--white);margin:0 0 10px;}
+  .idea-body{font-size:.88rem;color:var(--text-mid);line-height:1.8;margin:0 0 14px;}
+  .idea-meta{display:flex;gap:20px;flex-wrap:wrap;}
+  .idea-meta-item{font-size:.8rem;}
+  .idea-meta-label{color:var(--text-dim);display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+  .idea-meta-val{color:var(--white);font-weight:600;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Automation Ideas</span></nav>
+      <h1>10 SharePoint Automation Ideas <span class="grad-text">Using Power Automate</span></h1>
+      <p>Practical automation examples across HR, finance, IT, legal, and operations — with triggers, actions, and time-savings notes for every flow you can build this week.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">9 min read</span>
+      </div>
+
+      <p class="article-intro">Most organisations use SharePoint as a passive document store — files go in, people find them, nothing happens automatically. But SharePoint's real value comes from treating it as an active business process hub: every list item added, every document uploaded, every status changed can trigger structured work. Here are ten of the highest-value SharePoint automations we've built across our client engagements — each implementable by a confident Power Automate user in half a day.</p>
+
+      <div class="art-callout">
+        <p><strong>Prerequisites for all flows below:</strong> A Microsoft 365 Business Standard, Premium, or E plan includes Power Automate with SharePoint, Teams, Outlook, and Approvals connectors at no extra cost. Only flows using premium connectors (HTTP, Dataverse, SAP, Salesforce) require a Power Automate premium licence.</p>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">1</div>
+        <div class="idea-dept">HR</div>
+        <div class="idea-title">New Employee Onboarding Checklist Generator</div>
+        <p class="idea-body">When HR adds a new employee record to the SharePoint HR list, this flow creates a personal onboarding site (from a PnP template), generates a Planner plan with 20 standard onboarding tasks pre-assigned to the relevant owners (IT for laptop setup, Facilities for access card, HR for benefits enrollment), sends the new hire a welcome email with their first-week schedule, and posts an introduction in the relevant Teams channel.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">When item is created in HR New Starters list</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~3 hrs per new hire</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard (M365 included)</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">2</div>
+        <div class="idea-dept">Legal / Procurement</div>
+        <div class="idea-title">Contract Expiry Reminder System</div>
+        <p class="idea-body">A scheduled flow runs daily and queries the Contracts SharePoint list for items where the Expiry Date is within 90, 60, or 30 days. For each expiring contract, it sends a structured reminder to the contract owner and their manager with the contract details, renewal instructions, and a link to the document. The reminder cadence and recipient list are configurable from the SharePoint list — no flow edits needed to change thresholds.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">Scheduled recurrence (daily, 8am)</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~2 hrs/week across all contracts</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">3</div>
+        <div class="idea-dept">Finance</div>
+        <div class="idea-title">Invoice Approval with GL Coding</div>
+        <p class="idea-body">When a scanned invoice is uploaded to the SharePoint Invoices library, a flow uses AI Builder's invoice processing model to extract vendor name, invoice number, amount, and line items. The extracted data is written to a SharePoint list, the invoice is routed to the appropriate approver based on amount thresholds, and upon approval the GL codes are written back to the list for the finance system export. Rejection sends the invoice back to Accounts Payable with comments.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">When file is created in Invoices library</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~5 hrs/week for AP team</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Premium (AI Builder)</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">4</div>
+        <div class="idea-dept">IT</div>
+        <div class="idea-title">Automated SharePoint Site Provisioning</div>
+        <p class="idea-body">When a new project is approved (item status changes to "Approved" in the Projects SharePoint list), a flow automatically provisions a new SharePoint team site using the PnP Sites Core library via Azure Functions, applies the correct site template (IT project, Marketing campaign, Client delivery), adds the project team as members, creates a linked Teams team, sets up the document library structure, and posts a welcome message to the project Teams channel.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">When item is modified — Status = "Approved"</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~45 min per new project</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard (Azure Functions extra)</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">5</div>
+        <div class="idea-dept">Compliance / Risk</div>
+        <div class="idea-title">Policy Review Cycle Automation</div>
+        <p class="idea-body">All company policies are stored in a SharePoint Policies library with a Review Date column. A monthly scheduled flow finds all policies due for review in the next 30 days, sends the policy owner a review request, creates a Planner task, and marks the policy as "Under Review" in SharePoint. When the owner updates the document and changes the status to "Reviewed", the flow automatically sets the next Review Date (12 months forward) and notifies the compliance team that the policy is current.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">Scheduled (monthly) + item modified trigger</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~4 hrs/month for compliance team</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">6</div>
+        <div class="idea-dept">HR</div>
+        <div class="idea-title">Leave Request and Manager Approval</div>
+        <p class="idea-body">Employees submit leave requests through a SharePoint list form (or a Power Apps canvas app over the same list). The flow immediately checks the shared team calendar for conflicts, sends the manager an approval request in Teams with an Adaptive Card showing the dates, existing team leave, and any public holidays. Approval updates the SharePoint record, sends the employee a confirmation, and (optionally) creates the calendar event in the team's shared Outlook calendar.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">When item is created in Leave Requests list</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~20 min per request</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">7</div>
+        <div class="idea-dept">Operations</div>
+        <div class="idea-title">Stale Document Alert and Archival</div>
+        <p class="idea-body">A weekly scheduled flow queries every key SharePoint library for documents that have not been modified in 18 months. It sends the document owner a notification with a direct link and three options: Keep, Archive, or Delete. The owner responds by updating a Status column on the document. After 14 days without a response, the flow escalates to the site owner. Documents marked "Archive" are moved to the Archive site automatically; "Delete" sends them to the recycle bin with a 30-day recovery window.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">Scheduled (weekly) + item modified</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">Ongoing governance vs manual audits</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">8</div>
+        <div class="idea-dept">Sales / CRM</div>
+        <div class="idea-title">Proposal Generation from SharePoint Template</div>
+        <p class="idea-body">When a new opportunity record reaches "Proposal Stage" (synced from Salesforce via Power Automate), the flow copies the Word proposal template from a SharePoint Templates library, populates it with the client name, products, pricing, and terms using the "Populate a Word template" action, saves the completed proposal to the opportunity's SharePoint folder, and notifies the sales rep in Teams with a direct link to review and send.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">When Salesforce opportunity stage changes (premium)</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~30 min per proposal</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Premium (Salesforce connector)</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">9</div>
+        <div class="idea-dept">IT / Security</div>
+        <div class="idea-title">External Guest Access Audit and Expiry</div>
+        <p class="idea-body">A monthly scheduled flow uses the Graph API (HTTP action) to retrieve all guest users in the Azure AD tenant who have access to SharePoint sites. For each guest account inactive for 90+ days, the flow emails the site owner asking them to confirm whether access should continue or be revoked. After 14 days without a response, it sends a final warning. After 30 days total, it removes the guest from the site's permission group — maintaining a clean, auditable guest access register.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">Scheduled (monthly)</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">Ongoing security hygiene</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Premium (HTTP connector for Graph)</span></div>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-num">10</div>
+        <div class="idea-dept">Marketing / Content</div>
+        <div class="idea-title">Content Publishing Approval and Distribution</div>
+        <p class="idea-body">When a content creator uploads a finished article, blog post, or social media asset to the SharePoint Content library and sets Status = "Ready for Review", the flow routes it to the brand approver via Teams Adaptive Card. On approval, it automatically publishes the item to the SharePoint news feed, posts a notification to the Marketing Teams channel, schedules a social sharing reminder 24 hours later, and archives the approved version to the Published library with a date-stamped filename.</p>
+        <div class="idea-meta">
+          <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">When file properties are modified — Status = "Ready for Review"</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">~45 min per content piece</span></div>
+          <div class="idea-meta-item"><span class="idea-meta-label">Licence needed</span><span class="idea-meta-val">Standard</span></div>
+        </div>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Power Automate and SharePoint overview — learn.microsoft.com</a>
+
+      <h2>Where to Start: Prioritising Your First Automation</h2>
+      <p>With ten ideas above, deciding where to start can be the hardest part. Use this prioritisation framework:</p>
+      <ol>
+        <li><strong>High frequency + high manual effort:</strong> Processes that happen daily or weekly and take more than 20 minutes each are the best ROI targets. Approval workflows and notification flows typically top this list.</li>
+        <li><strong>Low technical complexity:</strong> Start with flows that use standard SharePoint connectors (no premium licence needed) and have simple trigger → action logic. Build confidence before tackling AI Builder or Graph API integrations.</li>
+        <li><strong>High error rate:</strong> Manual processes with frequent mistakes (wrong approver, missed notification, forgotten follow-up) benefit most from automation. The flow doesn't forget.</li>
+        <li><strong>Visible to leadership:</strong> Automating a process that a senior stakeholder cares about builds organisational support for the broader Power Automate adoption programme.</li>
+      </ol>
+
+      <div class="art-cta-box">
+        <h3>Need help identifying your best automation opportunities?</h3>
+        <p>OceanCloud runs a half-day SharePoint Automation Workshop that maps your highest-value processes to Power Automate flows — with a prioritised delivery roadmap you can execute in-house or with our team.</p>
+        <a href="contact" class="btn btn-primary">Book an Automation Workshop</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-approval-workflow" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">How to Build a SharePoint Approval Workflow</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-power-automate-triggers-actions" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">Power Automate SharePoint Triggers and Actions Explained</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-power-automate-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Site Should Have</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

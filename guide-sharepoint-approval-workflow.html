@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>How to Build a SharePoint Approval Workflow with Power Automate | OceanCloud</title>
+  <meta name="description" content="Step-by-step guide to building a SharePoint approval workflow with Power Automate — configure the approval action, handle responses, send notifications, and update document status automatically." />
+  <meta name="keywords" content="sharepoint approval workflow, power automate sharepoint approval workflow, sharepoint document approval workflow, sharepoint list approval, power automate approval action" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-approval-workflow" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="How to Build a SharePoint Approval Workflow with Power Automate" />
+  <meta property="og:description" content="Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-approval-workflow" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-approval-workflow#article",
+        "headline": "How to Build a SharePoint Approval Workflow with Power Automate",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-approval-workflow",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide.",
+        "keywords": ["SharePoint approval workflow", "Power Automate approval", "SharePoint document approval", "Power Automate SharePoint"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approvals-overview", "name": "Overview of approvals in Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/create-approval-response-options", "name": "Create custom approval response options" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/modern-approvals", "name": "Create and test an approval workflow" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Approval Workflow Guide", "item": "https://www.oceancloudconsults.com/guide-sharepoint-approval-workflow" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(74,222,128,.12);color:#4ade80;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(74,222,128,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(74,222,128,.18);color:#4ade80;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .code-block{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px 20px;margin:18px 0;font-family:'Courier New',monospace;font-size:.82rem;color:#94a3b8;overflow-x:auto;line-height:1.7;}
+  .code-block .kw{color:#4ade80;}
+  .code-block .str{color:#86efac;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .flow-diagram{display:flex;flex-direction:column;gap:0;margin:24px 0;}
+  .fd-step{display:flex;align-items:flex-start;gap:16px;padding:14px 0;}
+  .fd-step+.fd-step{border-top:1px solid rgba(255,255,255,.04);}
+  .fd-icon{width:36px;height:36px;border-radius:8px;background:rgba(74,222,128,.12);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .fd-body strong{display:block;color:var(--white);font-size:.9rem;margin-bottom:3px;}
+  .fd-body p{margin:0;color:var(--text-dim);font-size:.83rem;line-height:1.6;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Approval Workflow</span></nav>
+      <h1>How to Build a SharePoint <span class="grad-text">Approval Workflow</span> with Power Automate</h1>
+      <p>Configure the approval action, handle approve and reject responses, notify requesters automatically, and keep your SharePoint list status in sync — step by step.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">10 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint approval workflows are one of the most requested Power Automate builds — and one of the most commonly built incorrectly. Developers skip the status column, forget the rejection branch, or build flows that break when the approver is out of office. This guide builds a complete, production-ready SharePoint document approval workflow from scratch, covering every step from list setup through edge-case handling.</p>
+
+      <h2>What We're Building</h2>
+      <p>A Power Automate cloud flow that triggers when a document is submitted to a SharePoint library, sends the configured approver a structured approval request in Microsoft Teams and email, waits for a response, and then:</p>
+      <ul>
+        <li>If <strong>approved:</strong> updates the document's Status column to "Approved", moves the file to an Approved folder, and notifies the submitter</li>
+        <li>If <strong>rejected:</strong> updates Status to "Rejected", adds the approver's comments to a Comments column, and sends the submitter a rejection notification with the reason</li>
+      </ul>
+
+      <h2>Step 1: Prepare Your SharePoint Library</h2>
+      <p>Before building the flow, configure the SharePoint document library with the columns the flow will read and write. Without these columns, the flow cannot track state or surface approver comments.</p>
+
+      <h3>Required columns</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Column name</th><th>Type</th><th>Values / notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Approval Status</strong></td><td>Choice</td><td>Pending Review, Approved, Rejected, Recall — default to "Pending Review"</td></tr>
+            <tr><td><strong>Approver</strong></td><td>Person or Group</td><td>Single selection; allow only people, not groups</td></tr>
+            <tr><td><strong>Approver Comments</strong></td><td>Multiple lines of text</td><td>Flow writes rejection reason here</td></tr>
+            <tr><td><strong>Submitted By</strong></td><td>Person or Group</td><td>Auto-populated; flow reads this to send notifications</td></tr>
+            <tr><td><strong>Submitted Date</strong></td><td>Date and Time</td><td>Set to Today by default; used in the approval request card</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout">
+        <p><strong>Tip:</strong> Set the Approver column as Required in the library settings. This forces submitters to select an approver before uploading, preventing the flow from failing due to a null approver field.</p>
+      </div>
+
+      <h2>Step 2: Create the Power Automate Flow</h2>
+      <p>Go to <strong>make.powerautomate.com</strong>, select <strong>Create</strong> &gt; <strong>Automated cloud flow</strong>, and search for the trigger "When a file is created or modified (properties only)". This trigger fires whenever a file's metadata changes in the library — which means it fires when the Approval Status is set to "Pending Review" on upload.</p>
+
+      <div class="art-callout warning">
+        <p><strong>Trigger choice matters:</strong> Use "When a file is created or modified (properties only)" rather than "When a file is created in a folder." The properties-only version is lighter weight (transfers only metadata, not file content) and fires reliably on both new uploads and column updates. The alternative triggers can double-fire or miss events.</p>
+      </div>
+
+      <h3>Add a condition to filter trigger fires</h3>
+      <p>Because the trigger fires on any property change — including when the flow itself updates the Status column to "Approved" or "Rejected" — you must add a condition immediately after the trigger to stop infinite loops:</p>
+
+      <div class="code-block">
+<span class="kw">Condition:</span> triggerOutputs()?['body/ApprovalStatus/Value'] <span class="str">is equal to</span> <span class="str">'Pending Review'</span>
+<span class="cm">// Only continue when the document is in the Pending Review state</span>
+<span class="cm">// This prevents the flow re-triggering when it updates Status to Approved/Rejected</span>
+      </div>
+
+      <p>Set the <strong>No</strong> branch of this condition to "Terminate" (action: Terminate, Status: Succeeded). Only the <strong>Yes</strong> branch continues to the approval logic.</p>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/approvals-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Overview of approvals in Power Automate — learn.microsoft.com</a>
+
+      <h2>Step 3: Configure the Approval Action</h2>
+      <p>In the Yes branch, add the action <strong>"Start and wait for an approval"</strong> from the Approvals connector. This is a blocking action — the flow pauses here until the approver responds (or the timeout expires).</p>
+
+      <h3>Approval action settings</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Field</th><th>Value / expression</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Approval type</strong></td><td>Approve/Reject — First to respond</td></tr>
+            <tr><td><strong>Title</strong></td><td><code>Document Approval Required: @{triggerOutputs()?['body/{FilenameWithExtension}']}</code></td></tr>
+            <tr><td><strong>Assigned to</strong></td><td><code>@{triggerOutputs()?['body/Approver/Email']}</code></td></tr>
+            <tr><td><strong>Details</strong></td><td>Document name, submitted by, submission date, library link</td></tr>
+            <tr><td><strong>Item link</strong></td><td><code>@{triggerOutputs()?['body/{Link}']}</code> — direct link to the file</td></tr>
+            <tr><td><strong>Item link description</strong></td><td>View document</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The approver receives this request in their <strong>Approvals app in Microsoft Teams</strong> (and email). They can approve or reject with comments directly from Teams without opening any other system.</p>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Create and test an approval workflow — learn.microsoft.com</a>
+
+      <h2>Step 4: Handle the Approval Response</h2>
+      <p>After the approval action completes, add a <strong>Condition</strong> to branch on the outcome:</p>
+
+      <div class="code-block">
+<span class="kw">Condition:</span> outputs('Start_and_wait_for_an_approval')?['body/outcome'] <span class="str">is equal to</span> <span class="str">'Approve'</span>
+      </div>
+
+      <h3>Yes branch — Approved path</h3>
+      <ul class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Update file properties</strong>
+            <p>Action: "Update file properties" (SharePoint) — set Approval Status = "Approved"</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Move file to Approved folder</strong>
+            <p>Action: "Copy file" to /Approved subfolder, then "Delete file" from root — or use "Move file" if your connector version supports it</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Notify the submitter</strong>
+            <p>Action: "Post a message in a chat" (Teams) — send a direct message to the Submitted By user: "Your document [name] has been approved by [approver name]."</p>
+          </div>
+        </li>
+      </ul>
+
+      <h3>No branch — Rejected path</h3>
+      <ul class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Update file properties</strong>
+            <p>Action: "Update file properties" — set Approval Status = "Rejected"; set Approver Comments = <code>@{outputs('Start_and_wait_for_an_approval')?['body/responses'][0]['comments']}</code></p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Notify the submitter with reason</strong>
+            <p>Action: "Post a message in a chat" (Teams) — include the rejection comments so the submitter knows exactly what to change: "Your document [name] was not approved. Comments: [comments]"</p>
+          </div>
+        </li>
+      </ul>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/create-approval-response-options" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Create custom approval response options — learn.microsoft.com</a>
+
+      <h2>Step 5: Set a Timeout for Stale Approvals</h2>
+      <p>The "Start and wait for an approval" action will wait indefinitely by default. In production, this creates flows that are stuck for weeks because an approver went on holiday or ignored the request. Set a timeout to prevent this.</p>
+
+      <p>In the approval action's settings, enable <strong>"Set a timeout"</strong> and use ISO 8601 duration format:</p>
+      <ul>
+        <li><code>P3D</code> — 3 days (good for most document approvals)</li>
+        <li><code>P7D</code> — 7 days (for lower-priority reviews)</li>
+        <li><code>PT4H</code> — 4 hours (for urgent time-sensitive approvals)</li>
+      </ul>
+      <p>In the timeout branch, update the Status to "Escalated" and notify the submitter and the approver's manager that the approval is overdue. This keeps the process moving without manual chasing.</p>
+
+      <h2>Common Mistakes to Avoid</h2>
+      <ul>
+        <li><strong>No infinite-loop guard:</strong> Without the initial "Approval Status = Pending Review" condition, the flow triggers itself every time it updates the status column — burning API call quota and creating duplicate approval requests</li>
+        <li><strong>Using the approver's display name instead of email:</strong> The "Assigned to" field in the approval action requires an email address — not a display name. Use the <code>/Email</code> property from the Person column</li>
+        <li><strong>Not handling null approver:</strong> If the Approver column is empty when the trigger fires, the approval action fails with a cryptic error. Add a null check condition before the approval and terminate gracefully with a notification to the submitter</li>
+        <li><strong>No rejection comments captured:</strong> Approvers can add comments when rejecting, but the flow must explicitly read <code>responses[0]['comments']</code> to retrieve them — it is not automatically written anywhere</li>
+        <li><strong>Flow owned by one person:</strong> When the flow owner leaves, connections break. Use a shared service account or ensure co-ownership is set</li>
+      </ul>
+
+      <h2>Testing Your Approval Workflow</h2>
+      <p>Before enabling for all users, test the complete flow end-to-end:</p>
+      <ol>
+        <li>Upload a test document to the library with Approval Status = "Pending Review" and an approver set to your own account</li>
+        <li>Verify the approval request arrives in Teams (Approvals app) and email within 60 seconds</li>
+        <li>Approve the request and confirm the Status column updates to "Approved" in SharePoint</li>
+        <li>Upload another test document and reject it — verify the comments are written to the Approver Comments column and the notification message includes the rejection reason</li>
+        <li>Test the timeout: temporarily set the timeout to PT5M (5 minutes) and verify the escalation path fires correctly</li>
+      </ol>
+
+      <div class="art-cta-box">
+        <h3>Need a custom SharePoint approval workflow?</h3>
+        <p>OceanCloud builds production-ready SharePoint approval workflows with multi-approver support, delegation, escalation, and Power BI reporting on approval cycle times — typically delivered in 1–2 weeks.</p>
+        <a href="contact" class="btn btn-primary">Get a Free Workflow Review</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-approval-multiple-approvers" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">SharePoint Approval Workflows with Multiple Approvers</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-power-automate-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Site Should Have</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-permissions" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions: A Complete Guide</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

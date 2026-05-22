@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Power Automate SharePoint Triggers and Actions Explained | OceanCloud</title>
+  <meta name="description" content="Complete reference for Power Automate SharePoint triggers and actions — when item is created, get items filter query, create file, send HTTP request, and every connector option explained." />
+  <meta name="keywords" content="power automate sharepoint triggers, sharepoint connector power automate, get items filter query, create file power automate, power automate sharepoint actions" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-power-automate-triggers-actions" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Power Automate SharePoint Triggers and Actions Explained" />
+  <meta property="og:description" content="Every SharePoint trigger and action in Power Automate — when to use each, how to write OData filter queries, file vs list operations, and the HTTP request action for advanced scenarios." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-power-automate-triggers-actions" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-power-automate-triggers-actions#article",
+        "headline": "Power Automate SharePoint Triggers and Actions Explained",
+        "url": "https://www.oceancloudconsults.com/guide-power-automate-triggers-actions",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Every SharePoint trigger and action in Power Automate — when to use each, OData filter queries, file vs list operations, and the HTTP request action.",
+        "keywords": ["Power Automate SharePoint triggers", "SharePoint connector", "get items filter query", "create file Power Automate"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/connectors/sharepointonline/", "name": "SharePoint connector reference" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview", "name": "Use SharePoint with Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/use-odata-query-operations-in-sharepoint-rest-requests", "name": "OData query operations in SharePoint" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Power Automate Triggers and Actions", "item": "https://www.oceancloudconsults.com/guide-power-automate-triggers-actions" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(74,222,128,.12);color:#4ade80;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(74,222,128,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-table td code{font-family:'Courier New',monospace;font-size:.82rem;background:rgba(74,222,128,.07);padding:2px 6px;border-radius:4px;color:#86efac;}
+  .code-block{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px 20px;margin:18px 0;font-family:'Courier New',monospace;font-size:.82rem;color:#94a3b8;overflow-x:auto;line-height:1.7;}
+  .code-block .kw{color:#4ade80;}
+  .code-block .str{color:#86efac;}
+  .code-block .cm{color:#64748b;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Power Automate Triggers &amp; Actions</span></nav>
+      <h1>Power Automate SharePoint <span class="grad-text">Triggers and Actions Explained</span></h1>
+      <p>Every SharePoint trigger, every action, OData filter query syntax, and the advanced HTTP request action — the complete connector reference for flow builders.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">10 min read</span>
+      </div>
+
+      <p class="article-intro">The SharePoint connector in Power Automate is the most widely used connector in the platform — and the most frequently misused. Choosing the wrong trigger causes double-fires and infinite loops. Using "Get items" without a filter query loads thousands of records unnecessarily. The "Send an HTTP request to SharePoint" action unlocks capabilities no other action provides. This guide covers every trigger and action with the context you need to use each one correctly.</p>
+
+      <h2>SharePoint Triggers: The Complete Reference</h2>
+      <p>Triggers determine when a flow starts. The SharePoint connector offers two categories: list/library triggers (respond to item or file changes) and site triggers (respond to page or structural changes).</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Trigger</th><th>Fires when</th><th>Best for</th><th>Gotchas</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>When an item is created</strong></td>
+              <td>A new list item is added to the specified list</td>
+              <td>New record workflows: approval, notification, provisioning</td>
+              <td>Does NOT fire on file uploads — use the file trigger for document libraries</td>
+            </tr>
+            <tr>
+              <td><strong>When an item is created or modified</strong></td>
+              <td>Any change to a list item, including creation</td>
+              <td>Status-change workflows where you need to react to updates</td>
+              <td>Fires on every column change — guard against infinite loops with a condition on a specific column value</td>
+            </tr>
+            <tr>
+              <td><strong>When an item is deleted</strong></td>
+              <td>A list item is deleted (moved to Recycle Bin)</td>
+              <td>Archiving, audit logging, cascade deletions to related lists</td>
+              <td>Only the item ID is available in the trigger — all other field values are gone; log them before deletion using a modified trigger</td>
+            </tr>
+            <tr>
+              <td><strong>When a file is created (properties only)</strong></td>
+              <td>A new file is uploaded to a document library</td>
+              <td>Document approval flows, virus scan triggers, metadata enforcement</td>
+              <td>"Properties only" means no file content — use "Get file content" action if you need to process the file itself</td>
+            </tr>
+            <tr>
+              <td><strong>When a file is created or modified (properties only)</strong></td>
+              <td>Any file upload or property update in a library</td>
+              <td>Document approval with re-submission; metadata update notifications</td>
+              <td>Most common source of infinite loops — always filter on a specific column value immediately after the trigger</td>
+            </tr>
+            <tr>
+              <td><strong>When a file is created in a folder</strong></td>
+              <td>A file appears in a specific subfolder</td>
+              <td>Folder-specific processing: scan invoices dropped in /Inbox folder</td>
+              <td>Does not fire for files added to subfolders of the specified folder — only the exact folder path</td>
+            </tr>
+            <tr>
+              <td><strong>For a selected item</strong></td>
+              <td>User manually triggers the flow from the SharePoint list item menu</td>
+              <td>On-demand actions: generate a PDF, send a report, trigger a one-off sync</td>
+              <td>Requires user to initiate — not suitable for automated background processes; appears in the "Automate" menu on the list</td>
+            </tr>
+            <tr>
+              <td><strong>For a selected file</strong></td>
+              <td>User manually triggers from a file in a document library</td>
+              <td>On-demand file processing: convert to PDF, send for signature, archive</td>
+              <td>Same as above — user-initiated only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/connectors/sharepointonline/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint connector reference — learn.microsoft.com</a>
+
+      <h2>SharePoint Actions: The Complete Reference</h2>
+
+      <h3>List item actions</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Action</th><th>What it does</th><th>Key parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Get items</strong></td><td>Retrieves multiple list items — returns an array you can loop through</td><td>Filter Query (OData), Top Count (max 5000), Order By, Select Columns</td></tr>
+            <tr><td><strong>Get item</strong></td><td>Retrieves a single list item by its ID</td><td>ID (integer — not the item's title or GUID)</td></tr>
+            <tr><td><strong>Create item</strong></td><td>Adds a new item to a SharePoint list</td><td>All list column values; required columns must have values or the action fails</td></tr>
+            <tr><td><strong>Update item</strong></td><td>Modifies an existing list item — only specified fields are changed</td><td>ID of the item to update; only include columns you want to change</td></tr>
+            <tr><td><strong>Delete item</strong></td><td>Moves an item to the Recycle Bin</td><td>ID of the item</td></tr>
+            <tr><td><strong>Get list views</strong></td><td>Returns metadata about configured views in a list</td><td>Rarely needed in flows; useful for view-filtered data export scenarios</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>File and library actions</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Action</th><th>What it does</th><th>Key parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Create file</strong></td><td>Uploads a file to a document library; creates the file if it doesn't exist</td><td>Site Address, Folder Path (relative), File Name, File Content (binary)</td></tr>
+            <tr><td><strong>Get file content</strong></td><td>Downloads the binary content of a file</td><td>Site Address, File Identifier (path or ID from trigger)</td></tr>
+            <tr><td><strong>Get file metadata</strong></td><td>Returns metadata for a file (size, created date, modified by, etc.) without downloading content</td><td>File Identifier</td></tr>
+            <tr><td><strong>Update file properties</strong></td><td>Writes to the metadata columns of a document library item</td><td>Site Address, Library Name, ID, and any columns to update</td></tr>
+            <tr><td><strong>Get file metadata using path</strong></td><td>Same as Get file metadata but accepts a folder path string instead of file ID</td><td>File path relative to site root</td></tr>
+            <tr><td><strong>Copy file</strong></td><td>Copies a file to a new location (same or different site)</td><td>Current Path, Destination Path, Whether to overwrite</td></tr>
+            <tr><td><strong>Move or rename a file</strong></td><td>Moves a file or changes its name</td><td>Current Path, New Path</td></tr>
+            <tr><td><strong>Delete file</strong></td><td>Moves a file to the Recycle Bin</td><td>File Identifier</td></tr>
+            <tr><td><strong>Extract folder</strong></td><td>Unzips a ZIP archive into a specified folder</td><td>Source file path, Destination folder path</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Mastering the "Get Items" Filter Query</h2>
+      <p>The Filter Query parameter in "Get items" is where most Power Automate beginners lose time. It uses OData query syntax — a standard query language for REST APIs. Without it, "Get items" returns up to the Top Count limit regardless of what you actually need.</p>
+
+      <h3>Essential OData filter query examples</h3>
+      <div class="code-block">
+<span class="cm">// Filter by text column</span>
+<span class="kw">Status eq</span> <span class="str">'Pending Review'</span>
+
+<span class="cm">// Filter by number</span>
+<span class="kw">Amount gt</span> 500
+
+<span class="cm">// Filter by date (ISO 8601 format — use formatDateTime() expression)</span>
+<span class="kw">DueDate lt</span> <span class="str">'@{formatDateTime(addDays(utcNow(), 30), 'yyyy-MM-dd')}'</span>
+
+<span class="cm">// Filter by person column (use the Email sub-property)</span>
+<span class="kw">AssignedTo/EMail eq</span> <span class="str">'user@example.com'</span>
+
+<span class="cm">// Filter by choice column</span>
+<span class="kw">Department eq</span> <span class="str">'Finance'</span>
+
+<span class="cm">// Combine filters with AND</span>
+<span class="kw">Status eq</span> <span class="str">'Active'</span> <span class="kw">and Amount gt</span> 1000
+
+<span class="cm">// Combine filters with OR</span>
+<span class="kw">Status eq</span> <span class="str">'Pending'</span> <span class="kw">or Status eq</span> <span class="str">'In Review'</span>
+
+<span class="cm">// Filter items created in last 7 days</span>
+<span class="kw">Created gt</span> <span class="str">'@{formatDateTime(addDays(utcNow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')}'</span>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>Person column gotcha:</strong> SharePoint Person columns store user objects, not strings. To filter by a person field, you must use the sub-property notation: <code>AssignedTo/EMail eq 'user@domain.com'</code> — not <code>AssignedTo eq 'User Name'</code>. The display name filter will always fail.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/use-odata-query-operations-in-sharepoint-rest-requests" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; OData query operations in SharePoint REST — learn.microsoft.com</a>
+
+      <h2>The "Send an HTTP Request to SharePoint" Action</h2>
+      <p>This action is the most powerful in the SharePoint connector and should be in every advanced flow builder's toolkit. It lets you call SharePoint's REST API directly — accessing capabilities not exposed through the standard actions, including:</p>
+      <ul>
+        <li>Managing SharePoint groups and permissions programmatically</li>
+        <li>Accessing site properties, features, and navigation</li>
+        <li>Querying cross-list data with CAML queries</li>
+        <li>Working with content types, term store, and managed metadata</li>
+        <li>Reading and writing site columns and site content types</li>
+      </ul>
+
+      <h3>Example: Get all members of a SharePoint group</h3>
+      <div class="code-block">
+<span class="kw">Site Address:</span> https://yourorg.sharepoint.com/sites/yoursite
+<span class="kw">Method:</span> GET
+<span class="kw">URI:</span> _api/web/sitegroups/getbyname(<span class="str">'Owners'</span>)/users
+<span class="kw">Headers:</span>
+  Accept: application/json;odata=nometadata
+  Content-Type: application/json
+      </div>
+
+      <h3>Example: Update a site column value (managed metadata)</h3>
+      <div class="code-block">
+<span class="kw">Method:</span> POST
+<span class="kw">URI:</span> _api/web/lists/getbytitle(<span class="str">'Documents'</span>)/items(@{triggerOutputs()?['body/ID']})
+<span class="kw">Headers:</span>
+  Accept: application/json;odata=nometadata
+  Content-Type: application/json
+  IF-MATCH: *
+  X-HTTP-Method: MERGE
+<span class="kw">Body:</span>
+{
+  "Department": { "__metadata": {"type": "SP.Taxonomy.TaxonomyFieldValue"}, "Label": "Finance", "TermGuid": "your-term-guid", "WssId": -1 }
+}
+      </div>
+
+      <h2>Common Performance Patterns</h2>
+
+      <h3>Use "Get items" with Top Count to limit results</h3>
+      <p>Set the Top Count to the minimum number you actually need. Default is 100; maximum is 5,000 per call. If you need more than 5,000 items, use pagination: enable the "Pagination" option in the action's Settings tab, which automatically handles multi-page retrieval.</p>
+
+      <h3>Use "Select" to reduce payload size</h3>
+      <p>By default, "Get items" returns all columns for every item, including internal system columns. Use the "Select Columns" parameter to specify only the columns your flow actually needs — this significantly reduces the payload size and speeds up large list queries:</p>
+      <div class="code-block">
+<span class="cm">// Select only the columns you need (comma-separated internal names)</span>
+<span class="str">ID,Title,Status,DueDate,AssignedTo/EMail,AssignedTo/Title</span>
+<span class="cm">// For person columns, also add to Expand: AssignedTo</span>
+      </div>
+
+      <h3>Avoid "Apply to each" on large result sets</h3>
+      <p>Power Automate processes "Apply to each" loops sequentially by default (one item at a time). For large result sets this is slow. Enable <strong>concurrency</strong> in the loop's Settings tab (up to 50 concurrent iterations) — but be careful: concurrent SharePoint writes can cause throttling. Test with 5–10 concurrent iterations first.</p>
+
+      <div class="art-cta-box">
+        <h3>Struggling with Power Automate performance or complexity?</h3>
+        <p>OceanCloud's Power Platform team can review your existing flows, identify inefficiencies, and rebuild them with production-grade patterns — or design new flows from your requirements.</p>
+        <a href="contact" class="btn btn-primary">Book a Flow Review</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-automation-ideas" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">10 SharePoint Automation Ideas Using Power Automate</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-approval-workflow" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">How to Build a SharePoint Approval Workflow</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-workflow-migration" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">Replace Legacy SharePoint Workflows with Power Automate</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

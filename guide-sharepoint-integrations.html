@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Best SharePoint Integrations: Teams, Power BI, Salesforce, ServiceNow &amp; Dynamics 365 | OceanCloud</title>
+  <meta name="description" content="How SharePoint integrates with Microsoft Teams, Power BI, Salesforce, ServiceNow, and Dynamics 365 — connector options, implementation patterns, and what each integration delivers." />
+  <meta name="keywords" content="sharepoint integration, sharepoint integration with teams, sharepoint integration with power bi, sharepoint integration with salesforce, sharepoint servicenow integration, sharepoint dynamics 365" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-integrations" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Best SharePoint Integrations: Teams, Power BI, Salesforce, ServiceNow &amp; Dynamics 365" />
+  <meta property="og:description" content="Integration patterns, connector options, and real-world outcomes for connecting SharePoint with Teams, Power BI, Salesforce, ServiceNow, and Dynamics 365." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-integrations" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-integrations#article",
+        "headline": "Best SharePoint Integrations: Teams, Power BI, Salesforce, ServiceNow and Dynamics 365",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-integrations",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Integration patterns, connector options, and real-world outcomes for connecting SharePoint with Teams, Power BI, Salesforce, ServiceNow, and Dynamics 365.",
+        "keywords": ["SharePoint integration", "SharePoint Teams integration", "SharePoint Power BI", "SharePoint Salesforce", "SharePoint ServiceNow", "SharePoint Dynamics 365"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites", "name": "Teams-connected sites in SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-embed-report-spo", "name": "Embed a Power BI report in SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/dynamics365/business-central/across-sharepoint-overview", "name": "SharePoint and Dynamics 365" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Integrations Guide", "item": "https://www.oceancloudconsults.com/guide-sharepoint-integrations" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(251,146,60,.12);color:#fb923c;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(251,146,60,.07);border-left:3px solid #fb923c;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#fed7aa;font-size:.92rem;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#a8d8ea;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(251,146,60,.12);color:#fb923c;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(251,146,60,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .int-block{border-top:1px solid rgba(255,255,255,.07);padding-top:40px;margin-top:40px;}
+  .int-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .int-logo{width:44px;height:44px;border-radius:10px;background:rgba(251,146,60,.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+  .int-title{font-size:1.15rem;font-weight:800;color:var(--white);}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#fb923c;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"251,146,60","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-orange" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(251,146,60,.18) 0%,rgba(251,146,60,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Integrations</span></nav>
+      <h1>Best SharePoint Integrations: <span class="grad-text">Teams, Power BI, Salesforce, ServiceNow &amp; Dynamics 365</span></h1>
+      <p>Connector options, integration patterns, and real-world outcomes for connecting SharePoint with the systems your business runs on.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Integration</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">11 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint works best not as a standalone document management system, but as the connective tissue between the tools your organisation runs on. Its native integrations with Microsoft Teams and Power BI are deep and built-in. Its integrations with Salesforce, ServiceNow, and Dynamics 365 are powerful but require planning. This guide covers all five — what each integration does, how to implement it, and the gotchas to avoid.</p>
+
+      <div class="int-block">
+        <div class="int-header">
+          <div class="int-logo">&#128172;</div>
+          <div class="int-title">SharePoint + Microsoft Teams</div>
+        </div>
+
+        <h3>The fundamental relationship</h3>
+        <p>SharePoint and Teams are not separate systems that integrate — they are architecturally unified. Every Microsoft Teams team automatically creates a SharePoint team site. The Files tab in every Teams channel maps directly to a document library folder in that SharePoint site. When users upload files to Teams, they are storing them in SharePoint. When IT admins manage SharePoint permissions on the underlying site, those permissions affect what Teams members can access in Files.</p>
+
+        <a href="https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Teams-connected sites in SharePoint — learn.microsoft.com</a>
+
+        <h3>What the integration delivers</h3>
+        <ul>
+          <li><strong>SharePoint tab in Teams:</strong> Add any SharePoint page, list, or document library as a tab in a Teams channel — users interact with SharePoint content without leaving Teams</li>
+          <li><strong>SharePoint news in Teams:</strong> SharePoint news posts from the intranet appear as notifications in Teams via Viva Connections or the SharePoint app</li>
+          <li><strong>File co-authoring:</strong> Files opened from the Teams Files tab open in Office for the Web with real-time co-authoring; comments and @mentions in the document notify team members in Teams chat</li>
+          <li><strong>Power Automate bridging:</strong> Teams-triggered flows can read/write SharePoint data; SharePoint-triggered flows can post to Teams channels — this is the most powerful integration pattern</li>
+        </ul>
+
+        <h3>Common configuration mistakes</h3>
+        <ul>
+          <li>Granting guest access in Teams without realising it also grants SharePoint site access</li>
+          <li>Deleting the underlying SharePoint site when archiving a Teams team — this permanently deletes all the team's files</li>
+          <li>Not restricting SharePoint sharing settings at the site level, allowing Teams members to create Anyone links for files the team owns</li>
+        </ul>
+      </div>
+
+      <div class="int-block">
+        <div class="int-header">
+          <div class="int-logo">&#128200;</div>
+          <div class="int-title">SharePoint + Power BI</div>
+        </div>
+
+        <h3>Two directions of integration</h3>
+        <p>The SharePoint-Power BI integration works in both directions: Power BI can use SharePoint lists as a data source to build reports, and Power BI reports can be embedded directly into SharePoint pages.</p>
+
+        <h3>Power BI reports embedded in SharePoint</h3>
+        <p>The Power BI web part lets you embed any published Power BI report or dashboard directly into a SharePoint page. The embedded report respects Power BI Row-Level Security (RLS) — each viewer sees only the data they have permission to see in Power BI, regardless of what SharePoint permissions they have. Implementation:</p>
+        <ol>
+          <li>Publish the report to a Power BI workspace (not "My workspace")</li>
+          <li>On the SharePoint page, add the Power BI web part</li>
+          <li>Paste the report URL from Power BI's browser address bar into the web part</li>
+          <li>Users viewing the page must have a Power BI Pro or Premium Per User licence to see the embedded report</li>
+        </ol>
+
+        <a href="https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-embed-report-spo" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Embed a Power BI report in SharePoint Online — learn.microsoft.com</a>
+
+        <h3>SharePoint lists as Power BI data sources</h3>
+        <p>Power BI Desktop's SharePoint Online List connector lets you import or directquery SharePoint list data for reporting. Useful for tracking approval volumes, project status distributions, contract expiry timelines, and other structured data that lives in SharePoint lists. Limitations: the SharePoint List connector is not the most performant for large lists (over 5,000 items); for high-volume data, consider syncing SharePoint list data to Dataverse or Azure SQL and querying that instead.</p>
+      </div>
+
+      <div class="int-block">
+        <div class="int-header">
+          <div class="int-logo">&#9729;&#65039;</div>
+          <div class="int-title">SharePoint + Salesforce</div>
+        </div>
+
+        <h3>Why organisations integrate these two systems</h3>
+        <p>Salesforce is the system of record for customer relationships; SharePoint is the document and collaboration platform. The gap between them — sales teams emailing documents outside Salesforce, contracts stored locally, proposals not linked to CRM records — is where value is lost. Integration closes that gap.</p>
+
+        <h3>Integration patterns</h3>
+        <div class="art-table-wrap">
+          <table class="art-table">
+            <thead>
+              <tr><th>Pattern</th><th>Implementation</th><th>Best for</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Documents linked to Salesforce records</strong></td><td>Power Automate: when Salesforce opportunity reaches a stage, auto-create a SharePoint site/folder and link the URL back to the CRM record as a custom field</td><td>Sales teams who need all deal documents (proposals, contracts, SOWs) organised by opportunity</td></tr>
+              <tr><td><strong>Contract approval in SharePoint → Salesforce update</strong></td><td>Power Automate: when SharePoint document is approved, update Salesforce opportunity status and attach the document reference</td><td>Legal/sales handoffs; ensuring CRM reflects actual contract status</td></tr>
+              <tr><td><strong>Salesforce data in SharePoint pages</strong></td><td>Custom SharePoint web part or Power Apps embedded in SharePoint pulls CRM data via Salesforce connector</td><td>Account management pages showing live CRM data alongside SharePoint documents</td></tr>
+              <tr><td><strong>Bidirectional sync</strong></td><td>Azure Logic Apps with Salesforce and SharePoint connectors for enterprise-grade sync with error handling and retry</td><td>Large organisations needing reliable, high-volume data synchronisation</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="int-block">
+        <div class="int-header">
+          <div class="int-logo">&#128736;&#65039;</div>
+          <div class="int-title">SharePoint + ServiceNow</div>
+        </div>
+
+        <h3>Use cases</h3>
+        <p>ServiceNow is the dominant ITSM platform for enterprise IT service management. SharePoint integration adds document management, knowledge base access, and collaboration capabilities that ServiceNow lacks natively.</p>
+        <ul>
+          <li><strong>IT knowledge base in SharePoint, surfaced in ServiceNow:</strong> IT articles authored in SharePoint are indexed by Microsoft Search and can be surfaced via the ServiceNow Virtual Agent using a Copilot Studio integration</li>
+          <li><strong>Incident-to-document workflow:</strong> When a P1 incident is created in ServiceNow, Power Automate automatically creates a SharePoint incident workspace (site or folder) for the response team's documentation — post-incident review, runbooks, root cause analysis</li>
+          <li><strong>Change request documentation:</strong> When a ServiceNow change request is approved, Power Automate creates a SharePoint document set for implementation documentation, test results, and sign-off records — all linked back to the change record via URL</li>
+          <li><strong>Asset data synchronisation:</strong> ServiceNow's CMDB data (hardware assets, software licences) can be pushed to a SharePoint list for department-level visibility using scheduled Power Automate flows with the ServiceNow connector</li>
+        </ul>
+      </div>
+
+      <div class="int-block">
+        <div class="int-header">
+          <div class="int-logo">&#128257;</div>
+          <div class="int-title">SharePoint + Dynamics 365</div>
+        </div>
+
+        <h3>Native document management integration</h3>
+        <p>Dynamics 365 has native SharePoint document management built in. When enabled, each Dynamics 365 record (Account, Opportunity, Case, etc.) gets a corresponding SharePoint folder. Documents attached to that record in Dynamics are actually stored in SharePoint — giving users the full SharePoint experience (version history, co-authoring, search, retention) while working within Dynamics 365.</p>
+
+        <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/across-sharepoint-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint and Dynamics 365 — learn.microsoft.com</a>
+
+        <h3>Enabling the native integration</h3>
+        <ol>
+          <li>In Dynamics 365 Admin Centre, navigate to System &gt; Document Management &gt; SharePoint Integration</li>
+          <li>Enter the SharePoint site URL where documents will be stored</li>
+          <li>Enable document management for each Dynamics entity (Account, Lead, Case, etc.) you want to manage documents for</li>
+          <li>Dynamics creates folder structures in SharePoint matching the entity hierarchy</li>
+        </ol>
+
+        <h3>Beyond the native integration</h3>
+        <p>The native integration covers document storage. For richer scenarios — automated document generation from Dynamics templates, approval workflows that span Dynamics and SharePoint, or reporting across both systems — Power Automate and Power BI are the connective tools. The Dynamics 365 connector in Power Automate provides access to all standard Dynamics entities for reads, creates, updates, and deletes without custom code.</p>
+      </div>
+
+      <h2>Choosing Your Integration Approach</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Requirement</th><th>Recommended approach</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Simple, event-based triggers (when X happens in system A, do Y in system B)</td><td>Power Automate cloud flow with standard or premium connectors</td></tr>
+            <tr><td>High-volume, reliable bidirectional sync with retry and error handling</td><td>Azure Logic Apps</td></tr>
+            <tr><td>Real-time data from external system displayed in SharePoint UI</td><td>Power Apps canvas app embedded in SharePoint page</td></tr>
+            <tr><td>Native document management for Dynamics 365</td><td>Dynamics 365 built-in SharePoint document management</td></tr>
+            <tr><td>Complex transformation or on-premises connectivity</td><td>Azure Logic Apps with on-premises data gateway</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-cta-box">
+        <h3>Need to connect SharePoint with your business systems?</h3>
+        <p>OceanCloud designs and builds SharePoint integrations with Salesforce, ServiceNow, Dynamics 365, and any other system with an API — from simple Power Automate flows to enterprise Azure Logic Apps with full error handling and monitoring.</p>
+        <a href="contact" class="btn btn-primary">Discuss Your Integration</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-microsoft-graph-sharepoint" class="related-card">
+            <span class="rc-topic">Integration</span>
+            <span class="rc-title">Microsoft Graph and SharePoint: M365 Integrations for IT Admins</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-vs-teams" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint vs Microsoft Teams: When to Use Which</span>
+            <span class="rc-read">7 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-automation-ideas" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">10 SharePoint Automation Ideas Using Power Automate</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

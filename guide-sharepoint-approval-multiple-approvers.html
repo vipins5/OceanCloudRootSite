@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel | OceanCloud</title>
+  <meta name="description" content="Build SharePoint approval workflows with multiple approvers using Power Automate. Understand sequential vs parallel approval patterns, how to escalate, and when to use each model." />
+  <meta name="keywords" content="sharepoint approval workflow multiple approvers, power automate multiple approvers, parallel approval workflow, sequential approval workflow sharepoint, power automate approval chain" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-approval-multiple-approvers" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel" />
+  <meta property="og:description" content="Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate + SharePoint explained with implementation notes." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-approval-multiple-approvers" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-approval-multiple-approvers#article",
+        "headline": "SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-approval-multiple-approvers",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate and SharePoint.",
+        "keywords": ["SharePoint multiple approvers", "Power Automate sequential approval", "parallel approval workflow", "SharePoint approval chain"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals", "name": "Manage sequential approvals with Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals", "name": "Manage parallel approvals with Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approvals-overview", "name": "Overview of approvals in Power Automate" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Multiple Approvers Guide", "item": "https://www.oceancloudconsults.com/guide-sharepoint-approval-multiple-approvers" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#a8d8ea;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(74,222,128,.12);color:#4ade80;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(74,222,128,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .pattern-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:26px;margin:20px 0;}
+  .pattern-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  .pattern-badge{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .pattern-title{font-size:1rem;font-weight:800;color:var(--white);}
+  .pattern-card p{color:var(--text-mid);font-size:.9rem;line-height:1.8;margin:0 0 12px;}
+  .pattern-card ul{margin:0;color:var(--text-mid);font-size:.88rem;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .code-block{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px 20px;margin:18px 0;font-family:'Courier New',monospace;font-size:.82rem;color:#94a3b8;overflow-x:auto;line-height:1.7;}
+  .code-block .kw{color:#4ade80;}
+  .code-block .str{color:#86efac;}
+  .code-block .cm{color:#64748b;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Multiple Approvers</span></nav>
+      <h1>SharePoint Approval Workflows <span class="grad-text">with Multiple Approvers</span></h1>
+      <p>Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multi-approver pattern explained with Power Automate implementation guidance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">10 min read</span>
+      </div>
+
+      <p class="article-intro">Single-approver workflows handle the easy case. Real business approval processes almost always involve multiple people — a line manager, a finance sign-off, a compliance check, and sometimes a final executive approval. Power Automate supports every combination of these patterns, but choosing the wrong model for your business process creates bottlenecks, compliance gaps, or both. This guide breaks down every multi-approver pattern and when to use each.</p>
+
+      <h2>The Four Multi-Approver Patterns</h2>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Pattern</th><th>How it works</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Sequential</strong></td><td>Approver 1 must decide before the request reaches Approver 2. Each approval gate is completed in order.</td><td>Hierarchical sign-off: manager → director → VP. Any one rejection stops the chain.</td></tr>
+            <tr><td><strong>Parallel (all must approve)</strong></td><td>All approvers receive the request simultaneously. Everyone must approve for the outcome to be "Approved".</td><td>Multi-departmental sign-off: Finance AND Legal AND IT must all approve a contract.</td></tr>
+            <tr><td><strong>Parallel (first to respond)</strong></td><td>All approvers receive it simultaneously. The first person to respond determines the outcome.</td><td>Any one of a pool of approvers can sign off: any team lead can approve a purchase under £500.</td></tr>
+            <tr><td><strong>Conditional routing</strong></td><td>The approval path is determined by data in the request — value, category, risk level, or department determines who receives it.</td><td>Dynamic routing: expenses under £500 go to line manager; over £500 go to Finance Director.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Pattern 1: Sequential Approval Chain</h2>
+
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <span class="pattern-badge">Sequential</span>
+          <span class="pattern-title">Approval must happen in a defined order</span>
+        </div>
+        <p>Sequential approvals are built by chaining multiple "Start and wait for an approval" actions in series. Each action completes before the next begins. If any approver rejects, the flow terminates the chain and notifies the submitter.</p>
+        <p><strong>Power Automate implementation:</strong></p>
+        <ul>
+          <li>Add the first "Start and wait for an approval" action (Manager)</li>
+          <li>Add a Condition: if outcome = "Approve", add a second "Start and wait for an approval" action (Director) inside the Yes branch</li>
+          <li>Chain as many stages as needed, each nested inside the previous Yes branch</li>
+          <li>The No branch at each stage terminates the process and notifies the submitter of which stage rejected and why</li>
+        </ul>
+      </div>
+
+      <div class="art-callout">
+        <p><strong>Keep context visible:</strong> When a sequential request reaches stage 3, the approver at stage 3 should see who has already approved. Include a "Previous approvals" section in the approval Details field, built from a variable you accumulate through each stage: append "Approved by [Name] at [Time]" after each successful stage.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Manage sequential approvals with Power Automate — learn.microsoft.com</a>
+
+      <h2>Pattern 2: Parallel Approval — All Must Approve</h2>
+
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <span class="pattern-badge">Parallel · All Required</span>
+          <span class="pattern-title">Every approver must say yes</span>
+        </div>
+        <p>The "Start and wait for an approval" action supports multiple assignees natively. Set the <strong>Approval type</strong> to <strong>"Approve/Reject — Everyone must approve"</strong> and enter all approver email addresses (semicolon-separated or as an array). Power Automate sends the request to all approvers simultaneously and waits until every person has responded.</p>
+        <p>The outcome is "Approve" only if every assigned approver chooses Approve. If even one rejects, the outcome is "Reject" and the flow handles it accordingly.</p>
+        <ul>
+          <li>All approvers see the same request details and can add individual comments</li>
+          <li>The <code>responses</code> array in the approval output contains each person's decision and timestamp — useful for audit trails</li>
+          <li>Set a shared timeout so one non-responsive approver does not block the entire process indefinitely</li>
+        </ul>
+      </div>
+
+      <h3>Retrieving all responses for the audit log</h3>
+      <div class="code-block">
+<span class="cm">// Loop through all responses after parallel approval completes</span>
+<span class="kw">Apply to each:</span> outputs('Start_and_wait_for_an_approval')?['body/responses']
+  <span class="kw">Append to string variable</span> AuditLog:
+    <span class="str">"@{items('Apply_to_each')?['responder/displayName']}: @{items('Apply_to_each')?['approverResponse']} at @{items('Apply_to_each')?['requestDate']}\n"</span>
+<span class="cm">// Then write AuditLog variable to a SharePoint column or list item</span>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Manage parallel approvals with Power Automate — learn.microsoft.com</a>
+
+      <h2>Pattern 3: Parallel Approval — First to Respond</h2>
+
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <span class="pattern-badge">Parallel · First Responds</span>
+          <span class="pattern-title">Any one approver can decide</span>
+        </div>
+        <p>Set the Approval type to <strong>"Approve/Reject — First to respond"</strong>. The request goes to all listed approvers simultaneously, but the first person to respond — approve or reject — determines the outcome. All other pending responses are cancelled automatically.</p>
+        <p>This is ideal for approval pools where any qualified person can sign off: any team lead in a department, any on-call manager, or any member of a finance committee. It reduces bottlenecks caused by one specific approver being unavailable.</p>
+        <ul>
+          <li>The approver who responded is recorded in <code>responses[0]['responder']</code></li>
+          <li>Combine with manager group distribution lists so the pool automatically updates as team membership changes</li>
+          <li>Use this pattern to implement a "deputy approver" system — add both the primary approver and their deputy to the request; whichever is available responds first</li>
+        </ul>
+      </div>
+
+      <h2>Pattern 4: Conditional Routing by Value or Category</h2>
+
+      <p>Many business processes require different approval paths depending on the request's attributes. Power Automate handles this with Switch or nested Condition actions before the approval step.</p>
+
+      <h3>Example: expense approval routing by amount</h3>
+      <div class="code-block">
+<span class="kw">Switch</span> on: triggerOutputs()?['body/Amount']
+
+  <span class="kw">Case</span> &lt; 500:
+    <span class="cm">// Send to Line Manager only</span>
+    Start approval: assigned to = Manager email
+
+  <span class="kw">Case</span> 500–5000:
+    <span class="cm">// Sequential: Line Manager first, then Finance Lead</span>
+    Start approval: Manager → (if approved) → Finance Lead
+
+  <span class="kw">Default</span> (&gt; 5000):
+    <span class="cm">// Sequential: Manager → Finance Lead → CFO</span>
+    Start approval: Manager → Finance Lead → CFO
+      </div>
+
+      <p>The same pattern applies to routing by document type (contracts go to Legal, policy changes go to HR, technical specs go to IT Architecture), by risk level (low/medium/high risk requiring different approval tiers), or by geography (EMEA documents go to the EMEA compliance team).</p>
+
+      <h2>Handling Approval Delegation and Out-of-Office</h2>
+      <p>One of the most common production issues with multi-approver workflows is approvers going on leave without setting a delegate. Power Automate does not automatically reroute approvals when an approver is out of office.</p>
+
+      <h3>Options for managing delegation</h3>
+      <ul>
+        <li><strong>Power Automate Approvals delegation:</strong> Users can set approval delegates in the Power Automate approvals portal (flow.microsoft.com → Approvals → Delegate). When a delegate is set, all approval requests are forwarded to them automatically — no flow changes needed.</li>
+        <li><strong>Timeout escalation:</strong> Build a timeout on every approval action. When the timeout expires, re-send the approval to the approver's manager (retrieved via the Office 365 Users connector: "Get manager" action) rather than blocking indefinitely.</li>
+        <li><strong>Pool-based approvals:</strong> Where business rules allow, use the "First to respond" pattern with a pool of qualified approvers rather than locking to one individual — this naturally handles absence.</li>
+        <li><strong>Approval status visibility:</strong> Write the current approver and the timestamp the request was sent to a SharePoint column. This lets managers monitor their team's pending approvals without needing flow admin access.</li>
+      </ul>
+
+      <h2>Building an Audit Trail for Compliance</h2>
+      <p>Regulated industries (financial services, healthcare, legal, government) require a documented audit trail showing who approved what, when, and with what comments. Build this into every multi-approver workflow from the start.</p>
+
+      <h3>Audit trail implementation</h3>
+      <ul>
+        <li>Create a separate <strong>Approval History</strong> SharePoint list with columns: Document ID (lookup), Stage Number, Approver Name, Approver Email, Decision, Comments, Response Timestamp</li>
+        <li>After each approval stage completes, use "Create item" (SharePoint) to write a row to the Approval History list regardless of the decision</li>
+        <li>Use this list to power a Power BI report showing average approval cycle times by stage, approver, and document type</li>
+        <li>Set the Approval History list permissions to read-only for all users except the automation service account — ensuring the audit trail cannot be edited after the fact</li>
+      </ul>
+
+      <h2>Choosing the Right Pattern: Quick Decision Guide</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Business requirement</th><th>Recommended pattern</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hierarchical sign-off — each level must see previous approval</td><td>Sequential chain</td></tr>
+            <tr><td>Multiple departments must all agree</td><td>Parallel — everyone must approve</td></tr>
+            <tr><td>Any qualified person in a team can approve</td><td>Parallel — first to respond</td></tr>
+            <tr><td>Approval path depends on value, risk, or category</td><td>Conditional routing + appropriate pattern per tier</td></tr>
+            <tr><td>Compliance requires documented multi-stage sign-off</td><td>Sequential with audit log at each stage</td></tr>
+            <tr><td>Speed is critical; bottleneck risk is high</td><td>Parallel first-to-respond or small sequential chain with tight timeouts</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-cta-box">
+        <h3>Need a complex multi-approver workflow?</h3>
+        <p>OceanCloud designs and builds multi-stage SharePoint approval workflows with conditional routing, escalation, delegation, and compliance audit trails — typically in 1–2 weeks.</p>
+        <a href="contact" class="btn btn-primary">Talk to a Workflow Specialist</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-approval-workflow" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">How to Build a SharePoint Approval Workflow with Power Automate</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-automation-ideas" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">10 SharePoint Automation Ideas Using Power Automate</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-power-automate-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Site Should Have</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

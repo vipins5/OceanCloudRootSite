@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint Permissions Best Practices for Secure Microsoft 365 Sites | OceanCloud</title>
+  <meta name="description" content="SharePoint permissions best practices for security-conscious organisations — least privilege principles, group-based access, external sharing controls, audit methodology, and common mistakes." />
+  <meta name="keywords" content="sharepoint permissions best practices, sharepoint permissions explained, sharepoint permissions audit, sharepoint security best practices, sharepoint access control, sharepoint oversharing" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-permissions-best-practices" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="SharePoint Permissions Best Practices for Secure Microsoft 365 Sites" />
+  <meta property="og:description" content="Least privilege, group-based access, external sharing controls, audit methodology, and the top 10 SharePoint permission mistakes — a security-focused deep dive." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-permissions-best-practices" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-permissions-best-practices#article",
+        "headline": "SharePoint Permissions Best Practices for Secure Microsoft 365 Sites",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-permissions-best-practices",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Least privilege, group-based access, external sharing controls, audit methodology, and the top SharePoint permission mistakes — a security-focused guide.",
+        "keywords": ["SharePoint permissions best practices", "SharePoint security", "SharePoint access control", "SharePoint permissions audit"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/default-sharepoint-groups", "name": "Default SharePoint groups" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview", "name": "External sharing overview for SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management", "name": "SharePoint Advanced Management" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Permissions Best Practices", "item": "https://www.oceancloudconsults.com/guide-sharepoint-permissions-best-practices" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(0,180,216,.12);color:#00b4d8;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#a8d8ea;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(0,180,216,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .bp-list{list-style:none;padding:0;margin:0 0 20px;}
+  .bp-list li{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .bp-list li:last-child{border-bottom:none;}
+  .bp-num{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:800;font-size:.8rem;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .bp-body strong{display:block;color:var(--white);font-size:.92rem;margin-bottom:4px;}
+  .bp-body p{margin:0;color:var(--text-mid);font-size:.88rem;line-height:1.8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#00b4d8;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Permissions Best Practices</span></nav>
+      <h1>SharePoint Permissions <span class="grad-text">Best Practices</span> for Secure Microsoft 365 Sites</h1>
+      <p>Least privilege, group-based access, external sharing controls, audit methodology, and the top mistakes that create security liabilities — a definitive security-focused guide.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">11 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint permissions are deceptively easy to get wrong. The platform makes it trivially simple to share content — which is by design — but that ease of sharing, without governance, creates the oversharing problems that result in data breaches, compliance failures, and Copilot AI surfacing documents to people who should never have seen them. This guide sets out the permission design principles, structural patterns, and audit approaches that prevent those problems.</p>
+
+      <h2>Principle 1: Always Start with Least Privilege</h2>
+      <p>The least privilege principle means granting users the minimum access required to do their job — no more. In SharePoint, this translates to concrete decisions at every level of the permission hierarchy:</p>
+      <ul>
+        <li><strong>Default new users to Read, not Contribute:</strong> Most employees who consume content from a SharePoint site do not need to create, edit, or delete items. Read-only access is appropriate until there is a specific need for more.</li>
+        <li><strong>Reserve Full Control for site owners only:</strong> Full Control allows a user to change permissions, which means they can grant themselves or others access to anything on the site. This should be limited to 1–2 designated site owners, not the 8 people who happened to be in the room when the site was created.</li>
+        <li><strong>Start with site-level permissions; break inheritance only when necessary:</strong> Most access control should be managed at the site level. Breaking inheritance for individual libraries, folders, or items creates a complex, unauditable permission structure. If you need to restrict access to a subset of content regularly, consider whether it belongs in a separate site instead.</li>
+      </ul>
+
+      <h2>Principle 2: Use Groups, Not Individual Accounts</h2>
+      <p>Granting access to individual user accounts — rather than Azure AD groups or SharePoint groups — is the most common SharePoint permission anti-pattern. It creates three problems:</p>
+      <ol>
+        <li><strong>Leaver management:</strong> When an employee leaves, their individual access grants across dozens of sites must be manually removed. Group-based access is automatically removed when the user is removed from the group.</li>
+        <li><strong>Auditability:</strong> Reviewing who has access to a site requires inspecting every individual grant rather than reviewing a small set of groups with clear, named membership.</li>
+        <li><strong>Scalability:</strong> Managing access for 500 users across 50 sites requires 25,000 individual grants. Managing it with 10 groups requires 500 group memberships and 50 site permission configurations — manageable by any administrator.</li>
+      </ol>
+
+      <div class="art-callout">
+        <p><strong>Best practice:</strong> For every SharePoint site, use three Azure AD groups: Site Owners, Site Members, and Site Visitors. Map these directly to the SharePoint Owners, Members, and Visitors groups. Manage all access by adding users to the Azure AD groups — never by adding individuals directly to SharePoint groups.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/default-sharepoint-groups" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Default SharePoint groups — learn.microsoft.com</a>
+
+      <h2>Principle 3: Control External Sharing at Every Level</h2>
+      <p>SharePoint's external sharing settings operate at three levels: tenant, site collection, and item/library. Each lower level can only be as permissive as the level above it — you cannot enable Anyone links for a site if the tenant setting disables them.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Sharing setting</th><th>Who can access</th><th>Recommended use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Anyone (anonymous)</strong></td><td>Any person with the link — no sign-in required; not tracked in audit logs as a named user</td><td>Avoid entirely for business data; acceptable for public-facing marketing assets only</td></tr>
+            <tr><td><strong>New and existing guests</strong></td><td>External users; new guests must verify identity before first access</td><td>Client collaboration sites, partner project sites with appropriate governance</td></tr>
+            <tr><td><strong>Existing guests only</strong></td><td>External users already in the Azure AD directory</td><td>IT-controlled guest access; new guests require an Azure AD invite from IT</td></tr>
+            <tr><td><strong>Only people in your organisation</strong></td><td>Internal M365 users only; no external access possible</td><td>Default setting for all internal sites; HR, Finance, Legal, Executive sites</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Recommended tenant sharing policy</h3>
+      <p>Set the tenant default to <strong>"New and existing guests"</strong> at most. Then disable external sharing at the site level for all internal sites (HR, Finance, Legal, IT, Executive), leaving it enabled only for sites with a legitimate collaboration need. Use SharePoint Advanced Management's Data Access Governance reports monthly to identify sites where sharing settings have drifted from the baseline.</p>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; External sharing overview for SharePoint — learn.microsoft.com</a>
+
+      <h2>The 10 SharePoint Permission Best Practices</h2>
+
+      <ul class="bp-list">
+        <li>
+          <div class="bp-num">1</div>
+          <div class="bp-body">
+            <strong>Assign a named site owner to every site</strong>
+            <p>Sites without a designated owner accumulate access grants that no one reviews. Every SharePoint site must have at least one named human owner (not a shared mailbox or service account) responsible for quarterly access reviews.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">2</div>
+          <div class="bp-body">
+            <strong>Set organisation-wide sharing link default to "Specific people"</strong>
+            <p>The default sharing link type — what appears when a user clicks Share — defaults to "Anyone with the link" in many tenants. Change the tenant default to "Specific people" or "People in your organisation" so the secure option is the path of least resistance.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">3</div>
+          <div class="bp-body">
+            <strong>Set link expiry on Anyone links</strong>
+            <p>If Anyone links are permitted for specific sites, configure a mandatory expiry (30 days is standard). Expired links require re-sharing — which creates a natural governance checkpoint.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">4</div>
+          <div class="bp-body">
+            <strong>Never break inheritance for individual items</strong>
+            <p>Item-level unique permissions (broken inheritance on a single file or list item) are invisible in the site's permission summary, nearly impossible to audit at scale, and frequently forgotten. Use folder or library-level permissions instead, or create a separate site for genuinely restricted content.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">5</div>
+          <div class="bp-body">
+            <strong>Run quarterly access reviews for sensitive sites</strong>
+            <p>At minimum, HR, Finance, Legal, and Executive sites should have their member lists reviewed every 90 days. Use SharePoint Advanced Management's Site Access Review feature to automate the request — owners receive an email with a list of current members and confirm or revoke each one.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">6</div>
+          <div class="bp-body">
+            <strong>Remove guest accounts immediately on relationship end</strong>
+            <p>Guest accounts in Azure AD persist until explicitly removed. An ex-client's employee with guest access to your SharePoint client site retains that access indefinitely unless removed. Build a process: when a client relationship ends, an offboarding checklist includes removing guest accounts.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">7</div>
+          <div class="bp-body">
+            <strong>Classify sites by sensitivity and apply baseline controls</strong>
+            <p>Create three site classifications: Public (internal), Confidential, and Highly Confidential. Define the baseline sharing settings, guest access rules, and sensitivity label requirements for each. Apply the classification to every site at creation and enforce it via SharePoint Advanced Management policies.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">8</div>
+          <div class="bp-body">
+            <strong>Monitor the Sharing reports in the Admin Centre</strong>
+            <p>The SharePoint Admin Centre's Active Sites report shows the external sharing status of every site. Review it monthly. Sites where external sharing is enabled that were not expected to have it are a governance failure signal.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">9</div>
+          <div class="bp-body">
+            <strong>Apply Purview sensitivity labels to enforce technical controls</strong>
+            <p>Sensitivity labels can enforce site-level access policies that cannot be bypassed through the SharePoint UI — including disabling Anyone links for Confidential-labelled sites, enforcing download restrictions for Highly Confidential content, and preventing sharing with external users regardless of site-level settings.</p>
+          </div>
+        </li>
+        <li>
+          <div class="bp-num">10</div>
+          <div class="bp-body">
+            <strong>Prepare permissions before enabling Microsoft 365 Copilot</strong>
+            <p>Copilot respects SharePoint permissions exactly — if a user has access (even through a forgotten sharing link), Copilot will use that content in its responses. Run the oversharing audit before Copilot rollout, not after. See our <a href="guide-sharepoint-copilot-ready">SharePoint Copilot Readiness guide</a> for the full methodology.</p>
+          </div>
+        </li>
+      </ul>
+
+      <h2>How to Conduct a SharePoint Permissions Audit</h2>
+      <p>A permissions audit should answer three questions: Who has access to what? How did they get it? Is that access still appropriate?</p>
+
+      <h3>Audit methodology</h3>
+      <ol>
+        <li><strong>Inventory all sites:</strong> Export a list of all SharePoint sites and their owners from the SharePoint Admin Centre (Active Sites view, export to CSV)</li>
+        <li><strong>Identify high-risk sites:</strong> Flag sites with "External sharing enabled", sites with "Everyone" or "Everyone except external users" in their member lists, and sites with no owner activity in 90+ days</li>
+        <li><strong>Run SAM Data Access Governance reports:</strong> SharePoint Advanced Management provides pre-built oversharing reports — Anyone links, Org-wide sharing links, and sensitivity label coverage. These are the fastest way to identify high-risk content at scale.</li>
+        <li><strong>Review broken inheritance:</strong> Use PnP PowerShell's <code>Get-PnPListItem</code> with permission expansion to find list items and folders with unique permissions — these are the blind spots in most permission reviews</li>
+        <li><strong>Validate external guest accounts:</strong> Export all Azure AD guest users and cross-reference against active business relationships; remove orphaned guest accounts</li>
+        <li><strong>Document findings and prioritise remediation:</strong> Score findings by risk (sensitivity of content × breadth of unintended access × likelihood of exploitation) and build a prioritised remediation plan</li>
+      </ol>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/advanced-management" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint Advanced Management documentation — learn.microsoft.com</a>
+
+      <div class="art-callout warning">
+        <p><strong>Audit cadence:</strong> An annual SharePoint permissions audit is the minimum for any organisation. Quarterly audits are recommended for organisations in regulated industries or those deploying Microsoft 365 Copilot. Use SharePoint Advanced Management's automated access reviews to make quarterly reviews operationally feasible at scale.</p>
+      </div>
+
+      <div class="art-cta-box">
+        <h3>Need a SharePoint permissions audit?</h3>
+        <p>OceanCloud conducts SharePoint permissions audits using SharePoint Advanced Management, PnP PowerShell, and Microsoft Purview — delivering a risk-scored findings report with a prioritised remediation plan. Typical engagement: 2–3 weeks.</p>
+        <a href="contact" class="btn btn-primary">Request a Permissions Audit</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-permissions" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions: A Complete Guide</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-copilot-ready" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">How to Prepare Your SharePoint for Microsoft Copilot</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-intranet" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">Build a Modern SharePoint Intranet: Step-by-Step Guide</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>
