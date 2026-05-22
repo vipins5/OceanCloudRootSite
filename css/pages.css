@@ -55,12 +55,12 @@
 }
 
 .article-hero .page-hero-content {
-  max-width: 940px !important;
+  max-width: 900px !important;
 }
 
 .article-hero h1 {
-  max-width: 940px !important;
-  font-size: clamp(2.2rem, 3.6vw, 3.85rem) !important;
+  max-width: 900px !important;
+  font-size: clamp(2.15rem, 3.25vw, 3.65rem) !important;
   line-height: 1.1 !important;
   letter-spacing: -.032em !important;
   overflow-wrap: normal;
@@ -79,7 +79,7 @@
 
 @media (min-width: 1280px) {
   .article-hero h1 {
-    font-size: clamp(2.35rem, 3.15vw, 3.8rem) !important;
+    font-size: clamp(2.3rem, 2.9vw, 3.6rem) !important;
   }
 }
 
