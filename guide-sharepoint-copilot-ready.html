@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>How to Prepare Your SharePoint for Microsoft Copilot | OceanCloud</title>
+  <meta name="description" content="Get SharePoint Copilot-ready: audit oversharing with SharePoint Advanced Management, enable Restricted SharePoint Search, apply Purview sensitivity labels, and validate search quality." />
+  <meta name="keywords" content="SharePoint Copilot ready, Microsoft Copilot SharePoint preparation, SharePoint Advanced Management, Restricted SharePoint Search, Purview sensitivity labels, Copilot oversharing" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-sharepoint-copilot-ready" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="How to Prepare Your SharePoint for Microsoft Copilot" />
+  <meta property="og:description" content="Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and clean stale content — the SharePoint readiness checklist before Copilot rollout." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-sharepoint-copilot-ready" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-sharepoint-copilot-ready#article",
+        "headline": "How to Prepare Your SharePoint for Microsoft Copilot",
+        "url": "https://www.oceancloudconsults.com/guide-sharepoint-copilot-ready",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and validate search quality — the SharePoint readiness checklist before Copilot rollout.",
+        "keywords": ["SharePoint Copilot", "Copilot readiness", "SharePoint Advanced Management", "Restricted SharePoint Search", "Purview sensitivity labels"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management", "name": "SharePoint Advanced Management" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search", "name": "Restricted SharePoint Search" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels", "name": "Microsoft Purview Sensitivity Labels" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Copilot Readiness", "item": "https://www.oceancloudconsults.com/guide-sharepoint-copilot-ready" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(168,85,247,.12);color:#c084fc;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(168,85,247,.07);border-left:3px solid #c084fc;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#d4b8f0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#a8d8ea;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(168,85,247,.12);color:#c084fc;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(168,85,247,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(168,85,247,.18);color:#c084fc;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#a78bfa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .readiness-score{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0;}
+  .rs-item{flex:1;min-width:140px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px;text-align:center;}
+  .rs-label{font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+  .rs-val{font-size:1.5rem;font-weight:800;color:#c084fc;}
+  .rs-note{font-size:.75rem;color:var(--text-dim);margin-top:4px;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"168,85,247","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-purple" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-cyan"   style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>SharePoint Copilot Readiness</span></nav>
+      <h1>How to Prepare Your SharePoint <span class="grad-text">for Microsoft Copilot</span></h1>
+      <p>The governance and data-quality steps every organisation must complete before enabling Copilot — so the AI finds the right content and never surfaces what it shouldn't.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Copilot</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">11 min read</span>
+      </div>
+
+      <p class="article-intro">Microsoft 365 Copilot is grounded in your organisation's data via the Microsoft 365 Graph. That means it can only be as good as your SharePoint is clean, well-governed, and correctly permissioned. Organisations that skip this preparation phase experience two painful outcomes: Copilot surfaces confidential documents to people who shouldn't see them, and it returns poor answers because it's searching through years of outdated, redundant, and trivial content. This guide walks through every remediation step — in the right order — to get SharePoint Copilot-ready.</p>
+
+      <div class="art-callout warning">
+        <p><strong>Why this matters:</strong> Copilot respects M365 permissions exactly. If a user has access to a file through an overly broad sharing link or an overpermissioned SharePoint group, Copilot will include that file's content in responses to that user's queries — even if the access was never intentional. Fixing permissions before Copilot launch is not optional.</p>
+      </div>
+
+      <h2>Step 1: Run an Oversharing Audit with SharePoint Advanced Management</h2>
+      <p>SharePoint Advanced Management (SAM) is a Microsoft 365 add-on ($3/user/month as of 2026) that provides the tooling enterprises need to understand and remediate oversharing at scale. Before enabling Copilot for any user, run a full oversharing assessment using SAM's built-in reports.</p>
+
+      <h3>Key SAM reports to run</h3>
+      <ul>
+        <li><strong>Data Access Governance (DAG) reports:</strong> Show which sites have "Anyone" links active, how many external users have access, and which sites have oversharing signals. Available from the SharePoint Admin Centre under Reports &gt; Data Access Governance.</li>
+        <li><strong>Sharing links report:</strong> Surfaces all active Anyone links across your tenant. Anyone links bypass permissions entirely — any person with the link can access the content regardless of Azure AD membership.</li>
+        <li><strong>Oversharing baseline report:</strong> A site-by-site summary showing the percentage of content accessible to everyone in the organisation vs. specific groups.</li>
+        <li><strong>Site access review:</strong> Sends automated review requests to site owners asking them to confirm or revoke access for listed users — useful for scaling governance across hundreds of sites.</li>
+      </ul>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/advanced-management" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint Advanced Management documentation — learn.microsoft.com/en-us/sharepoint/advanced-management</a>
+
+      <h3>Oversharing remediation priorities</h3>
+      <p>Not all oversharing is equally risky for Copilot. Prioritise in this order:</p>
+      <ol>
+        <li>Disable or expire all tenant-wide "Anyone" (anonymous) sharing links on sensitive sites</li>
+        <li>Audit "Organisation-wide" sharing links — these grant access to every M365 user in the tenant</li>
+        <li>Remove ex-employee guest accounts still in SharePoint groups</li>
+        <li>Review sites with "Everyone" or "Everyone except external users" in their member lists</li>
+        <li>Identify and restrict sites with highly sensitive content (HR, Finance, Legal, Executive)</li>
+      </ol>
+
+      <h2>Step 2: Enable Restricted SharePoint Search</h2>
+      <p>Restricted SharePoint Search (RSS) is a tenant-level setting that limits which SharePoint sites Copilot can search across — even for users who technically have permission to access them. This is the single most important Copilot governance control available and Microsoft's official recommendation for most organisations during Copilot rollout.</p>
+
+      <h3>How Restricted SharePoint Search works</h3>
+      <p>When RSS is enabled, Copilot and Microsoft 365 Chat only return results from a curated list of up to 100 SharePoint sites — plus each user's own OneDrive and any sites they've recently visited. By default, Copilot can search any site the user has access to across the entire tenant. RSS reduces the blast radius while you complete your broader governance remediation.</p>
+
+      <div class="art-callout info">
+        <p><strong>Recommended approach:</strong> Start with RSS enabled and a list of your 20–30 highest-quality, well-governed sites. Expand the allowed list monthly as you validate each site's content quality and permissions. This gives users a great Copilot experience from day one while giving IT time to audit the rest of the tenant.</p>
+      </div>
+
+      <h3>Configuring RSS</h3>
+      <p>RSS is configured via PowerShell using the SharePoint Online Management Shell:</p>
+      <ul>
+        <li>Connect to SharePoint Online as a Global Administrator or SharePoint Administrator</li>
+        <li>Run <code>Set-SPOTenantRestrictedSearchMode -Mode Enabled</code> to enable RSS</li>
+        <li>Add sites with <code>Add-SPOTenantRestrictedSearchAllowedList -SiteUrl "https://yourorg.sharepoint.com/sites/sitename"</code></li>
+        <li>View the current allowed list with <code>Get-SPOTenantRestrictedSearchAllowedList</code></li>
+      </ul>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Restricted SharePoint Search documentation — learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search</a>
+
+      <h2>Step 3: Apply Microsoft Purview Sensitivity Labels</h2>
+      <p>Sensitivity labels are metadata tags applied to content that carry protection policies — encryption, access restrictions, visual markings, and DLP (Data Loss Prevention) rules. For Copilot, sensitivity labels serve two critical functions: they tell Copilot which content is confidential (and how to handle it), and they prevent Copilot from including encrypted content in responses for users without decryption rights.</p>
+
+      <h3>Planning your label taxonomy</h3>
+      <p>Microsoft recommends starting with a simple, widely understood taxonomy rather than a complex hierarchy. A common starting point:</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Label</th><th>Typical use</th><th>Copilot behaviour</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Public</strong></td><td>Marketing materials, public docs</td><td>Fully searchable, includable in responses</td></tr>
+            <tr><td><strong>General</strong></td><td>Day-to-day business content</td><td>Searchable for all org users</td></tr>
+            <tr><td><strong>Confidential</strong></td><td>Internal projects, strategic plans</td><td>Only surfaced to users with access; label visible in responses</td></tr>
+            <tr><td><strong>Highly Confidential</strong></td><td>HR, legal, executive, financial</td><td>Encrypted; Copilot cannot include in responses without decryption rights</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Auto-labelling vs manual labelling</h3>
+      <p>Manual labelling by end users is unreliable at scale. Supplement it with:</p>
+      <ul>
+        <li><strong>Auto-labelling policies:</strong> Purview scans SharePoint content and applies labels based on content matches — credit card numbers, national ID patterns, keywords like "board only" or "attorney-client privilege"</li>
+        <li><strong>Default site sensitivity labels:</strong> Assign a default label to entire SharePoint sites (e.g., all HR site content defaults to Confidential) so new documents are labelled automatically</li>
+        <li><strong>Client-side auto-labelling:</strong> Office apps suggest labels based on document content as users work</li>
+      </ul>
+
+      <a href="https://learn.microsoft.com/en-us/purview/sensitivity-labels" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft Purview Sensitivity Labels documentation — learn.microsoft.com/en-us/purview/sensitivity-labels</a>
+
+      <h2>Step 4: Clean Stale and Low-Quality Content</h2>
+      <p>Copilot searches across your SharePoint environment and synthesises answers from what it finds. If your SharePoint is full of outdated policy documents from 2018, duplicated project folders, and half-finished draft files that were never deleted, Copilot will confidently cite them in its responses — and those responses will be wrong.</p>
+
+      <h3>Identifying stale content</h3>
+      <p>Use SharePoint's built-in site storage reports and the Microsoft 365 Usage Analytics workbook to identify high-volume, low-activity areas:</p>
+      <ul>
+        <li>Documents not accessed in 18+ months with no ongoing project association</li>
+        <li>Sites with zero activity in the past 6 months (candidate for archival)</li>
+        <li>Multiple near-identical documents in the same library (duplicates from iterative saves)</li>
+        <li>Personal OneDrive content shared broadly that should be in a team site</li>
+      </ul>
+
+      <h3>Content lifecycle governance</h3>
+      <p>After initial cleanup, put forward-looking governance in place to prevent re-accumulation:</p>
+      <ul>
+        <li>Set retention labels on document libraries to automatically expire and delete content after defined periods (Purview Compliance Portal)</li>
+        <li>Designate site owners responsible for quarterly content reviews</li>
+        <li>Use Power Automate flows to flag documents unmodified for 12 months and notify owners — see our <a href="guide-power-automate-sharepoint">Power Automate guide</a> for the stale content alert flow</li>
+        <li>Establish an official "archive" site collection for completed projects rather than leaving old content in active sites</li>
+      </ul>
+
+      <h2>Step 5: Improve Metadata and Content Searchability</h2>
+      <p>Copilot uses the same Microsoft Search index that powers SharePoint's search experience. The richer your metadata, the more accurately Copilot can retrieve and contextualise your content. This step is often skipped but significantly improves Copilot response quality.</p>
+
+      <h3>Metadata improvements to prioritise</h3>
+      <ul>
+        <li><strong>Document titles:</strong> Many SharePoint documents have generic names like "Final v3 REVISED.docx". Rename key documents with descriptive, searchable titles.</li>
+        <li><strong>Managed metadata:</strong> Use the SharePoint Term Store to create controlled vocabularies for Department, Project, Content Type, and Status columns. These become filterable facets in search and give Copilot structured context.</li>
+        <li><strong>Page descriptions:</strong> SharePoint pages with empty or thin descriptions score poorly in search. Add meaningful descriptions to all important pages.</li>
+        <li><strong>Content types:</strong> Associate document libraries with content types so Copilot understands what kind of document it's reading (Policy, Procedure, Report, Project Brief, etc.).</li>
+      </ul>
+
+      <h2>Step 6: Validate Search Quality Before Copilot Launch</h2>
+      <p>Copilot answers are only as good as what Microsoft Search surfaces. Before enabling Copilot, run search quality validation tests using queries representative of what your employees will ask.</p>
+
+      <h3>Search quality testing methodology</h3>
+      <ol>
+        <li>Identify 20–30 representative employee queries across key use cases (HR policies, project documentation, product specs, process guides)</li>
+        <li>Run each query in Microsoft Search and assess whether the top 5 results are accurate and current</li>
+        <li>For queries returning poor results, investigate: is the content missing? Poorly titled? Not crawled? Overly restricted?</li>
+        <li>Use the SharePoint Admin Centre's Search Configuration to set up promoted results (Best Bets) for high-priority queries</li>
+        <li>Add synonyms in Microsoft Search admin for common internal acronyms and product names</li>
+      </ol>
+
+      <div class="art-callout">
+        <p><strong>Copilot readiness benchmark:</strong> Microsoft recommends that at least 70% of your test queries return accurate top-3 results before Copilot is enabled for that user segment. If you're below 70%, search quality remediation — not AI enablement — should be the priority.</p>
+      </div>
+
+      <h2>The Copilot Readiness Checklist</h2>
+      <ul class="art-steps">
+        <li>
+          <div class="art-step-num">&#10003;</div>
+          <div class="art-step-body">
+            <strong>Oversharing audit complete</strong>
+            <p>SAM Data Access Governance reports run; Anyone links reviewed; ex-employee guests removed; high-risk sites identified and remediated.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">&#10003;</div>
+          <div class="art-step-body">
+            <strong>Restricted SharePoint Search configured</strong>
+            <p>RSS enabled at tenant level; initial allowed-site list of 20–30 curated, high-quality sites defined and added.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">&#10003;</div>
+          <div class="art-step-body">
+            <strong>Sensitivity labels deployed</strong>
+            <p>Label taxonomy agreed with Information Security; auto-labelling policies active; at least Highly Confidential sites have encryption enforced.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">&#10003;</div>
+          <div class="art-step-body">
+            <strong>Stale content removed</strong>
+            <p>Sites inactive for 6+ months archived; documents older than 3 years reviewed; duplicate content eliminated from key libraries.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">&#10003;</div>
+          <div class="art-step-body">
+            <strong>Metadata enriched</strong>
+            <p>Key document libraries have content types; Term Store managed metadata active; important pages have search descriptions.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">&#10003;</div>
+          <div class="art-step-body">
+            <strong>Search quality validated</strong>
+            <p>Representative query set tested; promoted results configured for top use cases; synonyms added for internal terminology.</p>
+          </div>
+        </li>
+      </ul>
+
+      <h2>Common Mistakes Organisations Make</h2>
+      <ul>
+        <li><strong>Enabling Copilot immediately after licence purchase</strong> — without governance remediation, this is the fastest way to a data exposure incident and an executive-level escalation about confidential documents appearing in AI summaries</li>
+        <li><strong>Treating RSS as a permanent solution</strong> — Restricted SharePoint Search is a temporary safety net during remediation, not a long-term governance strategy; maintain a roadmap to expand the allowed list as sites are validated</li>
+        <li><strong>Applying sensitivity labels as a one-time project</strong> — labelling is a continuous process; new content is created daily, and auto-labelling policies need regular tuning</li>
+        <li><strong>Skipping search validation</strong> — teams often assume Microsoft Search "just works" without verification; poor baseline search quality directly causes poor Copilot response quality</li>
+        <li><strong>Not communicating the permission audit to staff</strong> — when IT revokes access that users have held for years (even inappropriately), it causes friction; communicate why access changes are happening ahead of Copilot launch</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help getting SharePoint Copilot-ready?</h3>
+        <p>OceanCloud's Copilot Readiness Assessment covers oversharing audits, Restricted SharePoint Search configuration, sensitivity label deployment, and search quality validation — delivered in 4 weeks with clear remediation priorities.</p>
+        <a href="contact" class="btn btn-primary">Start Your Readiness Assessment</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-m365-copilot" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">Microsoft 365 Copilot: The Complete Business Guide</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-permissions" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions: A Complete Guide</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-intranet" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">Build a SharePoint Intranet: Step-by-Step Guide</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

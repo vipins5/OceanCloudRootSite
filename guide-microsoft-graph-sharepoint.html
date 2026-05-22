@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Microsoft Graph and SharePoint: M365 Integrations for IT Admins | OceanCloud</title>
+  <meta name="description" content="What IT admins need to know about Microsoft Graph API and SharePoint integrations — Graph operations, Power Automate HTTP connector, webhooks, Salesforce and ServiceNow connectors, app registrations vs managed identities." />
+  <meta name="keywords" content="Microsoft Graph API SharePoint, Graph Explorer, SharePoint webhooks, M365 integrations, SharePoint REST API, app registration Microsoft Graph, managed identities M365" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-microsoft-graph-sharepoint" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Microsoft Graph and SharePoint: M365 Integrations for IT Admins" />
+  <meta property="og:description" content="Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-microsoft-graph-sharepoint" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-microsoft-graph-sharepoint#article",
+        "headline": "Microsoft Graph and SharePoint: What IT Admins Need to Know About M365 Integrations",
+        "url": "https://www.oceancloudconsults.com/guide-microsoft-graph-sharepoint",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins.",
+        "keywords": ["Microsoft Graph", "SharePoint API", "SharePoint webhooks", "M365 integrations", "Graph Explorer"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://developer.microsoft.com/en-us/graph", "name": "Microsoft Graph Developer Portal" },
+          { "@type": "WebPage", "url": "https://developer.microsoft.com/en-us/graph/graph-explorer", "name": "Microsoft Graph Explorer" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks", "name": "SharePoint webhooks overview" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Microsoft Graph and SharePoint", "item": "https://www.oceancloudconsults.com/guide-microsoft-graph-sharepoint" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(251,146,60,.12);color:#fb923c;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(251,146,60,.07);border-left:3px solid #fb923c;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#fed7aa;font-size:.92rem;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#a8d8ea;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(251,146,60,.12);color:#fb923c;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(251,146,60,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .code-block{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px 20px;margin:18px 0;font-family:'Courier New',monospace;font-size:.82rem;color:#94a3b8;overflow-x:auto;line-height:1.7;}
+  .code-block .kw{color:#fb923c;}
+  .code-block .str{color:#86efac;}
+  .code-block .cm{color:#64748b;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#fb923c;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .integration-scenario{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px;margin:14px 0;}
+  .is-header{display:flex;gap:10px;align-items:center;margin-bottom:10px;}
+  .is-badge{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:3px 10px;border-radius:50px;background:rgba(251,146,60,.12);color:#fb923c;}
+  .is-title{font-size:.95rem;font-weight:700;color:var(--white);}
+  .is-body{font-size:.88rem;color:var(--text-mid);line-height:1.8;margin:0;}
+  .art-cta-box{background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"251,146,60","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-orange" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(251,146,60,.18) 0%,rgba(251,146,60,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Microsoft Graph &amp; SharePoint</span></nav>
+      <h1>Microsoft Graph and SharePoint: <span class="grad-text">M365 Integrations for IT Admins</span></h1>
+      <p>Graph API operations, the Power Automate HTTP connector, SharePoint webhooks, external system integration patterns, and the app registration vs managed identity decision — all explained.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Integration</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">11 min read</span>
+      </div>
+
+      <p class="article-intro">Microsoft Graph is the single API that underpins every integration with Microsoft 365. Whether you're connecting SharePoint to Salesforce, building a custom Teams bot, pulling Azure AD user data into a third-party HR system, or creating an automated provisioning workflow — all of these ultimately go through Graph. Understanding what Graph is, how to query it safely, and how to use it without writing traditional code puts IT admins in a position to design and own integrations rather than depending entirely on external developers.</p>
+
+      <h2>What is Microsoft Graph?</h2>
+      <p>Microsoft Graph is a RESTful API at <code>https://graph.microsoft.com</code> that provides a unified access point for data across all Microsoft 365 services. Before Graph existed (pre-2017), each Microsoft service had its own separate API — the SharePoint REST API, the Exchange EWS API, the Azure AD Graph API — each with different authentication mechanisms and data formats. Graph unified all of these behind a single endpoint with consistent OAuth 2.0 authentication and JSON responses.</p>
+
+      <h3>What Graph can access</h3>
+      <p>Through a single Graph API connection, you can query and modify data across:</p>
+      <ul>
+        <li><strong>SharePoint:</strong> Sites, lists, list items, documents, pages, permissions, search</li>
+        <li><strong>OneDrive:</strong> Files, folders, sharing links, file versions</li>
+        <li><strong>Teams:</strong> Teams, channels, messages, meetings, tabs, members</li>
+        <li><strong>Outlook/Exchange:</strong> Mailboxes, calendar events, contacts, distribution lists</li>
+        <li><strong>Azure AD (Entra ID):</strong> Users, groups, guest accounts, application registrations, audit logs</li>
+        <li><strong>Planner:</strong> Plans, buckets, tasks, assignments</li>
+        <li><strong>To Do, OneNote, Forms, Viva Insights</strong></li>
+      </ul>
+
+      <a href="https://developer.microsoft.com/en-us/graph" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft Graph Developer Portal — developer.microsoft.com/en-us/graph</a>
+
+      <h2>Graph Explorer: Your IT Admin Testing Tool</h2>
+      <p>Before building any integration, explore the API using Microsoft Graph Explorer — a browser-based tool that lets you make live Graph API calls against your own tenant (or a sample tenant) without writing any code. It's invaluable for understanding what data is returned before building a flow or integration.</p>
+
+      <h3>Getting started with Graph Explorer</h3>
+      <ol>
+        <li>Go to <a href="https://developer.microsoft.com/en-us/graph/graph-explorer" target="_blank" rel="noopener noreferrer">developer.microsoft.com/en-us/graph/graph-explorer</a></li>
+        <li>Sign in with your M365 account to query your real tenant data, or use the sample tenant to explore without risk</li>
+        <li>Select a request method (GET, POST, PATCH, DELETE) and enter a Graph URL</li>
+        <li>Explore the "Sample queries" library for 100+ ready-made examples across all M365 services</li>
+      </ol>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Operation</th><th>Graph URL example</th><th>What it returns</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>List all SharePoint sites</strong></td><td><code>GET /sites?search=*</code></td><td>All sites in the tenant the user can access</td></tr>
+            <tr><td><strong>Get a SharePoint list</strong></td><td><code>GET /sites/{site-id}/lists/{list-id}/items</code></td><td>All items in a SharePoint list with field values</td></tr>
+            <tr><td><strong>Get a user's profile</strong></td><td><code>GET /users/{user-id}</code></td><td>User object with name, email, department, manager, etc.</td></tr>
+            <tr><td><strong>List Teams a user belongs to</strong></td><td><code>GET /me/joinedTeams</code></td><td>All Teams teams for the authenticated user</td></tr>
+            <tr><td><strong>Send a Teams message</strong></td><td><code>POST /teams/{team-id}/channels/{channel-id}/messages</code></td><td>Creates a message in the specified channel</td></tr>
+            <tr><td><strong>Get calendar events</strong></td><td><code>GET /me/events?$filter=start/dateTime ge '2026-05-23T00:00:00'</code></td><td>Calendar events from today onwards</td></tr>
+            <tr><td><strong>Create a SharePoint list item</strong></td><td><code>POST /sites/{site-id}/lists/{list-id}/items</code></td><td>Adds a new item to the list (body contains field values)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="https://developer.microsoft.com/en-us/graph/graph-explorer" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft Graph Explorer — developer.microsoft.com/en-us/graph/graph-explorer</a>
+
+      <h2>The Power Automate HTTP Connector: No-Code Graph Access</h2>
+      <p>For IT admins who want to call Graph without writing code, the Power Automate "Send an HTTP request to SharePoint" or the HTTP connector with Graph API is the most accessible path. This lets you query any Graph endpoint from a Power Automate flow, using the flow's built-in authentication — no separate app registration required for many scenarios.</p>
+
+      <h3>Using the SharePoint HTTP request action</h3>
+      <p>The "Send an HTTP request to SharePoint" action in Power Automate uses the SharePoint REST API (a close cousin of Graph) and handles authentication automatically using the current user's credentials or the flow's service account. It's the quickest way to perform operations not covered by standard SharePoint connectors.</p>
+
+      <div class="code-block">
+<span class="cm">// Example: Get all items from a SharePoint list where Status = "Active"</span>
+<span class="kw">Site Address:</span> https://yourorg.sharepoint.com/sites/yoursite
+<span class="kw">Method:</span> GET
+<span class="kw">URI:</span> _api/web/lists/getbytitle(<span class="str">'YourListName'</span>)/items?$filter=Status eq <span class="str">'Active'</span>&amp;$select=Title,Status,AssignedTo/Title&amp;$expand=AssignedTo
+<span class="kw">Headers:</span> Accept: application/json;odata=nometadata
+      </div>
+
+      <h3>Using the HTTP connector for full Graph access</h3>
+      <p>The premium HTTP connector lets you call any Graph URL with full OAuth 2.0 authentication. This requires a Power Automate premium licence or Power Automate Per Flow plan, but unlocks access to every Graph endpoint — including Azure AD operations and cross-service queries not available through standard connectors.</p>
+
+      <div class="art-callout info">
+        <p><strong>Licensing note:</strong> The SharePoint HTTP request action is a standard action (no premium licence needed). The generic HTTP connector for arbitrary Graph calls is a premium action and requires Power Automate premium licensing for the flow user or the flow itself.</p>
+      </div>
+
+      <h2>SharePoint Webhooks: Real-Time Change Notifications</h2>
+      <p>SharePoint webhooks allow external systems to receive immediate notifications when content changes in a SharePoint list or library — without polling the API repeatedly. When a webhook subscription is registered, SharePoint sends an HTTP POST to your specified endpoint (a webhook receiver) every time a change occurs.</p>
+
+      <h3>How SharePoint webhooks work</h3>
+      <ol>
+        <li>Your integration creates a webhook subscription via the Graph API or SharePoint REST API, specifying the list to monitor and the URL of your receiver endpoint</li>
+        <li>When any change occurs in the list (item created, modified, or deleted), SharePoint sends a lightweight notification payload to your endpoint within seconds</li>
+        <li>Your receiver acknowledges receipt with a 200 OK response (must respond within 5 seconds)</li>
+        <li>Your receiver then calls the SharePoint change log API to retrieve the actual changed items and their new field values</li>
+        <li>Your integration processes the changes (sync to external system, trigger a flow, update a database)</li>
+      </ol>
+
+      <div class="art-callout warning">
+        <p><strong>Critical: Webhook subscriptions expire.</strong> SharePoint webhook subscriptions have a maximum lifetime of <strong>180 days</strong>. Your integration must renew each subscription before it expires or events will stop being delivered. Build automatic renewal logic into any production webhook integration — check expiry dates and renew at the 150-day mark as a safety margin.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint webhooks overview — learn.microsoft.com</a>
+
+      <h3>Webhook vs polling: when to use each</h3>
+      <p>Use webhooks when your integration needs near-real-time data (seconds of latency acceptable). Use polling when webhooks are impractical (short-lived integrations, external systems that can't receive HTTP posts, Power Automate flows with scheduled recurrence). For most business integrations, Power Automate's scheduled flows (5-minute minimum interval) are sufficient and far simpler to implement than custom webhook receivers.</p>
+
+      <h2>Real-World Integration Scenarios</h2>
+
+      <div class="integration-scenario">
+        <div class="is-header">
+          <span class="is-badge">Salesforce</span>
+          <span class="is-title">Sync Salesforce Opportunities to SharePoint</span>
+        </div>
+        <p class="is-body">When a Salesforce opportunity moves to "Proposal" stage, a Power Automate flow (using the Salesforce connector) automatically creates a SharePoint site for that deal, provisions the site with a document library, creates a deal summary list item, and posts a notification to the relevant Teams channel. The reverse sync — when documents in SharePoint are tagged "Customer Approved" — can update the Salesforce opportunity record. No custom code required; the Salesforce and SharePoint connectors in Power Automate handle the authentication and data mapping.</p>
+      </div>
+
+      <div class="integration-scenario">
+        <div class="is-header">
+          <span class="is-badge">ServiceNow</span>
+          <span class="is-title">ServiceNow Tickets Linked to SharePoint Knowledge</span>
+        </div>
+        <p class="is-body">When a ServiceNow IT ticket is created, a Power Automate flow uses the ServiceNow connector to read the ticket's category and description, then queries the SharePoint knowledge base via the Microsoft Search API (Graph) for relevant articles. Matching articles are posted back to the ServiceNow ticket as suggested resolutions. Agents who resolve tickets can also push the solution back to SharePoint as a new knowledge article — keeping the knowledge base current without manual copy-paste between systems.</p>
+      </div>
+
+      <div class="integration-scenario">
+        <div class="is-header">
+          <span class="is-badge">Azure Logic Apps</span>
+          <span class="is-title">Enterprise Integration via Azure Logic Apps</span>
+        </div>
+        <p class="is-body">For integrations that need enterprise-scale reliability, complex transformation logic, long-running processes, or connectivity to on-premises systems, Azure Logic Apps is the recommended platform over Power Automate. Logic Apps support all Graph API connectors available in Power Automate, plus direct HTTP calls to Graph, advanced retry policies, and Azure Virtual Network integration for on-premises connectivity. Logic Apps are managed by IT/DevOps rather than citizen developers, making them appropriate for mission-critical business integrations.</p>
+      </div>
+
+      <h2>App Registrations vs Managed Identities</h2>
+      <p>This is the question every IT admin faces when setting up a Graph API integration for the first time. Both approaches create a service identity (not a real user account) that the integration uses to authenticate to Microsoft 365. The difference is in how credentials are managed.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th></th><th>App Registration</th><th>Managed Identity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>What it is</strong></td><td>An Azure AD application with a client ID and either a client secret or certificate</td><td>An Azure AD identity automatically provisioned and managed by Azure for a specific Azure resource (VM, Function App, Logic App, etc.)</td></tr>
+            <tr><td><strong>Credential management</strong></td><td>Manual — you create and rotate client secrets or certificates; secrets expire and must be renewed</td><td>Automatic — Azure manages the underlying credentials; no secrets to store or rotate</td></tr>
+            <tr><td><strong>Best for</strong></td><td>Integrations from non-Azure systems (on-premises, third-party SaaS, local scripts)</td><td>Integrations running inside Azure (Azure Functions, Logic Apps, App Service, VMs)</td></tr>
+            <tr><td><strong>Security posture</strong></td><td>Good if managed well — but client secrets in code or config files are a common security incident cause</td><td>Excellent — no credentials to steal; authentication is handled by the Azure platform automatically</td></tr>
+            <tr><td><strong>Operational overhead</strong></td><td>Higher — secret rotation, expiry monitoring, storage in Azure Key Vault recommended</td><td>Lower — zero credential management once configured</td></tr>
+            <tr><td><strong>Graph permissions</strong></td><td>Application permissions (acts as itself) or delegated permissions (acts on behalf of a user)</td><td>Application permissions only (acts as itself); no delegated auth option</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>Security guidance:</strong> Never store client secrets in source code, configuration files, or environment variables in plain text. Always use Azure Key Vault to store and retrieve secrets. If your integration runs inside Azure infrastructure, use managed identities instead of app registrations wherever possible — it eliminates the secret management risk entirely.</p>
+      </div>
+
+      <h3>Granting Graph permissions correctly</h3>
+      <p>When you create an app registration or configure a managed identity's Graph permissions, you choose between two permission types:</p>
+      <ul>
+        <li><strong>Delegated permissions:</strong> The app acts on behalf of a signed-in user. The app can only do what the user can do. Appropriate for user-facing applications.</li>
+        <li><strong>Application permissions:</strong> The app acts as itself, with no user context. Grants broad access — <code>Sites.ReadWrite.All</code> means the app can read and write every SharePoint site in the tenant. These require explicit admin consent and should be scoped as narrowly as possible.</li>
+      </ul>
+      <p>Always apply the principle of least privilege. If an integration only needs to read a specific SharePoint list, don't grant <code>Sites.ReadWrite.All</code> — investigate whether <code>Sites.Selected</code> (granting access to specific sites only) meets your needs, which it often does.</p>
+
+      <h2>Common Integration Mistakes</h2>
+      <ul>
+        <li><strong>Polling with a 1-minute interval when webhooks would do:</strong> Excessive polling adds load to the Graph API, counts against throttling limits, and creates unnecessary M365 audit log noise; use webhooks or scheduled flows at appropriate intervals</li>
+        <li><strong>App registrations with unlimited expiry client secrets:</strong> Azure now caps secrets at 24 months maximum; plan for rotation and set monitoring alerts on expiry dates in Azure AD</li>
+        <li><strong>Granting Global Administrator consent for Graph permissions:</strong> Many integrations request excessive permissions; always review the minimum permission set actually required before granting consent</li>
+        <li><strong>Not handling Graph throttling:</strong> Graph enforces rate limits; integrations that don't implement exponential back-off retry logic will fail under load; look for <code>429 Too Many Requests</code> responses and implement retry-after header handling</li>
+        <li><strong>Forgetting webhook subscription renewal:</strong> The most common cause of "the integration stopped working" — 180-day expiry without renewal monitoring causes silent failures that are hard to diagnose retroactively</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need to integrate your systems with Microsoft 365?</h3>
+        <p>OceanCloud designs and builds M365 integrations using Graph API, Power Automate, Logic Apps, and custom connectors — from Salesforce and ServiceNow to bespoke ERP systems. We handle the architecture, security, and ongoing monitoring.</p>
+        <a href="contact" class="btn btn-primary">Discuss Your Integration</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-power-automate-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Site Should Have</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-teams-automation" class="related-card">
+            <span class="rc-topic">Teams</span>
+            <span class="rc-title">5 Microsoft Teams Automations That Save Hours Every Week</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-m365-copilot" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">Microsoft 365 Copilot: The Complete Business Guide</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

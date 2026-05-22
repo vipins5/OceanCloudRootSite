@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>5 Microsoft Teams Automations That Save Hours Every Week | OceanCloud</title>
+  <meta name="description" content="Automate Microsoft Teams with Power Automate: turn meeting notes into Planner tasks, send Adaptive Card approvals, welcome new team members, monitor keywords, and deliver weekly digest cards." />
+  <meta name="keywords" content="Microsoft Teams automation, Teams Power Automate, Teams Adaptive Cards, automate Teams workflows, Teams meeting automation, Microsoft Teams productivity" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-teams-automation" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="5 Microsoft Teams Automations That Save Hours Every Week" />
+  <meta property="og:description" content="Five practical Power Automate flows that integrate directly with Microsoft Teams — from meeting action items to Adaptive Card approvals and weekly team digests." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-teams-automation" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-teams-automation#article",
+        "headline": "5 Microsoft Teams Automations That Save Hours Every Week",
+        "url": "https://www.oceancloudconsults.com/guide-teams-automation",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Five Power Automate flows integrated with Microsoft Teams — meeting action items, Adaptive Card approvals, new member welcome, keyword monitoring, weekly digest.",
+        "keywords": ["Microsoft Teams automation", "Power Automate Teams", "Adaptive Cards Teams", "Teams workflows"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://adaptivecards.io", "name": "Adaptive Cards — adaptivecards.io" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/create-adaptive-cards", "name": "Create Adaptive Cards in Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference", "name": "Microsoft Teams cards reference" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Teams Automation Guide", "item": "https://www.oceancloudconsults.com/guide-teams-automation" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(120,87,220,.12);color:#a78bfa;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(120,87,220,.07);border-left:3px solid #a78bfa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#ddd6fe;font-size:.92rem;}
+  .art-callout.tip{background:rgba(74,222,128,.07);border-left-color:#4ade80;}
+  .art-callout.tip p{color:#bbf7d0;}
+  .flow-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-left:3px solid #a78bfa;border-radius:0 14px 14px 0;padding:28px;margin:24px 0;}
+  .flow-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(120,87,220,.2);color:#a78bfa;font-weight:800;font-size:.85rem;margin-bottom:12px;}
+  .flow-title{font-size:1.1rem;font-weight:800;color:var(--white);margin:0 0 8px;}
+  .flow-desc{color:var(--text-mid);font-size:.92rem;line-height:1.85;margin:0 0 14px;}
+  .flow-steps{list-style:none;padding:0;margin:12px 0 0;}
+  .flow-steps li{color:var(--text-mid);font-size:.88rem;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);padding-left:22px;position:relative;line-height:1.7;}
+  .flow-steps li::before{content:"→";position:absolute;left:0;color:#a78bfa;font-weight:700;}
+  .flow-steps li:last-child{border-bottom:none;}
+  .flow-steps li strong{color:var(--white);}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#a78bfa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(120,87,220,.07);border:1px solid rgba(120,87,220,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .prereq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0;}
+  .prereq-item{background:rgba(120,87,220,.07);border:1px solid rgba(120,87,220,.15);border-radius:10px;padding:12px 16px;font-size:.85rem;color:var(--text-mid);}
+  .prereq-item strong{color:#a78bfa;display:block;margin-bottom:3px;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"120,87,220","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-purple" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(120,87,220,.2) 0%,rgba(120,87,220,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Teams Automation</span></nav>
+      <h1>5 Microsoft Teams Automations <span class="grad-text">That Save Hours Every Week</span></h1>
+      <p>Practical Power Automate flows for Microsoft Teams — from turning meeting notes into Planner tasks to sending rich Adaptive Card approvals without leaving Teams.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Teams</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">9 min read</span>
+      </div>
+
+      <p class="article-intro">Microsoft Teams is where most M365 organisations do their daily work. But Teams alone is a passive communication tool — it records what happened, not what needs to happen next. Power Automate bridges that gap, turning Teams conversations, messages, and meetings into structured actions without requiring anyone to copy things between systems. Here are five automations that have the highest impact-to-effort ratio for most teams, with step-by-step implementation guidance.</p>
+
+      <h2>What You Need Before You Start</h2>
+      <p>All five automations in this guide are built with Power Automate (make.powerautomate.com). They require:</p>
+      <div class="prereq-grid">
+        <div class="prereq-item"><strong>Licence</strong>Microsoft 365 Business Standard, Premium, or any E plan — Power Automate is included</div>
+        <div class="prereq-item"><strong>Permissions</strong>Owner or Member in the relevant Teams channel; Planner access for flows that create tasks</div>
+        <div class="prereq-item"><strong>Connectors used</strong>Microsoft Teams, Microsoft Planner, Outlook (for some flows) — all standard connectors, no premium licence required</div>
+      </div>
+
+      <div class="art-callout">
+        <p><strong>Building tip:</strong> Create and test each flow using a test Teams team and test Planner plan before enabling it in a production team. Power Automate's built-in "Test" button lets you run the flow manually with a sample trigger to verify each step before going live.</p>
+      </div>
+
+      <h2>Automation 1: Meeting Action Items → Planner Tasks</h2>
+
+      <div class="flow-card">
+        <div class="flow-num">1</div>
+        <div class="flow-title">Meeting Action Items to Planner</div>
+        <p class="flow-desc">After a Teams meeting ends, the organiser posts action items in the meeting chat using a simple format (e.g., "ACTION: @Person — Task description by DD/MM"). This flow detects those messages, parses the action items, creates a Planner task for each one with the right assignee and due date, and posts a confirmation card back to the chat.</p>
+        <ul class="flow-steps">
+          <li><strong>Trigger:</strong> "When a new message is posted in a channel" (Microsoft Teams connector) — use keyword filter "ACTION:"</li>
+          <li><strong>Parse:</strong> Use "Compose" and string functions to extract the assignee (@mention), task text, and due date from the message body</li>
+          <li><strong>Create task:</strong> "Create a task" (Microsoft Planner) — Title = extracted task text, Assigned to = resolved user ID, Due date = extracted date</li>
+          <li><strong>Confirm:</strong> "Post message in chat or channel" (Teams) — send a card confirming the task was created with a link to Planner</li>
+        </ul>
+      </div>
+
+      <p>This flow eliminates the "who was going to do that?" problem that follows most meetings. Action items are captured immediately in Planner, assignees get a notification, and nothing falls through the cracks between the meeting and the next standup.</p>
+
+      <h2>Automation 2: Adaptive Card Approvals in Teams</h2>
+
+      <div class="flow-card">
+        <div class="flow-num">2</div>
+        <div class="flow-title">In-Teams Adaptive Card Approval Flow</div>
+        <p class="flow-desc">Instead of sending approval requests to email (where they get buried), this flow sends rich Adaptive Cards directly to the approver's Teams chat. The card shows all relevant request details, and the approver clicks Approve or Reject without leaving Teams. The decision is recorded in SharePoint and the requester is notified instantly.</p>
+        <ul class="flow-steps">
+          <li><strong>Trigger:</strong> "When an item is created" (SharePoint connector) — triggered when a new item is added to an Approvals SharePoint list</li>
+          <li><strong>Get approver:</strong> Look up the approver from the SharePoint item's Approver column (resolved to an email address)</li>
+          <li><strong>Send card:</strong> "Post an Adaptive Card and wait for response" (Teams connector) — design the card in the Adaptive Card designer with request details and Approve/Reject buttons</li>
+          <li><strong>Update SharePoint:</strong> "Update item" (SharePoint) — set Status to Approved or Rejected based on the card response; record approver comments</li>
+          <li><strong>Notify requester:</strong> "Post message in chat" (Teams) — send a direct message to the original requester with the decision</li>
+        </ul>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/power-automate/create-adaptive-cards" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Create Adaptive Cards in Power Automate — learn.microsoft.com</a>
+      <a href="https://adaptivecards.io" target="_blank" rel="noopener noreferrer" class="ms-ref" style="margin-left:16px;">&#127890; Adaptive Cards designer and schema — adaptivecards.io</a>
+
+      <h3>What makes Adaptive Cards powerful</h3>
+      <p>Adaptive Cards are JSON-defined UI cards that render natively inside Teams. Unlike plain text messages, they can include structured layouts with labelled fields, images, expandable sections, and interactive buttons that trigger Power Automate actions. The <a href="https://adaptivecards.io/designer/" target="_blank" rel="noopener noreferrer">Adaptive Card Designer</a> at adaptivecards.io lets you build cards visually and preview them in Teams before using the JSON in Power Automate.</p>
+
+      <a href="https://learn.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft Teams cards reference — learn.microsoft.com</a>
+
+      <h2>Automation 3: New Team Member Welcome Flow</h2>
+
+      <div class="flow-card">
+        <div class="flow-num">3</div>
+        <div class="flow-title">Automated New Member Welcome</div>
+        <p class="flow-desc">When a new member joins a Teams team, this flow automatically sends them a personalised welcome message in the General channel, sends them a direct message with an onboarding checklist, adds them to the relevant Planner plan, and optionally creates a SharePoint onboarding checklist item for HR to track progress.</p>
+        <ul class="flow-steps">
+          <li><strong>Trigger:</strong> "When a team member is added" (Microsoft Teams connector) — fires when any new member joins the specified team</li>
+          <li><strong>Get user details:</strong> "Get user profile" (Office 365 Users) — retrieve display name, job title, and department to personalise the message</li>
+          <li><strong>Post welcome card:</strong> "Post an Adaptive Card to a Teams channel" — welcome card with the new member's name, photo, and links to key team resources (SharePoint site, shared OneNote, team agreements)</li>
+          <li><strong>Direct message:</strong> "Post a message in a chat" (Teams) — send the new member a private onboarding checklist as an Adaptive Card with checkboxes they can tick off</li>
+          <li><strong>Add to Planner:</strong> "Add a member to a plan" (Planner) — adds the user to the team's Planner plan so their task assignments work correctly from day one</li>
+        </ul>
+      </div>
+
+      <div class="art-callout tip">
+        <p><strong>Pro tip:</strong> Customise the welcome card by team. A welcome to the Engineering team should link to the dev wiki and deployment process. A welcome to Sales should link to the CRM guide and territory map. Store team-specific onboarding content in SharePoint and have the flow look it up by team ID.</p>
+      </div>
+
+      <h2>Automation 4: Keyword Alert Monitor</h2>
+
+      <div class="flow-card">
+        <div class="flow-num">4</div>
+        <div class="flow-title">Teams Channel Keyword Monitor</div>
+        <p class="flow-desc">Monitors one or more Teams channels for specific keywords — competitor names, critical client mentions, escalation phrases like "urgent" or "down", or regulatory terms. When a keyword is detected, the flow immediately notifies a specific person or posts to an escalation channel, ensuring nothing important is missed in high-volume channels.</p>
+        <ul class="flow-steps">
+          <li><strong>Trigger:</strong> "When a new message is posted in a channel" (Teams) — set for each monitored channel (use separate flows per channel for reliability)</li>
+          <li><strong>Check keyword:</strong> "Condition" action — use <code>contains(triggerBody()?['body/content'], 'keyword')</code> — chain multiple conditions with OR for multiple keywords</li>
+          <li><strong>Notify:</strong> If condition is true, "Post message in chat or channel" (Teams) — post to an alerts channel with the original message link, sender name, and matched keyword highlighted</li>
+          <li><strong>Log:</strong> Optional — "Add a row" (SharePoint) to keep a searchable log of all keyword matches with timestamps for compliance purposes</li>
+        </ul>
+      </div>
+
+      <p>Common use cases: a sales team monitoring for their competitor's name across all customer-facing channels; a support team watching for "system down" or "critical" in any project channel; a compliance team logging all messages mentioning specific regulatory terms in finance or healthcare environments.</p>
+
+      <h2>Automation 5: Weekly Team Digest Card</h2>
+
+      <div class="flow-card">
+        <div class="flow-num">5</div>
+        <div class="flow-title">Monday Morning Team Digest</div>
+        <p class="flow-desc">Every Monday morning, this scheduled flow posts a rich Adaptive Card digest to the team's General channel, showing: open Planner tasks due this week (with assignees), any SharePoint pages published last week, upcoming calendar events for the team, and a "last week's wins" prompt that rotates a different team member each week to share a highlight.</p>
+        <ul class="flow-steps">
+          <li><strong>Trigger:</strong> "Recurrence" (Schedule) — set to every Monday at 8:30am in the team's timezone</li>
+          <li><strong>Get Planner tasks:</strong> "List tasks" (Planner) — filter for tasks due in the next 7 days in the team's plan; format as a bulleted list grouped by assignee</li>
+          <li><strong>Get SharePoint news:</strong> Use the SharePoint REST API with "Send an HTTP request to SharePoint" — query the team site's news for items modified in the past 7 days</li>
+          <li><strong>Get calendar events:</strong> "Get calendar view of events" (Office 365 Outlook) — retrieve shared calendar events for the current week</li>
+          <li><strong>Assemble and post:</strong> "Post an Adaptive Card to a Teams channel" — combine all data into a structured digest card with sections for Tasks, News, Events, and the rotating wins prompt</li>
+        </ul>
+      </div>
+
+      <p>The weekly digest replaces the Monday morning status meeting that most teams dread. Team members arrive informed, with their tasks visible and the week's events clear — before the first standup begins. The "wins" prompt builds team culture by ensuring positive outcomes are shared systematically, not just when someone remembers.</p>
+
+      <h2>Tips for Building Reliable Teams Automations</h2>
+      <ul>
+        <li><strong>Use service accounts for flow ownership:</strong> Flows owned by individual employees break when those employees leave. Create a shared service account (e.g., automations@yourorg.com) as the flow owner and connection owner.</li>
+        <li><strong>Add error handling to every flow:</strong> Use the "Configure run after" setting on critical steps to add a failure branch — at minimum, send an email to the IT team when a flow fails.</li>
+        <li><strong>Test with real data, not just the trigger:</strong> Power Automate's "Test" button is good for trigger validation, but test the full flow end-to-end with real Teams messages or real SharePoint items before turning on for production.</li>
+        <li><strong>Monitor flow run history:</strong> Check the flow's run history weekly for the first month. Failed runs are often silent — the error only appears in the run history, not in Teams.</li>
+        <li><strong>Throttle notification flows:</strong> Keyword alert flows can become noisy if a keyword appears frequently. Add a "Delay" action or a SharePoint de-duplication check to avoid sending the same alert multiple times in quick succession.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need a custom Teams automation?</h3>
+        <p>OceanCloud can design and build Power Automate flows tailored to your Teams setup — from simple notifications to complex multi-step approval workflows with Adaptive Cards and SharePoint integration.</p>
+        <a href="contact" class="btn btn-primary">Discuss Your Automation Needs</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-power-automate-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Site Should Have</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-vs-teams" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint vs Teams: Which Tool for Which Job?</span>
+            <span class="rc-read">7 min read &rarr;</span>
+          </a>
+          <a href="guide-power-apps-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">Build Custom Business Apps with Power Apps and SharePoint</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

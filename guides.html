@@ -84,12 +84,20 @@
   .guide-card:nth-child(3){animation-delay:.14s;}
   .guide-card:nth-child(4){animation-delay:.19s;}
   .guide-card:nth-child(5){animation-delay:.24s;}
+  .guide-card:nth-child(6){animation-delay:.29s;}
+  .guide-card:nth-child(7){animation-delay:.34s;}
+  .guide-card:nth-child(8){animation-delay:.39s;}
+  .guide-card:nth-child(9){animation-delay:.44s;}
+  .guide-card:nth-child(10){animation-delay:.49s;}
   .gc-icon{font-size:2.2rem;line-height:1;}
   .gc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .gc-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;}
   .tag-sharepoint{background:rgba(0,180,216,.12);color:#00b4d8;}
   .tag-migration{background:rgba(245,158,11,.12);color:#f59e0b;}
   .tag-power{background:rgba(74,222,128,.12);color:#4ade80;}
+  .tag-copilot{background:rgba(168,85,247,.12);color:#c084fc;}
+  .tag-teams{background:rgba(120,87,220,.12);color:#a78bfa;}
+  .tag-integration{background:rgba(251,146,60,.12);color:#fb923c;}
   .gc-read{font-size:.75rem;color:var(--text-dim);}
   .gc-title{font-size:1.05rem;font-weight:700;line-height:1.45;letter-spacing:-.02em;}
   .gc-title a{color:var(--white);text-decoration:none;transition:color .2s;}
@@ -163,6 +171,9 @@
       <button class="gf-btn" data-topic="sharepoint">SharePoint</button>
       <button class="gf-btn" data-topic="migration">Migration</button>
       <button class="gf-btn" data-topic="power-platform">Power Platform</button>
+      <button class="gf-btn" data-topic="copilot">Copilot</button>
+      <button class="gf-btn" data-topic="teams">Teams</button>
+      <button class="gf-btn" data-topic="integration">Integration</button>
     </div>
 
     <div class="guides-grid" id="guides-grid">
@@ -232,9 +243,74 @@
         <a class="gc-link" href="guide-sharepoint-intranet">Read guide &#8599;</a>
       </article>
 
+      <article class="guide-card glass" data-topic="copilot">
+        <div class="gc-icon">&#129302;</div>
+        <div class="gc-meta">
+          <span class="gc-tag tag-copilot">Copilot</span>
+          <span class="gc-read">10 min read</span>
+        </div>
+        <h2 class="gc-title">
+          <a href="guide-m365-copilot">Microsoft 365 Copilot: The Complete Business Guide</a>
+        </h2>
+        <p class="gc-body">What Copilot does in every M365 app, licensing requirements, the critical SharePoint governance warning, and a 6-step rollout plan so employees actually adopt it.</p>
+        <a class="gc-link" href="guide-m365-copilot">Read guide &#8599;</a>
+      </article>
+
+      <article class="guide-card glass" data-topic="copilot">
+        <div class="gc-icon">&#128203;</div>
+        <div class="gc-meta">
+          <span class="gc-tag tag-copilot">Copilot</span>
+          <span class="gc-read">11 min read</span>
+        </div>
+        <h2 class="gc-title">
+          <a href="guide-sharepoint-copilot-ready">How to Prepare Your SharePoint for Microsoft Copilot</a>
+        </h2>
+        <p class="gc-body">Audit oversharing with SharePoint Advanced Management, enable Restricted SharePoint Search, apply Purview sensitivity labels, and validate search quality before your Copilot rollout.</p>
+        <a class="gc-link" href="guide-sharepoint-copilot-ready">Read guide &#8599;</a>
+      </article>
+
+      <article class="guide-card glass" data-topic="power-platform">
+        <div class="gc-icon">&#128241;</div>
+        <div class="gc-meta">
+          <span class="gc-tag tag-power">Power Platform</span>
+          <span class="gc-read">10 min read</span>
+        </div>
+        <h2 class="gc-title">
+          <a href="guide-power-apps-sharepoint">Build Custom Business Apps with Power Apps and SharePoint</a>
+        </h2>
+        <p class="gc-body">Canvas vs model-driven apps, three real-world examples (asset tracking, IT helpdesk, expenses), the delegation limit you must know, and how to publish to Teams, SharePoint, or mobile.</p>
+        <a class="gc-link" href="guide-power-apps-sharepoint">Read guide &#8599;</a>
+      </article>
+
+      <article class="guide-card glass" data-topic="teams">
+        <div class="gc-icon">&#128172;</div>
+        <div class="gc-meta">
+          <span class="gc-tag tag-teams">Teams</span>
+          <span class="gc-read">9 min read</span>
+        </div>
+        <h2 class="gc-title">
+          <a href="guide-teams-automation">5 Microsoft Teams Automations That Save Hours Every Week</a>
+        </h2>
+        <p class="gc-body">Meeting action items to Planner, Adaptive Card approvals, new member welcome flows, keyword monitoring, and weekly digest cards — five Power Automate flows ready to deploy today.</p>
+        <a class="gc-link" href="guide-teams-automation">Read guide &#8599;</a>
+      </article>
+
+      <article class="guide-card glass" data-topic="integration">
+        <div class="gc-icon">&#128279;</div>
+        <div class="gc-meta">
+          <span class="gc-tag tag-integration">Integration</span>
+          <span class="gc-read">11 min read</span>
+        </div>
+        <h2 class="gc-title">
+          <a href="guide-microsoft-graph-sharepoint">Microsoft Graph and SharePoint: M365 Integrations for IT Admins</a>
+        </h2>
+        <p class="gc-body">Graph API operations, Graph Explorer, Power Automate HTTP connector, SharePoint webhooks, Salesforce and ServiceNow integration patterns, and app registrations vs managed identities.</p>
+        <a class="gc-link" href="guide-microsoft-graph-sharepoint">Read guide &#8599;</a>
+      </article>
+
     </div>
 
-    <p class="guides-count">5 guides available &mdash; new content added monthly &nbsp;&middot;&nbsp; <a href="faq">Browse our M365 FAQ &#8594;</a></p>
+    <p class="guides-count">10 guides available &mdash; new content added monthly &nbsp;&middot;&nbsp; <a href="faq">Browse our M365 FAQ &#8594;</a></p>
 
   </div>
 </section>

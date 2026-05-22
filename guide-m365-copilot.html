@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Microsoft 365 Copilot: The Complete Business Guide for 2026 | OceanCloud</title>
+  <meta name="description" content="Everything you need to know about Microsoft 365 Copilot — what it does in each app, licensing requirements, SharePoint readiness, rollout steps, and how to measure adoption with Viva Insights." />
+  <meta name="keywords" content="Microsoft 365 Copilot guide, M365 Copilot business, Copilot for Microsoft 365, Copilot licensing, Copilot SharePoint, deploy Microsoft Copilot, Copilot adoption" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-m365-copilot" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Microsoft 365 Copilot: The Complete Business Guide for 2026" />
+  <meta property="og:description" content="Licensing, app capabilities, SharePoint readiness, rollout steps, and adoption measurement — everything your organisation needs before deploying M365 Copilot." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-m365-copilot" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-m365-copilot#article",
+        "headline": "Microsoft 365 Copilot: The Complete Business Guide for 2026",
+        "url": "https://www.oceancloudconsults.com/guide-m365-copilot",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Everything your organisation needs before deploying Microsoft 365 Copilot — licensing, app capabilities, SharePoint readiness, rollout steps, and adoption measurement.",
+        "keywords": ["Microsoft 365 Copilot", "M365 Copilot", "Copilot for Microsoft 365", "AI workplace"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://adoption.microsoft.com/en-us/copilot/", "name": "Microsoft 365 Copilot Adoption Hub" },
+          { "@type": "WebPage", "url": "https://www.microsoft.com/en-us/microsoft-365/roadmap", "name": "Microsoft 365 Roadmap" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/viva/insights/", "name": "Microsoft Viva Insights" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Microsoft 365 Copilot Guide", "item": "https://www.oceancloudconsults.com/guide-m365-copilot" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(168,85,247,.12);color:#c084fc;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(168,85,247,.07);border-left:3px solid #c084fc;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#d4b8f0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(168,85,247,.12);color:#c084fc;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(168,85,247,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(168,85,247,.18);color:#c084fc;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#a78bfa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"168,85,247","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-purple" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-cyan"   style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>M365 Copilot Guide</span></nav>
+      <h1>Microsoft 365 Copilot: <span class="grad-text">The Complete Business Guide</span></h1>
+      <p>What Copilot does in every M365 app, how to licence it, what to fix in SharePoint first, and how to roll it out so employees actually use it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Copilot</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">10 min read</span>
+      </div>
+
+      <p class="article-intro">Microsoft 365 Copilot is the most significant change to Office productivity since the ribbon. Powered by GPT-4 class large language models and grounded in your organisation's own Microsoft 365 data, it can summarise a month of email in 30 seconds, draft a presentation from a Word document, and tell you what was decided in last week's meeting you missed. But deploying it without preparation creates real risk — and leaves most of its value unrealised. This guide covers everything your organisation needs to know before, during, and after a Copilot rollout.</p>
+
+      <h2>What is Microsoft 365 Copilot?</h2>
+      <p>Microsoft 365 Copilot is an AI assistant embedded throughout the M365 suite, announced at general availability in November 2023 and continuously expanded since. Unlike a standalone AI chatbot, Copilot is grounded in your specific organisational context: it can read your emails, reference your SharePoint documents, summarise your Teams meetings, and analyse data from your OneDrive files — while respecting the exact same permissions that govern access to that content.</p>
+      <p>The intelligence layer combines three components: the Microsoft 365 Graph (your organisation's data), large language models from OpenAI (hosted in Microsoft Azure, not shared with OpenAI), and natural language interfaces built into each M365 app. Microsoft tracks ongoing Copilot feature releases on the <a href="https://www.microsoft.com/en-us/microsoft-365/roadmap" target="_blank" rel="noopener noreferrer">M365 Roadmap</a>.</p>
+
+      <h2>Copilot Capabilities Across Microsoft 365 Apps</h2>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>App</th><th>Key Copilot capabilities</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Word</strong></td><td>Draft documents from prompts or existing files; rewrite, summarise, and improve selected sections; generate from outline</td></tr>
+            <tr><td><strong>Excel</strong></td><td>Analyse data in natural language; generate formulas and explain them; highlight trends; suggest pivot tables and charts; generate Python analysis</td></tr>
+            <tr><td><strong>PowerPoint</strong></td><td>Create full presentations from Word documents or prompts; add and reformat slides; generate speaker notes; apply branded templates automatically</td></tr>
+            <tr><td><strong>Outlook</strong></td><td>Summarise long email threads; draft contextual replies; prepare for meetings; schedule meetings with agenda suggestions; identify action items in inbox</td></tr>
+            <tr><td><strong>Teams</strong></td><td>Live meeting summaries; post-meeting recap showing who said what and key decisions; generate action items; answer questions about past meetings; draft messages</td></tr>
+            <tr><td><strong>SharePoint</strong></td><td>Summarise site and page content; answer questions about documents stored in a site; surface related content via AI-enhanced search</td></tr>
+            <tr><td><strong>Loop</strong></td><td>Collaborative AI writing and brainstorming in shared workspaces; generate structured tables and timelines from prompts</td></tr>
+            <tr><td><strong>Microsoft 365 Chat</strong></td><td>Cross-app assistant — reason over emails, files, Teams chats, meetings, and calendar simultaneously to answer complex questions about your work</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="https://adoption.microsoft.com/en-us/copilot/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft 365 Copilot Adoption Hub — adoption.microsoft.com/en-us/copilot/</a>
+
+      <h2>Licensing Requirements</h2>
+      <p>Microsoft 365 Copilot is a paid add-on, not included in standard M365 plans. As of 2026:</p>
+      <ul>
+        <li><strong>Base licence required:</strong> Microsoft 365 E3, E5, Business Standard, or Business Premium</li>
+        <li><strong>Copilot add-on:</strong> $30 USD per user per month (billed monthly or annually; check <a href="https://www.microsoft.com/en-us/microsoft-365/business/copilot-for-microsoft-365" target="_blank" rel="noopener noreferrer">microsoft.com</a> for current pricing)</li>
+        <li><strong>Copilot Chat (formerly Bing Chat Enterprise):</strong> Available at no extra cost with qualifying M365 plans — provides web-grounded AI without access to your organisational data</li>
+        <li><strong>Microsoft 365 F1 / F3 (Frontline):</strong> Copilot is available with an add-on; features are optimised for mobile and shift-based workers</li>
+      </ul>
+      <p>Most organisations start with a pilot licence pool (50–200 seats) to validate use cases and measure ROI before broader deployment. This allows you to identify which roles get the most value before committing to full deployment.</p>
+
+      <h2>The Critical Prerequisite: SharePoint Governance</h2>
+
+      <div class="art-callout warning">
+        <p><strong>Most important thing in this guide:</strong> Copilot surfaces content that each user already has permission to see. If your SharePoint permissions are too broad — if everyone has access to everything — Copilot will surface HR data, financial forecasts, and legal documents to employees who shouldn't be reading them. Fix permissions before deploying Copilot.</p>
+      </div>
+
+      <p>This isn't a theoretical risk. In environments where SharePoint has grown without governance, it's common to find that 60–80% of staff have read access to sites containing confidential information via "Everyone except external users" permissions set years ago and never reviewed. Copilot makes that invisible problem visible — and audible — immediately.</p>
+      <p>See our dedicated guide: <a href="guide-sharepoint-copilot-ready">How to Prepare Your SharePoint for Microsoft Copilot</a></p>
+
+      <h2>6 Steps to Rolling Out Microsoft 365 Copilot</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Audit and remediate SharePoint permissions</strong>
+            <p>Use SharePoint Advanced Management's Data Access Governance reports to identify sites shared with "Everyone," sites with anonymous links, and sites with excessive external access. Remediate the highest-risk sites before any Copilot licences are assigned. Prioritise sites containing HR, Finance, Legal, and Executive content.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Apply sensitivity labels to confidential content</strong>
+            <p>Configure Microsoft Purview sensitivity labels (Public, Internal, Confidential, Highly Confidential) and apply them to key document libraries. Labels help Copilot understand the context of content and can enforce encryption on the most sensitive items. This is also an excellent compliance practice independent of Copilot.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Enable Restricted SharePoint Search (optional interim measure)</strong>
+            <p>If full permission remediation will take months, Microsoft's Restricted SharePoint Search feature limits Copilot to a curated set of approved SharePoint sites. Enable it in the SharePoint Admin Center while broader remediation continues. Add sites to the allowed list only after confirming their permissions are correct.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Assign licences to a pilot cohort</strong>
+            <p>Start with 50–200 users across different roles and departments (not just IT and executives). Include people who will actually use the features — writers, analysts, project managers, HR. Ensure they have Teams Premium or Copilot enabled in Teams Admin Center to access meeting summaries, which is consistently the highest-value feature in pilots.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Train champions and surface quick wins</strong>
+            <p>Identify 5–10 enthusiastic early adopters in the pilot cohort to become internal Copilot champions. Give them access to Microsoft's free adoption resources at <a href="https://adoption.microsoft.com/en-us/copilot/" target="_blank" rel="noopener noreferrer">adoption.microsoft.com/en-us/copilot/</a> — scenario cards, training videos, and prompt libraries. Share their wins in a dedicated Teams channel to build momentum. Specific prompts that consistently delight pilot users: "Summarise this email thread and list action items," "Draft a reply to this email," "What did we decide in last week's meeting about [topic]?"</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Measure, optimise, then expand</strong>
+            <p>Use Microsoft Viva Insights' Copilot Dashboard to track active users, feature usage distribution, and self-reported satisfaction from the Copilot survey. Run a qualitative survey after 30 days asking pilot users where Copilot saved them time and where it fell short. Use findings to sharpen training content, close permission gaps, and prioritise which additional roles to licence in the next wave.</p>
+          </div>
+        </li>
+      </ol>
+
+      <h2>Measuring Copilot Adoption with Viva Insights</h2>
+      <p>The Microsoft Viva Insights Copilot Dashboard (accessible from the Viva Insights Teams app or at <a href="https://learn.microsoft.com/en-us/viva/insights/org-team-insights/copilot-dashboard" target="_blank" rel="noopener noreferrer">Microsoft Learn</a>) provides:</p>
+      <ul>
+        <li><strong>Active users:</strong> How many Copilot-licensed users have used Copilot at least once in the last 28 days</li>
+        <li><strong>Feature adoption:</strong> Breakdown by app (Teams meeting summaries, Word drafting, Outlook summarisation, etc.)</li>
+        <li><strong>Adoption trend:</strong> Week-over-week change in active users — useful for spotting when training or communications are working</li>
+        <li><strong>Copilot survey results:</strong> Microsoft 365 prompts licenced users to complete a periodic in-product survey on perceived time savings and satisfaction</li>
+      </ul>
+      <p>Organisations with Viva Insights Premium access also get time-saved estimates and role-level breakdowns. Most organisations use the standard (no extra cost) Copilot Dashboard and supplement it with a periodic pulse survey distributed via Microsoft Forms.</p>
+
+      <h2>Common Copilot Rollout Mistakes</h2>
+      <ul>
+        <li><strong>Deploying without permission remediation.</strong> The single most dangerous mistake. Schedule a permissions audit as the first workstream, not an afterthought.</li>
+        <li><strong>Licencing executives first.</strong> Executives rarely use Copilot for the everyday tasks where it saves the most time. Pilot with knowledge workers who write, analyse, and meet heavily.</li>
+        <li><strong>No prompt library.</strong> Most employees don't know what to ask Copilot. A curated set of role-specific prompts dramatically increases adoption. Publish it on your SharePoint intranet.</li>
+        <li><strong>Treating Copilot as self-service IT.</strong> Copilot deployment needs change management, not just licence assignment. Without training, adoption stagnates at 20–30% of licenced users.</li>
+        <li><strong>Skipping the pilot.</strong> Broad rollout before validating use cases at scale means you find the surprises — privacy, accuracy, hallucination edge cases — at full organisational cost rather than in a controlled group.</li>
+      </ul>
+
+      <div class="art-callout">
+        <p>Microsoft tracks all planned Copilot improvements on the <a href="https://www.microsoft.com/en-us/microsoft-365/roadmap" target="_blank" rel="noopener noreferrer" style="color:#c084fc;">M365 Roadmap</a>. Filter by "Copilot" to see upcoming features by rollout status. Subscribe to the roadmap RSS feed to get notified of changes relevant to your deployment.</p>
+      </div>
+
+      <div class="art-cta-box">
+        <h3>Planning a Microsoft 365 Copilot deployment?</h3>
+        <p>We help organisations prepare their SharePoint environment, plan the Copilot rollout, train champions, and measure adoption. Start with a free 60-minute readiness assessment — we'll assess your current environment and tell you exactly what to fix before your first licence is assigned.</p>
+        <a href="contact" class="btn-primary">Book a Free Readiness Assessment &#8594;</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a class="related-card glass" href="guide-sharepoint-copilot-ready">
+            <span class="rc-topic">Copilot &amp; SharePoint</span>
+            <span class="rc-title">How to Prepare Your SharePoint for Microsoft Copilot</span>
+            <span class="rc-read">8 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-sharepoint-permissions">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">The Complete Guide to SharePoint Permissions</span>
+            <span class="rc-read">8 min read</span>
+          </a>
+          <a class="related-card glass" href="guide-teams-automation">
+            <span class="rc-topic">Teams &amp; Automation</span>
+            <span class="rc-title">5 Microsoft Teams Automations That Save Hours Every Week</span>
+            <span class="rc-read">8 min read</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Twitter">&#x1D54F;</a>
+          <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="guides">Guides &amp; Tips</a></li>
+          <li><a href="faq">FAQ</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left"><span class="fb-copy">&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span></div>
+        <div class="status-pill"><span class="status-dot-anim"></span>Accepting new engagements</div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a><span class="fb-sep">&middot;</span>
+          <a href="terms">Terms</a><span class="fb-sep">&middot;</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+<script src="js/main.js?v=3"></script>
+<script src="js/particles.js?v=3"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>

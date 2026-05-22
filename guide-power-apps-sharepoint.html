@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Build Custom Business Apps with Power Apps and SharePoint | OceanCloud</title>
+  <meta name="description" content="Build no-code business apps using Power Apps and SharePoint as a data source. Canvas vs model-driven apps, real-world examples, delegation limits, and publishing options explained." />
+  <meta name="keywords" content="Power Apps SharePoint, no-code business apps, canvas app SharePoint, Power Apps tutorial, SharePoint list app, Power Apps delegation, build app SharePoint" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-power-apps-sharepoint" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Build Custom Business Apps with Power Apps and SharePoint — No Code Required" />
+  <meta property="og:description" content="Canvas apps, model-driven apps, SharePoint as a data source, delegation limits, and publishing options — everything you need to build your first Power Apps solution." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-power-apps-sharepoint" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-power-apps-sharepoint#article",
+        "headline": "Build Custom Business Apps with Power Apps and SharePoint — No Code Required",
+        "url": "https://www.oceancloudconsults.com/guide-power-apps-sharepoint",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Canvas apps, model-driven apps, SharePoint as a data source, delegation limits, and publishing options — a complete guide to building Power Apps solutions.",
+        "keywords": ["Power Apps", "SharePoint Power Apps", "no-code apps", "canvas app", "Power Platform"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online", "name": "Use SharePoint Online with Power Apps" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/delegation-overview", "name": "Understand delegation in Power Apps" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/embed-teams-app", "name": "Embed a canvas app as a Teams tab" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Power Apps and SharePoint Guide", "item": "https://www.oceancloudconsults.com/guide-power-apps-sharepoint" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(74,222,128,.12);color:#4ade80;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(74,222,128,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .app-example{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:24px;margin:20px 0;}
+  .app-example-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .app-icon{width:42px;height:42px;border-radius:10px;background:rgba(74,222,128,.15);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+  .app-name{font-size:1rem;font-weight:700;color:var(--white);}
+  .app-tag{font-size:.68rem;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:.08em;}
+  .app-example p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .app-example ul{margin:10px 0 0;color:var(--text-mid);font-size:.9rem;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>Power Apps &amp; SharePoint</span></nav>
+      <h1>Build Custom Business Apps <span class="grad-text">with Power Apps and SharePoint</span></h1>
+      <p>Real-world examples, the canvas vs model-driven choice, delegation limits you must know, and how to publish your app to Teams, SharePoint, and mobile — no code required.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Power Platform</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">10 min read</span>
+      </div>
+
+      <p class="article-intro">Most organisations already have SharePoint lists holding business data — asset registers, helpdesk tickets, purchase requests, employee records. The problem is that SharePoint's default list view is built for information managers, not the frontline staff who need to submit and update that data. Microsoft Power Apps solves this by letting you build custom, mobile-friendly interfaces on top of your existing SharePoint data — without writing any code. This guide shows you exactly how to do it.</p>
+
+      <h2>Canvas Apps vs Model-Driven Apps: Which One Do You Need?</h2>
+      <p>Power Apps comes in two fundamentally different types. Choosing the wrong one is the most common Power Apps mistake. Here's the clear comparison:</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th></th><th>Canvas App</th><th>Model-Driven App</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Best for</strong></td><td>Task-focused apps with custom UI: data entry forms, inspection checklists, approval screens</td><td>Data-rich business applications: CRM, case management, project tracking with complex relationships</td></tr>
+            <tr><td><strong>Data sources</strong></td><td>400+ connectors including SharePoint, Excel, SQL, Salesforce, and more</td><td>Microsoft Dataverse (formerly CDS) — structured relational database in the Power Platform</td></tr>
+            <tr><td><strong>UI design</strong></td><td>Fully custom — drag and drop controls, set position and size of every element</td><td>Data-driven — generated automatically from data schema; less visual flexibility</td></tr>
+            <tr><td><strong>Mobile experience</strong></td><td>Excellent — design specifically for phone or tablet screens</td><td>Good but less optimised for mobile-first scenarios</td></tr>
+            <tr><td><strong>Complexity</strong></td><td>Lower — good for 1–3 SharePoint lists</td><td>Higher — better for multi-table relationships and business logic</td></tr>
+            <tr><td><strong>SharePoint fit</strong></td><td>Native — SharePoint lists are a first-class data source</td><td>Indirect — usually requires Dataverse, though SharePoint data can be synced</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout">
+        <p><strong>For most SharePoint-based use cases, canvas apps are the right choice.</strong> Model-driven apps shine when you're building something closer to a Dynamics 365 application with complex entity relationships. If your data lives in SharePoint lists, start with canvas.</p>
+      </div>
+
+      <h2>Using SharePoint as a Power Apps Data Source</h2>
+      <p>SharePoint lists are one of the simplest data sources to connect in Power Apps. When you connect a SharePoint list to a canvas app, Power Apps reads the list's columns (including column types: text, choice, person, date, lookup) and uses them to generate forms automatically.</p>
+
+      <h3>SharePoint column types and Power Apps controls</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>SharePoint column type</th><th>Default Power Apps control</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Single line of text</strong></td><td>Text input</td><td>Simple text box; supports max length</td></tr>
+            <tr><td><strong>Choice</strong></td><td>Dropdown / Radio buttons</td><td>Options auto-populated from SharePoint choices</td></tr>
+            <tr><td><strong>Person or Group</strong></td><td>People picker</td><td>Searches Azure AD; returns user object</td></tr>
+            <tr><td><strong>Date and Time</strong></td><td>Date picker</td><td>Timezone-aware; can be date-only</td></tr>
+            <tr><td><strong>Yes/No</strong></td><td>Toggle</td><td>Boolean; useful for approval flags</td></tr>
+            <tr><td><strong>Lookup</strong></td><td>Dropdown</td><td>References another SharePoint list — delegation applies</td></tr>
+            <tr><td><strong>Managed metadata</strong></td><td>Limited</td><td>Requires workaround; Power Automate often handles this better</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Use SharePoint Online with Power Apps — learn.microsoft.com</a>
+
+      <h2>3 Real-World Power Apps + SharePoint Examples</h2>
+
+      <div class="app-example">
+        <div class="app-example-header">
+          <div class="app-icon">&#128230;</div>
+          <div>
+            <div class="app-name">Asset Tracking App</div>
+            <div class="app-tag">Operations</div>
+          </div>
+        </div>
+        <p>A canvas app that replaces a shared Excel spreadsheet used by the facilities team to track company assets — laptops, monitors, projectors, vehicles. The SharePoint list stores asset details (category, serial number, assigned user, location, condition, last-checked date). The app provides a mobile-first interface for staff to check assets in and out, log condition notes, and scan barcodes using the device camera.</p>
+        <ul>
+          <li><strong>SharePoint lists used:</strong> Assets, Assignments, Locations, Categories</li>
+          <li><strong>Key controls:</strong> Barcode scanner control, gallery with image thumbnails, location dropdown pre-filtered by department</li>
+          <li><strong>Power Automate integration:</strong> Notify manager when an asset is flagged as damaged; send overdue-return reminders</li>
+        </ul>
+      </div>
+
+      <div class="app-example">
+        <div class="app-example-header">
+          <div class="app-icon">&#128187;</div>
+          <div>
+            <div class="app-name">IT Helpdesk Ticket App</div>
+            <div class="app-tag">IT</div>
+          </div>
+        </div>
+        <p>A two-screen canvas app replacing email-based IT support requests. Screen 1 is a submission form for staff to log issues — category, priority, description, and photo attachment. Screen 2 is an IT team dashboard showing all open tickets, filterable by status and assignee. Tickets are stored in a SharePoint list; Power Automate handles routing and SLA notifications.</p>
+        <ul>
+          <li><strong>SharePoint lists used:</strong> Tickets, IT Staff (lookup)</li>
+          <li><strong>Key controls:</strong> Form with add-attachment control, gallery with conditional formatting (red for overdue, amber for due today), edit form for status updates</li>
+          <li><strong>Embedding:</strong> Published as a Teams tab in the IT Support team channel, so staff submit tickets without leaving Teams</li>
+        </ul>
+      </div>
+
+      <div class="app-example">
+        <div class="app-example-header">
+          <div class="app-icon">&#128176;</div>
+          <div>
+            <div class="app-name">Employee Expense Claims App</div>
+            <div class="app-tag">Finance</div>
+          </div>
+        </div>
+        <p>A mobile-first canvas app for submitting and approving expense claims. Employees photograph receipts (stored in a SharePoint document library), enter claim details, and submit. Managers receive an Adaptive Card in Teams asking them to approve or reject, with the receipt image embedded. Finance sees an aggregate view of all pending claims with export-to-Excel.</p>
+        <ul>
+          <li><strong>SharePoint lists used:</strong> Expense Claims, Expense Categories, Receipts (document library)</li>
+          <li><strong>Key controls:</strong> Camera control for receipt capture, date picker, currency input, person lookup for manager</li>
+          <li><strong>Power Automate integration:</strong> Multi-level approval flow — line manager first, Finance team second for amounts over £500</li>
+        </ul>
+      </div>
+
+      <h2>The Delegation Problem: What Every Power Apps Developer Must Know</h2>
+      <p>Delegation is the most misunderstood concept in Power Apps, and ignoring it causes apps to silently return wrong data in production. Here is what it means and why it matters.</p>
+
+      <h3>What is delegation?</h3>
+      <p>When Power Apps queries a SharePoint list, it can either process the query <em>locally</em> (loading data to the device first, then filtering) or <em>delegate</em> the query to SharePoint (letting SharePoint do the filtering server-side). Delegation is far more efficient — but not all functions support it.</p>
+
+      <h3>The delegation limit</h3>
+      <p>For non-delegable queries, Power Apps loads a maximum of <strong>2,000 records</strong> to the device (this was 500 before 2019; it is now configurable up to 2,000). If your SharePoint list has 5,000 items and you use a non-delegable filter like <code>Search()</code> without delegation, your app only sees the first 2,000 items — and Power Apps shows a yellow delegation warning, which many developers ignore.</p>
+
+      <h3>Delegable vs non-delegable operations on SharePoint</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Function</th><th>Delegable to SharePoint?</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Filter()</code> with simple comparisons (=, &lt;, &gt;)</td><td>Yes</td><td>Most column types supported</td></tr>
+            <tr><td><code>Sort()</code></td><td>Yes</td><td>Single column; multi-column sort not always delegable</td></tr>
+            <tr><td><code>Search()</code></td><td>Yes (text columns only)</td><td>Searches title and text fields</td></tr>
+            <tr><td><code>StartsWith()</code></td><td>Yes</td><td>Text column prefix match</td></tr>
+            <tr><td><code>Filter()</code> with <code>in</code> operator</td><td>No</td><td>Use multiple <code>Or</code> conditions instead</td></tr>
+            <tr><td><code>CountIf()</code></td><td>No</td><td>Loads all records; use Dataverse for aggregate queries</td></tr>
+            <tr><td><code>Filter()</code> with lookup columns</td><td>Limited</td><td>ID field delegable; expanded fields may not be</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>Delegation rule of thumb:</strong> If your SharePoint list will ever exceed 2,000 records, design around delegation from day one. For lists that genuinely need aggregate queries or complex filtering, consider migrating that list to Dataverse or using a SQL Azure backend instead.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/delegation-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Understand delegation in Power Apps — learn.microsoft.com</a>
+
+      <h2>Publishing Options: Where Your App Lives</h2>
+      <p>Once your canvas app is built, you have several ways to deploy it to users — each suited to different scenarios:</p>
+
+      <h3>Microsoft Teams tab</h3>
+      <p>The most popular option for internal business apps. Users access the app directly in Teams without installing anything. Requires publishing as an app package from Power Apps and adding it to Teams via the Admin Centre or individually by users. Apps can be pinned to specific Teams channels, making them contextual to the team's work. Microsoft documentation walks through the exact steps.</p>
+      <a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/embed-teams-app" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Embed a canvas app as a Teams tab — learn.microsoft.com</a>
+
+      <h3>SharePoint page web part</h3>
+      <p>Embed your app directly into a SharePoint page using the Power Apps web part. This works well when the app is related to a specific SharePoint site — for example, embedding an asset management app in the Facilities team site. Users don't need a separate app installed; they access it while browsing SharePoint.</p>
+
+      <h3>Standalone web app</h3>
+      <p>Share a direct URL (from make.powerapps.com) with users. They open it in a browser and can pin it as a progressive web app on their desktop or home screen. Good for apps shared across departments where there's no single Teams team or SharePoint site as a home.</p>
+
+      <h3>Power Apps mobile app</h3>
+      <p>Available on iOS and Android. Users install the Microsoft Power Apps app from the App Store or Google Play, sign in with their M365 credentials, and all apps shared with them appear in the app library. Ideal for frontline workers without Windows devices — field engineers, warehouse staff, retail teams.</p>
+
+      <h2>Governance: What Organisations Get Wrong</h2>
+      <p>Power Apps makes it very easy for citizen developers to build and share apps — which is great for productivity but creates governance challenges if unmanaged.</p>
+      <ul>
+        <li><strong>Environment strategy:</strong> Use Development, Test, and Production environments via the Power Platform Admin Centre. Never build directly in the production environment.</li>
+        <li><strong>Data Loss Prevention (DLP) policies:</strong> Define which connectors can be used in which environments. For example, block consumer connectors (Twitter, Dropbox) in the production environment to prevent data exfiltration.</li>
+        <li><strong>App ownership:</strong> Set a co-owner for every production app so it doesn't become orphaned when the original developer leaves.</li>
+        <li><strong>Licensing clarity:</strong> Canvas apps connecting to SharePoint require only a Microsoft 365 licence for users (no additional Power Apps licence needed). Connecting to premium connectors or Dataverse requires a Power Apps Per User or Per App licence.</li>
+        <li><strong>Power Platform Centre of Excellence (CoE) Starter Kit:</strong> Microsoft provides a free CoE Starter Kit that gives IT admins inventory, analytics, and governance tools for all Power Platform usage in the tenant.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Ready to build your first Power App?</h3>
+        <p>OceanCloud can design, build, and deploy a canvas app on your existing SharePoint environment in 2–4 weeks — or train your team to build their own. Either way, we handle governance and ensure it scales.</p>
+        <a href="contact" class="btn btn-primary">Talk to a Power Apps Specialist</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-power-automate-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">5 Power Automate Flows Every SharePoint Site Should Have</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-teams-automation" class="related-card">
+            <span class="rc-topic">Teams</span>
+            <span class="rc-title">5 Microsoft Teams Automations That Save Hours Every Week</span>
+            <span class="rc-read">8 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-permissions" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions: A Complete Guide</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>
