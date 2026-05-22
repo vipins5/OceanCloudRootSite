@@ -216,7 +216,7 @@ body:not(.has-mouse) #c-ring { opacity: 0; }
 .nav-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
 }
 
 /* logo */
@@ -250,6 +250,7 @@ body:not(.has-mouse) #c-ring { opacity: 0; }
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-left: auto;
 }
 .nav-links li { position: relative; }
 
@@ -1744,7 +1745,8 @@ footer {
   .nav-links.open { display: flex; }
   .nav-links a { font-size: 1.4rem; font-weight: 700; padding: 14px 32px; border-radius: 12px; }
   .nav-links li .nav-cta { border: 1px solid var(--border-hover); margin-top: 8px; font-size: 1rem; }
-  .hamburger { display: flex; }
+  .nav-search-btn { margin-left: auto; }
+  .hamburger { display: flex; margin-left: 4px; }
   .hamburger:focus-visible { outline: 2px solid var(--accent); border-radius: 6px; }
 
   /* CTA */
