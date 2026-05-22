@@ -97,6 +97,7 @@
   .guide-card:nth-child(16){animation-delay:.79s;}
   .guide-card:nth-child(17){animation-delay:.84s;}
   .guide-card:nth-child(18){animation-delay:.89s;}
+  .guide-card:nth-child(19){animation-delay:.94s;}
   .gc-icon{font-size:2.2rem;line-height:1;}
   .gc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .gc-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;}
@@ -106,6 +107,7 @@
   .tag-copilot{background:rgba(168,85,247,.12);color:#c084fc;}
   .tag-teams{background:rgba(120,87,220,.12);color:#a78bfa;}
   .tag-integration{background:rgba(251,146,60,.12);color:#fb923c;}
+  .tag-admin{background:rgba(59,130,246,.12);color:#60a5fa;}
   .gc-read{font-size:.75rem;color:var(--text-dim);}
   .gc-title{font-size:1.05rem;font-weight:700;line-height:1.45;letter-spacing:-.02em;}
   .gc-title a{color:var(--white);text-decoration:none;transition:color .2s;}
@@ -182,6 +184,7 @@
       <button class="gf-btn" data-topic="copilot">Copilot</button>
       <button class="gf-btn" data-topic="teams">Teams</button>
       <button class="gf-btn" data-topic="integration">Integration</button>
+      <button class="gf-btn" data-topic="admin">Admin</button>
     </div>
 
     <div class="guides-grid" id="guides-grid">
@@ -420,9 +423,22 @@
         <a class="gc-link" href="guide-sharepoint-permissions-best-practices">Read guide &#8599;</a>
       </article>
 
+      <article class="guide-card glass" data-topic="admin">
+        <div class="gc-icon">&#128272;</div>
+        <div class="gc-meta">
+          <span class="gc-tag tag-admin">Admin &amp; Automation</span>
+          <span class="gc-read">15 min read</span>
+        </div>
+        <h2 class="gc-title">
+          <a href="guide-pnp-entra-app-registration">PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</a>
+        </h2>
+        <p class="gc-body">Install PowerShell 7, set up PnP.PowerShell, register an Entra app with the right API permissions, generate a self-signed certificate, upload it, and connect three ways — Interactive, PFX, or Thumbprint.</p>
+        <a class="gc-link" href="guide-pnp-entra-app-registration">Read guide &#8599;</a>
+      </article>
+
     </div>
 
-    <p class="guides-count">18 guides available &mdash; new content added monthly &nbsp;&middot;&nbsp; <a href="faq">Browse our M365 FAQ &#8594;</a></p>
+    <p class="guides-count">19 guides available &mdash; new content added monthly &nbsp;&middot;&nbsp; <a href="faq">Browse our M365 FAQ &#8594;</a></p>
 
   </div>
 </section>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide | OceanCloud</title>
+  <meta name="description" content="Step-by-step guide to registering a PnP Entra app — install PowerShell 7, PnP module, create self-signed certs, and connect with -Interactive, -CertificatePath, or -Thumbprint." />
+  <meta name="keywords" content="pnp powershell app registration, connect-pnponline certificate, pnp powershell thumbprint, pnp entra app registration, pnp powershell client id certificate, sharepoint powershell automation, pnp powershell pfx" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/guide-pnp-entra-app-registration" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide" />
+  <meta property="og:description" content="Install PowerShell 7 and PnP.PowerShell, register an Entra app, create self-signed certificates, and connect to SharePoint three ways — Interactive, PFX, or Thumbprint." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/guide-pnp-entra-app-registration" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/guide-pnp-entra-app-registration#article",
+        "headline": "PnP PowerShell: Complete Entra App Registration & Certificate Guide",
+        "url": "https://www.oceancloudconsults.com/guide-pnp-entra-app-registration",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "End-to-end guide: install PowerShell 7, install PnP.PowerShell, register an Entra app, create a self-signed certificate, upload the public key, and connect with Interactive, CertificatePath, or Thumbprint.",
+        "keywords": ["PnP PowerShell", "Entra app registration", "Connect-PnPOnline certificate", "PnP thumbprint", "SharePoint PowerShell automation"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app", "name": "Register an application — Microsoft Entra" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows", "name": "Install PowerShell on Windows" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",   "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "PnP Entra App Registration", "item": "https://www.oceancloudconsults.com/guide-pnp-entra-app-registration" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  /* ── article shell ── */
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.12);color:#60a5fa;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#60a5fa;}
+
+  /* ── callouts ── */
+  .art-callout{background:rgba(59,130,246,.07);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bfdbfe;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-callout.danger{background:rgba(239,68,68,.07);border-left-color:#f87171;}
+  .art-callout.danger p{color:#fecaca;}
+  .art-callout.tip{background:rgba(74,222,128,.07);border-left-color:#4ade80;}
+  .art-callout.tip p{color:#bbf7d0;}
+
+  /* ── tables ── */
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(59,130,246,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-table code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:4px;font-size:.8rem;color:#c8daea;}
+
+  /* ── numbered steps ── */
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(59,130,246,.18);color:#60a5fa;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+
+  /* ── code blocks ── */
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+
+  /* ── portal navigation path ── */
+  .portal-path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.18);border-radius:8px;padding:10px 16px;margin:20px 0;font-size:.8rem;}
+  .portal-path a,.portal-path span.pp-step{color:#60a5fa;font-weight:600;}
+  .portal-path span.pp-sep{color:rgba(255,255,255,.25);margin:0 2px;}
+  .portal-path span.pp-icon{font-size:1rem;}
+
+  /* ── portal step simulation box ── */
+  .portal-step{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-top:3px solid rgba(59,130,246,.4);border-radius:0 0 12px 12px;padding:20px 22px;margin:16px 0 24px;}
+  .portal-step-bar{background:rgba(59,130,246,.1);border-radius:8px 8px 0 0;padding:9px 16px;margin:-20px -22px 18px;display:flex;align-items:center;gap:8px;}
+  .portal-step-dot{width:10px;height:10px;border-radius:50%;}
+  .portal-step-dot.r{background:rgba(239,68,68,.5);}
+  .portal-step-dot.y{background:rgba(245,158,11,.5);}
+  .portal-step-dot.g{background:rgba(74,222,128,.5);}
+  .portal-step-url{font-size:.74rem;color:var(--text-dim);margin-left:8px;font-family:'Courier New',monospace;}
+  .portal-step ul{margin:0;padding-left:20px;}
+  .portal-step li{color:var(--text-mid);font-size:.9rem;margin-bottom:8px;line-height:1.6;}
+  .portal-step li strong{color:var(--white);}
+  .portal-step li code{background:rgba(255,255,255,.08);padding:2px 7px;border-radius:4px;font-size:.8rem;color:#93c5fd;}
+  .portal-step .pf-action{display:inline-block;background:rgba(59,130,246,.2);color:#93c5fd;border-radius:6px;padding:5px 14px;font-size:.82rem;font-weight:600;margin-top:12px;border:1px solid rgba(59,130,246,.3);}
+
+  /* ── connection method cards ── */
+  .conn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:24px 0;}
+  .conn-card{border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,.07);}
+  .conn-badge{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;margin-bottom:10px;}
+  .conn-badge.interactive{background:rgba(74,222,128,.12);color:#4ade80;}
+  .conn-badge.pfx{background:rgba(59,130,246,.12);color:#60a5fa;}
+  .conn-badge.thumb{background:rgba(168,85,247,.12);color:#c084fc;}
+  .conn-card h4{margin:0 0 8px;color:var(--white);font-size:.95rem;font-weight:700;}
+  .conn-card p{margin:0 0 6px;font-size:.84rem;color:var(--text-mid);line-height:1.65;}
+  .conn-card .conn-good{font-size:.8rem;color:#4ade80;}
+  .conn-card .conn-bad{font-size:.8rem;color:#f87171;}
+
+  /* ── certificate flow diagram ── */
+  .cert-flow{margin:28px 0;}
+  .cert-flow-row{display:flex;align-items:center;gap:0;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+  .cert-box{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px 18px;flex:1;min-width:160px;}
+  .cert-box-label{font-size:.7rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+  .cert-box-desc{font-size:.83rem;color:var(--text-mid);line-height:1.5;}
+  .cert-arrow{font-size:1.5rem;color:rgba(255,255,255,.25);padding:0 4px;flex-shrink:0;}
+  .cert-dest{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 18px;flex:1;min-width:160px;}
+  .cert-dest-label{font-size:.7rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+  .cert-dest-desc{font-size:.83rem;color:var(--text-mid);line-height:1.5;}
+
+  /* ── troubleshoot cards ── */
+  .ts-list{list-style:none;padding:0;margin:0 0 20px;}
+  .ts-list li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .ts-list li:last-child{border-bottom:none;}
+  .ts-err{font-size:.82rem;font-family:'Courier New',monospace;color:#f87171;background:rgba(239,68,68,.07);padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:6px;}
+  .ts-fix{font-size:.88rem;color:var(--text-mid);line-height:1.7;}
+  .ts-fix strong{color:var(--white);}
+
+  /* ── ms ref ── */
+  .ms-ref{display:inline-block;font-size:.78rem;color:#60a5fa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+
+  /* ── CTA + related ── */
+  .art-cta-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(96,165,250,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#60a5fa;}
+
+  @media(max-width:600px){
+    .conn-grid{grid-template-columns:1fr;}
+    .cert-flow-row{flex-direction:column;align-items:stretch;}
+    .cert-arrow{transform:rotate(90deg);align-self:center;}
+  }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="guides">Guides</a><span>/</span><span>PnP Entra App Registration</span></nav>
+      <h1>PnP PowerShell: <span class="grad-text">Complete Entra App Registration</span> &amp; Certificate Guide</h1>
+      <p>Everything in one place — install PowerShell 7, install the PnP module, register your Entra app, generate a self-signed certificate, upload it, and connect with your method of choice.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">15 min read</span>
+      </div>
+
+      <p class="article-intro">PnP PowerShell is the most widely used open-source PowerShell module for managing SharePoint Online and Microsoft 365. To use it reliably in automated scripts, scheduled tasks, or Azure DevOps pipelines, you need an Entra app registration (formerly Azure AD app) and a certificate-based connection. This guide walks you through the complete setup from zero — including PowerShell 7 installation, module setup, roles, app registration in the Entra portal, self-signed certificate creation, and all three connection methods.</p>
+
+      <h2>Which Connection Method Should You Use?</h2>
+      <p>PnP PowerShell supports three authentication methods. Choose based on your use case:</p>
+
+      <div class="conn-grid">
+        <div class="conn-card">
+          <span class="conn-badge interactive">Interactive</span>
+          <h4>-Interactive</h4>
+          <p>Opens a browser window for sign-in including MFA. Runs as the signed-in user.</p>
+          <p class="conn-good">&#10003; Development and testing</p>
+          <p class="conn-good">&#10003; Ad-hoc admin tasks</p>
+          <p class="conn-bad">&#10007; Cannot be automated (requires human)</p>
+          <p class="conn-bad">&#10007; Not for scheduled tasks</p>
+        </div>
+        <div class="conn-card">
+          <span class="conn-badge pfx">PFX Certificate</span>
+          <h4>-CertificatePath</h4>
+          <p>Authenticates non-interactively using a .pfx certificate file on disk. App identity, no user.</p>
+          <p class="conn-good">&#10003; Scheduled tasks, pipelines</p>
+          <p class="conn-good">&#10003; Works without cert store access</p>
+          <p class="conn-bad">&#10007; PFX file (with private key) must be secured</p>
+          <p class="conn-bad">&#10007; Password must be handled securely</p>
+        </div>
+        <div class="conn-card">
+          <span class="conn-badge thumb">Thumbprint</span>
+          <h4>-Thumbprint</h4>
+          <p>Authenticates non-interactively using a certificate already installed in the Windows certificate store.</p>
+          <p class="conn-good">&#10003; No PFX file on disk</p>
+          <p class="conn-good">&#10003; Ideal for on-premises servers</p>
+          <p class="conn-bad">&#10007; Requires cert installed on each machine</p>
+          <p class="conn-bad">&#10007; Windows-only</p>
+        </div>
+      </div>
+
+      <div class="art-callout">
+        <p><strong>Interactive vs App-only permissions:</strong> The -Interactive method uses <em>delegated</em> permissions — the app can only do what the signed-in user can do. The -CertificatePath and -Thumbprint methods use <em>application</em> permissions — the app has its own identity and does not need a user account. For unattended automation, always use certificate-based authentication with application permissions.</p>
+      </div>
+
+      <h2>Step 1: Install PowerShell 7</h2>
+      <p>PnP.PowerShell is cross-platform and works on Windows PowerShell 5.1, but PowerShell 7 (built on .NET) is strongly recommended. It runs faster, supports more PnP cmdlets, and will be required in future module versions.</p>
+
+      <h3>Check your current PowerShell version</h3>
+      <div class="code-label">PowerShell — check version</div>
+      <div class="code-block"><pre>$PSVersionTable.PSVersion
+
+# Look for Major: 7 (or higher) in the output
+# If Major: 5, you are running Windows PowerShell — upgrade</pre></div>
+
+      <h3>Install PowerShell 7 via winget (recommended on Windows)</h3>
+      <div class="code-label">PowerShell or Command Prompt — install via winget</div>
+      <div class="code-block"><pre>winget install --id Microsoft.PowerShell -e --source winget
+
+# After installation, open a NEW terminal window and verify:
+pwsh --version
+# Expected output: PowerShell 7.x.x</pre></div>
+
+      <h3>Alternative: Install via MSI installer</h3>
+      <p>Download the Windows 64-bit MSI from the <a href="https://github.com/PowerShell/PowerShell/releases" target="_blank" rel="noopener noreferrer">PowerShell GitHub Releases page</a>. The file is named <code>PowerShell-7.x.x-win-x64.msi</code>. Run the installer with default options.</p>
+
+      <div class="art-callout tip">
+        <p><strong>After installation:</strong> PowerShell 7 installs alongside Windows PowerShell 5.1 — it does not replace it. Launch PS7 by running <code>pwsh</code> instead of <code>powershell</code>. In the Windows Start menu it appears as "PowerShell 7".</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Install PowerShell on Windows — learn.microsoft.com</a>
+
+      <h2>Step 2: Install the PnP.PowerShell Module</h2>
+      <p>The module is published to the PowerShell Gallery. Run these commands inside PowerShell 7 (<code>pwsh</code>).</p>
+
+      <h3>Set the execution policy (if required)</h3>
+      <div class="code-label">PowerShell 7 — set execution policy</div>
+      <div class="code-block"><pre># If scripts are blocked, set the policy for the current user
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Confirm when prompted (enter 'Y')
+# RemoteSigned: local scripts run freely; downloaded scripts must be signed</pre></div>
+
+      <h3>Install PnP.PowerShell</h3>
+      <div class="code-label">PowerShell 7 — install module</div>
+      <div class="code-block"><pre># Install for the current user (no administrator rights needed)
+Install-Module -Name PnP.PowerShell -Scope CurrentUser
+
+# To install for all users on the machine (requires Run as Administrator)
+# Install-Module -Name PnP.PowerShell -Scope AllUsers
+
+# If prompted about an untrusted repository, enter 'Y' to accept
+
+# Verify installation
+Get-Module -Name PnP.PowerShell -ListAvailable</pre></div>
+
+      <h3>Update an existing installation</h3>
+      <div class="code-label">PowerShell 7 — update module</div>
+      <div class="code-block"><pre>Update-Module -Name PnP.PowerShell
+
+# Check the installed version
+Import-Module PnP.PowerShell
+Get-Module PnP.PowerShell | Select-Object Version</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Module name matters:</strong> The current module is <code>PnP.PowerShell</code> (with a dot). An older module called <code>SharePointPnPPowerShellOnline</code> (no dot) exists on the Gallery but is deprecated and no longer maintained. Always use <code>PnP.PowerShell</code>.</p>
+      </div>
+
+      <a href="https://pnp.github.io/powershell/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell documentation — pnp.github.io</a>
+
+      <h2>Step 3: Roles Required for App Registration</h2>
+      <p>Creating an Entra app registration and granting it high-privilege permissions requires specific Azure AD roles. Confirm these with your tenant administrator before starting.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Task</th><th>Required role</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Create an app registration</strong></td><td>Application Administrator <em>or</em> Cloud Application Administrator</td><td>These roles allow creating and managing app registrations without being a Global Admin</td></tr>
+            <tr><td><strong>Grant admin consent for Graph permissions</strong></td><td>Privileged Role Administrator <em>or</em> Global Administrator</td><td>Required for high-privilege Application permissions such as <code>Sites.FullControl.All</code></td></tr>
+            <tr><td><strong>Run SharePoint tenant-level cmdlets</strong></td><td>SharePoint Administrator <em>or</em> Global Administrator</td><td>Needed for cmdlets like <code>Get-PnPTenantSite</code> — the Entra app alone is not sufficient</td></tr>
+            <tr><td><strong>Upload certificate to app</strong></td><td>Application Administrator (on that app)</td><td>The app owner can upload certs to their own app without Global Admin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>Least privilege note:</strong> If your scripts only access specific site collections and not the entire tenant, request <code>Sites.Selected</code> (application permission) and use Graph API to grant access to individual sites. This is the most secure option and avoids giving the app full tenant-wide SharePoint access.</p>
+      </div>
+
+      <h2>Step 4: Register the App in Microsoft Entra ID</h2>
+      <p>Sign in to the <a href="https://entra.microsoft.com" target="_blank" rel="noopener noreferrer">Microsoft Entra admin center</a> (or <a href="https://portal.azure.com" target="_blank" rel="noopener noreferrer">Azure portal</a> &gt; Microsoft Entra ID). You need Application Administrator role or higher.</p>
+
+      <div class="portal-path">
+        <span class="pp-icon">&#127968;</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Microsoft Entra ID</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">App registrations</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">+ New registration</span>
+      </div>
+
+      <div class="portal-step">
+        <div class="portal-step-bar">
+          <span class="portal-step-dot r"></span><span class="portal-step-dot y"></span><span class="portal-step-dot g"></span>
+          <span class="portal-step-url">entra.microsoft.com &rsaquo; Applications &rsaquo; App registrations &rsaquo; New registration</span>
+        </div>
+        <ul>
+          <li><strong>Name</strong> — Enter a descriptive name, e.g. <code>PnP SharePoint Automation</code>. This name appears in audit logs.</li>
+          <li><strong>Supported account types</strong> — Select: <em>Accounts in this organizational directory only (Single tenant)</em>. Only your organisation's users can use this app.</li>
+          <li><strong>Redirect URI</strong> — Leave <strong>blank</strong> if you are only using certificate-based (non-interactive) authentication. If you also want <code>-Interactive</code> support, select <em>Public client/native (mobile &amp; desktop)</em> and enter: <code>https://login.microsoftonline.com/common/oauth2/nativeclient</code></li>
+        </ul>
+        <span class="pf-action">Click: Register</span>
+      </div>
+
+      <h3>Note your Application IDs</h3>
+      <p>After registration, you land on the app's Overview page. Note down these two values — you will need them for every <code>Connect-PnPOnline</code> call:</p>
+
+      <div class="portal-path">
+        <span class="pp-icon">&#128196;</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Your app</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Overview</span>
+      </div>
+
+      <div class="portal-step">
+        <div class="portal-step-bar">
+          <span class="portal-step-dot r"></span><span class="portal-step-dot y"></span><span class="portal-step-dot g"></span>
+          <span class="portal-step-url">entra.microsoft.com &rsaquo; App registrations &rsaquo; PnP SharePoint Automation &rsaquo; Overview</span>
+        </div>
+        <ul>
+          <li><strong>Application (client) ID</strong> — A GUID like <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. This is your <code>-ClientId</code> parameter.</li>
+          <li><strong>Directory (tenant) ID</strong> — A GUID that identifies your Entra tenant. This is your <code>-Tenant</code> parameter (you can also use <code>yourcompany.onmicrosoft.com</code>).</li>
+        </ul>
+        <p style="margin:12px 0 0;font-size:.85rem;color:var(--text-dim);">Copy both values to a temporary notepad — you will use them in Step 8.</p>
+      </div>
+
+      <h2>Step 5: Configure API Permissions</h2>
+      <p>For certificate-based (app-only) connections, you need <strong>Application permissions</strong> — not Delegated permissions. Application permissions give the app its own identity, independent of any user account. The required permissions depend on what your scripts will do.</p>
+
+      <div class="portal-path">
+        <span class="pp-icon">&#128274;</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Your app</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">API permissions</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">+ Add a permission</span>
+      </div>
+
+      <h3>Recommended permissions for SharePoint management</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>API</th><th>Permission name</th><th>Type</th><th>When you need it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>Sites.FullControl.All</code></td><td>Application</td><td>Full read/write access to all SharePoint sites via Graph. Required for most PnP cmdlets in app-only mode.</td></tr>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>Sites.ReadWrite.All</code></td><td>Application</td><td>Read and write sites — use instead of FullControl if you don't need to manage permissions.</td></tr>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>User.ReadBasic.All</code></td><td>Application</td><td>Resolve users by email/UPN. Required if scripts look up user profiles.</td></tr>
+            <tr><td><strong>Microsoft Graph</strong></td><td><code>Group.ReadWrite.All</code></td><td>Application</td><td>Manage Microsoft 365 groups (which back Teams and SharePoint team sites).</td></tr>
+            <tr><td><strong>SharePoint</strong></td><td><code>Sites.FullControl.All</code></td><td>Application</td><td>Full control via SharePoint CSOM/REST — required for tenant-level PnP cmdlets like <code>Get-PnPTenantSite</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="portal-step">
+        <div class="portal-step-bar">
+          <span class="portal-step-dot r"></span><span class="portal-step-dot y"></span><span class="portal-step-dot g"></span>
+          <span class="portal-step-url">entra.microsoft.com &rsaquo; API permissions &rsaquo; Add a permission</span>
+        </div>
+        <ul>
+          <li>Click <strong>+ Add a permission</strong></li>
+          <li>Select <strong>Microsoft Graph</strong> &rarr; <strong>Application permissions</strong> &rarr; search <code>Sites.FullControl.All</code> &rarr; tick the checkbox &rarr; click <strong>Add permissions</strong></li>
+          <li>Repeat for any additional Graph permissions your scripts need</li>
+          <li>Click <strong>+ Add a permission</strong> again &rarr; select <strong>SharePoint</strong> &rarr; <strong>Application permissions</strong> &rarr; search <code>Sites.FullControl.All</code> &rarr; tick &rarr; <strong>Add permissions</strong></li>
+        </ul>
+        <span class="pf-action">Click: Grant admin consent for [Your Tenant]</span>
+        <p style="margin:10px 0 0;font-size:.83rem;color:#fed7aa;">&#9888;&nbsp; Admin consent is required for Application permissions. Without it, connections will fail with an authorization error. Only a Privileged Role Administrator or Global Administrator can grant consent.</p>
+      </div>
+
+      <div class="art-callout tip">
+        <p><strong>Principle of least privilege — use Sites.Selected:</strong> Instead of <code>Sites.FullControl.All</code> (which grants access to every site in your tenant), you can add <code>Sites.Selected</code> (Application, Microsoft Graph) and then explicitly grant the app permission to only specific sites using Graph API or PnP PowerShell's <code>Grant-PnPAzureADAppSitePermission</code>. This is best practice for production apps.</p>
+      </div>
+
+      <h2>Step 6: Generate a Self-Signed Certificate</h2>
+      <p>Certificate-based authentication requires a key pair: a <strong>public key</strong> (uploaded to Entra) and a <strong>private key</strong> (kept secure on your machine or server). You can generate both with a single PowerShell command. Run these commands in PowerShell 7 on the machine where you will run the scripts.</p>
+
+      <div class="code-label">PowerShell 7 — create self-signed certificate</div>
+      <div class="code-block"><pre># ── Step 1: Create the certificate in the Windows cert store ──
+$certName = "PnPSharePointApp"
+$notAfter  = (Get-Date).AddYears(2)   # 2-year validity
+
+$cert = New-SelfSignedCertificate `
+    -Subject           "CN=$certName" `
+    -CertStoreLocation "Cert:\CurrentUser\My" `
+    -KeyExportPolicy   Exportable `
+    -KeySpec           Signature `
+    -KeyLength         2048 `
+    -KeyAlgorithm      RSA `
+    -HashAlgorithm     SHA256 `
+    -NotAfter          $notAfter
+
+# Output the thumbprint — save this value, you will need it later
+Write-Host "Thumbprint: $($cert.Thumbprint)" -ForegroundColor Cyan
+
+# ── Step 2: Export public key (.cer) — upload this to Entra ──
+$cerPath = "C:\Certs\PnPSharePointApp.cer"
+New-Item -ItemType Directory -Force -Path "C:\Certs" | Out-Null
+Export-Certificate -Cert $cert -FilePath $cerPath
+Write-Host "Public key exported to: $cerPath"
+
+# ── Step 3: Export PFX (private + public) — use with -CertificatePath ──
+$pfxPath     = "C:\Certs\PnPSharePointApp.pfx"
+$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
+Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $pfxPassword
+Write-Host "PFX exported to: $pfxPath"</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Secure your PFX file:</strong> The <code>.pfx</code> file contains the private key and is equivalent to a password. Store it in a dedicated folder accessible only to the service account that runs the scripts. Never commit it to source control, place it on a shared drive, or email it. Consider using Azure Key Vault for production environments.</p>
+      </div>
+
+      <h3>Alternative: Use PnP's built-in certificate generator</h3>
+      <p>After installing PnP.PowerShell, you can use <code>New-PnPAzureCertificate</code> which generates both the .cer and .pfx in a single command without creating a cert store entry:</p>
+
+      <div class="code-label">PowerShell 7 — PnP certificate generator (alternative)</div>
+      <div class="code-block"><pre># This does NOT require an active PnP connection — run it before connecting
+$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
+
+New-PnPAzureCertificate `
+    -CommonName         "PnPSharePointApp" `
+    -OutPfx             "C:\Certs\PnPSharePointApp.pfx" `
+    -OutCert            "C:\Certs\PnPSharePointApp.cer" `
+    -CertificatePassword $pfxPassword `
+    -ValidYears         2
+
+# The cmdlet also outputs the Thumbprint and an Entra manifest JSON snippet
+# you can paste directly into the app registration's Manifest tab</pre></div>
+
+      <h2>Step 7: Upload the Certificate to Your Entra App</h2>
+      <p>Upload only the <strong>.cer file</strong> (public key) to Entra. Never upload the .pfx — Entra only needs the public key to verify signatures made by the private key.</p>
+
+      <div class="portal-path">
+        <span class="pp-icon">&#128274;</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Your app</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Certificates &amp; secrets</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Certificates tab</span>
+        <span class="pp-sep">&rsaquo;</span>
+        <span class="pp-step">Upload certificate</span>
+      </div>
+
+      <div class="portal-step">
+        <div class="portal-step-bar">
+          <span class="portal-step-dot r"></span><span class="portal-step-dot y"></span><span class="portal-step-dot g"></span>
+          <span class="portal-step-url">entra.microsoft.com &rsaquo; App registrations &rsaquo; PnP SharePoint Automation &rsaquo; Certificates &amp; secrets</span>
+        </div>
+        <ul>
+          <li>Click the <strong>Certificates</strong> tab (not "Client secrets")</li>
+          <li>Click <strong>Upload certificate</strong></li>
+          <li>Click the folder icon and browse to <code>C:\Certs\PnPSharePointApp.cer</code></li>
+          <li>Optionally add a description, e.g. <code>Script server — expires May 2028</code> (helps at renewal time)</li>
+        </ul>
+        <span class="pf-action">Click: Add</span>
+        <p style="margin:10px 0 0;font-size:.83rem;color:var(--text-dim);">After upload, the Certificates tab shows the certificate thumbprint, start date, and expiry date. The thumbprint shown here must match the one output by <code>New-SelfSignedCertificate</code> in Step 6.</p>
+      </div>
+
+      <h3>Certificate flow — what goes where</h3>
+      <div class="cert-flow">
+        <div class="cert-flow-row">
+          <div class="cert-box">
+            <div class="cert-box-label">New-SelfSignedCertificate</div>
+            <div class="cert-box-desc">Creates key pair in Windows cert store<br><code>Cert:\CurrentUser\My</code></div>
+          </div>
+          <span class="cert-arrow">&#8594;</span>
+          <div class="cert-box">
+            <div class="cert-box-label">Export-Certificate (.cer)</div>
+            <div class="cert-box-desc">Public key only<br>Safe to share</div>
+          </div>
+          <span class="cert-arrow">&#8594;</span>
+          <div class="cert-dest">
+            <div class="cert-dest-label">&#8679; Upload to Entra</div>
+            <div class="cert-dest-desc">Entra stores fingerprint to verify your app's signature</div>
+          </div>
+        </div>
+        <div class="cert-flow-row" style="margin-top:10px;">
+          <div class="cert-box">
+            <div class="cert-box-label">Export-PfxCertificate (.pfx)</div>
+            <div class="cert-box-desc">Private + public key<br>Password-protected</div>
+          </div>
+          <span class="cert-arrow">&#8594;</span>
+          <div class="cert-dest">
+            <div class="cert-dest-label">&#128190; Use with -CertificatePath</div>
+            <div class="cert-dest-desc">PnP reads the PFX and signs auth requests with the private key</div>
+          </div>
+          <span class="cert-arrow">&#8594;</span>
+          <div class="cert-dest">
+            <div class="cert-dest-label">&#128273; Or use -Thumbprint</div>
+            <div class="cert-dest-desc">PnP looks up the cert in the Windows cert store by its thumbprint</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>Certificate expiry:</strong> Self-signed certificates expire. The <code>-NotAfter (Get-Date).AddYears(2)</code> gives you 2 years. Set a calendar reminder 60 days before expiry to generate a new certificate, upload the new .cer to Entra (you can have multiple active certificates at the same time), and update your scripts before removing the old one.</p>
+      </div>
+
+      <h2>Step 8: Connect with Your Chosen Method</h2>
+      <p>Replace the placeholder values with your actual Application (client) ID and Tenant ID from Step 4.</p>
+
+      <h3>Method 1 — Interactive (browser sign-in)</h3>
+      <p>Opens a browser window. The signed-in user must have the required SharePoint permissions. MFA is supported.</p>
+
+      <div class="code-label">PowerShell 7 — Connect-PnPOnline Interactive</div>
+      <div class="code-block"><pre># Using the PnP Management Shell (Microsoft's pre-registered app)
+# On first use this prompts you to grant consent in the browser
+Connect-PnPOnline `
+    -Url "https://contoso.sharepoint.com" `
+    -Interactive
+
+# Using your own app registration (recommended — you control the permissions)
+Connect-PnPOnline `
+    -Url         "https://contoso.sharepoint.com" `
+    -ClientId    "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -Interactive
+
+# Verify the connection
+$web = Get-PnPWeb
+Write-Host "Connected to: $($web.Title)"</pre></div>
+
+      <div class="art-callout">
+        <p><strong>First-time Interactive consent:</strong> The first time you connect interactively with your own app registration, Entra shows a permissions consent screen. You must sign in as a user who can consent to the required permissions (or a Global Admin grants tenant-wide consent in the Entra portal). After initial consent, subsequent interactive logins skip the consent screen.</p>
+      </div>
+
+      <h3>Method 2 — Client ID + Certificate Path (PFX file)</h3>
+      <p>Fully non-interactive. Authenticates as the application, not a user. Suitable for scheduled tasks, Azure Automation runbooks, and CI/CD pipelines.</p>
+
+      <div class="code-label">PowerShell 7 — Connect-PnPOnline with PFX certificate</div>
+      <div class="code-block"><pre># Store the password securely — never hardcode in scripts
+# In production, retrieve from Azure Key Vault or an environment variable
+$pfxPassword = ConvertTo-SecureString `
+    -String    "YourSecureP@ssword!" `
+    -AsPlainText -Force
+
+Connect-PnPOnline `
+    -Url                 "https://contoso.sharepoint.com" `
+    -ClientId            "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -CertificatePath     "C:\Certs\PnPSharePointApp.pfx" `
+    -CertificatePassword $pfxPassword `
+    -Tenant              "contoso.onmicrosoft.com"
+
+# Verify
+$web = Get-PnPWeb
+Write-Host "Connected as app to: $($web.Title)"</pre></div>
+
+      <h3>Method 3 — Client ID + Thumbprint (Windows cert store)</h3>
+      <p>Also non-interactive. The certificate must already be installed in the current user's or local machine's certificate store. No PFX file is needed at runtime — the private key stays in the protected cert store.</p>
+
+      <div class="code-label">PowerShell 7 — Connect-PnPOnline with Thumbprint</div>
+      <div class="code-block"><pre># The thumbprint was displayed in Step 6 when you created the certificate
+# You can also retrieve it from the Entra portal (Certificates & secrets tab)
+# or from PowerShell:
+$thumbprint = (Get-ChildItem Cert:\CurrentUser\My |
+    Where-Object { $_.Subject -like "*PnPSharePointApp*" }).Thumbprint
+
+Connect-PnPOnline `
+    -Url        "https://contoso.sharepoint.com" `
+    -ClientId   "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -Thumbprint $thumbprint `
+    -Tenant     "contoso.onmicrosoft.com"
+
+# Verify
+$web = Get-PnPWeb
+Write-Host "Connected as app to: $($web.Title)"</pre></div>
+
+      <div class="art-callout tip">
+        <p><strong>Thumbprint on server deployments:</strong> When deploying to a new server, import the PFX into the Windows certificate store first, then use the thumbprint. Import command: <code>Import-PfxCertificate -FilePath "C:\Certs\PnPSharePointApp.pfx" -CertStoreLocation "Cert:\LocalMachine\My" -Password $pfxPassword</code>. After import, the PFX file is no longer needed and can be deleted.</p>
+      </div>
+
+      <h2>Step 9: Verify the Connection</h2>
+      <p>Run a few PnP cmdlets to confirm everything is working correctly.</p>
+
+      <div class="code-label">PowerShell 7 — verify PnP connection</div>
+      <div class="code-block"><pre># Basic connectivity check
+$web = Get-PnPWeb
+Write-Host "Site title  : $($web.Title)"
+Write-Host "Site URL    : $($web.Url)"
+Write-Host "Site template: $($web.WebTemplate)"
+
+# Check connection details (shows which ClientId and auth method is active)
+Get-PnPConnection
+
+# List all site collections (requires SharePoint Admin role for the app)
+# Use -Limit All to retrieve more than the default 200 results
+Get-PnPTenantSite -Limit All | Select-Object Title, Url, Template | Format-Table -AutoSize
+
+# List libraries on the current site
+Get-PnPList | Where-Object { $_.BaseType -eq "DocumentLibrary" } | Select-Object Title, DefaultViewUrl</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Access denied after connecting?</strong> A successful <code>Connect-PnPOnline</code> does not guarantee that the app has permission to the specific site. If you see "Access denied" after connecting, check that: (1) admin consent was granted for the API permissions in Step 5, and (2) if using <code>Sites.Selected</code>, the app has been explicitly granted access to that site using <code>Grant-PnPAzureADAppSitePermission</code>.</p>
+      </div>
+
+      <h2>Connecting to the SharePoint Admin Center</h2>
+      <p>Some cmdlets (like <code>Get-PnPTenantSite</code>, <code>Set-PnPTenant</code>, <code>New-PnPSite</code>) require connecting to the admin URL, not a regular site URL:</p>
+
+      <div class="code-label">PowerShell 7 — connect to SharePoint admin center</div>
+      <div class="code-block"><pre># Admin center URL format: https://[tenant]-admin.sharepoint.com
+$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
+
+Connect-PnPOnline `
+    -Url                 "https://contoso-admin.sharepoint.com" `
+    -ClientId            "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -CertificatePath     "C:\Certs\PnPSharePointApp.pfx" `
+    -CertificatePassword $pfxPassword `
+    -Tenant              "contoso.onmicrosoft.com"
+
+# Now tenant-level cmdlets are available
+Get-PnPTenantSite -Limit All
+New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></div>
+
+      <h2>Security Best Practices</h2>
+
+      <ul class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Use a dedicated service account for interactive connections</strong>
+            <p>Never use a named user's account (e.g. <code>vipin@contoso.com</code>) for automation. Create a dedicated service account (e.g. <code>svc-pnp@contoso.com</code>), assign it the minimum SharePoint Admin role it needs, and assign the PnP app to that account. This decouples the automation from any individual's employment status.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Never store PFX files or passwords in source control</strong>
+            <p>Add <code>*.pfx</code> to your <code>.gitignore</code> and treat the PFX like a password. In production, load the password from Azure Key Vault, an environment variable, or a secrets management system — never hardcode it in a script file.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Set calendar reminders for certificate renewal</strong>
+            <p>Create a 2-year certificate and set a reminder 60 days before expiry. Generate a new certificate, upload the new .cer to Entra (you can have multiple active certs simultaneously), update your scripts or vault with the new thumbprint/PFX, confirm the new cert works, then delete the old one from Entra. Never let the certificate expire — it causes silent auth failures in scheduled scripts.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Prefer Sites.Selected over Sites.FullControl.All in production</strong>
+            <p>Granting <code>Sites.FullControl.All</code> means the app can access every site in your tenant. For production apps that only need to access specific sites, use <code>Sites.Selected</code> and grant granular access per site. This limits the blast radius if the app's credentials are compromised.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Enable conditional access for your app</strong>
+            <p>In the Entra admin center, apply conditional access policies to restrict which IP addresses or named locations can authenticate as your PnP app. This prevents use of the certificate from outside your corporate network even if the PFX is stolen.</p>
+          </div>
+        </li>
+      </ul>
+
+      <h2>Troubleshooting Common Errors</h2>
+
+      <ul class="ts-list">
+        <li>
+          <span class="ts-err">AADSTS70011: The provided request must include a 'response_type' input parameter</span>
+          <span class="ts-fix"><strong>Cause:</strong> Wrong redirect URI or the app is not configured for the requested auth flow. <strong>Fix:</strong> For interactive auth, ensure the Redirect URI is set to <code>https://login.microsoftonline.com/common/oauth2/nativeclient</code> under Public client platform in Entra &rsaquo; Authentication.</span>
+        </li>
+        <li>
+          <span class="ts-err">AADSTS700027: Client assertion contains an invalid signature</span>
+          <span class="ts-fix"><strong>Cause:</strong> The certificate in the app registration does not match the PFX or thumbprint being used. <strong>Fix:</strong> Verify that the thumbprint shown in Entra (Certificates &amp; secrets tab) exactly matches <code>$cert.Thumbprint</code> from PowerShell. If you recreated the cert, re-upload the new .cer to Entra.</span>
+        </li>
+        <li>
+          <span class="ts-err">Invoke-WebRequest: The remote name could not be resolved: 'login.microsoftonline.com'</span>
+          <span class="ts-fix"><strong>Cause:</strong> No internet connectivity or DNS resolution failure on the server. <strong>Fix:</strong> Confirm the server can reach <code>login.microsoftonline.com</code> and <code>graph.microsoft.com</code>. Check proxy settings — PnP respects the <code>$env:HTTPS_PROXY</code> environment variable.</span>
+        </li>
+        <li>
+          <span class="ts-err">Access denied. You do not have permission to perform this action or access this resource.</span>
+          <span class="ts-fix"><strong>Cause:</strong> Connection succeeded but the app lacks permission on that site. <strong>Fix:</strong> (1) Confirm admin consent was granted in Entra for the required permissions. (2) If using <code>Sites.Selected</code>, run <code>Grant-PnPAzureADAppSitePermission</code> to explicitly add the app to the site. (3) Check if the site has unique permissions that exclude the app's identity.</span>
+        </li>
+        <li>
+          <span class="ts-err">The term 'Connect-PnPOnline' is not recognized as the name of a cmdlet</span>
+          <span class="ts-fix"><strong>Cause:</strong> PnP.PowerShell is not installed in the current PowerShell session or version. <strong>Fix:</strong> Run <code>Get-Module PnP.PowerShell -ListAvailable</code> to check. If not found, run <code>Install-Module PnP.PowerShell -Scope CurrentUser</code>. Ensure you are running PowerShell 7 (<code>pwsh</code>), not Windows PowerShell 5.1 (<code>powershell</code>).</span>
+        </li>
+        <li>
+          <span class="ts-err">Cannot find certificate with thumbprint 'ABC123...' in certificate store</span>
+          <span class="ts-fix"><strong>Cause:</strong> The -Thumbprint method cannot find the cert in the store. <strong>Fix:</strong> Run <code>Get-ChildItem Cert:\CurrentUser\My</code> to list available certs. If the cert is missing, import the PFX: <code>Import-PfxCertificate -FilePath "path.pfx" -CertStoreLocation "Cert:\CurrentUser\My" -Password $pfxPassword</code>. On a server, use <code>Cert:\LocalMachine\My</code> instead.</span>
+        </li>
+      </ul>
+
+      <a href="https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Register an application in Microsoft Entra — learn.microsoft.com</a><br>
+      <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell authentication guide — pnp.github.io</a>
+
+      <div class="art-cta-box">
+        <h3>Need help setting up PnP PowerShell automation for your tenant?</h3>
+        <p>OceanCloud builds and maintains SharePoint automation scripts for organisations of all sizes — from simple scheduled reports to complex multi-tenant governance pipelines. We handle the Entra app setup, certificate management, and Power Automate integration so your team doesn't have to.</p>
+        <a href="contact" class="btn btn-primary">Talk to a SharePoint Automation Expert</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-permissions-best-practices" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions Best Practices for Secure Sites</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-power-automate-triggers-actions" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">Power Automate SharePoint Triggers and Actions Explained</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-microsoft-graph-sharepoint" class="related-card">
+            <span class="rc-topic">Integration</span>
+            <span class="rc-title">Microsoft Graph API for SharePoint Developers</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about">About Us</a></li>
+        <li><a href="case-studies">Case Studies</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="archive">News Archive</a></li>
+        <li><a href="guides">Guides &amp; Tips</a></li>
+        <li><a href="faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services">SharePoint Development</a></li>
+        <li><a href="services">Teams Configuration</a></li>
+        <li><a href="services">M365 Migration</a></li>
+        <li><a href="services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy">Privacy Policy</a></li>
+        <li><a href="terms">Terms of Service</a></li>
+        <li><a href="cookies">Cookie Policy</a></li>
+        <li><a href="contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js?v=6"></script>
+<script src="js/particles.js?v=6"></script>
+<script src="js/weather.js?v=6"></script>
+</body>
+</html>
