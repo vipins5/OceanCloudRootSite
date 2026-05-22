@@ -185,12 +185,12 @@
       <a href="https://adoption.microsoft.com/en-us/copilot/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft 365 Copilot Adoption Hub — adoption.microsoft.com/en-us/copilot/</a>
 
       <h2>Licensing Requirements</h2>
-      <p>Microsoft 365 Copilot is a paid add-on, not included in standard M365 plans. As of 2026:</p>
+      <p>Microsoft 365 Copilot is a paid add-on for eligible Microsoft 365 subscriptions. Microsoft has broadened the eligible base plans over time, so treat licensing as something to verify before purchase rather than a static checklist. As of May 2026:</p>
       <ul>
-        <li><strong>Base licence required:</strong> Microsoft 365 E3, E5, Business Standard, or Business Premium</li>
-        <li><strong>Copilot add-on:</strong> $30 USD per user per month (billed monthly or annually; check <a href="https://www.microsoft.com/en-us/microsoft-365/business/copilot-for-microsoft-365" target="_blank" rel="noopener noreferrer">microsoft.com</a> for current pricing)</li>
-        <li><strong>Copilot Chat (formerly Bing Chat Enterprise):</strong> Available at no extra cost with qualifying M365 plans — provides web-grounded AI without access to your organisational data</li>
-        <li><strong>Microsoft 365 F1 / F3 (Frontline):</strong> Copilot is available with an add-on; features are optimised for mobile and shift-based workers</li>
+        <li><strong>Eligible base plans:</strong> Common options include Microsoft 365 and Office 365 business, enterprise, frontline, apps, Teams, Exchange, SharePoint, OneDrive, Planner/Project, and Visio plans, depending on the Copilot SKU and region</li>
+        <li><strong>Copilot add-on:</strong> Microsoft 365 Copilot is licensed per user; check <a href="https://www.microsoft.com/en-us/microsoft-365/business/copilot-for-microsoft-365" target="_blank" rel="noopener noreferrer">microsoft.com</a> or your licensing provider for current pricing and term options</li>
+        <li><strong>Copilot Chat:</strong> Web-grounded Copilot Chat is included with many eligible Microsoft 365 subscriptions at no extra cost; work-grounded chat over organisational data requires a Microsoft 365 Copilot licence</li>
+        <li><strong>Frontline and role-based scenarios:</strong> Copilot availability and app coverage vary by plan, so validate the exact user experience for frontline, Teams-only, and app-only users before rollout</li>
       </ul>
       <p>Most organisations start with a pilot licence pool (50–200 seats) to validate use cases and measure ROI before broader deployment. This allows you to identify which roles get the most value before committing to full deployment.</p>
 
@@ -200,7 +200,7 @@
         <p><strong>Most important thing in this guide:</strong> Copilot surfaces content that each user already has permission to see. If your SharePoint permissions are too broad — if everyone has access to everything — Copilot will surface HR data, financial forecasts, and legal documents to employees who shouldn't be reading them. Fix permissions before deploying Copilot.</p>
       </div>
 
-      <p>This isn't a theoretical risk. In environments where SharePoint has grown without governance, it's common to find that 60–80% of staff have read access to sites containing confidential information via "Everyone except external users" permissions set years ago and never reviewed. Copilot makes that invisible problem visible — and audible — immediately.</p>
+      <p>This isn't a theoretical risk. In environments where SharePoint has grown without governance, broad groups such as "Everyone except external users" are often found on sites that later turn out to contain confidential information. Copilot makes that invisible permission problem much easier for users to discover, so the cleanup needs to happen before licences are assigned.</p>
       <p>See our dedicated guide: <a href="guide-sharepoint-copilot-ready">How to Prepare Your SharePoint for Microsoft Copilot</a></p>
 
       <h2>6 Steps to Rolling Out Microsoft 365 Copilot</h2>
@@ -231,7 +231,7 @@
           <div class="art-step-num">4</div>
           <div class="art-step-body">
             <strong>Assign licences to a pilot cohort</strong>
-            <p>Start with 50–200 users across different roles and departments (not just IT and executives). Include people who will actually use the features — writers, analysts, project managers, HR. Ensure they have Teams Premium or Copilot enabled in Teams Admin Center to access meeting summaries, which is consistently the highest-value feature in pilots.</p>
+            <p>Start with 50–200 users across different roles and departments (not just IT and executives). Include people who will actually use the features — writers, analysts, project managers, HR. Confirm each pilot user has the required Copilot or Teams licensing, and that Teams meeting transcription, recap, and Copilot policies are enabled where needed. Meeting recap is often one of the first features users understand and value.</p>
           </div>
         </li>
         <li>
@@ -265,7 +265,7 @@
         <li><strong>Deploying without permission remediation.</strong> The single most dangerous mistake. Schedule a permissions audit as the first workstream, not an afterthought.</li>
         <li><strong>Licencing executives first.</strong> Executives rarely use Copilot for the everyday tasks where it saves the most time. Pilot with knowledge workers who write, analyse, and meet heavily.</li>
         <li><strong>No prompt library.</strong> Most employees don't know what to ask Copilot. A curated set of role-specific prompts dramatically increases adoption. Publish it on your SharePoint intranet.</li>
-        <li><strong>Treating Copilot as self-service IT.</strong> Copilot deployment needs change management, not just licence assignment. Without training, adoption stagnates at 20–30% of licenced users.</li>
+        <li><strong>Treating Copilot as self-service IT.</strong> Copilot deployment needs change management, not just licence assignment. Without training, many users try it once, miss the better use cases, and quietly stop using it.</li>
         <li><strong>Skipping the pilot.</strong> Broad rollout before validating use cases at scale means you find the surprises — privacy, accuracy, hallucination edge cases — at full organisational cost rather than in a controlled group.</li>
       </ul>
 

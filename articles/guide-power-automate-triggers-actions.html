@@ -229,7 +229,7 @@
             <tr><th>Action</th><th>What it does</th><th>Key parameters</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Get items</strong></td><td>Retrieves multiple list items — returns an array you can loop through</td><td>Filter Query (OData), Top Count (max 5000), Order By, Select Columns</td></tr>
+            <tr><td><strong>Get items</strong></td><td>Retrieves multiple list items — returns an array you can loop through</td><td>Filter Query (OData), Top Count, pagination, Order By, Select Columns</td></tr>
             <tr><td><strong>Get item</strong></td><td>Retrieves a single list item by its ID</td><td>ID (integer — not the item's title or GUID)</td></tr>
             <tr><td><strong>Create item</strong></td><td>Adds a new item to a SharePoint list</td><td>All list column values; required columns must have values or the action fails</td></tr>
             <tr><td><strong>Update item</strong></td><td>Modifies an existing list item — only specified fields are changed</td><td>ID of the item to update; only include columns you want to change</td></tr>
@@ -315,7 +315,7 @@
   Content-Type: application/json
       </div>
 
-      <h3>Example: Update a site column value (managed metadata)</h3>
+      <h3>Example: Update a managed metadata field on a list item</h3>
       <div class="code-block">
 <span class="kw">Method:</span> POST
 <span class="kw">URI:</span> _api/web/lists/getbytitle(<span class="str">'Documents'</span>)/items(@{triggerOutputs()?['body/ID']})
@@ -333,7 +333,7 @@
       <h2>Common Performance Patterns</h2>
 
       <h3>Use "Get items" with Top Count to limit results</h3>
-      <p>Set the Top Count to the minimum number you actually need. Default is 100; maximum is 5,000 per call. If you need more than 5,000 items, use pagination: enable the "Pagination" option in the action's Settings tab, which automatically handles multi-page retrieval.</p>
+      <p>Set the Top Count to the minimum number you actually need. For larger result sets, enable the "Pagination" option in the action's Settings tab so Power Automate can retrieve multiple pages instead of relying on one oversized request.</p>
 
       <h3>Use "Select" to reduce payload size</h3>
       <p>By default, "Get items" returns all columns for every item, including internal system columns. Use the "Select Columns" parameter to specify only the columns your flow actually needs — this significantly reduces the payload size and speeds up large list queries:</p>

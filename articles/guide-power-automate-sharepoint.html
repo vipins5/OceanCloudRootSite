@@ -179,13 +179,13 @@
       <div class="flow-card">
         <div class="flow-num">Flow 03</div>
         <div class="flow-title">HR creates new hire record &rarr; SharePoint site provisioned, welcome email sent, Teams channel created</div>
-        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">Manual onboarding typically takes HR and IT 4–6 hours per new employee. This flow reduces it to minutes while ensuring nothing is missed.</p>
+        <p style="color:var(--text-mid);font-size:.9rem;margin:0 0 14px;line-height:1.8;">Manual onboarding can take HR and IT several hours per new employee. This flow reduces the repeated coordination work and gives every team the same checklist, timing, and audit trail.</p>
         <ul class="flow-steps">
           <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Trigger:</strong> When a new item is created in the HR "New Employees" SharePoint list</span></li>
           <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Send a welcome email to the new hire's personal email (pre-start) with first day information and a link to the onboarding portal</span></li>
           <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Create a private Teams channel in the department team named "Onboarding-[FirstName]" and add the new hire, their manager, and an HR rep</span></li>
           <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Post an onboarding checklist as a message in the new channel — including IT setup tasks, policy acknowledgement links, and first-week meeting schedule</span></li>
-          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Create a Planner task list assigned to IT with hardware provisioning steps and a due date of the start date minus 2 days</span></li>
+          <li><span class="flow-step-icon">&rarr;</span><span><strong style="color:var(--white)">Action:</strong> Create Planner tasks assigned to IT with hardware provisioning steps and a due date of the start date minus 2 days</span></li>
         </ul>
       </div>
       <p><strong>Pro tip:</strong> Add a parallel branch that sends notifications to IT, payroll, and facilities simultaneously — each with only the fields relevant to their role — rather than one long email to everyone.</p>
@@ -223,7 +223,7 @@
         <li><strong>Always test with a sample item first.</strong> Use the "Test" button in Power Automate with a manual trigger before enabling. Run through both the approval and rejection paths.</li>
         <li><strong>Add error handling.</strong> Use a "Run after" condition on critical actions so the flow sends an alert to an admin if an action fails instead of silently stopping.</li>
         <li><strong>Document your flows.</strong> Add a description to every flow and note the SharePoint site, list, and columns it depends on. Undocumented flows become unmaintainable when the person who built them leaves.</li>
-        <li><strong>Review run history monthly.</strong> Power Automate's run history shows every execution. A flow that fails silently 40% of the time needs investigation — not just occasional spot checks.</li>
+        <li><strong>Review run history monthly.</strong> Power Automate's run history shows every execution. A flow with repeated failures needs investigation — not just occasional spot checks.</li>
       </ul>
 
       <div class="art-cta-box">

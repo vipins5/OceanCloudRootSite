@@ -170,12 +170,12 @@
       </div>
 
       <h2>Step 1: Run an Oversharing Audit with SharePoint Advanced Management</h2>
-      <p>SharePoint Advanced Management (SAM) is a Microsoft 365 add-on ($3/user/month as of 2026) that provides the tooling enterprises need to understand and remediate oversharing at scale. Before enabling Copilot for any user, run a full oversharing assessment using SAM's built-in reports.</p>
+      <p>SharePoint Advanced Management (SAM) provides governance tools that help administrators understand and remediate oversharing at scale. It is available as a standalone SharePoint Advanced Management add-on, and many SAM capabilities are also included for Microsoft 365 Copilot licensed environments. Before enabling Copilot for any user, run a full oversharing assessment using SAM's built-in reports where your licensing allows it.</p>
 
       <h3>Key SAM reports to run</h3>
       <ul>
         <li><strong>Data Access Governance (DAG) reports:</strong> Show which sites have "Anyone" links active, how many external users have access, and which sites have oversharing signals. Available from the SharePoint Admin Centre under Reports &gt; Data Access Governance.</li>
-        <li><strong>Sharing links report:</strong> Surfaces all active Anyone links across your tenant. Anyone links bypass permissions entirely — any person with the link can access the content regardless of Azure AD membership.</li>
+        <li><strong>Sharing links report:</strong> Surfaces active sharing links across your tenant, including Anyone links. Anyone links bypass sign-in and group membership controls — any person with the link can access the content if anonymous sharing is enabled.</li>
         <li><strong>Oversharing baseline report:</strong> A site-by-site summary showing the percentage of content accessible to everyone in the organisation vs. specific groups.</li>
         <li><strong>Site access review:</strong> Sends automated review requests to site owners asking them to confirm or revoke access for listed users — useful for scaling governance across hundreds of sites.</li>
       </ul>
@@ -193,10 +193,10 @@
       </ol>
 
       <h2>Step 2: Enable Restricted SharePoint Search</h2>
-      <p>Restricted SharePoint Search (RSS) is a tenant-level setting that limits which SharePoint sites Copilot can search across — even for users who technically have permission to access them. This is the single most important Copilot governance control available and Microsoft's official recommendation for most organisations during Copilot rollout.</p>
+      <p>Restricted SharePoint Search (RSS) is a tenant-level setting that limits which SharePoint sites appear in organisation-wide search, Copilot chat, and agentic experiences while you clean up permissions. It is useful as a temporary rollout control, not a long-term security boundary.</p>
 
       <h3>How Restricted SharePoint Search works</h3>
-      <p>When RSS is enabled, Copilot and Microsoft 365 Chat only return results from a curated list of up to 100 SharePoint sites — plus each user's own OneDrive and any sites they've recently visited. By default, Copilot can search any site the user has access to across the entire tenant. RSS reduces the blast radius while you complete your broader governance remediation.</p>
+      <p>When RSS is enabled, Copilot and Microsoft 365 Chat prioritise a curated allowed list of up to 100 SharePoint sites while still respecting existing permissions. Users can also continue to see content they own, recently accessed, frequently visit, or that was shared directly with them. RSS reduces the blast radius while you complete broader governance remediation, but it does not replace permission cleanup.</p>
 
       <div class="art-callout info">
         <p><strong>Recommended approach:</strong> Start with RSS enabled and a list of your 20–30 highest-quality, well-governed sites. Expand the allowed list monthly as you validate each site's content quality and permissions. This gives users a great Copilot experience from day one while giving IT time to audit the rest of the tenant.</p>
@@ -288,7 +288,7 @@
       </ol>
 
       <div class="art-callout">
-        <p><strong>Copilot readiness benchmark:</strong> Microsoft recommends that at least 70% of your test queries return accurate top-3 results before Copilot is enabled for that user segment. If you're below 70%, search quality remediation — not AI enablement — should be the priority.</p>
+        <p><strong>Copilot readiness benchmark:</strong> As an internal readiness target, aim for at least 70% of your test queries to return accurate, current results in the top three before Copilot is enabled for that user segment. If you're below that bar, search quality remediation — not AI enablement — should be the priority.</p>
       </div>
 
       <h2>The Copilot Readiness Checklist</h2>
