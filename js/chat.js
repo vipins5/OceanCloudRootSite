@@ -111,7 +111,7 @@ RESPONSE RULES:
     },
     {
       keywords: ['gemini', 'ai', 'artificial intelligence', 'connected to', 'how do you work', 'are you a bot', 'are you a robot'],
-      text: 'Yes — I\'m <strong>OceanBot</strong>, powered by <strong>Google Gemini 1.5 Flash</strong>.\n\nFor common questions about SharePoint, M365, pricing, and timelines I answer instantly from my knowledge base. For anything more specific, I pass your question to Gemini and research it on the fly.\n\nYou can ask me anything Microsoft 365-related!',
+      text: 'Yes — I\'m <strong>OceanBot</strong>, powered by <strong>Google Gemini 2.0 Flash</strong>.\n\nFor common M365 questions I answer instantly from my knowledge base. For deeper research, just ask naturally and I\'ll pass it to Gemini.\n\nTip: start your message with <strong>search</strong> to always go straight to AI — e.g. <em>search SharePoint migration best practices</em>.',
       chips: ['Services & pricing', 'SharePoint', 'Book a call']
     },
     {
@@ -423,8 +423,19 @@ RESPONSE RULES:
   }
 
   // ── Logic ─────────────────────────────────────────────────────────────────
+  const AI_PREFIX = /^(?:search|research|find|ask ai|ask gemini)\s+/i;
+
   function respond(text) {
     if (isWaiting) return;
+
+    // Explicit AI search prefix → skip rules entirely
+    const prefixMatch = text.trim().match(AI_PREFIX);
+    if (prefixMatch) {
+      const query = text.trim().slice(prefixMatch[0].length).trim();
+      respondWithGemini(query || text);
+      return;
+    }
+
     const lower = text.toLowerCase();
     const match = responses.find(r => r.keywords.some(k => lower.includes(k)));
 
