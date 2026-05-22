@@ -92,6 +92,17 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    #oc-w-time {
+      font-size: 11px;
+      font-weight: 500;
+      color: #5d8aa8;
+      margin-top: 1px;
+      letter-spacing: .2px;
+    }
+    #oc-w-time span {
+      color: #8ba3bb;
+      font-weight: 400;
+    }
     #oc-w-temp {
       font-size: 18px;
       font-weight: 700;
@@ -217,6 +228,7 @@
         <div id="oc-w-emoji">⋯</div>
         <div id="oc-w-right">
           <div id="oc-w-city">Locating…</div>
+          <div id="oc-w-time">—</div>
           <div id="oc-w-temp">—</div>
         </div>
       </div>
@@ -288,6 +300,19 @@
       document.getElementById('oc-w-temp').textContent  = `${tempC}°C / ${toF(tempC)}°F`;
       document.getElementById('oc-w-cond').textContent  = label;
       document.getElementById('oc-w-wind').textContent  = `Feels ${feelsC}°C · 💨 ${wind} km/h`;
+
+      // Live local clock using visitor's timezone
+      const tz       = geo.timezone;
+      const timeFmt  = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz });
+      const dateFmt  = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: tz });
+      const timeEl   = document.getElementById('oc-w-time');
+
+      function updateClock() {
+        const now = new Date();
+        timeEl.innerHTML = `${timeFmt.format(now)} <span>· ${dateFmt.format(now)}</span>`;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
 
       // 7-day forecast rows
       const rows  = document.getElementById('oc-w-fc-rows');
