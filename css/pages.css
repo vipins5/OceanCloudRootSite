@@ -227,6 +227,98 @@
   .oc-copy-btn { padding: 6px 9px; }
 }
 
+  /* ===== ARTICLE CTA / RELATED CARDS ===== */
+  .article-wrap .art-cta-box {
+    max-width: 820px;
+    margin: 56px auto 0 !important;
+    padding: clamp(28px, 4vw, 42px) !important;
+    border-radius: 16px !important;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(0,180,216,.12), transparent 58%),
+      rgba(7,26,46,.72) !important;
+    border: 1px solid rgba(0,180,216,.22) !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,.24);
+  }
+
+  .article-wrap .art-cta-box h3 {
+    color: #ffffff !important;
+    font-size: clamp(1.05rem, 2vw, 1.28rem) !important;
+    line-height: 1.35 !important;
+  }
+
+  .article-wrap .art-cta-box p {
+    max-width: 680px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    color: #b9ccec !important;
+  }
+
+  .article-wrap .art-cta-box .btn-primary {
+    justify-content: center;
+    min-width: min(100%, 325px);
+    color: #04111d !important;
+    background: linear-gradient(135deg, #22d3ee, #00b4d8) !important;
+    box-shadow: 0 14px 34px rgba(0,180,216,.24);
+  }
+
+  .article-wrap .art-cta-box .btn-primary:hover,
+  .article-wrap .art-cta-box .btn-primary:focus-visible {
+    color: #020b12 !important;
+    background: linear-gradient(135deg, #67e8f9, #22d3ee) !important;
+  }
+
+  .article-wrap .related-section {
+    border-top-color: rgba(255,255,255,.09) !important;
+  }
+
+  .article-wrap .related-card {
+    background: rgba(255,255,255,.025);
+    min-height: 132px;
+  }
+
+  .article-wrap .related-card:hover {
+    background: rgba(0,180,216,.045);
+  }
+
+  #back-to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 100px;
+    z-index: 9997;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(0,180,216,.24);
+    background: rgba(7,26,46,.88);
+    color: rgba(255,255,255,.68);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(14px);
+    cursor: pointer;
+    transition: opacity .25s, transform .25s, color .2s, border-color .2s;
+    backdrop-filter: blur(14px);
+  }
+
+  #back-to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #back-to-top:hover,
+  #back-to-top:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  @media (max-width: 580px) {
+    #back-to-top { right: 16px; bottom: 88px; }
+  }
+
 /* ===== SERVICES PAGE ===== */
 .services-page {
   padding: 72px 0 80px;

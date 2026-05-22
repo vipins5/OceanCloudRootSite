@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ─── Navbar scroll ─── */
 const navbar  = document.getElementById('navbar');
-const backTop = document.getElementById('back-top');
+const backTop = document.getElementById('back-top') || document.getElementById('back-to-top');
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
@@ -52,7 +52,9 @@ window.addEventListener('scroll', () => {
   if (backTop) backTop.classList.toggle('show', y > 400);
 }, { passive: true });
 
-// back-to-top is now <a href="#"> — browser handles scroll natively
+if (backTop && backTop.tagName === 'BUTTON') {
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
 
 /* ─── Mobile hamburger ─── */
 const ham   = document.getElementById('hamburger');
