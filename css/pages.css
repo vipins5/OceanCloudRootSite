@@ -55,14 +55,16 @@
 }
 
 .article-hero .page-hero-content {
-  max-width: 1080px;
+  max-width: 940px;
 }
 
 .article-hero h1 {
-  max-width: 1080px;
-  font-size: clamp(2.25rem, 4.8vw, 4.35rem);
-  line-height: 1.08;
-  letter-spacing: -.035em;
+  max-width: 940px;
+  font-size: clamp(2.25rem, 3.9vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -.032em;
+  overflow-wrap: normal;
+  word-break: normal;
   text-wrap: balance;
 }
 
@@ -77,7 +79,7 @@
 
 @media (min-width: 1280px) {
   .article-hero h1 {
-    font-size: clamp(2.35rem, 4.05vw, 4.25rem);
+    font-size: clamp(2.4rem, 3.45vw, 3.95rem);
   }
 }
 
