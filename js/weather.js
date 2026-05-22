@@ -247,7 +247,6 @@
   // ── Toggle forecast ───────────────────────────────────────────────────────────
   const card     = document.getElementById('oc-w-card');
   const closeBtn = document.getElementById('oc-w-close');
-  const hint     = document.getElementById('oc-w-hint');
 
   function openForecast(e) {
     if (e.target === closeBtn) return;
@@ -261,21 +260,49 @@
   card.addEventListener('click', openForecast);
   closeBtn.addEventListener('click', closeForecast);
 
-  // Close on outside click
   document.addEventListener('click', e => {
     if (!widget.contains(e.target)) widget.classList.remove('oc-w-open');
   });
 
+  // ── Geolocation with fallback ─────────────────────────────────────────────────
+  // Primary: ipapi.co (1,000 req/day free)
+  // Fallback: ipwho.is (10,000 req/month free) — handles rate-limit silently
+  async function getGeo() {
+    try {
+      const r = await fetch('https://ipapi.co/json/');
+      if (r.ok) {
+        const d = await r.json();
+        if (!d.error && d.latitude != null && d.longitude != null) {
+          return {
+            latitude:    d.latitude,
+            longitude:   d.longitude,
+            city:        d.city || d.region || 'Your area',
+            region_code: d.region_code || '',
+            timezone:    d.timezone || 'UTC'
+          };
+        }
+      }
+    } catch (_) { /* fall through to backup */ }
+
+    // Fallback geo API
+    const r2 = await fetch('https://ipwho.is/');
+    if (!r2.ok) throw new Error('geo');
+    const d2 = await r2.json();
+    if (!d2.success || d2.latitude == null) throw new Error('no coords');
+    return {
+      latitude:    d2.latitude,
+      longitude:   d2.longitude,
+      city:        d2.city || d2.region || 'Your area',
+      region_code: d2.region_code || '',
+      timezone:    d2.timezone?.id || 'UTC'
+    };
+  }
+
   // ── Data fetch ───────────────────────────────────────────────────────────────
   async function init() {
     try {
-      // Step 1 — IP geolocation
-      const geoRes = await fetch('https://ipapi.co/json/');
-      if (!geoRes.ok) throw new Error('geo');
-      const geo = await geoRes.json();
-      if (!geo.latitude || !geo.longitude) throw new Error('no coords');
+      const geo = await getGeo();
 
-      // Step 2 — current + 7-day forecast from Open-Meteo (no API key)
       const wxUrl =
         `https://api.open-meteo.com/v1/forecast` +
         `?latitude=${geo.latitude}&longitude=${geo.longitude}` +
@@ -292,20 +319,18 @@
       const feelsC = Math.round(wx.current.apparent_temperature);
       const wind   = Math.round(wx.current.wind_speed_10m);
       const [label, emoji] = cond(wx.current.weather_code);
-      const city   = geo.city || geo.region || 'Your area';
-      const region = geo.region_code ? `, ${geo.region_code}` : '';
+      const cityLine = geo.city + (geo.region_code ? `, ${geo.region_code}` : '');
 
       document.getElementById('oc-w-emoji').textContent = emoji;
-      document.getElementById('oc-w-city').textContent  = city + region;
+      document.getElementById('oc-w-city').textContent  = cityLine;
       document.getElementById('oc-w-temp').textContent  = `${tempC}°C / ${toF(tempC)}°F`;
       document.getElementById('oc-w-cond').textContent  = label;
       document.getElementById('oc-w-wind').textContent  = `Feels ${feelsC}°C · 💨 ${wind} km/h`;
 
       // Live local clock using visitor's timezone
-      const tz       = geo.timezone;
-      const timeFmt  = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz });
-      const dateFmt  = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: tz });
-      const timeEl   = document.getElementById('oc-w-time');
+      const timeFmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: geo.timezone });
+      const dateFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: geo.timezone });
+      const timeEl  = document.getElementById('oc-w-time');
 
       function updateClock() {
         const now = new Date();
@@ -332,7 +357,8 @@
 
       widget.classList.add('oc-w-ready');
 
-    } catch (_) {
+    } catch (err) {
+      console.warn('OceanCloud weather widget:', err.message);
       widget.remove();
     }
   }
