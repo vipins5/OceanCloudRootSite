@@ -142,9 +142,12 @@ var TAG_CLASS = {
 };
 
 /* ── STATE ───────────────────────────────────────────────── */
-var currentTab   = 'articles';
-var currentQuery = '';
-var cseInjected  = false;
+var currentTab    = 'articles';
+var currentQuery  = '';
+var cseInjected   = false;
+var cseReady      = false;
+var pendingCseQ   = null;
+var CSE_GNAME     = 'oc-cse';
 
 /* ── DOM REFS (set on DOMContentLoaded) ─────────────────── */
 var inputEl, panelArticles, panelWeb, panelAI, resultsEl;
@@ -319,33 +322,50 @@ function renderWeb() {
     return;
   }
 
-  /* inject CSE script once */
-  if (!cseInjected) {
-    var script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(GOOGLE_CSE_ID);
-    document.head.appendChild(script);
-    cseInjected = true;
+  /* CSE element is ready — just run a new query via the API */
+  if (cseReady) {
+    executeCseQuery();
+    return;
   }
 
-  container.innerHTML =
-    '<div class="gcse-searchbox-only" data-autoSearchOnLoad="' + (currentQuery ? 'true' : 'false') + '" data-defaultToImageSearch="false" data-queryParameterName="q"></div>' +
-    '<div class="gcse-searchresults-only" data-queryParameterName="q"></div>';
+  /* CSE script is loading — update the pending query, wait for callback */
+  if (cseInjected) {
+    pendingCseQ = currentQuery || null;
+    return;
+  }
 
-  /* pre-fill query in CSE box after it renders */
-  if (currentQuery) {
-    var attempts = 0;
-    var poller = setInterval(function () {
-      var cseInput = container.querySelector('input[name="q"]');
-      if (cseInput) {
-        cseInput.value = currentQuery;
-        clearInterval(poller);
-        var form = cseInput.closest('form');
-        if (form) form.submit();
+  /* First call: create container div and load script with explicit init */
+  container.innerHTML = '<div id="gcs-inner"></div>';
+
+  window.__gcse = {
+    parsetags: 'explicit',
+    callback: function () {
+      try {
+        google.search.cse.element.render({ gname: CSE_GNAME, div: 'gcs-inner', tag: 'search' });
+      } catch (e) { return; }
+      cseReady = true;
+      if (pendingCseQ) {
+        var q = pendingCseQ;
+        pendingCseQ = null;
+        setTimeout(function () { executeCseQuery(q); }, 300);
       }
-      if (++attempts > 30) clearInterval(poller);
-    }, 200);
-  }
+    }
+  };
+
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://cse.google.com/cse.js?cx=' + GOOGLE_CSE_ID;
+  document.head.appendChild(script);
+  cseInjected = true;
+  pendingCseQ = currentQuery || null;
+}
+
+function executeCseQuery(q) {
+  var query = q !== undefined ? q : currentQuery;
+  if (!query) return;
+  try {
+    google.search.cse.element.getElement(CSE_GNAME).execute(query);
+  } catch (e) {}
 }
 
 /* ── AI (Perplexity) ─────────────────────────────────────── */
