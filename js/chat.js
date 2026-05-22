@@ -416,7 +416,10 @@ RESPONSE RULES:
     }
 
     const lower = text.toLowerCase();
-    const match = responses.find(r => r.keywords.some(k => lower.includes(k)));
+    const match = responses.find(r => r.keywords.some(k => {
+      const re = new RegExp('\\b' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+      return re.test(lower);
+    }));
 
     if (match) {
       // Rule-based: instant, no API call
