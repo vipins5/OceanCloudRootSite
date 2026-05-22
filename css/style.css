@@ -293,6 +293,21 @@ body:not(.has-mouse) #c-ring { opacity: 0; }
   outline-offset: 3px;
 }
 
+/* nav search icon */
+.nav-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: var(--text-mid);
+  flex-shrink: 0;
+  transition: color var(--t), background var(--t);
+}
+.nav-search-btn:hover,
+.nav-search-btn.active-link { color: var(--accent); background: rgba(0,180,216,.08); }
+
 /* hamburger */
 .hamburger {
   display: none;

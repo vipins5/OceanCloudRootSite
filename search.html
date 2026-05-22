@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title>Search | OceanCloud</title>
+  <meta name="description" content="Search OceanCloud articles, news, case studies, and the wider web for SharePoint and Microsoft 365 information." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/search" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=3" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
+  <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+
+  <style>
+  /* ── Search page ── */
+
+  /* Hero bar */
+  .search-hero-content { max-width: 720px; }
+  .search-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(13,18,32,.85);
+    border: 1.5px solid rgba(0,180,216,.30);
+    border-radius: 50px;
+    padding: 6px 6px 6px 22px;
+    margin-top: 28px;
+    backdrop-filter: blur(12px);
+    transition: border-color .25s;
+  }
+  .search-bar-wrap:focus-within { border-color: var(--accent); }
+  .search-bar-icon {
+    flex-shrink: 0;
+    color: var(--text-dim);
+    margin-right: 10px;
+    pointer-events: none;
+  }
+  #search-q {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-width: 0;
+  }
+  #search-q::placeholder { color: var(--text-dim); }
+  #search-submit {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 9px 22px;
+    font-family: inherit;
+    font-size: .88rem;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .2s, opacity .2s;
+    white-space: nowrap;
+  }
+  #search-submit:hover { background: #00c8f0; }
+
+  /* Tabs */
+  .search-tabs-wrap {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-2);
+    position: sticky;
+    top: 64px;
+    z-index: 100;
+  }
+  .search-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 0 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .search-tabs::-webkit-scrollbar { display: none; }
+  .stab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 18px 12px;
+    font-family: inherit;
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--text-mid);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color .2s, border-color .2s;
+    letter-spacing: .01em;
+  }
+  .stab:hover { color: var(--text); }
+  .stab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .stab svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* Panels */
+  .search-body { padding: 48px 0 100px; }
+  .s-panel { display: none; }
+  .s-panel.active { display: block; }
+
+  /* Result count */
+  .sr-count {
+    font-size: .84rem;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+  .sr-count strong { color: var(--text-mid); }
+
+  /* Article result cards */
+  .sr-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .sr-card {
+    padding: 18px 22px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--border);
+    transition: border-color .2s, background .2s, transform .18s;
+  }
+  .sr-card:hover {
+    border-color: var(--border-hover);
+    background: rgba(0,180,216,.04);
+    transform: translateX(3px);
+  }
+  .sr-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .sr-date { font-size: .72rem; color: var(--text-dim); }
+  .sr-title {
+    font-size: .96rem;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: -.02em;
+    margin-bottom: 6px;
+  }
+  .sr-title a { color: var(--text); text-decoration: none; transition: color .2s; }
+  .sr-title a:hover { color: var(--accent); }
+  .sr-ext { font-size: .75em; opacity: .7; }
+  .sr-excerpt {
+    font-size: .85rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+  mark {
+    background: rgba(0,180,216,.18);
+    color: var(--accent);
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  /* Tag colours */
+  .tag-case { background: rgba(6,214,160,.10); color: #06d6a0; }
+  .tag-page { background: rgba(255,209,102,.10); color: var(--accent-warm); }
+
+  /* Empty state */
+  .sr-empty {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--text-dim);
+  }
+  .sr-empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .sr-empty p { margin-bottom: 8px; font-size: .95rem; }
+  .sr-empty strong { color: var(--text-mid); }
+  .sr-empty-sub { font-size: .85rem; }
+  .sr-tab-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color .2s;
+  }
+  .sr-tab-link:hover { text-decoration-color: var(--accent); }
+
+  /* Web search panel */
+  .gcs-setup {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .gcs-setup-icon { font-size: 2.8rem; margin-bottom: 16px; }
+  .gcs-setup h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -.02em; }
+  .gcs-setup p { font-size: .88rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 16px; }
+  .gcs-setup code {
+    background: rgba(0,180,216,.10);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: .82rem;
+  }
+  .gcs-steps {
+    text-align: left;
+    list-style: decimal;
+    padding-left: 24px;
+    margin: 16px auto 20px;
+    max-width: 400px;
+    font-size: .86rem;
+    color: var(--text-mid);
+    line-height: 2;
+  }
+  .gcs-steps strong { color: var(--text); }
+  .gcs-steps em { color: var(--accent); font-style: normal; }
+  .gcs-fallback { font-size: .84rem !important; }
+  .gcs-google-link { color: var(--accent); font-weight: 600; }
+  .gcs-google-link:hover { text-decoration: underline; }
+
+  /* Google CSE overrides */
+  #gcs-container .gsc-control-cse { background: transparent !important; border: none !important; padding: 0 !important; }
+  #gcs-container .gsc-search-box { margin-bottom: 24px !important; }
+
+  /* AI panel */
+  .ai-panel-inner { max-width: 640px; }
+  .ai-hero-card {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 28px 28px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .ai-logo-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #20B2AA, #5B8AF0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .ai-card-text { flex: 1; min-width: 0; }
+  .ai-card-text h3 { font-size: 1.05rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 6px; }
+  .ai-card-text p { font-size: .85rem; color: var(--text-mid); line-height: 1.7; }
+  .ai-query-wrap {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: rgba(0,180,216,.07);
+    border: 1px solid rgba(0,180,216,.18);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .ai-query-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-dim); white-space: nowrap; }
+  .ai-query-text { font-size: .88rem; font-weight: 600; color: var(--accent); flex: 1; word-break: break-word; }
+  #perplexity-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #20B2AA, #5B8AF0);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: .9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity .2s, transform .2s;
+    box-shadow: 0 4px 20px rgba(91,138,240,.3);
+  }
+  #perplexity-link:hover { opacity: .9; transform: translateY(-1px); }
+  .ai-badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: .72rem;
+    font-weight: 600;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+  }
+
+  @media (max-width: 640px) {
+    .search-bar-wrap { border-radius: 16px; padding: 10px 16px; flex-wrap: wrap; gap: 10px; }
+    #search-submit { width: 100%; justify-content: center; border-radius: 10px; padding: 11px; }
+    .search-tabs { padding: 0 16px; }
+    .stab { padding: 12px 12px 10px; font-size: .8rem; }
+    .ai-hero-card { flex-direction: column; }
+  }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">OC</div>
+      <span class="logo-text">Ocean<span>Cloud</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn active-link" aria-label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<section id="main-content" class="page-hero particle-hero">
+  <canvas data-particles='{"count":45,"color":"0,180,216","maxDist":100,"speed":0.16,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan"   style="width:380px;height:380px;top:-80px;right:-60px;"></div>
+  <div class="orb orb-purple" style="width:280px;height:280px;bottom:-50px;left:18%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content search-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><span>Search</span></nav>
+      <h1>Search <span class="grad-text">OceanCloud</span></h1>
+      <p>Articles, news, case studies — or go wider with web and AI search.</p>
+
+      <div class="search-bar-wrap" role="search">
+        <span class="search-bar-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input
+          type="search"
+          id="search-q"
+          name="q"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="SharePoint migration, Teams governance, M365 Copilot..."
+          aria-label="Search query"
+          autofocus
+        />
+        <button id="search-submit" type="button" aria-label="Search">Search</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEARCH TABS ===== -->
+<div class="search-tabs-wrap">
+  <div class="search-tabs" role="tablist" aria-label="Search mode">
+    <button class="stab active" data-tab="articles" role="tab" aria-selected="true" aria-controls="panel-articles">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Articles
+    </button>
+    <button class="stab" data-tab="web" role="tab" aria-selected="false" aria-controls="panel-web">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Web Search
+    </button>
+    <button class="stab" data-tab="ai" role="tab" aria-selected="false" aria-controls="panel-ai">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      AI Search
+    </button>
+  </div>
+</div>
+
+<!-- ===== SEARCH BODY ===== -->
+<section class="search-body">
+  <div class="container">
+
+    <!-- Articles panel -->
+    <div id="panel-articles" class="s-panel active" role="tabpanel" aria-labelledby="tab-articles">
+      <div id="articles-results">
+        <!-- rendered by search.js -->
+      </div>
+    </div>
+
+    <!-- Web panel -->
+    <div id="panel-web" class="s-panel" role="tabpanel" aria-labelledby="tab-web">
+      <div id="gcs-container">
+        <!-- Google CSE or setup notice rendered by search.js -->
+      </div>
+    </div>
+
+    <!-- AI panel -->
+    <div id="panel-ai" class="s-panel" role="tabpanel" aria-labelledby="tab-ai">
+      <div class="ai-panel-inner">
+
+        <div class="ai-hero-card glass">
+          <div class="ai-logo-wrap" aria-hidden="true">&#129302;</div>
+          <div class="ai-card-text">
+            <h3>Perplexity AI Search</h3>
+            <p>Get real-time, cited answers to your questions — powered by Perplexity AI. Great for deep dives into SharePoint features, M365 licensing, governance best practices, and more.</p>
+          </div>
+        </div>
+
+        <div class="ai-query-wrap" id="ai-query-wrap" aria-live="polite">
+          <span class="ai-query-label">Searching for</span>
+          <span class="ai-query-text" id="ai-query-preview"></span>
+        </div>
+
+        <a href="https://www.perplexity.ai/" id="perplexity-link" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Open in Perplexity AI &#8599;
+        </a>
+
+        <div class="ai-badges" aria-label="Perplexity features">
+          <span class="ai-badge">&#10003; &nbsp;Cited sources</span>
+          <span class="ai-badge">&#10003; &nbsp;Real-time web data</span>
+          <span class="ai-badge">&#10003; &nbsp;Free to use</span>
+          <span class="ai-badge">&#10003; &nbsp;No sign-up required</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="cta-banner" class="cta-border-top">
+  <div class="cta-full">
+    <div class="cta-glow"></div>
+    <div class="container cta-inner">
+      <h2>Can't find what you need?</h2>
+      <p>Our consultants are happy to answer any SharePoint or Microsoft 365 question — book a free 60-minute call.</p>
+      <div>
+        <a href="contact" class="btn-primary">Book a Free Call &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">
+          <div class="logo-mark">OC</div>
+          Ocean<span>Cloud</span>
+        </div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Twitter">&#x1D54F;</a>
+          <a href="#" class="social-link" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="archive">News Archive</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+          <li><span style="color:var(--text-dim)">Mon&ndash;Fri, 9 AM&ndash;6 PM EST</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left">
+          <span class="fb-copy">&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span>
+          <span class="fb-craft">Turning Microsoft complexity into clarity, one deployment at a time.</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot-anim"></span>
+          Accepting new engagements
+        </div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a>
+          <span class="fb-sep">&middot;</span>
+          <a href="terms">Terms</a>
+          <span class="fb-sep">&middot;</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+
+<!-- ===== COOKIE CONSENT BANNER ===== -->
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js?v=3"></script>
+<script src="js/particles.js?v=3"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=3"></script>
+<script src="js/search.js?v=1"></script>
+</body>
+</html>
