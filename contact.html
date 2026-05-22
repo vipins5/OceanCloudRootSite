@@ -12,8 +12,8 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
-    <meta name="geo.placename" content="Dallas, TX" />
-<link rel="canonical" href="https://www.oceancloudconsults.com/contact" />
+  <meta name="geo.placename" content="Dallas, TX" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/contact" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -40,6 +40,32 @@
   <link rel="stylesheet" href="css/darkstar.css?v=3" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": "https://www.oceancloudconsults.com/contact#webpage",
+        "url": "https://www.oceancloudconsults.com/contact",
+        "name": "Free SharePoint & M365 Consultation | OceanCloud",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" },
+        "about": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Book a free 60-min SharePoint & M365 consultation with OceanCloud. Certified M365 architects — call +1 (469) 809-4053.",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+            { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.oceancloudconsults.com/contact" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
   <!-- EmailJS SDK — https://www.emailjs.com -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 

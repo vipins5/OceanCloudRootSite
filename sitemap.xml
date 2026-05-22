@@ -6,35 +6,35 @@
 
   <url>
     <loc>https://www.oceancloudconsults.com/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://www.oceancloudconsults.com/services</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.oceancloudconsults.com/about</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.oceancloudconsults.com/case-studies</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.oceancloudconsults.com/contact</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -54,31 +54,31 @@
   </url>
 
   <url>
+    <loc>https://www.oceancloudconsults.com/search</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
     <loc>https://www.oceancloudconsults.com/privacy</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://www.oceancloudconsults.com/terms</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://www.oceancloudconsults.com/cookies</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://www.oceancloudconsults.com/search</loc>
-    <lastmod>2026-05-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
   </url>
 
 </urlset>

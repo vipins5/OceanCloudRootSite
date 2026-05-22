@@ -41,6 +41,32 @@
   <link rel="stylesheet" href="css/darkstar.css?v=3" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://www.oceancloudconsults.com/archive#webpage",
+        "url": "https://www.oceancloudconsults.com/archive",
+        "name": "Microsoft 365 News Archive | OceanCloud",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" },
+        "description": "Full archive of Microsoft SharePoint and M365 news updates curated and explained by OceanCloud's certified consultants.",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+            { "@type": "ListItem", "position": 2, "name": "News", "item": "https://www.oceancloudconsults.com/news" },
+            { "@type": "ListItem", "position": 3, "name": "Archive", "item": "https://www.oceancloudconsults.com/archive" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
 
   <style>
   /* ── Archive page styles ── */
