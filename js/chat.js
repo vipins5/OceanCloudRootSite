@@ -7,7 +7,7 @@
   // 3. Free tier: 1,500 requests/day, 15 requests/min — no credit card needed
   // 4. Restrict the key to your domain in Google Cloud Console for safety
   const GEMINI_API_KEY = 'AIzaSyB6U0ZXYNaS3fcWmmVZLhkAfRCZEVClxGM';
-  const GEMINI_MODEL   = 'gemini-flash-latest';
+  const GEMINI_MODEL   = 'gemini-2.0-flash';
   const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
   const SYSTEM_PROMPT = `You are OceanBot, the AI assistant for OceanCloud — a Microsoft Solutions Partner based in the United States specialising in SharePoint Online, Microsoft 365, Power Platform, Microsoft Teams, Viva, and workplace transformation.
