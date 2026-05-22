@@ -185,7 +185,7 @@ JS files use `?v=N` query parameters on all `<script>` tags to force browsers to
 
 | File | Version |
 |---|---|
-| `main.js` | `?v=3` |
+| `main.js` | `?v=7` |
 | `particles.js` | `?v=3` |
 | `consent.js` | `?v=3` |
 | `chat.js` | `?v=6` |

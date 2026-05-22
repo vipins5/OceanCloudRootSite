@@ -171,3 +171,107 @@ if (form) {
     }, 1400);
   });
 }
+
+/* --- Guide code blocks: copy button + lightweight syntax colors --- */
+document.addEventListener('DOMContentLoaded', () => {
+  const blocks = document.querySelectorAll('.code-block');
+  if (!blocks.length) return;
+
+  const escapeCode = value => value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  const restoreHeld = (line, held) => line.replace(/\uE000(A+)\uE001/g, (_, marker) => held[marker.length - 1] || '');
+
+  const hold = (held, html) => {
+    held.push(html);
+    return `\uE000${'A'.repeat(held.length)}\uE001`;
+  };
+
+  const highlightLine = line => {
+    const held = [];
+    let output = escapeCode(line);
+
+    output = output.replace(/(\/\/.*$|#.*$)/, match => hold(held, `<span class="token-comment">${match}</span>`));
+    output = output.replace(/("[^"]*"|'[^']*')/g, match => hold(held, `<span class="token-string">${match}</span>`));
+    output = output.replace(/(\$[A-Za-z_][\w.]*)/g, match => hold(held, `<span class="token-variable">${match}</span>`));
+    output = output.replace(/(^|\s)(-[A-Za-z][\w-]*)/g, (match, lead, param) => `${lead}${hold(held, `<span class="token-param">${param}</span>`)}`);
+    output = output.replace(/\b(\d+(?:\.\d+)?)\b/g, match => hold(held, `<span class="token-number">${match}</span>`));
+    output = output.replace(/\b(GET|POST|PUT|PATCH|DELETE|MERGE|Method|URI|Headers|Body|Switch|Case|Default|Status|Amount|Created|DueDate|Department|Apply|Select|Where|Object|ForEach|Install|Import|Update|Connect|Export|Write|New|Set|Get)\b/g, match => hold(held, `<span class="token-keyword">${match}</span>`));
+    output = output.replace(/\b([A-Za-z]+-[A-Za-z][\w-]*)\b/g, match => hold(held, `<span class="token-command">${match}</span>`));
+    output = output.replace(/\b(https?:\/\/[^\s<]+|_[A-Za-z0-9/?$=.'&;%-]+)\b/g, match => hold(held, `<span class="token-path">${match}</span>`));
+
+    return restoreHeld(output, held);
+  };
+
+  const highlightCode = value => value.split('\n').map(highlightLine).join('\n');
+
+  const detectLabel = code => {
+    if (/\$[A-Za-z_]|\b(Get|Set|New|Connect|Install|Import|Export|Update)-[A-Za-z]/.test(code)) return 'PowerShell';
+    if (/^\s*[{[]/.test(code)) return 'JSON';
+    if (/\b(GET|POST|PUT|PATCH|DELETE)\b|_api\/|graph\.microsoft\.com/i.test(code)) return 'API';
+    return 'Script';
+  };
+
+  const copyText = text => {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise((resolve, reject) => {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) {
+        reject(error);
+      } finally {
+        area.remove();
+      }
+    });
+  };
+
+  blocks.forEach(block => {
+    if (block.dataset.codeEnhanced === 'true') return;
+
+    const source = block.querySelector('pre') || block;
+    const originalText = source.textContent.replace(/^\n+|\s+$/g, '');
+    const hasManualTokens = Boolean(block.querySelector('.kw, .str, .cm'));
+
+    if (!hasManualTokens && source) source.innerHTML = highlightCode(originalText);
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'oc-code-toolbar';
+
+    const label = document.createElement('span');
+    label.className = 'oc-code-label';
+    label.textContent = detectLabel(originalText);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'oc-copy-btn';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy code to clipboard');
+    button.addEventListener('click', () => {
+      copyText(originalText).then(() => {
+        button.textContent = 'Copied';
+        button.classList.add('copied');
+        window.setTimeout(() => {
+          button.textContent = 'Copy';
+          button.classList.remove('copied');
+        }, 1600);
+      }).catch(() => {
+        button.textContent = 'Press Ctrl+C';
+        window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+      });
+    });
+
+    toolbar.append(label, button);
+    block.prepend(toolbar);
+    block.classList.add('oc-code-enhanced');
+    block.dataset.codeEnhanced = 'true';
+  });
+});
