@@ -39,6 +39,108 @@
   <link rel="stylesheet" href="css/style.css?v=3" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230077b6'/><text y='22' x='5' font-size='18' font-weight='900' fill='white' font-family='sans-serif'>OC</text></svg>" />
   <link rel="apple-touch-icon" href="https://www.oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://www.oceancloudconsults.com/#organization",
+        "name": "OceanCloud",
+        "url": "https://www.oceancloudconsults.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.oceancloudconsults.com/assets/og-home.jpg",
+          "width": 1200,
+          "height": 630
+        },
+        "image": "https://www.oceancloudconsults.com/assets/og-home.jpg",
+        "description": "Microsoft Solutions Partner specialising in SharePoint Online, Microsoft 365, Power Platform, and workplace transformation across the United States.",
+        "foundingDate": "2013",
+        "numberOfEmployees": {
+          "@type": "QuantitativeValue",
+          "value": 15
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dallas",
+          "addressRegion": "TX",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 32.7767,
+          "longitude": -96.797
+        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+1-469-809-4053",
+            "email": "oceancloudconsults@gmail.com",
+            "contactType": "customer service",
+            "availableLanguage": "English",
+            "hoursAvailable": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+              "opens": "09:00",
+              "closes": "18:00"
+            }
+          }
+        ],
+        "areaServed": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "knowsAbout": [
+          "SharePoint Online",
+          "Microsoft 365",
+          "Power Platform",
+          "Microsoft Teams",
+          "Microsoft Purview",
+          "Microsoft Viva"
+        ],
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Microsoft Solutions Partner — Modern Work & Security"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "bestRating": "5",
+          "ratingCount": "150"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.oceancloudconsults.com/#website",
+        "url": "https://www.oceancloudconsults.com",
+        "name": "OceanCloud",
+        "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US.",
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.oceancloudconsults.com/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oceancloudconsults.com/#webpage",
+        "url": "https://www.oceancloudconsults.com",
+        "name": "SharePoint Consulting & M365 Migration | OceanCloud",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" },
+        "about": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US. 150+ projects, 98% satisfaction. Free 60-min call."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 

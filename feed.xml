@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>OceanCloud — Microsoft 365 &amp; SharePoint News</title>
+    <link>https://www.oceancloudconsults.com/news</link>
+    <atom:link href="https://www.oceancloudconsults.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>The latest Microsoft 365 and SharePoint news, roadmap updates, and expert commentary from OceanCloud — Microsoft Solutions Partner.</description>
+    <language>en-us</language>
+    <copyright>© 2026 OceanCloud LLC</copyright>
+    <managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
+    <webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
+    <lastBuildDate>Wed, 21 May 2026 18:34:00 +0000</lastBuildDate>
+    <ttl>1440</ttl>
+    <image>
+      <url>https://www.oceancloudconsults.com/assets/og-home.jpg</url>
+      <title>OceanCloud — Microsoft 365 &amp; SharePoint News</title>
+      <link>https://www.oceancloudconsults.com/news</link>
+    </image>
+
+    <item>
+      <title>Microsoft Teams: Interpreter agent support in Teams Rooms on Android</title>
+      <link>https://www.microsoft.com/microsoft-365/roadmap?id=562665</link>
+      <guid isPermaLink="true">https://www.microsoft.com/microsoft-365/roadmap?id=562665</guid>
+      <pubDate>Wed, 20 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft M365 Roadmap</dc:creator>
+      <category>M365 Roadmap</category>
+      <category>Teams</category>
+      <description><![CDATA[The Interpreter agent acts as a translator in Microsoft Teams meetings, allowing participants to listen to the meeting in their chosen language with real-time translation so speaking different languages isn't a barrier to effective understanding and collaboration. It's now available in Teams Rooms on Android.]]></description>
+    </item>
+
+    <item>
+      <title>Microsoft Purview: Information Protection – Auto-labeling Simulation Evaluation</title>
+      <link>https://www.microsoft.com/microsoft-365/roadmap?id=560707</link>
+      <guid isPermaLink="true">https://www.microsoft.com/microsoft-365/roadmap?id=560707</guid>
+      <pubDate>Wed, 20 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft M365 Roadmap</dc:creator>
+      <category>M365 Roadmap</category>
+      <category>Purview</category>
+      <description><![CDATA[The Simulation Grader helps admins understand and improve auto-labeling accuracy before enforcing a policy. When enabled during simulation, matched items are evaluated by an AI-powered grader to determine whether each match is a true positive or false positive, along with an explanation.]]></description>
+    </item>
+
+    <item>
+      <title>Microsoft Teams: Support human interpreter listening mode in Microsoft Teams Rooms on Windows</title>
+      <link>https://www.microsoft.com/microsoft-365/roadmap?id=562050</link>
+      <guid isPermaLink="true">https://www.microsoft.com/microsoft-365/roadmap?id=562050</guid>
+      <pubDate>Mon, 18 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft M365 Roadmap</dc:creator>
+      <category>M365 Roadmap</category>
+      <category>Teams</category>
+      <description><![CDATA[Microsoft Teams Rooms on Windows now supports human interpreter listening mode in meetings where organizers enable language interpretation in Meeting options, allowing room participants to select a language and hear interpreter audio. GA date: July CY2026.]]></description>
+    </item>
+
+    <item>
+      <title>Microsoft Teams: Searchable keyboard shortcuts from the dialog in Teams</title>
+      <link>https://www.microsoft.com/microsoft-365/roadmap?id=562413</link>
+      <guid isPermaLink="true">https://www.microsoft.com/microsoft-365/roadmap?id=562413</guid>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft M365 Roadmap</dc:creator>
+      <category>M365 Roadmap</category>
+      <category>Teams</category>
+      <description><![CDATA[Easily find keyboard shortcuts with a new searchable experience in Microsoft Teams. Search by shortcut name or enter part of a key combination directly in the dialog. GA date: June CY2026.]]></description>
+    </item>
+
+    <item>
+      <title>Microsoft Purview: Data Lifecycle Management - DLM Meter Change</title>
+      <link>https://www.microsoft.com/microsoft-365/roadmap?id=560324</link>
+      <guid isPermaLink="true">https://www.microsoft.com/microsoft-365/roadmap?id=560324</guid>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft M365 Roadmap</dc:creator>
+      <category>M365 Roadmap</category>
+      <category>Purview</category>
+      <description><![CDATA[Data Lifecycle Management (DLM) billing will be based on the volume of data retained. Any number of non-Microsoft 365 generative AI prompts and responses that collectively amount to 1 GB of retained data will be billed at $0.25 per GB per month.]]></description>
+    </item>
+
+    <item>
+      <title>Microsoft Teams: Preloaded video for Teams Events and Meetings</title>
+      <link>https://www.microsoft.com/microsoft-365/roadmap?id=562340</link>
+      <guid isPermaLink="true">https://www.microsoft.com/microsoft-365/roadmap?id=562340</guid>
+      <pubDate>Thu, 14 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft M365 Roadmap</dc:creator>
+      <category>M365 Roadmap</category>
+      <category>Teams</category>
+      <description><![CDATA[Users can now upload videos directly into a Teams event or meeting from OneDrive from the "Manage view" options when an organizer has turned on Manage What Attendees See mode. This ensures a smoother high quality video playback with a more consistent experience for attendees.]]></description>
+    </item>
+
+    <item>
+      <title>Proven intranet framework - Involv Intranet - SharePoint Partner Showcase</title>
+      <link>https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/proven-intranet-framework-involv-intranet-sharepoint-partner/ba-p/4519241</link>
+      <guid isPermaLink="true">https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/proven-intranet-framework-involv-intranet-sharepoint-partner/ba-p/4519241</guid>
+      <pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft SharePoint Blog</dc:creator>
+      <category>SharePoint Blog</category>
+      <category>SharePoint</category>
+      <description><![CDATA[A new episode on our partner showcase series focused on SharePoint in Microsoft 365. Tim Bogemans and Pascal Herreweghe from Involv Intranet join Vesa Juvonen from Microsoft to highlight capabilities they've built for Microsoft 365 customers.]]></description>
+    </item>
+
+    <item>
+      <title>Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management</title>
+      <link>https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252</link>
+      <guid isPermaLink="true">https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252</guid>
+      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft SharePoint Blog</dc:creator>
+      <category>SharePoint Blog</category>
+      <category>SharePoint</category>
+      <description><![CDATA[AI is raising the bar for document management. It's no longer enough to store and share files — content needs to be governed, structured, and connected to the way teams actually work so AI can reason over it responsibly and help people move from information to action.]]></description>
+    </item>
+
+    <item>
+      <title>SharePoint Showcase: AI-Forward Content Creation &amp; Curation for the Modern Intranet</title>
+      <link>https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-ai-forward-content-creation-curation-for-the/ba-p/4515947</link>
+      <guid isPermaLink="true">https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-ai-forward-content-creation-curation-for-the/ba-p/4515947</guid>
+      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft SharePoint Blog</dc:creator>
+      <category>SharePoint Blog</category>
+      <category>SharePoint</category>
+      <description><![CDATA[More than 2,700 Microsoft 365 customers joined us at the Microsoft 365 Community Conference in Orlando to learn what's new across Microsoft 365. In this session, AI-Forward Content Creation & Curation for the Modern Intranet, we shared how SharePoint is evolving from a content repository into an intelligent publishing platform.]]></description>
+    </item>
+
+    <item>
+      <title>Solutions for document-centric business processes - Portal Systems - SharePoint Partner Showcase</title>
+      <link>https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/solutions-for-document-centric-business-processes-portal-systems/ba-p/4515217</link>
+      <guid isPermaLink="true">https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/solutions-for-document-centric-business-processes-portal-systems/ba-p/4515217</guid>
+      <pubDate>Wed, 29 Apr 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft SharePoint Blog</dc:creator>
+      <category>SharePoint Blog</category>
+      <category>SharePoint</category>
+      <description><![CDATA[Patrick Carl from Portal Systems AG joins Vesa Juvonen from Microsoft to showcase different features and capabilities they've built for Microsoft 365 customers — focused on document-centric business process automation.]]></description>
+    </item>
+
+    <item>
+      <title>Building a modern digital workplace on Microsoft 365 - WebVine - SharePoint Partner Showcase</title>
+      <link>https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/building-a-modern-digital-workplace-on-microsoft-365-webvine/ba-p/4511679</link>
+      <guid isPermaLink="true">https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/building-a-modern-digital-workplace-on-microsoft-365-webvine/ba-p/4511679</guid>
+      <pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft SharePoint Blog</dc:creator>
+      <category>SharePoint Blog</category>
+      <category>SharePoint</category>
+      <description><![CDATA[Chloe Dervin and James Dellow from WebVine join Vesa Juvonen from Microsoft to showcase different features and capabilities they've built for Microsoft 365 — focused on modern digital workplace design and employee experience.]]></description>
+    </item>
+
+    <item>
+      <title>AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act</title>
+      <link>https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoint/ba-p/4512532</link>
+      <guid isPermaLink="true">https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoint/ba-p/4512532</guid>
+      <pubDate>Mon, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Microsoft SharePoint Blog</dc:creator>
+      <category>SharePoint Blog</category>
+      <category>SharePoint</category>
+      <description><![CDATA[In March, Microsoft shared their vision for AI in SharePoint: transforming how teams build solutions, publish content, and organize information using AI. AI Skills are now available in Public Preview — start with intent, describe it in natural language, and move directly to working solutions.]]></description>
+    </item>
+
+  </channel>
+</rss>
