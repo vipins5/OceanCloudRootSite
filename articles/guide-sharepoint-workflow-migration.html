@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css?v=3" />
-  <link rel="stylesheet" href="../css/pages.css?v=10" />
+  <link rel="stylesheet" href="../css/pages.css?v=11" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
@@ -177,6 +177,38 @@
         <li>Combine with <code>Get-PnPTenantSite</code> to iterate across all sites</li>
         <li>Export results to CSV: site URL, workflow name, list association, workflow platform version (2010 vs 2013), last run date</li>
       </ul>
+
+      <div class="code-label">PowerShell 7 — export workflow inventory</div>
+      <div class="code-block"><pre># Connect to the SharePoint admin center first
+$adminUrl = "https://contoso-admin.sharepoint.com"
+Connect-PnPOnline -Url $adminUrl -Interactive
+
+# Pull candidate sites. Exclude OneDrive personal sites unless you intentionally need them.
+$sites = Get-PnPTenantSite -Limit All |
+    Where-Object { $_.Template -notlike "SPSPERS*" }
+
+$workflowInventory = foreach ($site in $sites) {
+    Write-Host "Checking $($site.Url)" -ForegroundColor Cyan
+    Connect-PnPOnline -Url $site.Url -Interactive
+
+    Get-PnPWorkflowSubscription | ForEach-Object {
+        [pscustomobject]@{
+            SiteUrl      = $site.Url
+            WorkflowName = $_.Name
+            ListId       = $_.ListId
+            Enabled      = $_.Enabled
+            DefinitionId = $_.DefinitionId
+        }
+    }
+}
+
+$workflowInventory |
+    Sort-Object SiteUrl, WorkflowName |
+    Export-Csv .\sharepoint-workflow-inventory.csv -NoTypeInformation</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Run this in a pilot first:</strong> Tenant-wide workflow inventory can take time on large environments. Start with a small site subset, confirm the exported columns are useful, then run across the tenant during a quiet admin window.</p>
+      </div>
 
       <h3>Classify workflows by priority</h3>
       <p>Not all discovered workflows need immediate migration. Classify each one:</p>
@@ -349,7 +381,7 @@
 
 <button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script src="../js/main.js?v=8"></script>
+<script src="../js/main.js?v=9"></script>
 <script src="../js/chat.js?v=6"></script>
 <script src="../js/particles.js?v=6"></script>
 <script src="../js/weather.js?v=6"></script>

@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css?v=3" />
-  <link rel="stylesheet" href="../css/pages.css?v=10" />
+  <link rel="stylesheet" href="../css/pages.css?v=11" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
@@ -210,6 +210,33 @@
         <li>Add sites with <code>Add-SPOTenantRestrictedSearchAllowedList -SiteUrl "https://yourorg.sharepoint.com/sites/sitename"</code></li>
         <li>View the current allowed list with <code>Get-SPOTenantRestrictedSearchAllowedList</code></li>
       </ul>
+
+      <div class="code-label">PowerShell 7 — configure Restricted SharePoint Search</div>
+      <div class="code-block"><pre># Connect to the SharePoint admin center
+$tenant = "contoso"
+Connect-SPOService -Url "https://$tenant-admin.sharepoint.com"
+
+# Enable Restricted SharePoint Search during the cleanup phase
+Set-SPOTenantRestrictedSearchMode -Mode Enabled
+
+# Add validated sites to the allowed list
+$allowedSites = @(
+    "https://contoso.sharepoint.com/sites/hr",
+    "https://contoso.sharepoint.com/sites/finance",
+    "https://contoso.sharepoint.com/sites/operations"
+)
+
+foreach ($siteUrl in $allowedSites) {
+    Add-SPOTenantRestrictedSearchAllowedList -SiteUrl $siteUrl
+}
+
+# Confirm current configuration
+Get-SPOTenantRestrictedSearchMode
+Get-SPOTenantRestrictedSearchAllowedList</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Use RSS as a temporary control:</strong> Keep a dated list of why each site was allowed. Review the list monthly, fix the remaining permission issues, and plan when Restricted SharePoint Search can be disabled.</p>
+      </div>
 
       <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Restricted SharePoint Search documentation — learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search</a>
 
@@ -418,7 +445,7 @@
 
 <button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script src="../js/main.js?v=8"></script>
+<script src="../js/main.js?v=9"></script>
 <script src="../js/chat.js?v=6"></script>
 <script src="../js/particles.js?v=6"></script>
 <script src="../js/weather.js?v=6"></script>

@@ -199,10 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
     output = output.replace(/("[^"]*"|'[^']*')/g, match => hold(held, `<span class="token-string">${match}</span>`));
     output = output.replace(/(\$[A-Za-z_][\w.]*)/g, match => hold(held, `<span class="token-variable">${match}</span>`));
     output = output.replace(/(^|\s)(-[A-Za-z][\w-]*)/g, (match, lead, param) => `${lead}${hold(held, `<span class="token-param">${param}</span>`)}`);
+    output = output.replace(/\b(\$true|\$false|\$null)\b/gi, match => hold(held, `<span class="token-bool">${match}</span>`));
     output = output.replace(/\b(\d+(?:\.\d+)?)\b/g, match => hold(held, `<span class="token-number">${match}</span>`));
     output = output.replace(/\b(GET|POST|PUT|PATCH|DELETE|MERGE|Method|URI|Headers|Body|Switch|Case|Default|Status|Amount|Created|DueDate|Department|Apply|Select|Where|Object|ForEach|Install|Import|Update|Connect|Export|Write|New|Set|Get)\b/g, match => hold(held, `<span class="token-keyword">${match}</span>`));
     output = output.replace(/\b([A-Za-z]+-[A-Za-z][\w-]*)\b/g, match => hold(held, `<span class="token-command">${match}</span>`));
     output = output.replace(/\b(https?:\/\/[^\s<]+|_[A-Za-z0-9/?$=.'&;%-]+)\b/g, match => hold(held, `<span class="token-path">${match}</span>`));
+    output = output.replace(/(\||`|=>|=|\{|\}|\(|\)|\[|\]|,)/g, match => hold(held, `<span class="token-operator">${match}</span>`));
 
     return restoreHeld(output, held);
   };

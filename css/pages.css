@@ -262,6 +262,10 @@
 .code-block.oc-code-enhanced .token-number { color: #fbbf24 !important; }
 .article-wrap .code-block .token-path,
 .code-block.oc-code-enhanced .token-path { color: #fdba74 !important; }
+.article-wrap .code-block .token-bool,
+.code-block.oc-code-enhanced .token-bool { color: #f0abfc !important; font-weight: 700; }
+.article-wrap .code-block .token-operator,
+.code-block.oc-code-enhanced .token-operator { color: #94a3b8 !important; }
 
 @media (max-width: 560px) {
   .article-wrap .code-block,

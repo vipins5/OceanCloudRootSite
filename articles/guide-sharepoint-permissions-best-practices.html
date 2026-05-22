@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css?v=3" />
-  <link rel="stylesheet" href="../css/pages.css?v=10" />
+  <link rel="stylesheet" href="../css/pages.css?v=11" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
@@ -290,6 +290,34 @@
         <li><strong>Document findings and prioritise remediation:</strong> Score findings by risk (sensitivity of content × breadth of unintended access × likelihood of exploitation) and build a prioritised remediation plan</li>
       </ol>
 
+      <div class="code-label">PowerShell 7 — find uniquely permissioned library items</div>
+      <div class="code-block"><pre># Connect to the site you want to audit
+$siteUrl = "https://contoso.sharepoint.com/sites/finance"
+$library = "Documents"
+
+Connect-PnPOnline -Url $siteUrl -Interactive
+
+# Find files/folders that no longer inherit permissions from the library
+$items = Get-PnPListItem `
+    -List $library `
+    -PageSize 2000 `
+    -Includes HasUniqueRoleAssignments, FileSystemObjectType, FieldValuesAsText
+
+$items |
+    Where-Object { $_.HasUniqueRoleAssignments -eq $true } |
+    Select-Object `
+        @{Name="SiteUrl"; Expression={ $siteUrl }},
+        @{Name="Library"; Expression={ $library }},
+        Id,
+        FileSystemObjectType,
+        @{Name="Name"; Expression={ $_.FieldValuesAsText.FileLeafRef }},
+        @{Name="Path"; Expression={ $_.FieldValuesAsText.FileRef }} |
+    Export-Csv .\unique-permissions-finance.csv -NoTypeInformation</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Audit safely:</strong> This script reports broken inheritance; it does not remove access. Review the CSV with each site owner before changing permissions, especially in libraries used by legal, finance, HR, or executive teams.</p>
+      </div>
+
       <a href="https://learn.microsoft.com/en-us/sharepoint/advanced-management" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint Advanced Management documentation — learn.microsoft.com</a>
 
       <div class="art-callout warning">
@@ -368,7 +396,7 @@
 
 <button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script src="../js/main.js?v=8"></script>
+<script src="../js/main.js?v=9"></script>
 <script src="../js/chat.js?v=6"></script>
 <script src="../js/particles.js?v=6"></script>
 <script src="../js/weather.js?v=6"></script>
