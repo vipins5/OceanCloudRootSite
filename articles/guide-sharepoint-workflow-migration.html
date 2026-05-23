@@ -181,17 +181,33 @@
       </ul>
 
       <div class="code-label">PowerShell 7 — export workflow inventory</div>
-      <div class="code-block"><pre># Connect to the SharePoint admin center first
-$adminUrl = "https://contoso-admin.sharepoint.com"
-Connect-PnPOnline -Url $adminUrl -Interactive
+      <div class="code-block"><pre># ── Authentication variables ───────────────────────────────────────────────
+$adminUrl   = "https://contoso-admin.sharepoint.com"
+$clientId   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # your Entra app Client ID
+$tenant     = "contoso.onmicrosoft.com"
+$thumbprint = "AABBCCDDEEFF..."                         # cert thumbprint (for non-interactive)
+
+# ── Connect to the SharePoint admin center (choose one method) ─────────────
+# Interactive (browser pop-up, runs as the signed-in user):
+# Connect-PnPOnline -Url $adminUrl -Interactive -ClientId $clientId
+
+# Certificate thumbprint (non-interactive — recommended when iterating many sites):
+Connect-PnPOnline -Url $adminUrl -ClientId $clientId -Thumbprint $thumbprint -Tenant $tenant
+
+# PFX file (non-interactive — CI/CD pipelines):
+# $certPass = ConvertTo-SecureString "YourP@ssw0rd" -AsPlainText -Force
+# Connect-PnPOnline -Url $adminUrl -ClientId $clientId -CertificatePath "C:\Certs\PnPApp.pfx" -CertificatePassword $certPass -Tenant $tenant
 
 # Pull candidate sites. Exclude OneDrive personal sites unless you intentionally need them.
-$sites = Get-PnPTenantSite -Limit All |
+$sites = Get-PnPTenantSite |
     Where-Object { $_.Template -notlike "SPSPERS*" }
 
 $workflowInventory = foreach ($site in $sites) {
     Write-Host "Checking $($site.Url)" -ForegroundColor Cyan
-    Connect-PnPOnline -Url $site.Url -Interactive
+
+    # Reconnect to each site using the same credentials (thumbprint avoids a browser
+    # pop-up on every iteration; swap in Interactive -ClientId for ad-hoc one-off runs)
+    Connect-PnPOnline -Url $site.Url -ClientId $clientId -Thumbprint $thumbprint -Tenant $tenant
 
     Get-PnPWorkflowSubscription | ForEach-Object {
         [pscustomobject]@{
