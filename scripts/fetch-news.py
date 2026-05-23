@@ -74,6 +74,7 @@ ARCHIVE_HTML    = ROOT / "archive.html"
 ARCHIVE_JSON    = ROOT / "data" / "archive.json"
 ARTICLES_DIR    = ROOT / "articles"
 SITEMAP_XML     = ROOT / "sitemap.xml"
+SEARCH_INDEX    = ROOT / "data" / "search-index.json"
 SITE_BASE_URL   = "https://www.oceancloudconsults.com"
 
 NEWS_BEGIN      = "<!-- BEGIN:NEWS-CONTENT -->"
@@ -626,6 +627,52 @@ def update_sitemap(new_slugs: list[str]) -> None:
     print(f"✓ sitemap.xml updated with {added} new article URL(s).")
 
 
+# ── Search index updater ──────────────────────────────────────────────────────
+
+def update_search_index(new_items: list[dict]) -> None:
+    """Append new news article entries to data/search-index.json."""
+    if not SEARCH_INDEX.exists() or not new_items:
+        return
+    try:
+        index = json.loads(SEARCH_INDEX.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  [warn] Could not read search-index.json: {exc}", file=sys.stderr)
+        return
+
+    existing_ids = {entry.get("id", "") for entry in index}
+    added = 0
+    for item in new_items:
+        slug   = item.get("_slug", "")
+        if not slug:
+            continue
+        entry_id = f"articles-{slug}"
+        if entry_id in existing_ids:
+            continue
+        date_display = friendly_date(item["date"])
+        commentary   = item.get("_commentary", item.get("summary", ""))[:300]
+        body_text    = f"{item['title']} | OceanCloud {date_display} 3 min read {commentary}"
+        index.append({
+            "id":          entry_id,
+            "type":        "article",
+            "tag":         "Article",
+            "title":       item["title"],
+            "heading":     item["title"],
+            "excerpt":     commentary,
+            "body":        body_text,
+            "url":         f"articles/{slug}",
+            "dateDisplay": date_display,
+            "dateSort":    "",
+        })
+        existing_ids.add(entry_id)
+        added += 1
+
+    if added:
+        SEARCH_INDEX.write_text(
+            json.dumps(index, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        print(f"✓ search-index.json updated with {added} new article entry/entries.")
+
+
 # ── Fetchers ──────────────────────────────────────────────────────────────────
 
 def fetch_blog() -> list[dict]:
@@ -888,6 +935,10 @@ def main() -> None:
 
     # ── Update sitemap ────────────────────────────────────────────────────────
     update_sitemap(new_article_slugs)
+
+    # ── Update search index ───────────────────────────────────────────────────
+    new_indexed = [it for it in all_items if it.get("_slug") in new_article_slugs]
+    update_search_index(new_indexed)
 
     # ── Update news.html ──────────────────────────────────────────────────────
     html = NEWS_HTML.read_text(encoding="utf-8")
