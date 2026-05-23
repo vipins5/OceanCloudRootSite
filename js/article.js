@@ -176,7 +176,6 @@
         var idx = headings.indexOf(entry.target);
         if (idx === -1) return;
         if (entry.isIntersecting) {
-          lastActive = idx;
           setActive(idx);
         }
       });

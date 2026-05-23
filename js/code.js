@@ -276,6 +276,10 @@
       var pre = block.querySelector('pre');
       if (!pre) return;
 
+      /* Remove toolbar injected by main.js to avoid duplicate copy buttons */
+      var existing = block.querySelector('.oc-code-toolbar');
+      if (existing) existing.remove();
+
       var lang = detectLang(block);
       var raw  = pre.textContent || '';
 
