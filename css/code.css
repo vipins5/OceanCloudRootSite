@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════════════════════════
+   code.css — syntax-highlight tokens + copy-button header
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Code block: make room for the injected header ── */
+.code-block {
+  position: relative;
+  padding-top: 0 !important;
+  overflow: visible;
+}
+
+/* ── Header bar (lang badge + copy button) ── */
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 22px;
+  background: rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px 10px 0 0;
+  margin: 0 -22px 18px;
+  user-select: none;
+}
+
+.code-lang {
+  font-size: .72rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: rgba(255,255,255,.32);
+  letter-spacing: .05em;
+}
+
+/* ── Copy button ── */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 5px;
+  color: rgba(255,255,255,.4);
+  font-size: .72rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .17s, border-color .17s, color .17s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.copy-btn svg { vertical-align: middle; flex-shrink: 0; }
+.copy-btn:hover {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.22);
+  color: #e2e8f0;
+}
+.copy-btn.copied {
+  background: rgba(74,222,128,.1);
+  border-color: rgba(74,222,128,.3);
+  color: #4ade80;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Syntax token classes — VS Code Dark+ palette
+   ═══════════════════════════════════════════════════════════ */
+
+/* PowerShell / scripting */
+.tok-comment { color: #6a9955; font-style: italic; }   /* green  — # comments       */
+.tok-string  { color: #ce9178; }                        /* orange — "strings"        */
+.tok-var     { color: #9cdcfe; }                        /* cyan   — $variables       */
+.tok-param   { color: #9cdcfe; }                        /* cyan   — -Parameters      */
+.tok-cmdlet  { color: #dcdcaa; }                        /* yellow — Verb-Noun cmds   */
+.tok-kw      { color: #c586c0; }                        /* pink   — if/foreach/try   */
+.tok-num     { color: #b5cea8; }                        /* pale green — numbers      */
+
+/* HTML / XML */
+.tok-tag     { color: #4ec9b0; }                        /* teal   — <tagname>        */
+.tok-attr    { color: #9cdcfe; }                        /* cyan   — attribute keys   */
+.tok-aval    { color: #ce9178; }                        /* orange — attribute values */
+.tok-entity  { color: #f48771; }                        /* coral  — &amp; entities   */
+
+/* JSON */
+.tok-jkey    { color: #9cdcfe; }                        /* cyan   — "key":           */
+.tok-jstr    { color: #ce9178; }                        /* orange — string values    */
+.tok-jnum    { color: #b5cea8; }                        /* green  — number values    */
+.tok-jbool   { color: #c586c0; }                        /* pink   — true/false/null  */
+.tok-jbrack  { color: #ffd700; }                        /* gold   — { } [ ]          */
