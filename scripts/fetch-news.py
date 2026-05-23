@@ -4,8 +4,8 @@ OceanCloud News Fetcher
 =======================
 Pulls the latest Microsoft SharePoint blog posts and M365 release
 communications, rewrites each item in OceanCloud's consulting voice
-using the Gemini API, then:
-  1. Injects the latest cards into news.html (replaces each week)
+using an AI API, then:
+  1. Injects the latest cards into news.html (replaces each run)
   2. Appends new items to data/archive.json (cumulative, deduplicated)
   3. Regenerates archive.html from the full archive grouped by month
 
@@ -14,9 +14,14 @@ Sources
   Blog   : TechCommunity SharePoint Blog RSS
   Roadmap: Microsoft Release Communications RSS (official M365 release feed)
 
-Required environment variable
-------------------------------
-  GEMINI_API_KEY  — add as a GitHub Repository Secret
+AI rewrite engines (tried in order, first available wins)
+----------------------------------------------------------
+  OPENAI_API_KEY    — ChatGPT gpt-4o-mini          (primary)
+  ANTHROPIC_API_KEY — Claude claude-haiku-4-5-20251001         (secondary)
+  GEMINI_API_KEY    — Google Gemini 2.0 Flash       (tertiary)
+  None set          — uses truncated original RSS text
+
+Add secrets at: GitHub repo → Settings → Secrets → Actions
 """
 
 import json
@@ -39,6 +44,9 @@ GEMINI_URL      = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     "gemini-2.0-flash:generateContent?key=" + GEMINI_KEY
 )
+
+ANTHROPIC_KEY   = os.environ.get("ANTHROPIC_API_KEY", "")
+OPENAI_KEY      = os.environ.get("OPENAI_API_KEY", "")
 
 BLOG_RSS_URL    = (
     "https://techcommunity.microsoft.com"
@@ -161,7 +169,7 @@ def is_relevant(entry) -> bool:
     return any(term in haystack for term in RELEVANT_TERMS)
 
 
-# ── Gemini rewrite ────────────────────────────────────────────────────────────
+# ── AI rewrite (ChatGPT primary → Claude secondary → Gemini tertiary → text) ──
 
 SYSTEM_PROMPT = textwrap.dedent("""\
     You are a senior content writer for OceanCloud, a certified Microsoft 365
@@ -179,11 +187,36 @@ SYSTEM_PROMPT = textwrap.dedent("""\
 """)
 
 
-def gemini_rewrite(title: str, summary: str) -> str:
-    if not GEMINI_KEY:
-        print("  [warn] GEMINI_API_KEY not set — using original text", file=sys.stderr)
-        return (summary[:280] + "…") if len(summary) > 280 else summary
+def _truncate(summary: str) -> str:
+    return (summary[:280] + "…") if len(summary) > 280 else summary
 
+
+def _openai(title: str, summary: str) -> str | None:
+    """Try ChatGPT gpt-4o-mini. Returns text on success, None on any failure."""
+    if not OPENAI_KEY:
+        return None
+    try:
+        import openai
+        client = openai.OpenAI(api_key=OPENAI_KEY)
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            max_tokens=220,
+            temperature=0.65,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"Title: {title}\n\nOriginal text: {summary[:600]}"},
+            ],
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as exc:
+        print(f"  [warn] ChatGPT error: {exc}", file=sys.stderr)
+        return None
+
+
+def _gemini(title: str, summary: str) -> str | None:
+    """Try Gemini. Returns text on success, None on any failure."""
+    if not GEMINI_KEY:
+        return None
     body = f"Title: {title}\n\nOriginal text: {summary[:600]}"
     payload = {
         "contents": [{"parts": [{"text": SYSTEM_PROMPT + "\n\n" + body}]}],
@@ -195,7 +228,48 @@ def gemini_rewrite(title: str, summary: str) -> str:
         return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
     except Exception as exc:
         print(f"  [warn] Gemini error: {exc}", file=sys.stderr)
-        return (summary[:280] + "…") if len(summary) > 280 else summary
+        return None
+
+
+def _claude(title: str, summary: str) -> str | None:
+    """Try Claude claude-haiku-4-5-20251001. Returns text on success, None on any failure."""
+    if not ANTHROPIC_KEY:
+        return None
+    try:
+        import anthropic
+        client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
+        msg = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=220,
+            messages=[{
+                "role": "user",
+                "content": (
+                    SYSTEM_PROMPT
+                    + f"\n\nTitle: {title}\n\nOriginal text: {summary[:600]}"
+                ),
+            }],
+        )
+        return msg.content[0].text.strip()
+    except Exception as exc:
+        print(f"  [warn] Claude error: {exc}", file=sys.stderr)
+        return None
+
+
+def ai_rewrite(title: str, summary: str) -> str:
+    """ChatGPT → Claude → Gemini → original text (graceful degradation)."""
+    result = _openai(title, summary)
+    if result:
+        return result
+    result = _claude(title, summary)
+    if result:
+        print("  [info] Used Claude (secondary) rewriter")
+        return result
+    result = _gemini(title, summary)
+    if result:
+        print("  [info] Used Gemini (tertiary) rewriter")
+        return result
+    print("  [warn] No AI key available — using original text", file=sys.stderr)
+    return _truncate(summary)
 
 
 # ── Fetchers ──────────────────────────────────────────────────────────────────
@@ -426,7 +500,7 @@ def main() -> None:
     print(f"\nRewriting {len(all_items)} items with Gemini…")
     for item in all_items:
         print(f"  • {item['title'][:70]}")
-        item["_commentary"] = gemini_rewrite(item["title"], item["summary"])
+        item["_commentary"] = ai_rewrite(item["title"], item["summary"])
         time.sleep(0.4)
 
     # ── Update news.html ──────────────────────────────────────────────────────

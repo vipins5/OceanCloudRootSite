@@ -1,9 +1,14 @@
 name: Update Microsoft 365 News
 
-# Runs every Monday at 08:00 UTC, or trigger manually from GitHub Actions tab
+# Runs Mon / Wed / Fri at 08:00 UTC, or trigger manually.
+# AI rewrite engine: Gemini (primary). Set GEMINI_API_KEY secret to activate.
+# Claude fallback:   set ANTHROPIC_API_KEY secret — used automatically when
+#                    Gemini key is absent or returns an error.
 on:
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '0 8 * * 1'   # Monday
+    - cron: '0 8 * * 3'   # Wednesday
+    - cron: '0 8 * * 5'   # Friday
   workflow_dispatch:
 
 permissions:
@@ -12,6 +17,7 @@ permissions:
 jobs:
   update-news:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
@@ -30,8 +36,15 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Fetch, rewrite, and update news + archive
+        # Add secrets in: repo Settings → Secrets and variables → Actions → New repository secret
+        # Priority order: ChatGPT → Claude → Gemini → original text (first available key wins)
+        # OPENAI_API_KEY    → ChatGPT gpt-4o-mini           (primary)
+        # ANTHROPIC_API_KEY → Claude claude-haiku-4-5-20251001          (secondary)
+        # GEMINI_API_KEY    → Google Gemini 2.0 Flash        (tertiary)
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY:    ${{ secrets.OPENAI_API_KEY    || '' }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || '' }}
+          GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY    || '' }}
         run: python scripts/fetch-news.py
 
       - name: Show diff summary
@@ -51,4 +64,11 @@ jobs:
           else
             git commit -m "chore: auto-update M365 news + archive $(date -u +%Y-%m-%d)"
             git push
+            echo "✓ News committed and pushed."
           fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## News Update Complete" >> $GITHUB_STEP_SUMMARY
+          echo "Run date: $(date -u +%Y-%m-%d\ %H:%M\ UTC)" >> $GITHUB_STEP_SUMMARY
