@@ -27,6 +27,7 @@
     { topic:'sharepoint',     tag:'SharePoint',           url:'guide-sharepoint-permissions-best-practices',   title:'SharePoint Permissions Best Practices for Secure Microsoft 365 Sites',                    read:'11 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-pnp-entra-app-registration',              title:'PnP PowerShell: Complete Entra App Registration & Certificate Guide',                     read:'15 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-pnp-site-migration',           title:'Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide',                  read:'18 min read' }
+    // END:GUIDES-ARRAY
   ];
 
   /* ── Detect current article slug from URL ─────────────── */

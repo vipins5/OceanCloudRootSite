@@ -1,0 +1,88 @@
+name: Generate Guide Draft
+
+# Runs daily at 09:00 UTC — only if topics are queued in data/guide-topics.json.
+# Add a topic to that file and push; the next run picks it up and opens a PR.
+# Merge the PR to publish. Close it to discard.
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-guide:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Generate guide content
+        id: gen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || '' }}
+          OPENAI_API_KEY:    ${{ secrets.OPENAI_API_KEY    || '' }}
+          GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY    || '' }}
+        run: python scripts/generate-guide.py
+
+      - name: Create branch, commit, and open PR
+        if: steps.gen.outputs.slug != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SLUG="${{ steps.gen.outputs.slug }}"
+          TITLE="${{ steps.gen.outputs.title }}"
+          PR_BODY="${{ steps.gen.outputs.pr_body }}"
+          BRANCH="draft/${SLUG}"
+
+          git config user.name  "OceanCloud Guide Bot"
+          git config user.email "bot@oceancloudconsults.com"
+          git checkout -b "$BRANCH"
+
+          git add "articles/${SLUG}.html" \
+                  guides.html \
+                  js/article.js \
+                  data/search-index.json \
+                  sitemap.xml
+          git commit -m "draft: ${TITLE}"
+          git push -u origin "$BRANCH"
+
+          gh pr create \
+            --title "Draft: ${TITLE}" \
+            --body-file "${PR_BODY}" \
+            --base main \
+            --head "$BRANCH"
+
+          echo "✓ PR opened: Draft: ${TITLE}"
+
+      - name: No topics queued
+        if: steps.gen.outputs.slug == ''
+        run: echo "No pending topics in guide-topics.json — nothing to do today."
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## Guide Generation Run" >> $GITHUB_STEP_SUMMARY
+          echo "Date: $(date -u +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ steps.gen.outputs.slug }}" ]; then
+            echo "**Draft PR opened for:** ${{ steps.gen.outputs.title }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No new draft generated (queue empty or all topics already published)." >> $GITHUB_STEP_SUMMARY
+          fi
