@@ -37,9 +37,9 @@ jobs:
 
       - name: Fetch, rewrite, and update news + archive
         # Add secrets in: repo Settings → Secrets and variables → Actions → New repository secret
-        # Priority order: ChatGPT → Claude → Gemini → original text (first available key wins)
-        # OPENAI_API_KEY    → ChatGPT gpt-4o-mini           (primary)
-        # ANTHROPIC_API_KEY → Claude claude-haiku-4-5-20251001          (secondary)
+        # Priority order: Claude → ChatGPT → Gemini → original text (first available key wins)
+        # ANTHROPIC_API_KEY → Claude claude-haiku-4-5-20251001          (primary)
+        # OPENAI_API_KEY    → ChatGPT gpt-4o-mini           (secondary)
         # GEMINI_API_KEY    → Google Gemini 2.0 Flash        (tertiary)
         env:
           OPENAI_API_KEY:    ${{ secrets.OPENAI_API_KEY    || '' }}

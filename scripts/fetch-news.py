@@ -16,8 +16,8 @@ Sources
 
 AI rewrite engines (tried in order, first available wins)
 ----------------------------------------------------------
-  OPENAI_API_KEY    — ChatGPT gpt-4o-mini          (primary)
-  ANTHROPIC_API_KEY — Claude claude-haiku-4-5-20251001         (secondary)
+  ANTHROPIC_API_KEY — Claude claude-haiku-4-5-20251001         (primary)
+  OPENAI_API_KEY    — ChatGPT gpt-4o-mini          (secondary)
   GEMINI_API_KEY    — Google Gemini 2.0 Flash       (tertiary)
   None set          — uses truncated original RSS text
 
@@ -169,7 +169,7 @@ def is_relevant(entry) -> bool:
     return any(term in haystack for term in RELEVANT_TERMS)
 
 
-# ── AI rewrite (ChatGPT primary → Claude secondary → Gemini tertiary → text) ──
+# ── AI rewrite (Claude primary → ChatGPT secondary → Gemini tertiary → text) ──
 
 SYSTEM_PROMPT = textwrap.dedent("""\
     You are a senior content writer for OceanCloud, a certified Microsoft 365
@@ -256,13 +256,13 @@ def _claude(title: str, summary: str) -> str | None:
 
 
 def ai_rewrite(title: str, summary: str) -> str:
-    """ChatGPT → Claude → Gemini → original text (graceful degradation)."""
-    result = _openai(title, summary)
-    if result:
-        return result
+    """Claude → ChatGPT → Gemini → original text (graceful degradation)."""
     result = _claude(title, summary)
     if result:
-        print("  [info] Used Claude (secondary) rewriter")
+        return result
+    result = _openai(title, summary)
+    if result:
+        print("  [info] Used ChatGPT (secondary) rewriter")
         return result
     result = _gemini(title, summary)
     if result:
