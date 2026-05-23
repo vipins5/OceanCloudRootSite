@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /coming-soon.html
 Allow: /
 
 Sitemap: https://www.oceancloudconsults.com/sitemap.xml
