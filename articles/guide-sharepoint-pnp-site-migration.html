@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide | OceanCloud</title>
+  <meta name="description" content="Step-by-step PowerShell guide to migrate document libraries, lists, pages, and permissions from one SharePoint Online site to another — including full scripts, error handling, and post-migration validation." />
+  <meta name="keywords" content="sharepoint online migration powershell, pnp powershell site migration, copy sharepoint site to site, migrate sharepoint list items, sharepoint online migration script, copy document library sharepoint" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide" />
+  <meta property="og:description" content="Migrate document libraries, lists, modern pages, and permissions between SharePoint Online sites using PnP PowerShell — with complete scripts and validation." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=11" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration#article",
+        "headline": "Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide",
+        "url": "https://www.oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration",
+        "datePublished": "2026-05-23",
+        "dateModified": "2026-05-23",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Complete PowerShell guide to migrating document libraries, list items, modern pages, and permissions between SharePoint Online sites using PnP PowerShell — including inventory, migration, validation, and troubleshooting scripts.",
+        "keywords": ["SharePoint migration", "PnP PowerShell", "SharePoint Online site migration", "Copy-PnPFile", "SharePoint list migration"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepointmigration/migrate-to-sharepoint-online", "name": "SharePoint migration — Microsoft Learn" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://www.oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",   "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint PnP Site Migration", "item": "https://www.oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  /* ── article shell ── */
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.12);color:#60a5fa;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#60a5fa;}
+
+  /* ── callouts ── */
+  .art-callout{background:rgba(59,130,246,.07);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bfdbfe;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-callout.danger{background:rgba(239,68,68,.07);border-left-color:#f87171;}
+  .art-callout.danger p{color:#fecaca;}
+  .art-callout.tip{background:rgba(74,222,128,.07);border-left-color:#4ade80;}
+  .art-callout.tip p{color:#bbf7d0;}
+
+  /* ── tables ── */
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(59,130,246,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-table code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:4px;font-size:.8rem;color:#c8daea;}
+  .art-table .yes{color:#4ade80;font-weight:700;}
+  .art-table .partial{color:#fbbf24;font-weight:700;}
+  .art-table .no{color:#f87171;font-weight:700;}
+
+  /* ── code blocks ── */
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+
+  /* ── numbered steps ── */
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(59,130,246,.18);color:#60a5fa;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+
+  /* ── migration scope grid ── */
+  .scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;}
+  .scope-card{border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,.07);}
+  .scope-card.yes{border-left:3px solid #4ade80;}
+  .scope-card.no{border-left:3px solid #f87171;}
+  .scope-card h4{margin:0 0 10px;font-size:.9rem;font-weight:700;}
+  .scope-card.yes h4{color:#4ade80;}
+  .scope-card.no h4{color:#f87171;}
+  .scope-card ul{margin:0;padding-left:16px;}
+  .scope-card li{font-size:.84rem;color:var(--text-mid);margin-bottom:5px;}
+
+  /* ── CTA + related ── */
+  .art-cta-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(96,165,250,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#60a5fa;}
+
+  @media(max-width:600px){
+    .scope-grid{grid-template-columns:1fr;}
+  }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>SharePoint PnP Site Migration</span></nav>
+      <h1>Migrate SharePoint Online Sites with <span class="grad-text">PnP PowerShell</span></h1>
+      <p>A complete end-to-end PowerShell guide — inventory, migrate libraries, lists, pages, and permissions, then validate every item made it across.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">May 23, 2026</span>
+        <span class="art-read">18 min read</span>
+      </div>
+
+      <p class="article-intro">Moving content between SharePoint Online sites is one of the most common — and most underestimated — admin tasks. Whether you are consolidating sites, restructuring an intranet, or splitting a department site into dedicated sub-sites, PnP PowerShell gives you fine-grained control over exactly what moves and how. This guide covers the complete workflow: connecting to both sites, inventorying the source, migrating document libraries, list items, modern pages, and permissions, then running a validation pass to confirm everything landed correctly.</p>
+
+      <h2>What PnP PowerShell Can (and Cannot) Migrate</h2>
+      <p>Before writing a single line of PowerShell, align expectations. PnP covers the majority of routine content migrations but some artifacts require supplementary tools.</p>
+
+      <div class="scope-grid">
+        <div class="scope-card yes">
+          <h4>&#10003; Supported by PnP PowerShell</h4>
+          <ul>
+            <li>Document libraries and files</li>
+            <li>Custom list items and field values</li>
+            <li>Modern site pages (with caveats)</li>
+            <li>Site columns and content types</li>
+            <li>SharePoint groups and members</li>
+            <li>Role assignments and permission levels</li>
+            <li>Navigation nodes</li>
+            <li>Site template (structure export)</li>
+            <li>Managed metadata field values</li>
+          </ul>
+        </div>
+        <div class="scope-card no">
+          <h4>&#10007; Requires Additional Tools</h4>
+          <ul>
+            <li>Version history (use SPMT for this)</li>
+            <li>Power Automate flows</li>
+            <li>Power Apps embedded in pages</li>
+            <li>InfoPath forms</li>
+            <li>Classic workflows (SharePoint Designer)</li>
+            <li>Recycle bin contents</li>
+            <li>OneNote notebooks (use OneDrive)</li>
+            <li>Cross-tenant migrations (&gt; SPMT or Mover)</li>
+            <li>Files over 250 GB</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="art-callout">
+        <p><strong>Same-tenant vs cross-tenant:</strong> This guide covers <em>same-tenant</em> site-to-site migration (both sites are in your Microsoft 365 organisation). For cross-tenant migrations — mergers, acquisitions, divestiture — use the <a href="https://learn.microsoft.com/en-us/sharepointmigration/migrate-to-sharepoint-online" target="_blank" rel="noopener noreferrer">SharePoint Migration Tool (SPMT)</a> or Microsoft's Cross-Tenant Migration tooling.</p>
+      </div>
+
+      <h2>Prerequisites</h2>
+      <p>You need PowerShell 7, the PnP.PowerShell module, and an Entra app registration with the right permissions. If you have not done this yet, start with our <a href="guide-pnp-entra-app-registration">PnP Entra App Registration guide</a> before continuing.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Requirement</th><th>Minimum version / detail</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>PowerShell</strong></td><td>7.4 or later (<code>pwsh --version</code>)</td></tr>
+            <tr><td><strong>PnP.PowerShell</strong></td><td>2.x or later (<code>Get-Module PnP.PowerShell -ListAvailable</code>)</td></tr>
+            <tr><td><strong>Entra app permissions</strong></td><td><code>Sites.FullControl.All</code> (Application) on Microsoft Graph</td></tr>
+            <tr><td><strong>SharePoint Admin role</strong></td><td>Required at tenant level for site collection operations</td></tr>
+            <tr><td><strong>Access to both sites</strong></td><td>Site Collection Administrator on both source and destination</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-label">PowerShell 7 &mdash; verify and update PnP module</div>
+      <div class="code-block"><pre># Verify PowerShell version (must be 7+)
+$PSVersionTable.PSVersion
+
+# Install or update PnP.PowerShell
+Install-Module PnP.PowerShell -Scope CurrentUser -Force -AllowClobber
+
+# Confirm installed version
+Get-Module PnP.PowerShell -ListAvailable | Select-Object Name, Version</pre></div>
+
+      <h2>Step 1 — Connect to Both Sites</h2>
+      <p>You need two live connections — one to the source site and one to the destination. PnP PowerShell lets you switch between connections using the <code>-Connection</code> parameter, which keeps your code explicit about which site each cmdlet targets.</p>
+
+      <div class="art-callout tip">
+        <p><strong>Tip:</strong> Store connections in clearly named variables (<code>$src</code> and <code>$dst</code>) and always pass <code>-Connection</code> explicitly. Without it, PnP uses the most recently established connection — a common source of accidental writes to the wrong site.</p>
+      </div>
+
+      <div class="code-label">PowerShell 7 &mdash; connect to source and destination sites</div>
+      <div class="code-block"><pre># ── Source site ───────────────────────────────────────────────────────────
+$srcUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"
+$dstUrl    = "https://contoso.sharepoint.com/sites/NewIntranet"
+$clientId  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # Entra app Client ID
+$tenant    = "contoso.onmicrosoft.com"
+$certPath  = "C:\Certs\PnPSharePointApp.pfx"
+$certPass  = ConvertTo-SecureString "YourP@ssw0rd" -AsPlainText -Force
+
+$src = Connect-PnPOnline `
+    -Url                 $srcUrl `
+    -ClientId            $clientId `
+    -CertificatePath     $certPath `
+    -CertificatePassword $certPass `
+    -Tenant              $tenant `
+    -ReturnConnection
+
+# ── Destination site ───────────────────────────────────────────────────────
+$dst = Connect-PnPOnline `
+    -Url                 $dstUrl `
+    -ClientId            $clientId `
+    -CertificatePath     $certPath `
+    -CertificatePassword $certPass `
+    -Tenant              $tenant `
+    -ReturnConnection
+
+# Verify both connections
+Write-Host "Source     : $((Get-PnPWeb -Connection $src).Title)"
+Write-Host "Destination: $((Get-PnPWeb -Connection $dst).Title)"</pre></div>
+
+      <h2>Step 2 — Inventory the Source Site</h2>
+      <p>Before migrating anything, produce a complete inventory of the source site. This CSV becomes your migration manifest and your post-migration validation baseline.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; export full site inventory to CSV</div>
+      <div class="code-block"><pre>$reportPath = "C:\Migration\source-inventory-$(Get-Date -Format 'yyyyMMdd').csv"
+$inventory  = @()
+
+$lists = Get-PnPList -Connection $src |
+    Where-Object { -not $_.Hidden -and $_.BaseType -in 'DocumentLibrary','GenericList' }
+
+foreach ($list in $lists) {
+    $items = Get-PnPListItem -List $list.Title -Connection $src -PageSize 500
+
+    $inventory += [PSCustomObject]@{
+        ListTitle    = $list.Title
+        ListType     = $list.BaseType
+        ItemCount    = $list.ItemCount
+        LastModified = $list.LastItemModifiedDate.ToString("yyyy-MM-dd")
+        HasUniquePermissions = $list.HasUniqueRoleAssignments
+    }
+    Write-Host "  $($list.Title) — $($list.ItemCount) items"
+}
+
+$inventory | Export-Csv -Path $reportPath -NoTypeInformation -Encoding UTF8
+Write-Host "`nInventory saved to: $reportPath"
+Write-Host "Total lists/libraries: $($inventory.Count)"
+Write-Host "Total items          : $(($inventory | Measure-Object ItemCount -Sum).Sum)"</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Large libraries:</strong> If a library has more than 5,000 items, <code>Get-PnPListItem</code> will hit the list view threshold. Use <code>-PageSize 500</code> combined with <code>-Fields</code> to fetch only the columns you need, and consider batching by folder.</p>
+      </div>
+
+      <h2>Step 3 — Export the Site Template (Structure)</h2>
+      <p>The site template captures columns, content types, list schemas, navigation, and regional settings — everything except the actual content. Apply it to the destination site first so that the structure exists before you copy data.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; export and apply site template</div>
+      <div class="code-block"><pre>$templatePath = "C:\Migration\site-template.xml"
+
+# ── Export from source ─────────────────────────────────────────────────────
+Get-PnPSiteTemplate `
+    -Connection          $src `
+    -Out                 $templatePath `
+    -Handlers            ContentTypes, Fields, Lists, Navigation, SupportedUILanguages `
+    -ExcludeHandlers     ExtensibilityProviders `
+    -Force
+
+Write-Host "Template exported to: $templatePath"
+
+# ── Apply to destination ────────────────────────────────────────────────────
+# Review the XML in a text editor before applying — remove any lists
+# that already exist at the destination to avoid duplication errors.
+Invoke-PnPSiteTemplate `
+    -Connection $dst `
+    -Path       $templatePath
+
+Write-Host "Template applied to destination site."</pre></div>
+
+      <div class="art-callout">
+        <p><strong>Before applying:</strong> Open the exported XML and remove <code>&lt;pnp:ListInstance&gt;</code> nodes for any lists that already exist at the destination (Documents, Site Assets, Site Pages). Applying a template that tries to create an already-existing list will throw a non-fatal but noisy error.</p>
+      </div>
+
+      <h2>Step 4 — Migrate Document Libraries and Files</h2>
+      <p><code>Copy-PnPFile</code> is the fastest way to move files within the same tenant — it calls the SharePoint server-side copy API, so nothing transfers through your local machine. For large libraries, combine it with folder enumeration and progress tracking.</p>
+
+      <h3>Simple library copy</h3>
+      <div class="code-label">PowerShell 7 &mdash; copy an entire document library</div>
+      <div class="code-block"><pre>$srcLibUrl = "/sites/OldIntranet/Shared Documents"
+$dstLibUrl = "/sites/NewIntranet/Shared Documents"
+
+# Copy-PnPFile works server-side — fast and does not use local bandwidth
+Copy-PnPFile `
+    -SourceUrl      $srcLibUrl `
+    -TargetUrl      $dstLibUrl `
+    -Overwrite `
+    -SkipSourceFolderName `   # copies CONTENTS of the folder, not the folder itself
+    -Connection     $src      # source connection; destination is inferred from TargetUrl
+
+Write-Host "Library copy complete."</pre></div>
+
+      <h3>Folder-by-folder copy with progress (large libraries)</h3>
+      <div class="code-label">PowerShell 7 &mdash; iterate folders, copy with logging</div>
+      <div class="code-block"><pre>$logPath = "C:\Migration\copy-log-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
+$log     = @()
+
+function Copy-SPFolder {
+    param($FolderUrl, $SrcConn, $DstSiteUrl)
+
+    $files = Get-PnPFolderItem -FolderSiteRelativeUrl $FolderUrl `
+                 -ItemType File -Connection $SrcConn
+
+    foreach ($file in $files) {
+        $srcFile = $file.ServerRelativeUrl
+        $dstFile = $srcFile -replace "/sites/OldIntranet", "/sites/NewIntranet"
+
+        try {
+            Copy-PnPFile -SourceUrl $srcFile -TargetUrl $dstFile `
+                         -Overwrite -Connection $SrcConn
+            $log += [PSCustomObject]@{
+                File   = $srcFile
+                Status = "OK"
+                Error  = ""
+            }
+        } catch {
+            $log += [PSCustomObject]@{
+                File   = $srcFile
+                Status = "FAILED"
+                Error  = $_.Exception.Message
+            }
+            Write-Warning "FAILED: $srcFile — $($_.Exception.Message)"
+        }
+    }
+
+    # Recurse into subfolders
+    $subFolders = Get-PnPFolderItem -FolderSiteRelativeUrl $FolderUrl `
+                      -ItemType Folder -Connection $SrcConn |
+                  Where-Object { $_.Name -notin "Forms","_t","_w" }
+
+    foreach ($sub in $subFolders) {
+        Copy-SPFolder -FolderUrl $sub.ServerRelativeUrl -SrcConn $SrcConn -DstSiteUrl $DstSiteUrl
+    }
+}
+
+Copy-SPFolder -FolderUrl "/sites/OldIntranet/Shared Documents" `
+              -SrcConn $src -DstSiteUrl $dstUrl
+
+$log | Export-Csv -Path $logPath -NoTypeInformation -Encoding UTF8
+$failed = ($log | Where-Object { $_.Status -eq "FAILED" }).Count
+Write-Host "`nCopied: $($log.Count - $failed) files  |  Failed: $failed  |  Log: $logPath"</pre></div>
+
+      <h2>Step 5 — Migrate Custom List Items and Metadata</h2>
+      <p>For custom lists (not document libraries) you need to read items from the source and create them at the destination. PnP PowerShell maps field values via a hashtable — you match source field internal names to destination field internal names.</p>
+
+      <div class="art-callout warning">
+        <p><strong>Lookup columns:</strong> Lookup field values cannot be copied as-is because they reference item IDs in the source list — IDs that won't match at the destination. You must resolve the lookup text value and re-link it to the destination list's ID. The script below handles single-value text lookups; multi-value and cascading lookups require additional resolution logic.</p>
+      </div>
+
+      <div class="code-label">PowerShell 7 &mdash; migrate list items with field mapping</div>
+      <div class="code-block"><pre>$srcListName = "Project Register"
+$dstListName = "Project Register"
+
+# Fetch all source items — specify only the fields you need
+$srcItems = Get-PnPListItem `
+    -List       $srcListName `
+    -Connection $src `
+    -PageSize   500 `
+    -Fields     "Title","ProjectStatus","Department","StartDate","DueDate","Budget"
+
+Write-Host "Migrating $($srcItems.Count) items from '$srcListName'…"
+$migrated = 0
+$errors   = 0
+
+foreach ($item in $srcItems) {
+    try {
+        $values = @{
+            Title         = $item["Title"]
+            ProjectStatus = $item["ProjectStatus"]
+            Department    = $item["Department"]
+            StartDate     = $item["StartDate"]
+            DueDate       = $item["DueDate"]
+            Budget        = $item["Budget"]
+        }
+
+        # Remove null values — Add-PnPListItem errors on null for some field types
+        $values = $values.GetEnumerator() |
+            Where-Object { $null -ne $_.Value } |
+            ForEach-Object -Begin { $h = @{} } -Process { $h[$_.Key] = $_.Value } -End { $h }
+
+        Add-PnPListItem -List $dstListName -Values $values -Connection $dst | Out-Null
+        $migrated++
+    } catch {
+        Write-Warning "Item '$($item["Title"])' failed: $($_.Exception.Message)"
+        $errors++
+    }
+}
+
+Write-Host "Done — Migrated: $migrated  |  Errors: $errors"</pre></div>
+
+      <h2>Step 6 — Migrate Modern Site Pages</h2>
+      <p>Modern pages present the biggest challenge. The page text, images, and layout migrate cleanly. Web part configurations — Highlighted Content, Quick Links, News web parts with specific filters — often need manual reconfiguration after the copy because their data references the source site URL.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; export and import modern pages</div>
+      <div class="code-block"><pre>$pagesExportDir = "C:\Migration\pages"
+New-Item -ItemType Directory -Path $pagesExportDir -Force | Out-Null
+
+# ── Get all modern pages from source ──────────────────────────────────────
+$pages = Get-PnPListItem -List "Site Pages" -Connection $src `
+             -Fields "FileLeafRef","Title","_ModernAudienceTargetUserField" |
+         Where-Object { $_["FileLeafRef"] -match "\.aspx$" }
+
+Write-Host "Found $($pages.Count) pages to migrate."
+
+foreach ($page in $pages) {
+    $pageName = $page["FileLeafRef"]
+    Write-Host "  Exporting: $pageName"
+
+    try {
+        # Export page as PnP template (XML captures layout + static text)
+        $pageTemplate = "$pagesExportDir\$($pageName -replace '\.aspx$','.xml')"
+        Get-PnPSiteTemplate `
+            -Connection   $src `
+            -Out          $pageTemplate `
+            -Handlers     PageContents `
+            -Pages        $pageName `
+            -Force
+
+        # Apply to destination
+        Invoke-PnPSiteTemplate `
+            -Connection $dst `
+            -Path       $pageTemplate
+
+        Write-Host "    ✓ $pageName migrated"
+    } catch {
+        Write-Warning "    ✗ $pageName failed: $($_.Exception.Message)"
+    }
+}
+
+Write-Host "`nPage migration complete. Review web part configurations manually."</pre></div>
+
+      <div class="art-callout">
+        <p><strong>After page migration:</strong> Open each migrated page in edit mode and check News, Highlighted Content, and Quick Links web parts. Any web part that references a specific SharePoint list or library will still point to the <em>source</em> site URL and must be re-pointed to the equivalent destination list.</p>
+      </div>
+
+      <h2>Step 7 — Migrate Permissions</h2>
+      <p>Permissions are migrated in two stages: recreate the SharePoint groups at the destination (with the same permission levels), then add the original members to each group. Item-level unique permissions require a separate pass.</p>
+
+      <h3>Migrate site groups and members</h3>
+      <div class="code-label">PowerShell 7 &mdash; copy SharePoint groups and membership</div>
+      <div class="code-block"><pre># ── Get source site groups ─────────────────────────────────────────────────
+$srcGroups = Get-PnPSiteGroup -Connection $src |
+    Where-Object { $_.Title -notin "Excel Services Viewers","Style Resource Readers" }
+
+foreach ($group in $srcGroups) {
+    Write-Host "Processing group: $($group.Title)"
+
+    # Check if group already exists at destination
+    $dstGroup = Get-PnPSiteGroup -Connection $dst |
+        Where-Object { $_.Title -eq $group.Title }
+
+    if (-not $dstGroup) {
+        # Create the group
+        $dstGroup = New-PnPGroup `
+            -Title       $group.Title `
+            -Description $group.Description `
+            -Connection  $dst
+        Write-Host "  Created group: $($group.Title)"
+    }
+
+    # Get source members
+    $members = Get-PnPGroupMember -Group $group.Title -Connection $src
+
+    foreach ($member in $members) {
+        if ($member.PrincipalType -eq "User") {
+            try {
+                Add-PnPGroupMember `
+                    -Group      $dstGroup.Title `
+                    -LoginName  $member.LoginName `
+                    -Connection $dst
+            } catch {
+                Write-Warning "  Could not add $($member.LoginName): $($_.Exception.Message)"
+            }
+        }
+    }
+
+    Write-Host "  Added $($members.Count) members to $($group.Title)"
+}
+
+Write-Host "Group migration complete."</pre></div>
+
+      <h3>Assign permission levels to groups</h3>
+      <div class="code-label">PowerShell 7 &mdash; set role assignments on destination site</div>
+      <div class="code-block"><pre># Get role assignments from source root web
+$srcWeb  = Get-PnPWeb -Connection $src -Includes RoleAssignments
+$srcRoles = $srcWeb.RoleAssignments
+Invoke-PnPQuery -Connection $src
+
+foreach ($ra in $srcRoles) {
+    $principal = $ra.Member
+    $bindings  = $ra.RoleDefinitionBindings
+    Invoke-PnPQuery -Connection $src
+
+    foreach ($binding in $bindings) {
+        if ($binding.Name -in "Limited Access","System Account") { continue }
+
+        try {
+            Set-PnPWebPermission `
+                -Group      $principal.LoginName `
+                -AddRole    $binding.Name `
+                -Connection $dst
+            Write-Host "  Set '$($binding.Name)' on '$($principal.LoginName)'"
+        } catch {
+            Write-Warning "  Could not set role '$($binding.Name)' for '$($principal.LoginName)'"
+        }
+    }
+}</pre></div>
+
+      <h2>Step 8 — Post-Migration Validation</h2>
+      <p>Never declare a migration complete without a validation pass. This script compares item counts between source and destination for every list and library, and flags any discrepancy.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; compare item counts source vs destination</div>
+      <div class="code-block"><pre>$validationPath = "C:\Migration\validation-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
+$results = @()
+
+$srcLists = Get-PnPList -Connection $src |
+    Where-Object { -not $_.Hidden -and $_.BaseType -in 'DocumentLibrary','GenericList' }
+
+foreach ($srcList in $srcLists) {
+    # Find matching list at destination by title
+    $dstList = Get-PnPList -Identity $srcList.Title -Connection $dst -ErrorAction SilentlyContinue
+
+    $srcCount = $srcList.ItemCount
+    $dstCount = if ($dstList) { $dstList.ItemCount } else { -1 }
+    $match    = $srcCount -eq $dstCount
+
+    $results += [PSCustomObject]@{
+        List        = $srcList.Title
+        SourceCount = $srcCount
+        DestCount   = $dstCount
+        Match       = if ($match) { "OK" } elseif ($dstCount -eq -1) { "MISSING" } else { "MISMATCH" }
+    }
+
+    $icon = if ($match) { "✓" } elseif ($dstCount -eq -1) { "✗ MISSING" } else { "⚠ MISMATCH" }
+    Write-Host "  $icon  $($srcList.Title) — Source: $srcCount  Dest: $dstCount"
+}
+
+$results | Export-Csv -Path $validationPath -NoTypeInformation -Encoding UTF8
+
+$ok       = ($results | Where-Object { $_.Match -eq "OK" }).Count
+$mismatch = ($results | Where-Object { $_.Match -ne "OK" }).Count
+Write-Host "`n─────────────────────────────────────────────"
+Write-Host "Matched: $ok / $($results.Count)"
+if ($mismatch -gt 0) {
+    Write-Warning "$mismatch list(s) need attention — see: $validationPath"
+} else {
+    Write-Host "✓ All lists match. Migration validated successfully."
+}</pre></div>
+
+      <h2>Complete End-to-End Migration Script</h2>
+      <p>The script below orchestrates all eight steps as a single runnable file. Adjust the configuration block at the top, run in PowerShell 7, and pipe the output to a log file for a complete audit trail.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; full site-to-site migration orchestrator</div>
+      <div class="code-block"><pre>#Requires -Version 7
+#Requires -Modules PnP.PowerShell
+
+<#
+.SYNOPSIS
+    OceanCloud — SharePoint Online Site-to-Site Migration
+.DESCRIPTION
+    Migrates document libraries, list items, modern pages, and permissions
+    from one SharePoint Online site to another within the same tenant.
+    Run as: pwsh -File Invoke-SPMigration.ps1 *>&1 | Tee-Object migration.log
+#>
+
+# ════════════════════════════════════════
+#   CONFIGURATION — edit this block only
+# ════════════════════════════════════════
+$Config = @{
+    SourceUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"
+    DestUrl      = "https://contoso.sharepoint.com/sites/NewIntranet"
+    ClientId     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    Tenant       = "contoso.onmicrosoft.com"
+    CertPath     = "C:\Certs\PnPSharePointApp.pfx"
+    CertPass     = "YourSecurePassword"
+    OutputDir    = "C:\Migration"
+
+    # Lists to SKIP (system lists always excluded automatically)
+    ExcludeLists = @("Form Templates","Preservation Hold Library")
+
+    # Migration switches
+    MigrateTemplate    = $true
+    MigrateLibraries   = $true
+    MigrateLists       = $true
+    MigratePages       = $true
+    MigratePermissions = $true
+}
+# ════════════════════════════════════════
+
+$null = New-Item -ItemType Directory -Path $Config.OutputDir -Force
+$certPassSec = ConvertTo-SecureString $Config.CertPass -AsPlainText -Force
+
+Write-Host "`n=== OceanCloud SP Migration — $(Get-Date -Format 'yyyy-MM-dd HH:mm') ===`n"
+
+# ── Connect ────────────────────────────────────────────────────────────────
+$connParams = @{
+    ClientId            = $Config.ClientId
+    CertificatePath     = $Config.CertPath
+    CertificatePassword = $certPassSec
+    Tenant              = $Config.Tenant
+}
+$src = Connect-PnPOnline @connParams -Url $Config.SourceUrl -ReturnConnection
+$dst = Connect-PnPOnline @connParams -Url $Config.DestUrl   -ReturnConnection
+Write-Host "Connected: $((Get-PnPWeb -Connection $src).Title)  →  $((Get-PnPWeb -Connection $dst).Title)`n"
+
+# ── Step 3: Site template ──────────────────────────────────────────────────
+if ($Config.MigrateTemplate) {
+    Write-Host "[1/5] Exporting and applying site template…"
+    $tpl = "$($Config.OutputDir)\site-template.xml"
+    Get-PnPSiteTemplate -Connection $src -Out $tpl -Handlers ContentTypes,Fields,Lists,Navigation -Force
+    Invoke-PnPSiteTemplate -Connection $dst -Path $tpl
+    Write-Host "      Template applied.`n"
+}
+
+# ── Step 4: Document libraries ─────────────────────────────────────────────
+if ($Config.MigrateLibraries) {
+    Write-Host "[2/5] Copying document libraries…"
+    $libs = Get-PnPList -Connection $src |
+        Where-Object { $_.BaseType -eq 'DocumentLibrary' -and -not $_.Hidden `
+                       -and $_.Title -notin $Config.ExcludeLists }
+    foreach ($lib in $libs) {
+        $srcPath = $lib.RootFolder.ServerRelativeUrl
+        $dstPath = $srcPath -replace [regex]::Escape(([uri]$Config.SourceUrl).AbsolutePath), ([uri]$Config.DestUrl).AbsolutePath
+        Write-Host "  Copying: $($lib.Title)"
+        try { Copy-PnPFile -SourceUrl $srcPath -TargetUrl $dstPath -Overwrite -Connection $src }
+        catch { Write-Warning "  Failed: $($_.Exception.Message)" }
+    }
+    Write-Host "      Libraries done.`n"
+}
+
+# ── Step 5: List items ─────────────────────────────────────────────────────
+if ($Config.MigrateLists) {
+    Write-Host "[3/5] Migrating list items…"
+    $lists = Get-PnPList -Connection $src |
+        Where-Object { $_.BaseType -eq 'GenericList' -and -not $_.Hidden `
+                       -and $_.Title -notin $Config.ExcludeLists }
+    foreach ($list in $lists) {
+        $items = Get-PnPListItem -List $list.Title -Connection $src -PageSize 500
+        Write-Host "  $($list.Title): $($items.Count) items"
+        foreach ($item in $items) {
+            try {
+                $vals = @{ Title = $item["Title"] }
+                Add-PnPListItem -List $list.Title -Values $vals -Connection $dst | Out-Null
+            } catch { Write-Warning "  Item failed: $($_.Exception.Message)" }
+        }
+    }
+    Write-Host "      Lists done.`n"
+}
+
+# ── Step 6: Pages ──────────────────────────────────────────────────────────
+if ($Config.MigratePages) {
+    Write-Host "[4/5] Migrating modern pages…"
+    $pages = Get-PnPListItem -List "Site Pages" -Connection $src -Fields "FileLeafRef" |
+             Where-Object { $_["FileLeafRef"] -match "\.aspx$" }
+    foreach ($page in $pages) {
+        $name = $page["FileLeafRef"]
+        $out  = "$($Config.OutputDir)\page-$name.xml"
+        try {
+            Get-PnPSiteTemplate -Connection $src -Out $out -Handlers PageContents -Pages $name -Force
+            Invoke-PnPSiteTemplate -Connection $dst -Path $out
+            Write-Host "  ✓ $name"
+        } catch { Write-Warning "  ✗ $name : $($_.Exception.Message)" }
+    }
+    Write-Host "      Pages done.`n"
+}
+
+# ── Step 7: Permissions ────────────────────────────────────────────────────
+if ($Config.MigratePermissions) {
+    Write-Host "[5/5] Migrating groups and permissions…"
+    $groups = Get-PnPSiteGroup -Connection $src
+    foreach ($grp in $groups) {
+        if (-not (Get-PnPSiteGroup -Connection $dst | Where-Object { $_.Title -eq $grp.Title })) {
+            New-PnPGroup -Title $grp.Title -Description $grp.Description -Connection $dst | Out-Null
+        }
+        $members = Get-PnPGroupMember -Group $grp.Title -Connection $src
+        foreach ($m in $members | Where-Object { $_.PrincipalType -eq "User" }) {
+            try { Add-PnPGroupMember -Group $grp.Title -LoginName $m.LoginName -Connection $dst }
+            catch { Write-Warning "  Could not add $($m.LoginName)" }
+        }
+        Write-Host "  ✓ $($grp.Title) ($($members.Count) members)"
+    }
+    Write-Host "      Permissions done.`n"
+}
+
+Write-Host "=== Migration complete — $(Get-Date -Format 'yyyy-MM-dd HH:mm') ===`n"
+Write-Host "Next: run validation script, then check page web parts manually."</pre></div>
+
+      <h2>Troubleshooting Common Errors</h2>
+
+      <ul class="ts-list">
+        <li>
+          <span class="ts-err">Access denied. You do not have permission to perform this action or access this resource.</span>
+          <span class="ts-fix"><strong>Cause:</strong> The Entra app lacks <code>Sites.FullControl.All</code> at the application level, or the app has not been granted admin consent. <strong>Fix:</strong> In the Entra portal → your app → API permissions → click <em>Grant admin consent for [tenant]</em>. Then verify in the SharePoint Admin Centre that the app is registered as a site collection administrator.</span>
+        </li>
+        <li>
+          <span class="ts-err">Copy-PnPFile : The file already exists.</span>
+          <span class="ts-fix"><strong>Cause:</strong> A file with the same name exists at the destination and <code>-Overwrite</code> was not specified. <strong>Fix:</strong> Add <code>-Overwrite</code> to <code>Copy-PnPFile</code>, or delete the conflicting file at the destination first. If you want to preserve the destination version, remove the file from your source copy list.</span>
+        </li>
+        <li>
+          <span class="ts-err">The list item could not be found or does not exist.</span>
+          <span class="ts-fix"><strong>Cause:</strong> A lookup field value references an item ID that does not exist at the destination. <strong>Fix:</strong> Set lookup fields to <code>$null</code> on initial migration, then resolve lookup IDs in a second pass after all referenced items are created.</span>
+        </li>
+        <li>
+          <span class="ts-err">Microsoft.SharePoint.Client.ServerException: List does not exist at site with URL.</span>
+          <span class="ts-fix"><strong>Cause:</strong> The list name at the destination differs from the source (internal name vs display name). <strong>Fix:</strong> Use <code>Get-PnPList -Connection $dst | Select Title, InternalName</code> to confirm the exact internal name and adjust your mapping.</span>
+        </li>
+        <li>
+          <span class="ts-err">Invoke-PnPSiteTemplate : The file or folder name contains characters that are not permitted.</span>
+          <span class="ts-fix"><strong>Cause:</strong> A page or file in the template contains characters invalid in SharePoint URLs (<code>? # % &amp;</code>). <strong>Fix:</strong> Check the source file names with <code>Get-PnPFolderItem | Where-Object { $_.Name -match '[?#%&amp;]' }</code> and rename the files before re-exporting the template.</span>
+        </li>
+        <li>
+          <span class="ts-err">Get-PnPListItem : The attempted operation is prohibited because it exceeds the list view threshold.</span>
+          <span class="ts-fix"><strong>Cause:</strong> The list has more than 5,000 items. <strong>Fix:</strong> Add <code>-PageSize 500</code> and use <code>-Query</code> with a CAML filter to process items in batches, or index the column you are filtering on before querying.</span>
+        </li>
+      </ul>
+
+      <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell authentication guide — pnp.github.io</a><br>
+      <a href="https://learn.microsoft.com/en-us/sharepointmigration/migrate-to-sharepoint-online" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint Migration overview — learn.microsoft.com</a><br>
+      <a href="https://learn.microsoft.com/en-us/powershell/module/sharepoint-pnp/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell cmdlet reference — learn.microsoft.com</a>
+
+      <div class="art-cta-box">
+        <h3>Need a hands-off SharePoint migration?</h3>
+        <p>OceanCloud plans and executes site-to-site migrations for organisations of all sizes — from single-site restructures to full intranet consolidations. We handle the scripting, testing, cutover planning, and post-migration validation so your team experiences zero surprises.</p>
+        <a href="../contact" class="btn btn-primary">Talk to a Migration Specialist</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-pnp-entra-app-registration" class="related-card glass">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</span>
+            <span class="rc-read">15 min read &rarr;</span>
+          </a>
+          <a href="guide-m365-migration-checklist" class="related-card glass">
+            <span class="rc-topic">Migration</span>
+            <span class="rc-title">The 10-Step Microsoft 365 Migration Checklist</span>
+            <span class="rc-read">7 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-permissions-best-practices" class="related-card glass">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions Best Practices for Secure Microsoft 365 Sites</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../about">About Us</a></li>
+        <li><a href="../case-studies">Case Studies</a></li>
+        <li><a href="../news">News</a></li>
+        <li><a href="../archive">News Archive</a></li>
+        <li><a href="../guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="../services">SharePoint Development</a></li>
+        <li><a href="../services">Teams Configuration</a></li>
+        <li><a href="../services">M365 Migration</a></li>
+        <li><a href="../services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../privacy">Privacy Policy</a></li>
+        <li><a href="../terms">Terms of Service</a></li>
+        <li><a href="../cookies">Cookie Policy</a></li>
+        <li><a href="../contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=1"></script>
+<script src="../js/article.js?v=1"></script>
+</body>
+</html>
