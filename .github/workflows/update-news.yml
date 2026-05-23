@@ -58,11 +58,12 @@ jobs:
         run: |
           git config user.name  "OceanCloud News Bot"
           git config user.email "bot@oceancloudconsults.com"
-          git add news.html archive.html data/archive.json
+          git add news.html archive.html data/archive.json sitemap.xml
+          git add articles/news-*.html 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit — all content is already up to date."
           else
-            git commit -m "chore: auto-update M365 news + archive $(date -u +%Y-%m-%d)"
+            git commit -m "chore: auto-update M365 news + article pages $(date -u +%Y-%m-%d)"
             git push
             echo "✓ News committed and pushed."
           fi
