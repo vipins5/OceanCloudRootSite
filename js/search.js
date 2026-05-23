@@ -137,13 +137,19 @@ var ARTICLES = [
 var TAG_CLASS = {
   blog:      'tag-blog',
   roadmap:   'tag-roadmap',
+  guide:     'tag-guide',
+  news:      'tag-news',
   casestudy: 'tag-case',
-  page:      'tag-page'
+  page:      'tag-page',
+  legal:     'tag-legal'
 };
 
 /* ── STATE ───────────────────────────────────────────────── */
 var currentTab    = 'articles';
 var currentQuery  = '';
+var siteIndex     = ARTICLES.slice();
+var fuseIndex     = null;
+var indexPromise  = null;
 var cseInjected   = false;
 var cseReady      = false;
 var pendingCseQ   = null;
@@ -170,9 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
     currentQuery  = initQ;
   }
 
-  /* render initial state */
+  /* render initial state, then refresh when the generated static index loads */
   renderArticles();
   updatePerplexityLink();
+  loadSiteIndex();
 
   /* search input events */
   inputEl.addEventListener('input', function () {
@@ -202,6 +209,47 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+/* ── STATIC SITE INDEX ────────────────────────────────────── */
+function loadSiteIndex() {
+  if (indexPromise) return indexPromise;
+  indexPromise = fetch('data/search-index.json', { cache: 'no-cache' })
+    .then(function (res) {
+      if (!res.ok) throw new Error('Search index unavailable');
+      return res.json();
+    })
+    .then(function (data) {
+      if (Array.isArray(data) && data.length) {
+        siteIndex = data.concat(ARTICLES.filter(function (item) { return item.external; }));
+        fuseIndex = null;
+        if (currentTab === 'articles') renderArticles();
+      }
+    })
+    .catch(function () {
+      siteIndex = ARTICLES.slice();
+    });
+  return indexPromise;
+}
+
+function getFuseIndex() {
+  if (!window.Fuse) return null;
+  if (fuseIndex) return fuseIndex;
+  fuseIndex = new Fuse(siteIndex, {
+    includeScore: true,
+    ignoreLocation: true,
+    threshold: 0.36,
+    minMatchCharLength: 2,
+    keys: [
+      { name: 'title', weight: 0.36 },
+      { name: 'heading', weight: 0.22 },
+      { name: 'excerpt', weight: 0.22 },
+      { name: 'body', weight: 0.15 },
+      { name: 'tag', weight: 0.03 },
+      { name: 'type', weight: 0.02 }
+    ]
+  });
+  return fuseIndex;
+}
 
 /* ── TAB SWITCHING ───────────────────────────────────────── */
 function switchTab(tab) {
@@ -233,15 +281,19 @@ function renderArticles() {
   var results;
 
   if (!words.length) {
-    /* no query — show news and case studies sorted by date */
-    results = ARTICLES.filter(function (a) {
-      return a.type !== 'page';
+    /* no query — show guides, news, and case studies sorted by date */
+    results = siteIndex.filter(function (a) {
+      return a.type !== 'page' && a.type !== 'legal';
     }).sort(function (a, b) {
       return (b.dateSort || '').localeCompare(a.dateSort || '');
     });
+  } else if (getFuseIndex()) {
+    results = getFuseIndex().search(currentQuery)
+      .slice(0, 30)
+      .map(function (r) { return r.item; });
   } else {
-    results = ARTICLES.map(function (a) {
-      var haystack = (a.title + ' ' + a.excerpt + ' ' + a.topic + ' ' + a.tag).toLowerCase();
+    results = siteIndex.map(function (a) {
+      var haystack = (a.title + ' ' + (a.heading || '') + ' ' + a.excerpt + ' ' + (a.body || '') + ' ' + (a.topic || '') + ' ' + a.tag).toLowerCase();
       var score = 0;
       var allMatch = words.every(function (w) {
         if (haystack.indexOf(w) !== -1) {
@@ -280,8 +332,10 @@ function renderArticles() {
   results.forEach(function (a) {
     var tagCls  = TAG_CLASS[a.type] || 'tag-page';
     var isExt   = a.external;
-    var excerpt = words.length ? highlight(a.excerpt, words) : escHtml(a.excerpt);
-    var titleH  = words.length ? highlight(a.title, words) : escHtml(a.title);
+    var titleText = a.title || a.heading || 'Untitled';
+    var excerptText = a.excerpt || a.body || '';
+    var excerpt = words.length ? highlight(excerptText, words) : escHtml(excerptText);
+    var titleH  = words.length ? highlight(titleText, words) : escHtml(titleText);
     html +=
       '<div class="sr-card">' +
         '<div class="sr-meta">' +
