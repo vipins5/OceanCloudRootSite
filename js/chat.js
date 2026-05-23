@@ -1,52 +1,9 @@
 (function () {
   'use strict';
 
-  // ── Groq AI Config ────────────────────────────────────────────────────────
-  // 1. Go to https://console.groq.com → API Keys → Create API key (free)
-  // 2. Free tier: 14,400 requests/day, 30 requests/min — no credit card needed
-  const GROQ_API_KEY  = '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';
-  const GROQ_MODEL    = 'llama-3.3-70b-versatile';
-  const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
-
-  const SYSTEM_PROMPT = `You are OceanBot, the AI assistant for OceanCloud — a Microsoft Solutions Partner based in the United States specialising in SharePoint Online, Microsoft 365, Power Platform, Microsoft Teams, Viva, and workplace transformation.
-
-ABOUT OCEANCLOUD:
-- Microsoft Solutions Partner with Modern Work and Security designations
-- Founded 2013 | 15 certified consultants | 150+ projects delivered | 98% client satisfaction
-- 40+ active Microsoft certifications: MS-102, MS-203, SC-300, SC-400, PL-400, PL-600, AZ-104
-- Fixed-price engagements, no time-and-materials billing surprises
-- Every project includes 12 months post-go-live hypercare support
-- Free 60-minute discovery call available — no obligation
-
-SERVICES & PRICING (fixed-price):
-- SharePoint intranet build: from $7,500 (small, <200 users) | $20,000 (mid, 200-500) | $55,000+ (enterprise 500+)
-- M365 migration: from $18-$30/user (minimum project fee $3,500)
-- Power Apps: from $4,500 | Power Automate workflows: from $2,500 | Power BI dashboards: from $3,000
-- Security & Compliance (Zero Trust/Entra ID/Purview/Defender): from $4,000
-- Advisory retainer: from $2,200/month
-- Teams & Viva implementation: scoped per project
-
-TYPICAL TIMELINES:
-- SharePoint intranet: 8-12 weeks
-- M365 migration (100-500 users): 4-8 weeks | Enterprise (500+): 10-16 weeks
-- Power Platform app: 3-6 weeks
-- Security uplift: 4-8 weeks
-
-CONTACT:
-- Phone: +1 (469) 809-4053
-- WhatsApp: +1 (917) 675-3126
-- Email: oceancloudconsults@gmail.com
-- Hours: Monday-Friday, 9am-6pm EST
-- Book a call: contact
-
-RESPONSE RULES:
-- Answer questions about SharePoint, Microsoft 365, Power Platform, Teams, security, and OceanCloud's services
-- For general Microsoft 365 / SharePoint technical questions, give accurate, genuinely helpful answers
-- Keep responses concise — 3-5 sentences or a short bullet list (max 5 bullets)
-- Use plain text only — no markdown asterisks or hashes; use simple line breaks
-- Always naturally mention the free discovery call when someone asks about scoping, timelines, or costs
-- If asked something completely unrelated to Microsoft/SharePoint/OceanCloud, politely say you specialise in M365 topics and offer to connect them with the team
-- Never make up pricing, certifications, or case study details not listed above`;
+  // ── Secure AI proxy config ────────────────────────────────────────────────
+  // The AI provider key is stored in Cloudflare Worker Secrets, not in browser JS.
+  const AI_PROXY_ENDPOINT = 'https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/chat';
 
   // ── Rule-based Responses ───────────────────────────────────────────────────
   const TYPING_MS = 900;
@@ -220,7 +177,7 @@ RESPONSE RULES:
   let started = false;
   let isWaiting = false;
 
-  // Conversation history sent to Gemini (max 8 turns kept)
+  // Conversation history sent to the AI proxy (max 8 turns kept)
   const history = [];
 
   // ── Open / close ──────────────────────────────────────────────────────────
@@ -317,7 +274,7 @@ RESPONSE RULES:
     if (history.length > 8) history.splice(0, history.length - 8);
   }
 
-  // ── Groq AI Call ──────────────────────────────────────────────────────────
+  // ── AI proxy call ─────────────────────────────────────────────────────────
   async function respondWithGroq(userText) {
     isWaiting = true;
     inputEl.disabled = true;
@@ -325,28 +282,19 @@ RESPONSE RULES:
     statusText.textContent = 'Thinking…';
     showTyping('Researching with AI');
 
-    const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
-      ...history.slice(-6).map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
-      { role: 'user', content: userText }
-    ];
-
-    const body = {
-      model: GROQ_MODEL,
-      messages,
-      max_tokens: 420,
-      temperature: 0.6,
-      top_p: 0.9
-    };
-
     try {
-      const res = await fetch(GROQ_ENDPOINT, {
+      const res = await fetch(AI_PROXY_ENDPOINT, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${GROQ_API_KEY}`
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+          message: userText,
+          history: history.slice(-6).map(m => ({
+            role: m.role === 'assistant' ? 'assistant' : 'user',
+            content: m.content
+          }))
+        })
       });
 
       hideTyping();
@@ -357,7 +305,7 @@ RESPONSE RULES:
       }
 
       const data = await res.json();
-      const raw = data.choices?.[0]?.message?.content?.trim() || '';
+      const raw = data.reply?.trim() || '';
 
       if (!raw) throw new Error('Empty response');
 
@@ -425,7 +373,7 @@ RESPONSE RULES:
       // Rule-based: instant, no API call
       scheduleBot(match.text, match.chips);
     } else {
-      // Fallback: hand off to Gemini AI
+      // Fallback: hand off to AI proxy
       respondWithGroq(text);
     }
   }

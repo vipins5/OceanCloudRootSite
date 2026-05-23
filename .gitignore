@@ -11,5 +11,12 @@ desktop.ini
 *.log
 *.tmp
 
+# Dependencies and local secrets
+node_modules/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+
 # Action items (internal only)
 ACTION-ITEMS.md

@@ -77,18 +77,23 @@ Subtle animated particle canvas on hero sections.
 
 ## Integrations
 
-### Groq — Chatbot AI
+### Groq — Chatbot AI via Cloudflare Worker
 | Detail | Value |
 |---|---|
 | Provider | [Groq](https://console.groq.com) |
 | Model | `llama-3.3-70b-versatile` |
-| Endpoint | `https://api.groq.com/openai/v1/chat/completions` |
-| Auth | `Authorization: Bearer YOUR_KEY` |
+| Public endpoint | `https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/chat` |
+| Worker folder | `oceancloud-ai-proxy/` |
+| Secret binding | `GROQ_API_KEY` |
 | Free tier | 14,400 requests/day · 30 req/min · No credit card needed |
 
-To update the key, edit line 7 of `js/chat.js`:
-```js
-const GROQ_API_KEY = 'gsk_...';
+The Groq key must stay in Cloudflare Worker Secrets and must not be added to frontend files.
+
+To update the key:
+```powershell
+cd oceancloud-ai-proxy
+npx wrangler secret put GROQ_API_KEY
+npm run deploy
 ```
 
 ---
