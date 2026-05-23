@@ -297,7 +297,6 @@ def build_page(
     esc_sub    = escape(hero_sub)
     bc_label   = escape(title[:50] + ("…" if len(title) > 50 else ""))
     css_tag    = CSS_TAG_MAP.get(topic, "tag-sharepoint")
-    tag_html   = escape(tag).replace("&amp;", "&amp;amp;")
 
     return f"""<!DOCTYPE html>
 <html lang="en">

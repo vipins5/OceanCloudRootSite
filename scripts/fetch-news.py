@@ -428,6 +428,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/article.css?v=1" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="{SITE_BASE_URL}/feed.xml" />
   <script type="application/ld+json">
   {{
     "@context": "https://schema.org",
@@ -592,7 +593,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
 <script src="../js/particles.js?v=6"></script>
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
-<script src="../js/article.js?v=2"></script>
+<script src="../js/article.js?v=3"></script>
 </body>
 </html>"""
 
