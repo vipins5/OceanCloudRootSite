@@ -8,5 +8,7 @@
   { "title": "Power BI and SharePoint: Embedding Reports and Building Dashboards", "topic": "integration" },
   { "title": "SharePoint Site Templates: Creating and Deploying Reusable Designs", "topic": "sharepoint" },
   { "title": "Microsoft Entra ID Privileged Identity Management for M365 Admins", "topic": "admin" },
-  { "title": "Power Automate Approval Flows: Error Handling and Retry Strategies", "topic": "power-platform" }
+  { "title": "Power Automate Approval Flows: Error Handling and Retry Strategies", "topic": "power-platform" },
+  { "title": "PUID Mismatch for SharePoint or OneDrive: PowerShell fix", "topic": "sharepoint" }
 ]
+
