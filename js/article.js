@@ -168,8 +168,6 @@
       if (mls[idx]) mls[idx].classList.add('active');
     }
 
-    /* Track which heading was last intersecting */
-    var lastActive = 0;
     setActive(0);
 
     var observer = new IntersectionObserver(function (entries) {
@@ -204,7 +202,7 @@
 
     grid.innerHTML = picks.map(function (g) {
       return '<a class="related-card glass" href="' + g.url + '">' +
-        '<span class="rc-topic">' + g.tag + '</span>' +
+        '<span class="rc-topic">' + escHtml(g.tag) + '</span>' +
         '<span class="rc-title">' + escHtml(g.title) + '</span>' +
         '<span class="rc-read">' + g.read + ' →</span>' +
         '</a>';

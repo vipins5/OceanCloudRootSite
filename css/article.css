@@ -104,6 +104,12 @@
   display: none;
 }
 
+/* #toc-mobile visibility is driven by the HTML hidden attribute;
+   this rule restores it when JS removes hidden on mobile screens */
+@media (max-width: 1279px) {
+  #toc-mobile:not([hidden]) { display: block; }
+}
+
 @media (max-width: 1279px) {
   #toc-toggle {
     display: flex;
