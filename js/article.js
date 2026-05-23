@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  /* ── All 19 guide articles ─────────────────────────────── */
+  /* ── All 20 guide articles ─────────────────────────────── */
   var GUIDES = [
     { topic:'sharepoint',     tag:'SharePoint',          url:'guide-sharepoint-permissions',                  title:'The Complete Guide to SharePoint Permissions in Microsoft 365',                           read:'8 min read'  },
     { topic:'migration',      tag:'Migration',            url:'guide-m365-migration-checklist',                title:'The 10-Step Microsoft 365 Migration Checklist',                                           read:'7 min read'  },
@@ -71,6 +71,8 @@
     var wrap = document.querySelector('.article-wrap');
     if (!wrap) return;
     var headings = Array.from(wrap.querySelectorAll('h2'));
+    /* Fall back to h2+h3 for articles whose sections are marked with h3 */
+    if (headings.length < 3) headings = Array.from(wrap.querySelectorAll('h2, h3'));
     if (headings.length < 3) return;
 
     /* Assign IDs to headings that lack them */
