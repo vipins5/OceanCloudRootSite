@@ -1,0 +1,116 @@
+.oc-comments {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.oc-comments-head h2 {
+  margin-top: 0;
+}
+
+.oc-comments-label {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 8px;
+}
+
+.oc-comments-list {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.oc-comment {
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,.025);
+}
+
+.oc-comment-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: .82rem;
+}
+
+.oc-comment-meta strong {
+  color: var(--white);
+}
+
+.oc-comment-meta span,
+.oc-comments-empty,
+.oc-comments-note,
+.oc-comments-status,
+.oc-comments-user {
+  color: var(--text-dim);
+  font-size: .86rem;
+}
+
+.oc-comment p {
+  margin: 0;
+}
+
+.oc-comments-form {
+  margin-top: 20px;
+}
+
+.oc-comments-form form {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(0,180,216,.18);
+  border-radius: 14px;
+  padding: 20px;
+  background: rgba(0,180,216,.045);
+}
+
+.oc-comments-form label {
+  color: var(--white);
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.oc-comments-form textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 120px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--white);
+  background: rgba(0,0,0,.24);
+  font: inherit;
+  line-height: 1.6;
+}
+
+.oc-comments-form textarea:focus {
+  outline: none;
+  border-color: rgba(0,180,216,.55);
+}
+
+.oc-comments-form button,
+.oc-comments-signin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border: 1px solid rgba(0,180,216,.35);
+  border-radius: 999px;
+  padding: 10px 18px;
+  color: #00111c;
+  background: #00b4d8;
+  font-weight: 800;
+  font-size: .88rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.oc-comments-signout {
+  color: rgba(255,255,255,.7) !important;
+  background: transparent !important;
+  border-color: rgba(255,255,255,.14) !important;
+}

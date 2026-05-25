@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Comment Moderation | OceanCloud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=12" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <style>
+    body{padding:40px 20px}.admin-wrap{max-width:900px;margin:0 auto}.admin-head{margin-bottom:24px}.admin-panel{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;background:rgba(255,255,255,.03)}.admin-token{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.admin-token input{flex:1;min-width:260px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px;color:white}.admin-token button,.comment-actions button{border:1px solid rgba(0,180,216,.35);border-radius:999px;padding:9px 16px;background:#00b4d8;color:#00111c;font-weight:800;cursor:pointer}.comment-list{display:grid;gap:14px}.comment-item{border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;background:rgba(255,255,255,.025)}.comment-meta{display:flex;justify-content:space-between;gap:12px;color:var(--text-dim);font-size:.82rem;margin-bottom:8px}.comment-body{color:var(--text-mid);line-height:1.7;white-space:pre-wrap}.comment-actions{display:flex;gap:8px;margin-top:12px}.comment-actions button.reject{background:transparent;color:#fca5a5;border-color:rgba(252,165,165,.35)}.status{color:var(--text-dim);font-size:.9rem;margin:10px 0}
+  </style>
+</head>
+<body>
+  <main class="admin-wrap">
+    <div class="admin-head">
+      <h1>Comment Moderation</h1>
+      <p>Paste the admin token from Cloudflare Worker secrets. Approved comments appear publicly.</p>
+    </div>
+    <section class="admin-panel">
+      <div class="admin-token">
+        <input id="adminToken" type="password" placeholder="Admin token" autocomplete="off" />
+        <button id="saveToken">Load pending</button>
+      </div>
+      <p class="status" id="status"></p>
+      <div class="comment-list" id="commentList"></div>
+    </section>
+  </main>
+  <script src="js/comments-admin.js?v=1"></script>
+</body>
+</html>
