@@ -45,7 +45,7 @@
     if (document.querySelector('link[data-oc-comments]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '../css/comments.css?v=1';
+    link.href = '../css/comments.css?v=2';
     link.setAttribute('data-oc-comments', 'true');
     document.head.appendChild(link);
   }
@@ -84,12 +84,37 @@
     return { microsoft: 'Microsoft', google: 'Google', github: 'GitHub' }[provider] || provider;
   }
 
-  function signInButtons() {
+  function providerIcon(provider) {
+    if (provider === 'microsoft') {
+      return '<span class="oc-provider-icon oc-ms-icon" aria-hidden="true"><span></span><span></span><span></span><span></span></span>';
+    }
+    if (provider === 'google') {
+      return '<span class="oc-provider-icon oc-google-icon" aria-hidden="true">G</span>';
+    }
+    if (provider === 'github') {
+      return '<span class="oc-provider-icon oc-github-icon" aria-hidden="true">GH</span>';
+    }
+    return '';
+  }
+
+  function enabledProviders() {
     var providers = config && config.providers ? config.providers : {};
     return ['microsoft', 'google', 'github'].filter(function (provider) {
       return providers[provider];
-    }).map(function (provider) {
-      return '<a class="oc-comments-signin oc-comments-signin-' + provider + '" href="' + signInUrl(provider) + '">Sign in with ' + providerLabel(provider) + '</a>';
+    });
+  }
+
+  function providerText() {
+    var labels = enabledProviders().map(providerLabel);
+    if (!labels.length) return 'Sign in with a verified account to comment.';
+    if (labels.length === 1) return 'Sign in with your verified ' + labels[0] + ' account to comment.';
+    if (labels.length === 2) return 'Sign in with a verified ' + labels[0] + ' or ' + labels[1] + ' account to comment.';
+    return 'Sign in with a verified ' + labels.slice(0, -1).join(', ') + ', or ' + labels[labels.length - 1] + ' account to comment.';
+  }
+
+  function signInButtons() {
+    return enabledProviders().map(function (provider) {
+      return '<a class="oc-comments-signin oc-comments-signin-' + provider + '" href="' + signInUrl(provider) + '">' + providerIcon(provider) + '<span>Sign in with ' + providerLabel(provider) + '</span></a>';
     }).join('');
   }
 
@@ -99,7 +124,7 @@
       '  <div class="oc-comments-head">',
       '    <p class="oc-comments-label">Discussion</p>',
       '    <h2 id="oc-comments-title">Comments</h2>',
-      '    <p>Sign in with a verified Microsoft, Google, or GitHub account to comment. Comments appear only after approval.</p>',
+      '    <p id="oc-comments-provider-copy">Sign in with a verified account to comment. Comments appear only after approval.</p>',
       '  </div>',
       '  <div id="oc-comments-list" class="oc-comments-list"></div>',
       '  <div id="oc-comments-form" class="oc-comments-form"></div>',
@@ -129,6 +154,8 @@
       target.innerHTML = '<p class="oc-comments-note">Comments are being configured.</p>';
       return;
     }
+    var providerCopy = document.getElementById('oc-comments-provider-copy');
+    if (providerCopy) providerCopy.textContent = providerText() + ' Comments appear only after approval.';
     if (!session.authenticated) {
       target.innerHTML = '<div class="oc-comments-signins">' + signInButtons() + '</div>';
       return;

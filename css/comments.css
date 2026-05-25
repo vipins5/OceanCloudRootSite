@@ -95,7 +95,7 @@
 .oc-comments-signins {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .oc-comments-form button,
@@ -103,24 +103,74 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   width: fit-content;
   border: 1px solid rgba(0,180,216,.35);
-  border-radius: 999px;
-  padding: 10px 18px;
-  color: #00111c;
-  background: #00b4d8;
+  border-radius: 10px;
+  padding: 10px 16px;
+  min-height: 44px;
+  color: var(--white);
+  background: rgba(255,255,255,.045);
   font-weight: 800;
   font-size: .88rem;
   text-decoration: none;
   cursor: pointer;
+  transition: background .18s, border-color .18s, transform .18s;
+}
+
+.oc-comments-signin:hover,
+.oc-comments-form button:hover {
+  background: rgba(255,255,255,.075);
+  border-color: rgba(0,180,216,.55);
+  transform: translateY(-1px);
+}
+
+.oc-provider-icon {
+  flex: 0 0 auto;
+}
+
+.oc-ms-icon {
+  display: grid;
+  grid-template-columns: repeat(2, 8px);
+  grid-template-rows: repeat(2, 8px);
+  gap: 2px;
+  width: 18px;
+  height: 18px;
+}
+
+.oc-ms-icon span:nth-child(1) { background: #f25022; }
+.oc-ms-icon span:nth-child(2) { background: #7fba00; }
+.oc-ms-icon span:nth-child(3) { background: #00a4ef; }
+.oc-ms-icon span:nth-child(4) { background: #ffb900; }
+
+.oc-google-icon,
+.oc-github-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: .7rem;
+  font-weight: 900;
+}
+
+.oc-google-icon {
+  color: #4285f4;
+  background: #fff;
+}
+
+.oc-github-icon {
+  color: #fff;
+  background: #24292f;
 }
 
 .oc-comments-signin-google {
-  background: #ffffff;
+  border-color: rgba(255,255,255,.18);
 }
 
 .oc-comments-signin-github {
-  background: #e5e7eb;
+  border-color: rgba(255,255,255,.18);
 }
 
 .oc-comments-signout {
