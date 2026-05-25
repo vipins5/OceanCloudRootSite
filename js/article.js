@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  /* ── All 21 guide articles ─────────────────────────────── */
+  /* ── All 20 guide articles ─────────────────────────────── */
   var GUIDES = [
     { topic:'sharepoint',     tag:'SharePoint',          url:'guide-sharepoint-permissions',                  title:'The Complete Guide to SharePoint Permissions in Microsoft 365',                           read:'8 min read'  },
     { topic:'migration',      tag:'Migration',            url:'guide-m365-migration-checklist',                title:'The 10-Step Microsoft 365 Migration Checklist',                                           read:'7 min read'  },
@@ -26,8 +26,7 @@
     { topic:'integration',    tag:'Integration',          url:'guide-sharepoint-integrations',                 title:'Best SharePoint Integrations: Teams, Power BI, Salesforce & Dynamics 365',               read:'11 min read' },
     { topic:'sharepoint',     tag:'SharePoint',           url:'guide-sharepoint-permissions-best-practices',   title:'SharePoint Permissions Best Practices for Secure Microsoft 365 Sites',                    read:'11 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-pnp-entra-app-registration',              title:'PnP PowerShell: Complete Entra App Registration & Certificate Guide',                     read:'15 min read' },
-    { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-pnp-site-migration',           title:'Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide',                  read:'18 min read' }
-    { topic:'sharepoint', tag:'SharePoint', url:'guide-sharepoint-external-sharing-complete-admin-guide', title:'SharePoint External Sharing: Complete Admin Guide', read:'6 min read' },
+    { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-pnp-site-migration',           title:'Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide',                  read:'18 min read' },
     // END:GUIDES-ARRAY
   ];
 

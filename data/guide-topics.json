@@ -1,14 +1,42 @@
 [
-  { "title": "SharePoint External Sharing: Complete Admin Guide", "topic": "sharepoint" },
-  { "title": "Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance", "topic": "sharepoint" },
-  { "title": "OneDrive vs SharePoint: Governance Best Practices for Microsoft 365", "topic": "sharepoint" },
-  { "title": "Microsoft Teams Governance: Preventing Sprawl and Managing Lifecycle", "topic": "teams" },
-  { "title": "SharePoint Hub Sites: Architecture, Setup, and Navigation Design", "topic": "sharepoint" },
-  { "title": "Microsoft 365 Conditional Access: Zero Trust Policies for SharePoint", "topic": "admin" },
-  { "title": "Power BI and SharePoint: Embedding Reports and Building Dashboards", "topic": "integration" },
-  { "title": "SharePoint Site Templates: Creating and Deploying Reusable Designs", "topic": "sharepoint" },
-  { "title": "Microsoft Entra ID Privileged Identity Management for M365 Admins", "topic": "admin" },
-  { "title": "Power Automate Approval Flows: Error Handling and Retry Strategies", "topic": "power-platform" },
-  { "title": "PUID Mismatch for SharePoint or OneDrive: PowerShell fix", "topic": "sharepoint" }
+  {
+    "title": "Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance",
+    "topic": "sharepoint"
+  },
+  {
+    "title": "OneDrive vs SharePoint: Governance Best Practices for Microsoft 365",
+    "topic": "sharepoint"
+  },
+  {
+    "title": "Microsoft Teams Governance: Preventing Sprawl and Managing Lifecycle",
+    "topic": "teams"
+  },
+  {
+    "title": "SharePoint Hub Sites: Architecture, Setup, and Navigation Design",
+    "topic": "sharepoint"
+  },
+  {
+    "title": "Microsoft 365 Conditional Access: Zero Trust Policies for SharePoint",
+    "topic": "admin"
+  },
+  {
+    "title": "Power BI and SharePoint: Embedding Reports and Building Dashboards",
+    "topic": "integration"
+  },
+  {
+    "title": "SharePoint Site Templates: Creating and Deploying Reusable Designs",
+    "topic": "sharepoint"
+  },
+  {
+    "title": "Microsoft Entra ID Privileged Identity Management for M365 Admins",
+    "topic": "admin"
+  },
+  {
+    "title": "Power Automate Approval Flows: Error Handling and Retry Strategies",
+    "topic": "power-platform"
+  },
+  {
+    "title": "PUID Mismatch for SharePoint or OneDrive: PowerShell fix",
+    "topic": "sharepoint"
+  }
 ]
-

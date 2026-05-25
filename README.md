@@ -182,6 +182,16 @@ Domain      →  oceancloudconsults.com
 
 Every `git push` to `main` deploys automatically.
 
+### Local Publish Maintenance
+
+Content changes are maintained locally. Before committing a manual publish, run:
+
+```powershell
+python scripts/publish-local.py
+```
+
+This updates only `sitemap.xml` and `feed.xml`. It does not generate content, call AI APIs, create branches, open PRs, or fetch news. Review the diff, then commit and push to `main`.
+
 ---
 
 ## Cache Busting
