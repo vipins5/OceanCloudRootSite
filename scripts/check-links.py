@@ -30,7 +30,12 @@ SRC_RE  = re.compile(r'src=["\']([^"\']+)',  re.IGNORECASE)
 
 SKIP_SCHEMES = {"http", "https", "mailto", "tel", "javascript", "data"}
 
-HTML_FILES = sorted(ROOT.glob("**/*.html"))
+IGNORED_PARTS = {".git", "node_modules", ".wrangler", "dist", "build"}
+
+HTML_FILES = sorted(
+    path for path in ROOT.glob("**/*.html")
+    if not any(part in IGNORED_PARTS for part in path.relative_to(ROOT).parts)
+)
 
 
 def resolve(base: Path, target: str) -> Path:

@@ -894,7 +894,7 @@ def main() -> None:
         slug      = article_slug(item)
         art_path  = ARTICLES_DIR / f"{slug}.html"
         item["_slug"]        = slug
-        item["_article_url"] = f"{slug}"  # relative from articles/ — no leading ../
+        item["_article_url"] = f"/articles/{slug}"
 
         if not art_path.exists():
             print(f"    → generating article page: {slug}.html")
