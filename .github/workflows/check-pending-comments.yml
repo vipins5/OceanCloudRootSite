@@ -31,7 +31,19 @@ jobs:
           COMMENTS_API_BASE: https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev
         run: python scripts/check-pending-comments.py
 
+      - name: Check whether report exists
+        id: pending-report
+        run: |
+          if [ -f data/comment-moderation/pending-comments.md ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Pending comments report exists."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "No pending comments report exists. Skipping PR creation."
+          fi
+
       - name: Create or update moderation PR
+        if: steps.pending-report.outputs.exists == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -57,5 +69,5 @@ jobs:
           if [ -f data/comment-moderation/pending-comments.md ]; then
             echo "Pending report generated." >> $GITHUB_STEP_SUMMARY
           else
-            echo "No pending report generated." >> $GITHUB_STEP_SUMMARY
+            echo "No pending report generated; PR creation skipped." >> $GITHUB_STEP_SUMMARY
           fi
