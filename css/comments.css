@@ -72,8 +72,42 @@
   font-size: .86rem;
 }
 
-.oc-comment p {
+.oc-comment-body {
   margin: 0;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+.oc-comment-body strong {
+  color: var(--white);
+}
+
+.oc-comment-body code {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 5px;
+  color: #bfdbfe;
+  background: rgba(255,255,255,.08);
+  font-size: .86em;
+}
+
+.oc-comment-body a {
+  color: #8bdff2;
+}
+
+.oc-comment-image-link {
+  display: block;
+  margin-top: 10px;
+}
+
+.oc-comment-image {
+  display: block;
+  max-width: min(100%, 520px);
+  max-height: 320px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  object-fit: contain;
+  background: rgba(0,0,0,.18);
 }
 
 .oc-comment-actions {
@@ -133,6 +167,33 @@
   color: var(--white);
   font-weight: 700;
   font-size: .9rem;
+}
+
+.oc-comment-toolbar,
+.oc-emoji-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.oc-comment-toolbar button,
+.oc-emoji-panel button {
+  min-height: 34px !important;
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
+  font-size: .78rem !important;
+}
+
+.oc-emoji-panel[hidden] {
+  display: none;
+}
+
+.oc-format-note {
+  margin: -4px 0 0;
+  color: var(--text-dim);
+  font-size: .78rem;
+  line-height: 1.5;
 }
 
 .oc-comments-form textarea {

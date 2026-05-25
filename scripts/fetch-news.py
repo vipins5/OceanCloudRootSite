@@ -566,7 +566,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
 <script src="../js/article.js?v=5"></script>
-<script src="../js/comments.js?v=4"></script>
+<script src="../js/comments.js?v=6"></script>
 </body>
 </html>"""
 

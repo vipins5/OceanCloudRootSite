@@ -21,6 +21,36 @@
     });
   }
 
+  function safeUrl(value) {
+    try {
+      var raw = String(value || '').replace(/&amp;/g, '&').trim();
+      var url = new URL(raw);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') return '';
+      return url.toString();
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function renderRichText(value) {
+    var html = escapeHtml(value).replace(/\r\n/g, '\n');
+
+    html = html.replace(/!\[([^\]]{0,100})\]\((https?:\/\/[^\s)]+)\)/g, function (match, alt, url) {
+      var cleanUrl = safeUrl(url);
+      if (!cleanUrl) return match;
+      return '<a class="oc-comment-image-link" href="' + escapeHtml(cleanUrl) + '" target="_blank" rel="noopener noreferrer"><img class="oc-comment-image" src="' + escapeHtml(cleanUrl) + '" alt="' + escapeHtml(alt || 'Comment image') + '" loading="lazy" /></a>';
+    });
+    html = html.replace(/\[([^\]]{1,140})\]\((https?:\/\/[^\s)]+)\)/g, function (match, label, url) {
+      var cleanUrl = safeUrl(url);
+      if (!cleanUrl) return match;
+      return '<a href="' + escapeHtml(cleanUrl) + '" target="_blank" rel="noopener noreferrer">' + label + '</a>';
+    });
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    return html.replace(/\n/g, '<br>');
+  }
+
   function tokenFromHash() {
     var match = window.location.hash.match(/oc_comment_token=([^&]+)/);
     if (!match) return;
@@ -47,7 +77,7 @@
     if (document.querySelector('link[data-oc-comments]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '../css/comments.css?v=5';
+    link.href = '../css/comments.css?v=6';
     link.setAttribute('data-oc-comments', 'true');
     document.head.appendChild(link);
   }
@@ -170,7 +200,7 @@
   function renderComment(item, isReply, replyCount) {
     return '<article class="oc-comment' + (isReply ? ' oc-comment-reply' : '') + '" data-comment-id="' + item.id + '">' +
       '<div class="oc-comment-meta"><strong>' + escapeHtml(item.display_name) + '</strong><span>' + escapeHtml(new Date(item.created_at).toLocaleDateString()) + '</span></div>' +
-      '<p>' + escapeHtml(item.body).replace(/\n/g, '<br>') + '</p>' +
+      '<div class="oc-comment-body">' + renderRichText(item.body) + '</div>' +
       (!isReply ? '<div class="oc-comment-actions"><button type="button" class="oc-comment-reply-btn" data-reply-id="' + item.id + '" data-reply-name="' + escapeHtml(item.display_name) + '">Reply</button>' +
         (replyCount ? '<span>' + replyCount + ' repl' + (replyCount === 1 ? 'y' : 'ies') + '</span>' : '') + '</div>' : '') +
       '</article>';
@@ -194,7 +224,19 @@
       '  <div class="oc-comments-user">Signed in as <strong>' + escapeHtml(session.user && session.user.name) + '</strong></div>',
       '  <div id="oc-reply-context" class="oc-reply-context" hidden></div>',
       '  <label for="oc-comment-body">Comment</label>',
+      '  <div class="oc-comment-toolbar" aria-label="Comment formatting tools">',
+      '    <button type="button" data-format="bold">B</button>',
+      '    <button type="button" data-format="italic"><em>I</em></button>',
+      '    <button type="button" data-format="code">Code</button>',
+      '    <button type="button" data-format="link">Link</button>',
+      '    <button type="button" data-format="image">Image</button>',
+      '    <button type="button" data-format="emoji">Emoji</button>',
+      '  </div>',
+      '  <div id="oc-emoji-panel" class="oc-emoji-panel" hidden>',
+      '    <button type="button" data-emoji="👍">👍</button><button type="button" data-emoji="👏">👏</button><button type="button" data-emoji="✅">✅</button><button type="button" data-emoji="💡">💡</button><button type="button" data-emoji="🚀">🚀</button><button type="button" data-emoji="😊">😊</button><button type="button" data-emoji="🙏">🙏</button><button type="button" data-emoji="🔒">🔒</button>',
+      '  </div>',
       '  <textarea id="oc-comment-body" maxlength="2000" rows="5" required placeholder="Add a helpful comment or question..."></textarea>',
+      '  <p class="oc-format-note">Supports **bold**, *italic*, `code`, [links](https://...), image URLs, and emoji. All comments are moderated.</p>',
       '  <div id="oc-turnstile"></div>',
       '  <button type="submit">Submit for approval</button>',
       '  <button type="button" class="oc-comments-signout" id="oc-comments-signout">Sign out</button>',
@@ -212,6 +254,68 @@
     });
 
     document.getElementById('oc-comment-submit').addEventListener('submit', submitComment);
+    bindFormattingTools();
+  }
+
+  function textarea() {
+    return document.getElementById('oc-comment-body');
+  }
+
+  function insertText(text) {
+    var field = textarea();
+    if (!field) return;
+    var start = field.selectionStart || 0;
+    var end = field.selectionEnd || 0;
+    field.value = field.value.slice(0, start) + text + field.value.slice(end);
+    field.focus();
+    field.selectionStart = field.selectionEnd = start + text.length;
+    field.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function wrapSelection(prefix, suffix, fallback) {
+    var field = textarea();
+    if (!field) return;
+    var start = field.selectionStart || 0;
+    var end = field.selectionEnd || 0;
+    var selected = field.value.slice(start, end) || fallback;
+    var next = prefix + selected + suffix;
+    field.value = field.value.slice(0, start) + next + field.value.slice(end);
+    field.focus();
+    field.selectionStart = start + prefix.length;
+    field.selectionEnd = start + prefix.length + selected.length;
+    field.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function bindFormattingTools() {
+    var toolbar = document.querySelector('.oc-comment-toolbar');
+    var panel = document.getElementById('oc-emoji-panel');
+    if (!toolbar) return;
+
+    toolbar.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-format]');
+      if (!button) return;
+      var format = button.dataset.format;
+      if (format === 'bold') wrapSelection('**', '**', 'bold text');
+      if (format === 'italic') wrapSelection('*', '*', 'italic text');
+      if (format === 'code') wrapSelection('`', '`', 'code');
+      if (format === 'link') {
+        var linkUrl = prompt('Paste a link URL');
+        if (safeUrl(linkUrl)) wrapSelection('[', '](' + safeUrl(linkUrl) + ')', 'link text');
+      }
+      if (format === 'image') {
+        var imageUrl = prompt('Paste an image URL');
+        if (safeUrl(imageUrl)) insertText('![image](' + safeUrl(imageUrl) + ')');
+      }
+      if (format === 'emoji' && panel) panel.hidden = !panel.hidden;
+    });
+
+    if (panel) {
+      panel.addEventListener('click', function (event) {
+        var button = event.target.closest('button[data-emoji]');
+        if (!button) return;
+        insertText(button.dataset.emoji || '');
+      });
+    }
   }
 
   function setReplyTarget(id, name) {
