@@ -1,6 +1,7 @@
 name: Generate Guide Draft
 
 # Runs daily at 09:00 UTC — only if topics are queued in data/guide-topics.json.
+# Requires OPENAI_API_KEY repository secret. GEMINI_API_KEY is an optional fallback.
 # Add a topic to that file and push; the next run picks it up and opens a PR.
 # Merge the PR to publish. Close it to discard.
 on:
@@ -37,7 +38,6 @@ jobs:
       - name: Generate guide content
         id: gen
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || '' }}
           OPENAI_API_KEY:    ${{ secrets.OPENAI_API_KEY    || '' }}
           GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY    || '' }}
         run: python scripts/generate-guide.py

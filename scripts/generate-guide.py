@@ -27,8 +27,8 @@ from pathlib import Path
 
 # ── Environment ───────────────────────────────────────────────────────────────
 
-ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 OPENAI_KEY    = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_MODEL  = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 GEMINI_KEY    = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_URL    = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
@@ -216,23 +216,6 @@ def parse_response(raw: str) -> dict:
 
 # ── AI calls ──────────────────────────────────────────────────────────────────
 
-def _claude(prompt: str) -> str | None:
-    if not ANTHROPIC_KEY:
-        return None
-    try:
-        import anthropic
-        client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
-        msg = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=4096,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return msg.content[0].text.strip()
-    except Exception as exc:
-        print(f"  [warn] Claude error: {exc}", file=sys.stderr)
-        return None
-
-
 def _openai(prompt: str) -> str | None:
     if not OPENAI_KEY:
         return None
@@ -240,8 +223,8 @@ def _openai(prompt: str) -> str | None:
         import openai
         client = openai.OpenAI(api_key=OPENAI_KEY)
         resp = client.chat.completions.create(
-            model="gpt-4o-mini",
-            max_tokens=4096,
+            model=OPENAI_MODEL,
+            max_tokens=8192,
             temperature=0.65,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -270,7 +253,7 @@ def _gemini(prompt: str) -> str | None:
 
 def generate_content(title: str) -> dict | None:
     prompt = GUIDE_PROMPT.format(title=title)
-    for fn, name in [(_claude, "Claude"), (_openai, "ChatGPT"), (_gemini, "Gemini")]:
+    for fn, name in [(_openai, "ChatGPT"), (_gemini, "Gemini")]:
         raw = fn(prompt)
         if not raw:
             continue
