@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Restore SharePoint Recycle Bin Items with PnP PowerShell | OceanCloud</title>
+  <meta name="description" content="Restore SharePoint deleted files and folders from specific folders and dates with PnP PowerShell, CSOM paging, dry-run mode, conflict checks, and CSV logging." />
+  <meta name="keywords" content="SharePoint recycle bin restore PowerShell, PnP PowerShell recycle bin restore, restore deleted SharePoint files, SharePoint first-stage recycle bin, SharePoint CSOM paging, restore SharePoint deleted folder" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Restore SharePoint Recycle Bin Items with PnP PowerShell" />
+  <meta property="og:description" content="A practical admin guide and script for restoring deleted SharePoint files and folders from first-stage recycle bin by folder path, deleted date, and optional deleted-by filter." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=5" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell#article",
+        "headline": "Restore SharePoint Recycle Bin Items with PnP PowerShell",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell",
+        "datePublished": "2026-05-26",
+        "dateModified": "2026-05-26",
+        "author": { "@id": "https://oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "description": "Restore deleted SharePoint files and folders from first-stage recycle bin by folder path, deleted date, and deleted user using PnP PowerShell plus CSOM paging.",
+        "keywords": ["SharePoint recycle bin restore", "PnP PowerShell", "Restore SharePoint deleted files", "First-stage recycle bin", "CSOM paging"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/restore-deleted-items-from-the-site-collection-recycle-bin", "name": "Restore deleted items from the site collection recycle bin" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee542778(v=office.15)", "name": "SharePoint CSOM RecycleBinItem class" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Recycle Bin Restore", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}.article-wrap{max-width:840px;margin:0 auto;}.article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07)}.art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.12);color:#60a5fa}.art-date,.art-read{font-size:.8rem;color:var(--text-dim)}.article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85}.article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em}.article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea}.article-wrap p,.article-wrap li{color:var(--text-mid);line-height:1.85}.article-wrap ul,.article-wrap ol{padding-left:22px}.article-wrap strong{color:var(--white)}.article-wrap a{color:#60a5fa}.art-callout{background:rgba(59,130,246,.07);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0}.art-callout p{margin:0;color:#bfdbfe;font-size:.92rem}.art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c}.art-callout.warning p{color:#fed7aa}.art-callout.danger{background:rgba(239,68,68,.07);border-left-color:#f87171}.art-callout.danger p{color:#fecaca}.art-table-wrap{overflow-x:auto;margin:24px 0}.art-table{width:100%;border-collapse:collapse;font-size:.87rem}.art-table th{background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700;padding:10px 14px;text-align:left}.art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top}.art-table tr:last-child td{border-bottom:none}.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto}.code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre}.code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}.restore-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:24px 0}.restore-step{border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;background:rgba(255,255,255,.025)}.restore-step span{display:block;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#60a5fa;margin-bottom:6px}.restore-step strong{display:block;margin-bottom:4px}.art-cta-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px}.art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white)}.art-cta-box p{margin:0 0 22px;color:var(--text-mid)}.related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08)}.related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>Recycle Bin Restore</span></nav>
+      <h1>Restore SharePoint Recycle Bin Items with <span class="grad-text">PnP PowerShell</span></h1>
+      <p>Recover deleted files and folders by folder path, deleted date, and deleted user without scanning a large recycle bin in one risky operation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">May 26, 2026</span>
+        <span class="art-read">14 min read</span>
+      </div>
+
+      <p class="article-intro">When a SharePoint folder is accidentally deleted, the first instinct is often to open the recycle bin and restore everything that looks related. That works for small sites. It gets risky in large libraries, migration projects, or document centers where thousands of recycle bin entries may share similar names. This guide shows how to restore SharePoint deleted files and folders with PnP PowerShell using precise filters for folder path, deleted date, and deleted-by user.</p>
+
+      <p>The script below is designed for SharePoint Online admins who need a controlled recovery process. It reads first-stage recycle bin items in pages through CSOM, filters each page in memory, restores folders before files where possible, checks whether the original item already exists, and writes a CSV log of every action. It defaults to <strong>WhatIf mode</strong>, so your first run reports what would be restored before anything changes.</p>
+
+      <div class="art-callout warning"><p><strong>Safety first:</strong> Recycle bin restoration is a production operation. Run the script in WhatIf mode, review the CSV, confirm the folder paths and deleted date, then set <code>$WhatIfMode = $false</code> only when the matched items are correct.</p></div>
+
+      <h2>When to use this script</h2>
+      <p>Use this approach when you need more control than the SharePoint recycle bin UI provides. It is especially useful when the business says something like: "Restore only the files deleted from these two folders on May 20th" or "Recover items deleted by one user during a migration cleanup."</p>
+
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Scenario</th><th>Why the script helps</th></tr></thead>
+        <tbody>
+          <tr><td>Deleted SharePoint folder</td><td>Filters by the original folder path and restores child items from the recycle bin.</td></tr>
+          <tr><td>Large recycle bin</td><td>Uses CSOM paging instead of loading every recycle bin item at once.</td></tr>
+          <tr><td>Accidental bulk delete</td><td>Limits recovery by deleted date and optional deleted-by email.</td></tr>
+          <tr><td>Migration rollback</td><td>Produces a CSV audit trail showing what was skipped, restored, or failed.</td></tr>
+          <tr><td>Restore dry run</td><td>Reports matching items before performing any restore action.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>What the script does</h2>
+      <div class="restore-flow">
+        <div class="restore-step"><span>Step 1</span><strong>Connect</strong><p>Uses <code>Connect-PnPOnline -Interactive -ClientId $ClientId</code> so PnP.PowerShell v2+ has a valid Entra app ID.</p></div>
+        <div class="restore-step"><span>Step 2</span><strong>Page</strong><p>Reads first-stage recycle bin items with CSOM paging to reduce threshold pressure.</p></div>
+        <div class="restore-step"><span>Step 3</span><strong>Filter</strong><p>Matches original folder path, deleted date window, and optional deleted-by email.</p></div>
+        <div class="restore-step"><span>Step 4</span><strong>Validate</strong><p>Checks whether the original file or folder already exists before restoring.</p></div>
+        <div class="restore-step"><span>Step 5</span><strong>Restore</strong><p>Restores matching items only when WhatIf mode is disabled.</p></div>
+        <div class="restore-step"><span>Step 6</span><strong>Log</strong><p>Exports every matched item and action to CSV for audit and troubleshooting.</p></div>
+      </div>
+
+      <h2>Before you run it</h2>
+      <ul>
+        <li>Install <strong>PowerShell 7</strong> and the latest <strong>PnP.PowerShell</strong> module.</li>
+        <li>Use an account that has sufficient permissions on the target site collection.</li>
+        <li>Register an Entra app for interactive PnP sign-in and provide the Client ID.</li>
+        <li>Confirm the site URL, folder paths, deleted date, and optional deleted-by email.</li>
+        <li>Start with <code>$WhatIfMode = $true</code> and inspect the CSV log before restore.</li>
+      </ul>
+
+      <div class="art-callout"><p><strong>Folder path format:</strong> The folder paths should not start with a slash. Use values like <code>sites/Retail/Shared Documents/Folder1</code>. The script normalizes the paths and compares them against each recycle bin item's original directory.</p></div>
+
+      <h2>Important limitations</h2>
+      <ul>
+        <li>This script targets the <strong>first-stage recycle bin</strong>. If items have moved to the second-stage recycle bin, adjust the recycle bin state and test carefully.</li>
+        <li>Restore order can matter. The script sorts folders before files, but SharePoint may still fail a restore if a parent path cannot be recreated.</li>
+        <li>If a file or folder already exists at the original path, the script skips it to avoid collisions.</li>
+        <li>Anyone links, sharing links, and unique permissions may not return exactly as the business expects. Validate access after restore.</li>
+        <li>Paging tokens for CSOM recycle bin queries are not as friendly as list item paging. Always test on a small date window first.</li>
+      </ul>
+
+      <h2>Full PnP PowerShell script</h2>
+      <p>Update the configuration block first. Keep WhatIf mode enabled until the log shows exactly the items you expect.</p>
+
+      <div class="code-block"><div class="code-label">PowerShell - restore first-stage recycle bin items by folder and date</div><pre><code>#requires -Modules PnP.PowerShell
+
+# Restore first-stage recycle bin items from selected folders
+# deleted on one date, using CSOM paging to reduce threshold risk.
+
+$SiteUrl = "https://contoso.sharepoint.com/sites/Retail"
+$ClientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Folder paths without a leading slash.
+$FolderPaths = @(
+    "sites/Retail/Shared Documents/Folder1",
+    "sites/Retail/Shared Documents/Folder2"
+)
+
+$DeletedOnDate = Get-Date "05/20/2026"
+$FromDate = $DeletedOnDate.Date
+$ToDate = $DeletedOnDate.Date.AddDays(1).AddSeconds(-1)
+
+# Leave blank to restore items deleted by any user.
+$DeletedByEmail = ""
+
+# Keep below 5000 to reduce threshold risk.
+$PageSize = 1000
+
+# Keep true until you have reviewed the CSV log.
+$WhatIfMode = $true
+
+$LogPath = "C:\Temp\RecycleBinRestoreLog_{0}.csv" -f (Get-Date -Format "yyyyMMdd_HHmmss")
+
+Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
+$Context = Get-PnPContext
+
+function Normalize-Path {
+    param([Parameter(Mandatory = $true)][string]$Path)
+    return $Path.Trim().TrimStart("/").TrimEnd("/")
+}
+
+function Test-ItemMatchesFolderPath {
+    param(
+        [Parameter(Mandatory = $true)]$RecycleBinItem,
+        [Parameter(Mandatory = $true)][string[]]$NormalizedFolderPaths
+    )
+
+    $ItemDirName = Normalize-Path -Path $RecycleBinItem.DirName
+
+    foreach ($FolderPath in $NormalizedFolderPaths) {
+        if ($ItemDirName -like "$FolderPath*") {
+            return $true
+        }
+    }
+
+    return $false
+}
+
+function Test-OriginalItemExists {
+    param([Parameter(Mandatory = $true)]$RecycleBinItem)
+
+    $OriginalLocation = "/" + $RecycleBinItem.DirName.TrimStart("/") + "/" + $RecycleBinItem.LeafName
+
+    try {
+        if ($RecycleBinItem.ItemType -eq "File") {
+            $ExistingFile = Get-PnPFile -Url $OriginalLocation -AsListItem -ErrorAction SilentlyContinue
+            return ($null -ne $ExistingFile)
+        }
+
+        $ExistingFolder = Get-PnPFolder -Url $OriginalLocation -ErrorAction SilentlyContinue
+        return ($null -ne $ExistingFolder)
+    }
+    catch {
+        return $false
+    }
+}
+
+function Get-NextPagingInfo {
+    param([Parameter(Mandatory = $true)]$LastItem)
+
+    try {
+        $IdValue = [System.Uri]::EscapeDataString($LastItem.Id.ToString())
+        $TitleValue = [System.Uri]::EscapeDataString($LastItem.Title)
+        $SearchValue = [System.Uri]::EscapeDataString(
+            $LastItem.DeletedDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+        )
+
+        return "id=$IdValue&amp;title=$TitleValue&amp;searchValue=$SearchValue"
+    }
+    catch {
+        return $null
+    }
+}
+
+$NormalizedFolderPaths = $FolderPaths | ForEach-Object { Normalize-Path -Path $_ }
+$Log = New-Object System.Collections.Generic.List[Object]
+
+Write-Host "Site URL            : $SiteUrl" -ForegroundColor Cyan
+Write-Host "Deleted date filter : $FromDate to $ToDate" -ForegroundColor Cyan
+Write-Host "First-stage only    : Yes" -ForegroundColor Cyan
+Write-Host "Page size           : $PageSize" -ForegroundColor Cyan
+Write-Host "WhatIf mode         : $WhatIfMode" -ForegroundColor Cyan
+
+$PagingInfo = $null
+$PageNumber = 0
+$TotalScanned = 0
+$TotalMatched = 0
+$TotalRestored = 0
+$TotalSkipped = 0
+$TotalFailed = 0
+$ProcessedIds = @{}
+
+do {
+    $PageNumber++
+
+    Write-Progress `
+        -Activity "Scanning first-stage recycle bin" `
+        -Status "Reading page $PageNumber. Total scanned: $TotalScanned" `
+        -PercentComplete -1
+
+    try {
+        $RecycleBinItems = $Context.Web.GetRecycleBinItems(
+            $PagingInfo,
+            $PageSize,
+            $false,
+            [Microsoft.SharePoint.Client.RecycleBinOrderBy]::DeletedDate,
+            [Microsoft.SharePoint.Client.RecycleBinItemState]::FirstStageRecycleBin
+        )
+
+        $Context.Load($RecycleBinItems)
+        $Context.ExecuteQuery()
+    }
+    catch {
+        Write-Host "Failed reading recycle bin page $PageNumber. Error: $($_.Exception.Message)" -ForegroundColor Red
+        break
+    }
+
+    $CurrentPageItems = @($RecycleBinItems)
+    $CurrentPageCount = $CurrentPageItems.Count
+
+    if ($CurrentPageCount -eq 0) {
+        break
+    }
+
+    $TotalScanned += $CurrentPageCount
+    Write-Host "Page $PageNumber scanned. Items: $CurrentPageCount. Total scanned: $TotalScanned" -ForegroundColor DarkCyan
+
+    $MatchingItems = $CurrentPageItems | Where-Object {
+        $Item = $_
+
+        if ($ProcessedIds.ContainsKey($Item.Id.ToString())) {
+            return $false
+        }
+
+        $DateMatch = ($Item.DeletedDate -ge $FromDate -and $Item.DeletedDate -le $ToDate)
+        $FolderMatch = Test-ItemMatchesFolderPath -RecycleBinItem $Item -NormalizedFolderPaths $NormalizedFolderPaths
+
+        if ([string]::IsNullOrWhiteSpace($DeletedByEmail)) {
+            $DeletedByMatch = $true
+        }
+        else {
+            $DeletedByMatch = ($Item.DeletedByEmail -eq $DeletedByEmail)
+        }
+
+        return ($DateMatch -and $FolderMatch -and $DeletedByMatch)
+    }
+
+    $MatchingItems = $MatchingItems | Sort-Object `
+        @{ Expression = { if ($_.ItemType -eq "Folder") { 0 } else { 1 } } }, `
+        @{ Expression = { $_.DirName.Length } }, `
+        DeletedDate
+
+    foreach ($Item in $MatchingItems) {
+        $ProcessedIds[$Item.Id.ToString()] = $true
+        $TotalMatched++
+
+        $OriginalLocation = "/" + $Item.DirName.TrimStart("/") + "/" + $Item.LeafName
+
+        $LogEntry = [PSCustomObject]@{
+            Id               = $Item.Id
+            LeafName         = $Item.LeafName
+            DirName          = $Item.DirName
+            OriginalLocation = $OriginalLocation
+            ItemType         = $Item.ItemType
+            DeletedDate      = $Item.DeletedDate
+            DeletedByEmail   = $Item.DeletedByEmail
+            Action           = ""
+            Status           = ""
+            Error            = ""
+        }
+
+        try {
+            $OriginalExists = Test-OriginalItemExists -RecycleBinItem $Item
+
+            if ($OriginalExists) {
+                $TotalSkipped++
+                $LogEntry.Action = "Skipped"
+                $LogEntry.Status = "Original item already exists"
+                Write-Host "Skipped, item already exists: $OriginalLocation" -ForegroundColor Yellow
+            }
+            elseif ($WhatIfMode) {
+                $TotalSkipped++
+                $LogEntry.Action = "WhatIf"
+                $LogEntry.Status = "Would restore"
+                Write-Host "WhatIf: Would restore: $OriginalLocation" -ForegroundColor Cyan
+            }
+            else {
+                $Item.Restore()
+                $Context.ExecuteQuery()
+                $TotalRestored++
+                $LogEntry.Action = "Restored"
+                $LogEntry.Status = "Success"
+                Write-Host "Restored: $OriginalLocation" -ForegroundColor Green
+            }
+        }
+        catch {
+            $TotalFailed++
+            $LogEntry.Action = "Failed"
+            $LogEntry.Status = "Error"
+            $LogEntry.Error = $_.Exception.Message
+            Write-Host "Failed: $OriginalLocation. Error: $($_.Exception.Message)" -ForegroundColor Red
+        }
+
+        $Log.Add($LogEntry)
+    }
+
+    $LastItem = $CurrentPageItems[-1]
+    $NewPagingInfo = Get-NextPagingInfo -LastItem $LastItem
+
+    if ([string]::IsNullOrWhiteSpace($NewPagingInfo)) {
+        Write-Host "No further paging information returned. Stopping scan." -ForegroundColor Yellow
+        break
+    }
+
+    if ($NewPagingInfo -eq $PagingInfo) {
+        Write-Host "Paging information did not change. Stopping to avoid a loop." -ForegroundColor Yellow
+        break
+    }
+
+    $PagingInfo = $NewPagingInfo
+}
+while ($CurrentPageCount -eq $PageSize)
+
+Write-Progress -Activity "Scanning first-stage recycle bin" -Completed
+
+$LogDirectory = Split-Path -Path $LogPath -Parent
+if (-not (Test-Path -Path $LogDirectory)) {
+    New-Item -Path $LogDirectory -ItemType Directory -Force | Out-Null
+}
+
+$Log | Export-Csv -Path $LogPath -NoTypeInformation -Encoding UTF8
+
+Write-Host ""
+Write-Host "Completed." -ForegroundColor Cyan
+Write-Host "Total scanned  : $TotalScanned" -ForegroundColor Cyan
+Write-Host "Total matched  : $TotalMatched" -ForegroundColor Cyan
+Write-Host "Total restored : $TotalRestored" -ForegroundColor Green
+Write-Host "Total skipped  : $TotalSkipped" -ForegroundColor Yellow
+Write-Host "Total failed   : $TotalFailed" -ForegroundColor Red
+Write-Host "Log file       : $LogPath" -ForegroundColor Cyan</code></pre></div>
+
+      <h2>How to run the restore safely</h2>
+      <ol>
+        <li>Update <code>$SiteUrl</code>, <code>$ClientId</code>, <code>$FolderPaths</code>, and <code>$DeletedOnDate</code>.</li>
+        <li>Leave <code>$WhatIfMode = $true</code> and run the script.</li>
+        <li>Open the CSV log and confirm that every item belongs to the expected folder and deleted date.</li>
+        <li>If the results are too broad, narrow the folder path or set <code>$DeletedByEmail</code>.</li>
+        <li>Change <code>$WhatIfMode</code> to <code>$false</code> only after review.</li>
+        <li>Run the script again, then validate the restored folder in SharePoint.</li>
+      </ol>
+
+      <h2>Troubleshooting common errors</h2>
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Error or symptom</th><th>Likely cause</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td><code>Provide a valid value for ClientId</code></td><td>Missing or invalid Entra app Client ID.</td><td>Register an app and use <code>Connect-PnPOnline -Interactive -ClientId $ClientId</code>.</td></tr>
+          <tr><td>No items matched</td><td>Folder path does not match recycle bin <code>DirName</code>, or date is wrong.</td><td>Broaden the date range or test with one known deleted item.</td></tr>
+          <tr><td>Original item already exists</td><td>A file or folder has already been recreated at the original path.</td><td>Review manually before overwriting or renaming.</td></tr>
+          <tr><td>Paging stops early</td><td>CSOM paging token cannot be built from the last item.</td><td>Reduce page size and narrow filters; rerun with a smaller deleted-date range.</td></tr>
+          <tr><td>Restore fails for child files</td><td>Parent folder was not restored or path conflict exists.</td><td>Restore parent folders first, then rerun for files.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Validation after restore</h2>
+      <p>After a successful run, do not stop at the PowerShell summary. Open the restored library and validate that the expected files and folders are back, permissions are appropriate, and business users can open the restored content. For sensitive sites, also check sharing links and unique permissions, because restored content can bring back access patterns that existed before deletion.</p>
+
+      <ul>
+        <li>Compare the CSV log against the restored folder contents.</li>
+        <li>Check item counts and folder structure.</li>
+        <li>Confirm files open without corruption or permission prompts.</li>
+        <li>Review sharing links for externally shared content.</li>
+        <li>Document who requested the restore and why it was performed.</li>
+      </ul>
+
+      <div class="art-callout danger"><p><strong>Do not bulk restore blindly.</strong> Recycle bin entries often include old drafts, duplicate folders, and items deleted intentionally during cleanup. A narrow filter plus WhatIf review is safer than restoring everything and trying to clean it again.</p></div>
+
+      <div class="art-cta-box">
+        <h3>Need help recovering SharePoint content safely?</h3>
+        <p>OceanCloud can help audit recycle bin contents, recover deleted SharePoint libraries, and build safer retention, backup, and governance processes for Microsoft 365.</p>
+        <a href="../contact" class="btn-primary">Book a SharePoint Recovery Call &#8594;</a>
+      </div>
+
+      <div class="related-section">
+        <div class="related-label">Related guides</div>
+        <div class="related-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="/services#migration">M365 Migration</a></li>
+          <li><a href="/services#power">Power Platform</a></li>
+          <li><a href="/services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/guides">Guides</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li>United States</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 OceanCloud LLC. All rights reserved.</p>
+      <div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<script src="../js/main.js?v=8"></script>
+<script src="../js/particles.js?v=3"></script>
+<script src="../js/code.js?v=1"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=4"></script>
+</body>
+</html>
