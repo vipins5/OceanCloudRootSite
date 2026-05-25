@@ -37,6 +37,7 @@ const ALLOWED_ORIGINS = new Set([
 const COMMENT_SESSION_TTL_SECONDS = 60 * 60 * 24 * 30;
 const COMMENT_MAX_LENGTH = 2000;
 const COMMENT_MIN_LENGTH = 3;
+const COMMENT_MAX_THREAD_DEPTH = 1;
 const MICROSOFT_AUTHORITY = "https://login.microsoftonline.com/common/oauth2/v2.0";
 const GRAPH_ME_ENDPOINT = "https://graph.microsoft.com/v1.0/me?$select=id,displayName,mail,userPrincipalName";
 const GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -239,10 +240,10 @@ async function handleListComments(request: Request, env: Env, origin: string): P
 	const slug = safeSlug(new URL(request.url).searchParams.get("slug"));
 	if (!slug) return jsonResponse({ error: "Missing slug" }, 400, origin);
 	const { results } = await env.COMMENTS_DB.prepare(
-		`SELECT id, display_name, body, created_at
+		`SELECT id, parent_id, display_name, body, created_at
 		 FROM comments
 		 WHERE slug = ? AND status = 'approved'
-		 ORDER BY created_at ASC`,
+		 ORDER BY COALESCE(parent_id, id) ASC, parent_id IS NOT NULL ASC, created_at ASC`,
 	).bind(slug).all();
 	return jsonResponse({ comments: results || [] }, 200, origin);
 }
@@ -279,14 +280,31 @@ async function handleCreateComment(request: Request, env: Env, origin: string): 
 
 	const slug = safeSlug(payload.slug);
 	const body = safeComment(payload.body);
+	const parentId = Number(payload.parentId || 0);
 	if (!slug) return jsonResponse({ error: "Missing article slug" }, 400, origin);
 	if (body.length < COMMENT_MIN_LENGTH) return jsonResponse({ error: "Comment is too short" }, 400, origin);
 
+	let normalizedParentId: number | null = null;
+	if (parentId > 0) {
+		const parent = await env.COMMENTS_DB.prepare(
+			`SELECT id, parent_id
+			 FROM comments
+			 WHERE id = ? AND slug = ? AND status = 'approved'`,
+		).bind(parentId, slug).first<{ id: number; parent_id: number | null }>();
+
+		if (!parent?.id) return jsonResponse({ error: "Reply target was not found" }, 400, origin);
+		if (COMMENT_MAX_THREAD_DEPTH === 1 && parent.parent_id) {
+			return jsonResponse({ error: "Replies can only be added to top-level comments" }, 400, origin);
+		}
+		normalizedParentId = parent.id;
+	}
+
 	await env.COMMENTS_DB.prepare(
-		`INSERT INTO comments (slug, user_id, provider, provider_user_id, display_name, email_hash, body, status, created_at, updated_at)
-		 VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
+		`INSERT INTO comments (slug, parent_id, user_id, provider, provider_user_id, display_name, email_hash, body, status, created_at, updated_at)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
 	).bind(
 		slug,
+		normalizedParentId,
 		user.id,
 		user.provider,
 		user.provider_user_id,
@@ -577,7 +595,7 @@ async function handleAdminList(request: Request, env: Env, origin: string): Prom
 	if (!requireAdmin(request, env)) return jsonResponse({ error: "Unauthorized" }, 401, origin);
 	const status = new URL(request.url).searchParams.get("status") || "pending";
 	const { results } = await env.COMMENTS_DB.prepare(
-		`SELECT id, slug, display_name, body, status, created_at, updated_at
+		`SELECT id, parent_id, slug, display_name, body, status, created_at, updated_at
 		 FROM comments
 		 WHERE status = ?
 		 ORDER BY created_at DESC

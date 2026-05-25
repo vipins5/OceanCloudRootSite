@@ -7,6 +7,8 @@
   var session = { authenticated: false };
   var turnstileToken = '';
   var turnstileWidgetId = null;
+  var replyTarget = null;
+  var THREAD_VISIBLE_REPLIES = 3;
 
   function slug() {
     var part = window.location.pathname.split('/').pop() || '';
@@ -45,7 +47,7 @@
     if (document.querySelector('link[data-oc-comments]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '../css/comments.css?v=4';
+    link.href = '../css/comments.css?v=5';
     link.setAttribute('data-oc-comments', 'true');
     document.head.appendChild(link);
   }
@@ -139,12 +141,39 @@
       list.innerHTML = '<p class="oc-comments-empty">No approved comments yet.</p>';
       return;
     }
-    list.innerHTML = items.map(function (item) {
-      return '<article class="oc-comment">' +
-        '<div class="oc-comment-meta"><strong>' + escapeHtml(item.display_name) + '</strong><span>' + escapeHtml(new Date(item.created_at).toLocaleDateString()) + '</span></div>' +
-        '<p>' + escapeHtml(item.body).replace(/\n/g, '<br>') + '</p>' +
+
+    var topLevel = [];
+    var repliesByParent = {};
+    items.forEach(function (item) {
+      if (item.parent_id) {
+        var key = String(item.parent_id);
+        repliesByParent[key] = repliesByParent[key] || [];
+        repliesByParent[key].push(item);
+      } else {
+        topLevel.push(item);
+      }
+    });
+
+    list.innerHTML = topLevel.map(function (item) {
+      var replies = repliesByParent[String(item.id)] || [];
+      var hiddenCount = Math.max(0, replies.length - THREAD_VISIBLE_REPLIES);
+      return '<article class="oc-comment-thread" data-comment-id="' + item.id + '">' +
+        renderComment(item, false, replies.length) +
+        (replies.length ? '<div class="oc-comment-replies">' + replies.map(function (reply, index) {
+          return '<div class="oc-comment-reply-wrap' + (index >= THREAD_VISIBLE_REPLIES ? ' oc-reply-hidden' : '') + '">' + renderComment(reply, true, 0) + '</div>';
+        }).join('') + '</div>' : '') +
+        (hiddenCount ? '<button type="button" class="oc-comments-show-replies" data-parent-id="' + item.id + '">Show ' + hiddenCount + ' more repl' + (hiddenCount === 1 ? 'y' : 'ies') + '</button>' : '') +
         '</article>';
     }).join('');
+  }
+
+  function renderComment(item, isReply, replyCount) {
+    return '<article class="oc-comment' + (isReply ? ' oc-comment-reply' : '') + '" data-comment-id="' + item.id + '">' +
+      '<div class="oc-comment-meta"><strong>' + escapeHtml(item.display_name) + '</strong><span>' + escapeHtml(new Date(item.created_at).toLocaleDateString()) + '</span></div>' +
+      '<p>' + escapeHtml(item.body).replace(/\n/g, '<br>') + '</p>' +
+      (!isReply ? '<div class="oc-comment-actions"><button type="button" class="oc-comment-reply-btn" data-reply-id="' + item.id + '" data-reply-name="' + escapeHtml(item.display_name) + '">Reply</button>' +
+        (replyCount ? '<span>' + replyCount + ' repl' + (replyCount === 1 ? 'y' : 'ies') + '</span>' : '') + '</div>' : '') +
+      '</article>';
   }
 
   function renderForm() {
@@ -163,6 +192,7 @@
     target.innerHTML = [
       '<form id="oc-comment-submit">',
       '  <div class="oc-comments-user">Signed in as <strong>' + escapeHtml(session.user && session.user.name) + '</strong></div>',
+      '  <div id="oc-reply-context" class="oc-reply-context" hidden></div>',
       '  <label for="oc-comment-body">Comment</label>',
       '  <textarea id="oc-comment-body" maxlength="2000" rows="5" required placeholder="Add a helpful comment or question..."></textarea>',
       '  <div id="oc-turnstile"></div>',
@@ -177,10 +207,37 @@
     document.getElementById('oc-comments-signout').addEventListener('click', function () {
       localStorage.removeItem(TOKEN_KEY);
       session = { authenticated: false };
+      replyTarget = null;
       renderForm();
     });
 
     document.getElementById('oc-comment-submit').addEventListener('submit', submitComment);
+  }
+
+  function setReplyTarget(id, name) {
+    replyTarget = { id: Number(id), name: name || 'comment' };
+    var context = document.getElementById('oc-reply-context');
+    var body = document.getElementById('oc-comment-body');
+    if (context) {
+      context.hidden = false;
+      context.innerHTML = 'Replying to <strong>' + escapeHtml(replyTarget.name) + '</strong> <button type="button" id="oc-reply-cancel">Cancel</button>';
+      document.getElementById('oc-reply-cancel').addEventListener('click', clearReplyTarget);
+    }
+    if (body) {
+      body.placeholder = 'Write a reply...';
+      body.focus();
+    }
+  }
+
+  function clearReplyTarget() {
+    replyTarget = null;
+    var context = document.getElementById('oc-reply-context');
+    var body = document.getElementById('oc-comment-body');
+    if (context) {
+      context.hidden = true;
+      context.innerHTML = '';
+    }
+    if (body) body.placeholder = 'Add a helpful comment or question...';
   }
 
   async function submitComment(event) {
@@ -194,14 +251,16 @@
     }
     status.textContent = 'Submitting...';
     try {
+      var wasReply = Boolean(replyTarget);
       await api('/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: slug(), body: body, turnstileToken: turnstileToken })
+        body: JSON.stringify({ slug: slug(), body: body, parentId: replyTarget ? replyTarget.id : null, turnstileToken: turnstileToken })
       });
       document.getElementById('oc-comment-body').value = '';
+      clearReplyTarget();
       resetTurnstile();
-      status.textContent = 'Thanks. Your comment is pending approval.';
+      status.textContent = 'Thanks. Your ' + (wasReply ? 'reply' : 'comment') + ' is pending approval.';
     } catch (error) {
       resetTurnstile();
       status.textContent = error.message || 'Could not submit comment.';
@@ -229,6 +288,29 @@
       document.getElementById('oc-comments-form').innerHTML = '<p class="oc-comments-note">Comments are temporarily unavailable.</p>';
     }
   }
+
+  document.addEventListener('click', function (event) {
+    var replyButton = event.target.closest('.oc-comment-reply-btn');
+    if (replyButton) {
+      if (!session.authenticated) {
+        document.getElementById('oc-comments-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      setReplyTarget(replyButton.dataset.replyId, replyButton.dataset.replyName);
+      document.getElementById('oc-comments-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var showButton = event.target.closest('.oc-comments-show-replies');
+    if (showButton) {
+      var thread = showButton.closest('.oc-comment-thread');
+      if (!thread) return;
+      thread.querySelectorAll('.oc-reply-hidden').forEach(function (reply) {
+        reply.classList.remove('oc-reply-hidden');
+      });
+      showButton.remove();
+    }
+  });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

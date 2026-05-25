@@ -48,7 +48,7 @@
       statusEl.textContent = comments.length ? comments.length + ' pending comment(s).' : 'No pending comments.';
       listEl.innerHTML = comments.map(function (comment) {
         return '<article class="comment-item">' +
-          '<div class="comment-meta"><strong>' + escapeHtml(comment.display_name) + '</strong><span>' + escapeHtml(comment.slug) + '</span></div>' +
+          '<div class="comment-meta"><strong>' + escapeHtml(comment.display_name) + '</strong><span>' + escapeHtml(comment.slug) + (comment.parent_id ? ' - reply to #' + comment.parent_id : '') + '</span></div>' +
           '<div class="comment-body">' + escapeHtml(comment.body) + '</div>' +
           '<div class="comment-actions">' +
           '<button data-action="approve" data-id="' + comment.id + '">Approve</button>' +
