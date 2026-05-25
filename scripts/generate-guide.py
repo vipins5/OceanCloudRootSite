@@ -536,7 +536,8 @@ def main() -> None:
         print("guide-topics.json is empty — no topics queued. Add topics to generate a draft.")
         return
 
-    # Find first topic that has no article and no open draft branch
+    # Find first topic that has no published article. Existing draft branches are
+    # reused by the workflow so a failed PR creation can be retried safely.
     chosen = None
     for t in topics:
         title = t.get("title", "").strip()
@@ -546,14 +547,11 @@ def main() -> None:
         if (ARTICLES_DIR / f"{slug}.html").exists():
             print(f"  → skip (article exists): {slug}")
             continue
-        if branch_exists(f"draft/{slug}"):
-            print(f"  → skip (draft branch open): draft/{slug}")
-            continue
         chosen = t
         break
 
     if not chosen:
-        print("All queued topics already have articles or open draft branches — nothing to do.")
+        print("All queued topics already have published articles — nothing to do.")
         return
 
     title  = chosen["title"].strip()
