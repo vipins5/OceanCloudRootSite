@@ -3,7 +3,7 @@
 OceanCloud Guide Generator
 ==========================
 Picks the next pending topic from data/guide-topics.json and generates
-a full guide article draft using AI. Writes:
+a manual guide article scaffold. Writes:
   - articles/{slug}.html        new guide page
   - guides.html                 new card injected before END marker
   - js/article.js               GUIDES array entry
@@ -19,21 +19,9 @@ import os
 import re
 import subprocess
 import sys
-import textwrap
-import time
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
-
-# ── Environment ───────────────────────────────────────────────────────────────
-
-OPENAI_KEY    = os.environ.get("OPENAI_API_KEY") or os.environ.get("CHATGPT_API_KEY", "")
-OPENAI_MODEL  = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
-GEMINI_KEY    = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_URL    = (
-    "https://generativelanguage.googleapis.com/v1beta/models/"
-    "gemini-2.0-flash:generateContent?key=" + GEMINI_KEY
-)
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 
@@ -49,7 +37,6 @@ SITE_BASE_URL = "https://www.oceancloudconsults.com"
 GUIDES_BEGIN  = "<!-- BEGIN:GUIDES-GRID -->"
 GUIDES_END    = "<!-- END:GUIDES-GRID -->"
 JS_ARRAY_END  = "    // END:GUIDES-ARRAY"
-PROVIDER_ERRORS: list[str] = []
 
 # ── Topic metadata ────────────────────────────────────────────────────────────
 
@@ -82,66 +69,6 @@ CSS_TAG_MAP = {
     "integration":    "tag-integration",
     "admin":          "tag-admin",
 }
-
-# ── AI prompt ─────────────────────────────────────────────────────────────────
-
-GUIDE_PROMPT = textwrap.dedent("""\
-    You are a senior Microsoft 365 and SharePoint consultant writing expert guides
-    for OceanCloud, a certified Microsoft Solutions Partner in Dallas, TX specialising
-    in SharePoint, Teams, Power Platform, Copilot, and M365 security.
-
-    Write a comprehensive guide titled: {title}
-
-    Output EXACTLY three sections using these delimiters — include the delimiters verbatim:
-
-    <<<META_DESCRIPTION>>>
-    [SEO meta description for this guide, under 160 characters, no quotes]
-
-    <<<HERO_SUBTITLE>>>
-    [One clear sentence describing what the reader will learn or be able to do]
-
-    <<<BODY_HTML>>>
-    [Full article body HTML following the format rules below]
-
-    HTML FORMAT RULES for the BODY_HTML section:
-
-    First element (required):
-    <p class="article-intro">2-3 sentence introduction. State the problem, who this guide is for, and what outcome the reader achieves.</p>
-
-    Then 6-9 h2 sections totalling 1800-2200 words of prose:
-    <h2>Clear Section Title</h2>
-    <p>Content — write 2-4 paragraphs per section.</p>
-
-    Optional sub-sections:
-    <h3>Sub-section heading</h3>
-    <p>Content</p>
-
-    PowerShell code blocks (use only verified PnP.PowerShell 2.x cmdlets and parameters):
-    <div class="code-label">PowerShell 7 &mdash; brief description of what this does</div>
-    <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/Example"
-    Connect-PnPOnline -Url $siteUrl -Interactive
-    Get-PnPWeb | Select-Object Title, Url</pre></div>
-
-    Callout boxes (include 2-3 per guide):
-    <div class="art-callout"><p><strong>Note:</strong> Important information here.</p></div>
-    <div class="art-callout tip"><p><strong>Tip:</strong> Helpful advice here.</p></div>
-    <div class="art-callout warning"><p><strong>Warning:</strong> Risk or caveat here.</p></div>
-
-    Comparison or reference tables (include at least one):
-    <div class="art-table-wrap"><table class="art-table">
-    <thead><tr><th>Column A</th><th>Column B</th><th>Column C</th></tr></thead>
-    <tbody>
-    <tr><td>Value</td><td>Value</td><td>Value</td></tr>
-    </tbody>
-    </table></div>
-
-    RULES:
-    - Output ONLY the three sections — no preamble, no explanation, no markdown fences
-    - BODY_HTML must NOT contain: DOCTYPE, html, head, body, nav, footer, breadcrumb, article-meta, related-section
-    - Use &amp; not & in HTML text and attributes
-    - Close all HTML tags properly
-    - PowerShell cmdlets: -Url (not -SiteUrl) for Connect-PnPOnline; no -Limit parameter on Get-PnPTenantSite
-""")
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -199,93 +126,65 @@ def branch_exists(branch: str) -> bool:
         return False
 
 
-def parse_response(raw: str) -> dict:
-    raw = re.sub(r"^```(?:html)?\s*|\s*```$", "", raw.strip(), flags=re.IGNORECASE | re.DOTALL)
-    sections: dict[str, str] = {}
-    matches = list(re.finditer(r"<<<\s*(META_DESCRIPTION|HERO_SUBTITLE|BODY_HTML)\s*>>>", raw))
-    for index, match in enumerate(matches):
-        start = match.end()
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(raw)
-        sections[match.group(1)] = raw[start:end].strip()
+def generate_content(title: str, tag: str) -> dict:
+    esc_title = escape(title)
+    esc_tag = escape(tag)
+    meta_description = f"Manual draft scaffold for {title}. Complete and review before publishing."
+    hero_subtitle = f"A manually prepared scaffold for completing {title}."
+    body_html = f"""
+      <p class="article-intro">This is a manual draft scaffold for <strong>{esc_title}</strong>. Replace this introduction with a concise explanation of the problem, the audience, and the outcome the reader will achieve.</p>
 
-    if "BODY_HTML" not in sections:
-        intro_match = re.search(r'<p\s+class=["\']article-intro["\']>.*', raw, re.DOTALL | re.IGNORECASE)
-        if intro_match:
-            sections["BODY_HTML"] = intro_match.group(0).strip()
+      <div class="art-callout warning"><p><strong>Draft note:</strong> This guide was generated as a no-API manual scaffold. Complete every placeholder section and review technical accuracy before merging.</p></div>
 
+      <h2>Overview</h2>
+      <p>Summarise what {esc_title} means for Microsoft 365 administrators, business stakeholders, and end users. Explain why this topic matters now and where it typically appears in real-world {esc_tag} projects.</p>
+      <p>Add the key definitions, assumptions, and prerequisites a reader needs before following the rest of the guide.</p>
+
+      <h2>Business Scenario</h2>
+      <p>Describe the common business situation that leads teams to search for this guide. Include the symptoms, operational risks, governance concerns, and expected benefits of solving the problem well.</p>
+      <p>Connect the scenario to practical OceanCloud consulting work such as SharePoint architecture, Teams governance, Power Platform automation, migration planning, or Microsoft 365 security.</p>
+
+      <h2>Planning Checklist</h2>
+      <p>List the decisions that should be made before implementation, including ownership, permissions, lifecycle management, communication, rollback planning, and success measures.</p>
+      <div class="art-table-wrap"><table class="art-table">
+      <thead><tr><th>Planning area</th><th>Decision to document</th><th>Owner</th></tr></thead>
+      <tbody>
+      <tr><td>Scope</td><td>Which sites, teams, users, or workloads are included?</td><td>Project lead</td></tr>
+      <tr><td>Governance</td><td>Which policies, naming standards, and approval rules apply?</td><td>M365 admin</td></tr>
+      <tr><td>Security</td><td>Which permissions, labels, retention, or sharing controls are required?</td><td>Security owner</td></tr>
+      <tr><td>Adoption</td><td>How will users be trained and supported after launch?</td><td>Business owner</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Implementation Steps</h2>
+      <p>Replace this section with the ordered steps for completing the work. Keep the instructions practical, tested, and specific to Microsoft 365 admin centers, SharePoint, Teams, Power Platform, or PnP.PowerShell as appropriate.</p>
+      <p>Include screenshots or exact navigation paths where they would reduce ambiguity for the reader.</p>
+
+      <h2>PowerShell Validation</h2>
+      <p>Add any safe validation commands here. Avoid destructive commands and confirm all examples work with current PnP.PowerShell parameters before publishing.</p>
+      <div class="code-label">PowerShell 7 &mdash; validate site connectivity</div>
+      <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/Example"
+Connect-PnPOnline -Url $siteUrl -Interactive
+Get-PnPWeb | Select-Object Title, Url</pre></div>
+
+      <div class="art-callout tip"><p><strong>Tip:</strong> Keep implementation commands separate from validation commands so readers can test access and assumptions before making changes.</p></div>
+
+      <h2>Governance and Security</h2>
+      <p>Explain the policies, permissions, audit requirements, data protection controls, and lifecycle considerations that should be reviewed before rollout.</p>
+      <p>Call out tenant-level settings that may override site-level or team-level configuration.</p>
+
+      <h2>Common Pitfalls</h2>
+      <p>Document the mistakes that commonly delay projects in this area, such as unclear ownership, over-permissioned sites, missing communication plans, untested automation, or incomplete rollback steps.</p>
+      <div class="art-callout"><p><strong>Note:</strong> Replace this note with a topic-specific caveat that would help an administrator avoid a real support issue.</p></div>
+
+      <h2>Final Review Checklist</h2>
+      <p>Before publishing, confirm the guide includes accurate product names, current admin center navigation, tested PowerShell, clear business value, and a concrete next step for readers who need expert help.</p>
+    """.strip()
     return {
-        "meta_description": sections.get("META_DESCRIPTION", "").strip(),
-        "hero_subtitle":    sections.get("HERO_SUBTITLE", "").strip(),
-        "body_html":        sections.get("BODY_HTML", "").strip(),
+        "meta_description": meta_description[:160],
+        "hero_subtitle": hero_subtitle,
+        "body_html": body_html,
     }
-
-
-# ── AI calls ──────────────────────────────────────────────────────────────────
-
-def _openai(prompt: str) -> str | None:
-    if not OPENAI_KEY:
-        PROVIDER_ERRORS.append("ChatGPT skipped: OPENAI_API_KEY is not configured.")
-        return None
-    try:
-        import openai
-        client = openai.OpenAI(api_key=OPENAI_KEY)
-        resp = client.chat.completions.create(
-            model=OPENAI_MODEL,
-            max_tokens=8192,
-            temperature=0.65,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        choice = resp.choices[0]
-        content = (choice.message.content or "").strip()
-        finish_reason = getattr(choice, "finish_reason", "unknown")
-        if not content:
-            PROVIDER_ERRORS.append(f"ChatGPT returned empty content; finish_reason={finish_reason}.")
-            return None
-        if finish_reason == "length":
-            PROVIDER_ERRORS.append("ChatGPT response hit the token limit before completing.")
-        return content
-    except Exception as exc:
-        error = f"ChatGPT error: {type(exc).__name__}: {exc}"
-        PROVIDER_ERRORS.append(error)
-        print(f"  [warn] {error}", file=sys.stderr)
-        return None
-
-
-def _gemini(prompt: str) -> str | None:
-    if not GEMINI_KEY:
-        PROVIDER_ERRORS.append("Gemini skipped: GEMINI_API_KEY is not configured.")
-        return None
-    import requests
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.65, "maxOutputTokens": 4096},
-    }
-    try:
-        resp = requests.post(GEMINI_URL, json=payload, timeout=60)
-        resp.raise_for_status()
-        return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-    except Exception as exc:
-        error = f"Gemini error: {type(exc).__name__}: {exc}"
-        PROVIDER_ERRORS.append(error)
-        print(f"  [warn] {error}", file=sys.stderr)
-        return None
-
-
-def generate_content(title: str) -> dict | None:
-    prompt = GUIDE_PROMPT.format(title=title)
-    for fn, name in [(_openai, "ChatGPT"), (_gemini, "Gemini")]:
-        raw = fn(prompt)
-        if not raw:
-            continue
-        parsed = parse_response(raw)
-        if parsed["body_html"]:
-            print(f"  ✓ Content generated via {name}")
-            return parsed
-        excerpt = re.sub(r"\s+", " ", raw[:700]).strip()
-        PROVIDER_ERRORS.append(f"{name} returned incomplete response. First 700 chars: {excerpt}")
-        print(f"  [warn] {name} returned incomplete response. First 700 chars: {excerpt}", file=sys.stderr)
-    print("[error] All AI providers failed or returned no content.", file=sys.stderr)
-    return None
 
 
 # ── Page builder ──────────────────────────────────────────────────────────────
@@ -585,11 +484,13 @@ def update_sitemap(slug: str, iso_str: str) -> None:
 
 def write_pr_body(slug: str, title: str) -> Path:
     body = (
-        f"## New Guide Draft\n\n"
+    f"## New Manual Guide Scaffold\n\n"
         f"**Title:** {title}\n"
         f"**File:** `articles/{slug}.html`\n\n"
+    f"This PR contains a no-API scaffold. Complete the article manually before merging.\n\n"
         f"### Before merging — review checklist\n"
-        f"- [ ] Introduction and section headings read naturally\n"
+    f"- [ ] Replace every scaffold paragraph with final content\n"
+    f"- [ ] Introduction and section headings read naturally\n"
         f"- [ ] Any PowerShell code blocks use correct PnP.PowerShell 2.x cmdlets and parameters\n"
         f"- [ ] Tables and callout boxes look right\n"
         f"- [ ] No obvious factual errors\n"
@@ -616,19 +517,6 @@ def emit_output(slug: str, title: str, pr_body_path: Path) -> None:
     else:
         print(f"GUIDE_SLUG={slug}")
         print(f"GUIDE_TITLE={title}")
-
-
-def emit_failure(reason: str) -> None:
-    gh_output = os.environ.get("GITHUB_OUTPUT", "")
-    if gh_output:
-        with open(gh_output, "a", encoding="utf-8") as f:
-            f.write(f"failure_reason={reason}\n")
-
-
-def failure_summary() -> str:
-    if not PROVIDER_ERRORS:
-        return "AI provider call failed or returned incomplete content."
-    return " | ".join(PROVIDER_ERRORS)[:900]
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -676,20 +564,11 @@ def main() -> None:
     date_str = today.strftime("%B %d, %Y")
     iso_str  = today.strftime("%Y-%m-%d")
 
-    print(f"\nGenerating guide: {title}")
+    print(f"\nGenerating manual guide scaffold: {title}")
     print(f"  Slug : {slug}")
     print(f"  Topic: {topic} ({tag})")
 
-    if not OPENAI_KEY and not GEMINI_KEY:
-        reason = "No AI provider key configured. Add OPENAI_API_KEY as a repository secret for ChatGPT/OpenAI."
-        emit_failure(reason)
-        print(f"[error] {reason}", file=sys.stderr)
-        sys.exit(1)
-
-    content = generate_content(title)
-    if not content:
-        emit_failure(failure_summary())
-        sys.exit(1)
+    content = generate_content(title, tag)
 
     body_html = content["body_html"]
     meta_desc = content["meta_description"] or f"Expert guide to {title} for Microsoft 365 admins and IT professionals."
