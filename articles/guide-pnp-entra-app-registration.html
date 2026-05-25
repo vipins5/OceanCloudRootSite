@@ -594,19 +594,21 @@ New-PnPAzureCertificate `
             <tr><th>Variant</th><th>-ClientId needed?</th><th>App registration needed?</th><th>Best for</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>A &mdash; PnP Management Shell</strong></td><td>No — omit it</td><td>No (uses Microsoft's pre-built app)</td><td>Ad-hoc scripts, testing, first-time use</td></tr>
-            <tr><td><strong>B &mdash; Your own app</strong></td><td>Yes</td><td>Yes &mdash; must have <em>delegated</em> permissions + Redirect URI</td><td>Controlled scope, audit trail, custom consent</td></tr>
+            <tr><td><strong>A &mdash; Explicit delegated app</strong></td><td>Yes</td><td>Yes &mdash; must have <em>delegated</em> permissions + Redirect URI</td><td>Ad-hoc scripts, testing, controlled consent</td></tr>
+            <tr><td><strong>B &mdash; Certificate app</strong></td><td>Yes</td><td>Yes &mdash; must have <em>application</em> permissions + certificate</td><td>Automation, scheduled jobs, CI/CD</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h4 style="color:var(--white);font-size:.95rem;margin:24px 0 8px;">Variant A &mdash; No ClientId (uses PnP Management Shell)</h4>
-      <p>The PnP open-source team maintains a pre-registered Entra application called <strong>PnP Management Shell</strong>. You do not need to create your own app registration. The browser popup handles sign-in and MFA automatically. The first time this app is used in your tenant, a Global Administrator must grant tenant-wide consent once.</p>
+      <h4 style="color:var(--white);font-size:.95rem;margin:24px 0 8px;">Variant A &mdash; Interactive with explicit ClientId</h4>
+      <p>Use an explicit ClientId for interactive PnP examples. The browser popup still handles sign-in and MFA, but the app registration, delegated permissions, and consent trail are clear and repeatable.</p>
 
-      <div class="code-label">PowerShell 7 &mdash; Interactive (no ClientId, PnP Management Shell)</div>
-      <div class="code-block"><pre># No -ClientId required — PnP uses its own pre-registered app
+      <div class="code-label">PowerShell 7 &mdash; Interactive with ClientId</div>
+      <div class="code-block"><pre>$clientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
 Connect-PnPOnline `
     -Url "https://contoso.sharepoint.com" `
+    -ClientId $clientId `
     -Interactive
 
 # Verify
@@ -614,7 +616,7 @@ $web = Get-PnPWeb
 Write-Host "Connected to: $($web.Title)"</pre></div>
 
       <div class="art-callout tip">
-        <p><strong>First-run tenant consent:</strong> On the very first use of the PnP Management Shell app in your tenant, Entra presents a consent screen. A Global Administrator must approve it. This is a one-time step — all subsequent users can connect interactively without seeing the consent screen (assuming they have the required SharePoint permissions on the target site).</p>
+        <p><strong>First-run tenant consent:</strong> On the very first use of your delegated PnP app in a tenant, Entra may present a consent screen. A Global Administrator may need to approve the requested delegated permissions once.</p>
       </div>
 
       <h4 style="color:var(--white);font-size:.95rem;margin:28px 0 8px;">Variant B &mdash; Your own ClientId (delegated permissions)</h4>
