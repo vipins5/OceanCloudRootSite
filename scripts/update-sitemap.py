@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT     = Path(__file__).parent.parent
 SITEMAP  = ROOT / "sitemap.xml"
-BASE_URL = "https://www.oceancloudconsults.com"
+BASE_URL = "https://oceancloudconsults.com"
 
 # Map URL path → local file (relative to repo root)
 # Paths without .html extension are tried with .html appended

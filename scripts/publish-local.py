@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 SITEMAP = ROOT / "sitemap.xml"
 FEED = ROOT / "feed.xml"
-BASE_URL = "https://www.oceancloudconsults.com"
+BASE_URL = "https://oceancloudconsults.com"
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
 

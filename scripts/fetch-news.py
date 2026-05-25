@@ -73,7 +73,7 @@ ARCHIVE_JSON    = ROOT / "data" / "archive.json"
 ARTICLES_DIR    = ROOT / "articles"
 SITEMAP_XML     = ROOT / "sitemap.xml"
 SEARCH_INDEX    = ROOT / "data" / "search-index.json"
-SITE_BASE_URL   = "https://www.oceancloudconsults.com"
+SITE_BASE_URL   = "https://oceancloudconsults.com"
 
 NEWS_BEGIN      = "<!-- BEGIN:NEWS-CONTENT -->"
 NEWS_END        = "<!-- END:NEWS-CONTENT -->"
