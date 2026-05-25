@@ -27,7 +27,7 @@ from pathlib import Path
 
 # ── Environment ───────────────────────────────────────────────────────────────
 
-OPENAI_KEY    = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_KEY    = os.environ.get("OPENAI_API_KEY") or os.environ.get("CHATGPT_API_KEY", "")
 OPENAI_MODEL  = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 GEMINI_KEY    = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_URL    = (
@@ -596,6 +596,13 @@ def emit_output(slug: str, title: str, pr_body_path: Path) -> None:
         print(f"GUIDE_TITLE={title}")
 
 
+def emit_failure(reason: str) -> None:
+    gh_output = os.environ.get("GITHUB_OUTPUT", "")
+    if gh_output:
+        with open(gh_output, "a", encoding="utf-8") as f:
+            f.write(f"failure_reason={reason}\n")
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -645,8 +652,15 @@ def main() -> None:
     print(f"  Slug : {slug}")
     print(f"  Topic: {topic} ({tag})")
 
+    if not OPENAI_KEY and not GEMINI_KEY:
+        reason = "No AI provider key configured. Add OPENAI_API_KEY as a repository secret for ChatGPT/OpenAI."
+        emit_failure(reason)
+        print(f"[error] {reason}", file=sys.stderr)
+        sys.exit(1)
+
     content = generate_content(title)
     if not content:
+        emit_failure("AI provider call failed or returned incomplete content. Check the Generate guide content logs.")
         sys.exit(1)
 
     body_html = content["body_html"]

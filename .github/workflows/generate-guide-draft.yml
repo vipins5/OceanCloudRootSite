@@ -1,7 +1,7 @@
 name: Generate Guide Draft
 
 # Runs daily at 09:00 UTC — only if topics are queued in data/guide-topics.json.
-# Requires OPENAI_API_KEY repository secret. GEMINI_API_KEY is an optional fallback.
+# Requires OPENAI_API_KEY repository secret for ChatGPT/OpenAI. GEMINI_API_KEY is an optional fallback.
 # Add a topic to that file and push; the next run picks it up and opens a PR.
 # Merge the PR to publish. Close it to discard.
 on:
@@ -81,7 +81,9 @@ jobs:
         run: |
           echo "## Guide Generation Run" >> $GITHUB_STEP_SUMMARY
           echo "Date: $(date -u +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
-          if [ -n "${{ steps.gen.outputs.slug }}" ]; then
+          if [ -n "${{ steps.gen.outputs.failure_reason }}" ]; then
+            echo "**Generation failed:** ${{ steps.gen.outputs.failure_reason }}" >> $GITHUB_STEP_SUMMARY
+          elif [ -n "${{ steps.gen.outputs.slug }}" ]; then
             echo "**Draft PR opened for:** ${{ steps.gen.outputs.title }}" >> $GITHUB_STEP_SUMMARY
           else
             echo "No new draft generated (queue empty or all topics already published)." >> $GITHUB_STEP_SUMMARY
