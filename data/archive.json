@@ -1,6 +1,16 @@
 {
   "items": [
     {
+      "title": "Microsoft Copilot (Microsoft 365): Chat History Filtering by Copilot Experience",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559601",
+      "date_friendly": "May 22, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-chat-history-filtering-by-co"
+    },
+    {
       "title": "Microsoft Teams: Interpreter agent support in Teams Rooms on Android",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562665",
       "date_friendly": "May 20, 2026",
@@ -64,6 +74,26 @@
       "css_tag": "tag-blog"
     },
     {
+      "title": "Microsoft Teams: Interpreter - Simultaneous mode enhancements",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562035",
+      "date_friendly": "May 13, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-interpreter-simultaneous-mode-enhancements"
+    },
+    {
+      "title": "Microsoft Teams: Enhanced bookable desk experience with Teams panel-based desk dock devices",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561031",
+      "date_friendly": "May 06, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-enhanced-bookable-desk-experience-with-teams"
+    },
+    {
       "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252",
       "date_friendly": "April 30, 2026",
@@ -107,7 +137,37 @@
       "month_label": "April 2026",
       "source": "SharePoint Blog",
       "css_tag": "tag-blog"
+    },
+    {
+      "title": "Microsoft Teams: Facilitator detects and answers questions",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558341",
+      "date_friendly": "April 01, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-teams-facilitator-detects-and-answers-questions"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Mind Maps in Copilot Notebooks",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559029",
+      "date_friendly": "March 24, 2026",
+      "month_sort": "2026-03",
+      "month_label": "March 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-03-microsoft-copilot-microsoft-365-mind-maps-in-copilot-noteboo"
+    },
+    {
+      "title": "Microsoft Purview: Insider Risk Management – Ability to create cases without content in IRM",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=554940",
+      "date_friendly": "February 04, 2026",
+      "month_sort": "2026-02",
+      "month_label": "February 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     }
   ],
-  "last_updated": "2026-05-21"
+  "last_updated": "2026-05-25"
 }
