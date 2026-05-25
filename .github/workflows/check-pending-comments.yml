@@ -1,0 +1,61 @@
+name: Check Pending Comments
+
+# Opens or updates a PR when the comments moderation queue changes.
+# Runs three times per day and can also be triggered manually.
+on:
+  schedule:
+    - cron: '0 2,10,18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pending-comments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate pending comments report
+        env:
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          COMMENTS_API_BASE: https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev
+        run: python scripts/check-pending-comments.py
+
+      - name: Create or update moderation PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/pending-comments
+          delete-branch: true
+          commit-message: "chore: update pending comments report"
+          title: "Pending comments need moderation"
+          body: |
+            The scheduled comments check found a change in the pending comment moderation queue.
+
+            Open the moderation page to approve or reject comments:
+            https://oceancloudconsults.com/comments-admin.html
+
+            This PR is only a notification/report. It does not approve comments.
+          add-paths: |
+            data/comment-moderation/pending-comments.md
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## Pending Comments Check" >> $GITHUB_STEP_SUMMARY
+          echo "Run date: $(date -u +%Y-%m-%d\ %H:%M\ UTC)" >> $GITHUB_STEP_SUMMARY
+          if [ -f data/comment-moderation/pending-comments.md ]; then
+            echo "Pending report generated." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No pending report generated." >> $GITHUB_STEP_SUMMARY
+          fi
