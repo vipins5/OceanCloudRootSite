@@ -4,7 +4,7 @@ This site uses the existing Cloudflare Worker in `oceancloud-ai-proxy/` for comm
 
 Comments are deliberately moderated:
 
-1. Reader signs in with Microsoft.
+1. Reader signs in with Microsoft, Google, or GitHub.
 2. Reader completes Cloudflare Turnstile.
 3. Comment is stored in D1 as `pending`.
 4. Admin approves or rejects from `comments-admin.html`.
@@ -45,7 +45,11 @@ Set `TURNSTILE_SITE_KEY` as a non-secret variable in the Worker dashboard, or ad
 npx wrangler secret put TURNSTILE_SITE_KEY
 ```
 
-## Microsoft OAuth App
+## OAuth Apps
+
+You can configure any combination of Microsoft, Google, and GitHub. The comment widget shows only providers with configured client IDs.
+
+### Microsoft OAuth App
 
 Create an app registration in Microsoft Entra admin center.
 
@@ -75,6 +79,52 @@ npx wrangler secret put MICROSOFT_CLIENT_ID
 npx wrangler secret put MICROSOFT_CLIENT_SECRET
 npx wrangler secret put COMMENT_SESSION_SECRET
 npx wrangler secret put ADMIN_TOKEN
+```
+
+### Google OAuth Client
+
+Create a Google OAuth web application client in Google Cloud Console.
+
+Use this authorized redirect URI:
+
+```text
+https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/comments/auth/google/callback
+```
+
+Requested scopes:
+
+```text
+openid email profile
+```
+
+Set Worker secrets:
+
+```powershell
+npx wrangler secret put GOOGLE_CLIENT_ID
+npx wrangler secret put GOOGLE_CLIENT_SECRET
+```
+
+### GitHub OAuth App
+
+Create a GitHub OAuth App.
+
+Use this callback URL:
+
+```text
+https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/comments/auth/github/callback
+```
+
+Requested scope:
+
+```text
+read:user user:email
+```
+
+Set Worker secrets:
+
+```powershell
+npx wrangler secret put GITHUB_CLIENT_ID
+npx wrangler secret put GITHUB_CLIENT_SECRET
 ```
 
 `COMMENT_SESSION_SECRET` and `ADMIN_TOKEN` should be long random values.

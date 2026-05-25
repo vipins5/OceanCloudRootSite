@@ -3,6 +3,10 @@ interface Env {
 	COMMENTS_DB?: D1Database;
 	MICROSOFT_CLIENT_ID?: string;
 	MICROSOFT_CLIENT_SECRET?: string;
+	GOOGLE_CLIENT_ID?: string;
+	GOOGLE_CLIENT_SECRET?: string;
+	GITHUB_CLIENT_ID?: string;
+	GITHUB_CLIENT_SECRET?: string;
 	COMMENT_SESSION_SECRET?: string;
 	TURNSTILE_SECRET_KEY?: string;
 	TURNSTILE_SITE_KEY?: string;
@@ -35,6 +39,13 @@ const COMMENT_MAX_LENGTH = 2000;
 const COMMENT_MIN_LENGTH = 3;
 const MICROSOFT_AUTHORITY = "https://login.microsoftonline.com/common/oauth2/v2.0";
 const GRAPH_ME_ENDPOINT = "https://graph.microsoft.com/v1.0/me?$select=id,displayName,mail,userPrincipalName";
+const GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
+const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
+const GOOGLE_USERINFO_ENDPOINT = "https://openidconnect.googleapis.com/v1/userinfo";
+const GITHUB_AUTH_ENDPOINT = "https://github.com/login/oauth/authorize";
+const GITHUB_TOKEN_ENDPOINT = "https://github.com/login/oauth/access_token";
+const GITHUB_USER_ENDPOINT = "https://api.github.com/user";
+const GITHUB_EMAILS_ENDPOINT = "https://api.github.com/user/emails";
 
 const SYSTEM_PROMPT = `You are OceanBot, the AI assistant for OceanCloud — a Microsoft Solutions Partner based in the United States specialising in SharePoint Online, Microsoft 365, Power Platform, Microsoft Teams, Viva, and workplace transformation.
 
@@ -215,7 +226,11 @@ async function getSessionUser(request: Request, env: Env): Promise<any | null> {
 async function handleCommentsConfig(env: Env, origin: string): Promise<Response> {
 	return jsonResponse({
 		turnstileSiteKey: env.TURNSTILE_SITE_KEY || "",
-		providers: { microsoft: Boolean(env.MICROSOFT_CLIENT_ID) },
+		providers: {
+			microsoft: Boolean(env.MICROSOFT_CLIENT_ID),
+			google: Boolean(env.GOOGLE_CLIENT_ID),
+			github: Boolean(env.GITHUB_CLIENT_ID),
+		},
 	}, 200, origin);
 }
 
@@ -284,7 +299,11 @@ async function handleCreateComment(request: Request, env: Env, origin: string): 
 }
 
 function oauthStateCookie(state: string): string {
-	return `oc_comment_state=${state}; Path=/comments/auth/microsoft; HttpOnly; Secure; SameSite=Lax; Max-Age=600`;
+	return `oc_comment_state=${state}; Path=/comments/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=600`;
+}
+
+function clearOauthStateCookie(): string {
+	return "oc_comment_state=; Path=/comments/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=0";
 }
 
 function readCookie(request: Request, name: string): string {
@@ -315,6 +334,70 @@ async function handleMicrosoftStart(request: Request, env: Env): Promise<Respons
 	return redirectResponse(authUrl.toString(), { headers: { "Set-Cookie": oauthStateCookie(state) } });
 }
 
+async function handleGoogleStart(request: Request, env: Env): Promise<Response> {
+	if (!env.GOOGLE_CLIENT_ID) return htmlResponse("Comments are not configured", 503);
+	const url = new URL(request.url);
+	const returnTo = url.searchParams.get("return_to");
+	if (!isAllowedReturnUrl(returnTo)) return htmlResponse("Invalid return URL", 400);
+	const state = randomToken(24);
+	const stateValue = btoa(JSON.stringify({ state, returnTo }));
+	const redirectUri = `${url.origin}/comments/auth/google/callback`;
+	const authUrl = new URL(GOOGLE_AUTH_ENDPOINT);
+	authUrl.searchParams.set("client_id", env.GOOGLE_CLIENT_ID);
+	authUrl.searchParams.set("response_type", "code");
+	authUrl.searchParams.set("redirect_uri", redirectUri);
+	authUrl.searchParams.set("scope", "openid email profile");
+	authUrl.searchParams.set("state", stateValue);
+	authUrl.searchParams.set("prompt", "select_account");
+	return redirectResponse(authUrl.toString(), { headers: { "Set-Cookie": oauthStateCookie(state) } });
+}
+
+async function handleGithubStart(request: Request, env: Env): Promise<Response> {
+	if (!env.GITHUB_CLIENT_ID) return htmlResponse("Comments are not configured", 503);
+	const url = new URL(request.url);
+	const returnTo = url.searchParams.get("return_to");
+	if (!isAllowedReturnUrl(returnTo)) return htmlResponse("Invalid return URL", 400);
+	const state = randomToken(24);
+	const stateValue = btoa(JSON.stringify({ state, returnTo }));
+	const redirectUri = `${url.origin}/comments/auth/github/callback`;
+	const authUrl = new URL(GITHUB_AUTH_ENDPOINT);
+	authUrl.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
+	authUrl.searchParams.set("redirect_uri", redirectUri);
+	authUrl.searchParams.set("scope", "read:user user:email");
+	authUrl.searchParams.set("state", stateValue);
+	authUrl.searchParams.set("prompt", "select_account");
+	return redirectResponse(authUrl.toString(), { headers: { "Set-Cookie": oauthStateCookie(state) } });
+}
+
+function readOauthState(request: Request, encodedState: string): { returnTo: string } | Response {
+	let statePayload: { state: string; returnTo: string };
+	try {
+		statePayload = JSON.parse(atob(encodedState));
+	} catch {
+		return htmlResponse("Invalid OAuth state", 400);
+	}
+	if (readCookie(request, "oc_comment_state") !== statePayload.state || !isAllowedReturnUrl(statePayload.returnTo)) {
+		return htmlResponse("Invalid OAuth state", 400);
+	}
+	return { returnTo: statePayload.returnTo };
+}
+
+async function createSessionRedirect(request: Request, env: Env, returnTo: string, userId: number): Promise<Response> {
+	if (!env.COMMENTS_DB || !env.COMMENT_SESSION_SECRET) return htmlResponse("Comments are not configured", 503);
+	const sessionToken = randomToken(32);
+	const tokenHash = await sha256Hex(`${env.COMMENT_SESSION_SECRET}:${sessionToken}`);
+	await env.COMMENTS_DB.prepare(
+		`INSERT INTO comment_sessions (token_hash, user_id, created_at, expires_at)
+		 VALUES (?, ?, datetime('now'), datetime('now', ?))`,
+	).bind(tokenHash, userId, `+${COMMENT_SESSION_TTL_SECONDS} seconds`).run();
+
+	const returnUrl = new URL(returnTo);
+	returnUrl.hash = `oc_comment_token=${encodeURIComponent(sessionToken)}`;
+	return redirectResponse(returnUrl.toString(), {
+		headers: { "Set-Cookie": clearOauthStateCookie() },
+	});
+}
+
 async function upsertMicrosoftUser(env: Env, profile: any): Promise<number> {
 	if (!env.COMMENTS_DB) throw new Error("D1 not configured");
 	const email = String(profile.mail || profile.userPrincipalName || "").toLowerCase();
@@ -341,6 +424,31 @@ async function upsertMicrosoftUser(env: Env, profile: any): Promise<number> {
 	return Number(result.meta.last_row_id);
 }
 
+async function upsertOAuthUser(env: Env, provider: string, providerUserId: string, displayName: string, email: string): Promise<number> {
+	if (!env.COMMENTS_DB) throw new Error("D1 not configured");
+	const normalizedEmail = email.toLowerCase();
+	const emailHash = await sha256Hex(normalizedEmail);
+	const safeName = safeDisplayName(displayName || normalizedEmail || `${provider} user`);
+	const existing = await env.COMMENTS_DB.prepare(
+		"SELECT id FROM comment_users WHERE provider = ? AND provider_user_id = ?",
+	).bind(provider, providerUserId).first<{ id: number }>();
+
+	if (existing?.id) {
+		await env.COMMENTS_DB.prepare(
+			`UPDATE comment_users
+			 SET display_name = ?, email = ?, email_hash = ?, updated_at = datetime('now')
+			 WHERE id = ?`,
+		).bind(safeName, normalizedEmail, emailHash, existing.id).run();
+		return existing.id;
+	}
+
+	const result = await env.COMMENTS_DB.prepare(
+		`INSERT INTO comment_users (provider, provider_user_id, display_name, email, email_hash, created_at, updated_at)
+		 VALUES (?, ?, ?, ?, ?, datetime('now'), datetime('now'))`,
+	).bind(provider, providerUserId, safeName, normalizedEmail, emailHash).run();
+	return Number(result.meta.last_row_id);
+}
+
 async function handleMicrosoftCallback(request: Request, env: Env): Promise<Response> {
 	if (!env.COMMENTS_DB || !env.MICROSOFT_CLIENT_ID || !env.MICROSOFT_CLIENT_SECRET || !env.COMMENT_SESSION_SECRET) {
 		return htmlResponse("Comments are not configured", 503);
@@ -351,15 +459,8 @@ async function handleMicrosoftCallback(request: Request, env: Env): Promise<Resp
 	const encodedState = url.searchParams.get("state") || "";
 	if (!code || !encodedState) return htmlResponse("Missing OAuth response", 400);
 
-	let statePayload: { state: string; returnTo: string };
-	try {
-		statePayload = JSON.parse(atob(encodedState));
-	} catch {
-		return htmlResponse("Invalid OAuth state", 400);
-	}
-	if (readCookie(request, "oc_comment_state") !== statePayload.state || !isAllowedReturnUrl(statePayload.returnTo)) {
-		return htmlResponse("Invalid OAuth state", 400);
-	}
+	const stateResult = readOauthState(request, encodedState);
+	if (stateResult instanceof Response) return stateResult;
 
 	const redirectUri = `${url.origin}/comments/auth/microsoft/callback`;
 	const tokenResponse = await fetch(`${MICROSOFT_AUTHORITY}/token`, {
@@ -386,18 +487,85 @@ async function handleMicrosoftCallback(request: Request, env: Env): Promise<Resp
 	if (!profileResponse.ok || !profile) return htmlResponse("Could not read Microsoft profile", 502);
 
 	const userId = await upsertMicrosoftUser(env, profile);
-	const sessionToken = randomToken(32);
-	const tokenHash = await sha256Hex(`${env.COMMENT_SESSION_SECRET}:${sessionToken}`);
-	await env.COMMENTS_DB.prepare(
-		`INSERT INTO comment_sessions (token_hash, user_id, created_at, expires_at)
-		 VALUES (?, ?, datetime('now'), datetime('now', ?))`,
-	).bind(tokenHash, userId, `+${COMMENT_SESSION_TTL_SECONDS} seconds`).run();
+	return createSessionRedirect(request, env, stateResult.returnTo, userId);
+}
 
-	const returnUrl = new URL(statePayload.returnTo);
-	returnUrl.hash = `oc_comment_token=${encodeURIComponent(sessionToken)}`;
-	return redirectResponse(returnUrl.toString(), {
-		headers: { "Set-Cookie": "oc_comment_state=; Path=/comments/auth/microsoft; HttpOnly; Secure; SameSite=Lax; Max-Age=0" },
+async function handleGoogleCallback(request: Request, env: Env): Promise<Response> {
+	if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET) return htmlResponse("Comments are not configured", 503);
+	const url = new URL(request.url);
+	const code = url.searchParams.get("code");
+	const encodedState = url.searchParams.get("state") || "";
+	if (!code || !encodedState) return htmlResponse("Missing OAuth response", 400);
+	const stateResult = readOauthState(request, encodedState);
+	if (stateResult instanceof Response) return stateResult;
+
+	const redirectUri = `${url.origin}/comments/auth/google/callback`;
+	const tokenResponse = await fetch(GOOGLE_TOKEN_ENDPOINT, {
+		method: "POST",
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		body: new URLSearchParams({
+			client_id: env.GOOGLE_CLIENT_ID,
+			client_secret: env.GOOGLE_CLIENT_SECRET,
+			grant_type: "authorization_code",
+			code,
+			redirect_uri: redirectUri,
+		}),
 	});
+	const tokenData = await tokenResponse.json().catch(() => null) as any;
+	if (!tokenResponse.ok || !tokenData?.access_token) return htmlResponse("Google sign-in failed", 502);
+
+	const profileResponse = await fetch(GOOGLE_USERINFO_ENDPOINT, {
+		headers: { Authorization: `Bearer ${tokenData.access_token}` },
+	});
+	const profile = await profileResponse.json().catch(() => null) as any;
+	if (!profileResponse.ok || !profile?.sub || !profile?.email || profile.email_verified !== true) {
+		return htmlResponse("Could not verify Google email", 502);
+	}
+	const userId = await upsertOAuthUser(env, "google", String(profile.sub), String(profile.name || profile.email), String(profile.email));
+	return createSessionRedirect(request, env, stateResult.returnTo, userId);
+}
+
+async function handleGithubCallback(request: Request, env: Env): Promise<Response> {
+	if (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) return htmlResponse("Comments are not configured", 503);
+	const url = new URL(request.url);
+	const code = url.searchParams.get("code");
+	const encodedState = url.searchParams.get("state") || "";
+	if (!code || !encodedState) return htmlResponse("Missing OAuth response", 400);
+	const stateResult = readOauthState(request, encodedState);
+	if (stateResult instanceof Response) return stateResult;
+
+	const redirectUri = `${url.origin}/comments/auth/github/callback`;
+	const tokenResponse = await fetch(GITHUB_TOKEN_ENDPOINT, {
+		method: "POST",
+		headers: { "Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded" },
+		body: new URLSearchParams({
+			client_id: env.GITHUB_CLIENT_ID,
+			client_secret: env.GITHUB_CLIENT_SECRET,
+			code,
+			redirect_uri: redirectUri,
+		}),
+	});
+	const tokenData = await tokenResponse.json().catch(() => null) as any;
+	if (!tokenResponse.ok || !tokenData?.access_token) return htmlResponse("GitHub sign-in failed", 502);
+	const githubHeaders = {
+		"Accept": "application/vnd.github+json",
+		"Authorization": `Bearer ${tokenData.access_token}`,
+		"User-Agent": "OceanCloud-Comments",
+		"X-GitHub-Api-Version": "2022-11-28",
+	};
+	const [profileResponse, emailsResponse] = await Promise.all([
+		fetch(GITHUB_USER_ENDPOINT, { headers: githubHeaders }),
+		fetch(GITHUB_EMAILS_ENDPOINT, { headers: githubHeaders }),
+	]);
+	const profile = await profileResponse.json().catch(() => null) as any;
+	const emails = await emailsResponse.json().catch(() => null) as any[] | null;
+	const primaryEmail = Array.isArray(emails)
+		? emails.find((item) => item?.primary && item?.verified)?.email || emails.find((item) => item?.verified)?.email
+		: "";
+	if (!profileResponse.ok || !profile?.id || !primaryEmail) return htmlResponse("Could not verify GitHub email", 502);
+	const name = String(profile.name || profile.login || primaryEmail);
+	const userId = await upsertOAuthUser(env, "github", String(profile.id), name, String(primaryEmail));
+	return createSessionRedirect(request, env, stateResult.returnTo, userId);
 }
 
 function requireAdmin(request: Request, env: Env): boolean {
@@ -514,6 +682,22 @@ export default {
 
 		if (request.method === "GET" && url.pathname === "/comments/auth/microsoft/callback") {
 			return handleMicrosoftCallback(request, env);
+		}
+
+		if (request.method === "GET" && url.pathname === "/comments/auth/google/start") {
+			return handleGoogleStart(request, env);
+		}
+
+		if (request.method === "GET" && url.pathname === "/comments/auth/google/callback") {
+			return handleGoogleCallback(request, env);
+		}
+
+		if (request.method === "GET" && url.pathname === "/comments/auth/github/start") {
+			return handleGithubStart(request, env);
+		}
+
+		if (request.method === "GET" && url.pathname === "/comments/auth/github/callback") {
+			return handleGithubCallback(request, env);
 		}
 
 		const origin = request.headers.get("Origin");

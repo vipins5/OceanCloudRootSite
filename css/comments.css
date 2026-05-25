@@ -92,6 +92,12 @@
   border-color: rgba(0,180,216,.55);
 }
 
+.oc-comments-signins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .oc-comments-form button,
 .oc-comments-signin {
   display: inline-flex;
@@ -107,6 +113,14 @@
   font-size: .88rem;
   text-decoration: none;
   cursor: pointer;
+}
+
+.oc-comments-signin-google {
+  background: #ffffff;
+}
+
+.oc-comments-signin-github {
+  background: #e5e7eb;
 }
 
 .oc-comments-signout {

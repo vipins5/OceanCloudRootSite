@@ -76,8 +76,21 @@
     if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
   }
 
-  function signInUrl() {
-    return API_BASE + '/comments/auth/microsoft/start?return_to=' + encodeURIComponent(window.location.href.split('#')[0]);
+  function signInUrl(provider) {
+    return API_BASE + '/comments/auth/' + provider + '/start?return_to=' + encodeURIComponent(window.location.href.split('#')[0]);
+  }
+
+  function providerLabel(provider) {
+    return { microsoft: 'Microsoft', google: 'Google', github: 'GitHub' }[provider] || provider;
+  }
+
+  function signInButtons() {
+    var providers = config && config.providers ? config.providers : {};
+    return ['microsoft', 'google', 'github'].filter(function (provider) {
+      return providers[provider];
+    }).map(function (provider) {
+      return '<a class="oc-comments-signin oc-comments-signin-' + provider + '" href="' + signInUrl(provider) + '">Sign in with ' + providerLabel(provider) + '</a>';
+    }).join('');
   }
 
   function renderShell(root) {
@@ -86,7 +99,7 @@
       '  <div class="oc-comments-head">',
       '    <p class="oc-comments-label">Discussion</p>',
       '    <h2 id="oc-comments-title">Comments</h2>',
-      '    <p>Sign in with a verified Microsoft account to comment. Comments appear only after approval.</p>',
+      '    <p>Sign in with a verified Microsoft, Google, or GitHub account to comment. Comments appear only after approval.</p>',
       '  </div>',
       '  <div id="oc-comments-list" class="oc-comments-list"></div>',
       '  <div id="oc-comments-form" class="oc-comments-form"></div>',
@@ -112,12 +125,12 @@
   function renderForm() {
     var target = document.getElementById('oc-comments-form');
     if (!target) return;
-    if (!config || !config.providers || !config.providers.microsoft) {
+    if (!config || !config.providers || !signInButtons()) {
       target.innerHTML = '<p class="oc-comments-note">Comments are being configured.</p>';
       return;
     }
     if (!session.authenticated) {
-      target.innerHTML = '<a class="oc-comments-signin" href="' + signInUrl() + '">Sign in with Microsoft to comment</a>';
+      target.innerHTML = '<div class="oc-comments-signins">' + signInButtons() + '</div>';
       return;
     }
     target.innerHTML = [
