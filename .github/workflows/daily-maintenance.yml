@@ -39,8 +39,8 @@ jobs:
       - name: Check internal links
         run: |
           echo "=== Internal link check ==="
-          python scripts/check-links.py
-          # Non-strict: reports but does not fail the build
+          python scripts/check-links.py --strict
+          # Strict: fails if internal links are broken or article pages miss shared scripts
 
       # ── 5. Quick HTML well-formedness check with Python's html.parser ───────
       - name: Validate HTML structure

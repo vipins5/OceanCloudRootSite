@@ -3,11 +3,13 @@
 check-links.py
 ==============
 Scans all HTML files in the repo for internal relative links and reports
-any that point to a file that doesn't exist on disk.
+any that point to a file that doesn't exist on disk. Also verifies that
+article pages include the standard shared script bundle.
 
 Checks:
   - href="..." in <a> tags (skips absolute URLs, mailto:, tel:, #anchors)
   - src="..."  in <img>, <script>, <link> tags
+    - required shared scripts in articles/*.html
 
 Usage:
     python scripts/check-links.py [--strict]
@@ -29,6 +31,14 @@ HREF_RE = re.compile(r'href=["\']([^"\'#?]+)', re.IGNORECASE)
 SRC_RE  = re.compile(r'src=["\']([^"\']+)',  re.IGNORECASE)
 
 SKIP_SCHEMES = {"http", "https", "mailto", "tel", "javascript", "data"}
+REQUIRED_ARTICLE_SCRIPTS = (
+    "../js/main.js",
+    "../js/chat.js",
+    "../js/particles.js",
+    "../js/weather.js",
+    "../js/article.js",
+    "../js/comments.js",
+)
 
 IGNORED_PARTS = {".git", "node_modules", ".wrangler", "dist", "build"}
 
@@ -74,13 +84,28 @@ def check_file(html: Path) -> list[str]:
     return broken
 
 
+def check_article_scripts(html: Path) -> list[str]:
+    rel = html.relative_to(ROOT)
+    if len(rel.parts) < 2 or rel.parts[0] != "articles":
+        return []
+
+    text = html.read_text(encoding="utf-8", errors="ignore")
+    missing = [script for script in REQUIRED_ARTICLE_SCRIPTS if script not in text]
+    if not missing:
+        return []
+
+    return [f"  {rel}  missing standard script(s): {', '.join(missing)}"]
+
+
 def main(strict: bool = False) -> None:
     print(f"Checking {len(HTML_FILES)} HTML files for broken internal links…\n")
     all_broken: list[str] = []
+    all_script_issues: list[str] = []
 
     for html in HTML_FILES:
         broken = check_file(html)
         all_broken.extend(broken)
+        all_script_issues.extend(check_article_scripts(html))
 
     if all_broken:
         print(f"⚠️  {len(all_broken)} broken link(s) found:\n")
@@ -89,9 +114,16 @@ def main(strict: bool = False) -> None:
     else:
         print("✓ No broken internal links found.")
 
+    if all_script_issues:
+        print(f"\n⚠️  {len(all_script_issues)} article script issue(s) found:\n")
+        for line in all_script_issues:
+            print(line)
+    else:
+        print("✓ All article pages include the standard script bundle.")
+
     print(f"\nScanned {len(HTML_FILES)} files.")
 
-    if strict and all_broken:
+    if strict and (all_broken or all_script_issues):
         sys.exit(1)
 
 
