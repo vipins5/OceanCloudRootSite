@@ -39,7 +39,6 @@ const COMMENT_MAX_LENGTH = 2000;
 const COMMENT_MIN_LENGTH = 3;
 const COMMENT_MAX_THREAD_DEPTH = 1;
 const MICROSOFT_AUTHORITY = "https://login.microsoftonline.com/common/oauth2/v2.0";
-const GRAPH_ME_ENDPOINT = "https://graph.microsoft.com/v1.0/me?$select=id,displayName,mail,userPrincipalName";
 const GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_ENDPOINT = "https://openidconnect.googleapis.com/v1/userinfo";
@@ -121,6 +120,43 @@ function htmlResponse(markup: string, status = 200): Response {
 			"Cache-Control": "no-store",
 		},
 	});
+}
+
+function escapeHtml(value: unknown): string {
+	return String(value || "").replace(/[&<>"]/g, (char) => ({
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		"\"": "&quot;",
+	}[char] || char));
+}
+
+function friendlyOAuthError(provider: string, error: string, description: string, returnTo?: string): Response {
+	const backLink = returnTo && isAllowedReturnUrl(returnTo)
+		? `<p><a href="${escapeHtml(returnTo)}">Return to the article</a></p>`
+		: "";
+
+	return htmlResponse(`<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>${escapeHtml(provider)} sign-in failed</title>
+<style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:760px;margin:8vh auto;padding:0 24px;line-height:1.6;color:#122}code{background:#f4f6f8;padding:2px 6px;border-radius:5px}.box{border:1px solid #d8e0e8;border-radius:12px;padding:24px;background:#fff}</style></head>
+<body><div class="box"><h1>${escapeHtml(provider)} sign-in failed</h1>
+<p>The identity provider returned an error before OceanCloud received a sign-in code.</p>
+<p><strong>Error:</strong> <code>${escapeHtml(error || "unknown_error")}</code></p>
+${description ? `<p>${escapeHtml(description)}</p>` : ""}
+<p>If this happened during Microsoft admin consent, try signing in again without selecting tenant-wide consent. If it continues, remove the existing <strong>OceanCloud Comments</strong> Enterprise Application/service principal from Entra ID, then try again.</p>
+${backLink}</div></body></html>`, 400);
+}
+
+function decodeJwtPayload(token: string): any | null {
+	const payload = token.split(".")[1];
+	if (!payload) return null;
+	try {
+		const normalized = payload.replace(/-/g, "+").replace(/_/g, "/");
+		const padded = normalized + "=".repeat((4 - normalized.length % 4) % 4);
+		return JSON.parse(atob(padded));
+	} catch {
+		return null;
+	}
 }
 
 function redirectResponse(location: string, init?: ResponseInit): Response {
@@ -393,7 +429,7 @@ async function handleMicrosoftStart(request: Request, env: Env): Promise<Respons
 	authUrl.searchParams.set("response_type", "code");
 	authUrl.searchParams.set("redirect_uri", redirectUri);
 	authUrl.searchParams.set("response_mode", "query");
-	authUrl.searchParams.set("scope", "openid profile email User.Read");
+	authUrl.searchParams.set("scope", "openid profile email");
 	authUrl.searchParams.set("state", stateValue);
 	authUrl.searchParams.set("prompt", "select_account");
 	return redirectResponse(authUrl.toString(), { headers: { "Set-Cookie": oauthStateCookie(state) } });
@@ -465,10 +501,10 @@ async function createSessionRedirect(request: Request, env: Env, returnTo: strin
 
 async function upsertMicrosoftUser(env: Env, profile: any): Promise<number> {
 	if (!env.COMMENTS_DB) throw new Error("D1 not configured");
-	const email = String(profile.mail || profile.userPrincipalName || "").toLowerCase();
+	const email = String(profile.email || profile.preferred_username || profile.upn || profile.mail || profile.userPrincipalName || "").toLowerCase();
 	const emailHash = await sha256Hex(email);
-	const providerUserId = String(profile.id || emailHash);
-	const displayName = safeDisplayName(profile.displayName || email || "Microsoft user");
+	const providerUserId = String(profile.oid || profile.sub || profile.id || emailHash);
+	const displayName = safeDisplayName(profile.name || profile.displayName || email || "Microsoft user");
 	const existing = await env.COMMENTS_DB.prepare(
 		"SELECT id FROM comment_users WHERE provider = 'microsoft' AND provider_user_id = ?",
 	).bind(providerUserId).first<{ id: number }>();
@@ -520,6 +556,16 @@ async function handleMicrosoftCallback(request: Request, env: Env): Promise<Resp
 	}
 
 	const url = new URL(request.url);
+	const oauthError = url.searchParams.get("error");
+	if (oauthError) {
+		const stateParam = url.searchParams.get("state") || "";
+		let returnTo = "";
+		try {
+			returnTo = JSON.parse(atob(stateParam)).returnTo || "";
+		} catch {}
+		return friendlyOAuthError("Microsoft", oauthError, url.searchParams.get("error_description") || "", returnTo);
+	}
+
 	const code = url.searchParams.get("code");
 	const encodedState = url.searchParams.get("state") || "";
 	if (!code || !encodedState) return htmlResponse("Missing OAuth response", 400);
@@ -537,19 +583,16 @@ async function handleMicrosoftCallback(request: Request, env: Env): Promise<Resp
 			grant_type: "authorization_code",
 			code,
 			redirect_uri: redirectUri,
-			scope: "openid profile email User.Read",
+			scope: "openid profile email",
 		}),
 	});
 	const tokenData = await tokenResponse.json().catch(() => null) as any;
-	if (!tokenResponse.ok || !tokenData?.access_token) {
+	if (!tokenResponse.ok || !tokenData?.id_token) {
 		return htmlResponse("Microsoft sign-in failed", 502);
 	}
 
-	const profileResponse = await fetch(GRAPH_ME_ENDPOINT, {
-		headers: { Authorization: `Bearer ${tokenData.access_token}` },
-	});
-	const profile = await profileResponse.json().catch(() => null) as any;
-	if (!profileResponse.ok || !profile) return htmlResponse("Could not read Microsoft profile", 502);
+	const profile = decodeJwtPayload(String(tokenData.id_token));
+	if (!profile) return htmlResponse("Could not read Microsoft profile", 502);
 
 	const userId = await upsertMicrosoftUser(env, profile);
 	return createSessionRedirect(request, env, stateResult.returnTo, userId);
