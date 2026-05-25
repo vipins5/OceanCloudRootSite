@@ -158,13 +158,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #fff;
+  width: 18px;
+  height: 18px;
 }
 
-.oc-google-icon img {
+.oc-google-icon svg {
   display: block;
   width: 18px;
   height: 18px;
