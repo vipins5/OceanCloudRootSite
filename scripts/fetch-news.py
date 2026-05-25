@@ -18,9 +18,8 @@ Sources
 
 AI rewrite engines (tried in order, first available wins)
 ----------------------------------------------------------
-  ANTHROPIC_API_KEY — Claude claude-haiku-4-5-20251001         (primary)
-  OPENAI_API_KEY    — ChatGPT gpt-4o-mini          (secondary)
-  GEMINI_API_KEY    — Google Gemini 2.0 Flash       (tertiary)
+    OPENAI_API_KEY    — ChatGPT gpt-4o-mini
+    GEMINI_API_KEY    — Google Gemini 2.0 Flash
   None set          — uses truncated original RSS text
 
 Add secrets at: GitHub repo → Settings → Secrets → Actions
@@ -47,7 +46,6 @@ GEMINI_URL      = (
     "gemini-2.0-flash:generateContent?key=" + GEMINI_KEY
 )
 
-ANTHROPIC_KEY   = os.environ.get("ANTHROPIC_API_KEY", "")
 OPENAI_KEY      = os.environ.get("OPENAI_API_KEY", "")
 
 BLOG_RSS_URL    = (
@@ -298,55 +296,29 @@ def _gemini(title: str, summary: str, prompt: str, max_tokens: int) -> str | Non
         return None
 
 
-def _claude(title: str, summary: str, prompt: str, max_tokens: int) -> str | None:
-    if not ANTHROPIC_KEY:
-        return None
-    try:
-        import anthropic
-        client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
-        msg = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=max_tokens,
-            messages=[{
-                "role": "user",
-                "content": prompt + f"\n\nTitle: {title}\n\nOriginal text: {summary[:800]}",
-            }],
-        )
-        return msg.content[0].text.strip()
-    except Exception as exc:
-        print(f"  [warn] Claude error: {exc}", file=sys.stderr)
-        return None
-
-
 def ai_rewrite(title: str, summary: str) -> str:
-    """Short 2-3 sentence commentary for news cards. Claude → ChatGPT → Gemini → text."""
-    result = _claude(title, summary, SYSTEM_PROMPT, 220)
-    if result:
-        return result
+    """Short 2-3 sentence commentary for news cards. ChatGPT → Gemini → text."""
     result = _openai(title, summary, SYSTEM_PROMPT, 220)
     if result:
-        print("  [info] Used ChatGPT (secondary) for card rewrite")
+        print("  [info] Used ChatGPT for card rewrite")
         return result
     result = _gemini(title, summary, SYSTEM_PROMPT, 220)
     if result:
-        print("  [info] Used Gemini (tertiary) for card rewrite")
+        print("  [info] Used Gemini for card rewrite")
         return result
     print("  [warn] No AI key available — using original text", file=sys.stderr)
     return _truncate(summary)
 
 
 def ai_article_body(title: str, summary: str) -> str:
-    """Longer structured article body. Claude → ChatGPT → Gemini → fallback."""
-    result = _claude(title, summary, ARTICLE_PROMPT, 700)
-    if result:
-        return result
+    """Longer structured article body. ChatGPT → Gemini → fallback."""
     result = _openai(title, summary, ARTICLE_PROMPT, 700)
     if result:
-        print("  [info] Used ChatGPT (secondary) for article body")
+        print("  [info] Used ChatGPT for article body")
         return result
     result = _gemini(title, summary, ARTICLE_PROMPT, 700)
     if result:
-        print("  [info] Used Gemini (tertiary) for article body")
+        print("  [info] Used Gemini for article body")
         return result
     return summary[:800]
 

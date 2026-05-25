@@ -49,6 +49,7 @@ SITE_BASE_URL = "https://www.oceancloudconsults.com"
 GUIDES_BEGIN  = "<!-- BEGIN:GUIDES-GRID -->"
 GUIDES_END    = "<!-- END:GUIDES-GRID -->"
 JS_ARRAY_END  = "    // END:GUIDES-ARRAY"
+PROVIDER_ERRORS: list[str] = []
 
 # ── Topic metadata ────────────────────────────────────────────────────────────
 
@@ -199,18 +200,23 @@ def branch_exists(branch: str) -> bool:
 
 
 def parse_response(raw: str) -> dict:
-    sections: dict[str, list[str]] = {}
-    current = None
-    for line in raw.splitlines():
-        if line.strip() in ("<<<META_DESCRIPTION>>>", "<<<HERO_SUBTITLE>>>", "<<<BODY_HTML>>>"):
-            current = line.strip().strip("<>")
-            sections[current] = []
-        elif current is not None:
-            sections[current].append(line)
+    raw = re.sub(r"^```(?:html)?\s*|\s*```$", "", raw.strip(), flags=re.IGNORECASE | re.DOTALL)
+    sections: dict[str, str] = {}
+    matches = list(re.finditer(r"<<<\s*(META_DESCRIPTION|HERO_SUBTITLE|BODY_HTML)\s*>>>", raw))
+    for index, match in enumerate(matches):
+        start = match.end()
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(raw)
+        sections[match.group(1)] = raw[start:end].strip()
+
+    if "BODY_HTML" not in sections:
+        intro_match = re.search(r'<p\s+class=["\']article-intro["\']>.*', raw, re.DOTALL | re.IGNORECASE)
+        if intro_match:
+            sections["BODY_HTML"] = intro_match.group(0).strip()
+
     return {
-        "meta_description": "\n".join(sections.get("META_DESCRIPTION", [])).strip(),
-        "hero_subtitle":    "\n".join(sections.get("HERO_SUBTITLE", [])).strip(),
-        "body_html":        "\n".join(sections.get("BODY_HTML", [])).strip(),
+        "meta_description": sections.get("META_DESCRIPTION", "").strip(),
+        "hero_subtitle":    sections.get("HERO_SUBTITLE", "").strip(),
+        "body_html":        sections.get("BODY_HTML", "").strip(),
     }
 
 
@@ -218,6 +224,7 @@ def parse_response(raw: str) -> dict:
 
 def _openai(prompt: str) -> str | None:
     if not OPENAI_KEY:
+        PROVIDER_ERRORS.append("ChatGPT skipped: OPENAI_API_KEY is not configured.")
         return None
     try:
         import openai
@@ -228,14 +235,25 @@ def _openai(prompt: str) -> str | None:
             temperature=0.65,
             messages=[{"role": "user", "content": prompt}],
         )
-        return resp.choices[0].message.content.strip()
+        choice = resp.choices[0]
+        content = (choice.message.content or "").strip()
+        finish_reason = getattr(choice, "finish_reason", "unknown")
+        if not content:
+            PROVIDER_ERRORS.append(f"ChatGPT returned empty content; finish_reason={finish_reason}.")
+            return None
+        if finish_reason == "length":
+            PROVIDER_ERRORS.append("ChatGPT response hit the token limit before completing.")
+        return content
     except Exception as exc:
-        print(f"  [warn] ChatGPT error: {exc}", file=sys.stderr)
+        error = f"ChatGPT error: {type(exc).__name__}: {exc}"
+        PROVIDER_ERRORS.append(error)
+        print(f"  [warn] {error}", file=sys.stderr)
         return None
 
 
 def _gemini(prompt: str) -> str | None:
     if not GEMINI_KEY:
+        PROVIDER_ERRORS.append("Gemini skipped: GEMINI_API_KEY is not configured.")
         return None
     import requests
     payload = {
@@ -247,7 +265,9 @@ def _gemini(prompt: str) -> str | None:
         resp.raise_for_status()
         return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
     except Exception as exc:
-        print(f"  [warn] Gemini error: {exc}", file=sys.stderr)
+        error = f"Gemini error: {type(exc).__name__}: {exc}"
+        PROVIDER_ERRORS.append(error)
+        print(f"  [warn] {error}", file=sys.stderr)
         return None
 
 
@@ -261,7 +281,9 @@ def generate_content(title: str) -> dict | None:
         if parsed["body_html"]:
             print(f"  ✓ Content generated via {name}")
             return parsed
-        print(f"  [warn] {name} returned incomplete response", file=sys.stderr)
+        excerpt = re.sub(r"\s+", " ", raw[:700]).strip()
+        PROVIDER_ERRORS.append(f"{name} returned incomplete response. First 700 chars: {excerpt}")
+        print(f"  [warn] {name} returned incomplete response. First 700 chars: {excerpt}", file=sys.stderr)
     print("[error] All AI providers failed or returned no content.", file=sys.stderr)
     return None
 
@@ -603,6 +625,12 @@ def emit_failure(reason: str) -> None:
             f.write(f"failure_reason={reason}\n")
 
 
+def failure_summary() -> str:
+    if not PROVIDER_ERRORS:
+        return "AI provider call failed or returned incomplete content."
+    return " | ".join(PROVIDER_ERRORS)[:900]
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -660,7 +688,7 @@ def main() -> None:
 
     content = generate_content(title)
     if not content:
-        emit_failure("AI provider call failed or returned incomplete content. Check the Generate guide content logs.")
+        emit_failure(failure_summary())
         sys.exit(1)
 
     body_html = content["body_html"]
