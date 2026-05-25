@@ -33,19 +33,27 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BRANCH="pending-comments-moderation"
+          REPORT="${{ steps.check.outputs.report_path }}"
 
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Reuse the same branch so we never flood with PRs.
-          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
-            git fetch origin "$BRANCH"
+          # Backup the report that Python just wrote on main's working tree.
+          cp "$REPORT" /tmp/pending-report-backup.md
+
+          git fetch origin "$BRANCH" 2>/dev/null || true
+
+          if git show-ref --quiet "refs/remotes/origin/$BRANCH"; then
             git checkout -B "$BRANCH" "origin/$BRANCH"
           else
             git checkout -b "$BRANCH"
           fi
 
-          git add data/comment-moderation/pending-comments.md
+          # Restore the report after checkout so the moderation branch gets the latest queue snapshot.
+          mkdir -p "$(dirname "$REPORT")"
+          cp /tmp/pending-report-backup.md "$REPORT"
+
+          git add "$REPORT"
           git diff --cached --quiet && echo "No changes to commit" && exit 0
 
           git commit -m "chore: update pending comment moderation report (${{ steps.check.outputs.pending_count }} pending)"
@@ -59,7 +67,7 @@ jobs:
             # Use --body-file so markdown with quotes, backticks, or $ signs is safe.
             gh pr create \
               --title "Pending comments need moderation (${{ steps.check.outputs.pending_count }} pending)" \
-              --body-file "${{ steps.check.outputs.report_path }}" \
+              --body-file "$REPORT" \
               --base main \
               --head "$BRANCH"
           fi
