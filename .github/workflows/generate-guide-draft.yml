@@ -38,8 +38,8 @@ jobs:
       - name: Generate guide content
         id: gen
         env:
-          OPENAI_API_KEY:    ${{ secrets.OPENAI_API_KEY    || '' }}
-          GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY    || '' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/generate-guide.py
 
       - name: Create branch, commit, and open PR
@@ -78,13 +78,17 @@ jobs:
 
       - name: Job summary
         if: always()
+        env:
+          GEN_FAILURE: ${{ steps.gen.outputs.failure_reason }}
+          GEN_SLUG: ${{ steps.gen.outputs.slug }}
+          GEN_TITLE: ${{ steps.gen.outputs.title }}
         run: |
           echo "## Guide Generation Run" >> $GITHUB_STEP_SUMMARY
           echo "Date: $(date -u +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
-          if [ -n "${{ steps.gen.outputs.failure_reason }}" ]; then
-            echo "**Generation failed:** ${{ steps.gen.outputs.failure_reason }}" >> $GITHUB_STEP_SUMMARY
-          elif [ -n "${{ steps.gen.outputs.slug }}" ]; then
-            echo "**Draft PR opened for:** ${{ steps.gen.outputs.title }}" >> $GITHUB_STEP_SUMMARY
+          if [ -n "$GEN_FAILURE" ]; then
+            echo "**Generation failed:** $GEN_FAILURE" >> $GITHUB_STEP_SUMMARY
+          elif [ -n "$GEN_SLUG" ]; then
+            echo "**Draft PR opened for:** $GEN_TITLE" >> $GITHUB_STEP_SUMMARY
           else
             echo "No new draft generated (queue empty or all topics already published)." >> $GITHUB_STEP_SUMMARY
           fi
