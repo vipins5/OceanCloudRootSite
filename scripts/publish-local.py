@@ -124,6 +124,7 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
         print(f"  [add] {loc}")
 
     if changed_count and not dry_run:
+        ET.indent(root, space="  ")
         xml_str = ET.tostring(root, encoding="unicode", xml_declaration=False)
         SITEMAP.write_text('<?xml version="1.0" encoding="UTF-8"?>\n' + xml_str + "\n", encoding="utf-8")
     return changed_count

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint External Sharing: Complete Admin Guide | OceanCloud</title>
+  <meta name="description" content="Configure SharePoint external sharing safely: tenant and site settings, guest links, Entra B2B, domain controls, and PowerShell examples." />
+  <meta name="keywords" content="SharePoint external sharing, SharePoint guest access, Microsoft Entra B2B, SharePoint PowerShell external sharing" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://www.oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="SharePoint External Sharing: Complete Admin Guide" />
+  <meta property="og:description" content="A practical admin guide to secure SharePoint external sharing with tenant controls, site policies, Entra B2B, and PowerShell." />
+  <meta property="og:url"         content="https://www.oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
+  <meta property="og:image"       content="https://www.oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://www.oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://www.oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#article",
+        "headline": "SharePoint External Sharing: Complete Admin Guide",
+        "url": "https://www.oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide",
+        "datePublished": "2026-05-25",
+        "dateModified": "2026-05-25",
+        "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
+        "description": "Configure SharePoint external sharing safely with tenant controls, site policies, Entra B2B, and PowerShell.",
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview", "name": "Overview of external sharing in SharePoint and OneDrive" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off", "name": "Manage sharing settings for SharePoint and OneDrive" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration", "name": "SharePoint and OneDrive integration with Microsoft Entra B2B" }
+        ],
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint External Sharing", "item": "https://www.oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}.article-wrap{max-width:800px;margin:0 auto;}.article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07)}.art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(0,180,216,.12);color:#00b4d8}.art-date,.art-read{font-size:.8rem;color:var(--text-dim)}.article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85}.article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:44px 0 14px;color:var(--white);letter-spacing:-.03em}.article-wrap p,.article-wrap li{color:var(--text-mid);line-height:1.85}.article-wrap ul{padding-left:22px}.article-wrap strong{color:var(--white)}.article-wrap a{color:#00b4d8}.art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0}.art-callout p{margin:0;color:#a8d8ea;font-size:.92rem}.art-table-wrap{overflow-x:auto;margin:24px 0}.art-table{width:100%;border-collapse:collapse;font-size:.87rem}.art-table th{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:700;padding:10px 14px;text-align:left}.art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top}.art-image{margin:28px 0;padding:24px;border:1px solid rgba(0,180,216,.18);border-radius:16px;background:rgba(0,180,216,.05);text-align:center}.art-image img{max-width:220px;width:55%;height:auto}.art-image figcaption{margin-top:12px;color:var(--text-dim);font-size:.82rem}.ms-ref{display:inline-block;font-size:.78rem;color:#00b4d8;text-decoration:none;margin:4px 0 18px}.ms-ref:hover{text-decoration:underline}.art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px}.related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08)}.related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>External Sharing</span></nav>
+      <h1>SharePoint External Sharing: <span class="grad-text">Complete Admin Guide</span></h1>
+      <p>Tenant settings, site controls, guest links, Microsoft Entra B2B, and PowerShell checks for safer collaboration.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">SharePoint</span>
+        <span class="art-date">May 25, 2026</span>
+        <span class="art-read">4 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint external sharing lets employees collaborate with clients, vendors, and partners without copying files into email. The risk is that the same convenience can expose confidential content if tenant settings, site settings, link defaults, and guest lifecycle controls are not aligned.</p>
+
+      <figure class="art-image">
+        <img src="../assets/news/sharepoint.svg" alt="SharePoint collaboration illustration" loading="lazy" />
+        <figcaption>External sharing should be enabled by policy, not by accident.</figcaption>
+      </figure>
+
+      <h2>How external sharing works</h2>
+      <p>SharePoint uses organization-level and site-level sharing settings. The most restrictive setting always wins: if the tenant blocks anonymous links, a site cannot enable them; if a site is internal-only, users cannot invite guests even when the tenant allows it.</p>
+
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Option</th><th>Use case</th><th>Admin guidance</th></tr></thead>
+        <tbody>
+          <tr><td>Anyone links</td><td>Unauthenticated access by link</td><td>Avoid for business data; require expiry if used.</td></tr>
+          <tr><td>New and existing guests</td><td>Client or partner collaboration</td><td>Best default for controlled collaboration.</td></tr>
+          <tr><td>Existing guests only</td><td>IT-managed guest access</td><td>Use when guests must be pre-approved in Entra ID.</td></tr>
+          <tr><td>Only people in your organization</td><td>Internal sites</td><td>Use for HR, finance, legal, executive, and sensitive project sites.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Recommended baseline</h2>
+      <p>Set the tenant to <strong>New and existing guests</strong>, set the default link to <strong>Specific people</strong>, and disable external sharing on sensitive sites. For client project sites, use named owners, guest expiry, sensitivity labels, and monthly access reviews.</p>
+      <div class="art-callout"><p><strong>Admin note:</strong> If you disable external sharing and later re-enable it, previous guests can regain access. Remove site-level guest permissions first when you are closing access permanently.</p></div>
+
+      <h2>Microsoft Entra B2B integration</h2>
+      <p>Modern SharePoint sharing relies on Microsoft Entra B2B so guests are represented in your directory and can be governed by external collaboration settings. This makes conditional access, domain allow/deny rules, and guest reviews more consistent across Microsoft 365.</p>
+
+      <h2>PowerShell configuration</h2>
+      <p>Use the SharePoint Online Management Shell for tenant and site checks. Test first, then document every change.</p>
+      <div class="code-label">PowerShell 7 &mdash; review and configure external sharing</div>
+      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+
+# Review tenant-level sharing posture
+Get-SPOTenant | Select-Object SharingCapability, DefaultSharingLinkType, EnableAzureADB2BIntegration
+
+# Set a controlled tenant baseline
+Set-SPOTenant -SharingCapability ExternalUserSharingOnly
+Set-SPOTenant -DefaultSharingLinkType SpecificPeople
+Set-SPOTenant -RequireAnonymousLinksExpireInDays 30
+
+# Enable guest sharing for one collaboration site
+Set-SPOSite -Identity "https://contoso.sharepoint.com/sites/client-project" `
+  -SharingCapability ExternalUserSharingOnly</pre></div>
+
+      <h2>Operating controls</h2>
+      <ul>
+        <li>Assign two accountable site owners for every externally shared site.</li>
+        <li>Use sensitivity labels and DLP policies for regulated content.</li>
+        <li>Run access reviews for guests and remove accounts when the relationship ends.</li>
+        <li>Audit Anyone links and sites where sharing has drifted from policy.</li>
+      </ul>
+
+      <a href="https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: External sharing overview</a><br />
+      <a href="https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: Manage sharing settings</a><br />
+      <a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: SharePoint and Entra B2B integration</a>
+
+      <div class="art-cta-box">
+        <h3>Need help securing external collaboration?</h3>
+        <p>OceanCloud can review your SharePoint sharing settings, guest access model, and site-level controls before sensitive content is exposed.</p>
+        <a href="../contact" class="btn btn-primary">Book a Free Call</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="../about">About Us</a></li><li><a href="../case-studies">Case Studies</a></li><li><a href="../news">News</a></li><li><a href="../archive">News Archive</a></li><li><a href="../guides">Guides &amp; Tips</a></li><li><a href="../faq">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="../services">SharePoint Development</a></li><li><a href="../services">Teams Configuration</a></li><li><a href="../services">M365 Migration</a></li><li><a href="../services">Power Platform</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a href="../privacy">Privacy Policy</a></li><li><a href="../terms">Terms of Service</a></li><li><a href="../cookies">Cookie Policy</a></li><li><a href="../contact">Contact Us</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=3"></script>
+</body>
+</html>

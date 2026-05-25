@@ -526,5 +526,17 @@
     "url": "articles/news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-",
     "dateDisplay": "February 04, 2026",
     "dateSort": ""
+  },
+  {
+    "id": "articles-guide-sharepoint-external-sharing-complete-admin-guide",
+    "type": "guide",
+    "tag": "Guide",
+    "title": "SharePoint External Sharing: Complete Admin Guide",
+    "heading": "SharePoint External Sharing: Complete Admin Guide",
+    "excerpt": "Configure SharePoint external sharing safely with tenant controls, site policies, guest links, Microsoft Entra B2B, domain restrictions, and PowerShell validation.",
+    "body": "SharePoint External Sharing: Complete Admin Guide | OceanCloud May 25, 2026 Tenant settings, site controls, guest links, Microsoft Entra B2B, and PowerShell checks for safer collaboration. SharePoint external sharing lets employees collaborate with clients, vendors, and partners without copying files into email. Configure organization-level and site-level sharing settings, set default links to Specific people, control Anyone links, review Entra B2B integration, and use PowerShell with Get-SPOTenant, Set-SPOTenant, and Set-SPOSite to validate and apply policy.",
+    "url": "articles/guide-sharepoint-external-sharing-complete-admin-guide",
+    "dateDisplay": "May 25, 2026",
+    "dateSort": ""
   }
 ]
