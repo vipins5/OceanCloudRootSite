@@ -67,7 +67,7 @@
   }
   </script>
   <!-- EmailJS SDK — https://www.emailjs.com -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <style>
   /* ============================================================
@@ -1149,7 +1149,9 @@
       message:      message,
     };
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, {
+      publicKey: EMAILJS_PUBLIC_KEY,
+    })
       .then(() => {
         showSuccessScreen(name, email, company, service, size);
       })
