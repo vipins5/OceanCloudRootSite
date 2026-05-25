@@ -45,7 +45,7 @@
     if (document.querySelector('link[data-oc-comments]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '../css/comments.css?v=2';
+    link.href = '../css/comments.css?v=3';
     link.setAttribute('data-oc-comments', 'true');
     document.head.appendChild(link);
   }
@@ -89,7 +89,7 @@
       return '<span class="oc-provider-icon oc-ms-icon" aria-hidden="true"><span></span><span></span><span></span><span></span></span>';
     }
     if (provider === 'google') {
-      return '<span class="oc-provider-icon oc-google-icon" aria-hidden="true">G</span>';
+      return '<span class="oc-provider-icon oc-google-icon" aria-hidden="true"><img src="https://developers.google.com/static/identity/images/g-logo.png" alt="" loading="lazy" /></span>';
     }
     if (provider === 'github') {
       return '<span class="oc-provider-icon oc-github-icon" aria-hidden="true">GH</span>';
