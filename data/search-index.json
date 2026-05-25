@@ -533,8 +533,8 @@
     "tag": "Guide",
     "title": "SharePoint External Sharing: Complete Admin Guide",
     "heading": "SharePoint External Sharing: Complete Admin Guide",
-    "excerpt": "Configure SharePoint external sharing safely with tenant controls, site policies, guest links, Microsoft Entra B2B, domain restrictions, and PowerShell validation.",
-    "body": "SharePoint External Sharing: Complete Admin Guide | OceanCloud May 25, 2026 Tenant settings, site controls, guest links, Microsoft Entra B2B, and PowerShell checks for safer collaboration. SharePoint external sharing lets employees collaborate with clients, vendors, and partners without copying files into email. Configure organization-level and site-level sharing settings, set default links to Specific people, control Anyone links, review Entra B2B integration, and use PowerShell with Get-SPOTenant, Set-SPOTenant, and Set-SPOSite to validate and apply policy.",
+    "excerpt": "Complete SharePoint external sharing guide covering tenant and site settings, Entra B2B, link defaults, governance, auditing, and PowerShell cleanup for unique permissions.",
+    "body": "SharePoint External Sharing: Complete Admin Guide | OceanCloud May 25, 2026 SharePoint external sharing is one of the most useful collaboration features in Microsoft 365 and one of the easiest to misconfigure. This guide covers tenant settings, site settings, link defaults, Microsoft Entra B2B guest identity, domain restrictions, governance baselines, audit reports, site-owner operating rules, and PowerShell commands for configuration and verification. Includes SharePoint Online Management Shell examples for Get-SPOTenant, Set-SPOTenant, Get-SPOSite, Set-SPOSite, domain allow lists, and PnP.PowerShell scripts to report external users, find unique permissions, and reset unique permissions across lists, libraries, folders, and items in a SharePoint site.",
     "url": "articles/guide-sharepoint-external-sharing-complete-admin-guide",
     "dateDisplay": "May 25, 2026",
     "dateSort": ""

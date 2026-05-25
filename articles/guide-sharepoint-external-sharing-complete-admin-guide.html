@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0077b6" />
 
   <title>SharePoint External Sharing: Complete Admin Guide | OceanCloud</title>
-  <meta name="description" content="Configure SharePoint external sharing safely: tenant and site settings, guest links, Entra B2B, domain controls, and PowerShell examples." />
+  <meta name="description" content="Complete SharePoint external sharing guide covering tenant settings, site controls, guest links, Entra B2B, governance, auditing, and PowerShell." />
   <meta name="keywords" content="SharePoint external sharing, SharePoint guest access, Microsoft Entra B2B, SharePoint PowerShell external sharing" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
@@ -44,7 +44,7 @@
         "dateModified": "2026-05-25",
         "author": { "@id": "https://www.oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://www.oceancloudconsults.com/#organization" },
-        "description": "Configure SharePoint external sharing safely with tenant controls, site policies, Entra B2B, and PowerShell.",
+        "description": "Complete SharePoint external sharing guide covering tenant settings, site controls, guest links, Entra B2B, governance, auditing, and PowerShell.",
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview", "name": "Overview of external sharing in SharePoint and OneDrive" },
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off", "name": "Manage sharing settings for SharePoint and OneDrive" },
@@ -110,64 +110,242 @@
       <div class="article-meta">
         <span class="art-tag">SharePoint</span>
         <span class="art-date">May 25, 2026</span>
-        <span class="art-read">4 min read</span>
+        <span class="art-read">15 min read</span>
       </div>
 
-      <p class="article-intro">SharePoint external sharing lets employees collaborate with clients, vendors, and partners. The risk is that the same convenience can expose confidential content if tenant settings, site settings, link defaults, and guest lifecycle controls are not aligned.</p>
+      <p class="article-intro">SharePoint external sharing is one of the most useful and most misunderstood collaboration features in Microsoft 365. It allows employees to work with clients, vendors, contractors, auditors, and partners without emailing document copies or creating unmanaged file stores. The challenge is that external sharing is controlled by several layers at once: organization settings, site settings, link defaults, Microsoft Entra B2B rules, guest lifecycle policies, and the permissions already present in the site.</p>
 
-      <figure class="art-image">
-        <img src="../assets/news/sharepoint.svg" alt="SharePoint collaboration illustration" loading="lazy" />
-        <figcaption>External sharing should be enabled by policy, not by accident.</figcaption>
-      </figure>
+      <p>When those layers are planned together, SharePoint becomes a secure collaboration workspace. When they are not, a tenant can quietly accumulate anonymous links, orphaned guest accounts, over-permissioned project sites, and content that Microsoft 365 Copilot can surface to users who technically have access but should not. This guide explains how SharePoint external sharing works, how to choose the right settings, and how to validate the configuration with PowerShell.</p>
 
-      <h2>How external sharing works</h2>
-      <p>SharePoint uses organization-level and site-level sharing settings. The most restrictive setting always wins: if the tenant blocks anonymous links, a site cannot enable them; if a site is internal-only, users cannot invite guests even when the tenant allows it.</p>
+      <h2>What SharePoint external sharing actually controls</h2>
+      <p>External sharing controls whether people outside your organization can access SharePoint sites, files, folders, lists, and list items. It is not a single switch. SharePoint has an organization-level external sharing setting, each site has its own external sharing setting, and individual sharing links have their own link type and permission level. The most restrictive setting always wins. If the tenant allows guest sharing but a site is set to internal-only, users cannot invite guests to that site. If the tenant blocks Anyone links, a site owner cannot make an anonymous link work from that site.</p>
+
+      <p>OneDrive uses the same sharing concepts, but OneDrive can only be as permissive as SharePoint or more restrictive. This matters because many external sharing incidents begin with a file link, not with a full site invitation. A user may think they are sharing one spreadsheet, while the link setting or folder inheritance exposes more than intended. Good governance starts by setting safe defaults that guide users toward named, trackable sharing.</p>
+
+      <div class="art-callout"><p><strong>Key principle:</strong> Allow external collaboration where the business needs it, but make it deliberate. Sensitive internal sites should be internal-only, while client and partner sites should be designed for external access from the start.</p></div>
+
+      <h2>The four external sharing levels</h2>
+      <p>Microsoft gives administrators four main sharing levels. The correct setting depends on the sensitivity of the content and the maturity of your guest management process. Avoid choosing the most permissive setting just because it reduces support tickets. The better pattern is to enable business collaboration while making the secure option the easiest option for users.</p>
 
       <div class="art-table-wrap"><table class="art-table">
-        <thead><tr><th>Option</th><th>Use case</th><th>Admin guidance</th></tr></thead>
+        <thead><tr><th>Sharing level</th><th>What it allows</th><th>Recommended use</th></tr></thead>
         <tbody>
-          <tr><td>Anyone links</td><td>Unauthenticated access by link</td><td>Avoid for business data; require expiry if used.</td></tr>
-          <tr><td>New and existing guests</td><td>Client or partner collaboration</td><td>Best default for controlled collaboration.</td></tr>
-          <tr><td>Existing guests only</td><td>IT-managed guest access</td><td>Use when guests must be pre-approved in Entra ID.</td></tr>
-          <tr><td>Only people in your organization</td><td>Internal sites</td><td>Use for HR, finance, legal, executive, and sensitive project sites.</td></tr>
+          <tr><td><strong>Anyone</strong></td><td>Links can work for anyone who has the link, without sign-in.</td><td>Use rarely. If allowed, require expiration and view-only permissions.</td></tr>
+          <tr><td><strong>New and existing guests</strong></td><td>Users can invite new guests, who must authenticate or verify identity.</td><td>Best baseline for controlled client and partner collaboration.</td></tr>
+          <tr><td><strong>Existing guests only</strong></td><td>Users can share only with guests already present in the directory.</td><td>Use when IT or a business owner must pre-approve every external user.</td></tr>
+          <tr><td><strong>Only people in your organization</strong></td><td>No external sharing is allowed.</td><td>Use for HR, finance, legal, executive, regulated, or internal-only sites.</td></tr>
         </tbody>
       </table></div>
 
-      <h2>Recommended baseline</h2>
-      <p>Set the tenant to <strong>New and existing guests</strong>, set the default link to <strong>Specific people</strong>, and disable external sharing on sensitive sites. For client project sites, use named owners, guest expiry, sensitivity labels, and monthly access reviews.</p>
-      <div class="art-callout"><p><strong>Admin note:</strong> If you disable external sharing and later re-enable it, previous guests can regain access. Remove site-level guest permissions first when you are closing access permanently.</p></div>
+      <p>For most organizations, a practical tenant baseline is <strong>New and existing guests</strong>, combined with a default link type of <strong>Specific people</strong>. This allows external collaboration but encourages named invitations instead of broad links. Anonymous Anyone links should be treated as an exception, not a normal way of working. If the business requires them for public documents, configure expiration and limit them to view-only access wherever possible.</p>
 
-      <h2>Microsoft Entra B2B integration</h2>
-      <p>Modern SharePoint sharing relies on Microsoft Entra B2B so guests are represented in your directory and can be governed by external collaboration settings. This makes conditional access, domain allow/deny rules, and guest reviews more consistent across Microsoft 365.</p>
+      <h2>Tenant settings versus site settings</h2>
+      <p>The tenant setting defines the maximum level of sharing available anywhere in SharePoint. Site settings then decide how much of that capability each site can use. This layered model is useful because not every site carries the same risk. A marketing agency collaboration site may need external guests; a finance close site almost certainly should not.</p>
 
-      <h2>PowerShell configuration</h2>
-      <p>Use the SharePoint Online Management Shell for tenant and site checks. Test first, then document changes.</p>
+      <p>A strong model begins with site classification. Put sites into simple categories such as Internal, Confidential, External Collaboration, and Public Content. Then apply a sharing baseline to each category. Internal and Confidential sites should normally be set to <strong>Only people in your organization</strong>. External Collaboration sites can allow new and existing guests. Public Content sites may permit broader link sharing only when the content is approved for public distribution.</p>
+
+      <p>Site owners should not be left to guess. Document what each site type is allowed to do, who approves guest access, how long access lasts, and who reviews membership. When users understand that a client site is the right place to share with clients, they are less likely to create ad hoc sharing links from sensitive internal libraries.</p>
+
+      <h2>Default link settings matter</h2>
+      <p>The default sharing link is the option users see first when they click Share. This one setting has a large effect on behavior. If the default is Anyone with the link, many users will accept it without thinking through the risk. If the default is Specific people, users are nudged toward named recipients, which improves auditability and reduces accidental forwarding.</p>
+
+      <p>Specific people links are the safest default for external sharing because the link works only for the people selected by the sender. If a recipient forwards the message, the forwarded recipient does not automatically gain access. This is different from Anyone links, where possession of the link can be enough to access the content. For sensitive collaboration, the goal is not merely to block sharing; it is to ensure sharing remains attributable and reviewable.</p>
+
+      <p>For internal collaboration, People in your organization links can be useful, but they should still be used with care. Organization-wide links are convenient, yet they create broad access that may not match the business intent. In tenants preparing for Microsoft 365 Copilot, these links deserve extra attention because Copilot respects existing permissions. If a user can access a document through permissions or links, Copilot can potentially reason over that content for that user.</p>
+
+      <h2>Microsoft Entra B2B and guest identity</h2>
+      <p>Modern SharePoint external sharing integrates with Microsoft Entra B2B. The benefit is that external users can be represented as guests in your directory and governed by Entra external collaboration settings. This brings SharePoint sharing closer to the identity model used by Teams, Microsoft 365 Groups, and other Microsoft 365 services.</p>
+
+      <p>With Entra B2B, guests can be subject to policies such as multifactor authentication, conditional access, domain restrictions, and guest lifecycle processes. Users without a work, school, or Microsoft account can still verify with a one-time passcode depending on your configuration. The important administrative point is that SharePoint settings and Entra settings interact. If Entra external collaboration restrictions are more restrictive than SharePoint, the Entra rule prevails.</p>
+
+      <p>Administrators should review domain allow and deny lists in both places. If your organization collaborates only with named partners, consider allowing only approved partner domains. If you need broader collaboration, document who is allowed to invite guests and how those guests are reviewed. External sharing is not complete until guest identity governance is part of the process.</p>
+
+      <h2>Recommended governance baseline</h2>
+      <p>A good baseline balances security, usability, and support workload. Start by setting SharePoint tenant sharing to New and existing guests, unless your organization has a stricter compliance requirement. Set the default sharing link to Specific people. Require Anyone links to expire quickly, and do not allow edit permissions on anonymous links unless a business owner has approved that risk.</p>
+
+      <p>Next, disable external sharing on sensitive sites. HR, finance, legal, executive, security, and acquisition-related sites should generally be internal-only. Create separate external collaboration sites for client or partner work instead of mixing external users into internal departmental sites. This keeps access reviews understandable and makes it easier to archive or close collaboration when the project ends.</p>
+
+      <p>Every externally shared site should have at least two accountable owners. Owners should understand who the guests are, why they need access, when the access expires, and which libraries contain sensitive information. Add a quarterly review rhythm for active guest sites and an offboarding step for completed engagements. If a vendor relationship ends, removing the guest from one document link is not enough; review all sites, groups, and guest accounts associated with that relationship.</p>
+
+      <h2>PowerShell: review and configure sharing</h2>
+      <p>The SharePoint admin center is the best place to understand the settings visually, but PowerShell is better for repeatable checks, documentation, and tenant-wide validation. Use the SharePoint Online Management Shell for tenant and site-level configuration. Always test changes in a non-production site before applying them broadly.</p>
+
       <div class="code-label">PowerShell 7 &mdash; review and configure external sharing</div>
-      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+      <div class="code-block"><pre>Install-Module Microsoft.Online.SharePoint.PowerShell -Scope CurrentUser
+
+Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
 
 # Review tenant-level sharing posture
-Get-SPOTenant | Select-Object SharingCapability, DefaultSharingLinkType, EnableAzureADB2BIntegration
+Get-SPOTenant | Select-Object `
+  SharingCapability, `
+  DefaultSharingLinkType, `
+  RequireAnonymousLinksExpireInDays, `
+  EnableAzureADB2BIntegration
 
 # Set a controlled tenant baseline
 Set-SPOTenant -SharingCapability ExternalUserSharingOnly
 Set-SPOTenant -DefaultSharingLinkType SpecificPeople
 Set-SPOTenant -RequireAnonymousLinksExpireInDays 30
 
-# Enable guest sharing for one collaboration site
+# Disable external sharing for a sensitive site
+Set-SPOSite -Identity "https://contoso.sharepoint.com/sites/finance" `
+  -SharingCapability Disabled
+
+# Enable guest sharing for a client collaboration site
 Set-SPOSite -Identity "https://contoso.sharepoint.com/sites/client-project" `
   -SharingCapability ExternalUserSharingOnly</pre></div>
 
-      <h2>Operating controls</h2>
+      <p>The `SharingCapability` values are the practical controls most administrators use: `Disabled` for internal-only sites, `ExternalUserSharingOnly` for authenticated guest sharing, `ExistingExternalUserSharingOnly` when guests must already exist, and `ExternalUserAndGuestSharing` when anonymous links are permitted. Use the least permissive value that still supports the business process.</p>
+
+      <h2>PowerShell: audit site sharing settings</h2>
+      <p>Configuration is only half the job. The other half is detecting drift. Site owners may request temporary exceptions, new sites may be created with different defaults, and old collaboration spaces may remain open long after the project ends. A simple report helps administrators identify sites where sharing is enabled and compare them with the approved site register.</p>
+
+      <div class="code-label">PowerShell 7 &mdash; export external sharing settings by site</div>
+      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+
+Get-SPOSite -Limit All | Select-Object `
+  Url, `
+  Title, `
+  Template, `
+  SharingCapability, `
+  Owner, `
+  StorageUsageCurrent | Export-Csv ".\sharepoint-sharing-settings.csv" -NoTypeInformation</pre></div>
+
+      <p>Review the export for sensitive templates or business units where sharing is not expected. A finance or HR site with external sharing enabled should trigger a review. A client project site with no named owner should also trigger a review. The goal is not to eliminate external sharing, but to ensure every externally shared site has a business reason, an owner, and an end date.</p>
+
+      <h2>Security controls for external collaboration</h2>
+      <p>External sharing should be supported by additional controls. Use sensitivity labels to classify sites and files, and use data loss prevention policies where regulated information is involved. If users need to share view-only files, consider blocking download so recipients can read content without taking a local copy. Use guest expiration for project-based collaboration, and require owners to confirm whether guest access is still needed.</p>
+
+      <p>Domain restrictions are useful when collaboration is limited to known partners. For example, a legal matter site may allow guests only from a specific law firm domain. A construction project site may allow several approved vendor domains. Domain restrictions should be documented carefully, because they affect support requests and may interact with Microsoft Entra external collaboration settings.</p>
+
+      <p>Audit logs are essential when investigating sharing events. Review who created a sharing link, what was shared, whether a guest accepted an invitation, and whether access was later removed. For larger tenants, combine audit review with scheduled exports of site sharing capability, guest users, and sensitivity label coverage. This gives security and compliance teams a defensible view of external collaboration risk.</p>
+
+      <h2>Common mistakes to avoid</h2>
       <ul>
-        <li>Assign two accountable site owners for every externally shared site.</li>
-        <li>Use sensitivity labels and DLP policies for regulated content.</li>
-        <li>Run access reviews for guests and remove accounts when the relationship ends.</li>
-        <li>Audit Anyone links and sites where sharing has drifted from policy.</li>
+        <li><strong>Using Anyone links as the default:</strong> They are convenient but hard to attribute and easy to forward.</li>
+        <li><strong>Mixing internal and external work in one site:</strong> Create separate collaboration sites when guest access is required.</li>
+        <li><strong>Forgetting Teams-connected sites:</strong> Guest access in Teams, Microsoft 365 Groups, and SharePoint are connected operationally.</li>
+        <li><strong>Leaving guests after a project ends:</strong> Guest access should have an owner, review date, and offboarding process.</li>
+        <li><strong>Ignoring Copilot readiness:</strong> Copilot respects permissions, so overshared files become discoverable in new ways.</li>
       </ul>
 
+      <h2>Practical rollout plan</h2>
+      <p>Begin with discovery. Export current site sharing settings, identify externally shared sites, and compare them with known business processes. Next, define the target policy: tenant sharing level, default link type, Anyone link rules, guest expiration, approved domains, and site classification rules. Then remediate high-risk sites first, especially sites that contain regulated or executive content.</p>
+
+      <p>After remediation, communicate the new model to site owners. Explain when to use a client collaboration site, when to request a new external site, and how to stop sharing when work ends. Finally, automate review. A monthly report of externally shared sites and a quarterly guest access review will prevent drift from returning.</p>
+
+        <h2>Policy Model for Real Tenants</h2>
+        <p>A policy only works if site owners can understand it. Avoid a twenty-page external sharing policy that no one reads. Instead, create a small number of site classifications and connect each one to a clear sharing rule. An <strong>Internal</strong> site allows employees only. A <strong>Controlled External</strong> site allows authenticated guests, but only with named owners and quarterly review. A <strong>Partner Workspace</strong> allows approved partner domains and has a project end date. A <strong>Public Asset</strong> site contains content approved for public distribution and may allow broader links under strict expiry rules.</p>
+
+        <p>This model should be part of site provisioning. When a new SharePoint site is requested, the requester should identify the data sensitivity, external audience, business owner, expected end date, and whether Teams membership is required. If the site is connected to Teams, remember that adding a guest to the team normally gives that guest access to the connected SharePoint files as well. Sometimes that is correct; sometimes the guest should receive access only to a specific document library or file set.</p>
+
+        <p>For departments such as finance, HR, legal, and executive leadership, the default answer should be internal-only. If those teams need to collaborate externally, create a dedicated external workspace with limited content rather than opening the core department site. This keeps accidental oversharing away from payroll files, legal matter records, board materials, contracts, and commercially sensitive planning documents.</p>
+
+        <h2>PowerShell: Report External Users in a Site</h2>
+        <p>Before changing sharing settings, report who already has access. The script below lists external-looking users from a SharePoint site. It is not a complete identity governance report, but it is a useful starting point for site owners because it exposes guests and external claims that may not be visible in day-to-day use.</p>
+
+        <div class="code-label">PowerShell 7 &mdash; report external users in a SharePoint site</div>
+        <div class="code-block"><pre>Install-Module PnP.PowerShell -Scope CurrentUser
+
+    $siteUrl = "https://contoso.sharepoint.com/sites/client-project"
+    Connect-PnPOnline -Url $siteUrl -Interactive
+
+    Get-PnPUser | Where-Object {
+      $_.LoginName -match "#ext#" -or
+      $_.Email -notmatch "@contoso\.com$"
+    } | Select-Object Title, Email, LoginName, IsSiteAdmin |
+      Export-Csv ".\external-users-client-project.csv" -NoTypeInformation</pre></div>
+
+        <p>Review the CSV with the site owner. Remove users who no longer have a business reason to access the site, and document any guests that must remain. Do not rely only on the display name; verify the email address, domain, and the project or contract that justifies access.</p>
+
+        <h2>PowerShell: Find Unique Permissions</h2>
+        <p>External sharing risk is not limited to tenant settings. Unique permissions inside a site can make access difficult to understand. A document library may inherit permissions from the site, but a folder or item inside that library may have broken inheritance. Those exceptions are where accidental exposure often hides. Before resetting anything, export a report.</p>
+
+        <div class="code-label">PowerShell 7 &mdash; find lists and items with unique permissions</div>
+        <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
+    Connect-PnPOnline -Url $siteUrl -Interactive
+
+    $results = @()
+    $lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder
+
+    foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
+      if ($list.HasUniqueRoleAssignments) {
+        $results += [pscustomobject]@{
+          Scope = "List"
+          List  = $list.Title
+          Url   = $list.RootFolder.ServerRelativeUrl
+        }
+      }
+
+      $items = Get-PnPListItem -List $list -PageSize 1000 `
+        -Includes HasUniqueRoleAssignments, FieldValuesAsText
+
+      foreach ($item in $items | Where-Object { $_.HasUniqueRoleAssignments }) {
+        $results += [pscustomobject]@{
+          Scope = "Item"
+          List  = $list.Title
+          Url   = $item.FieldValuesAsText.FileRef
+        }
+      }
+    }
+
+    $results | Export-Csv ".\unique-permissions-report.csv" -NoTypeInformation</pre></div>
+
+        <p>This report should be reviewed before cleanup. Some unique permissions are intentional: a legal folder restricted to counsel, a vendor folder limited to one partner, or an executive document set. Others are leftovers from one-off sharing. The report gives you the evidence needed to separate valid exceptions from historical clutter.</p>
+
+        <h2>PowerShell: Remove Unique Permissions Across a Site</h2>
+        <p>Resetting unique permissions across an entire site is powerful and risky. It forces lists, libraries, folders, and items back to inherited permissions. Use it only after exporting a report, confirming the desired site-level permissions, and getting approval from the business owner. Run it first in report-only mode or on a copy of the site if the content is sensitive.</p>
+
+        <div class="art-callout"><p><strong>Warning:</strong> This script removes custom permissions. If a folder was intentionally restricted, resetting inheritance will broaden or change access based on the parent. Review the CSV report and take a backup of critical permission assignments before running it.</p></div>
+
+        <div class="code-label">PowerShell 7 &mdash; reset unique permissions for lists and items</div>
+        <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
+    Connect-PnPOnline -Url $siteUrl -Interactive
+
+    $ctx = Get-PnPContext
+    $lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder
+
+    foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
+      Write-Host "Checking list:" $list.Title
+
+      if ($list.HasUniqueRoleAssignments) {
+        Write-Host "  Reset list inheritance:" $list.Title -ForegroundColor Yellow
+        $list.ResetRoleInheritance()
+        $list.Update()
+        $ctx.ExecuteQuery()
+      }
+
+      $items = Get-PnPListItem -List $list -PageSize 1000 `
+        -Includes HasUniqueRoleAssignments, FieldValuesAsText
+
+      foreach ($item in $items | Where-Object { $_.HasUniqueRoleAssignments }) {
+        $path = $item.FieldValuesAsText.FileRef
+        Write-Host "  Reset item inheritance:" $path -ForegroundColor Yellow
+        $item.ResetRoleInheritance()
+        $item.Update()
+        $ctx.ExecuteQuery()
+      }
+    }
+
+    Write-Host "Unique permission reset complete for $siteUrl" -ForegroundColor Green</pre></div>
+
+        <p>After running the reset, validate access with a test user from each key audience: a site owner, a member, a visitor, and a guest if the site is externally shared. Confirm that libraries still inherit correctly, that sensitive folders are not accidentally visible, and that any required exceptions are recreated deliberately rather than left as undocumented inheritance breaks.</p>
+
+        <h2>Troubleshooting Guest Access</h2>
+        <p>Guest access problems usually come from mismatched settings. If a user cannot invite an external person, check the site sharing setting first, then the tenant setting, then Microsoft Entra external collaboration restrictions. If the site is internal-only, changing the link type will not help. If Entra blocks the recipient domain, SharePoint cannot override that rule. If only existing guests are allowed, the recipient must already exist as a guest before the SharePoint invitation works.</p>
+
+        <p>If a guest receives a verification code but still cannot open the content, confirm that the link was sent to the same email address the guest is using. Specific people links are identity-bound. Forwarding the email to another mailbox, signing in with a different account, or using a shared mailbox can fail by design. Reshare with the correct address rather than weakening the link type.</p>
+
+        <h2>Ongoing Operations</h2>
+        <p>External sharing needs a regular operating rhythm. A monthly report should show all sites where external sharing is enabled, the site owner, the sharing capability, and whether the site has a valid business purpose. A second report should list guests, their domains, and the sites or groups where they have access. Even a simple CSV reviewed consistently is better than waiting for a security incident.</p>
+
+        <p>For each externally shared site, ask three questions: does the business still need external collaboration, are the current guests still correct, and is the content still appropriate for external access? If the answer to any question is no, remove access or move the content. Align this review with audits, vendor offboarding, major migrations, and Copilot readiness work.</p>
+
       <a href="https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: External sharing overview</a><br />
+      <a href="https://support.microsoft.com/en-us/office/external-or-guest-sharing-in-onedrive-sharepoint-and-lists-7aa070b8-d094-4921-9dd9-86392f2a79e7" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft Support: External or guest sharing</a><br />
       <a href="https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: Manage sharing settings</a><br />
-      <a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: SharePoint and Entra B2B integration</a>
+      <a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Microsoft: SharePoint and Entra B2B integration</a><br />
+      <a href="https://www.sharepointdiary.com/2017/04/how-to-enable-external-sharing-in-sharepoint-online.html" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint Diary: Enable external sharing with PowerShell</a>
 
       <div class="art-cta-box">
         <h3>Need help securing external collaboration?</h3>
