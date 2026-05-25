@@ -31,6 +31,7 @@
   }
 
   async function moderate(id, action) {
+    if (action === 'delete' && !confirm('Delete this comment permanently?')) return;
     await request('/comments/admin/moderate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -53,6 +54,7 @@
           '<div class="comment-actions">' +
           '<button data-action="approve" data-id="' + comment.id + '">Approve</button>' +
           '<button class="reject" data-action="reject" data-id="' + comment.id + '">Reject</button>' +
+          '<button class="delete" data-action="delete" data-id="' + comment.id + '">Delete</button>' +
           '</div>' +
           '</article>';
       }).join('');

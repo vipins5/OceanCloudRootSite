@@ -9,6 +9,7 @@
   var turnstileWidgetId = null;
   var replyTarget = null;
   var THREAD_VISIBLE_REPLIES = 3;
+  var EMOJIS = ['👍','👏','✅','💡','🚀','😊','🙏','🔒','🎉','🔥','⭐','🙌','💯','🤝','👀','📝','⚡','🛠️','📌','📣','❤️','😄','🤔','👌','☕','🌊','📚','🧠','🔎','🏆'];
 
   function slug() {
     var part = window.location.pathname.split('/').pop() || '';
@@ -77,7 +78,7 @@
     if (document.querySelector('link[data-oc-comments]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '../css/comments.css?v=6';
+    link.href = '../css/comments.css?v=7';
     link.setAttribute('data-oc-comments', 'true');
     document.head.appendChild(link);
   }
@@ -198,12 +199,28 @@
   }
 
   function renderComment(item, isReply, replyCount) {
+    var actions = [];
+    if (!isReply && !item.is_deleted) {
+      actions.push('<button type="button" class="oc-comment-reply-btn" data-reply-id="' + item.id + '" data-reply-name="' + escapeHtml(item.display_name) + '">Reply</button>');
+    }
+    if (item.can_delete) {
+      actions.push('<button type="button" class="oc-comment-delete-btn" data-delete-id="' + item.id + '">Delete</button>');
+    }
+    if (!isReply && replyCount) {
+      actions.push('<span>' + replyCount + ' repl' + (replyCount === 1 ? 'y' : 'ies') + '</span>');
+    }
+
     return '<article class="oc-comment' + (isReply ? ' oc-comment-reply' : '') + '" data-comment-id="' + item.id + '">' +
       '<div class="oc-comment-meta"><strong>' + escapeHtml(item.display_name) + '</strong><span>' + escapeHtml(new Date(item.created_at).toLocaleDateString()) + '</span></div>' +
-      '<div class="oc-comment-body">' + renderRichText(item.body) + '</div>' +
-      (!isReply ? '<div class="oc-comment-actions"><button type="button" class="oc-comment-reply-btn" data-reply-id="' + item.id + '" data-reply-name="' + escapeHtml(item.display_name) + '">Reply</button>' +
-        (replyCount ? '<span>' + replyCount + ' repl' + (replyCount === 1 ? 'y' : 'ies') + '</span>' : '') + '</div>' : '') +
+      '<div class="oc-comment-body' + (item.is_deleted ? ' oc-comment-deleted' : '') + '">' + (item.is_deleted ? 'This comment was deleted.' : renderRichText(item.body)) + '</div>' +
+      (actions.length ? '<div class="oc-comment-actions">' + actions.join('') + '</div>' : '') +
       '</article>';
+  }
+
+  function emojiButtons() {
+    return EMOJIS.map(function (emoji) {
+      return '<button type="button" data-emoji="' + emoji + '">' + emoji + '</button>';
+    }).join('');
   }
 
   function renderForm() {
@@ -233,7 +250,7 @@
       '    <button type="button" data-format="emoji">Emoji</button>',
       '  </div>',
       '  <div id="oc-emoji-panel" class="oc-emoji-panel" hidden>',
-      '    <button type="button" data-emoji="👍">👍</button><button type="button" data-emoji="👏">👏</button><button type="button" data-emoji="✅">✅</button><button type="button" data-emoji="💡">💡</button><button type="button" data-emoji="🚀">🚀</button><button type="button" data-emoji="😊">😊</button><button type="button" data-emoji="🙏">🙏</button><button type="button" data-emoji="🔒">🔒</button>',
+      '    ' + emojiButtons(),
       '  </div>',
       '  <textarea id="oc-comment-body" maxlength="2000" rows="5" required placeholder="Add a helpful comment or question..."></textarea>',
       '  <p class="oc-format-note">Supports **bold**, *italic*, `code`, [links](https://...), image URLs, and emoji. All comments are moderated.</p>',
@@ -371,6 +388,18 @@
     }
   }
 
+  async function deleteComment(id) {
+    if (!id) return;
+    if (!confirm('Delete this comment?')) return;
+    try {
+      await api('/comments/' + encodeURIComponent(id), { method: 'DELETE' });
+      var comments = await api('/comments?slug=' + encodeURIComponent(slug()));
+      renderComments(comments.comments || []);
+    } catch (error) {
+      alert(error.message || 'Could not delete comment.');
+    }
+  }
+
   async function init() {
     var wrap = document.querySelector('.article-wrap');
     if (!wrap) return;
@@ -413,6 +442,12 @@
         reply.classList.remove('oc-reply-hidden');
       });
       showButton.remove();
+      return;
+    }
+
+    var deleteButton = event.target.closest('.oc-comment-delete-btn');
+    if (deleteButton) {
+      deleteComment(Number(deleteButton.dataset.deleteId || 0));
     }
   });
 

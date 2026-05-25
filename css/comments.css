@@ -82,6 +82,11 @@
   color: var(--white);
 }
 
+.oc-comment-deleted {
+  color: rgba(255,255,255,.42);
+  font-style: italic;
+}
+
 .oc-comment-body code {
   display: inline-block;
   padding: 1px 6px;
@@ -120,6 +125,7 @@
 }
 
 .oc-comment-reply-btn,
+.oc-comment-delete-btn,
 .oc-comments-show-replies,
 .oc-reply-context button {
   width: auto !important;
@@ -135,6 +141,12 @@
 .oc-comments-show-replies {
   justify-self: start;
   margin-left: 42px;
+}
+
+.oc-comment-delete-btn {
+  color: #fca5a5 !important;
+  border-color: rgba(252,165,165,.28) !important;
+  background: rgba(252,165,165,.06) !important;
 }
 
 .oc-reply-context {
@@ -170,6 +182,12 @@
 }
 
 .oc-comment-toolbar,
+.oc-emoji-panel {
+  max-height: 116px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
 .oc-emoji-panel {
   display: flex;
   align-items: center;

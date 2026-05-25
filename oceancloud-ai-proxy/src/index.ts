@@ -96,7 +96,7 @@ function corsHeaders(origin: string): HeadersInit {
 	return {
 		"Access-Control-Allow-Origin": origin,
 		"Access-Control-Allow-Headers": "Authorization, Content-Type",
-		"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+		"Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
 		"Access-Control-Max-Age": "86400",
 		"Vary": "Origin",
 	};
@@ -239,13 +239,26 @@ async function handleListComments(request: Request, env: Env, origin: string): P
 	if (!env.COMMENTS_DB) return badConfig(origin);
 	const slug = safeSlug(new URL(request.url).searchParams.get("slug"));
 	if (!slug) return jsonResponse({ error: "Missing slug" }, 400, origin);
+	const user = await getSessionUser(request, env);
 	const { results } = await env.COMMENTS_DB.prepare(
-		`SELECT id, parent_id, display_name, body, created_at
+		`SELECT id, parent_id, user_id, display_name, body, created_at
 		 FROM comments
 		 WHERE slug = ? AND status = 'approved'
 		 ORDER BY COALESCE(parent_id, id) ASC, parent_id IS NOT NULL ASC, created_at ASC`,
 	).bind(slug).all();
-	return jsonResponse({ comments: results || [] }, 200, origin);
+	const comments = (results || []).map((row: any) => {
+		const isDeleted = row.body === "[deleted]";
+		return {
+			id: row.id,
+			parent_id: row.parent_id,
+			display_name: row.display_name,
+			body: row.body,
+			created_at: row.created_at,
+			is_deleted: isDeleted,
+			can_delete: Boolean(user?.id && row.user_id === user.id && !isDeleted),
+		};
+	});
+	return jsonResponse({ comments }, 200, origin);
 }
 
 async function handleSession(request: Request, env: Env, origin: string): Promise<Response> {
@@ -314,6 +327,40 @@ async function handleCreateComment(request: Request, env: Env, origin: string): 
 	).run();
 
 	return jsonResponse({ ok: true, status: "pending" }, 201, origin);
+}
+
+async function handleDeleteComment(request: Request, env: Env, origin: string, id: number): Promise<Response> {
+	if (!env.COMMENTS_DB) return badConfig(origin);
+	const user = await getSessionUser(request, env);
+	if (!user) return jsonResponse({ error: "Sign in required" }, 401, origin);
+	if (!id) return jsonResponse({ error: "Missing comment id" }, 400, origin);
+
+	const comment = await env.COMMENTS_DB.prepare(
+		`SELECT id, user_id, parent_id
+		 FROM comments
+		 WHERE id = ? AND status = 'approved'`,
+	).bind(id).first<{ id: number; user_id: number; parent_id: number | null }>();
+
+	if (!comment?.id) return jsonResponse({ error: "Comment not found" }, 404, origin);
+	if (comment.user_id !== user.id) return jsonResponse({ error: "You can only delete your own comments" }, 403, origin);
+
+	if (!comment.parent_id) {
+		const childCount = await env.COMMENTS_DB.prepare(
+			"SELECT COUNT(*) AS count FROM comments WHERE parent_id = ? AND status = 'approved'",
+		).bind(id).first<{ count: number }>();
+
+		if (Number(childCount?.count || 0) > 0) {
+			await env.COMMENTS_DB.prepare(
+				`UPDATE comments
+				 SET display_name = 'Deleted comment', body = '[deleted]', updated_at = datetime('now')
+				 WHERE id = ?`,
+			).bind(id).run();
+			return jsonResponse({ ok: true, deleted: true, preservedThread: true }, 200, origin);
+		}
+	}
+
+	await env.COMMENTS_DB.prepare("DELETE FROM comments WHERE id = ?").bind(id).run();
+	return jsonResponse({ ok: true, deleted: true }, 200, origin);
 }
 
 function oauthStateCookie(state: string): string {
@@ -610,6 +657,11 @@ async function handleAdminModerate(request: Request, env: Env, origin: string): 
 	const payload = await request.json().catch(() => null) as any;
 	const id = Number(payload?.id || 0);
 	const action = String(payload?.action || "");
+	if (id && action === "delete") {
+		await env.COMMENTS_DB.prepare("DELETE FROM comments WHERE parent_id = ?").bind(id).run();
+		await env.COMMENTS_DB.prepare("DELETE FROM comments WHERE id = ?").bind(id).run();
+		return jsonResponse({ ok: true, status: "deleted" }, 200, origin);
+	}
 	const status = action === "approve" ? "approved" : action === "reject" ? "rejected" : "";
 	if (!id || !status) return jsonResponse({ error: "Invalid moderation action" }, 400, origin);
 	await env.COMMENTS_DB.prepare(
@@ -745,6 +797,11 @@ export default {
 
 		if (url.pathname === "/comments" && request.method === "POST") {
 			return handleCreateComment(request, env, origin);
+		}
+
+		if (url.pathname.startsWith("/comments/") && request.method === "DELETE") {
+			const id = Number(url.pathname.split("/").pop() || 0);
+			return handleDeleteComment(request, env, origin, id);
 		}
 
 		if (url.pathname === "/comments/admin" && request.method === "GET") {
