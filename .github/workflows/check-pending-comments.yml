@@ -1,67 +1,77 @@
 name: Check Pending Comments
 
-# Opens or updates a PR when the comments moderation queue changes.
-# Runs three times per day and can also be triggered manually.
 on:
   schedule:
-    - cron: '0 2,10,18 * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write
-  pull-requests: write
 
 jobs:
   pending-comments:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Generate pending comments report
-        id: pending-comments
+      - name: Check pending comments
+        id: check
         env:
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
-          COMMENTS_API_BASE: https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev
         run: python scripts/check-pending-comments.py
 
-      - name: No pending comments
-        if: steps.pending-comments.outputs.has_pending != 'true'
-        run: echo "No pending comments. Skipping PR creation."
+      - name: Create or update pull request
+        if: steps.check.outputs.has_pending == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="pending-comments-moderation"
 
-      - name: Create or update moderation PR
-        if: steps.pending-comments.outputs.has_pending == 'true'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/pending-comments
-          delete-branch: true
-          commit-message: "chore: update pending comments report"
-          title: "Pending comments need moderation"
-          body: |
-            The scheduled comments check found a change in the pending comment moderation queue.
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-            Open the moderation page to approve or reject comments:
-            https://oceancloudconsults.com/comments-admin.html
+          # Reuse the same branch so we never flood with PRs.
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            git fetch origin "$BRANCH"
+            git checkout -B "$BRANCH" "origin/$BRANCH"
+          else
+            git checkout -b "$BRANCH"
+          fi
 
-            This PR is only a notification/report. It does not approve comments.
-          add-paths: |
-            data/comment-moderation/pending-comments.md
+          git add data/comment-moderation/pending-comments.md
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
 
-      - name: Job summary
+          git commit -m "chore: update pending comment moderation report (${{ steps.check.outputs.pending_count }} pending)"
+          git push origin "$BRANCH"
+
+          # Only open a new PR if one does not exist yet.
+          EXISTING=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            echo "PR #$EXISTING already open - report updated on branch."
+          else
+            # Use --body-file so markdown with quotes, backticks, or $ signs is safe.
+            gh pr create \
+              --title "Pending comments need moderation (${{ steps.check.outputs.pending_count }} pending)" \
+              --body-file "${{ steps.check.outputs.report_path }}" \
+              --base main \
+              --head "$BRANCH"
+          fi
+
+      - name: Write job summary
         if: always()
         run: |
-          echo "## Pending Comments Check" >> $GITHUB_STEP_SUMMARY
-          echo "Run date: $(date -u +%Y-%m-%d\ %H:%M\ UTC)" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.pending-comments.outputs.has_pending }}" = "true" ]; then
-            echo "Pending report generated for ${{ steps.pending-comments.outputs.pending_count }} comment(s)." >> $GITHUB_STEP_SUMMARY
+          echo "## Pending Comments Check" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Run date: $(date -u '+%Y-%m-%d %H:%M UTC')" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.check.outputs.has_pending }}" = "true" ]; then
+            echo "PR opened/updated - ${{ steps.check.outputs.pending_count }} comment(s) pending." >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "No pending report generated; PR creation skipped." >> $GITHUB_STEP_SUMMARY
+            echo "No pending report generated; PR creation skipped." >> "$GITHUB_STEP_SUMMARY"
           fi
