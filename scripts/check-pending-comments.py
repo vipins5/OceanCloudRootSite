@@ -11,9 +11,8 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import sys
-import urllib.error
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -29,24 +28,32 @@ def fetch_pending() -> list[dict]:
         print("[error] ADMIN_TOKEN environment variable is required", file=sys.stderr)
         sys.exit(2)
 
-    request = urllib.request.Request(
+    cmd = [
+        "curl",
+        "-sf",
+        "--max-time",
+        "30",
+        "-H",
+        f"Authorization: Bearer {ADMIN_TOKEN}",
+        "-H",
+        "Origin: https://oceancloudconsults.com",
+        "-H",
+        "Accept: application/json",
+        "-H",
+        "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         f"{API_BASE}/comments/admin?status=pending",
-        headers={
-            "Authorization": f"Bearer {ADMIN_TOKEN}",
-            "Origin": "https://oceancloudconsults.com",
-            "Accept": "application/json",
-        },
-    )
+    ]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+
+    if result.returncode != 0:
+        print(f"[error] curl failed (exit {result.returncode}): {result.stderr}", file=sys.stderr)
+        sys.exit(1)
 
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        print(f"[error] comments API returned HTTP {exc.code}: {detail}", file=sys.stderr)
-        sys.exit(1)
-    except Exception as exc:
-        print(f"[error] could not read pending comments: {exc}", file=sys.stderr)
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        print(f"[error] invalid JSON from API: {exc}\nBody: {result.stdout[:200]}", file=sys.stderr)
         sys.exit(1)
 
     comments = payload.get("comments", [])
