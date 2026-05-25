@@ -182,15 +182,15 @@ Domain      →  oceancloudconsults.com
 
 Every `git push` to `main` deploys automatically.
 
-### Local Publish Maintenance
+### Local Guide / Article Publishing
 
-Content changes are maintained locally. Before committing a manual publish, run:
+Manually authored guide and article changes are created locally. Before committing a manual publish, run:
 
 ```powershell
 python scripts/publish-local.py
 ```
 
-This updates only `sitemap.xml` and `feed.xml`. It does not generate content, call AI APIs, create branches, open PRs, or fetch news. Review the diff, then commit and push to `main`.
+This updates only `sitemap.xml` and `feed.xml` for your local content changes. It does not generate guide content, create branches, or open PRs. The scheduled maintenance and Microsoft 365 news workflows remain separate.
 
 ---
 
