@@ -117,9 +117,16 @@ def render_report(comments: list[dict]) -> str:
 
 def main() -> None:
     comments = fetch_pending()
+    github_output = os.environ.get("GITHUB_OUTPUT")
+
     if comments:
         REPORT.parent.mkdir(parents=True, exist_ok=True)
         REPORT.write_text(render_report(comments), encoding="utf-8")
+        if github_output:
+            with open(github_output, "a", encoding="utf-8") as output:
+                output.write("has_pending=true\n")
+                output.write(f"pending_count={len(comments)}\n")
+                output.write(f"report_path={REPORT.relative_to(ROOT).as_posix()}\n")
         print(f"[ok] wrote pending comment report with {len(comments)} item(s): {REPORT.relative_to(ROOT)}")
         return
 
@@ -128,6 +135,12 @@ def main() -> None:
         print(f"[ok] removed stale pending comment report: {REPORT.relative_to(ROOT)}")
     else:
         print("[ok] no pending comments and no report to update")
+
+    if github_output:
+        with open(github_output, "a", encoding="utf-8") as output:
+            output.write("has_pending=false\n")
+            output.write("pending_count=0\n")
+            output.write(f"report_path={REPORT.relative_to(ROOT).as_posix()}\n")
 
 
 if __name__ == "__main__":
