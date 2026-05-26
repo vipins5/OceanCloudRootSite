@@ -34,30 +34,54 @@ jobs:
           cache-dependency-path: oceancloud-ai-proxy/package-lock.json
 
       - name: Install worker dependencies
-        run: npm --prefix oceancloud-ai-proxy ci --include=dev
+        working-directory: oceancloud-ai-proxy
+        run: npm ci --include=dev
 
-      - name: Run release readiness checks
+      - name: Check links and script bundle
+        id: links
+        continue-on-error: true
+        run: python scripts/check-links.py --strict
+
+      - name: Check content QA report rules
+        id: qa
+        continue-on-error: true
+        run: python scripts/content-qa-report.py
+
+      - name: Run worker tests
+        id: tests
+        continue-on-error: true
+        working-directory: oceancloud-ai-proxy
+        run: npm run -s test -- --run
+
+      - name: Run worker typecheck
+        id: typecheck
+        continue-on-error: true
+        working-directory: oceancloud-ai-proxy
+        run: npm run -s typecheck
+
+      - name: Build release readiness report
         id: checks
         shell: bash
+        env:
+          LINKS_CONCLUSION: ${{ steps.links.conclusion }}
+          QA_CONCLUSION: ${{ steps.qa.conclusion }}
+          TEST_CONCLUSION: ${{ steps.tests.conclusion }}
+          TSC_CONCLUSION: ${{ steps.typecheck.conclusion }}
         run: |
-          set +e
+          set -euo pipefail
 
-          python scripts/check-links.py --strict
-          LINKS_EXIT=$?
+          to_exit_code() {
+            if [ "$1" = "success" ]; then
+              echo "0"
+            else
+              echo "1"
+            fi
+          }
 
-          python scripts/content-qa-report.py
-          QA_EXIT=$?
-
-          npm --prefix oceancloud-ai-proxy run -s test -- --run
-          TEST_EXIT=$?
-
-          npm --prefix oceancloud-ai-proxy run -s typecheck
-          TSC_EXIT=$?
-
-          echo "links_exit=$LINKS_EXIT"
-          echo "qa_exit=$QA_EXIT"
-          echo "test_exit=$TEST_EXIT"
-          echo "tsc_exit=$TSC_EXIT"
+          LINKS_EXIT="$(to_exit_code "$LINKS_CONCLUSION")"
+          QA_EXIT="$(to_exit_code "$QA_CONCLUSION")"
+          TEST_EXIT="$(to_exit_code "$TEST_CONCLUSION")"
+          TSC_EXIT="$(to_exit_code "$TSC_CONCLUSION")"
 
           mkdir -p data/reports
           REPORT="data/reports/release-readiness-report.md"
@@ -76,15 +100,17 @@ jobs:
             echo ""
             echo "## Check Results"
             echo ""
-            echo "- Link and script checks: $LINKS_EXIT"
-            echo "- Content QA report checks: $QA_EXIT"
-            echo "- Worker tests: $TEST_EXIT"
-            echo "- Worker TypeScript check: $TSC_EXIT"
+            echo "- Link and script checks: $LINKS_EXIT ($LINKS_CONCLUSION)"
+            echo "- Content QA report checks: $QA_EXIT ($QA_CONCLUSION)"
+            echo "- Worker tests: $TEST_EXIT ($TEST_CONCLUSION)"
+            echo "- Worker TypeScript check: $TSC_EXIT ($TSC_CONCLUSION)"
             echo ""
             echo "## Recent Commits"
             echo ""
             git log --oneline -n 12
           } > "$REPORT"
+
+          cat "$REPORT"
 
           echo "ready_for_release=$READY" >> "$GITHUB_OUTPUT"
           echo "report_path=$REPORT" >> "$GITHUB_OUTPUT"
