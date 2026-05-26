@@ -44,6 +44,9 @@ jobs:
           git fetch origin "$BRANCH" 2>/dev/null || true
 
           if git show-ref --quiet "refs/remotes/origin/$BRANCH"; then
+            # Remove untracked report before checkout. Even with -B, Git will
+            # refuse to overwrite untracked files that would be clobbered.
+            rm -f "$REPORT"
             git checkout -B "$BRANCH" "origin/$BRANCH"
           else
             git checkout -b "$BRANCH"
