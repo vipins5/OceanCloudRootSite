@@ -49,7 +49,7 @@ jobs:
           npm --prefix oceancloud-ai-proxy run -s test -- --run
           TEST_EXIT=$?
 
-          npx --yes tsc --noEmit -p oceancloud-ai-proxy/tsconfig.json
+          npm --prefix oceancloud-ai-proxy exec -- tsc --noEmit -p oceancloud-ai-proxy/tsconfig.json
           TSC_EXIT=$?
 
           mkdir -p data/reports
