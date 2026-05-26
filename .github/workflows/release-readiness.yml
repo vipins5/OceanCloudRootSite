@@ -1,0 +1,108 @@
+name: Release Readiness Automation
+
+on:
+  schedule:
+    - cron: '0 9 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: oceancloud-ai-proxy/package-lock.json
+
+      - name: Install worker dependencies
+        run: npm --prefix oceancloud-ai-proxy ci
+
+      - name: Run release readiness checks
+        id: checks
+        shell: bash
+        run: |
+          set +e
+
+          python scripts/check-links.py --strict
+          LINKS_EXIT=$?
+
+          python scripts/content-qa-report.py
+          QA_EXIT=$?
+
+          npm --prefix oceancloud-ai-proxy run -s test -- --run
+          TEST_EXIT=$?
+
+          npx --yes tsc --noEmit -p oceancloud-ai-proxy/tsconfig.json
+          TSC_EXIT=$?
+
+          mkdir -p data/reports
+          REPORT="data/reports/release-readiness-report.md"
+
+          if [ "$LINKS_EXIT" -eq 0 ] && [ "$QA_EXIT" -eq 0 ] && [ "$TEST_EXIT" -eq 0 ] && [ "$TSC_EXIT" -eq 0 ]; then
+            READY="true"
+          else
+            READY="false"
+          fi
+
+          {
+            echo "# Release Readiness Report"
+            echo ""
+            echo "Generated: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "Ready for release: $READY"
+            echo ""
+            echo "## Check Results"
+            echo ""
+            echo "- Link and script checks: $LINKS_EXIT"
+            echo "- Content QA report checks: $QA_EXIT"
+            echo "- Worker tests: $TEST_EXIT"
+            echo "- Worker TypeScript check: $TSC_EXIT"
+            echo ""
+            echo "## Recent Commits"
+            echo ""
+            git log --oneline -n 12
+          } > "$REPORT"
+
+          echo "ready_for_release=$READY" >> "$GITHUB_OUTPUT"
+          echo "report_path=$REPORT" >> "$GITHUB_OUTPUT"
+
+      - name: Upload release readiness report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-readiness-report
+          path: data/reports/release-readiness-report.md
+          if-no-files-found: warn
+
+      - name: Publish job summary
+        if: always()
+        run: |
+          echo "## Release Readiness Automation" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f data/reports/release-readiness-report.md ]; then
+            cat data/reports/release-readiness-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No release report generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Fail if not ready for release
+        if: steps.checks.outputs.ready_for_release != 'true'
+        run: |
+          echo "Release readiness checks failed. See report artifact for details."
+          exit 1

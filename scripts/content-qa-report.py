@@ -1,0 +1,187 @@
+#!/usr/bin/env python3
+"""
+Generate a content QA report for OceanCloud.
+
+Hard-fail checks:
+- XML parseability for sitemap.xml and feed.xml
+- JSON parseability for key data index files
+
+Advisory checks (warnings only):
+- Missing <title>
+- Missing <meta name="description">
+- Missing canonical link tag
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+REPORT = ROOT / "data" / "reports" / "content-qa-report.md"
+
+XML_FILES = [
+    ROOT / "sitemap.xml",
+    ROOT / "feed.xml",
+]
+
+JSON_FILES = [
+    ROOT / "data" / "search-index.json",
+    ROOT / "data" / "archive.json",
+    ROOT / "data" / "guide-topics.json",
+]
+
+TITLE_RE = re.compile(r"<title\b[^>]*>.*?</title>", re.IGNORECASE | re.DOTALL)
+DESC_RE = re.compile(
+    r"<meta\s+[^>]*name=[\"']description[\"'][^>]*>",
+    re.IGNORECASE,
+)
+CANONICAL_RE = re.compile(
+    r"<link\s+[^>]*rel=[\"']canonical[\"'][^>]*>",
+    re.IGNORECASE,
+)
+
+
+def rel(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
+
+
+def check_xml(files: list[Path]) -> list[str]:
+    errors: list[str] = []
+    for file_path in files:
+        if not file_path.exists():
+            errors.append(f"Missing XML file: {rel(file_path)}")
+            continue
+        try:
+            ET.parse(file_path)
+        except ET.ParseError as exc:
+            errors.append(f"Invalid XML in {rel(file_path)}: {exc}")
+    return errors
+
+
+def check_json(files: list[Path]) -> list[str]:
+    errors: list[str] = []
+    for file_path in files:
+        if not file_path.exists():
+            errors.append(f"Missing JSON file: {rel(file_path)}")
+            continue
+        try:
+            json.loads(file_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            errors.append(f"Invalid JSON in {rel(file_path)}: {exc}")
+    return errors
+
+
+def scan_metadata(html_files: list[Path]) -> dict[str, list[str]]:
+    missing_title: list[str] = []
+    missing_description: list[str] = []
+    missing_canonical: list[str] = []
+
+    for file_path in html_files:
+        content = file_path.read_text(encoding="utf-8", errors="ignore")
+        r = rel(file_path)
+        if TITLE_RE.search(content) is None:
+            missing_title.append(r)
+        if DESC_RE.search(content) is None:
+            missing_description.append(r)
+        if CANONICAL_RE.search(content) is None:
+            missing_canonical.append(r)
+
+    return {
+        "title": missing_title,
+        "description": missing_description,
+        "canonical": missing_canonical,
+    }
+
+
+def format_samples(items: list[str], max_items: int = 12) -> list[str]:
+    if not items:
+        return ["- none"]
+    sample = items[:max_items]
+    lines = [f"- {item}" for item in sample]
+    if len(items) > max_items:
+        lines.append(f"- ... and {len(items) - max_items} more")
+    return lines
+
+
+def build_report(
+    html_count: int,
+    xml_errors: list[str],
+    json_errors: list[str],
+    metadata: dict[str, list[str]],
+) -> str:
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    hard_fail_count = len(xml_errors) + len(json_errors)
+
+    lines = [
+        "# Content QA Report",
+        "",
+        f"Generated: {now}",
+        f"HTML files scanned: {html_count}",
+        f"Hard-fail issues: {hard_fail_count}",
+        "",
+        "## Hard Checks",
+        "",
+        "### XML validation",
+    ]
+
+    if xml_errors:
+        lines.extend([f"- {err}" for err in xml_errors])
+    else:
+        lines.append("- OK")
+
+    lines.extend(["", "### JSON validation"])
+    if json_errors:
+        lines.extend([f"- {err}" for err in json_errors])
+    else:
+        lines.append("- OK")
+
+    lines.extend([
+        "",
+        "## Advisory SEO Checks",
+        "",
+        f"Missing title tag: {len(metadata['title'])}",
+    ])
+    lines.extend(format_samples(metadata["title"]))
+
+    lines.extend([
+        "",
+        f"Missing meta description: {len(metadata['description'])}",
+    ])
+    lines.extend(format_samples(metadata["description"]))
+
+    lines.extend([
+        "",
+        f"Missing canonical link: {len(metadata['canonical'])}",
+    ])
+    lines.extend(format_samples(metadata["canonical"]))
+
+    return "\n".join(lines) + "\n"
+
+
+def main() -> int:
+    html_files = sorted(ROOT.glob("*.html")) + sorted((ROOT / "articles").glob("*.html"))
+
+    xml_errors = check_xml(XML_FILES)
+    json_errors = check_json(JSON_FILES)
+    metadata = scan_metadata(html_files)
+
+    REPORT.parent.mkdir(parents=True, exist_ok=True)
+    REPORT.write_text(
+        build_report(len(html_files), xml_errors, json_errors, metadata),
+        encoding="utf-8",
+    )
+
+    hard_fail_count = len(xml_errors) + len(json_errors)
+    print(f"[ok] wrote QA report: {rel(REPORT)}")
+    print(f"[ok] hard-fail issues: {hard_fail_count}")
+
+    return 1 if hard_fail_count else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

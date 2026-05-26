@@ -1,0 +1,48 @@
+name: Content QA Automation
+
+on:
+  schedule:
+    - cron: '0 6,18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  content-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run strict link and script checks
+        run: python scripts/check-links.py --strict
+
+      - name: Generate content QA report
+        run: python scripts/content-qa-report.py
+
+      - name: Upload QA report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-qa-report
+          path: data/reports/content-qa-report.md
+          if-no-files-found: warn
+
+      - name: Publish job summary
+        if: always()
+        run: |
+          echo "## Content QA Automation" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f data/reports/content-qa-report.md ]; then
+            cat data/reports/content-qa-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No report generated." >> "$GITHUB_STEP_SUMMARY"
+          fi

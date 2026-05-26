@@ -32,3 +32,11 @@ Example prompts:
 
 - Agents are intentionally scoped and do not auto-deploy or auto-moderate without explicit instruction.
 - For automation, these agents can still call existing scripts/workflows in this repository.
+
+## Automated Equivalents (Option 1)
+
+- Comment Moderator automation: `.github/workflows/check-pending-comments.yml` (hourly schedule).
+- Content QA automation: `.github/workflows/content-qa-automation.yml` (twice daily schedule).
+- Release readiness automation: `.github/workflows/release-readiness.yml` (weekday schedule).
+
+These workflows generate markdown reports under `data/reports/` as job artifacts and publish the same content in the GitHub Actions job summary.
