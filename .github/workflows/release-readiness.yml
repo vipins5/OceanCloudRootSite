@@ -12,6 +12,8 @@ jobs:
   release-readiness:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      NODE_ENV: development
 
     steps:
       - name: Checkout
@@ -32,7 +34,7 @@ jobs:
           cache-dependency-path: oceancloud-ai-proxy/package-lock.json
 
       - name: Install worker dependencies
-        run: npm --prefix oceancloud-ai-proxy ci
+        run: npm --prefix oceancloud-ai-proxy ci --include=dev
 
       - name: Run release readiness checks
         id: checks
@@ -51,6 +53,11 @@ jobs:
 
           npm --prefix oceancloud-ai-proxy run -s typecheck
           TSC_EXIT=$?
+
+          echo "links_exit=$LINKS_EXIT"
+          echo "qa_exit=$QA_EXIT"
+          echo "test_exit=$TEST_EXIT"
+          echo "tsc_exit=$TSC_EXIT"
 
           mkdir -p data/reports
           REPORT="data/reports/release-readiness-report.md"
