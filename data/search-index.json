@@ -550,5 +550,77 @@
     "url": "articles/guide-sharepoint-external-sharing-complete-admin-guide",
     "dateDisplay": "May 25, 2026",
     "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-copilot-microsoft-365-vision-in-microsoft-365-copi",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Copilot (Microsoft 365): Vision in Microsoft 365 Copilot can analyze content shared on desktop screen and through mobile camera",
+    "heading": "Microsoft Copilot (Microsoft 365): Vision in Microsoft 365 Copilot can analyze content shared on desktop screen and through mobile camera",
+    "excerpt": "Vision in Microsoft 365 Copilot helps you make faster, more informed decisions by understanding context from what you share on screen or camera. Copilot can analyze visual inputs from shared desktop screens and provide detailed insights about the content. You can also use vision …",
+    "body": "Microsoft Copilot (Microsoft 365): Vision in Microsoft 365 Copilot can analyze content shared on desktop screen and through mobile camera | OceanCloud May 11, 2026 3 min read Vision in Microsoft 365 Copilot helps you make faster, more informed decisions by understanding context from what you share on screen or camera. Copilot can analyze visual inputs from shared desktop screens and provide detailed insights about the content. You can also use vision …",
+    "url": "articles/news-2026-05-microsoft-copilot-microsoft-365-vision-in-microsoft-365-copi",
+    "dateDisplay": "May 11, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-improved-visibility-and-control-for-download",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Improved visibility and control for downloads",
+    "heading": "Microsoft Teams: Improved visibility and control for downloads",
+    "excerpt": "Download manager updates in Microsoft Teams make it easier to track file progress with improved visibility, control, and accessibility. You can now open the manager from the title bar or by using a keyboard shortcut, and view downloads without blocking key chat and channel action…",
+    "body": "Microsoft Teams: Improved visibility and control for downloads | OceanCloud April 27, 2026 3 min read Download manager updates in Microsoft Teams make it easier to track file progress with improved visibility, control, and accessibility. You can now open the manager from the title bar or by using a keyboard shortcut, and view downloads without blocking key chat and channel action…",
+    "url": "articles/news-2026-04-microsoft-teams-improved-visibility-and-control-for-download",
+    "dateDisplay": "April 27, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-quick-share-for-images",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Quick Share for Images",
+    "heading": "Microsoft Teams: Quick Share for Images",
+    "excerpt": "Microsoft Teams extends Quick Share to images, making it fast and easy to share visual content across chats and channels. With access from hover, right click, overflow menus, and shared tabs, you can quickly copy links or share images while preserving existing permissions. GA dat…",
+    "body": "Microsoft Teams: Quick Share for Images | OceanCloud April 24, 2026 3 min read Microsoft Teams extends Quick Share to images, making it fast and easy to share visual content across chats and channels. With access from hover, right click, overflow menus, and shared tabs, you can quickly copy links or share images while preserving existing permissions. GA dat…",
+    "url": "articles/news-2026-04-microsoft-teams-quick-share-for-images",
+    "dateDisplay": "April 24, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-search-in-quick-sharing-experience",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Search in quick sharing experience",
+    "heading": "Microsoft Teams: Search in quick sharing experience",
+    "excerpt": "Microsoft Teams makes it easier to find and attach files by enabling search directly within the quick sharing experience. You can now locate cloud based files while attaching content, reducing friction when sharing files across chats and channels. GA date: June CY2026",
+    "body": "Microsoft Teams: Search in quick sharing experience | OceanCloud April 24, 2026 3 min read Microsoft Teams makes it easier to find and attach files by enabling search directly within the quick sharing experience. You can now locate cloud based files while attaching content, reducing friction when sharing files across chats and channels. GA date: June CY2026",
+    "url": "articles/news-2026-04-microsoft-teams-search-in-quick-sharing-experience",
+    "dateDisplay": "April 24, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-unblock-users-to-send-message-while-file-is-",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Unblock users to send message while file is uploading in the background",
+    "heading": "Microsoft Teams: Unblock users to send message while file is uploading in the background",
+    "excerpt": "Large file sharing in Teams today introduces blocking behavior, forcing users to wait for uploads to complete and disrupting real-time collaboration. To improve productivity and reduce perceived latency, we are introducing asynchronous file uploads. This allows users to continue …",
+    "body": "Microsoft Teams: Unblock users to send message while file is uploading in the background | OceanCloud April 24, 2026 3 min read Large file sharing in Teams today introduces blocking behavior, forcing users to wait for uploads to complete and disrupting real-time collaboration. To improve productivity and reduce perceived latency, we are introducing asynchronous file uploads. This allows users to continue …",
+    "url": "articles/news-2026-04-microsoft-teams-unblock-users-to-send-message-while-file-is-",
+    "dateDisplay": "April 24, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-sharing-recap-access",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Sharing recap access",
+    "heading": "Microsoft Teams: Sharing recap access",
+    "excerpt": "Recording and transcript owners can now grant recording and transcript access to specified people when copying or sharing recap link, and the specified people can access the recap without having to request access. GA date: May CY2026",
+    "body": "Microsoft Teams: Sharing recap access | OceanCloud April 03, 2026 3 min read Recording and transcript owners can now grant recording and transcript access to specified people when copying or sharing recap link, and the specified people can access the recap without having to request access. GA date: May CY2026",
+    "url": "articles/news-2026-04-microsoft-teams-sharing-recap-access",
+    "dateDisplay": "April 03, 2026",
+    "dateSort": ""
   }
 ]

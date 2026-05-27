@@ -84,6 +84,16 @@
       "article_slug": "news-2026-05-microsoft-teams-interpreter-simultaneous-mode-enhancements"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Vision in Microsoft 365 Copilot can analyze content shared on desktop screen and through mobile camera",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561037",
+      "date_friendly": "May 11, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-vision-in-microsoft-365-copi"
+    },
+    {
       "title": "Microsoft Teams: Enhanced bookable desk experience with Teams panel-based desk dock devices",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561031",
       "date_friendly": "May 06, 2026",
@@ -130,6 +140,46 @@
       "css_tag": "tag-blog"
     },
     {
+      "title": "Microsoft Teams: Improved visibility and control for downloads",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560815",
+      "date_friendly": "April 27, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-teams-improved-visibility-and-control-for-download"
+    },
+    {
+      "title": "Microsoft Teams: Quick Share for Images",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560816",
+      "date_friendly": "April 24, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-teams-quick-share-for-images"
+    },
+    {
+      "title": "Microsoft Teams: Search in quick sharing experience",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560814",
+      "date_friendly": "April 24, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-teams-search-in-quick-sharing-experience"
+    },
+    {
+      "title": "Microsoft Teams: Unblock users to send message while file is uploading in the background",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560813",
+      "date_friendly": "April 24, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-teams-unblock-users-to-send-message-while-file-is-"
+    },
+    {
       "title": "AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoint/ba-p/4512532",
       "date_friendly": "April 21, 2026",
@@ -137,6 +187,16 @@
       "month_label": "April 2026",
       "source": "SharePoint Blog",
       "css_tag": "tag-blog"
+    },
+    {
+      "title": "Microsoft Teams: Sharing recap access",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559606",
+      "date_friendly": "April 03, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-teams-sharing-recap-access"
     },
     {
       "title": "Microsoft Teams: Facilitator detects and answers questions",
@@ -169,5 +229,5 @@
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     }
   ],
-  "last_updated": "2026-05-25"
+  "last_updated": "2026-05-27"
 }
