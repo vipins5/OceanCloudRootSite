@@ -215,14 +215,14 @@
 
       <div class="code-label">PowerShell 7 — configure Restricted SharePoint Search</div>
       <div class="code-block"><pre># Connect to the SharePoint admin center
-$tenant = "contoso"  # User note: update this variable for your environment
+$tenant = "contoso"
 Connect-SPOService -Url "https://$tenant-admin.sharepoint.com"
 
 # Enable Restricted SharePoint Search during the cleanup phase
 Set-SPOTenantRestrictedSearchMode -Mode Enabled
 
 # Add validated sites to the allowed list
-$allowedSites = @(  # User note: update this variable for your environment
+$allowedSites = @(
     "https://contoso.sharepoint.com/sites/hr",
     "https://contoso.sharepoint.com/sites/finance",
     "https://contoso.sharepoint.com/sites/operations"
@@ -457,3 +457,4 @@ Get-SPOTenantRestrictedSearchAllowedList</pre></div>
   <script src="../js/comments.js?v=7"></script>
 </body>
 </html>
+
