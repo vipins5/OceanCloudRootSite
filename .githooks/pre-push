@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+set -eu
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+echo "[pre-push] Running OceanCloud sanity checks..."
+
+run_check() {
+  label="$1"
+  shift
+  echo "[pre-push] $label"
+  "$@"
+}
+
+cleanup_generated() {
+  # Keep the working tree clean after QA scripts.
+  if [ -d "data/reports" ]; then
+    rm -rf "data/reports"
+  fi
+  if [ -d "scripts/__pycache__" ]; then
+    rm -rf "scripts/__pycache__"
+  fi
+}
+
+trap cleanup_generated EXIT
+
+run_check "Strict link check" python scripts/check-links.py --strict
+run_check "Content QA" python scripts/content-qa-report.py
+run_check "Worker tests" npm --prefix oceancloud-ai-proxy run -s test -- --run
+run_check "Worker typecheck" npm --prefix oceancloud-ai-proxy run -s typecheck
+
+echo "[pre-push] All checks passed."

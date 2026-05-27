@@ -192,6 +192,23 @@ python scripts/publish-local.py
 
 This updates only `sitemap.xml` and `feed.xml` for your local content changes. It does not generate guide content, create branches, or open PRs. The scheduled maintenance and Microsoft 365 news workflows remain separate.
 
+### Local Pre-Push Guard
+
+To enforce sanity checks before every push, this repo includes a managed git hook at `.githooks/pre-push`.
+
+Enable it once per clone:
+
+```powershell
+git config core.hooksPath .githooks
+```
+
+The pre-push hook blocks pushes unless all checks pass:
+
+- `python scripts/check-links.py --strict`
+- `python scripts/content-qa-report.py`
+- `npm --prefix oceancloud-ai-proxy run -s test -- --run`
+- `npm --prefix oceancloud-ai-proxy run -s typecheck`
+
 ---
 
 ## Cache Busting

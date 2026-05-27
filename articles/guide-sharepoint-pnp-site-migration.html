@@ -268,12 +268,22 @@ Get-Module PnP.PowerShell -ListAvailable | Select-Object Name, Version</pre></di
       </div>
 
       <div class="code-label">PowerShell 7 &mdash; connect to source and destination sites</div>
-      <div class="code-block"><pre># ── Source site ───────────────────────────────────────────────────────────
+      <div class="code-block"><pre># Source site you are migrating from.
 $srcUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"
+
+# Destination site you are migrating into.
 $dstUrl    = "https://contoso.sharepoint.com/sites/NewIntranet"
-$clientId  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # Entra app Client ID
+
+# Entra app Client ID used for certificate authentication.
+$clientId  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Tenant name for the Entra app registration.
 $tenant    = "contoso.onmicrosoft.com"
+
+# PFX certificate file linked to the Entra app registration.
 $certPath  = "C:\Certs\PnPSharePointApp.pfx"
+
+# PFX password; use a secure secret source for production.
 $certPass  = ConvertTo-SecureString "YourP@ssw0rd" -AsPlainText -Force
 $src = Connect-PnPOnline `
     -Url                 $srcUrl `
@@ -283,7 +293,6 @@ $src = Connect-PnPOnline `
     -Tenant              $tenant `
     -ReturnConnection
 
-# ── Destination site ───────────────────────────────────────────────────────
 $dst = Connect-PnPOnline `
     -Url                 $dstUrl `
     -ClientId            $clientId `
@@ -292,7 +301,6 @@ $dst = Connect-PnPOnline `
     -Tenant              $tenant `
     -ReturnConnection
 
-# Verify both connections
 Write-Host "Source     : $((Get-PnPWeb -Connection $src).Title)"
 Write-Host "Destination: $((Get-PnPWeb -Connection $dst).Title)"</pre></div>
 
@@ -300,7 +308,8 @@ Write-Host "Destination: $((Get-PnPWeb -Connection $dst).Title)"</pre></div>
       <p>Before migrating anything, produce a complete inventory of the source site. This CSV becomes your migration manifest and your post-migration validation baseline.</p>
 
       <div class="code-label">PowerShell 7 &mdash; export full site inventory to CSV</div>
-      <div class="code-block"><pre>$reportPath = "C:\Migration\source-inventory-$(Get-Date -Format 'yyyyMMdd').csv"
+      <div class="code-block"><pre># CSV output path for the source inventory report.
+$reportPath = "C:\Migration\source-inventory-$(Get-Date -Format 'yyyyMMdd').csv"
 $inventory  = @()
 
 $lists = Get-PnPList -Connection $src |
@@ -332,9 +341,9 @@ Write-Host "Total items          : $(($inventory | Measure-Object ItemCount -Sum
       <p>The site template captures columns, content types, list schemas, navigation, and regional settings — everything except the actual content. Apply it to the destination site first so that the structure exists before you copy data.</p>
 
       <div class="code-label">PowerShell 7 &mdash; export and apply site template</div>
-      <div class="code-block"><pre>$templatePath = "C:\Migration\site-template.xml"
+      <div class="code-block"><pre># PnP template XML output path.
+$templatePath = "C:\Migration\site-template.xml"
 
-# ── Export from source ─────────────────────────────────────────────────────
 Get-PnPSiteTemplate `
     -Connection          $src `
     -Out                 $templatePath `
@@ -344,7 +353,6 @@ Get-PnPSiteTemplate `
 
 Write-Host "Template exported to: $templatePath"
 
-# ── Apply to destination ────────────────────────────────────────────────────
 # Review the XML in a text editor before applying — remove any lists
 # that already exist at the destination to avoid duplication errors.
 Invoke-PnPSiteTemplate `
@@ -362,22 +370,25 @@ Write-Host "Template applied to destination site."</pre></div>
 
       <h3>Simple library copy</h3>
       <div class="code-label">PowerShell 7 &mdash; copy an entire document library</div>
-      <div class="code-block"><pre>$srcLibUrl = "/sites/OldIntranet/Shared Documents"
+      <div class="code-block"><pre># Source library server-relative URL.
+$srcLibUrl = "/sites/OldIntranet/Shared Documents"
+
+# Destination library server-relative URL.
 $dstLibUrl = "/sites/NewIntranet/Shared Documents"
 
-# Copy-PnPFile works server-side — fast and does not use local bandwidth
 Copy-PnPFile `
     -SourceUrl      $srcLibUrl `
     -TargetUrl      $dstLibUrl `
     -Overwrite `
-    -SkipSourceFolderName `   # copies CONTENTS of the folder, not the folder itself
-    -Connection     $src      # source connection; destination is inferred from TargetUrl
+    -SkipSourceFolderName `
+    -Connection     $src
 
 Write-Host "Library copy complete."</pre></div>
 
       <h3>Folder-by-folder copy with progress (large libraries)</h3>
       <div class="code-label">PowerShell 7 &mdash; iterate folders, copy with logging</div>
-      <div class="code-block"><pre>$logPath = "C:\Migration\copy-log-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
+      <div class="code-block"><pre># CSV output path for copy results.
+$logPath = "C:\Migration\copy-log-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
 $log     = @()
 
 function Copy-SPFolder {
@@ -407,7 +418,6 @@ function Copy-SPFolder {
         }
     }
 
-    # Recurse into subfolders
     $subFolders = Get-PnPFolderItem -FolderSiteRelativeUrl $FolderUrl `
                       -ItemType Folder -Connection $SrcConn |
                   Where-Object { $_.Name -notin "Forms","_t","_w" }
@@ -432,10 +442,12 @@ Write-Host "`nCopied: $($log.Count - $failed) files  |  Failed: $failed  |  Log:
       </div>
 
       <div class="code-label">PowerShell 7 &mdash; migrate list items with field mapping</div>
-      <div class="code-block"><pre>$srcListName = "Project Register"
+      <div class="code-block"><pre># Source list display name.
+$srcListName = "Project Register"
+
+# Destination list display name.
 $dstListName = "Project Register"
 
-# Fetch all source items — specify only the fields you need
 $srcItems = Get-PnPListItem `
     -List       $srcListName `
     -Connection $src `
@@ -476,10 +488,10 @@ Write-Host "Done — Migrated: $migrated  |  Errors: $errors"</pre></div>
       <p>Modern pages present the biggest challenge. The page text, images, and layout migrate cleanly. Web part configurations — Highlighted Content, Quick Links, News web parts with specific filters — often need manual reconfiguration after the copy because their data references the source site URL.</p>
 
       <div class="code-label">PowerShell 7 &mdash; export and import modern pages</div>
-      <div class="code-block"><pre>$pagesExportDir = "C:\Migration\pages"
+      <div class="code-block"><pre># Folder where page template XML files will be written.
+$pagesExportDir = "C:\Migration\pages"
 New-Item -ItemType Directory -Path $pagesExportDir -Force | Out-Null
 
-# ── Get all modern pages from source ──────────────────────────────────────
 $pages = Get-PnPListItem -List "Site Pages" -Connection $src `
              -Fields "FileLeafRef","Title","_ModernAudienceTargetUserField" |
          Where-Object { $_["FileLeafRef"] -match "\.aspx$" }
@@ -491,7 +503,6 @@ foreach ($page in $pages) {
     Write-Host "  Exporting: $pageName"
 
     try {
-        # Export page as PnP template (XML captures layout + static text)
         $pageTemplate = "$pagesExportDir\$($pageName -replace '\.aspx$','.xml')"
         Get-PnPSiteTemplate `
             -Connection   $src `
@@ -500,7 +511,6 @@ foreach ($page in $pages) {
             -Pages        $pageName `
             -Force
 
-        # Apply to destination
         Invoke-PnPSiteTemplate `
             -Connection $dst `
             -Path       $pageTemplate
@@ -522,19 +532,17 @@ Write-Host "`nPage migration complete. Review web part configurations manually."
 
       <h3>Migrate site groups and members</h3>
       <div class="code-label">PowerShell 7 &mdash; copy SharePoint groups and membership</div>
-      <div class="code-block"><pre># ── Get source site groups ─────────────────────────────────────────────────
+      <div class="code-block"><pre>
 $srcGroups = Get-PnPSiteGroup -Connection $src |
     Where-Object { $_.Title -notin "Excel Services Viewers","Style Resource Readers" }
 
 foreach ($group in $srcGroups) {
     Write-Host "Processing group: $($group.Title)"
 
-    # Check if group already exists at destination
     $dstGroup = Get-PnPSiteGroup -Connection $dst |
         Where-Object { $_.Title -eq $group.Title }
 
     if (-not $dstGroup) {
-        # Create the group
         $dstGroup = New-PnPGroup `
             -Title       $group.Title `
             -Description $group.Description `
@@ -542,7 +550,6 @@ foreach ($group in $srcGroups) {
         Write-Host "  Created group: $($group.Title)"
     }
 
-    # Get source members
     $members = Get-PnPGroupMember -Group $group.Title -Connection $src
 
     foreach ($member in $members) {
@@ -594,7 +601,8 @@ foreach ($ra in $srcRoles) {
       <p>Never declare a migration complete without a validation pass. This script compares item counts between source and destination for every list and library, and flags any discrepancy.</p>
 
       <div class="code-label">PowerShell 7 &mdash; compare item counts source vs destination</div>
-      <div class="code-block"><pre>$validationPath = "C:\Migration\validation-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
+      <div class="code-block"><pre># CSV output path for validation results.
+$validationPath = "C:\Migration\validation-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
 $results = @()
 
 $srcLists = Get-PnPList -Connection $src |
@@ -647,36 +655,35 @@ if ($mismatch -gt 0) {
     Run as: pwsh -File Invoke-SPMigration.ps1 *>&1 | Tee-Object migration.log
 #>
 
-# ════════════════════════════════════════
-#   CONFIGURATION — edit this block only
-# ════════════════════════════════════════
 $Config = @{
+    # Source and destination SharePoint sites.
     SourceUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"
     DestUrl      = "https://contoso.sharepoint.com/sites/NewIntranet"
+
+    # Entra app and certificate authentication values.
     ClientId     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     Tenant       = "contoso.onmicrosoft.com"
     CertPath     = "C:\Certs\PnPSharePointApp.pfx"
     CertPass     = "YourSecurePassword"
+
+    # Folder for logs, exports, and page templates.
     OutputDir    = "C:\Migration"
 
-    # Lists to SKIP (system lists always excluded automatically)
+    # Lists to skip during migration.
     ExcludeLists = @("Form Templates","Preservation Hold Library")
 
-    # Migration switches
+    # Set each switch to false to skip that migration phase.
     MigrateTemplate    = $true
     MigrateLibraries   = $true
     MigrateLists       = $true
     MigratePages       = $true
     MigratePermissions = $true
 }
-# ════════════════════════════════════════
-
 $null = New-Item -ItemType Directory -Path $Config.OutputDir -Force
 $certPassSec = ConvertTo-SecureString $Config.CertPass -AsPlainText -Force
 
 Write-Host "`n=== OceanCloud SP Migration — $(Get-Date -Format 'yyyy-MM-dd HH:mm') ===`n"
 
-# ── Connect ────────────────────────────────────────────────────────────────
 $connParams = @{
     ClientId            = $Config.ClientId
     CertificatePath     = $Config.CertPath
@@ -687,7 +694,6 @@ $src = Connect-PnPOnline @connParams -Url $Config.SourceUrl -ReturnConnection
 $dst = Connect-PnPOnline @connParams -Url $Config.DestUrl   -ReturnConnection
 Write-Host "Connected: $((Get-PnPWeb -Connection $src).Title)  →  $((Get-PnPWeb -Connection $dst).Title)`n"
 
-# ── Step 3: Site template ──────────────────────────────────────────────────
 if ($Config.MigrateTemplate) {
     Write-Host "[1/5] Exporting and applying site template…"
     $tpl = "$($Config.OutputDir)\site-template.xml"
@@ -696,7 +702,6 @@ if ($Config.MigrateTemplate) {
     Write-Host "      Template applied.`n"
 }
 
-# ── Step 4: Document libraries ─────────────────────────────────────────────
 if ($Config.MigrateLibraries) {
     Write-Host "[2/5] Copying document libraries…"
     $libs = Get-PnPList -Connection $src |
@@ -712,7 +717,6 @@ if ($Config.MigrateLibraries) {
     Write-Host "      Libraries done.`n"
 }
 
-# ── Step 5: List items ─────────────────────────────────────────────────────
 if ($Config.MigrateLists) {
     Write-Host "[3/5] Migrating list items…"
     $lists = Get-PnPList -Connection $src |
@@ -731,7 +735,6 @@ if ($Config.MigrateLists) {
     Write-Host "      Lists done.`n"
 }
 
-# ── Step 6: Pages ──────────────────────────────────────────────────────────
 if ($Config.MigratePages) {
     Write-Host "[4/5] Migrating modern pages…"
     $pages = Get-PnPListItem -List "Site Pages" -Connection $src -Fields "FileLeafRef" |
@@ -748,7 +751,6 @@ if ($Config.MigratePages) {
     Write-Host "      Pages done.`n"
 }
 
-# ── Step 7: Permissions ────────────────────────────────────────────────────
 if ($Config.MigratePermissions) {
     Write-Host "[5/5] Migrating groups and permissions…"
     $groups = Get-PnPSiteGroup -Connection $src

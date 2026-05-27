@@ -1,0 +1,57 @@
+# OceanCloud
+
+> OceanCloud is a Microsoft 365 and SharePoint consultancy focused on SharePoint Online, Microsoft 365 migration, Power Platform, Microsoft Teams, Copilot readiness, security, compliance, and adoption.
+
+This file is a compact discovery map for AI assistants, search crawlers, and retrieval systems. The public site is available at https://oceancloudconsults.com/.
+
+## Crawl and Indexing Policy
+
+Public pages, guides, news posts, sitemap, RSS feed, and search index may be crawled and indexed. Do not submit contact forms, attempt authentication, or use private/customer data. Prefer canonical URLs without `.html`.
+
+## Machine-Readable Resources
+
+- Sitemap: https://oceancloudconsults.com/sitemap.xml
+- RSS feed: https://oceancloudconsults.com/feed.xml
+- Search index JSON: https://oceancloudconsults.com/data/search-index.json
+- Guides hub: https://oceancloudconsults.com/guides
+- Site search: https://oceancloudconsults.com/search
+
+## Core Pages
+
+- [Home](https://oceancloudconsults.com/): SharePoint consulting, Microsoft 365 migration, Power Platform, Teams, Copilot, security, and adoption services.
+- [Services](https://oceancloudconsults.com/services): Consulting service categories and engagement options.
+- [Case Studies](https://oceancloudconsults.com/case-studies): Example outcomes across intranet, migration, automation, security, Teams, and governance projects.
+- [News](https://oceancloudconsults.com/news): Microsoft 365, SharePoint, Teams, Copilot, Purview, and Power Platform updates.
+- [Guides](https://oceancloudconsults.com/guides): Practical long-form Microsoft 365 and SharePoint guides.
+- [FAQ](https://oceancloudconsults.com/faq): Answers to common Microsoft 365 and SharePoint questions.
+- [Contact](https://oceancloudconsults.com/contact): Consultation request and contact information.
+
+## Primary Guides
+
+- [Microsoft 365 Copilot: The Complete Business Guide for 2026](https://oceancloudconsults.com/articles/guide-m365-copilot): Copilot capabilities, licensing, rollout, SharePoint readiness, and adoption measurement.
+- [The 10-Step Microsoft 365 Migration Checklist](https://oceancloudconsults.com/articles/guide-m365-migration-checklist): Discovery, tenant setup, identity, pilot, cutover, training, and post-migration validation.
+- [Microsoft Graph and SharePoint: M365 Integrations for IT Admins](https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint): Graph API, Power Automate HTTP, webhooks, connectors, app registrations, and managed identities.
+- [PnP PowerShell: Complete Entra App Registration and Certificate Guide](https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration): Delegated PnP auth, ClientId usage, app permissions, certificates, PFX, and thumbprints.
+- [Build Custom Business Apps with Power Apps and SharePoint](https://oceancloudconsults.com/articles/guide-power-apps-sharepoint): Canvas apps, model-driven apps, SharePoint data sources, delegation, and publishing.
+- [5 Power Automate Flows Every SharePoint Admin Should Build](https://oceancloudconsults.com/articles/guide-power-automate-sharepoint): Approvals, reminders, onboarding, stale content alerts, and escalation flows.
+- [Power Automate SharePoint Triggers and Actions Explained](https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions): SharePoint triggers, OData filter queries, file actions, HTTP requests, and connector behavior.
+- [SharePoint Approval Workflows with Multiple Approvers](https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers): Sequential approval, parallel approval, escalation, delegation, and audit patterns.
+- [How to Build a SharePoint Approval Workflow with Power Automate](https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow): Approval action setup, response handling, notifications, and SharePoint item status updates.
+- [10 SharePoint Automation Ideas Using Power Automate](https://oceancloudconsults.com/articles/guide-sharepoint-automation-ideas): HR onboarding, contracts, IT requests, compliance alerts, provisioning, and business automation examples.
+- [Switch SharePoint Classic Calendar to Modern View with PnP PowerShell](https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view): Pre-checks, dry-run support, modern view creation, rollback, and validation.
+- [SharePoint Copilot Agents: What They Are, Licensing, Limits, and Use Cases](https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents): SharePoint agents, Copilot Studio, licensing, credits, HR, IT, and policy lookup scenarios.
+- [How to Prepare Your SharePoint for Microsoft Copilot](https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready): Oversharing audits, Restricted SharePoint Search, Purview labels, and search quality checks.
+- [SharePoint External Sharing: Complete Admin Guide](https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide): Tenant and site controls, Entra B2B, link defaults, auditing, and unique permission cleanup.
+- [Best SharePoint Integrations](https://oceancloudconsults.com/articles/guide-sharepoint-integrations): Teams, Power BI, Salesforce, ServiceNow, Dynamics 365, connector choices, and patterns.
+- [How to Build a Modern SharePoint Intranet in 2026](https://oceancloudconsults.com/articles/guide-sharepoint-intranet): Hub architecture, navigation, news, search, mobile, governance, and common mistakes.
+- [The Complete Guide to SharePoint Permissions in Microsoft 365](https://oceancloudconsults.com/articles/guide-sharepoint-permissions): Permission levels, groups, sharing links, inheritance, and governance.
+- [SharePoint Permissions Best Practices for Secure Microsoft 365 Sites](https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices): Least privilege, group-based access, external sharing controls, auditing, and mistakes to avoid.
+- [Migrate SharePoint Online Sites with PnP PowerShell](https://oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration): Document libraries, lists, pages, permissions, inventory, copy functions, and validation.
+- [Restore SharePoint Recycle Bin Items with PnP PowerShell](https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell): Folder/date filtering, dry-run mode, conflict checks, CSOM paging, and CSV logging.
+- [SharePoint vs Microsoft Teams: When to Use Which](https://oceancloudconsults.com/articles/guide-sharepoint-vs-teams): Decision framework for collaboration, document management, communication, and Teams-backed SharePoint sites.
+- [How to Replace Legacy SharePoint Workflows with Power Automate](https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration): Workflow retirement, inventory, mapping, migration planning, and Power Automate replacements.
+- [5 Microsoft Teams Automations That Save Hours Every Week](https://oceancloudconsults.com/articles/guide-teams-automation): Meeting notes to tasks, Adaptive Card approvals, onboarding, keyword monitoring, and digest cards.
+
+## Retrieval Guidance
+
+For broad discovery, start with `/data/search-index.json` or `/sitemap.xml`. For reader-friendly navigation, start with `/guides`. For recent Microsoft updates, use `/news` or `/feed.xml`. For a specific guide, fetch the canonical article URL listed above.

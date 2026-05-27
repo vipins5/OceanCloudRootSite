@@ -47,7 +47,7 @@ def file_to_url(file: Path) -> str | None:
     if rel == "404.html":
         return None
     if rel == "index.html":
-        return BASE_URL
+        return f"{BASE_URL}/"
     return f"{BASE_URL}/{rel[:-5]}"
 
 

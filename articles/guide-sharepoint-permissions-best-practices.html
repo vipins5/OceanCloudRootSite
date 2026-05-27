@@ -293,24 +293,17 @@
       </ol>
 
       <div class="code-label">PowerShell 7 — find uniquely permissioned library items</div>
-      <div class="code-block"><pre># Connect to the site you want to audit
+      <div class="code-block"><pre># Target SharePoint site to audit.
 $siteUrl  = "https://contoso.sharepoint.com/sites/finance"
-$library  = "Documents"
-$clientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # your Entra app Client ID
 
-# ── Choose one authentication method ──────────────────────────────────────
-# Interactive (browser pop-up, runs as the signed-in user):
+# Document library display name to scan.
+$library  = "Documents"
+
+# Entra app Client ID used by PnP.PowerShell interactive authentication.
+$clientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
 Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
-# Certificate thumbprint (non-interactive — ideal for scheduled scripts):
-# $thumbprint = "AABBCCDDEEFF..."
-# Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Thumbprint $thumbprint -Tenant "contoso.onmicrosoft.com"
-
-# PFX file (non-interactive — ideal for CI/CD pipelines):
-# $certPass = ConvertTo-SecureString "YourP@ssw0rd" -AsPlainText -Force
-# Connect-PnPOnline -Url $siteUrl -ClientId $clientId -CertificatePath "C:\Certs\PnPApp.pfx" -CertificatePassword $certPass -Tenant "contoso.onmicrosoft.com"
-
-# Find files/folders that no longer inherit permissions from the library
 $items = Get-PnPListItem `
     -List $library `
     -PageSize 2000 `

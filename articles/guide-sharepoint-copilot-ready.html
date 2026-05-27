@@ -214,14 +214,14 @@
       </ul>
 
       <div class="code-label">PowerShell 7 — configure Restricted SharePoint Search</div>
-      <div class="code-block"><pre># Connect to the SharePoint admin center
+      <div class="code-block"><pre># Tenant prefix used in contoso-admin.sharepoint.com.
 $tenant = "contoso"
 Connect-SPOService -Url "https://$tenant-admin.sharepoint.com"
 
 # Enable Restricted SharePoint Search during the cleanup phase
 Set-SPOTenantRestrictedSearchMode -Mode Enabled
 
-# Add validated sites to the allowed list
+# Site URLs approved for Copilot search access.
 $allowedSites = @(
     "https://contoso.sharepoint.com/sites/hr",
     "https://contoso.sharepoint.com/sites/finance",

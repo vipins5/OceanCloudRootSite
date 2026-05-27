@@ -1,5 +1,37 @@
 User-agent: *
 Disallow: /coming-soon.html
 Allow: /
+Allow: /llms.txt
+Allow: /data/search-index.json
+Allow: /feed.xml
+
+User-agent: GPTBot
+Disallow: /coming-soon.html
+Allow: /
+
+User-agent: ChatGPT-User
+Disallow: /coming-soon.html
+Allow: /
+
+User-agent: ClaudeBot
+Disallow: /coming-soon.html
+Allow: /
+
+User-agent: Claude-User
+Disallow: /coming-soon.html
+Allow: /
+
+User-agent: PerplexityBot
+Disallow: /coming-soon.html
+Allow: /
+
+User-agent: Perplexity-User
+Disallow: /coming-soon.html
+Allow: /
+
+User-agent: Google-Extended
+Disallow: /coming-soon.html
+Allow: /
 
 Sitemap: https://oceancloudconsults.com/sitemap.xml
+# LLM discovery map: https://oceancloudconsults.com/llms.txt

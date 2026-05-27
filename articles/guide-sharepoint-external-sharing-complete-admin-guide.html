@@ -272,10 +272,13 @@ Get-SPOSite -Limit All | Select-Object `
         <div class="code-label">PowerShell 7 &mdash; report external users in a SharePoint site</div>
         <div class="code-block"><pre>Install-Module PnP.PowerShell -Scope CurrentUser
 
+# Target SharePoint site to audit.
 $siteUrl = "https://contoso.sharepoint.com/sites/client-project"
-      $clientId = "00000000-0000-0000-0000-000000000000"
 
-      Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
+# Entra app Client ID used by PnP.PowerShell interactive authentication.
+$clientId = "00000000-0000-0000-0000-000000000000"
+
+Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
 Get-PnPUser | Where-Object {
     $_.LoginName -match "#ext#" -or
@@ -289,10 +292,13 @@ Get-PnPUser | Where-Object {
         <p>External sharing risk is not limited to tenant settings. Unique permissions inside a site can make access difficult to understand. A document library may inherit permissions from the site, but a folder or item inside that library may have broken inheritance. Those exceptions are where accidental exposure often hides. Before resetting anything, export a report.</p>
 
         <div class="code-label">PowerShell 7 &mdash; find lists and items with unique permissions</div>
-        <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
-      $clientId = "00000000-0000-0000-0000-000000000000"
+        <div class="code-block"><pre># Target SharePoint site to report on.
+$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
 
-      Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
+# Entra app Client ID used by PnP.PowerShell interactive authentication.
+$clientId = "00000000-0000-0000-0000-000000000000"
+
+Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
 $results = @()
 $lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder
@@ -327,11 +333,16 @@ $results | Export-Csv ".\unique-permissions-report.csv" -NoTypeInformation</pre>
         <div class="art-callout"><p><strong>Warning:</strong> This script removes custom permissions. If a folder was intentionally restricted, resetting inheritance will broaden or change access based on the parent. Review the CSV report and take a backup of critical permission assignments before running it.</p></div>
 
         <div class="code-label">PowerShell 7 &mdash; reset unique permissions for lists and items</div>
-        <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
-      $clientId = "00000000-0000-0000-0000-000000000000"
+        <div class="code-block"><pre># Target SharePoint site to clean up.
+$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
+
+# Entra app Client ID used by PnP.PowerShell interactive authentication.
+$clientId = "00000000-0000-0000-0000-000000000000"
+
+# Keep false for report-only mode; set true only after review and approval.
 $applyChanges = $false
 
-      Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
+Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
 $ctx = Get-PnPContext
 $lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder
@@ -362,7 +373,7 @@ foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
 }
 
 if (-not $applyChanges) {
-    Write-Host "Report-only mode. Set `$applyChanges = `$true to reset inheritance." -ForegroundColor Cyan
+  Write-Host "Report-only mode. Set the applyChanges variable to true to reset inheritance." -ForegroundColor Cyan
 }
 
 Write-Host "Unique permission review complete for $siteUrl" -ForegroundColor Green</pre></div>

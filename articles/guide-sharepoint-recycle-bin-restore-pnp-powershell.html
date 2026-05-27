@@ -173,7 +173,10 @@
 # Restore first-stage recycle bin items from selected folders
 # deleted on one date, using CSOM paging to reduce threshold risk.
 
+# Target SharePoint site where items were deleted.
 $SiteUrl = "https://contoso.sharepoint.com/sites/Retail"
+
+# Entra app Client ID used by PnP.PowerShell interactive authentication.
 $ClientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 # Folder paths without a leading slash.
@@ -182,6 +185,7 @@ $FolderPaths = @(
     "sites/Retail/Shared Documents/Folder2"
 )
 
+# Calendar date when the items were deleted.
 $DeletedOnDate = Get-Date "05/20/2026"
 $FromDate = $DeletedOnDate.Date
 $ToDate = $DeletedOnDate.Date.AddDays(1).AddSeconds(-1)
@@ -195,6 +199,7 @@ $PageSize = 1000
 # Keep true until you have reviewed the CSV log.
 $WhatIfMode = $true
 
+# CSV log path for restored, skipped, and failed items.
 $LogPath = "C:\Temp\RecycleBinRestoreLog_{0}.csv" -f (Get-Date -Format "yyyyMMdd_HHmmss")
 
 Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId

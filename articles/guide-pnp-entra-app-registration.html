@@ -281,17 +281,14 @@
       <h3>Check your current PowerShell version</h3>
       <div class="code-label">PowerShell — check version</div>
       <div class="code-block"><pre>$PSVersionTable.PSVersion
-
-# Look for Major: 7 (or higher) in the output
-# If Major: 5, you are running Windows PowerShell — upgrade</pre></div>
+      </pre></div>
 
       <h3>Install PowerShell 7 via winget (recommended on Windows)</h3>
       <div class="code-label">PowerShell or Command Prompt — install via winget</div>
       <div class="code-block"><pre>winget install --id Microsoft.PowerShell -e --source winget
 
-# After installation, open a NEW terminal window and verify:
 pwsh --version
-# Expected output: PowerShell 7.x.x</pre></div>
+      </pre></div>
 
       <h3>Alternative: Install via MSI installer</h3>
       <p>Download the Windows 64-bit MSI from the <a href="https://github.com/PowerShell/PowerShell/releases" target="_blank" rel="noopener noreferrer">PowerShell GitHub Releases page</a>. The file is named <code>PowerShell-7.x.x-win-x64.msi</code>. Run the installer with default options.</p>
@@ -309,9 +306,7 @@ pwsh --version
       <div class="code-label">PowerShell 7 — set execution policy</div>
       <div class="code-block"><pre># If scripts are blocked, set the policy for the current user
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-
-# Confirm when prompted (enter 'Y')
-# RemoteSigned: local scripts run freely; downloaded scripts must be signed</pre></div>
+      </pre></div>
 
       <h3>Install PnP.PowerShell</h3>
       <div class="code-label">PowerShell 7 — install module</div>
@@ -321,16 +316,12 @@ Install-Module -Name PnP.PowerShell -Scope CurrentUser
 # To install for all users on the machine (requires Run as Administrator)
 # Install-Module -Name PnP.PowerShell -Scope AllUsers
 
-# If prompted about an untrusted repository, enter 'Y' to accept
-
-# Verify installation
 Get-Module -Name PnP.PowerShell -ListAvailable</pre></div>
 
       <h3>Update an existing installation</h3>
       <div class="code-label">PowerShell 7 — update module</div>
       <div class="code-block"><pre>Update-Module -Name PnP.PowerShell
 
-# Check the installed version
 Import-Module PnP.PowerShell
 Get-Module PnP.PowerShell | Select-Object Version</pre></div>
 
@@ -463,7 +454,10 @@ Get-Module PnP.PowerShell | Select-Object Version</pre></div>
 
       <div class="code-label">PowerShell 7 — create self-signed certificate</div>
       <div class="code-block"><pre># ── Step 1: Create the certificate in the Windows cert store ──
+# Certificate friendly name shown in Windows certificate store and Entra.
 $certName = "PnPSharePointApp"
+
+# Certificate validity period; shorten or extend based on your security policy.
 $notAfter  = (Get-Date).AddYears(2)   # 2-year validity
 $cert = New-SelfSignedCertificate `
     -Subject           "CN=$certName" `
@@ -475,17 +469,18 @@ $cert = New-SelfSignedCertificate `
     -HashAlgorithm     SHA256 `
     -NotAfter          $notAfter
 
-# Output the thumbprint — save this value, you will need it later
 Write-Host "Thumbprint: $($cert.Thumbprint)" -ForegroundColor Cyan
 
-# ── Step 2: Export public key (.cer) — upload this to Entra ──
+# Public certificate path to upload into the Entra app registration.
 $cerPath = "C:\Certs\PnPSharePointApp.cer"
 New-Item -ItemType Directory -Force -Path "C:\Certs" | Out-Null
 Export-Certificate -Cert $cert -FilePath $cerPath
 Write-Host "Public key exported to: $cerPath"
 
-# ── Step 3: Export PFX (private + public) — use with -CertificatePath ──
+# Private PFX path used by automation scripts.
 $pfxPath     = "C:\Certs\PnPSharePointApp.pfx"
+
+# PFX export password; use a secure secret source for production.
 $pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
 Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $pfxPassword
 Write-Host "PFX exported to: $pfxPath"</pre></div>
@@ -499,6 +494,7 @@ Write-Host "PFX exported to: $pfxPath"</pre></div>
 
       <div class="code-label">PowerShell 7 — PnP certificate generator (alternative)</div>
       <div class="code-block"><pre># This does NOT require an active PnP connection — run it before connecting
+# PFX export password; use a secure secret source for production.
 $pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
 
 New-PnPAzureCertificate `
@@ -508,8 +504,7 @@ New-PnPAzureCertificate `
     -CertificatePassword $pfxPassword `
     -ValidYears         2
 
-# The cmdlet also outputs the Thumbprint and an Entra manifest JSON snippet
-# you can paste directly into the app registration's Manifest tab</pre></div>
+</pre></div>
 
       <h2>Step 7: Upload the Certificate to Your Entra App</h2>
       <p>Upload only the <strong>.cer file</strong> (public key) to Entra. Never upload the .pfx — Entra only needs the public key to verify signatures made by the private key.</p>
@@ -603,14 +598,14 @@ New-PnPAzureCertificate `
       <p>Use an explicit ClientId for interactive PnP examples. The browser popup still handles sign-in and MFA, but the app registration, delegated permissions, and consent trail are clear and repeatable.</p>
 
       <div class="code-label">PowerShell 7 &mdash; Interactive with ClientId</div>
-      <div class="code-block"><pre>$clientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      <div class="code-block"><pre># Entra app Client ID used by PnP.PowerShell interactive authentication.
+    $clientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 Connect-PnPOnline `
     -Url "https://contoso.sharepoint.com" `
     -ClientId $clientId `
     -Interactive
 
-# Verify
 $web = Get-PnPWeb
 Write-Host "Connected to: $($web.Title)"</pre></div>
 
@@ -664,7 +659,6 @@ Connect-PnPOnline `
     -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
     -Interactive
 
-# Verify
 $web = Get-PnPWeb
 Write-Host "Connected to: $($web.Title)"</pre></div>
 
@@ -678,6 +672,7 @@ Write-Host "Connected to: $($web.Title)"</pre></div>
       <div class="code-label">PowerShell 7 — Connect-PnPOnline with PFX certificate</div>
       <div class="code-block"><pre># Store the password securely — never hardcode in scripts
 # In production, retrieve from Azure Key Vault or an environment variable
+# PFX password used to unlock the certificate private key.
 $pfxPassword = ConvertTo-SecureString `
     -String    "YourSecureP@ssword!" `
     -AsPlainText -Force
@@ -689,7 +684,6 @@ Connect-PnPOnline `
     -CertificatePassword $pfxPassword `
     -Tenant              "contoso.onmicrosoft.com"
 
-# Verify
 $web = Get-PnPWeb
 Write-Host "Connected as app to: $($web.Title)"</pre></div>
 
@@ -709,7 +703,6 @@ Connect-PnPOnline `
     -Thumbprint $thumbprint `
     -Tenant     "contoso.onmicrosoft.com"
 
-# Verify
 $web = Get-PnPWeb
 Write-Host "Connected as app to: $($web.Title)"</pre></div>
 
@@ -746,6 +739,7 @@ Get-PnPList | Where-Object { $_.BaseType -eq "DocumentLibrary" } | Select-Object
 
       <div class="code-label">PowerShell 7 — connect to SharePoint admin center</div>
       <div class="code-block"><pre># Admin center URL format: https://[tenant]-admin.sharepoint.com
+# PFX password used to unlock the certificate private key.
 $pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
 
 Connect-PnPOnline `

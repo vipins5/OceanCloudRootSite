@@ -171,24 +171,31 @@
       <div class="code-block"><div class="code-label">PowerShell - classic calendar to modern view with safeguards</div><pre><code>#requires -Modules PnP.PowerShell
 
 param(
+    # Target SharePoint site that contains the classic calendar list.
     [Parameter(Mandatory = $false)]
-  [string]$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement",
+    [string]$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement",
 
-  [Parameter(Mandatory = $false)]
-  [string]$ClientId = "00000000-0000-0000-0000-000000000000",
+    # Entra app Client ID used by PnP.PowerShell interactive authentication.
+    [Parameter(Mandatory = $false)]
+    [string]$ClientId = "00000000-0000-0000-0000-000000000000",
 
+    # Calendar list display name or internal list title.
     [Parameter(Mandatory = $false)]
     [string]$ListName = "Calendar",
 
+    # Name for the modern calendar view that will be created.
     [Parameter(Mandatory = $false)]
     [string]$NewViewTitle = "MODERNCALENDAR",
 
+    # Add this switch only after testing if the new view should become default.
     [Parameter(Mandatory = $false)]
     [switch]$SetAsDefault,
 
+    # Add this switch for validation-only runs that make no changes.
     [Parameter(Mandatory = $false)]
     [switch]$DryRun,
 
+    # Minimum PnP.PowerShell version accepted by the pre-check.
     [Parameter(Mandatory = $false)]
     [Version]$MinPnPVersion = [Version]"2.4.0"
 )
@@ -330,7 +337,7 @@ try {
     Test-PnPModule
 
     Write-Section "Connection"
-    Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
+Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
     Write-Host "Connected to: $SiteUrl"
 
     Write-Section "List validation"
@@ -456,13 +463,20 @@ finally {
       <p>If business users report a blocker, rollback should be immediate and predictable. The safest rollback is to set the previous view back as default and keep the modern view for troubleshooting. Avoid deleting artifacts during the same incident window.</p>
 
       <div class="code-block"><div class="code-label">PowerShell - quick rollback to previous default view</div><pre><code>param(
+    # Target SharePoint site that contains the calendar list.
     [string]$SiteUrl,
-      [string]$ClientId,
+
+    # Entra app Client ID used by PnP.PowerShell interactive authentication.
+    [string]$ClientId,
+
+    # Calendar list display name or internal list title.
     [string]$ListName = "Calendar",
+
+    # Existing view title to restore as the default view.
     [string]$FallbackViewTitle = "All Events"
 )
 
-    Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
+Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
 $fallback = Get-PnPView -List $ListName -Identity $FallbackViewTitle -ErrorAction Stop
 Set-PnPView -List $ListName -Identity $fallback.Id -Values @{ DefaultView = $true }
 Write-Host "Rollback complete. Default view is now: $FallbackViewTitle"
@@ -491,8 +505,13 @@ Disconnect-PnPOnline
       <h2>Reference your original REST pattern</h2>
       <p>If your team started from the direct REST pattern below, keep it as a baseline reference. The hardened script in this guide wraps this method with safeguards and validation:</p>
 
-      <div class="code-block"><div class="code-label">PowerShell - original REST create pattern</div><pre><code>$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement"
-    $ClientId = "00000000-0000-0000-0000-000000000000"
+      <div class="code-block"><div class="code-label">PowerShell - original REST create pattern</div><pre><code># Target SharePoint site that contains the classic calendar list.
+$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement"
+
+# Entra app Client ID used by PnP.PowerShell interactive authentication.
+$ClientId = "00000000-0000-0000-0000-000000000000"
+
+# Calendar list display name or internal list title.
 $ListName = "Calendar"
 
     Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
