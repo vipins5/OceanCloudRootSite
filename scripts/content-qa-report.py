@@ -21,25 +21,32 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Repo root path used for file discovery and relative output paths.
 ROOT = Path(__file__).resolve().parent.parent
+# Output markdown report for QA pipeline artifacts.
 REPORT = ROOT / "data" / "reports" / "content-qa-report.md"
 
+# XML files that must parse successfully (hard-fail checks).
 XML_FILES = [
     ROOT / "sitemap.xml",
     ROOT / "feed.xml",
 ]
 
+# JSON files that must parse successfully (hard-fail checks).
 JSON_FILES = [
     ROOT / "data" / "search-index.json",
     ROOT / "data" / "archive.json",
     ROOT / "data" / "guide-topics.json",
 ]
 
+# Regex that detects a valid HTML title element.
 TITLE_RE = re.compile(r"<title\b[^>]*>.*?</title>", re.IGNORECASE | re.DOTALL)
+# Regex that detects the meta description tag.
 DESC_RE = re.compile(
     r"<meta\s+[^>]*name=[\"']description[\"'][^>]*>",
     re.IGNORECASE,
 )
+# Regex that detects canonical link markup.
 CANONICAL_RE = re.compile(
     r"<link\s+[^>]*rel=[\"']canonical[\"'][^>]*>",
     re.IGNORECASE,
@@ -114,7 +121,9 @@ def build_report(
     json_errors: list[str],
     metadata: dict[str, list[str]],
 ) -> str:
+    # UTC timestamp shown in the generated report header.
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # Hard failures determine process exit code for CI behavior.
     hard_fail_count = len(xml_errors) + len(json_errors)
 
     lines = [
@@ -164,6 +173,7 @@ def build_report(
 
 
 def main() -> int:
+    # Scope of HTML files checked for advisory metadata quality.
     html_files = sorted(ROOT.glob("*.html")) + sorted((ROOT / "articles").glob("*.html"))
 
     xml_errors = check_xml(XML_FILES)

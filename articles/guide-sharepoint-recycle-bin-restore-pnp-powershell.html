@@ -173,32 +173,32 @@
 # Restore first-stage recycle bin items from selected folders
 # deleted on one date, using CSOM paging to reduce threshold risk.
 
-$SiteUrl = "https://contoso.sharepoint.com/sites/Retail"
-$ClientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+$SiteUrl = "https://contoso.sharepoint.com/sites/Retail"  # User note: update this variable for your environment
+$ClientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"  # User note: update this variable for your environment
 
 # Folder paths without a leading slash.
-$FolderPaths = @(
+$FolderPaths = @(  # User note: update this variable for your environment
     "sites/Retail/Shared Documents/Folder1",
     "sites/Retail/Shared Documents/Folder2"
 )
 
-$DeletedOnDate = Get-Date "05/20/2026"
-$FromDate = $DeletedOnDate.Date
-$ToDate = $DeletedOnDate.Date.AddDays(1).AddSeconds(-1)
+$DeletedOnDate = Get-Date "05/20/2026"  # User note: update this variable for your environment
+$FromDate = $DeletedOnDate.Date  # User note: update this variable for your environment
+$ToDate = $DeletedOnDate.Date.AddDays(1).AddSeconds(-1)  # User note: update this variable for your environment
 
 # Leave blank to restore items deleted by any user.
-$DeletedByEmail = ""
+$DeletedByEmail = ""  # User note: update this variable for your environment
 
 # Keep below 5000 to reduce threshold risk.
-$PageSize = 1000
+$PageSize = 1000  # User note: update this variable for your environment
 
 # Keep true until you have reviewed the CSV log.
-$WhatIfMode = $true
+$WhatIfMode = $true  # User note: update this variable for your environment
 
-$LogPath = "C:\Temp\RecycleBinRestoreLog_{0}.csv" -f (Get-Date -Format "yyyyMMdd_HHmmss")
+$LogPath = "C:\Temp\RecycleBinRestoreLog_{0}.csv" -f (Get-Date -Format "yyyyMMdd_HHmmss")  # User note: update this variable for your environment
 
 Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
-$Context = Get-PnPContext
+$Context = Get-PnPContext  # User note: update this variable for your environment
 
 function Normalize-Path {
     param([Parameter(Mandatory = $true)][string]$Path)
@@ -211,7 +211,7 @@ function Test-ItemMatchesFolderPath {
         [Parameter(Mandatory = $true)][string[]]$NormalizedFolderPaths
     )
 
-    $ItemDirName = Normalize-Path -Path $RecycleBinItem.DirName
+    $ItemDirName = Normalize-Path -Path $RecycleBinItem.DirName  # User note: update this variable for your environment
 
     foreach ($FolderPath in $NormalizedFolderPaths) {
         if ($ItemDirName -like "$FolderPath*") {
@@ -225,15 +225,15 @@ function Test-ItemMatchesFolderPath {
 function Test-OriginalItemExists {
     param([Parameter(Mandatory = $true)]$RecycleBinItem)
 
-    $OriginalLocation = "/" + $RecycleBinItem.DirName.TrimStart("/") + "/" + $RecycleBinItem.LeafName
+    $OriginalLocation = "/" + $RecycleBinItem.DirName.TrimStart("/") + "/" + $RecycleBinItem.LeafName  # User note: update this variable for your environment
 
     try {
         if ($RecycleBinItem.ItemType -eq "File") {
-            $ExistingFile = Get-PnPFile -Url $OriginalLocation -AsListItem -ErrorAction SilentlyContinue
+            $ExistingFile = Get-PnPFile -Url $OriginalLocation -AsListItem -ErrorAction SilentlyContinue  # User note: update this variable for your environment
             return ($null -ne $ExistingFile)
         }
 
-        $ExistingFolder = Get-PnPFolder -Url $OriginalLocation -ErrorAction SilentlyContinue
+        $ExistingFolder = Get-PnPFolder -Url $OriginalLocation -ErrorAction SilentlyContinue  # User note: update this variable for your environment
         return ($null -ne $ExistingFolder)
     }
     catch {
@@ -245,9 +245,9 @@ function Get-NextPagingInfo {
     param([Parameter(Mandatory = $true)]$LastItem)
 
     try {
-        $IdValue = [System.Uri]::EscapeDataString($LastItem.Id.ToString())
-        $TitleValue = [System.Uri]::EscapeDataString($LastItem.Title)
-        $SearchValue = [System.Uri]::EscapeDataString(
+        $IdValue = [System.Uri]::EscapeDataString($LastItem.Id.ToString())  # User note: update this variable for your environment
+        $TitleValue = [System.Uri]::EscapeDataString($LastItem.Title)  # User note: update this variable for your environment
+        $SearchValue = [System.Uri]::EscapeDataString(  # User note: update this variable for your environment
             $LastItem.DeletedDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
         )
 
@@ -258,8 +258,8 @@ function Get-NextPagingInfo {
     }
 }
 
-$NormalizedFolderPaths = $FolderPaths | ForEach-Object { Normalize-Path -Path $_ }
-$Log = New-Object System.Collections.Generic.List[Object]
+$NormalizedFolderPaths = $FolderPaths | ForEach-Object { Normalize-Path -Path $_ }  # User note: update this variable for your environment
+$Log = New-Object System.Collections.Generic.List[Object]  # User note: update this variable for your environment
 
 Write-Host "Site URL            : $SiteUrl" -ForegroundColor Cyan
 Write-Host "Deleted date filter : $FromDate to $ToDate" -ForegroundColor Cyan
@@ -267,14 +267,14 @@ Write-Host "First-stage only    : Yes" -ForegroundColor Cyan
 Write-Host "Page size           : $PageSize" -ForegroundColor Cyan
 Write-Host "WhatIf mode         : $WhatIfMode" -ForegroundColor Cyan
 
-$PagingInfo = $null
-$PageNumber = 0
-$TotalScanned = 0
-$TotalMatched = 0
-$TotalRestored = 0
-$TotalSkipped = 0
-$TotalFailed = 0
-$ProcessedIds = @{}
+$PagingInfo = $null  # User note: update this variable for your environment
+$PageNumber = 0  # User note: update this variable for your environment
+$TotalScanned = 0  # User note: update this variable for your environment
+$TotalMatched = 0  # User note: update this variable for your environment
+$TotalRestored = 0  # User note: update this variable for your environment
+$TotalSkipped = 0  # User note: update this variable for your environment
+$TotalFailed = 0  # User note: update this variable for your environment
+$ProcessedIds = @{}  # User note: update this variable for your environment
 
 do {
     $PageNumber++
@@ -285,7 +285,7 @@ do {
         -PercentComplete -1
 
     try {
-        $RecycleBinItems = $Context.Web.GetRecycleBinItems(
+        $RecycleBinItems = $Context.Web.GetRecycleBinItems(  # User note: update this variable for your environment
             $PagingInfo,
             $PageSize,
             $false,
@@ -301,8 +301,8 @@ do {
         break
     }
 
-    $CurrentPageItems = @($RecycleBinItems)
-    $CurrentPageCount = $CurrentPageItems.Count
+    $CurrentPageItems = @($RecycleBinItems)  # User note: update this variable for your environment
+    $CurrentPageCount = $CurrentPageItems.Count  # User note: update this variable for your environment
 
     if ($CurrentPageCount -eq 0) {
         break
@@ -311,26 +311,27 @@ do {
     $TotalScanned += $CurrentPageCount
     Write-Host "Page $PageNumber scanned. Items: $CurrentPageCount. Total scanned: $TotalScanned" -ForegroundColor DarkCyan
 
-    $MatchingItems = $CurrentPageItems | Where-Object {
-        $Item = $_
+    $MatchingItems = $CurrentPageItems | Where-Object {  # User note: update this variable for your environment
+        $Item = $_  # User note: update this variable for your environment
 
         if ($ProcessedIds.ContainsKey($Item.Id.ToString())) {
             return $false
         }
 
-        $DateMatch = ($Item.DeletedDate -ge $FromDate -and $Item.DeletedDate -le $ToDate)
-        $FolderMatch = Test-ItemMatchesFolderPath -RecycleBinItem $Item -NormalizedFolderPaths $NormalizedFolderPaths
+        $DateMatch = ($Item.DeletedDate -ge $FromDate -and $Item.DeletedDate -le $ToDate)  # User note: update this variable for your environment
+        $FolderMatch = Test-ItemMatchesFolderPath -RecycleBinItem $Item -NormalizedFolderPaths $NormalizedFolderPaths  # User note: update this variable for your environment
 
         if ([string]::IsNullOrWhiteSpace($DeletedByEmail)) {
-            $DeletedByMatch = $true
+            $DeletedByMatch = $true  # User note: update this variable for your environment
         }
         else {
-            $DeletedByMatch = ($Item.DeletedByEmail -eq $DeletedByEmail)
+            $DeletedByMatch = ($Item.DeletedByEmail -eq $DeletedByEmail)  # User note: update this variable for your environment
         }
 
         return ($DateMatch -and $FolderMatch -and $DeletedByMatch)
     }
 
+    # User note: sorting ensures folders restore before files and keeps output deterministic.
     $MatchingItems = $MatchingItems | Sort-Object `
         @{ Expression = { if ($_.ItemType -eq "Folder") { 0 } else { 1 } } }, `
         @{ Expression = { $_.DirName.Length } }, `
@@ -340,9 +341,9 @@ do {
         $ProcessedIds[$Item.Id.ToString()] = $true
         $TotalMatched++
 
-        $OriginalLocation = "/" + $Item.DirName.TrimStart("/") + "/" + $Item.LeafName
+        $OriginalLocation = "/" + $Item.DirName.TrimStart("/") + "/" + $Item.LeafName  # User note: update this variable for your environment
 
-        $LogEntry = [PSCustomObject]@{
+        $LogEntry = [PSCustomObject]@{  # User note: update this variable for your environment
             Id               = $Item.Id
             LeafName         = $Item.LeafName
             DirName          = $Item.DirName
@@ -356,7 +357,7 @@ do {
         }
 
         try {
-            $OriginalExists = Test-OriginalItemExists -RecycleBinItem $Item
+            $OriginalExists = Test-OriginalItemExists -RecycleBinItem $Item  # User note: update this variable for your environment
 
             if ($OriginalExists) {
                 $TotalSkipped++
@@ -390,8 +391,8 @@ do {
         $Log.Add($LogEntry)
     }
 
-    $LastItem = $CurrentPageItems[-1]
-    $NewPagingInfo = Get-NextPagingInfo -LastItem $LastItem
+    $LastItem = $CurrentPageItems[-1]  # User note: update this variable for your environment
+    $NewPagingInfo = Get-NextPagingInfo -LastItem $LastItem  # User note: update this variable for your environment
 
     if ([string]::IsNullOrWhiteSpace($NewPagingInfo)) {
         Write-Host "No further paging information returned. Stopping scan." -ForegroundColor Yellow
@@ -403,13 +404,13 @@ do {
         break
     }
 
-    $PagingInfo = $NewPagingInfo
+    $PagingInfo = $NewPagingInfo  # User note: update this variable for your environment
 }
 while ($CurrentPageCount -eq $PageSize)
 
 Write-Progress -Activity "Scanning first-stage recycle bin" -Completed
 
-$LogDirectory = Split-Path -Path $LogPath -Parent
+$LogDirectory = Split-Path -Path $LogPath -Parent  # User note: update this variable for your environment
 if (-not (Test-Path -Path $LogDirectory)) {
     New-Item -Path $LogDirectory -ItemType Directory -Force | Out-Null
 }

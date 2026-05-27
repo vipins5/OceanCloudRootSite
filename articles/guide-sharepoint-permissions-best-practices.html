@@ -294,8 +294,8 @@
 
       <div class="code-label">PowerShell 7 — find uniquely permissioned library items</div>
       <div class="code-block"><pre># Connect to the site you want to audit
-$siteUrl  = "https://contoso.sharepoint.com/sites/finance"
-$library  = "Documents"
+$siteUrl  = "https://contoso.sharepoint.com/sites/finance"  # User note: update this variable for your environment
+$library  = "Documents"  # User note: update this variable for your environment
 $clientId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # your Entra app Client ID
 
 # ── Choose one authentication method ──────────────────────────────────────
@@ -311,6 +311,7 @@ Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 # Connect-PnPOnline -Url $siteUrl -ClientId $clientId -CertificatePath "C:\Certs\PnPApp.pfx" -CertificatePassword $certPass -Tenant "contoso.onmicrosoft.com"
 
 # Find files/folders that no longer inherit permissions from the library
+# User note: this query loads list items for unique-permissions analysis.
 $items = Get-PnPListItem `
     -List $library `
     -PageSize 2000 `

@@ -269,13 +269,14 @@ Get-Module PnP.PowerShell -ListAvailable | Select-Object Name, Version</pre></di
 
       <div class="code-label">PowerShell 7 &mdash; connect to source and destination sites</div>
       <div class="code-block"><pre># ── Source site ───────────────────────────────────────────────────────────
-$srcUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"
-$dstUrl    = "https://contoso.sharepoint.com/sites/NewIntranet"
+$srcUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"  # User note: update this variable for your environment
+$dstUrl    = "https://contoso.sharepoint.com/sites/NewIntranet"  # User note: update this variable for your environment
 $clientId  = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # Entra app Client ID
-$tenant    = "contoso.onmicrosoft.com"
-$certPath  = "C:\Certs\PnPSharePointApp.pfx"
-$certPass  = ConvertTo-SecureString "YourP@ssw0rd" -AsPlainText -Force
+$tenant    = "contoso.onmicrosoft.com"  # User note: update this variable for your environment
+$certPath  = "C:\Certs\PnPSharePointApp.pfx"  # User note: update this variable for your environment
+$certPass  = ConvertTo-SecureString "YourP@ssw0rd" -AsPlainText -Force  # User note: update this variable for your environment
 
+# User note: this connection object is reused for all source-site operations.
 $src = Connect-PnPOnline `
     -Url                 $srcUrl `
     -ClientId            $clientId `
@@ -285,6 +286,7 @@ $src = Connect-PnPOnline `
     -ReturnConnection
 
 # ── Destination site ───────────────────────────────────────────────────────
+# User note: this connection object is reused for all destination-site operations.
 $dst = Connect-PnPOnline `
     -Url                 $dstUrl `
     -ClientId            $clientId `
@@ -302,13 +304,13 @@ Write-Host "Destination: $((Get-PnPWeb -Connection $dst).Title)"</pre></div>
 
       <div class="code-label">PowerShell 7 &mdash; export full site inventory to CSV</div>
       <div class="code-block"><pre>$reportPath = "C:\Migration\source-inventory-$(Get-Date -Format 'yyyyMMdd').csv"
-$inventory  = @()
+$inventory  = @()  # User note: update this variable for your environment
 
-$lists = Get-PnPList -Connection $src |
+$lists = Get-PnPList -Connection $src |  # User note: update this variable for your environment
     Where-Object { -not $_.Hidden -and $_.BaseType -in 'DocumentLibrary','GenericList' }
 
 foreach ($list in $lists) {
-    $items = Get-PnPListItem -List $list.Title -Connection $src -PageSize 500
+    $items = Get-PnPListItem -List $list.Title -Connection $src -PageSize 500  # User note: update this variable for your environment
 
     $inventory += [PSCustomObject]@{
         ListTitle    = $list.Title
@@ -364,7 +366,7 @@ Write-Host "Template applied to destination site."</pre></div>
       <h3>Simple library copy</h3>
       <div class="code-label">PowerShell 7 &mdash; copy an entire document library</div>
       <div class="code-block"><pre>$srcLibUrl = "/sites/OldIntranet/Shared Documents"
-$dstLibUrl = "/sites/NewIntranet/Shared Documents"
+$dstLibUrl = "/sites/NewIntranet/Shared Documents"  # User note: update this variable for your environment
 
 # Copy-PnPFile works server-side — fast and does not use local bandwidth
 Copy-PnPFile `
@@ -379,17 +381,18 @@ Write-Host "Library copy complete."</pre></div>
       <h3>Folder-by-folder copy with progress (large libraries)</h3>
       <div class="code-label">PowerShell 7 &mdash; iterate folders, copy with logging</div>
       <div class="code-block"><pre>$logPath = "C:\Migration\copy-log-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
-$log     = @()
+$log     = @()  # User note: update this variable for your environment
 
 function Copy-SPFolder {
     param($FolderUrl, $SrcConn, $DstSiteUrl)
 
+    # User note: this query loads files in the current folder scope.
     $files = Get-PnPFolderItem -FolderSiteRelativeUrl $FolderUrl `
                  -ItemType File -Connection $SrcConn
 
     foreach ($file in $files) {
-        $srcFile = $file.ServerRelativeUrl
-        $dstFile = $srcFile -replace "/sites/OldIntranet", "/sites/NewIntranet"
+        $srcFile = $file.ServerRelativeUrl  # User note: update this variable for your environment
+        $dstFile = $srcFile -replace "/sites/OldIntranet", "/sites/NewIntranet"  # User note: update this variable for your environment
 
         try {
             Copy-PnPFile -SourceUrl $srcFile -TargetUrl $dstFile `
@@ -410,6 +413,7 @@ function Copy-SPFolder {
     }
 
     # Recurse into subfolders
+    # User note: this query loads child folders for recursive copy.
     $subFolders = Get-PnPFolderItem -FolderSiteRelativeUrl $FolderUrl `
                       -ItemType Folder -Connection $SrcConn |
                   Where-Object { $_.Name -notin "Forms","_t","_w" }
@@ -423,7 +427,7 @@ Copy-SPFolder -FolderUrl "/sites/OldIntranet/Shared Documents" `
               -SrcConn $src -DstSiteUrl $dstUrl
 
 $log | Export-Csv -Path $logPath -NoTypeInformation -Encoding UTF8
-$failed = ($log | Where-Object { $_.Status -eq "FAILED" }).Count
+$failed = ($log | Where-Object { $_.Status -eq "FAILED" }).Count  # User note: update this variable for your environment
 Write-Host "`nCopied: $($log.Count - $failed) files  |  Failed: $failed  |  Log: $logPath"</pre></div>
 
       <h2>Step 5 — Migrate Custom List Items and Metadata</h2>
@@ -435,9 +439,10 @@ Write-Host "`nCopied: $($log.Count - $failed) files  |  Failed: $failed  |  Log:
 
       <div class="code-label">PowerShell 7 &mdash; migrate list items with field mapping</div>
       <div class="code-block"><pre>$srcListName = "Project Register"
-$dstListName = "Project Register"
+$dstListName = "Project Register"  # User note: update this variable for your environment
 
 # Fetch all source items — specify only the fields you need
+# User note: this query loads source list items for migration.
 $srcItems = Get-PnPListItem `
     -List       $srcListName `
     -Connection $src `
@@ -445,12 +450,12 @@ $srcItems = Get-PnPListItem `
     -Fields     "Title","ProjectStatus","Department","StartDate","DueDate","Budget"
 
 Write-Host "Migrating $($srcItems.Count) items from '$srcListName'…"
-$migrated = 0
-$errors   = 0
+$migrated = 0  # User note: update this variable for your environment
+$errors   = 0  # User note: update this variable for your environment
 
 foreach ($item in $srcItems) {
     try {
-        $values = @{
+        $values = @{  # User note: update this variable for your environment
             Title         = $item["Title"]
             ProjectStatus = $item["ProjectStatus"]
             Department    = $item["Department"]
@@ -460,7 +465,7 @@ foreach ($item in $srcItems) {
         }
 
         # Remove null values — Add-PnPListItem errors on null for some field types
-        $values = $values.GetEnumerator() |
+        $values = $values.GetEnumerator() |  # User note: update this variable for your environment
             Where-Object { $null -ne $_.Value } |
             ForEach-Object -Begin { $h = @{} } -Process { $h[$_.Key] = $_.Value } -End { $h }
 
@@ -482,6 +487,7 @@ Write-Host "Done — Migrated: $migrated  |  Errors: $errors"</pre></div>
 New-Item -ItemType Directory -Path $pagesExportDir -Force | Out-Null
 
 # ── Get all modern pages from source ──────────────────────────────────────
+# User note: this query loads modern pages that will be exported/imported.
 $pages = Get-PnPListItem -List "Site Pages" -Connection $src `
              -Fields "FileLeafRef","Title","_ModernAudienceTargetUserField" |
          Where-Object { $_["FileLeafRef"] -match "\.aspx$" }
@@ -489,12 +495,12 @@ $pages = Get-PnPListItem -List "Site Pages" -Connection $src `
 Write-Host "Found $($pages.Count) pages to migrate."
 
 foreach ($page in $pages) {
-    $pageName = $page["FileLeafRef"]
+    $pageName = $page["FileLeafRef"]  # User note: update this variable for your environment
     Write-Host "  Exporting: $pageName"
 
     try {
         # Export page as PnP template (XML captures layout + static text)
-        $pageTemplate = "$pagesExportDir\$($pageName -replace '\.aspx$','.xml')"
+        $pageTemplate = "$pagesExportDir\$($pageName -replace '\.aspx$','.xml')"  # User note: update this variable for your environment
         Get-PnPSiteTemplate `
             -Connection   $src `
             -Out          $pageTemplate `
@@ -525,18 +531,19 @@ Write-Host "`nPage migration complete. Review web part configurations manually."
       <h3>Migrate site groups and members</h3>
       <div class="code-label">PowerShell 7 &mdash; copy SharePoint groups and membership</div>
       <div class="code-block"><pre># ── Get source site groups ─────────────────────────────────────────────────
-$srcGroups = Get-PnPSiteGroup -Connection $src |
+$srcGroups = Get-PnPSiteGroup -Connection $src |  # User note: update this variable for your environment
     Where-Object { $_.Title -notin "Excel Services Viewers","Style Resource Readers" }
 
 foreach ($group in $srcGroups) {
     Write-Host "Processing group: $($group.Title)"
 
     # Check if group already exists at destination
-    $dstGroup = Get-PnPSiteGroup -Connection $dst |
+    $dstGroup = Get-PnPSiteGroup -Connection $dst |  # User note: update this variable for your environment
         Where-Object { $_.Title -eq $group.Title }
 
     if (-not $dstGroup) {
         # Create the group
+        # User note: this command creates a missing destination SharePoint group.
         $dstGroup = New-PnPGroup `
             -Title       $group.Title `
             -Description $group.Description `
@@ -545,7 +552,7 @@ foreach ($group in $srcGroups) {
     }
 
     # Get source members
-    $members = Get-PnPGroupMember -Group $group.Title -Connection $src
+    $members = Get-PnPGroupMember -Group $group.Title -Connection $src  # User note: update this variable for your environment
 
     foreach ($member in $members) {
         if ($member.PrincipalType -eq "User") {
@@ -568,13 +575,13 @@ Write-Host "Group migration complete."</pre></div>
       <h3>Assign permission levels to groups</h3>
       <div class="code-label">PowerShell 7 &mdash; set role assignments on destination site</div>
       <div class="code-block"><pre># Get role assignments from source root web
-$srcWeb  = Get-PnPWeb -Connection $src -Includes RoleAssignments
-$srcRoles = $srcWeb.RoleAssignments
+$srcWeb  = Get-PnPWeb -Connection $src -Includes RoleAssignments  # User note: update this variable for your environment
+$srcRoles = $srcWeb.RoleAssignments  # User note: update this variable for your environment
 Invoke-PnPQuery -Connection $src
 
 foreach ($ra in $srcRoles) {
-    $principal = $ra.Member
-    $bindings  = $ra.RoleDefinitionBindings
+    $principal = $ra.Member  # User note: update this variable for your environment
+    $bindings  = $ra.RoleDefinitionBindings  # User note: update this variable for your environment
     Invoke-PnPQuery -Connection $src
 
     foreach ($binding in $bindings) {
@@ -597,18 +604,18 @@ foreach ($ra in $srcRoles) {
 
       <div class="code-label">PowerShell 7 &mdash; compare item counts source vs destination</div>
       <div class="code-block"><pre>$validationPath = "C:\Migration\validation-$(Get-Date -Format 'yyyyMMdd-HHmm').csv"
-$results = @()
+$results = @()  # User note: update this variable for your environment
 
-$srcLists = Get-PnPList -Connection $src |
+$srcLists = Get-PnPList -Connection $src |  # User note: update this variable for your environment
     Where-Object { -not $_.Hidden -and $_.BaseType -in 'DocumentLibrary','GenericList' }
 
 foreach ($srcList in $srcLists) {
     # Find matching list at destination by title
-    $dstList = Get-PnPList -Identity $srcList.Title -Connection $dst -ErrorAction SilentlyContinue
+    $dstList = Get-PnPList -Identity $srcList.Title -Connection $dst -ErrorAction SilentlyContinue  # User note: update this variable for your environment
 
-    $srcCount = $srcList.ItemCount
-    $dstCount = if ($dstList) { $dstList.ItemCount } else { -1 }
-    $match    = $srcCount -eq $dstCount
+    $srcCount = $srcList.ItemCount  # User note: update this variable for your environment
+    $dstCount = if ($dstList) { $dstList.ItemCount } else { -1 }  # User note: update this variable for your environment
+    $match    = $srcCount -eq $dstCount  # User note: update this variable for your environment
 
     $results += [PSCustomObject]@{
         List        = $srcList.Title
@@ -617,14 +624,14 @@ foreach ($srcList in $srcLists) {
         Match       = if ($match) { "OK" } elseif ($dstCount -eq -1) { "MISSING" } else { "MISMATCH" }
     }
 
-    $icon = if ($match) { "✓" } elseif ($dstCount -eq -1) { "✗ MISSING" } else { "⚠ MISMATCH" }
+    $icon = if ($match) { "✓" } elseif ($dstCount -eq -1) { "✗ MISSING" } else { "⚠ MISMATCH" }  # User note: update this variable for your environment
     Write-Host "  $icon  $($srcList.Title) — Source: $srcCount  Dest: $dstCount"
 }
 
 $results | Export-Csv -Path $validationPath -NoTypeInformation -Encoding UTF8
 
-$ok       = ($results | Where-Object { $_.Match -eq "OK" }).Count
-$mismatch = ($results | Where-Object { $_.Match -ne "OK" }).Count
+$ok       = ($results | Where-Object { $_.Match -eq "OK" }).Count  # User note: update this variable for your environment
+$mismatch = ($results | Where-Object { $_.Match -ne "OK" }).Count  # User note: update this variable for your environment
 Write-Host "`n─────────────────────────────────────────────"
 Write-Host "Matched: $ok / $($results.Count)"
 if ($mismatch -gt 0) {
@@ -652,7 +659,7 @@ if ($mismatch -gt 0) {
 # ════════════════════════════════════════
 #   CONFIGURATION — edit this block only
 # ════════════════════════════════════════
-$Config = @{
+$Config = @{  # User note: update this variable for your environment
     SourceUrl    = "https://contoso.sharepoint.com/sites/OldIntranet"
     DestUrl      = "https://contoso.sharepoint.com/sites/NewIntranet"
     ClientId     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
@@ -673,26 +680,26 @@ $Config = @{
 }
 # ════════════════════════════════════════
 
-$null = New-Item -ItemType Directory -Path $Config.OutputDir -Force
-$certPassSec = ConvertTo-SecureString $Config.CertPass -AsPlainText -Force
+$null = New-Item -ItemType Directory -Path $Config.OutputDir -Force  # User note: update this variable for your environment
+$certPassSec = ConvertTo-SecureString $Config.CertPass -AsPlainText -Force  # User note: update this variable for your environment
 
 Write-Host "`n=== OceanCloud SP Migration — $(Get-Date -Format 'yyyy-MM-dd HH:mm') ===`n"
 
 # ── Connect ────────────────────────────────────────────────────────────────
-$connParams = @{
+$connParams = @{  # User note: update this variable for your environment
     ClientId            = $Config.ClientId
     CertificatePath     = $Config.CertPath
     CertificatePassword = $certPassSec
     Tenant              = $Config.Tenant
 }
-$src = Connect-PnPOnline @connParams -Url $Config.SourceUrl -ReturnConnection
-$dst = Connect-PnPOnline @connParams -Url $Config.DestUrl   -ReturnConnection
+$src = Connect-PnPOnline @connParams -Url $Config.SourceUrl -ReturnConnection  # User note: update this variable for your environment
+$dst = Connect-PnPOnline @connParams -Url $Config.DestUrl   -ReturnConnection  # User note: update this variable for your environment
 Write-Host "Connected: $((Get-PnPWeb -Connection $src).Title)  →  $((Get-PnPWeb -Connection $dst).Title)`n"
 
 # ── Step 3: Site template ──────────────────────────────────────────────────
 if ($Config.MigrateTemplate) {
     Write-Host "[1/5] Exporting and applying site template…"
-    $tpl = "$($Config.OutputDir)\site-template.xml"
+    $tpl = "$($Config.OutputDir)\site-template.xml"  # User note: update this variable for your environment
     Get-PnPSiteTemplate -Connection $src -Out $tpl -Handlers ContentTypes,Fields,Lists,Navigation -Force
     Invoke-PnPSiteTemplate -Connection $dst -Path $tpl
     Write-Host "      Template applied.`n"
@@ -701,12 +708,12 @@ if ($Config.MigrateTemplate) {
 # ── Step 4: Document libraries ─────────────────────────────────────────────
 if ($Config.MigrateLibraries) {
     Write-Host "[2/5] Copying document libraries…"
-    $libs = Get-PnPList -Connection $src |
+    $libs = Get-PnPList -Connection $src |  # User note: update this variable for your environment
         Where-Object { $_.BaseType -eq 'DocumentLibrary' -and -not $_.Hidden `
                        -and $_.Title -notin $Config.ExcludeLists }
     foreach ($lib in $libs) {
-        $srcPath = $lib.RootFolder.ServerRelativeUrl
-        $dstPath = $srcPath -replace [regex]::Escape(([uri]$Config.SourceUrl).AbsolutePath), ([uri]$Config.DestUrl).AbsolutePath
+        $srcPath = $lib.RootFolder.ServerRelativeUrl  # User note: update this variable for your environment
+        $dstPath = $srcPath -replace [regex]::Escape(([uri]$Config.SourceUrl).AbsolutePath), ([uri]$Config.DestUrl).AbsolutePath  # User note: update this variable for your environment
         Write-Host "  Copying: $($lib.Title)"
         try { Copy-PnPFile -SourceUrl $srcPath -TargetUrl $dstPath -Overwrite -Connection $src }
         catch { Write-Warning "  Failed: $($_.Exception.Message)" }
@@ -717,15 +724,15 @@ if ($Config.MigrateLibraries) {
 # ── Step 5: List items ─────────────────────────────────────────────────────
 if ($Config.MigrateLists) {
     Write-Host "[3/5] Migrating list items…"
-    $lists = Get-PnPList -Connection $src |
+    $lists = Get-PnPList -Connection $src |  # User note: update this variable for your environment
         Where-Object { $_.BaseType -eq 'GenericList' -and -not $_.Hidden `
                        -and $_.Title -notin $Config.ExcludeLists }
     foreach ($list in $lists) {
-        $items = Get-PnPListItem -List $list.Title -Connection $src -PageSize 500
+        $items = Get-PnPListItem -List $list.Title -Connection $src -PageSize 500  # User note: update this variable for your environment
         Write-Host "  $($list.Title): $($items.Count) items"
         foreach ($item in $items) {
             try {
-                $vals = @{ Title = $item["Title"] }
+                $vals = @{ Title = $item["Title"] }  # User note: update this variable for your environment
                 Add-PnPListItem -List $list.Title -Values $vals -Connection $dst | Out-Null
             } catch { Write-Warning "  Item failed: $($_.Exception.Message)" }
         }
@@ -736,11 +743,11 @@ if ($Config.MigrateLists) {
 # ── Step 6: Pages ──────────────────────────────────────────────────────────
 if ($Config.MigratePages) {
     Write-Host "[4/5] Migrating modern pages…"
-    $pages = Get-PnPListItem -List "Site Pages" -Connection $src -Fields "FileLeafRef" |
+    $pages = Get-PnPListItem -List "Site Pages" -Connection $src -Fields "FileLeafRef" |  # User note: update this variable for your environment
              Where-Object { $_["FileLeafRef"] -match "\.aspx$" }
     foreach ($page in $pages) {
-        $name = $page["FileLeafRef"]
-        $out  = "$($Config.OutputDir)\page-$name.xml"
+        $name = $page["FileLeafRef"]  # User note: update this variable for your environment
+        $out  = "$($Config.OutputDir)\page-$name.xml"  # User note: update this variable for your environment
         try {
             Get-PnPSiteTemplate -Connection $src -Out $out -Handlers PageContents -Pages $name -Force
             Invoke-PnPSiteTemplate -Connection $dst -Path $out
@@ -753,12 +760,12 @@ if ($Config.MigratePages) {
 # ── Step 7: Permissions ────────────────────────────────────────────────────
 if ($Config.MigratePermissions) {
     Write-Host "[5/5] Migrating groups and permissions…"
-    $groups = Get-PnPSiteGroup -Connection $src
+    $groups = Get-PnPSiteGroup -Connection $src  # User note: update this variable for your environment
     foreach ($grp in $groups) {
         if (-not (Get-PnPSiteGroup -Connection $dst | Where-Object { $_.Title -eq $grp.Title })) {
             New-PnPGroup -Title $grp.Title -Description $grp.Description -Connection $dst | Out-Null
         }
-        $members = Get-PnPGroupMember -Group $grp.Title -Connection $src
+        $members = Get-PnPGroupMember -Group $grp.Title -Connection $src  # User note: update this variable for your environment
         foreach ($m in $members | Where-Object { $_.PrincipalType -eq "User" }) {
             try { Add-PnPGroupMember -Group $grp.Title -LoginName $m.LoginName -Connection $dst }
             catch { Write-Warning "  Could not add $($m.LoginName)" }

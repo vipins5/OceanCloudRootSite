@@ -272,8 +272,8 @@ Get-SPOSite -Limit All | Select-Object `
         <div class="code-label">PowerShell 7 &mdash; report external users in a SharePoint site</div>
         <div class="code-block"><pre>Install-Module PnP.PowerShell -Scope CurrentUser
 
-$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
-      $clientId = "00000000-0000-0000-0000-000000000000"
+$siteUrl = "https://contoso.sharepoint.com/sites/client-project"  # User note: update this variable for your environment
+      $clientId = "00000000-0000-0000-0000-000000000000"  # User note: update this variable for your environment
 
       Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
@@ -290,12 +290,12 @@ Get-PnPUser | Where-Object {
 
         <div class="code-label">PowerShell 7 &mdash; find lists and items with unique permissions</div>
         <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
-      $clientId = "00000000-0000-0000-0000-000000000000"
+      $clientId = "00000000-0000-0000-0000-000000000000"  # User note: update this variable for your environment
 
       Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
-$results = @()
-$lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder
+$results = @()  # User note: update this variable for your environment
+$lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder  # User note: update this variable for your environment
 
 foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
     if ($list.HasUniqueRoleAssignments) {
@@ -306,6 +306,7 @@ foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
         }
     }
 
+    # User note: this query loads list items to detect item-level unique permissions.
     $items = Get-PnPListItem -List $list -PageSize 1000 `
         -Includes HasUniqueRoleAssignments, FieldValuesAsText
 
@@ -329,13 +330,13 @@ $results | Export-Csv ".\unique-permissions-report.csv" -NoTypeInformation</pre>
 
         <div class="code-label">PowerShell 7 &mdash; reset unique permissions for lists and items</div>
         <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/client-project"
-      $clientId = "00000000-0000-0000-0000-000000000000"
-$applyChanges = $false
+      $clientId = "00000000-0000-0000-0000-000000000000"  # User note: update this variable for your environment
+$applyChanges = $false  # User note: update this variable for your environment
 
       Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
 
-$ctx = Get-PnPContext
-$lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder
+$ctx = Get-PnPContext  # User note: update this variable for your environment
+$lists = Get-PnPList -Includes Hidden, HasUniqueRoleAssignments, Title, RootFolder  # User note: update this variable for your environment
 
 foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
     Write-Host "Checking list:" $list.Title
@@ -349,11 +350,12 @@ foreach ($list in $lists | Where-Object { -not $_.Hidden }) {
         }
     }
 
+    # User note: this query loads list items before applying inheritance resets.
     $items = Get-PnPListItem -List $list -PageSize 1000 `
         -Includes HasUniqueRoleAssignments, FieldValuesAsText
 
     foreach ($item in $items | Where-Object { $_.HasUniqueRoleAssignments }) {
-        $path = $item.FieldValuesAsText.FileRef
+        $path = $item.FieldValuesAsText.FileRef  # User note: update this variable for your environment
         Write-Host "  Reset item inheritance:" $path -ForegroundColor Yellow
         if ($applyChanges) {
             $item.ResetRoleInheritance()

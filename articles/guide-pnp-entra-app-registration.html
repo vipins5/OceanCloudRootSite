@@ -463,9 +463,10 @@ Get-Module PnP.PowerShell | Select-Object Version</pre></div>
 
       <div class="code-label">PowerShell 7 — create self-signed certificate</div>
       <div class="code-block"><pre># ── Step 1: Create the certificate in the Windows cert store ──
-$certName = "PnPSharePointApp"
+$certName = "PnPSharePointApp"  # User note: update this variable for your environment
 $notAfter  = (Get-Date).AddYears(2)   # 2-year validity
 
+# User note: this command output is stored in $cert for later export steps.
 $cert = New-SelfSignedCertificate `
     -Subject           "CN=$certName" `
     -CertStoreLocation "Cert:\CurrentUser\My" `
@@ -480,14 +481,14 @@ $cert = New-SelfSignedCertificate `
 Write-Host "Thumbprint: $($cert.Thumbprint)" -ForegroundColor Cyan
 
 # ── Step 2: Export public key (.cer) — upload this to Entra ──
-$cerPath = "C:\Certs\PnPSharePointApp.cer"
+$cerPath = "C:\Certs\PnPSharePointApp.cer"  # User note: update this variable for your environment
 New-Item -ItemType Directory -Force -Path "C:\Certs" | Out-Null
 Export-Certificate -Cert $cert -FilePath $cerPath
 Write-Host "Public key exported to: $cerPath"
 
 # ── Step 3: Export PFX (private + public) — use with -CertificatePath ──
-$pfxPath     = "C:\Certs\PnPSharePointApp.pfx"
-$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
+$pfxPath     = "C:\Certs\PnPSharePointApp.pfx"  # User note: update this variable for your environment
+$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force  # User note: update this variable for your environment
 Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $pfxPassword
 Write-Host "PFX exported to: $pfxPath"</pre></div>
 
@@ -500,7 +501,7 @@ Write-Host "PFX exported to: $pfxPath"</pre></div>
 
       <div class="code-label">PowerShell 7 — PnP certificate generator (alternative)</div>
       <div class="code-block"><pre># This does NOT require an active PnP connection — run it before connecting
-$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
+$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force  # User note: update this variable for your environment
 
 New-PnPAzureCertificate `
     -CommonName         "PnPSharePointApp" `
@@ -612,7 +613,7 @@ Connect-PnPOnline `
     -Interactive
 
 # Verify
-$web = Get-PnPWeb
+$web = Get-PnPWeb  # User note: update this variable for your environment
 Write-Host "Connected to: $($web.Title)"</pre></div>
 
       <div class="art-callout tip">
@@ -666,7 +667,7 @@ Connect-PnPOnline `
     -Interactive
 
 # Verify
-$web = Get-PnPWeb
+$web = Get-PnPWeb  # User note: update this variable for your environment
 Write-Host "Connected to: $($web.Title)"</pre></div>
 
       <div class="art-callout warning">
@@ -679,6 +680,7 @@ Write-Host "Connected to: $($web.Title)"</pre></div>
       <div class="code-label">PowerShell 7 — Connect-PnPOnline with PFX certificate</div>
       <div class="code-block"><pre># Store the password securely — never hardcode in scripts
 # In production, retrieve from Azure Key Vault or an environment variable
+# User note: set a secure PFX password for your environment.
 $pfxPassword = ConvertTo-SecureString `
     -String    "YourSecureP@ssword!" `
     -AsPlainText -Force
@@ -691,7 +693,7 @@ Connect-PnPOnline `
     -Tenant              "contoso.onmicrosoft.com"
 
 # Verify
-$web = Get-PnPWeb
+$web = Get-PnPWeb  # User note: update this variable for your environment
 Write-Host "Connected as app to: $($web.Title)"</pre></div>
 
       <h3>Method 3 — Client ID + Thumbprint (Windows cert store)</h3>
@@ -701,7 +703,7 @@ Write-Host "Connected as app to: $($web.Title)"</pre></div>
       <div class="code-block"><pre># The thumbprint was displayed in Step 6 when you created the certificate
 # You can also retrieve it from the Entra portal (Certificates & secrets tab)
 # or from PowerShell:
-$thumbprint = (Get-ChildItem Cert:\CurrentUser\My |
+$thumbprint = (Get-ChildItem Cert:\CurrentUser\My |  # User note: update this variable for your environment
     Where-Object { $_.Subject -like "*PnPSharePointApp*" }).Thumbprint
 
 Connect-PnPOnline `
@@ -711,7 +713,7 @@ Connect-PnPOnline `
     -Tenant     "contoso.onmicrosoft.com"
 
 # Verify
-$web = Get-PnPWeb
+$web = Get-PnPWeb  # User note: update this variable for your environment
 Write-Host "Connected as app to: $($web.Title)"</pre></div>
 
       <div class="art-callout tip">
@@ -723,7 +725,7 @@ Write-Host "Connected as app to: $($web.Title)"</pre></div>
 
       <div class="code-label">PowerShell 7 — verify PnP connection</div>
       <div class="code-block"><pre># Basic connectivity check
-$web = Get-PnPWeb
+$web = Get-PnPWeb  # User note: update this variable for your environment
 Write-Host "Site title  : $($web.Title)"
 Write-Host "Site URL    : $($web.Url)"
 Write-Host "Site template: $($web.WebTemplate)"
@@ -747,7 +749,7 @@ Get-PnPList | Where-Object { $_.BaseType -eq "DocumentLibrary" } | Select-Object
 
       <div class="code-label">PowerShell 7 — connect to SharePoint admin center</div>
       <div class="code-block"><pre># Admin center URL format: https://[tenant]-admin.sharepoint.com
-$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force
+$pfxPassword = ConvertTo-SecureString -String "YourSecureP@ssword!" -AsPlainText -Force  # User note: update this variable for your environment
 
 Connect-PnPOnline `
     -Url                 "https://contoso-admin.sharepoint.com" `

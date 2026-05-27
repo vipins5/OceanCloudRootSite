@@ -20,10 +20,15 @@ from datetime import datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
 
+# Repo root path used for git and content file operations.
 ROOT = Path(__file__).parent.parent
+# Target sitemap file that receives add/remove/lastmod updates.
 SITEMAP = ROOT / "sitemap.xml"
+# Target RSS feed whose lastBuildDate is refreshed on publish.
 FEED = ROOT / "feed.xml"
+# Canonical site base URL used in file-to-URL mapping.
 BASE_URL = "https://oceancloudconsults.com"
+# XML namespace for sitemap URL set parsing/writing.
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
 
@@ -57,6 +62,7 @@ def url_to_file(loc: str) -> Path | None:
 
 
 def changed_files() -> set[Path]:
+    # Git porcelain output with tracked/untracked working-tree deltas.
     result = subprocess.run(
         ["git", "status", "--porcelain"],
         cwd=ROOT,
@@ -64,6 +70,7 @@ def changed_files() -> set[Path]:
         text=True,
         check=True,
     )
+    # Unique set of changed file paths resolved to absolute filesystem paths.
     files: set[Path] = set()
     for line in result.stdout.splitlines():
         if not line:
@@ -86,8 +93,11 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
     ET.register_namespace("", SITEMAP_NS)
     tree = ET.parse(SITEMAP)
     root = tree.getroot()
+    # ISO date string written into lastmod fields.
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    # Counter for total sitemap mutations performed in this run.
     changed_count = 0
+    # Cache of existing loc values to avoid duplicate URL entries.
     existing_locs: set[str] = set()
 
     for url_el in list(root.findall(f"{{{SITEMAP_NS}}}url")):
@@ -135,6 +145,7 @@ def update_feed(dry_run: bool) -> bool:
         print("[skip] feed.xml not found")
         return False
     text = FEED.read_text(encoding="utf-8")
+    # RFC 2822 timestamp required by RSS lastBuildDate.
     build_date = format_datetime(datetime.now(timezone.utc))
     start = text.find("<lastBuildDate>")
     end = text.find("</lastBuildDate>")

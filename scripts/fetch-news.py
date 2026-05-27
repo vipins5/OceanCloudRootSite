@@ -40,25 +40,33 @@ import feedparser
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
+# Optional Gemini API key for AI rewriting fallback.
 GEMINI_KEY      = os.environ.get("GEMINI_API_KEY", "")
+# Gemini endpoint URL pre-bound with API key query parameter.
 GEMINI_URL      = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     "gemini-2.0-flash:generateContent?key=" + GEMINI_KEY
 )
 
+# Optional OpenAI API key (preferred rewrite engine).
 OPENAI_KEY      = os.environ.get("OPENAI_API_KEY", "")
 
+# RSS source for official SharePoint blog announcements.
 BLOG_RSS_URL    = (
     "https://techcommunity.microsoft.com"
     "/t5/s/gxcuf89792/rss/board?board.id=SPBlog"
 )
+# RSS source for Microsoft 365 release communications.
 ROADMAP_RSS_URL = (
     "https://www.microsoft.com/releasecommunications/api/v2/m365/rss"
 )
 
+# Maximum SharePoint blog items fetched per run.
 MAX_BLOG        = 6
+# Maximum roadmap items fetched per run.
 MAX_ROADMAP     = 6
 
+# Topic terms used to filter relevant news content.
 RELEVANT_TERMS  = {
     "sharepoint", "copilot", "teams", "viva", "onedrive",
     "power platform", "power apps", "power automate",
@@ -66,20 +74,31 @@ RELEVANT_TERMS  = {
     "microsoft 365", "m365"
 }
 
+# Repo root used for all generated content paths.
 ROOT            = Path(__file__).parent.parent
+# News landing page where latest cards are injected.
 NEWS_HTML       = ROOT / "news.html"
+# Archive landing page rebuilt from full archive data.
 ARCHIVE_HTML    = ROOT / "archive.html"
+# Canonical JSON archive store (deduplicated and cumulative).
 ARCHIVE_JSON    = ROOT / "data" / "archive.json"
+# Directory where generated article pages are written.
 ARTICLES_DIR    = ROOT / "articles"
+# Sitemap file updated with newly generated article URLs.
 SITEMAP_XML     = ROOT / "sitemap.xml"
+# Search index used for site-wide search discoverability.
 SEARCH_INDEX    = ROOT / "data" / "search-index.json"
+# Canonical public base URL for generated links/canonical tags.
 SITE_BASE_URL   = "https://oceancloudconsults.com"
 
+# Marker comments delimiting auto-managed news block in news.html.
 NEWS_BEGIN      = "<!-- BEGIN:NEWS-CONTENT -->"
 NEWS_END        = "<!-- END:NEWS-CONTENT -->"
+# Marker comments delimiting auto-managed archive block in archive.html.
 ARCHIVE_BEGIN   = "<!-- BEGIN:ARCHIVE-CONTENT -->"
 ARCHIVE_END     = "<!-- END:ARCHIVE-CONTENT -->"
 
+# HTTP request headers for RSS and API fetches.
 HEADERS         = {"User-Agent": "OceanCloudBot/1.0 (+https://oceancloudconsults.com)"}
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

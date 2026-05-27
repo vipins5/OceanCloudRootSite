@@ -182,9 +182,9 @@
 
       <div class="code-label">PowerShell 7 — export workflow inventory</div>
       <div class="code-block"><pre># ── Authentication variables ───────────────────────────────────────────────
-$adminUrl   = "https://contoso-admin.sharepoint.com"
+$adminUrl   = "https://contoso-admin.sharepoint.com"  # User note: update this variable for your environment
 $clientId   = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # your Entra app Client ID
-$tenant     = "contoso.onmicrosoft.com"
+$tenant     = "contoso.onmicrosoft.com"  # User note: update this variable for your environment
 $thumbprint = "AABBCCDDEEFF..."                         # cert thumbprint (for non-interactive)
 
 # ── Connect to the SharePoint admin center (choose one method) ─────────────
@@ -199,10 +199,10 @@ Connect-PnPOnline -Url $adminUrl -ClientId $clientId -Thumbprint $thumbprint -Te
 # Connect-PnPOnline -Url $adminUrl -ClientId $clientId -CertificatePath "C:\Certs\PnPApp.pfx" -CertificatePassword $certPass -Tenant $tenant
 
 # Pull candidate sites. Exclude OneDrive personal sites unless you intentionally need them.
-$sites = Get-PnPTenantSite |
+$sites = Get-PnPTenantSite |  # User note: update this variable for your environment
     Where-Object { $_.Template -notlike "SPSPERS*" }
 
-$workflowInventory = foreach ($site in $sites) {
+$workflowInventory = foreach ($site in $sites) {  # User note: update this variable for your environment
     Write-Host "Checking $($site.Url)" -ForegroundColor Cyan
 
     # Reconnect to each site using the same credentials (thumbprint avoids a browser

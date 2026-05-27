@@ -16,10 +16,15 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Repo root path for file output and relative path calculations.
 ROOT = Path(__file__).parent.parent
+# Markdown report destination consumed by GitHub Actions/PR flow.
 REPORT = ROOT / "data" / "comment-moderation" / "pending-comments.md"
+# Base URL for the comment admin API endpoint.
 API_BASE = os.environ.get("COMMENTS_API_BASE", "https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev").rstrip("/")
+# Required bearer token used to authenticate admin API calls.
 ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN", "").strip()
+# Optional toggle to include short comment body previews in reports.
 INCLUDE_BODY_PREVIEW = os.environ.get("INCLUDE_COMMENT_BODY_PREVIEW", "").strip().lower() in {"1", "true", "yes"}
 
 
@@ -28,6 +33,7 @@ def fetch_pending() -> list[dict]:
         print("[error] ADMIN_TOKEN environment variable is required", file=sys.stderr)
         sys.exit(2)
 
+    # Curl command definition for the pending-comments API query.
     cmd = [
         "curl",
         "-sf",
@@ -44,6 +50,7 @@ def fetch_pending() -> list[dict]:
         f"{API_BASE}/comments/admin?status=pending",
     ]
 
+    # Raw process result containing stdout JSON payload and stderr diagnostics.
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     if result.returncode != 0:
@@ -56,6 +63,7 @@ def fetch_pending() -> list[dict]:
         print(f"[error] invalid JSON from API: {exc}\nBody: {result.stdout[:200]}", file=sys.stderr)
         sys.exit(1)
 
+    # API payload field containing pending comment objects.
     comments = payload.get("comments", [])
     return comments if isinstance(comments, list) else []
 
@@ -73,6 +81,7 @@ def body_preview(comment: dict) -> str:
 
 
 def render_report(comments: list[dict]) -> str:
+    # UTC timestamp displayed at the top of the moderation report.
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
         "# Pending Comment Moderation",
@@ -124,6 +133,7 @@ def render_report(comments: list[dict]) -> str:
 
 def main() -> None:
     comments = fetch_pending()
+    # GitHub Actions output file used to pass values to later workflow steps.
     github_output = os.environ.get("GITHUB_OUTPUT")
 
     if comments:

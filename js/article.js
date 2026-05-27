@@ -54,6 +54,75 @@
   }
 
   /* ═══════════════════════════════════════════════════════
+     1.5 Quick points summary block
+     ═══════════════════════════════════════════════════════ */
+  function initQuickPoints() {
+    var wrap = document.querySelector('.article-wrap');
+    var meta = wrap && wrap.querySelector('.article-meta');
+    if (!wrap || !meta || wrap.querySelector('#quick-points')) return;
+
+    var intro = wrap.querySelector('.article-intro');
+    var headings = Array.from(wrap.querySelectorAll('h2'))
+      .map(function (h) { return (h.textContent || '').trim(); })
+      .filter(function (t) {
+        var low = t.toLowerCase();
+        return t && !low.includes('related') && !low.includes('common mistakes');
+      });
+
+    if (!intro && headings.length < 3) return;
+
+    var points = [];
+
+    if (intro) {
+      var firstSentence = (intro.textContent || '')
+        .replace(/\s+/g, ' ')
+        .split('. ')[0]
+        .trim();
+      if (firstSentence) {
+        points.push(firstSentence.replace(/[.]+$/, ''));
+      }
+    }
+
+    headings.slice(0, 5).forEach(function (t) {
+      points.push(t.replace(/^Step\s+\d+\s*[:\-]?\s*/i, ''));
+    });
+
+    points = points.filter(Boolean).filter(function (v, i, arr) {
+      return arr.indexOf(v) === i;
+    }).slice(0, 6);
+
+    if (!points.length) return;
+
+    var section = document.createElement('section');
+    section.id = 'quick-points';
+    section.className = 'quick-points-box';
+
+    var title = document.createElement('h3');
+    title.textContent = 'Quick Points';
+    section.appendChild(title);
+
+    var note = document.createElement('p');
+    note.className = 'qp-note';
+    note.textContent = 'Short version first, then the full walkthrough below.';
+    section.appendChild(note);
+
+    var ul = document.createElement('ul');
+    ul.className = 'qp-list';
+    points.forEach(function (p) {
+      var li = document.createElement('li');
+      li.textContent = p;
+      ul.appendChild(li);
+    });
+    section.appendChild(ul);
+
+    if (meta.nextSibling) {
+      wrap.insertBefore(section, meta.nextSibling);
+    } else {
+      wrap.appendChild(section);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════
      1. Reading progress bar
      ═══════════════════════════════════════════════════════ */
   function initProgress() {
@@ -253,6 +322,7 @@
      ═══════════════════════════════════════════════════════ */
   function init() {
     initProgress();
+    initQuickPoints();
     initTOC();
     initRelated();
     initBreadcrumb();

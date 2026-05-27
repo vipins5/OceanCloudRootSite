@@ -172,16 +172,16 @@
 
 param(
     [Parameter(Mandatory = $false)]
-  [string]$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement",
+  [string]$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement",  # User note: update this variable for your environment
 
   [Parameter(Mandatory = $false)]
-  [string]$ClientId = "00000000-0000-0000-0000-000000000000",
+  [string]$ClientId = "00000000-0000-0000-0000-000000000000",  # User note: update this variable for your environment
 
     [Parameter(Mandatory = $false)]
-    [string]$ListName = "Calendar",
+    [string]$ListName = "Calendar",  # User note: update this variable for your environment
 
     [Parameter(Mandatory = $false)]
-    [string]$NewViewTitle = "MODERNCALENDAR",
+    [string]$NewViewTitle = "MODERNCALENDAR",  # User note: update this variable for your environment
 
     [Parameter(Mandatory = $false)]
     [switch]$SetAsDefault,
@@ -190,10 +190,10 @@ param(
     [switch]$DryRun,
 
     [Parameter(Mandatory = $false)]
-    [Version]$MinPnPVersion = [Version]"2.4.0"
+    [Version]$MinPnPVersion = [Version]"2.4.0"  # User note: update this variable for your environment
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Stop"  # User note: update this variable for your environment
 
 function Write-Section {
     param([string]$Message)
@@ -218,7 +218,7 @@ function Test-PowerShellRuntime {
 function Test-PnPModule {
     Write-Section "PnP.PowerShell pre-check"
 
-    $module = Get-Module -ListAvailable -Name PnP.PowerShell |
+    $module = Get-Module -ListAvailable -Name PnP.PowerShell |  # User note: update this variable for your environment
         Sort-Object Version -Descending |
         Select-Object -First 1
 
@@ -256,14 +256,14 @@ function Test-RequiredFields {
         [string[]]$RequiredInternalNames
     )
 
-    $fields = Get-PnPField -List $TargetListName
-    $fieldMap = @{}
+    $fields = Get-PnPField -List $TargetListName  # User note: update this variable for your environment
+    $fieldMap = @{}  # User note: update this variable for your environment
 
     foreach ($field in $fields) {
         $fieldMap[$field.InternalName] = $true
     }
 
-    $missing = @()
+    $missing = @()  # User note: update this variable for your environment
     foreach ($required in $RequiredInternalNames) {
         if (-not $fieldMap.ContainsKey($required)) {
             $missing += $required
@@ -278,7 +278,7 @@ function Test-RequiredFields {
 function New-ModernCalendarViewPayload {
     param([string]$Title)
 
-    $viewDataJson = @{
+    $viewDataJson = @{  # User note: update this variable for your environment
         ViewType = "CALENDAR"
         CalendarViewStyles = @{
             Day = @{
@@ -334,14 +334,14 @@ try {
     Write-Host "Connected to: $SiteUrl"
 
     Write-Section "List validation"
-    $list = Get-PnPList -Identity $ListName -Includes Id, Title -ErrorAction Stop
+    $list = Get-PnPList -Identity $ListName -Includes Id, Title -ErrorAction Stop  # User note: update this variable for your environment
     Write-Host "List found: $($list.Title)"
 
-    $requiredFields = @("Title", "Category", "EventDate", "EndDate", "fAllDayEvent", "Recurrence")
+    $requiredFields = @("Title", "Category", "EventDate", "EndDate", "fAllDayEvent", "Recurrence")  # User note: update this variable for your environment
     Test-RequiredFields -TargetListName $ListName -RequiredInternalNames $requiredFields
     Write-Host "Required fields verified."
 
-    $existingView = Get-PnPView -List $ListName -Identity $NewViewTitle -ErrorAction SilentlyContinue
+    $existingView = Get-PnPView -List $ListName -Identity $NewViewTitle -ErrorAction SilentlyContinue  # User note: update this variable for your environment
     if ($existingView) {
         Write-Host "View '$NewViewTitle' already exists. Skipping create operation." -ForegroundColor Yellow
         if ($SetAsDefault) {
@@ -358,9 +358,9 @@ try {
         return
     }
 
-    $escapedListName = Escape-SingleQuotesForRest -Value $ListName
-    $endpoint = "/_api/web/lists/getbytitle('$escapedListName')/Views/Add"
-    $payload = New-ModernCalendarViewPayload -Title $NewViewTitle
+    $escapedListName = Escape-SingleQuotesForRest -Value $ListName  # User note: update this variable for your environment
+    $endpoint = "/_api/web/lists/getbytitle('$escapedListName')/Views/Add"  # User note: update this variable for your environment
+    $payload = New-ModernCalendarViewPayload -Title $NewViewTitle  # User note: update this variable for your environment
 
     Write-Section "Create modern view"
     Write-Host "Endpoint : $endpoint"
@@ -368,8 +368,8 @@ try {
     Write-Host "Dry-run  : $DryRun"
 
     if (-not $DryRun) {
-        $response = Invoke-PnPSPRestMethod -Method Post -Url $endpoint -Content $payload -ContentType "application/json;odata=verbose"
-        $createdViewId = $response.d.Id
+        $response = Invoke-PnPSPRestMethod -Method Post -Url $endpoint -Content $payload -ContentType "application/json;odata=verbose"  # User note: update this variable for your environment
+        $createdViewId = $response.d.Id  # User note: update this variable for your environment
         Write-Host "View created. ID: $createdViewId" -ForegroundColor Green
     }
     else {
@@ -377,7 +377,7 @@ try {
     }
 
     Write-Section "Post-change verification"
-    $verifyView = Get-PnPView -List $ListName -Identity $NewViewTitle -ErrorAction SilentlyContinue
+    $verifyView = Get-PnPView -List $ListName -Identity $NewViewTitle -ErrorAction SilentlyContinue  # User note: update this variable for your environment
 
     if (-not $DryRun -and -not $verifyView) {
         throw "Create call completed but verification failed. View '$NewViewTitle' was not found."
@@ -393,7 +393,7 @@ try {
                 Set-PnPView -List $ListName -Identity $verifyView.Id -Values @{ DefaultView = $true }
             }
 
-            $defaultView = Get-PnPView -List $ListName | Where-Object { $_.DefaultView -eq $true } | Select-Object -First 1
+            $defaultView = Get-PnPView -List $ListName | Where-Object { $_.DefaultView -eq $true } | Select-Object -First 1  # User note: update this variable for your environment
             if ($defaultView) {
                 Write-Host "Default view now: $($defaultView.Title)" -ForegroundColor Green
             }
@@ -458,12 +458,12 @@ finally {
       <div class="code-block"><div class="code-label">PowerShell - quick rollback to previous default view</div><pre><code>param(
     [string]$SiteUrl,
       [string]$ClientId,
-    [string]$ListName = "Calendar",
-    [string]$FallbackViewTitle = "All Events"
+    [string]$ListName = "Calendar",  # User note: update this variable for your environment
+    [string]$FallbackViewTitle = "All Events"  # User note: update this variable for your environment
 )
 
     Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
-$fallback = Get-PnPView -List $ListName -Identity $FallbackViewTitle -ErrorAction Stop
+$fallback = Get-PnPView -List $ListName -Identity $FallbackViewTitle -ErrorAction Stop  # User note: update this variable for your environment
 Set-PnPView -List $ListName -Identity $fallback.Id -Values @{ DefaultView = $true }
 Write-Host "Rollback complete. Default view is now: $FallbackViewTitle"
 Disconnect-PnPOnline
@@ -492,19 +492,19 @@ Disconnect-PnPOnline
       <p>If your team started from the direct REST pattern below, keep it as a baseline reference. The hardened script in this guide wraps this method with safeguards and validation:</p>
 
       <div class="code-block"><div class="code-label">PowerShell - original REST create pattern</div><pre><code>$SiteUrl = "https://contoso.sharepoint.com/sites/PerformanceManagement"
-    $ClientId = "00000000-0000-0000-0000-000000000000"
-$ListName = "Calendar"
+    $ClientId = "00000000-0000-0000-0000-000000000000"  # User note: update this variable for your environment
+$ListName = "Calendar"  # User note: update this variable for your environment
 
     Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
 
-$List = Get-PnPList -Identity $ListName -ErrorAction Stop
+$List = Get-PnPList -Identity $ListName -ErrorAction Stop  # User note: update this variable for your environment
 if ($null -eq $List) {
     throw "List '$ListName' not found."
 }
 
-$Endpoint = "$SiteUrl/_api/web/lists/getbytitle('$ListName')/Views/Add"
+$Endpoint = "$SiteUrl/_api/web/lists/getbytitle('$ListName')/Views/Add"  # User note: update this variable for your environment
 
-$Body = @"
+$Body = @"  # User note: update this variable for your environment
 {
   "parameters": {
     "__metadata": { "type": "SP.View" },
@@ -523,7 +523,7 @@ $Body = @"
 }
 "@
 
-$response = Invoke-PnPSPRestMethod -Method Post -Url $Endpoint -Content $Body -ContentType "application/json;odata=verbose"
+$response = Invoke-PnPSPRestMethod -Method Post -Url $Endpoint -Content $Body -ContentType "application/json;odata=verbose"  # User note: update this variable for your environment
 Write-Host "Calendar view created."
 </code></pre></div>
 

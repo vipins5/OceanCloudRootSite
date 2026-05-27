@@ -25,12 +25,17 @@ import sys
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 
+# Repo root used to resolve relative links from HTML files.
 ROOT = Path(__file__).parent.parent
 
+# Regex to capture href values while ignoring inline anchors and query strings.
 HREF_RE = re.compile(r'href=["\']([^"\'#?]+)', re.IGNORECASE)
+# Regex to capture src values for assets (scripts, images, stylesheets).
 SRC_RE  = re.compile(r'src=["\']([^"\']+)',  re.IGNORECASE)
 
+# URI schemes that should never be validated as local filesystem paths.
 SKIP_SCHEMES = {"http", "https", "mailto", "tel", "javascript", "data"}
+# Required script bundle that must appear in article pages for consistent UX/features.
 REQUIRED_ARTICLE_SCRIPTS = (
     "../js/main.js",
     "../js/chat.js",
@@ -40,8 +45,10 @@ REQUIRED_ARTICLE_SCRIPTS = (
     "../js/comments.js",
 )
 
+# Folders to exclude from HTML scans.
 IGNORED_PARTS = {".git", "node_modules", ".wrangler", "dist", "build"}
 
+# Precomputed list of HTML files that are in scope for link checks.
 HTML_FILES = sorted(
     path for path in ROOT.glob("**/*.html")
     if not any(part in IGNORED_PARTS for part in path.relative_to(ROOT).parts)
@@ -57,7 +64,9 @@ def resolve(base: Path, target: str) -> Path:
 
 
 def check_file(html: Path) -> list[str]:
+    # Accumulates unresolved local links found in this specific HTML file.
     broken = []
+    # Raw HTML content being scanned with regex patterns.
     text   = html.read_text(encoding="utf-8", errors="ignore")
 
     for pattern in (HREF_RE, SRC_RE):
@@ -99,7 +108,9 @@ def check_article_scripts(html: Path) -> list[str]:
 
 def main(strict: bool = False) -> None:
     print(f"Checking {len(HTML_FILES)} HTML files for broken internal links…\n")
+    # Global list of broken link findings across all scanned files.
     all_broken: list[str] = []
+    # Global list of missing required article script bundle entries.
     all_script_issues: list[str] = []
 
     for html in HTML_FILES:

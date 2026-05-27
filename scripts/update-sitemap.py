@@ -18,8 +18,11 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Repo root used for git lookups and URL-to-file resolution.
 ROOT     = Path(__file__).parent.parent
+# Sitemap file that will receive refreshed lastmod values.
 SITEMAP  = ROOT / "sitemap.xml"
+# Canonical domain prefix stripped from loc entries before path mapping.
 BASE_URL = "https://oceancloudconsults.com"
 
 # Map URL path → local file (relative to repo root)
@@ -69,10 +72,14 @@ def main(dry_run: bool = False) -> None:
     ET.register_namespace("", "http://www.sitemaps.org/schemas/sitemap/0.9")
     tree = ET.parse(SITEMAP)
     root = tree.getroot()
+    # Namespace URI used to query sitemap XML elements.
     ns   = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
+    # URL entries updated with a new lastmod value.
     updated = 0
+    # URL entries that were already in sync.
     unchanged = 0
+    # URL entries with no local file mapping.
     missing = 0
 
     for url_el in root.findall(f"{{{ns}}}url"):
@@ -81,8 +88,11 @@ def main(dry_run: bool = False) -> None:
         if loc_el is None:
             continue
 
+        # Absolute URL from <loc>.
         loc  = loc_el.text or ""
+        # Repo-relative URL path segment derived from loc.
         path = loc.replace(BASE_URL, "").strip("/")
+        # Filesystem path inferred from URL path.
         file = url_to_file(path)
 
         if file is None:
@@ -90,7 +100,9 @@ def main(dry_run: bool = False) -> None:
             missing += 1
             continue
 
+        # Proposed lastmod value based on latest git commit touching this file.
         new_date = git_last_modified(file)
+        # Existing lastmod value currently present in sitemap.
         old_date = (lastmod_el.text or "").strip() if lastmod_el is not None else ""
 
         if new_date == old_date:
