@@ -396,6 +396,18 @@
     "dateSort": ""
   },
   {
+    "id": "articles-guide-sharepoint-classic-calendar-to-modern-view",
+    "type": "guide",
+    "tag": "Guide",
+    "title": "Switch SharePoint Classic Calendar to Modern View with PnP PowerShell",
+    "heading": "Switch SharePoint Classic Calendar to <span class=\"grad-text\">Modern View</span> with PnP PowerShell",
+    "excerpt": "Step-by-step admin guide to switch SharePoint classic calendar lists to modern-friendly views using PnP PowerShell, with PowerShell pre-checks, module verification, dry-run support, and post-change validation.",
+    "body": "Switch SharePoint Classic Calendar to Modern View with PnP PowerShell | OceanCloud Skip to content Switch SharePoint Classic Calendar to Modern View with PnP PowerShell A production-ready process for modernizing classic calendar list views using pre-checks, PowerShell verification, API safety guards, and rollback planning. Admin & Automation May 27, 2026 16 min read A lot of SharePoint teams still run important scheduling workflows on classic calendar lists. This guide gives you a full admin runbook for switching from classic calendar view to modern view with PnP PowerShell and SharePoint REST endpoints. It includes hard pre-checks for PowerShell and module readiness, validation of list schema and fields, optional dry-run mode, post-change verification, and a practical rollback pattern. The script verifies runtime requirements, validates list and required fields, creates the modern view, verifies the created view, and can set it as default only after successful checks.",
+    "url": "articles/guide-sharepoint-classic-calendar-to-modern-view",
+    "dateDisplay": "May 27, 2026",
+    "dateSort": ""
+  },
+  {
     "id": "articles-news-2026-05-proven-intranet-framework-involv-intranet-sharepoint-partner",
     "type": "article",
     "tag": "Article",

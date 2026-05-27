@@ -276,7 +276,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-vision-in-microsoft-365-copi</loc>
     <lastmod>2026-05-27</lastmod>
@@ -317,5 +316,12 @@
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

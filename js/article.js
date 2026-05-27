@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  /* ── All 22 guide articles ─────────────────────────────── */
+  /* ── All 23 guide articles ─────────────────────────────── */
   var GUIDES = [
     { topic:'sharepoint',     tag:'SharePoint',          url:'guide-sharepoint-permissions',                  title:'The Complete Guide to SharePoint Permissions in Microsoft 365',                           read:'8 min read'  },
     { topic:'migration',      tag:'Migration',            url:'guide-m365-migration-checklist',                title:'The 10-Step Microsoft 365 Migration Checklist',                                           read:'7 min read'  },
@@ -29,6 +29,7 @@
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-pnp-entra-app-registration',              title:'PnP PowerShell: Complete Entra App Registration & Certificate Guide',                     read:'15 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-pnp-site-migration',           title:'Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide',                  read:'18 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-recycle-bin-restore-pnp-powershell', title:'Restore SharePoint Recycle Bin Items with PnP PowerShell',                       read:'14 min read' },
+    { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-classic-calendar-to-modern-view', title:'Switch SharePoint Classic Calendar to Modern View with PnP PowerShell',           read:'16 min read' },
     // END:GUIDES-ARRAY
   ];
 

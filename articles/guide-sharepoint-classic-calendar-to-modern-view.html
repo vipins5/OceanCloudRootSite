@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Switch SharePoint Classic Calendar to Modern View with PnP PowerShell | OceanCloud</title>
+  <meta name="description" content="Step-by-step admin guide to switch SharePoint classic calendar lists to modern-friendly views using PnP PowerShell, with PowerShell pre-checks, module verification, dry-run support, and post-change validation." />
+  <meta name="keywords" content="SharePoint classic calendar modern view, PnP PowerShell calendar view, SharePoint modern list view, switch calendar to modern, PowerShell prechecks PnP" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Switch SharePoint Classic Calendar to Modern View with PnP PowerShell" />
+  <meta property="og:description" content="A practical migration guide with hardened PowerShell pre-checks and verification steps for modernizing SharePoint calendar list views." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=5" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#article",
+        "headline": "Switch SharePoint Classic Calendar to Modern View with PnP PowerShell",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view",
+        "datePublished": "2026-05-27",
+        "dateModified": "2026-05-27",
+        "author": { "@id": "https://oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "description": "Switch classic calendar list views to modern-friendly SharePoint list views using PnP PowerShell with pre-checks for PowerShell version, module version, permissions, list schema, and post-change verification.",
+        "keywords": ["SharePoint calendar modern view", "PnP PowerShell", "SharePoint list view migration", "classic to modern", "PowerShell pre-checks"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting", "name": "SharePoint view and formatting guidance" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints", "name": "SharePoint REST API operations" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Classic Calendar to Modern View", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}.article-wrap{max-width:840px;margin:0 auto;}.article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07)}.art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.12);color:#60a5fa}.art-date,.art-read{font-size:.8rem;color:var(--text-dim)}.article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85}.article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em}.article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea}.article-wrap p,.article-wrap li{color:var(--text-mid);line-height:1.85}.article-wrap ul,.article-wrap ol{padding-left:22px}.article-wrap strong{color:var(--white)}.article-wrap a{color:#60a5fa}.art-callout{background:rgba(59,130,246,.07);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0}.art-callout p{margin:0;color:#bfdbfe;font-size:.92rem}.art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c}.art-callout.warning p{color:#fed7aa}.art-callout.danger{background:rgba(239,68,68,.07);border-left-color:#f87171}.art-callout.danger p{color:#fecaca}.art-table-wrap{overflow-x:auto;margin:24px 0}.art-table{width:100%;border-collapse:collapse;font-size:.87rem}.art-table th{background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700;padding:10px 14px;text-align:left}.art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top}.art-table tr:last-child td{border-bottom:none}.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto}.code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre}.code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}.check-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:24px 0}.check-step{border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;background:rgba(255,255,255,.025)}.check-step span{display:block;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#60a5fa;margin-bottom:6px}.check-step strong{display:block;margin-bottom:4px}.art-cta-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px}.art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white)}.art-cta-box p{margin:0 0 22px;color:var(--text-mid)}.related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08)}.related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>Classic Calendar to Modern View</span></nav>
+      <h1>Switch SharePoint Classic Calendar to <span class="grad-text">Modern View</span> with PnP PowerShell</h1>
+      <p>A production-ready process for modernizing classic calendar list views using pre-checks, PowerShell verification, API safety guards, and rollback planning.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">May 27, 2026</span>
+        <span class="art-read">16 min read</span>
+      </div>
+
+      <p class="article-intro">A lot of SharePoint teams still run important scheduling workflows on classic calendar lists. The list itself may be stable, but the user experience is usually not: classic rendering behaves differently across browsers, responsive behavior is weak, and long-term support confidence is lower than modern list experiences. If your objective is to preserve calendar data while giving users a cleaner modern view, you do not need to rebuild everything from scratch. In many cases you can add a modern-friendly list view and set it as default, while retaining the original view for fallback.</p>
+
+      <p>This guide gives you a full admin runbook for switching from classic calendar view to modern view with PnP PowerShell and SharePoint REST endpoints. It includes hard pre-checks for PowerShell and module readiness, validation of list schema and fields, optional dry-run mode, post-change verification, and a practical rollback pattern. It is written for Microsoft 365 administrators and SharePoint owners who need low-risk execution, auditability, and repeatability across multiple sites.</p>
+
+      <div class="art-callout warning"><p><strong>Important:</strong> not every classic calendar customization can be recreated one-to-one in modern view. Always test in a non-production site first, compare rendered behavior against business requirements, and keep at least one fallback view while users validate.</p></div>
+
+      <h2>Why this migration matters now</h2>
+      <p>Classic calendar list views were useful for years, especially for department schedules and project timelines. But operational pressure has changed. Teams expect mobile-friendly rendering, simpler filtering, and consistent behavior with other modern SharePoint lists. Calendar data is still valid; the issue is usually the presentation layer and maintenance burden.</p>
+
+      <p>Switching views, rather than replacing the list, keeps risk controlled. Existing columns, list items, permissions, and integrations stay in place. You introduce a modern view and make it default when testing passes. That means less disruption for owners and less retraining for users compared to replacing the entire solution.</p>
+
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Approach</th><th>Risk profile</th><th>When to choose it</th></tr></thead>
+        <tbody>
+          <tr><td>Create modern view on existing list</td><td>Low to medium</td><td>You want minimal disruption and quick rollback options.</td></tr>
+          <tr><td>Rebuild list in a new app architecture</td><td>Medium to high</td><td>Current schema is broken, unmanaged, or cannot meet future requirements.</td></tr>
+          <tr><td>Keep classic permanently</td><td>Hidden long-term risk</td><td>Only valid as temporary hold if business-critical dependency blocks migration.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>What this script does</h2>
+      <p>The script in this guide is based on a proven pattern: connect with PnP.PowerShell, call SharePoint REST to add a view definition, then optionally set the created view as default. The hardened version adds a guardrail layer before and after the REST call so the script can fail early and explain exactly why.</p>
+
+      <div class="check-flow">
+        <div class="check-step"><span>Check 1</span><strong>PowerShell</strong><p>Verifies running edition and minimum version.</p></div>
+        <div class="check-step"><span>Check 2</span><strong>PnP Module</strong><p>Confirms module is installed and at required version.</p></div>
+        <div class="check-step"><span>Check 3</span><strong>Site + List</strong><p>Validates site connectivity and target list presence.</p></div>
+        <div class="check-step"><span>Check 4</span><strong>Schema</strong><p>Checks required columns for day/week/month rendering.</p></div>
+        <div class="check-step"><span>Check 5</span><strong>Create</strong><p>Adds modern view via REST endpoint and tracks response.</p></div>
+        <div class="check-step"><span>Check 6</span><strong>Verify</strong><p>Reads view back, confirms settings, and can set default.</p></div>
+      </div>
+
+      <h2>Pre-checks before touching production</h2>
+      <p>Do not skip pre-checks. Most migration pain is not in the REST payload itself. It comes from running with the wrong shell, wrong module version, missing permissions, or a list schema that does not match calendar assumptions. A ten-minute pre-flight check can prevent a failed change window.</p>
+
+      <h3>1. Verify PowerShell runtime</h3>
+      <p>For modern automation and predictable module behavior, run PowerShell 7 or newer. Windows PowerShell 5.1 can still run many commands, but module behavior and TLS defaults can cause friction. The script checks edition and version and exits with clear guidance if requirements are not met.</p>
+
+      <h3>2. Verify PnP.PowerShell version</h3>
+      <p>Modern PnP authentication patterns and cmdlet behavior evolve. Pin a tested minimum version and enforce it in script logic. If the module is missing or too old, fail fast with a direct install/update command. That keeps execution deterministic across admin laptops and automation runners.</p>
+
+      <h3>3. Verify permissions and connection path</h3>
+      <p>Use an account with sufficient rights to create and update views on the target list. The script performs a lightweight list read as a permission probe before writing anything. If this fails, you get an immediate stop instead of partial changes.</p>
+
+      <h3>4. Verify required list fields</h3>
+      <p>The sample payload expects calendar-relevant columns such as title, category, start/end date, and recurrence fields. If your list uses alternate internal names, map them before execution. The script checks field internal names and blocks the change when required fields are missing.</p>
+
+      <h3>5. Verify naming and collision strategy</h3>
+      <p>Decide whether to skip, overwrite, or version an existing modern view title. In this guide, the default is safe-skip for an existing view title. You can switch behavior if your governance model prefers replacing old artifacts.</p>
+
+      <h2>Hardened migration script (with pre-checks and PS verification)</h2>
+      <p>The script below includes your original REST pattern, but adds validation, dry-run support, and post-change verification so it can be used repeatedly across sites. Start with dry-run mode in a test site, then run in production once validation passes.</p>
+
+      <div class="code-block"><div class="code-label">PowerShell - classic calendar to modern view with safeguards</div><pre><code>#requires -Modules PnP.PowerShell
+
+param(
+    [Parameter(Mandatory = $false)]
+    [string]$SiteUrl = "https://osol.sharepoint.com/sites/PerformanceManagement",
+
+    [Parameter(Mandatory = $false)]
+    [string]$ListName = "Calendar",
+
+    [Parameter(Mandatory = $false)]
+    [string]$NewViewTitle = "MODERNCALENDAR",
+
+    [Parameter(Mandatory = $false)]
+    [switch]$SetAsDefault,
+
+    [Parameter(Mandatory = $false)]
+    [switch]$DryRun,
+
+    [Parameter(Mandatory = $false)]
+    [Version]$MinPnPVersion = [Version]"2.4.0"
+)
+
+$ErrorActionPreference = "Stop"
+
+function Write-Section {
+    param([string]$Message)
+    Write-Host "`n=== $Message ===" -ForegroundColor Cyan
+}
+
+function Test-PowerShellRuntime {
+    Write-Section "Runtime pre-check"
+
+    if ($PSVersionTable.PSEdition -ne "Core") {
+        throw "PowerShell Core (7+) is required. Current edition: $($PSVersionTable.PSEdition)."
+    }
+
+    if ($PSVersionTable.PSVersion.Major -lt 7) {
+        throw "PowerShell 7+ is required. Current version: $($PSVersionTable.PSVersion)."
+    }
+
+    Write-Host "PowerShell edition : $($PSVersionTable.PSEdition)"
+    Write-Host "PowerShell version : $($PSVersionTable.PSVersion)"
+}
+
+function Test-PnPModule {
+    Write-Section "PnP.PowerShell pre-check"
+
+    $module = Get-Module -ListAvailable -Name PnP.PowerShell |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
+
+    if (-not $module) {
+        throw "PnP.PowerShell module not found. Install with: Install-Module PnP.PowerShell -Scope CurrentUser"
+    }
+
+    if ($module.Version -lt $MinPnPVersion) {
+        throw "PnP.PowerShell $($module.Version) found. Minimum required version is $MinPnPVersion. Run Update-Module PnP.PowerShell."
+    }
+
+    Import-Module PnP.PowerShell -MinimumVersion $MinPnPVersion -Force
+    Write-Host "PnP.PowerShell version : $($module.Version)"
+}
+
+function Assert-RequiredValue {
+    param(
+        [string]$Value,
+        [string]$Name
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Value)) {
+        throw "$Name cannot be empty."
+    }
+}
+
+function Escape-SingleQuotesForRest {
+    param([string]$Value)
+    return $Value.Replace("'", "''")
+}
+
+function Test-RequiredFields {
+    param(
+        [string]$TargetListName,
+        [string[]]$RequiredInternalNames
+    )
+
+    $fields = Get-PnPField -List $TargetListName
+    $fieldMap = @{}
+
+    foreach ($field in $fields) {
+        $fieldMap[$field.InternalName] = $true
+    }
+
+    $missing = @()
+    foreach ($required in $RequiredInternalNames) {
+        if (-not $fieldMap.ContainsKey($required)) {
+            $missing += $required
+        }
+    }
+
+    if ($missing.Count -gt 0) {
+        throw "List '$TargetListName' is missing required fields: $($missing -join ', ')"
+    }
+}
+
+function New-ModernCalendarViewPayload {
+    param([string]$Title)
+
+    $viewDataJson = @{
+        ViewType = "CALENDAR"
+        CalendarViewStyles = @{
+            Day = @{
+                StartDateField = "EventDate"
+                EndDateField = "EndDate"
+                TitleField = "Title"
+                IsMonthView = $false
+            }
+            Week = @{
+                StartDateField = "EventDate"
+                EndDateField = "EndDate"
+                TitleField = "Title"
+                IsMonthView = $false
+            }
+            Month = @{
+                StartDateField = "EventDate"
+                EndDateField = "EndDate"
+                TitleField = "Title"
+                IsMonthView = $true
+            }
+        }
+    } | ConvertTo-Json -Depth 10 -Compress
+
+    return @{
+        parameters = @{
+            __metadata = @{ type = "SP.View" }
+            Title = $Title
+            PersonalView = $false
+            RowLimit = 30
+            ViewData = $viewDataJson
+            ViewQuery = "<OrderBy><FieldRef Name='EventDate' Ascending='TRUE'/></OrderBy>"
+            Aggregations = ""
+            Joins = ""
+            ProjectedFields = ""
+            ViewFields = @{
+                results = @("DocIcon", "LinkTitle", "Category", "EventDate", "EndDate", "fAllDayEvent", "Recurrence")
+            }
+        }
+    } | ConvertTo-Json -Depth 12
+}
+
+try {
+    Assert-RequiredValue -Value $SiteUrl -Name "SiteUrl"
+    Assert-RequiredValue -Value $ListName -Name "ListName"
+    Assert-RequiredValue -Value $NewViewTitle -Name "NewViewTitle"
+
+    Test-PowerShellRuntime
+    Test-PnPModule
+
+    Write-Section "Connection"
+    Connect-PnPOnline -Url $SiteUrl -Interactive
+    Write-Host "Connected to: $SiteUrl"
+
+    Write-Section "List validation"
+    $list = Get-PnPList -Identity $ListName -Includes Id, Title -ErrorAction Stop
+    Write-Host "List found: $($list.Title)"
+
+    $requiredFields = @("Title", "Category", "EventDate", "EndDate", "fAllDayEvent", "Recurrence")
+    Test-RequiredFields -TargetListName $ListName -RequiredInternalNames $requiredFields
+    Write-Host "Required fields verified."
+
+    $existingView = Get-PnPView -List $ListName -Identity $NewViewTitle -ErrorAction SilentlyContinue
+    if ($existingView) {
+        Write-Host "View '$NewViewTitle' already exists. Skipping create operation." -ForegroundColor Yellow
+        if ($SetAsDefault) {
+            Write-Host "SetAsDefault was requested. Updating existing view as default."
+            if (-not $DryRun) {
+                Set-PnPView -List $ListName -Identity $existingView.Id -Values @{ DefaultView = $true }
+            }
+        }
+
+        if ($DryRun) {
+            Write-Host "Dry-run complete. No changes executed." -ForegroundColor Green
+        }
+
+        return
+    }
+
+    $escapedListName = Escape-SingleQuotesForRest -Value $ListName
+    $endpoint = "/_api/web/lists/getbytitle('$escapedListName')/Views/Add"
+    $payload = New-ModernCalendarViewPayload -Title $NewViewTitle
+
+    Write-Section "Create modern view"
+    Write-Host "Endpoint : $endpoint"
+    Write-Host "View     : $NewViewTitle"
+    Write-Host "Dry-run  : $DryRun"
+
+    if (-not $DryRun) {
+        $response = Invoke-PnPSPRestMethod -Method Post -Url $endpoint -Content $payload -ContentType "application/json;odata=verbose"
+        $createdViewId = $response.d.Id
+        Write-Host "View created. ID: $createdViewId" -ForegroundColor Green
+    }
+    else {
+        Write-Host "Dry-run enabled. Skipping REST create call." -ForegroundColor Yellow
+    }
+
+    Write-Section "Post-change verification"
+    $verifyView = Get-PnPView -List $ListName -Identity $NewViewTitle -ErrorAction SilentlyContinue
+
+    if (-not $DryRun -and -not $verifyView) {
+        throw "Create call completed but verification failed. View '$NewViewTitle' was not found."
+    }
+
+    if ($verifyView) {
+        Write-Host "Verified view title : $($verifyView.Title)"
+        Write-Host "Verified view ID    : $($verifyView.Id)"
+
+        if ($SetAsDefault) {
+            Write-Host "Setting view '$NewViewTitle' as default..."
+            if (-not $DryRun) {
+                Set-PnPView -List $ListName -Identity $verifyView.Id -Values @{ DefaultView = $true }
+            }
+
+            $defaultView = Get-PnPView -List $ListName | Where-Object { $_.DefaultView -eq $true } | Select-Object -First 1
+            if ($defaultView) {
+                Write-Host "Default view now: $($defaultView.Title)" -ForegroundColor Green
+            }
+        }
+    }
+
+    Write-Host "Migration script completed successfully." -ForegroundColor Green
+}
+catch {
+    Write-Host "ERROR: $($_.Exception.Message)" -ForegroundColor Red
+    throw
+}
+finally {
+    Disconnect-PnPOnline -ErrorAction SilentlyContinue
+}
+</code></pre></div>
+
+      <h2>How to run safely in phases</h2>
+      <p>For enterprise tenants, avoid one-shot tenant-wide rollout. Use phased execution and evidence gates. That gives site owners confidence and gives your admin team enough signal to detect edge cases before broad rollout.</p>
+
+      <h3>Phase 1: Single test site</h3>
+      <ol>
+        <li>Run script with <strong>-DryRun</strong> first.</li>
+        <li>Run without DryRun and without <strong>-SetAsDefault</strong>.</li>
+        <li>Open the view in browser and test day/week/month rendering.</li>
+        <li>Validate recurring events, all-day events, and category rendering.</li>
+      </ol>
+
+      <h3>Phase 2: Pilot group of production sites</h3>
+      <ol>
+        <li>Select 5 to 10 sites with different calendar usage patterns.</li>
+        <li>Run the script and set default only for approved sites.</li>
+        <li>Capture owner feedback for two business cycles.</li>
+        <li>Adjust view fields and row limits based on observations.</li>
+      </ol>
+
+      <h3>Phase 3: Scaled rollout</h3>
+      <ol>
+        <li>Batch sites by business unit and maintenance window.</li>
+        <li>Log success/failure per site and keep a rollback list.</li>
+        <li>Retain classic fallback view title for at least 30 days.</li>
+      </ol>
+
+      <div class="art-callout"><p><strong>Operational tip:</strong> include a change ticket ID and operator name in your run logs. Even if the technical change is simple, audit context is what helps when a business team reports behavior changes weeks later.</p></div>
+
+      <h2>Post-change validation checklist</h2>
+      <p>Technical success is not only "view created". Real success is "users can complete their scheduling task without friction". Validate both platform-level outputs and user-facing behavior.</p>
+
+      <ul>
+        <li>View appears in list view selector with expected title.</li>
+        <li>Default view flag is correct on target list.</li>
+        <li>Day, week, and month render expected event ranges.</li>
+        <li>Recurring events show correctly and are selectable.</li>
+        <li>All-day events are visible and sorted correctly.</li>
+        <li>Filtering and sorting are responsive on common browsers.</li>
+        <li>Key users from each department confirm acceptance.</li>
+      </ul>
+
+      <h2>Rollback and recovery plan</h2>
+      <p>If business users report a blocker, rollback should be immediate and predictable. The safest rollback is to set the previous view back as default and keep the modern view for troubleshooting. Avoid deleting artifacts during the same incident window.</p>
+
+      <div class="code-block"><div class="code-label">PowerShell - quick rollback to previous default view</div><pre><code>param(
+    [string]$SiteUrl,
+    [string]$ListName = "Calendar",
+    [string]$FallbackViewTitle = "All Events"
+)
+
+Connect-PnPOnline -Url $SiteUrl -Interactive
+$fallback = Get-PnPView -List $ListName -Identity $FallbackViewTitle -ErrorAction Stop
+Set-PnPView -List $ListName -Identity $fallback.Id -Values @{ DefaultView = $true }
+Write-Host "Rollback complete. Default view is now: $FallbackViewTitle"
+Disconnect-PnPOnline
+</code></pre></div>
+
+      <p>After rollback, compare modern vs classic behavior with a small reproducible test set. Most issues are usually field mapping assumptions or specific calendar rendering expectations that need a tailored view payload.</p>
+
+      <h2>Common issues and fixes</h2>
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Issue</th><th>Likely cause</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>View created but not visible</td><td>Permissions or list browser caching</td><td>Confirm rights, refresh, test as owner and member users.</td></tr>
+          <tr><td>Recurring events missing</td><td>Recurrence field not included in ViewFields</td><td>Add Recurrence to payload and re-create versioned view.</td></tr>
+          <tr><td>Date blocks shift unexpectedly</td><td>Timezone or all-day flag handling</td><td>Check regional settings and validate EventDate/EndDate values.</td></tr>
+          <tr><td>REST call 403/401</td><td>Insufficient list rights or auth context issue</td><td>Reconnect with correct account and verify list-level permission.</td></tr>
+          <tr><td>Set default fails</td><td>View lookup mismatch</td><td>Resolve by view ID instead of title, then re-run Set-PnPView.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Governance recommendations for long-term stability</h2>
+      <p>Once you complete the first migration wave, lock in a repeatable governance model. Define a standard modern calendar payload, pin minimum PnP module versions, and maintain a site migration registry with owner sign-off status. This keeps ad-hoc scripts from drifting over time.</p>
+
+      <p>It also helps to publish a short owner guide for what changed in navigation and how to request field updates. Admin teams often focus on technical migration only, but user-facing communication is what reduces support tickets after rollout.</p>
+
+      <h2>Reference your original REST pattern</h2>
+      <p>If your team started from the direct REST pattern below, keep it as a baseline reference. The hardened script in this guide wraps this method with safeguards and validation:</p>
+
+      <div class="code-block"><div class="code-label">PowerShell - original REST create pattern</div><pre><code>$SiteUrl = "https://osol.sharepoint.com/sites/PerformanceManagement"
+$ListName = "Calendar"
+
+Connect-PnPOnline -Url $SiteUrl -Interactive
+
+$List = Get-PnPList -Identity $ListName -ErrorAction Stop
+if ($null -eq $List) {
+    throw "List '$ListName' not found."
+}
+
+$Endpoint = "$SiteUrl/_api/web/lists/getbytitle('$ListName')/Views/Add"
+
+$Body = @"
+{
+  "parameters": {
+    "__metadata": { "type": "SP.View" },
+    "Title": "MODERNCALENDAR",
+    "PersonalView": false,
+    "RowLimit": 30,
+    "ViewData": "{\"ViewType\":\"CALENDAR\",\"CalendarViewStyles\":{\"Day\":{\"StartDateField\":\"EventDate\",\"EndDateField\":\"EndDate\",\"TitleField\":\"Title\",\"IsMonthView\":false},\"Week\":{\"StartDateField\":\"EventDate\",\"EndDateField\":\"EndDate\",\"TitleField\":\"Title\",\"IsMonthView\":false},\"Month\":{\"StartDateField\":\"EventDate\",\"EndDateField\":\"EndDate\",\"TitleField\":\"Title\",\"IsMonthView\":true}}}",
+    "ViewQuery": "<OrderBy><FieldRef Name='EventDate' Ascending='TRUE'/></OrderBy>",
+    "Aggregations": "",
+    "Joins": "",
+    "ProjectedFields": "",
+    "ViewFields": {
+      "results": ["DocIcon", "LinkTitle", "Category", "EventDate", "EndDate", "fAllDayEvent", "Recurrence"]
+    }
+  }
+}
+"@
+
+$response = Invoke-PnPSPRestMethod -Method Post -Url $Endpoint -Content $Body -ContentType "application/json;odata=verbose"
+Write-Host "Calendar view created."
+</code></pre></div>
+
+      <h2>Final migration checklist</h2>
+      <ul>
+        <li>Pre-checks pass for PowerShell edition/version and PnP module version.</li>
+        <li>Target list and required fields validated before change.</li>
+        <li>Dry-run output reviewed by site owner.</li>
+        <li>Modern view created and verified by ID and title.</li>
+        <li>Default view switched only after user acceptance test.</li>
+        <li>Fallback view retained and rollback command documented.</li>
+        <li>Change record and support note shared with business stakeholders.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help modernizing SharePoint calendars at scale?</h3>
+        <p>OceanCloud can help you standardize classic-to-modern view migrations across business units with validation scripts, governance controls, and low-risk rollout plans.</p>
+        <a href="../contact" class="btn btn-primary">Book a SharePoint Modernization Session</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-pnp-entra-app-registration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</span>
+            <span class="rc-read">15 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-pnp-site-migration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide</span>
+            <span class="rc-read">18 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-recycle-bin-restore-pnp-powershell" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Restore SharePoint Recycle Bin Items with PnP PowerShell</span>
+            <span class="rc-read">14 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../about">About Us</a></li>
+        <li><a href="../case-studies">Case Studies</a></li>
+        <li><a href="../news">News</a></li>
+        <li><a href="../archive">News Archive</a></li>
+        <li><a href="../guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="../services">SharePoint Development</a></li>
+        <li><a href="../services">Teams Configuration</a></li>
+        <li><a href="../services">M365 Migration</a></li>
+        <li><a href="../services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../privacy">Privacy Policy</a></li>
+        <li><a href="../terms">Terms of Service</a></li>
+        <li><a href="../cookies">Cookie Policy</a></li>
+        <li><a href="../contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>
