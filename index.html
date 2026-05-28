@@ -51,7 +51,7 @@
         "@type": ["Organization", "ProfessionalService"],
         "@id": "https://oceancloudconsults.com/#organization",
         "name": "OceanCloud",
-        "url": "https://oceancloudconsults.com",
+        "url": "https://oceancloudconsults.com/",
         "logo": {
           "@type": "ImageObject",
           "url": "https://oceancloudconsults.com/assets/og-home.jpg",
@@ -60,6 +60,9 @@
         },
         "image": "https://oceancloudconsults.com/assets/og-home.jpg",
         "description": "Microsoft Solutions Partner specialising in SharePoint Online, Microsoft 365, Power Platform, and workplace transformation across the United States.",
+        "telephone": "+1-469-809-4053",
+        "email": "oceancloudconsults@gmail.com",
+        "priceRange": "$$",
         "foundingDate": "2013",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
@@ -85,7 +88,7 @@
             "availableLanguage": "English",
             "hoursAvailable": {
               "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
               "opens": "09:00",
               "closes": "18:00"
             }
@@ -98,14 +101,28 @@
         "knowsAbout": [
           "SharePoint Online",
           "Microsoft 365",
+          "Microsoft 365 migration",
           "Power Platform",
           "Microsoft Teams",
           "Microsoft Purview",
-          "Microsoft Viva"
+          "Microsoft Viva",
+          "Microsoft 365 Copilot"
         ],
         "hasCredential": {
           "@type": "EducationalOccupationalCredential",
           "name": "Microsoft Solutions Partner — Modern Work & Security"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "SharePoint and Microsoft 365 Services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SharePoint Consulting" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Migration" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft Teams and Viva Implementation" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Power Platform Development" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Security and Compliance" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Copilot Readiness and Rollout" } }
+          ]
         },
         "aggregateRating": {
           "@type": "AggregateRating",
@@ -117,10 +134,11 @@
       {
         "@type": "WebSite",
         "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com",
+        "url": "https://oceancloudconsults.com/",
         "name": "OceanCloud",
         "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US.",
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "inLanguage": "en-US",
         "potentialAction": {
           "@type": "SearchAction",
           "target": {
@@ -133,11 +151,102 @@
       {
         "@type": "WebPage",
         "@id": "https://oceancloudconsults.com/#webpage",
-        "url": "https://oceancloudconsults.com",
+        "url": "https://oceancloudconsults.com/",
         "name": "SharePoint Consulting & M365 Migration | OceanCloud",
         "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
         "about": { "@id": "https://oceancloudconsults.com/#organization" },
-        "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US. 150+ projects, 98% satisfaction. Free 60-min call."
+        "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US. 150+ projects, 98% satisfaction. Free 60-min call.",
+        "inLanguage": "en-US",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com/"
+            }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/#faq",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#webpage" },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does SharePoint consulting cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our fixed-price engagements cover everything from focused advisory retainers ($2,200/month) to full intranet builds and migrations. Typical project ranges: SharePoint intranet from $7,500 (small org) to $55,000+ (enterprise); M365 migration from $18-$30/user; Power Platform apps from $4,500. Every project starts with a free 60-minute scoping call - you'll receive a written estimate within 24 hours. Most clients see measurable ROI within 3-6 months."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a Microsoft 365 migration take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A typical M365 migration for 100-500 users takes 4-8 weeks, covering discovery, pilot migration, cutover, and post-migration support. Larger organisations (500-5,000+ users) with complex on-premises environments typically require 10-16 weeks. We use industry-leading migration tooling to ensure zero downtime and zero data loss."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer ongoing SharePoint support after a project ends?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes - all clients have the option to move onto a SharePoint support retainer after project delivery. Our support plans include a dedicated consultant, guaranteed SLA response times, monthly health checks, and proactive monitoring of your M365 tenant. Support is available Monday-Friday 9am-6pm EST, with emergency response available 24/7 on premium plans."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you rebuild our existing SharePoint intranet without losing data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely. We specialise in SharePoint intranet modernisation - migrating content, permissions, and metadata from legacy SharePoint 2010/2013/2016 or classic SharePoint Online sites to a fully modern SharePoint Online experience. Your data is migrated in parallel so the old intranet stays live until the new one is signed off."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a Microsoft Solutions Partner and why does it matter?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft Solutions Partner is Microsoft's highest partner designation, replacing the old Gold Partner tier. It requires verified customer success metrics, certified employees, and a proven track record of successful deployments. When you work with a Solutions Partner like OceanCloud, you get access to dedicated Microsoft support escalations, early feature previews, and the assurance that your consultant is regularly validated by Microsoft itself."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you work with small businesses, or only large enterprises?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We work with organisations of all sizes - from 20-person professional services firms to 5,000-seat multinational enterprises. Our service tiers are designed to scale: smaller clients benefit from our fixed-price intranet packages and SharePoint Quickstart offering, while enterprise clients get fully bespoke programmes with dedicated project management."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is your approach to SharePoint security and compliance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We implement a Zero Trust security model by default across all engagements - combining Entra ID, Conditional Access policies, Microsoft Purview sensitivity labels, and Defender for Microsoft 365. For regulated industries (healthcare, legal, finance), we layer on sector-specific compliance controls and can support HIPAA, SOC 2, ISO 27001, and GDPR requirements."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you help us roll out Microsoft 365 Copilot safely?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes - Copilot readiness and deployment is one of our fastest-growing service areas. The biggest risk most organisations face before enabling Copilot is oversharing - documents and data that are technically accessible to everyone but were never meant to be. We run a Copilot Readiness Assessment covering data hygiene, sensitivity labelling, and governance posture, then manage the structured rollout, build prompt libraries, configure acceptable-use policies, and measure ROI through Viva Insights dashboards. The result: Copilot that delivers real productivity gains without exposing sensitive data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What industries do you specialise in?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We have deep experience across healthcare, legal, financial services, public sector, retail, and manufacturing. That said, our core methodology - discover, design, deploy, adopt - works for any organisation that runs on Microsoft 365."
+            }
+          }
+        ]
       }
     ]
   }
@@ -911,195 +1020,6 @@
 </footer>
 
 <a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
-<!-- ═══════════════════════════════════════════════════════════
-     JSON-LD STRUCTURED DATA
-     Replace https://oceancloudconsults.com with your real domain.
-═══════════════════════════════════════════════════════════ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://oceancloudconsults.com/#organization",
-      "name": "OceanCloud",
-      "url": "https://oceancloudconsults.com",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://oceancloudconsults.com/assets/logo.png",
-        "width": 200,
-        "height": 60
-      },
-      "description": "Microsoft Solutions Partner specialising in SharePoint consulting, Microsoft 365 migration, Power Platform, Teams, and M365 security services.",
-      "telephone": "+14698094053",
-      "email": "oceancloudconsults@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Dallas",
-        "addressRegion": "TX",
-        "addressCountry": "US"
-      },
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+14698094053",
-          "contactType": "customer service",
-          "availableLanguage": "English"
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+19176753126",
-          "contactType": "customer support",
-          "contactOption": "TollFree",
-          "availableLanguage": "English"
-        }
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/company/oceancloud"
-      ],
-      "numberOfEmployees": { "@type": "QuantitativeValue", "value": 15 },
-      "foundingDate": "2013",
-      "areaServed": {
-        "@type": "Country",
-        "name": "United States"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "SharePoint & Microsoft 365 Services",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SharePoint Consulting" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Migration" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft Teams Implementation" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Power Platform Development" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "M365 Security & Compliance" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SharePoint Training & Adoption" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Copilot Readiness & Rollout" } }
-        ]
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://oceancloudconsults.com/#website",
-      "url": "https://oceancloudconsults.com",
-      "name": "OceanCloud — SharePoint & Microsoft 365 Consulting",
-      "description": "Expert SharePoint consulting, M365 migration, and Microsoft 365 support services.",
-      "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
-      "inLanguage": "en-US"
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://oceancloudconsults.com/#webpage",
-      "url": "https://oceancloudconsults.com/",
-      "name": "SharePoint Consulting & Microsoft 365 Support | OceanCloud",
-      "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-      "about": { "@id": "https://oceancloudconsults.com/#organization" },
-      "description": "OceanCloud is a Microsoft Solutions Partner offering expert SharePoint consulting, Microsoft 365 migration, and M365 support across the United States.",
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com/" }
-        ]
-      }
-    },
-    {
-      "@type": "ProfessionalService",
-      "name": "OceanCloud SharePoint & M365 Consulting",
-      "url": "https://oceancloudconsults.com",
-      "image": "https://oceancloudconsults.com/assets/og-home.jpg",
-      "telephone": "+14698094053",
-      "priceRange": "$$",
-      "address": { "@type": "PostalAddress", "addressLocality": "Dallas", "addressRegion": "TX", "addressCountry": "US" },
-      "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "17:30" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "16:00" }
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "47",
-        "bestRating": "5"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What SharePoint consulting services does OceanCloud offer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "OceanCloud offers a full range of SharePoint consulting services including SharePoint Online intranet design and build, information architecture, SPFx custom development, governance frameworks, SharePoint migration from on-premises to SharePoint Online, and post-migration support. We are a certified Microsoft Solutions Partner."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can OceanCloud migrate our on-premises SharePoint to SharePoint Online?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. OceanCloud specialises in migrating SharePoint 2013, 2016, and 2019 environments to SharePoint Online (Microsoft 365). Our migration service includes content assessment, workflow modernisation, permission mapping, and a phased cutover with zero data loss. We also handle Exchange to Exchange Online and file share migrations."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How long does a SharePoint migration take?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The timeline depends on the size and complexity of your environment. Small organisations (under 100 users) can typically complete a SharePoint Online migration in 2–4 weeks. Mid-size organisations (100–500 users) typically take 4–8 weeks. Large enterprise migrations with multiple site collections and complex permissions can take 3–6 months. OceanCloud provides a detailed project plan with milestones after a free discovery call."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is included in Microsoft 365 consultation?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "OceanCloud's Microsoft 365 consultation includes a full environment audit, licence optimisation review, security posture assessment (Microsoft Secure Score analysis), SharePoint governance recommendations, Teams and Viva deployment strategy, and a prioritised roadmap. All initial discovery calls are free and run for 60 minutes."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do you offer SharePoint support after the project is complete?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. OceanCloud offers 12-month post-go-live hypercare support packages covering incident management, change requests, user training refreshers, governance reviews, and monthly health-check reports. Support is available via phone (+1 469-809-4053), WhatsApp (+1 917-675-3126), and email."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is OceanCloud a Microsoft certified partner?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. OceanCloud is a Microsoft Solutions Partner with designations in Modern Work, Security, and Business Applications. Our team collectively holds 40+ Microsoft certifications including MS-102, MS-203, SC-300, SC-400, PL-400, PL-600, and AZ-104."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How much does SharePoint consulting cost?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "OceanCloud offers fixed-price engagements tailored to your organisation's size and requirements. Assessments start from $1,500, intranet builds from $7,500, and monthly support retainers from $2,200. Enterprise migrations are priced per-project after a free scoping call. We provide transparent, written quotes with no hidden fees — you'll receive an estimate within 24 hours of your discovery call."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is it safe to roll out Microsoft 365 Copilot across our organisation?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes — with the right preparation. OceanCloud's Copilot Readiness Assessment reviews your Microsoft 365 security posture, data classification, sensitivity labels, and SharePoint permissions before any Copilot licence is activated. This prevents Copilot from surfacing files users shouldn't see. We then design a phased rollout with governance policies, acceptable-use guidelines, and adoption training so your team gets maximum value safely."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What industries does OceanCloud specialise in?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "OceanCloud has delivered SharePoint and Microsoft 365 projects across a wide range of sectors including Healthcare (HIPAA-aligned environments), Legal (ISO 27001 document management), Financial Services (SOC 2 and data-governance frameworks), Public Sector (GCC High and FedRAMP-ready tenants), Retail (Teams Shifts and frontline worker solutions), and Manufacturing (Power BI and Power Automate factory-floor workflows). Our consultants hold sector-specific certifications and understand each industry's compliance requirements."
-          }
-        }
-      ]
-    }
-  ]
-}
-</script>
 
 <script src="js/main.js?v=8"></script>
 <script src="js/chat.js?v=7"></script>
