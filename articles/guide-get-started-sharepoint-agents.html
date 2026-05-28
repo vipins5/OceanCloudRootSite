@@ -56,7 +56,9 @@
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint", "name": "Publish an agent to SharePoint" },
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint", "name": "Add SharePoint as a knowledge source" },
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-agents-azure-billing", "name": "Use agents with pay-as-you-go billing" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint", "name": "Manage access to agents in SharePoint" }
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint", "name": "Manage access to agents in SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/insights-on-sharepoint-agents", "name": "Insights report on agents in SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery", "name": "Restricted Content Discovery for SharePoint" }
         ],
         "inLanguage": "en-US",
         "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
@@ -205,20 +207,20 @@
       </div>
 
       <h2>What Microsoft's Official Guidance Says</h2>
-      <p>Microsoft's support article describes SharePoint agents as AI-powered assistants that help people ask questions about SharePoint sites, pages, document libraries, lists, and files. The important phrase is <strong>that the asker has permissions to access</strong>. Agents do not replace SharePoint permissions. They sit on top of them.</p>
+      <p>Microsoft describes SharePoint agents as AI assistants for questions about sites, pages, libraries, lists, and files the asker already has permission to access. That last part matters: agents sit on top of SharePoint permissions; they do not replace them.</p>
 
       <ul>
-        <li><strong>Every SharePoint site gets a ready-made agent:</strong> It appears by default, is scoped to the current site, and does not require a site owner to build anything.</li>
+        <li><strong>Every SharePoint site gets a ready-made agent:</strong> It appears by default, is scoped to the current site, and does not require a site owner to build anything. Microsoft also says this ready-made agent has no associated <code>.agent</code> file and cannot be edited, deleted, or shared like a custom agent.</li>
         <li><strong>Custom-built agents are created by editors:</strong> A user with edit permissions can create an agent, choose sources, change the agent's name and purpose, and refine how it should answer.</li>
-        <li><strong>Interaction needs licensing:</strong> Users need a Microsoft 365 Copilot license, or the organization must enable pay-as-you-go billing for SharePoint agents.</li>
+        <li><strong>Interaction needs licensing, not a separate activation switch:</strong> Users need a Microsoft 365 Copilot license, or the organization must enable pay-as-you-go billing for SharePoint agents and scope access through the admin policy.</li>
         <li><strong>Editing needs both access paths:</strong> To edit an agent, a user needs the license or pay-as-you-go path, plus edit permissions on the SharePoint site and the <code>.agent</code> file.</li>
         <li><strong>Sharing the agent is not the same as sharing the knowledge:</strong> If someone can open the agent but cannot access a source document, the agent should not use that restricted document for that person's answer.</li>
       </ul>
 
-      <p>That makes the first rollout conversation less about clever prompts and more about basic SharePoint hygiene: who owns the content, who can see it, which sources are reliable, and which sites should be kept away from broad AI discovery until permissions are cleaned up.</p>
+      <p>That makes the first rollout conversation less about clever prompts and more about SharePoint hygiene: content ownership, source quality, permissions, and sites that should stay away from broad AI discovery until cleaned up.</p>
 
       <figure class="article-image">
-        <img src="https://support.microsoft.com/images/en-us/55e639e7-e1f7-4935-baa1-8fdb260f1944?format=avif&amp;w=640" alt="Microsoft SharePoint agent builder showing options to create a new agent" loading="lazy" />
+        <img src="https://support.microsoft.com/images/en-us/55e639e7-e1f7-4935-baa1-8fdb260f1944?format=png&amp;w=640" alt="Microsoft SharePoint agent builder showing options to create a new agent" loading="lazy" />
         <figcaption>Actual Microsoft Support screenshot of the SharePoint agent builder. Source: <a href="https://support.microsoft.com/en-au/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42" target="_blank" rel="noopener noreferrer">Create an agent in SharePoint - Microsoft Support</a>.</figcaption>
       </figure>
 
@@ -229,29 +231,17 @@
         <li><strong>It answers questions:</strong> Users can ask things like "What is the PTO policy?" or "Summarize the project risks in this folder."</li>
         <li><strong>It uses scoped knowledge:</strong> The answer is grounded in the sites, pages, libraries, folders, and files included as sources.</li>
         <li><strong>It follows user permissions:</strong> Answers depend on what the person asking already has permission to access.</li>
-        <li><strong>It can be shared:</strong> Custom-created agents are stored as <code>.agent</code> files and can be shared like SharePoint files.</li>
+        <li><strong>Custom agents are files:</strong> Custom-created agents are stored as <code>.agent</code> files and can be shared like SharePoint files. The ready-made site agent is the exception because Microsoft says it has no associated <code>.agent</code> file.</li>
         <li><strong>It can live in more than one place:</strong> SharePoint-created agents can be used in SharePoint and Teams, and Copilot Studio agents can be deployed to SharePoint as a channel.</li>
       </ul>
 
       <a href="https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Get started with agents in SharePoint - Microsoft Support</a>
 
-      <h2>How People Actually Use Agents Day to Day</h2>
-      <p>The easiest way to understand SharePoint agents is to look at the questions people already ask in chat, email, and meetings. The agent gives those questions a place to go, grounded in approved SharePoint content.</p>
-
-      <ul>
-        <li><strong>Summarize a library:</strong> "Give me the key points from the latest project status reports."</li>
-        <li><strong>Compare documents:</strong> "Compare the Mega-200 and Mega-300 proposals and list the benefits of each."</li>
-        <li><strong>Find policy answers:</strong> "What is the process for parental leave in Australia?"</li>
-        <li><strong>Create a first draft:</strong> "Create a one-hour training outline from these product documents."</li>
-      </ul>
-
-      <p>Users can also select files before asking, or attach files through the chat pane, when they want the answer grounded in a smaller set of content.</p>
-
       <h2>What You Need Before You Start</h2>
       <p>Before you build anything, check these basics. Most failed agent pilots are not technical failures. They fail because licensing, permissions, or content quality was not ready.</p>
 
       <ul>
-        <li><strong>Microsoft 365 Copilot license or pay-as-you-go enabled:</strong> Microsoft documents these as the main access paths for SharePoint agents.</li>
+        <li><strong>Microsoft 365 Copilot license or pay-as-you-go enabled:</strong> Microsoft documents these as the main access paths for SharePoint agents. Pay-as-you-go access should be scoped through the admin policy and the right security group, not left as an informal rollout decision.</li>
         <li><strong>Edit permissions to create or modify agents:</strong> Visitors can interact where allowed, but site edit permissions are needed to create or edit an agent.</li>
         <li><strong>Modern SharePoint experience:</strong> The creation and use experience is for SharePoint Online modern sites. This is not a SharePoint Subscription Edition/on-premises feature.</li>
         <li><strong>Clean source content:</strong> Agents are only as useful as the pages and documents they can read. Archive stale drafts before using them as sources.</li>
@@ -263,9 +253,7 @@
       </div>
 
       <h2>Option 1 - SharePoint Built-in Agent (No Code)</h2>
-      <p>This is the quickest way to get value. A site owner or member with edit permissions can create an agent directly inside SharePoint, choose its sources, give it a purpose, and share it with the team. It is the right path when the job is mainly <strong>answers from SharePoint content</strong>, not workflow automation.</p>
-
-      <p>For most organizations, the no-code path is where to start. Build one or two small agents against clean content, learn how users ask questions, then decide whether a more advanced Copilot Studio agent is worth the extra governance and build effort.</p>
+      <p>This is the quickest way to get value. A site owner or member with edit permissions can create an agent in SharePoint, choose sources, give it a purpose, and share it with the team. Start here when the job is mainly <strong>answers from SharePoint content</strong>, not workflow automation.</p>
 
       <h3>Ready-made agent vs custom-built agent</h3>
       <div class="art-table-wrap">
@@ -306,6 +294,11 @@
         <li><strong>Starter prompts:</strong> Give users helpful first questions instead of leaving them staring at an empty chat box.</li>
       </ul>
 
+      <figure class="article-image">
+        <img src="https://support.microsoft.com/images/en-us/cee96ab3-7e1c-4dde-8b7a-61670c1cc600?format=png&amp;w=640" alt="Microsoft SharePoint agent sources tab showing selected knowledge sources" loading="lazy" />
+        <figcaption>Actual Microsoft Support screenshot of the Sources tab in a SharePoint agent. Source: <a href="https://support.microsoft.com/en-au/topic/edit-an-agent-in-sharepoint-39f7b47a-178b-47d4-9cab-736a7012b1da" target="_blank" rel="noopener noreferrer">Edit an agent in SharePoint - Microsoft Support</a>.</figcaption>
+      </figure>
+
       <h3>Example instruction prompt</h3>
       <p>You do not need a perfect prompt to start. You need a clear purpose and good boundaries.</p>
 
@@ -316,6 +309,11 @@ Use simple language and bullet points.
 If a policy is unclear, say that the employee should contact HR instead of guessing.
 Do not give legal, payroll, or medical advice.
 Always cite the source document or page when possible.</pre></div>
+
+      <figure class="article-image">
+        <img src="https://support.microsoft.com/images/en-us/5bf9d0c8-43d0-4691-aaa6-c36ec2bd6bb8?format=png&amp;w=640" alt="Microsoft SharePoint agent behavior instructions screen" loading="lazy" />
+        <figcaption>Actual Microsoft Support screenshot of the Behavior tab where agent instructions are edited. Source: <a href="https://support.microsoft.com/en-au/topic/edit-an-agent-in-sharepoint-39f7b47a-178b-47d4-9cab-736a7012b1da" target="_blank" rel="noopener noreferrer">Edit an agent in SharePoint - Microsoft Support</a>.</figcaption>
+      </figure>
 
       <h3>Where the .agent file is stored</h3>
       <p>Custom SharePoint agents are stored as <code>.agent</code> files. That matters because sharing and access to the agent are governed like other SharePoint files.</p>
@@ -342,6 +340,11 @@ Always cite the source document or page when possible.</pre></div>
       </ul>
 
       <p>That review flow is a good thing. Agents make information easier to retrieve, so the product has to be careful about accidentally reposting information into a chat where not everyone has access. Train users to read the response and the cited files before sending an answer to a whole group.</p>
+
+      <figure class="article-image">
+        <img src="https://support.microsoft.com/images/en-us/46f31f84-acd0-4403-9b0a-d0c246da69a7?format=png&amp;w=640" alt="Microsoft Teams review flow for sharing a SharePoint agent answer with different permissions" loading="lazy" />
+        <figcaption>Actual Microsoft Support screenshot of the Teams permission review experience for SharePoint agents. Source: <a href="https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3" target="_blank" rel="noopener noreferrer">Share an agent from SharePoint in Teams - Microsoft Support</a>.</figcaption>
+      </figure>
 
       <a href="https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Share an agent from SharePoint in Teams - Microsoft Support</a>
 
@@ -382,6 +385,7 @@ Always cite the source document or page when possible.</pre></div>
         <li><strong>SharePoint list knowledge:</strong> Add lists through the SharePoint list option. Microsoft says makers can select up to 15 lists at a time, with each list added as an individual knowledge source.</li>
         <li><strong>Authentication:</strong> In Teams, Power Apps, and Microsoft 365 Copilot experiences, Microsoft authentication is normally preconfigured. For manual authentication scenarios, Microsoft documents Entra ID scopes such as <code>Sites.Read.All</code> and <code>Files.Read.All</code>.</li>
         <li><strong>Filtering:</strong> Copilot Studio can filter SharePoint knowledge by fields such as title, author, modified by, and modified date. This is useful for "only show current policy" or "only use files updated this year" patterns.</li>
+        <li><strong>Search restrictions still matter:</strong> If your tenant uses Restricted SharePoint Search or Restricted Content Discovery, test the agent with real users because those controls can change what SharePoint content is discoverable for grounding.</li>
         <li><strong>Grounding discipline:</strong> If you want the agent to answer only from the selected SharePoint source, turn off broad web/general-knowledge behavior where appropriate and test what happens when the answer is not found.</li>
       </ul>
 
@@ -431,10 +435,11 @@ Always cite the source document or page when possible.</pre></div>
       </div>
 
       <h2>PowerShell for SharePoint Agent Admins</h2>
-      <p>There is not a single magic PowerShell cmdlet that "manages all SharePoint agents" end to end. In practice, admins use two patterns:</p>
+      <p>There is not a single magic PowerShell cmdlet that "manages all SharePoint agents" end to end. In practice, admins use three patterns:</p>
 
       <ul>
         <li><strong>Inventory agent files</strong> because custom SharePoint agents are stored as <code>.agent</code> files.</li>
+        <li><strong>Generate the official Agent Insights report</strong> for tenant-wide visibility into where agents are being created.</li>
         <li><strong>Control risky sites</strong> with SharePoint admin controls such as Restricted Content Discovery.</li>
       </ul>
 
@@ -469,8 +474,30 @@ $agentFiles = foreach ($library in Get-PnPList | Where-Object { $_.BaseTemplate 
 $agentFiles | Sort-Object Library, Name | Export-Csv -Path $outFile -NoTypeInformation
 $agentFiles | Format-Table Library, Name, Modified, Editor -AutoSize</pre></div>
 
-      <h3>2. Turn off agent-related features on a sensitive site</h3>
-      <p>Microsoft documents Restricted Content Discovery as a site-level control. When enabled on a site, it can prevent that site's content from appearing in organization-wide search and Microsoft 365 Copilot discovery scenarios, and Microsoft says users will not see the Copilot icon on that site.</p>
+      <h3>2. Generate an Agent Insights report</h3>
+      <p>Microsoft now documents an Agent Insights report for SharePoint admins. It is available in the SharePoint admin center and SharePoint Online Management Shell, uses Microsoft 365 audit data, and helps admins find sites with recently created agents. Large tenants can take up to 48 hours for data to appear.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/agent-insights/agent-report.png" alt="Microsoft SharePoint admin center Agent Insights report" loading="lazy" />
+        <figcaption>Actual Microsoft Learn screenshot of the Agent Insights report in the SharePoint admin center. Source: <a href="https://learn.microsoft.com/en-us/sharepoint/insights-on-sharepoint-agents" target="_blank" rel="noopener noreferrer">Insights report on agents in SharePoint - Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <div class="code-label">SharePoint Online Management Shell - Agent Insights report</div>
+      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+
+# Run these only if your tenant asks you to enable activity data collection first.
+Start-SPOAuditDataCollectionForActivityInsights
+Get-SPOAuditDataCollectionStatusForActivityInsights
+
+Start-SPOCopilotAgentInsightsReport -ReportPeriodInDays 28
+Get-SPOCopilotAgentInsightsReport
+
+$reportId = "00000000-0000-0000-0000-000000000000"
+Get-SPOCopilotAgentInsightsReport -ReportId $reportId -Content TopSites
+Get-SPOCopilotAgentInsightsReport -ReportId $reportId -Content CopilotAgentsOnSites -Action Download</pre></div>
+
+      <h3>3. Turn off agent-related features on a sensitive site</h3>
+      <p>Microsoft documents Restricted Content Discovery as a site-level control for high-risk SharePoint sites. It can keep site content out of organization-wide search and Microsoft 365 Copilot discovery, and Microsoft says users will not see the Copilot icon on that site. It is not a permissions cleanup tool, does not apply to OneDrive, and can take time to show across experiences.</p>
 
       <div class="code-label">SharePoint Online Management Shell - restrict a sensitive site</div>
       <div class="code-block"><pre># Requires the latest Microsoft SharePoint Online Management Shell
@@ -479,15 +506,27 @@ $siteUrl = "https://contoso.sharepoint.com/sites/executive"
 
 Connect-SPOService -Url "https://$tenant-admin.sharepoint.com"
 
+# Optional: allow delegated management of Restricted Content Discovery.
+Set-SPOTenant -DelegateRestrictedContentDiscoverabilityManagement $true
+Get-SPOTenant | Select-Object DelegateRestrictedContentDiscoverabilityManagement
+
 # Enable Restricted Content Discovery for a high-risk site
 Set-SPOSite -Identity $siteUrl -RestrictContentOrgWideSearch $true
 
 # Confirm status
-Get-SPOSite -Identity $siteUrl | Select-Object Url, RestrictContentOrgWideSearch</pre></div>
+Get-SPOSite -Identity $siteUrl | Select-Object Url, RestrictContentOrgWideSearch
+
+# Later, after permissions and content are cleaned up, remove the restriction.
+# Set-SPOSite -Identity $siteUrl -RestrictContentOrgWideSearch $false</pre></div>
 
       <p>Use this setting selectively. Microsoft's Restricted Content Discovery documentation says it can protect high-risk sites from tenant-wide search and Copilot discovery, but overuse can reduce the quality of search and Copilot answers because there is less content available for grounding.</p>
 
-      <h3>3. Generate a Restricted Content Discovery report</h3>
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/restricted-content-discovery/1-rcd-enable-spac.png" alt="Microsoft SharePoint admin center setting for Restricted Content Discovery" loading="lazy" />
+        <figcaption>Actual Microsoft Learn screenshot showing Restricted Content Discovery in the SharePoint admin center. Source: <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery" target="_blank" rel="noopener noreferrer">Restricted Content Discovery for SharePoint - Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <h3>4. Generate a Restricted Content Discovery report</h3>
       <p>Use this when you want evidence of which sites have the control enabled.</p>
 
       <div class="code-label">PowerShell - report on Restricted Content Discovery</div>
@@ -512,6 +551,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
         <li><strong>Use approval for important agents:</strong> Site owners can approve agents so visitors can distinguish official agents from ad hoc ones.</li>
         <li><strong>Set a site default only when it helps:</strong> Site owners can set an approved agent as the default agent for the site. Use this for official assistants, not experiments.</li>
         <li><strong>Watch the <code>.agent</code> files:</strong> Custom agents are files. Include them in content lifecycle, retention, ownership, and permission reviews.</li>
+        <li><strong>Use Agent Insights:</strong> Review the SharePoint admin center Agent Insights report or the PowerShell report regularly so unmanaged agent growth does not surprise you.</li>
         <li><strong>Monitor billing:</strong> For pay-as-you-go, create Azure budgets and cost alerts before broad rollout, especially if unlicensed users will use SharePoint agents.</li>
         <li><strong>Keep prompts plain:</strong> The best instructions are specific, boring, and testable.</li>
         <li><strong>Set a review date:</strong> Recheck agent sources and permissions every quarter, or whenever a project closes.</li>
@@ -548,6 +588,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
         <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint" target="_blank" rel="noopener noreferrer">Add SharePoint as a knowledge source - Microsoft Learn</a>
         <a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-agents-azure-billing" target="_blank" rel="noopener noreferrer">Use agents with pay-as-you-go billing - Microsoft Learn</a>
         <a href="https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint" target="_blank" rel="noopener noreferrer">Manage access to agents in SharePoint - Microsoft Learn</a>
+        <a href="https://learn.microsoft.com/en-us/sharepoint/insights-on-sharepoint-agents" target="_blank" rel="noopener noreferrer">Insights report on agents in SharePoint - Microsoft Learn</a>
         <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery" target="_blank" rel="noopener noreferrer">Restricted Content Discovery for SharePoint - Microsoft Learn</a>
       </div>
 
