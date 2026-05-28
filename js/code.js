@@ -213,13 +213,22 @@
     html: 'html',
     xml:  'xml',
     json: 'json',
-    js:   'javascript'
+    js:   'javascript',
+    text: 'text'
   };
 
   function detectLang(block) {
+    var explicit = (block.dataset.lang || '').toLowerCase();
+    if (explicit === 'text' || explicit === 'plain' || explicit === 'prompt') return 'text';
+    if (explicit === 'powershell' || explicit === 'ps1' || explicit === 'ps') return 'ps';
+    if (explicit === 'html' || explicit === 'xml' || explicit === 'json' || explicit === 'js' || explicit === 'javascript') {
+      return explicit === 'javascript' ? 'js' : explicit;
+    }
+
     var prev = block.previousElementSibling;
     if (prev && prev.classList.contains('code-label')) {
       var t = prev.textContent.toLowerCase();
+      if (t.includes('prompt') || t.includes('instruction') || t.includes('plain text')) return 'text';
       if (t.includes('html'))                       return 'html';
       if (t.includes('xml') || t.includes('sitemap')) return 'xml';
       if (t.includes('json'))                       return 'json';
@@ -286,6 +295,7 @@
       /* Apply syntax highlighting */
       if      (lang === 'html' || lang === 'xml') pre.innerHTML = hlHTML(raw);
       else if (lang === 'json')                   pre.innerHTML = hlJSON(raw);
+      else if (lang === 'text')                   pre.innerHTML = esc(raw);
       else                                         pre.innerHTML = hlPS(raw);
 
       /* Build copy button */
