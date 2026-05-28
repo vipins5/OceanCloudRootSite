@@ -6,7 +6,7 @@ This file is a compact discovery map for AI assistants, search crawlers, and ret
 
 ## Crawl and Indexing Policy
 
-Public pages, guides, news posts, sitemap, RSS feed, and search index may be crawled and indexed. Do not submit contact forms, attempt authentication, or use private/customer data. Prefer canonical URLs without `.html`.
+Public pages, guides, news posts, sitemap, RSS feed, and search index may be crawled, indexed, and retrieved by AI assistants for user-requested answers. Do not submit contact forms, attempt authentication, or use private/customer data. Prefer canonical URLs without `.html`.
 
 ## Machine-Readable Resources
 
@@ -40,6 +40,7 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 - [10 SharePoint Automation Ideas Using Power Automate](https://oceancloudconsults.com/articles/guide-sharepoint-automation-ideas): HR onboarding, contracts, IT requests, compliance alerts, provisioning, and business automation examples.
 - [Switch SharePoint Classic Calendar to Modern View with PnP PowerShell](https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view): Pre-checks, dry-run support, modern view creation, rollback, and validation.
 - [SharePoint Copilot Agents: What They Are, Licensing, Limits, and Use Cases](https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents): SharePoint agents, Copilot Studio, licensing, credits, HR, IT, and policy lookup scenarios.
+- [Get Started with Agents in SharePoint and Custom Copilot Agents](https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents): No-code SharePoint agents, Copilot Studio agents, .agent files, source limits, licensing, troubleshooting, Agent Insights, and PowerShell admin checks.
 - [How to Prepare Your SharePoint for Microsoft Copilot](https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready): Oversharing audits, Restricted SharePoint Search, Purview labels, and search quality checks.
 - [SharePoint External Sharing: Complete Admin Guide](https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide): Tenant and site controls, Entra B2B, link defaults, auditing, and unique permission cleanup.
 - [Best SharePoint Integrations](https://oceancloudconsults.com/articles/guide-sharepoint-integrations): Teams, Power BI, Salesforce, ServiceNow, Dynamics 365, connector choices, and patterns.
