@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>Get Started with Agents in SharePoint and Custom Copilot Agents | OceanCloud</title>
-  <meta name="description" content="A practical 2026 guide to SharePoint agents and custom Copilot agents: licensing, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and troubleshooting." />
-  <meta name="keywords" content="agents in SharePoint, SharePoint agents, custom Copilot agents SharePoint, Microsoft 365 Copilot agents, Copilot Studio SharePoint, SharePoint agent PowerShell" />
+  <title>Agents in SharePoint Guide: Custom Copilot Agents | OceanCloud</title>
+  <meta name="description" content="2026 guide to SharePoint agents and custom Copilot agents: setup, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and troubleshooting." />
+  <meta name="keywords" content="agents in SharePoint, SharePoint agents, SharePoint agent limits, SharePoint agent troubleshooting, custom Copilot agents, custom Copilot agents SharePoint, Microsoft 365 Copilot agents, Copilot Studio SharePoint, SharePoint agent PowerShell, Agent Insights, Agent Access Insights" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
-  <meta property="og:title"       content="Get Started with Agents in SharePoint and Custom Copilot Agents" />
-  <meta property="og:description" content="Plain-English 2026 guide to SharePoint agents, custom Copilot agents, PAYG costs, source limits, Copilot Studio deployment, Agent Insights, governance, and common fixes." />
+  <meta property="og:title"       content="Agents in SharePoint Guide: Custom Copilot Agents" />
+  <meta property="og:description" content="Plain-English 2026 guide to SharePoint agents, custom Copilot agents, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and fixes." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
   <meta property="og:locale"      content="en_US" />
@@ -38,14 +38,14 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents#article",
-        "headline": "Get Started with Agents in SharePoint and Custom Copilot Agents",
+        "headline": "Agents in SharePoint Guide: Custom Copilot Agents",
         "url": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents",
         "datePublished": "2026-05-28",
         "dateModified": "2026-05-29",
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
-        "description": "A practical 2026 guide to SharePoint agents and custom Copilot agents: licensing, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and troubleshooting.",
-        "keywords": ["SharePoint agents", "custom Copilot agents", "Copilot Studio", "Microsoft 365 Copilot", "SharePoint PowerShell"],
+        "description": "2026 guide to SharePoint agents and custom Copilot agents: setup, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and troubleshooting.",
+        "keywords": ["agents in SharePoint", "SharePoint agents", "SharePoint agent limits", "SharePoint agent troubleshooting", "custom Copilot agents", "Copilot Studio SharePoint", "Microsoft 365 Copilot agents", "SharePoint agent PowerShell", "Agent Insights", "Agent Access Insights"],
         "citation": [
           { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf", "name": "Get started with agents in SharePoint" },
           { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42", "name": "Create an agent in SharePoint" },
@@ -172,7 +172,7 @@
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>SharePoint Agents</span></nav>
       <h1>Get Started with Agents in SharePoint <span class="grad-text">and Custom Copilot Agents</span></h1>
-      <p>A practical guide to SharePoint agents, Copilot Studio agents, licensing, PAYG costs, source limits, governance, Microsoft screenshots, and the PowerShell checks admins should run before rollout.</p>
+      <p>A practical guide to SharePoint agents, Copilot Studio agents, licensing, PAYG costs, SharePoint agent limits, governance, Microsoft screenshots, PowerShell checks, and SharePoint agent troubleshooting before rollout.</p>
     </div>
   </div>
 </section>
@@ -190,9 +190,9 @@
       <ul class="quick-points-source" hidden>
         <li>Use SharePoint agents for fast Q&amp;A over approved SharePoint sites, pages, libraries, folders, lists, or files.</li>
         <li>Use Copilot Studio when the agent must run actions, call workflows, connect to external systems, or follow a controlled process.</li>
-        <li>Pay-as-you-go requires Azure billing setup, a connected billing policy, and a security group; complex SharePoint agent prompts can consume 12 Copilot Credits.</li>
+        <li>SharePoint agent limits matter: pay-as-you-go requires Azure billing setup, a connected billing policy, and a security group; complex prompts can consume 12 Copilot Credits.</li>
         <li>Ready-made site agents are automatic; custom agents are stored as <code>.agent</code> files that can be approved, shared, and governed.</li>
-        <li>Admins should monitor agent growth with Agent Insights, review content access with Agent Access Insights, and protect sensitive sites with Restricted Content Discovery.</li>
+        <li>Use the troubleshooting section when answers miss content, licensing blocks access, agent approval stalls, or PowerShell reports fail.</li>
       </ul>
 
       <p class="article-intro">SharePoint agents are one of the most practical ways to bring Microsoft 365 Copilot closer to the work people already do. Instead of asking employees to search through libraries, policy pages, and project folders, an agent lets them ask plain-English questions and get answers grounded in the SharePoint content they already have permission to see.</p>
@@ -360,8 +360,8 @@ Always cite the source document or page when possible.</pre></div>
 
       <a href="https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Share an agent from SharePoint in Teams - Microsoft Support</a>
 
-      <h2>Limits and Behaviors to Know</h2>
-      <p>These are the limits and behaviors worth explaining to site owners before they start creating agents.</p>
+      <h2>SharePoint Agent Limits and Behaviors to Know</h2>
+      <p>These SharePoint agent limits and behaviors are worth explaining to site owners before they start creating agents.</p>
 
       <ul>
         <li><strong>20 source items and nesting:</strong> Microsoft Support currently says a SharePoint agent can include up to 20 source items. Because a source item can be a site, library, folder, or file, one folder with 100 approved files can count as one source item while 100 individually selected files would not fit.</li>
@@ -581,7 +581,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
         <li><strong>Teach users to verify:</strong> Users should open citations for decisions that matter.</li>
       </ul>
 
-      <h2>Basic Errors and Fixes</h2>
+      <h2>SharePoint Agent Troubleshooting: Basic Errors and Fixes</h2>
       <p>When an agent rollout gets stuck, start with these simple checks before rebuilding the agent.</p>
 
       <div class="art-table-wrap">
