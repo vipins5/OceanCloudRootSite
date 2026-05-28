@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Get Started with Agents in SharePoint: Built-in and Custom Copilot Agents | OceanCloud</title>
+  <meta name="description" content="A practical 2026 guide to SharePoint agents and custom Copilot agents: Microsoft Support-backed steps, licensing, creation, images, Copilot Studio, governance, and PowerShell." />
+  <meta name="keywords" content="agents in SharePoint, SharePoint agents, custom Copilot agents SharePoint, Microsoft 365 Copilot agents, Copilot Studio SharePoint, SharePoint agent PowerShell" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Get Started with Agents in SharePoint: Built-in and Custom Copilot Agents" />
+  <meta property="og:description" content="Plain-English 2026 guide to SharePoint agents, custom Copilot agents, Copilot Studio deployment, licensing, limits, governance, and PowerShell checks." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents#article",
+        "headline": "Get Started with Agents in SharePoint: Built-in and Custom Copilot Agents",
+        "url": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents",
+        "datePublished": "2026-05-28",
+        "dateModified": "2026-05-29",
+        "author": { "@id": "https://oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "description": "A practical 2026 guide to SharePoint agents and custom Copilot agents: Microsoft Support-backed steps, licensing, creation, images, Copilot Studio, governance, and PowerShell checks.",
+        "keywords": ["SharePoint agents", "custom Copilot agents", "Copilot Studio", "Microsoft 365 Copilot", "SharePoint PowerShell"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf", "name": "Get started with agents in SharePoint" },
+          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42", "name": "Create an agent in SharePoint" },
+          { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/interact-with-agents-in-sharepoint-bda7dd7a-2498-49de-acd7-a830d6d9fb24", "name": "Interact with agents in SharePoint" },
+          { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3", "name": "Share an agent from SharePoint in Teams" },
+          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/manage-agents-in-sharepoint-bcab837a-835c-4a1a-8ad4-d53a353c369f", "name": "Manage agents in SharePoint" },
+          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/frequently-asked-questions-about-copilot-in-sharepoint-eb1b7668-3d98-4a93-98ef-f0c6dfc694f0", "name": "FAQs about Copilot in SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint", "name": "Publish an agent to SharePoint" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint", "name": "Add SharePoint as a knowledge source" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-agents-azure-billing", "name": "Use agents with pay-as-you-go billing" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint", "name": "Manage access to agents in SharePoint" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Get Started with SharePoint Agents", "item": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:840px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(168,85,247,.12);color:#c084fc;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(168,85,247,.07);border-left:3px solid #c084fc;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#d4b8f0;font-size:.92rem;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#a8d8ea;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(168,85,247,.12);color:#c084fc;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(168,85,247,.25);}
+  .art-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0;}
+  .quick-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px;}
+  .quick-card strong{display:block;margin-bottom:6px;}
+  .quick-card p{font-size:.9rem;margin:0;line-height:1.7;}
+  .agent-path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0;}
+  .path-step{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px;min-height:110px;}
+  .path-step span{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:50%;background:rgba(168,85,247,.18);color:#c084fc;font-size:.78rem;font-weight:800;margin-bottom:10px;}
+  .path-step strong{display:block;font-size:.88rem;margin-bottom:6px;}
+  .path-step p{font-size:.8rem;line-height:1.55;margin:0;}
+  .article-image{margin:28px 0;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.03);}
+  .article-image img{display:block;width:100%;height:auto;border-radius:10px;background:#fff;}
+  .article-image figcaption{margin-top:10px;color:var(--text-dim);font-size:.78rem;line-height:1.6;}
+  .source-list{display:grid;gap:10px;margin:24px 0;}
+  .source-list a{display:block;padding:13px 16px;border:1px solid rgba(255,255,255,.07);border-radius:10px;text-decoration:none;color:#c8daea;background:rgba(255,255,255,.025);}
+  .source-list a:hover{border-color:rgba(0,180,216,.35);color:#00b4d8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#a78bfa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  @media(max-width:760px){.quick-grid,.agent-path{grid-template-columns:1fr;}.path-step{min-height:auto;}}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"168,85,247","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-purple" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>SharePoint Agents</span></nav>
+      <h1>Get Started with Agents in SharePoint <span class="grad-text">and Custom Copilot Agents</span></h1>
+      <p>A clear, practical guide to the no-code SharePoint agent experience, advanced Copilot Studio agents, licensing, limits, governance, and the PowerShell checks admins should run before rollout.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Copilot</span>
+        <span class="art-date">Updated May 29, 2026</span>
+        <span class="art-read">18 min read</span>
+      </div>
+
+      <p class="article-intro">SharePoint agents are one of the most practical ways to bring Microsoft 365 Copilot closer to the work people already do. Instead of asking employees to search through libraries, policy pages, and project folders, an agent lets them ask plain-English questions and get answers grounded in the SharePoint content they already have permission to see.</p>
+
+      <div class="art-callout info">
+        <p><strong>Short version:</strong> Use a built-in SharePoint agent when you want a fast, no-code Q&amp;A assistant over a site, library, folder, or selected files. Use a Copilot Studio agent when you need actions, workflows, external systems, advanced topics, or a more controlled enterprise rollout.</p>
+      </div>
+
+      <h2>Quick Answer: Which Agent Should You Build?</h2>
+
+      <div class="quick-grid">
+        <div class="quick-card">
+          <strong>Option 1: SharePoint built-in agent</strong>
+          <p>Best for site owners who want a no-code assistant that answers questions from SharePoint pages, documents, libraries, folders, or selected files.</p>
+        </div>
+        <div class="quick-card">
+          <strong>Option 2: Copilot Studio agent</strong>
+          <p>Best for IT, HR, operations, and service teams that need multi-step conversations, Power Automate actions, external data, or controlled deployment.</p>
+        </div>
+        <div class="quick-card">
+          <strong>License path</strong>
+          <p>Users need Microsoft 365 Copilot, or the organization must enable pay-as-you-go/capacity for SharePoint agents where supported.</p>
+        </div>
+        <div class="quick-card">
+          <strong>Security model</strong>
+          <p>Agents respect SharePoint permissions. If a user cannot access a source, the agent should not use that source in its answer for that user.</p>
+        </div>
+      </div>
+
+      <h2>What Microsoft's Official Guidance Says</h2>
+      <p>Microsoft's support article describes SharePoint agents as AI-powered assistants that help people ask questions about SharePoint sites, pages, document libraries, lists, and files. The important phrase is <strong>that the asker has permissions to access</strong>. Agents do not replace SharePoint permissions. They sit on top of them.</p>
+
+      <ul>
+        <li><strong>Every SharePoint site gets a ready-made agent:</strong> It appears by default, is scoped to the current site, and does not require a site owner to build anything.</li>
+        <li><strong>Custom-built agents are created by editors:</strong> A user with edit permissions can create an agent, choose sources, change the agent's name and purpose, and refine how it should answer.</li>
+        <li><strong>Interaction needs licensing:</strong> Users need a Microsoft 365 Copilot license, or the organization must enable pay-as-you-go billing for SharePoint agents.</li>
+        <li><strong>Editing needs both access paths:</strong> To edit an agent, a user needs the license or pay-as-you-go path, plus edit permissions on the SharePoint site and the <code>.agent</code> file.</li>
+        <li><strong>Sharing the agent is not the same as sharing the knowledge:</strong> If someone can open the agent but cannot access a source document, the agent should not use that restricted document for that person's answer.</li>
+      </ul>
+
+      <p>That makes the first rollout conversation less about clever prompts and more about basic SharePoint hygiene: who owns the content, who can see it, which sources are reliable, and which sites should be kept away from broad AI discovery until permissions are cleaned up.</p>
+
+      <figure class="article-image">
+        <img src="https://support.microsoft.com/images/en-us/55e639e7-e1f7-4935-baa1-8fdb260f1944?format=avif&amp;w=640" alt="Microsoft SharePoint agent builder showing options to create a new agent" loading="lazy" />
+        <figcaption>Actual Microsoft Support screenshot of the SharePoint agent builder. Source: <a href="https://support.microsoft.com/en-au/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42" target="_blank" rel="noopener noreferrer">Create an agent in SharePoint - Microsoft Support</a>.</figcaption>
+      </figure>
+
+      <h2>What Are Agents in SharePoint?</h2>
+      <p>An agent in SharePoint is a scoped AI assistant. It is not a replacement for your intranet, search, or governance model. Think of it as a conversational layer over selected SharePoint content.</p>
+
+      <ul>
+        <li><strong>It answers questions:</strong> Users can ask things like "What is the PTO policy?" or "Summarize the project risks in this folder."</li>
+        <li><strong>It uses scoped knowledge:</strong> The answer is grounded in the sites, pages, libraries, folders, and files included as sources.</li>
+        <li><strong>It follows user permissions:</strong> Answers depend on what the person asking already has permission to access.</li>
+        <li><strong>It can be shared:</strong> Custom-created agents are stored as <code>.agent</code> files and can be shared like SharePoint files.</li>
+        <li><strong>It can live in more than one place:</strong> SharePoint-created agents can be used in SharePoint and Teams, and Copilot Studio agents can be deployed to SharePoint as a channel.</li>
+      </ul>
+
+      <a href="https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Get started with agents in SharePoint - Microsoft Support</a>
+
+      <h2>How People Actually Use Agents Day to Day</h2>
+      <p>The easiest way to understand SharePoint agents is to look at the questions people already ask in chat, email, and meetings. The agent gives those questions a place to go, grounded in approved SharePoint content.</p>
+
+      <ul>
+        <li><strong>Summarize a library:</strong> "Give me the key points from the latest project status reports."</li>
+        <li><strong>Compare documents:</strong> "Compare the Mega-200 and Mega-300 proposals and list the benefits of each."</li>
+        <li><strong>Find policy answers:</strong> "What is the process for parental leave in Australia?"</li>
+        <li><strong>Create a first draft:</strong> "Create a one-hour training outline from these product documents."</li>
+      </ul>
+
+      <p>Users can also select files before asking, or attach files through the chat pane, when they want the answer grounded in a smaller set of content.</p>
+
+      <h2>What You Need Before You Start</h2>
+      <p>Before you build anything, check these basics. Most failed agent pilots are not technical failures. They fail because licensing, permissions, or content quality was not ready.</p>
+
+      <ul>
+        <li><strong>Microsoft 365 Copilot license or pay-as-you-go enabled:</strong> Microsoft documents these as the main access paths for SharePoint agents.</li>
+        <li><strong>Edit permissions to create or modify agents:</strong> Visitors can interact where allowed, but site edit permissions are needed to create or edit an agent.</li>
+        <li><strong>Modern SharePoint experience:</strong> The creation and use experience is for SharePoint Online modern sites. This is not a SharePoint Subscription Edition/on-premises feature.</li>
+        <li><strong>Clean source content:</strong> Agents are only as useful as the pages and documents they can read. Archive stale drafts before using them as sources.</li>
+        <li><strong>Governance decision:</strong> Decide who can create agents, who approves them, and which sites are too sensitive for agent discovery.</li>
+      </ul>
+
+      <div class="art-callout warning">
+        <p><strong>Important for on-prem SharePoint:</strong> SharePoint agents are SharePoint Online/Microsoft 365 capabilities. They do not run inside a SharePoint Subscription Edition farm out of the box. For on-prem environments, the closest pattern is a custom chatbot or Azure Bot/LLM integration that indexes approved content separately.</p>
+      </div>
+
+      <h2>Option 1 - SharePoint Built-in Agent (No Code)</h2>
+      <p>This is the quickest way to get value. A site owner or member with edit permissions can create an agent directly inside SharePoint, choose its sources, give it a purpose, and share it with the team. It is the right path when the job is mainly <strong>answers from SharePoint content</strong>, not workflow automation.</p>
+
+      <p>For most organizations, the no-code path is where to start. Build one or two small agents against clean content, learn how users ask questions, then decide whether a more advanced Copilot Studio agent is worth the extra governance and build effort.</p>
+
+      <h3>Ready-made agent vs custom-built agent</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Type</th><th>What it does</th><th>Good for</th><th>Key limit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Ready-made agent</strong></td><td>Appears automatically on SharePoint sites and is scoped to that site.</td><td>Quick site Q&amp;A without any setup.</td><td>You cannot edit, delete, or share the ready-made agent like a custom agent.</td></tr>
+            <tr><td><strong>Custom-built SharePoint agent</strong></td><td>Created by a user with edit permissions. Sources, identity, and behavior can be tailored.</td><td>Team knowledge assistants for a project, policy area, library, folder, or selected files.</td><td>Currently up to 20 source items per agent, according to Microsoft Support.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Where you can create it</h3>
+      <p>Microsoft lists several entry points for creating a SharePoint agent. Use the one that matches the scope you want. A site-wide agent is good for an intranet or department portal. A document-library agent is better for a project library. A selected-file agent is best when you want tight control over exactly what the agent can use.</p>
+
+      <ul>
+        <li><strong>Site homepage:</strong> Choose <strong>New &gt; Agent</strong> for a site-focused assistant.</li>
+        <li><strong>Document library or list command bar:</strong> Use the AI actions menu to create an agent for supported content in that library or list.</li>
+        <li><strong>Selected files or folders:</strong> Select a narrow set of files/folders and create an agent from the context menu.</li>
+        <li><strong>Agent chat pane:</strong> Open the Copilot button, use the agent dropdown, then create a new agent from there.</li>
+      </ul>
+
+      <div class="agent-path" aria-label="SharePoint agent creation flow">
+        <div class="path-step"><span>1</span><strong>Choose scope</strong><p>Site, library, folder, list, or selected files.</p></div>
+        <div class="path-step"><span>2</span><strong>Create agent</strong><p>Use New &gt; Agent, AI actions, context menu, or the chat pane.</p></div>
+        <div class="path-step"><span>3</span><strong>Customize</strong><p>Name, logo, purpose, sources, starter prompts, and behavior.</p></div>
+        <div class="path-step"><span>4</span><strong>Approve/share</strong><p>Share the .agent file or mark the agent approved for the site.</p></div>
+      </div>
+
+      <h3>What you can customize</h3>
+      <ul>
+        <li><strong>Name and identity:</strong> Give the agent a useful name like "HR Policy Helper" or "Project Phoenix Assistant."</li>
+        <li><strong>Logo/branding:</strong> Make it easy for users to recognize which agent they are using.</li>
+        <li><strong>Knowledge sources:</strong> Add or remove the sites, pages, libraries, folders, and files the agent should use.</li>
+        <li><strong>Behavior instructions:</strong> Tell the agent how to answer, what to avoid, and when to refer users to a human owner.</li>
+        <li><strong>Starter prompts:</strong> Give users helpful first questions instead of leaving them staring at an empty chat box.</li>
+      </ul>
+
+      <h3>Example instruction prompt</h3>
+      <p>You do not need a perfect prompt to start. You need a clear purpose and good boundaries.</p>
+
+      <div class="code-label">Agent behavior instructions</div>
+      <div class="code-block"><pre>You are the HR Policy Helper for Contoso.
+Answer only from the HR Policy site, Employee Handbook, Benefits library, and approved HR pages included as sources.
+Use simple language and bullet points.
+If a policy is unclear, say that the employee should contact HR instead of guessing.
+Do not give legal, payroll, or medical advice.
+Always cite the source document or page when possible.</pre></div>
+
+      <h3>Where the .agent file is stored</h3>
+      <p>Custom SharePoint agents are stored as <code>.agent</code> files. That matters because sharing and access to the agent are governed like other SharePoint files.</p>
+
+      <ul>
+        <li>If created from the site homepage, the file is stored under <strong>Site contents &gt; Site Assets &gt; Copilots</strong>.</li>
+        <li>If created from another location, it is saved in the current document library folder where it was created.</li>
+        <li>Permissions on the <code>.agent</code> file control who can access or edit the agent.</li>
+        <li>The agent still will not reveal source content the user does not have permission to access.</li>
+      </ul>
+
+      <a href="https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Create an agent in SharePoint - Microsoft Support</a>
+
+      <h2>Sharing Agents in Teams and Copilot Chat</h2>
+      <p>Custom-built agents can be shared beyond the SharePoint page. This is useful because a lot of work happens in Teams, not in the document library. A team can ask the project agent for a risk summary during a meeting chat, or a support channel can ask an IT knowledge agent for the current VPN setup instructions.</p>
+
+      <ul>
+        <li><strong>Only custom-built agents can be shared:</strong> The ready-made site agent cannot be shared like a custom agent.</li>
+        <li><strong>Use the Teams sharing link:</strong> In SharePoint, open the agent list, choose the custom agent, select the ellipsis, and copy the link for Teams.</li>
+        <li><strong>Add it to a chat or channel:</strong> After the link is posted in Teams, users are prompted to add the agent to the conversation. Then they can mention the agent in the same style as mentioning a person.</li>
+        <li><strong>Permissions are checked per asker:</strong> If the asker can see a source but some people in the Teams chat cannot, Microsoft shows a review flow instead of automatically posting the answer to everyone.</li>
+        <li><strong>Guest scenarios are limited:</strong> Microsoft notes that agents refuse to answer if external or guest users are part of the group chat or channel.</li>
+        <li><strong>One-to-one Teams chat is not there yet for SharePoint-created agents:</strong> Microsoft's Teams sharing article says users cannot chat 1:1 with agents created from SharePoint yet, and not all Teams mobile features are fully supported.</li>
+      </ul>
+
+      <p>That review flow is a good thing. Agents make information easier to retrieve, so the product has to be careful about accidentally reposting information into a chat where not everyone has access. Train users to read the response and the cited files before sending an answer to a whole group.</p>
+
+      <a href="https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Share an agent from SharePoint in Teams - Microsoft Support</a>
+
+      <h2>Key Limits to Know</h2>
+      <p>These are the limits and behaviors worth explaining to site owners before they start creating agents.</p>
+
+      <ul>
+        <li><strong>20 source items:</strong> Microsoft Support currently says a SharePoint agent can include up to 20 source items. A source item can be a site, library, folder, or file.</li>
+        <li><strong>Use higher-level sources when needed:</strong> If you need more than 20 files, point the agent at a folder or library instead of selecting every file one by one.</li>
+        <li><strong>Supported file types matter:</strong> Microsoft lists Office files, PDFs, TXT, RTF, HTML/ASPX, Loop/Fluid, and OpenDocument formats. Images, videos, meeting recordings, and OneNote notebooks are listed as coming soon for SharePoint agent chat scenarios.</li>
+        <li><strong>Pages and Lists are supported scenarios:</strong> Microsoft says agents in SharePoint support selecting pages and Lists. For list-heavy use cases, test with real users because column quality, permissions, and the way people phrase questions can change the result.</li>
+        <li><strong>Hub sites can widen the scope:</strong> When a SharePoint hub site is included as a source, Microsoft says associated sites are included too. That can be useful, but it also means the agent may cover more content than a site owner expects.</li>
+        <li><strong>Chat history is personal:</strong> Microsoft says only the user can see their chat history with agents. Users can rename or delete chat history from the pane.</li>
+        <li><strong>Permissions are still the foundation:</strong> If your SharePoint permissions are messy, agents will be messy too.</li>
+      </ul>
+
+      <p>A simple rule helps: keep the first version narrow. It is better to launch one reliable HR benefits agent over five approved pages than one vague "HR assistant" pointed at every HR folder created in the last ten years.</p>
+
+      <h2>Option 2 - Custom Copilot Agent in Copilot Studio</h2>
+      <p>Use Copilot Studio when your agent needs to do more than answer questions. This is the right path when the agent must collect details, call Power Automate, connect to external systems, use Dataverse, or follow a controlled topic flow.</p>
+
+      <p>This is the advanced path. It can still be low-code, but it usually needs more planning because you are no longer just asking questions over SharePoint content. You are designing an assistant that may authenticate users, call flows, update records, and appear across multiple channels.</p>
+
+      <h3>Use Copilot Studio when you need</h3>
+      <ul>
+        <li><strong>Actions:</strong> Create a ticket, update a SharePoint list, send an approval, or call a line-of-business API.</li>
+        <li><strong>External data:</strong> Use sources beyond SharePoint, such as Dataverse, ServiceNow, Dynamics 365, Salesforce, SQL, or custom connectors.</li>
+        <li><strong>Topic control:</strong> Design guided conversations for HR, IT support, procurement, onboarding, or compliance workflows.</li>
+        <li><strong>Enterprise deployment:</strong> Test, publish, deploy, approve, monitor, and retire agents through admin-owned processes.</li>
+        <li><strong>Multi-channel availability:</strong> Publish to SharePoint, Teams, Microsoft 365 Copilot Chat, Power Pages, or other supported channels.</li>
+      </ul>
+
+      <h3>How Copilot Studio uses SharePoint knowledge</h3>
+      <p>Copilot Studio can add SharePoint as a knowledge source. In Microsoft's current guidance, adding a SharePoint site URL lets the agent search that URL and its subpaths. For example, a site URL can include policy pages and libraries beneath it. Copilot Studio also supports SharePoint lists as knowledge sources, using the user's SharePoint credentials so permission checks still apply.</p>
+
+      <ul>
+        <li><strong>SharePoint site knowledge:</strong> Add the SharePoint option from the knowledge dialog, enter one or more URLs, and give each source a useful name and description.</li>
+        <li><strong>SharePoint list knowledge:</strong> Add lists through the SharePoint list option. Microsoft says makers can select up to 15 lists at a time, with each list added as an individual knowledge source.</li>
+        <li><strong>Authentication:</strong> In Teams, Power Apps, and Microsoft 365 Copilot experiences, Microsoft authentication is normally preconfigured. For manual authentication scenarios, Microsoft documents Entra ID scopes such as <code>Sites.Read.All</code> and <code>Files.Read.All</code>.</li>
+        <li><strong>Filtering:</strong> Copilot Studio can filter SharePoint knowledge by fields such as title, author, modified by, and modified date. This is useful for "only show current policy" or "only use files updated this year" patterns.</li>
+        <li><strong>Grounding discipline:</strong> If you want the agent to answer only from the selected SharePoint source, turn off broad web/general-knowledge behavior where appropriate and test what happens when the answer is not found.</li>
+      </ul>
+
+      <p>For an internal business process, this is where Copilot Studio becomes more powerful than a no-code SharePoint agent. The agent can ask for missing details, confirm them with the user, trigger a Power Automate flow, write to a SharePoint list, and return a confirmation number. That is a different class of solution from content Q&amp;A.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/microsoft-copilot-studio/media/publication-add-bot-to-sharepoint/copilot-studio-sharepoint-deployed.png" alt="Microsoft Copilot Studio SharePoint channel deployment status panel" loading="lazy" />
+        <figcaption>Actual Microsoft Copilot Studio screenshot showing a deployed SharePoint channel. Source: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint" target="_blank" rel="noopener noreferrer">Microsoft Learn - Publish an agent to SharePoint</a>.</figcaption>
+      </figure>
+
+      <h3>How to deploy a Copilot Studio agent to SharePoint</h3>
+      <ol>
+        <li><strong>Build and test the agent</strong> in Copilot Studio. Keep SharePoint sources narrow during the first version.</li>
+        <li><strong>Publish the agent</strong> so it is available for channel deployment.</li>
+        <li><strong>Open Channels</strong> and select the <strong>SharePoint</strong> tile.</li>
+        <li><strong>Select the SharePoint site</strong> or enter the site manually.</li>
+        <li><strong>Deploy and confirm</strong> the deployment.</li>
+        <li><strong>Test in SharePoint</strong> before promoting it to users.</li>
+        <li><strong>Ask the site owner to approve it</strong> if you want it to appear clearly in the site agent picker.</li>
+      </ol>
+
+      <div class="art-callout warning">
+        <p><strong>Billing note:</strong> Microsoft Learn says a Copilot Studio agent deployed to SharePoint follows Copilot Studio billing policies and consumes Copilot Studio capacity, even when users interact with it from SharePoint.</p>
+      </div>
+
+      <h3>Licensing difference in plain English</h3>
+      <p>For SharePoint built-in agents, Microsoft documents two access routes for users: a Microsoft 365 Copilot license, or pay-as-you-go billing enabled for SharePoint agents. For Copilot Studio, the maker/admin side is different: organizations generally need a Copilot Studio tenant license and Copilot Studio user licenses for people who create and manage agents. Microsoft also says published agent users do not need a special Copilot Studio maker license just to interact with a published agent, although the organization still has to cover the agent's capacity and channel requirements.</p>
+
+      <p>The practical takeaway is simple: do not promise "free agents" just because the button appears in SharePoint. Check whether the users have Microsoft 365 Copilot, whether pay-as-you-go is enabled for unlicensed users, and whether Copilot Studio capacity is in place for advanced agents.</p>
+
+      <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Publish an agent to SharePoint - Microsoft Learn</a>
+
+      <h2>Built-in Agent vs Copilot Studio Agent</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Decision point</th><th>SharePoint built-in agent</th><th>Copilot Studio agent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Speed</strong></td><td>Fastest. A site editor can create one in minutes.</td><td>Slower, but more controlled and extensible.</td></tr>
+            <tr><td><strong>Skills needed</strong></td><td>No-code. Good for site owners.</td><td>Low-code/pro-code depending on actions and integrations.</td></tr>
+            <tr><td><strong>Best use</strong></td><td>Q&amp;A over SharePoint content.</td><td>Q&amp;A plus workflows, APIs, structured processes, and external systems.</td></tr>
+            <tr><td><strong>Sources</strong></td><td>SharePoint sites, pages, libraries, folders, and files within current limits.</td><td>SharePoint, OneDrive, websites, Dataverse, Power Platform connectors, and custom APIs.</td></tr>
+            <tr><td><strong>Governance</strong></td><td>Govern through SharePoint permissions, .agent file permissions, site owner approval, and admin controls.</td><td>Govern through Copilot Studio environments, DLP, ALM, capacity, channels, and admin deployment controls.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>PowerShell for SharePoint Agent Admins</h2>
+      <p>There is not a single magic PowerShell cmdlet that "manages all SharePoint agents" end to end. In practice, admins use two patterns:</p>
+
+      <ul>
+        <li><strong>Inventory agent files</strong> because custom SharePoint agents are stored as <code>.agent</code> files.</li>
+        <li><strong>Control risky sites</strong> with SharePoint admin controls such as Restricted Content Discovery.</li>
+      </ul>
+
+      <h3>1. Inventory .agent files in a SharePoint site</h3>
+      <p>This PnP PowerShell script scans document libraries in one site and exports discovered <code>.agent</code> files. Run it site by site, or wrap it in a tenant-site loop after testing.</p>
+
+      <div class="code-label">PowerShell 7 - inventory SharePoint .agent files</div>
+      <div class="code-block"><pre># Requires PnP.PowerShell
+# Install-Module PnP.PowerShell -Scope CurrentUser
+
+$siteUrl = "https://contoso.sharepoint.com/sites/hr"
+$outFile = ".\sharepoint-agents-hr.csv"
+$clientId = "00000000-0000-0000-0000-000000000000" # Entra app registration for PnP.PowerShell
+
+Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Interactive
+
+$agentFiles = foreach ($library in Get-PnPList | Where-Object { $_.BaseTemplate -eq 101 -and -not $_.Hidden }) {
+    Get-PnPListItem -List $library.Title -PageSize 500 -Fields "FileLeafRef", "FileRef", "Editor", "Modified" |
+        Where-Object { $_.FieldValues["FileLeafRef"] -like "*.agent" } |
+        ForEach-Object {
+            [pscustomobject]@{
+                SiteUrl  = $siteUrl
+                Library  = $library.Title
+                Name     = $_.FieldValues["FileLeafRef"]
+                Path     = $_.FieldValues["FileRef"]
+                Modified = $_.FieldValues["Modified"]
+                Editor   = $_.FieldValues["Editor"].Email
+            }
+        }
+}
+
+$agentFiles | Sort-Object Library, Name | Export-Csv -Path $outFile -NoTypeInformation
+$agentFiles | Format-Table Library, Name, Modified, Editor -AutoSize</pre></div>
+
+      <h3>2. Turn off agent-related features on a sensitive site</h3>
+      <p>Microsoft documents Restricted Content Discovery as a site-level control. When enabled on a site, it can prevent that site's content from appearing in organization-wide search and Microsoft 365 Copilot discovery scenarios, and Microsoft says users will not see the Copilot icon on that site.</p>
+
+      <div class="code-label">SharePoint Online Management Shell - restrict a sensitive site</div>
+      <div class="code-block"><pre># Requires the latest Microsoft SharePoint Online Management Shell
+$tenant = "contoso"
+$siteUrl = "https://contoso.sharepoint.com/sites/executive"
+
+Connect-SPOService -Url "https://$tenant-admin.sharepoint.com"
+
+# Enable Restricted Content Discovery for a high-risk site
+Set-SPOSite -Identity $siteUrl -RestrictContentOrgWideSearch $true
+
+# Confirm status
+Get-SPOSite -Identity $siteUrl | Select-Object Url, RestrictContentOrgWideSearch</pre></div>
+
+      <p>Use this setting selectively. Microsoft's Restricted Content Discovery documentation says it can protect high-risk sites from tenant-wide search and Copilot discovery, but overuse can reduce the quality of search and Copilot answers because there is less content available for grounding.</p>
+
+      <h3>3. Generate a Restricted Content Discovery report</h3>
+      <p>Use this when you want evidence of which sites have the control enabled.</p>
+
+      <div class="code-label">PowerShell - report on Restricted Content Discovery</div>
+      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+
+# Start the report
+Start-SPORestrictedContentDiscoverabilityReport
+
+# View report jobs
+Get-SPORestrictedContentDiscoverabilityReport
+
+# Download a completed report by ReportId
+Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "00000000-0000-0000-0000-000000000000"</pre></div>
+
+      <h2>Governance Checklist Before Rollout</h2>
+      <p>Do this before you encourage everyone to create agents. It is much easier to set rules early than to clean up hundreds of unmanaged agents later.</p>
+
+      <ul>
+        <li><strong>Name ownership clearly:</strong> Every approved agent should have a named business owner and technical owner.</li>
+        <li><strong>Define source rules:</strong> Decide which sites are allowed as knowledge sources and which are blocked or restricted.</li>
+        <li><strong>Review permissions first:</strong> Fix broad access, stale guests, "Everyone except external users", and anonymous sharing links before adding sources.</li>
+        <li><strong>Use approval for important agents:</strong> Site owners can approve agents so visitors can distinguish official agents from ad hoc ones.</li>
+        <li><strong>Set a site default only when it helps:</strong> Site owners can set an approved agent as the default agent for the site. Use this for official assistants, not experiments.</li>
+        <li><strong>Watch the <code>.agent</code> files:</strong> Custom agents are files. Include them in content lifecycle, retention, ownership, and permission reviews.</li>
+        <li><strong>Monitor billing:</strong> For pay-as-you-go, create Azure budgets and cost alerts before broad rollout, especially if unlicensed users will use SharePoint agents.</li>
+        <li><strong>Keep prompts plain:</strong> The best instructions are specific, boring, and testable.</li>
+        <li><strong>Set a review date:</strong> Recheck agent sources and permissions every quarter, or whenever a project closes.</li>
+        <li><strong>Teach users to verify:</strong> AI-generated answers can be incomplete or outdated. Users should open citations for decisions that matter.</li>
+      </ul>
+
+      <h2>Example Use Cases</h2>
+      <ul>
+        <li><strong>HR policy helper:</strong> Answers questions about leave, benefits, onboarding, and performance review processes from approved HR pages and files.</li>
+        <li><strong>Project knowledge assistant:</strong> Summarizes status reports, decision logs, risks, and meeting notes from one project library.</li>
+        <li><strong>IT self-service agent:</strong> Handles password reset instructions, VPN setup, approved software requests, and known issue lookups.</li>
+        <li><strong>Procurement assistant:</strong> Explains approval thresholds, preferred supplier rules, and contract template guidance.</li>
+        <li><strong>Compliance playbook agent:</strong> Helps employees find the right policy, checklist, or control evidence without searching multiple sites.</li>
+      </ul>
+
+      <h2>Common Mistakes to Avoid</h2>
+      <ul>
+        <li><strong>Pointing agents at everything:</strong> Wider scope is not always better. Narrow, curated sources usually produce clearer answers.</li>
+        <li><strong>Skipping permissions cleanup:</strong> Agents respect permissions, but they also make existing oversharing much easier to discover.</li>
+        <li><strong>Using vague prompts:</strong> "Help users with HR" is weak. "Answer only from these HR policy sources, cite documents, and refer unclear cases to HR" is useful.</li>
+        <li><strong>Confusing built-in agents with Copilot Studio:</strong> Built-in SharePoint agents are great for content Q&amp;A. Copilot Studio is better for workflow and integration.</li>
+        <li><strong>Forgetting billing:</strong> If you use pay-as-you-go, Copilot Studio capacity, or advanced agents, monitor usage before broad rollout.</li>
+      </ul>
+
+      <h2>Official References</h2>
+      <div class="source-list">
+        <a href="https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf" target="_blank" rel="noopener noreferrer">Get started with agents in SharePoint - Microsoft Support</a>
+        <a href="https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42" target="_blank" rel="noopener noreferrer">Create an agent in SharePoint - Microsoft Support</a>
+        <a href="https://support.microsoft.com/en-au/office/interact-with-agents-in-sharepoint-bda7dd7a-2498-49de-acd7-a830d6d9fb24" target="_blank" rel="noopener noreferrer">Interact with agents in SharePoint - Microsoft Support</a>
+        <a href="https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3" target="_blank" rel="noopener noreferrer">Share an agent from SharePoint in Teams - Microsoft Support</a>
+        <a href="https://support.microsoft.com/en-us/office/manage-agents-in-sharepoint-bcab837a-835c-4a1a-8ad4-d53a353c369f" target="_blank" rel="noopener noreferrer">Manage agents in SharePoint - Microsoft Support</a>
+        <a href="https://support.microsoft.com/en-us/office/frequently-asked-questions-about-copilot-in-sharepoint-eb1b7668-3d98-4a93-98ef-f0c6dfc694f0" target="_blank" rel="noopener noreferrer">Frequently asked questions about Copilot in SharePoint - Microsoft Support</a>
+        <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint" target="_blank" rel="noopener noreferrer">Publish an agent to SharePoint - Microsoft Learn</a>
+        <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint" target="_blank" rel="noopener noreferrer">Add SharePoint as a knowledge source - Microsoft Learn</a>
+        <a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-agents-azure-billing" target="_blank" rel="noopener noreferrer">Use agents with pay-as-you-go billing - Microsoft Learn</a>
+        <a href="https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint" target="_blank" rel="noopener noreferrer">Manage access to agents in SharePoint - Microsoft Learn</a>
+        <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery" target="_blank" rel="noopener noreferrer">Restricted Content Discovery for SharePoint - Microsoft Learn</a>
+      </div>
+
+      <div class="art-cta-box">
+        <h3>Planning SharePoint agents for your tenant?</h3>
+        <p>OceanCloud can help you design the agent strategy, clean the SharePoint sources, configure governance, build Copilot Studio actions, and launch the first production agents safely.</p>
+        <a href="../contact" class="btn btn-primary">Book a Free Agent Readiness Call</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-copilot-agents" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">SharePoint Copilot Agents: Licensing, Limits &amp; Use Cases</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-copilot-ready" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">How to Prepare Your SharePoint for Microsoft Copilot</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-permissions-best-practices" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions Best Practices for Secure Sites</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../about">About Us</a></li>
+        <li><a href="../case-studies">Case Studies</a></li>
+        <li><a href="../news">News</a></li>
+        <li><a href="../archive">News Archive</a></li>
+        <li><a href="../guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="../services">SharePoint Development</a></li>
+        <li><a href="../services">Teams Configuration</a></li>
+        <li><a href="../services">M365 Migration</a></li>
+        <li><a href="../services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../privacy">Privacy Policy</a></li>
+        <li><a href="../terms">Terms of Service</a></li>
+        <li><a href="../cookies">Cookie Policy</a></li>
+        <li><a href="../contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>
