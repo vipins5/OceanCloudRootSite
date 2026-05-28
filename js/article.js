@@ -61,6 +61,9 @@
     var meta = wrap && wrap.querySelector('.article-meta');
     if (!wrap || !meta || wrap.querySelector('#quick-points')) return;
 
+    var customPoints = Array.from(wrap.querySelectorAll('.quick-points-source li'))
+      .map(function (li) { return (li.textContent || '').replace(/\s+/g, ' ').trim(); })
+      .filter(Boolean);
     var intro = wrap.querySelector('.article-intro');
     var headings = Array.from(wrap.querySelectorAll('h2'))
       .map(function (h) { return (h.textContent || '').trim(); })
@@ -69,11 +72,13 @@
         return t && !low.includes('related') && !low.includes('common mistakes');
       });
 
-    if (!intro && headings.length < 3) return;
+    if (!customPoints.length && !intro && headings.length < 3) return;
 
     var points = [];
 
-    if (intro) {
+    if (customPoints.length) {
+      points = customPoints;
+    } else if (intro) {
       var firstSentence = (intro.textContent || '')
         .replace(/\s+/g, ' ')
         .split('. ')[0]
@@ -83,9 +88,11 @@
       }
     }
 
-    headings.slice(0, 5).forEach(function (t) {
-      points.push(t.replace(/^Step\s+\d+\s*[:\-]?\s*/i, ''));
-    });
+    if (!customPoints.length) {
+      headings.slice(0, 5).forEach(function (t) {
+        points.push(t.replace(/^Step\s+\d+\s*[:\-]?\s*/i, ''));
+      });
+    }
 
     points = points.filter(Boolean).filter(function (v, i, arr) {
       return arr.indexOf(v) === i;

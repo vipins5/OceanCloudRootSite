@@ -164,7 +164,7 @@
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>SharePoint Agents</span></nav>
       <h1>Get Started with Agents in SharePoint <span class="grad-text">and Custom Copilot Agents</span></h1>
-      <p>A clear, practical guide to the no-code SharePoint agent experience, advanced Copilot Studio agents, licensing, limits, governance, and the PowerShell checks admins should run before rollout.</p>
+      <p>A practical guide to SharePoint agents, Copilot Studio agents, licensing, limits, governance, images from Microsoft docs, and the PowerShell checks admins should run before rollout.</p>
     </div>
   </div>
 </section>
@@ -179,22 +179,30 @@
         <span class="art-read">18 min read</span>
       </div>
 
+      <ul class="quick-points-source" hidden>
+        <li>Use SharePoint agents for fast Q&amp;A over approved SharePoint sites, pages, libraries, folders, lists, or files.</li>
+        <li>Use Copilot Studio when the agent must run actions, call workflows, connect to external systems, or follow a controlled process.</li>
+        <li>Agents still respect SharePoint permissions, so content cleanup and access reviews matter before rollout.</li>
+        <li>Ready-made site agents are automatic; custom agents are stored as <code>.agent</code> files that can be approved, shared, and governed.</li>
+        <li>Admins should monitor agent growth with Agent Insights and protect sensitive sites with Restricted Content Discovery where needed.</li>
+      </ul>
+
       <p class="article-intro">SharePoint agents are one of the most practical ways to bring Microsoft 365 Copilot closer to the work people already do. Instead of asking employees to search through libraries, policy pages, and project folders, an agent lets them ask plain-English questions and get answers grounded in the SharePoint content they already have permission to see.</p>
 
       <div class="art-callout info">
         <p><strong>Short version:</strong> Use a built-in SharePoint agent when you want a fast, no-code Q&amp;A assistant over a site, library, folder, or selected files. Use a Copilot Studio agent when you need actions, workflows, external systems, advanced topics, or a more controlled enterprise rollout.</p>
       </div>
 
-      <h2>Quick Answer: Which Agent Should You Build?</h2>
+      <h2>Choose the Right Agent for the Job</h2>
 
       <div class="quick-grid">
         <div class="quick-card">
-          <strong>Option 1: SharePoint built-in agent</strong>
-          <p>Best for site owners who want a no-code assistant that answers questions from SharePoint pages, documents, libraries, folders, or selected files.</p>
+          <strong>No-code SharePoint agent</strong>
+          <p>Best for site owners who need a focused assistant that answers questions from SharePoint pages, documents, libraries, folders, lists, or selected files.</p>
         </div>
         <div class="quick-card">
-          <strong>Option 2: Copilot Studio agent</strong>
-          <p>Best for IT, HR, operations, and service teams that need multi-step conversations, Power Automate actions, external data, or controlled deployment.</p>
+          <strong>Copilot Studio agent</strong>
+          <p>Best for IT, HR, operations, and service teams that need guided conversations, Power Automate actions, external data, or controlled deployment.</p>
         </div>
         <div class="quick-card">
           <strong>License path</strong>
@@ -206,7 +214,7 @@
         </div>
       </div>
 
-      <h2>What Microsoft's Official Guidance Says</h2>
+      <h2>What Microsoft Says These Agents Can Do</h2>
       <p>Microsoft describes SharePoint agents as AI assistants for questions about sites, pages, libraries, lists, and files the asker already has permission to access. That last part matters: agents sit on top of SharePoint permissions; they do not replace them.</p>
 
       <ul>
@@ -224,7 +232,7 @@
         <figcaption>Actual Microsoft Support screenshot of the SharePoint agent builder. Source: <a href="https://support.microsoft.com/en-au/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42" target="_blank" rel="noopener noreferrer">Create an agent in SharePoint - Microsoft Support</a>.</figcaption>
       </figure>
 
-      <h2>What Are Agents in SharePoint?</h2>
+      <h2>How SharePoint Agents Work</h2>
       <p>An agent in SharePoint is a scoped AI assistant. It is not a replacement for your intranet, search, or governance model. Think of it as a conversational layer over selected SharePoint content.</p>
 
       <ul>
@@ -237,7 +245,7 @@
 
       <a href="https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Get started with agents in SharePoint - Microsoft Support</a>
 
-      <h2>What You Need Before You Start</h2>
+      <h2>Before You Build: Licenses, Permissions, and Content</h2>
       <p>Before you build anything, check these basics. Most failed agent pilots are not technical failures. They fail because licensing, permissions, or content quality was not ready.</p>
 
       <ul>
@@ -252,10 +260,10 @@
         <p><strong>Important for on-prem SharePoint:</strong> SharePoint agents are SharePoint Online/Microsoft 365 capabilities. They do not run inside a SharePoint Subscription Edition farm out of the box. For on-prem environments, the closest pattern is a custom chatbot or Azure Bot/LLM integration that indexes approved content separately.</p>
       </div>
 
-      <h2>Option 1 - SharePoint Built-in Agent (No Code)</h2>
+      <h2>Create a No-Code SharePoint Agent</h2>
       <p>This is the quickest way to get value. A site owner or member with edit permissions can create an agent in SharePoint, choose sources, give it a purpose, and share it with the team. Start here when the job is mainly <strong>answers from SharePoint content</strong>, not workflow automation.</p>
 
-      <h3>Ready-made agent vs custom-built agent</h3>
+      <h3>Ready-made vs custom-built SharePoint agents</h3>
       <div class="art-table-wrap">
         <table class="art-table">
           <thead>
@@ -348,7 +356,7 @@ Always cite the source document or page when possible.</pre></div>
 
       <a href="https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Share an agent from SharePoint in Teams - Microsoft Support</a>
 
-      <h2>Key Limits to Know</h2>
+      <h2>Limits and Behaviors to Know</h2>
       <p>These are the limits and behaviors worth explaining to site owners before they start creating agents.</p>
 
       <ul>
@@ -363,7 +371,7 @@ Always cite the source document or page when possible.</pre></div>
 
       <p>A simple rule helps: keep the first version narrow. It is better to launch one reliable HR benefits agent over five approved pages than one vague "HR assistant" pointed at every HR folder created in the last ten years.</p>
 
-      <h2>Option 2 - Custom Copilot Agent in Copilot Studio</h2>
+      <h2>Build an Advanced Agent in Copilot Studio</h2>
       <p>Use Copilot Studio when your agent needs to do more than answer questions. This is the right path when the agent must collect details, call Power Automate, connect to external systems, use Dataverse, or follow a controlled topic flow.</p>
 
       <p>This is the advanced path. It can still be low-code, but it usually needs more planning because you are no longer just asking questions over SharePoint content. You are designing an assistant that may authenticate users, call flows, update records, and appear across multiple channels.</p>
@@ -418,7 +426,7 @@ Always cite the source document or page when possible.</pre></div>
 
       <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Official source: Publish an agent to SharePoint - Microsoft Learn</a>
 
-      <h2>Built-in Agent vs Copilot Studio Agent</h2>
+      <h2>Compare the Two Agent Paths</h2>
       <div class="art-table-wrap">
         <table class="art-table">
           <thead>
@@ -434,7 +442,7 @@ Always cite the source document or page when possible.</pre></div>
         </table>
       </div>
 
-      <h2>PowerShell for SharePoint Agent Admins</h2>
+      <h2>Admin PowerShell and Monitoring</h2>
       <p>There is not a single magic PowerShell cmdlet that "manages all SharePoint agents" end to end. In practice, admins use three patterns:</p>
 
       <ul>
@@ -558,7 +566,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
         <li><strong>Teach users to verify:</strong> AI-generated answers can be incomplete or outdated. Users should open citations for decisions that matter.</li>
       </ul>
 
-      <h2>Example Use Cases</h2>
+      <h2>Practical Use Cases</h2>
       <ul>
         <li><strong>HR policy helper:</strong> Answers questions about leave, benefits, onboarding, and performance review processes from approved HR pages and files.</li>
         <li><strong>Project knowledge assistant:</strong> Summarizes status reports, decision logs, risks, and meeting notes from one project library.</li>
@@ -576,7 +584,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
         <li><strong>Forgetting billing:</strong> If you use pay-as-you-go, Copilot Studio capacity, or advanced agents, monitor usage before broad rollout.</li>
       </ul>
 
-      <h2>Official References</h2>
+      <h2>Official Microsoft References</h2>
       <div class="source-list">
         <a href="https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf" target="_blank" rel="noopener noreferrer">Get started with agents in SharePoint - Microsoft Support</a>
         <a href="https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42" target="_blank" rel="noopener noreferrer">Create an agent in SharePoint - Microsoft Support</a>
@@ -670,7 +678,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
 <script src="../js/code.js?v=3"></script>
-<script src="../js/article.js?v=5"></script>
+<script src="../js/article.js?v=6"></script>
 <script src="../js/comments.js?v=7"></script>
 </body>
 </html>
