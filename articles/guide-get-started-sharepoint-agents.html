@@ -389,6 +389,11 @@ Always cite the source document or page when possible.</pre></div>
       <h3>How Copilot Studio uses SharePoint knowledge</h3>
       <p>Copilot Studio can add SharePoint as a knowledge source. Adding a SharePoint site URL lets the agent search that URL and its subpaths, and SharePoint credentials still apply.</p>
 
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/microsoft-copilot-studio/media/knowledge/add-sharepoint-knowledge.png" alt="Microsoft Copilot Studio Add knowledge dialog highlighting the SharePoint knowledge option" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Actual Microsoft Learn screenshot of the SharePoint option in the Copilot Studio Add knowledge dialog. Source: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint" target="_blank" rel="noopener noreferrer">Add SharePoint as a knowledge source - Microsoft Learn</a>.</figcaption>
+      </figure>
+
       <ul>
         <li><strong>SharePoint site knowledge:</strong> Add the SharePoint option from the knowledge dialog, enter one or more URLs, and give each source a useful name and description.</li>
         <li><strong>SharePoint list knowledge:</strong> Add lists through the SharePoint list option. Microsoft says makers can select up to 15 lists at a time, with each list added as an individual knowledge source. Current limits also say list queries return data from the first 2,048 rows, list views cannot be selected, and attachments are not indexed for answers.</li>
@@ -396,6 +401,11 @@ Always cite the source document or page when possible.</pre></div>
         <li><strong>Search restrictions still matter:</strong> Restricted SharePoint Search and Restricted Content Discovery can change what SharePoint content is discoverable for grounding, so test with real users.</li>
         <li><strong>Grounding discipline:</strong> If the agent should answer only from selected SharePoint sources, test what happens when an answer is not found.</li>
       </ul>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/microsoft-copilot-studio/media/knowledge/add-sharepoint-list.png" alt="Microsoft Copilot Studio Add knowledge dialog highlighting SharePoint list knowledge" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Actual Microsoft Learn screenshot of adding SharePoint list knowledge in Copilot Studio. Source: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint" target="_blank" rel="noopener noreferrer">Add SharePoint as a knowledge source - Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/microsoft-copilot-studio/media/publication-add-bot-to-sharepoint/copilot-studio-sharepoint-deployed.png" alt="Microsoft Copilot Studio SharePoint channel deployment status panel" loading="eager" decoding="async" fetchpriority="high" referrerpolicy="no-referrer" />
@@ -492,6 +502,11 @@ Get-SPOCopilotAgentInsightsReport -ReportId $reportId -Content CopilotAgentsOnSi
       <h3>3. Generate an Agent Access Insights report</h3>
       <p>Use Agent Insights to find where SharePoint agents are being created. Use Agent Access Insights when the risk question is broader: which Microsoft 365 agents are accessing SharePoint and OneDrive content, and where content governance policies may be needed.</p>
 
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-insights-agent-access/create-agent-access-report.jpg" alt="Microsoft SharePoint admin center create agent access report screen" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Actual Microsoft Learn screenshot showing how to create an Agent Access Insights report in the SharePoint admin center. Source: <a href="https://learn.microsoft.com/en-us/sharepoint/insights-on-agent-access" target="_blank" rel="noopener noreferrer">Monitor agent access to SharePoint and OneDrive - Microsoft Learn</a>.</figcaption>
+      </figure>
+
       <div class="code-label">SharePoint Online Management Shell - Agent Access Insights report</div>
       <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
 
@@ -578,7 +593,7 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
             <tr><td><strong>User cannot chat with an agent</strong></td><td>No Microsoft 365 Copilot license, or the user is not in the pay-as-you-go billing policy security group.</td><td>Assign Microsoft 365 Copilot, or add the user to the correct pay-as-you-go security group and confirm the billing policy is connected to SharePoint agents.</td></tr>
             <tr><td><strong>Create or edit option is missing</strong></td><td>The user has no site edit permission, no valid license path, or is trying to edit the ready-made site agent.</td><td>Give site edit permission where appropriate, check the license/pay-as-you-go path, and edit only custom-built agents.</td></tr>
             <tr><td><strong>Agent opens but misses a document</strong></td><td>The document is not included as a source, the file was uploaded recently and is not indexed yet, the user only has limited access, or a filter/search restriction is hiding it.</td><td>Add the source, wait for indexing, confirm the user's direct file access, and test with the same account that reported the issue.</td></tr>
-            <tr><td><strong>Agent says preparing or misses a new file</strong></td><td>The file may not be indexed yet, the source sync is still in progress, the user only has Limited Access, or the <code>.agent</code> file is still pointing at an older source set.</td><td>Wait for indexing, confirm direct source permissions, then remove and re-add the source. If a custom SharePoint agent remains stale, move or rename the <code>.agent</code> file, reopen it, and reselect the sources so SharePoint registers the source set again.</td></tr>
+            <tr><td><strong>Agent says preparing or misses a new file</strong></td><td>The file may not be indexed yet, the source sync is still in progress, the user only has Limited Access, or the agent source list was not saved after a change.</td><td>Wait for indexing, confirm direct source permissions, edit the agent, reselect the source, and save. If it remains stale after a reasonable sync window, create a fresh custom agent or raise a Microsoft support case.</td></tr>
             <tr><td><strong>Agent is not visible in the site picker</strong></td><td>The custom agent exists as a file but has not been approved or shared with the right people.</td><td>Check the <code>.agent</code> file permissions, then approve it or set it as the site default if it is the official agent.</td></tr>
             <tr><td><strong>Teams answer cannot be posted</strong></td><td>Some chat members cannot access the sources, or the chat/channel includes guest or external users.</td><td>Use the review flow, fix source permissions if appropriate, or move the discussion to a chat where every member has the right access.</td></tr>
             <tr><td><strong>Copilot Studio agent won't deploy to SharePoint</strong></td><td>The agent is not published, the maker lacks WRITE access to the SharePoint site, or Copilot Studio capacity is not in place.</td><td>Publish the agent, confirm site WRITE access, then check Copilot Studio licensing and capacity before redeploying.</td></tr>
