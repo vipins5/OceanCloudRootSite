@@ -1,6 +1,76 @@
 {
   "items": [
     {
+      "title": "SharePoint Showcase: From Chaos to AI-Ready with the SharePoint Admin Agent",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-from-chaos-to-ai-ready-with-the-sharepoint/ba-p/4523359",
+      "date_friendly": "May 28, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-05-sharepoint-showcase-from-chaos-to-ai-ready-with-the-sharepoi"
+    },
+    {
+      "title": "Microsoft Purview: Insider Risk Management - Unified alert queue",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564621",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-purview-insider-risk-management-unified-alert-queu"
+    },
+    {
+      "title": "Microsoft Purview: Insider Risk Management - Expanding note capabilities across alerts & cases",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564620",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-purview-insider-risk-management-expanding-note-cap"
+    },
+    {
+      "title": "Microsoft Purview: Insider Risk Management - Enhanced user profile in IRM alerts",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564619",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-purview-insider-risk-management-enhanced-user-prof"
+    },
+    {
+      "title": "Outlook: All Accounts view (Unified Inbox) brings your email into a single inbox view",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564609",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-outlook-all-accounts-view-unified-inbox-brings-your-email-in"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Support for MCP Agents with Interactive UI Widgets in Government Clouds",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564608",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-support-for-mcp-agents-with-"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): MCP-Based Agent Enablement for U.S. Government Clouds",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564607",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-mcp-based-agent-enablement-f"
+    },
+    {
       "title": "Microsoft Copilot (Microsoft 365): Chat History Filtering by Copilot Experience",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559601",
       "date_friendly": "May 22, 2026",
@@ -229,5 +299,5 @@
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     }
   ],
-  "last_updated": "2026-05-27"
+  "last_updated": "2026-05-29"
 }

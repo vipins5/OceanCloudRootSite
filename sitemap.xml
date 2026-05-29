@@ -330,4 +330,53 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-sharepoint-showcase-from-chaos-to-ai-ready-with-the-sharepoi</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-unified-alert-queu</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-expanding-note-cap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-enhanced-user-prof</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-outlook-all-accounts-view-unified-inbox-brings-your-email-in</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-support-for-mcp-agents-with-</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-mcp-based-agent-enablement-f</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
