@@ -31,6 +31,7 @@
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-recycle-bin-restore-pnp-powershell', title:'Restore SharePoint Recycle Bin Items with PnP PowerShell',                       read:'14 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-classic-calendar-to-modern-view', title:'Switch SharePoint Classic Calendar to Modern View with PnP PowerShell',           read:'16 min read' },
     { topic:'copilot',        tag:'Copilot',              url:'guide-get-started-sharepoint-agents',               title:'Agents in SharePoint Guide: Custom Copilot Agents',                              read:'20 min read' },
+    { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-site-provisioning-automation',     title:'Automate SharePoint Site Provisioning End to End: Logic Apps, Azure Automation & Self-Service Recovery', read:'14 min read' },
     // END:GUIDES-ARRAY
   ];
 

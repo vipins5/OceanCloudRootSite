@@ -760,5 +760,17 @@
     "title": "SharePoint Showcase: From Chaos to AI-Ready with the SharePoint Admin Agent",
     "dateDisplay": "May 28, 2026",
     "dateSort": "2026-05-28"
+  },
+  {
+    "tag": "Guide",
+    "topic": "admin",
+    "dateSort": "2026-06-02",
+    "heading": "Automate SharePoint Site Provisioning End to End",
+    "title": "Automate SharePoint Site Provisioning End to End: Logic Apps, Azure Automation & Self-Service Recovery",
+    "excerpt": "Build a fully automated SharePoint site provisioning pipeline: user request form, manager approval via Power Automate, Azure Logic App orchestration, PnP PowerShell runbook, SharePoint error logging, and email notifications for every outcome.",
+    "dateDisplay": "June 2, 2026",
+    "url": "articles/guide-sharepoint-site-provisioning-automation",
+    "id": "articles-guide-sharepoint-site-provisioning-automation",
+    "type": "guide"
   }
 ]

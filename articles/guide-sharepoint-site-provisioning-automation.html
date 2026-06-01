@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint Site Provisioning Automation: Logic Apps, Azure Automation & Self-Service Recovery | OceanCloud</title>
+  <meta name="description" content="Build a fully automated SharePoint site provisioning pipeline: user request form, manager approval, Azure Logic App orchestration, PnP PowerShell runbook, error logging to SharePoint, and email notifications." />
+  <meta name="keywords" content="SharePoint site provisioning automation, Azure Logic Apps SharePoint, Azure Automation PnP PowerShell site creation, SharePoint self-service site request, Power Automate site approval workflow, SharePoint site request form" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="SharePoint Site Provisioning Automation: Logic Apps, Azure Automation & Self-Service Recovery" />
+  <meta property="og:description" content="A complete end-to-end guide to automating SharePoint site creation — from user request and manager approval to PnP PowerShell provisioning, error logging, and automated notifications." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation#article",
+        "headline": "SharePoint Site Provisioning Automation: Logic Apps, Azure Automation & Self-Service Recovery",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation",
+        "datePublished": "2026-06-02",
+        "dateModified": "2026-06-02",
+        "author": { "@id": "https://oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "description": "A complete end-to-end guide to automating SharePoint site creation — from user request and manager approval to PnP PowerShell provisioning, error logging, and automated notifications.",
+        "keywords": ["SharePoint provisioning automation", "Azure Logic Apps", "Azure Automation", "PnP PowerShell", "Power Automate approval", "SharePoint self-service"],
+        "citation": [
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview", "name": "Azure Logic Apps overview" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/azure/automation/overview", "name": "Azure Automation overview" },
+          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/cmdlets/New-PnPSite.html", "name": "New-PnPSite cmdlet reference" }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",   "item": "https://oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "SharePoint Site Provisioning Automation", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:800px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(74,222,128,.12);color:#4ade80;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(74,222,128,.07);border-left:3px solid #4ade80;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bbf7d0;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#bae6fd;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(74,222,128,.12);color:#4ade80;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(74,222,128,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#4ade80;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .flow-diagram{display:flex;flex-direction:column;gap:0;margin:24px 0;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;}
+  .fd-step{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;}
+  .fd-step+.fd-step{border-top:1px solid rgba(255,255,255,.05);}
+  .fd-icon{width:36px;height:36px;border-radius:8px;background:rgba(74,222,128,.12);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .fd-body strong{display:block;color:var(--white);font-size:.9rem;margin-bottom:3px;}
+  .fd-body p{margin:0;color:var(--text-dim);font-size:.83rem;line-height:1.6;}
+  .arch-badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;margin-right:6px;}
+  .badge-pa{background:rgba(0,180,216,.15);color:#00b4d8;}
+  .badge-la{background:rgba(139,92,246,.15);color:#a78bfa;}
+  .badge-aa{background:rgba(74,222,128,.15);color:#4ade80;}
+  .badge-sp{background:rgba(251,191,36,.15);color:#fbbf24;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="../services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="../about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="../case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="../news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="../guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="../contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="../search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"74,222,128","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-green" style="width:380px;height:380px;top:-90px;right:-70px;background:radial-gradient(circle,rgba(74,222,128,.18) 0%,rgba(74,222,128,0) 70%);"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="../guides">Guides</a><span>/</span><span>SharePoint Site Provisioning Automation</span></nav>
+      <h1>Automate SharePoint Site Provisioning <span class="grad-text">End to End</span></h1>
+      <p>User request → manager approval → Logic App orchestration → PnP PowerShell runbook → error logging → instant email notification. The complete pipeline.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">June 2, 2026</span>
+        <span class="art-read">14 min read</span>
+      </div>
+
+      <p class="article-intro">Every SharePoint admin knows the pain: someone requests a new site, a ticket is raised, IT gets to it three days later, the site is created manually without a standard structure, and the requester gets a URL in a chat message. This guide replaces that entire process with a self-service pipeline that provisions a properly structured SharePoint site in under five minutes — with manager approval, audit logging, error recovery, and email notifications built in from the start.</p>
+
+      <h2>What We're Building</h2>
+
+      <p>The pipeline is made up of six components working in sequence. Each has a single, clear responsibility, which makes the whole system easy to maintain and easy to debug when something goes wrong.</p>
+
+      <div class="flow-diagram">
+        <div class="fd-step">
+          <div class="fd-icon">📋</div>
+          <div class="fd-body"><strong>1 — User submits a request</strong><p>A SharePoint list form (or embedded Power Apps canvas app) captures site name, URL alias, type, template, owner, and business purpose. The item is created with Status = <em>Pending Approval</em>.</p></div>
+        </div>
+        <div class="fd-step">
+          <div class="fd-icon">✅</div>
+          <div class="fd-body"><strong>2 — Power Automate routes to manager</strong><p>A cloud flow detects the new item, looks up the requester's line manager from Azure AD, and sends an Adaptive Card approval to the manager's Teams and email. A 48-hour timeout triggers a reminder and notifies the requester.</p></div>
+        </div>
+        <div class="fd-step">
+          <div class="fd-icon">⚡</div>
+          <div class="fd-body"><strong>3 — Azure Logic App orchestrates creation</strong><p>On approval, Power Automate POSTs the request to a Logic App HTTP trigger. The Logic App validates the URL, calls an Azure Automation runbook, polls for completion, and handles all success and failure branches.</p></div>
+        </div>
+        <div class="fd-step">
+          <div class="fd-icon">🔧</div>
+          <div class="fd-body"><strong>4 — Azure Automation runs the PnP PowerShell script</strong><p>The runbook connects via Managed Identity, creates the site, adds owners, applies the correct template structure (document libraries, lists, folders), and sets the sharing policy. It returns the provisioned URL or throws a descriptive error.</p></div>
+        </div>
+        <div class="fd-step">
+          <div class="fd-icon">📝</div>
+          <div class="fd-body"><strong>5 — Errors are logged to SharePoint</strong><p>If any step fails, the Logic App catch scope writes a structured entry to a <em>Site Provision Logs</em> list — including which step failed, the error message, and the Azure Automation job ID for deep-dive tracing.</p></div>
+        </div>
+        <div class="fd-step">
+          <div class="fd-icon">📧</div>
+          <div class="fd-body"><strong>6 — Requester gets an email regardless of outcome</strong><p>Success delivers the site URL and quick-start tips. Rejection delivers the manager's reason. Failure delivers a reference ID and a support link — no one is left waiting and wondering.</p></div>
+        </div>
+      </div>
+
+      <h2>Component Summary</h2>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Component</th><th>Service</th><th>Role in the pipeline</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Site Requests list</strong></td><td><span class="arch-badge badge-sp">SharePoint</span></td><td>Input form, status tracking, approved URL storage</td></tr>
+            <tr><td><strong>Site Provision Logs list</strong></td><td><span class="arch-badge badge-sp">SharePoint</span></td><td>Structured error and audit log — the single pane of glass for all failures</td></tr>
+            <tr><td><strong>Approval flow</strong></td><td><span class="arch-badge badge-pa">Power Automate</span></td><td>Manager lookup, Adaptive Card approval, rejection email</td></tr>
+            <tr><td><strong>Provisioning orchestrator</strong></td><td><span class="arch-badge badge-la">Logic App</span></td><td>URL check, runbook invocation, polling, error catch, success/failure routing</td></tr>
+            <tr><td><strong>SP-SiteProvisioning runbook</strong></td><td><span class="arch-badge badge-aa">Azure Automation</span></td><td>PnP PowerShell — creates site, applies template, sets permissions</td></tr>
+            <tr><td><strong>Managed Identity</strong></td><td><span class="arch-badge badge-aa">Azure Automation</span></td><td>Passwordless, auditable authentication to SharePoint</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step 1: Create the SharePoint Lists</h2>
+
+      <p>Two SharePoint lists underpin the entire pipeline. Create them in a central IT or admin site collection — not in a personal or team site.</p>
+
+      <h3>Site Requests list</h3>
+      <p>This is the intake form and the live status board. Every provisioning request flows through it from submission to completion.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Column name</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Title</strong></td><td>Single line</td><td>Site display name — shown in navigation and SharePoint home</td></tr>
+            <tr><td><strong>SiteURLAlias</strong></td><td>Single line</td><td>The URL slug (e.g. <em>marketing-2026</em>). Validate: lowercase, letters/numbers/hyphens only, max 40 chars</td></tr>
+            <tr><td><strong>SiteType</strong></td><td>Choice</td><td>Team Site — SharePoint Only, Communication Site</td></tr>
+            <tr><td><strong>Template</strong></td><td>Choice</td><td>General, Project Team, HR Department, IT Service Desk</td></tr>
+            <tr><td><strong>BusinessPurpose</strong></td><td>Multiple lines</td><td>Required — shown in the manager approval card</td></tr>
+            <tr><td><strong>PrimaryOwner</strong></td><td>Person or Group</td><td>Gets Site Collection Admin rights</td></tr>
+            <tr><td><strong>SecondaryOwner</strong></td><td>Person or Group</td><td>Optional — also gets Site Collection Admin rights</td></tr>
+            <tr><td><strong>Status</strong></td><td>Choice</td><td>Pending Approval · Approved · Rejected · Provisioning · Provisioned · Failed</td></tr>
+            <tr><td><strong>ManagerNotes</strong></td><td>Multiple lines</td><td>Approval or rejection comment written back by the flow</td></tr>
+            <tr><td><strong>ProvisionedURL</strong></td><td>Single line</td><td>Full site URL written back on success — use as a hyperlink column</td></tr>
+            <tr><td><strong>LogicAppRunID</strong></td><td>Single line</td><td>Logic App run ID for tracing in Azure Portal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout info">
+        <p><strong>Tip:</strong> Add a calculated column <em>SiteFullURL</em> with formula <code>="https://yourtenant.sharepoint.com/sites/"&amp;SiteURLAlias</code> to give approvers a preview of the exact URL before they approve.</p>
+      </div>
+
+      <h3>Site Provision Logs list</h3>
+      <p>When the Logic App's error handler fires, it writes a row here. This gives IT admins a searchable, filterable audit trail without needing to dig through Azure Portal logs.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Column name</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Title</strong></td><td>Single line</td><td>Auto-set: ERR-[RequestID]-[Timestamp] — makes each row uniquely identifiable</td></tr>
+            <tr><td><strong>RequestID</strong></td><td>Number</td><td>ID of the row in Site Requests list</td></tr>
+            <tr><td><strong>SiteURL</strong></td><td>Single line</td><td>The attempted site URL alias</td></tr>
+            <tr><td><strong>LogLevel</strong></td><td>Choice</td><td>Info · Warning · Error</td></tr>
+            <tr><td><strong>FailedStep</strong></td><td>Single line</td><td>Which Logic App action or runbook step failed (e.g. <em>New-PnPSite</em>, <em>URL check</em>)</td></tr>
+            <tr><td><strong>ErrorMessage</strong></td><td>Multiple lines</td><td>Human-readable description from the Logic App error object</td></tr>
+            <tr><td><strong>RawError</strong></td><td>Multiple lines</td><td>Full stack trace or raw exception — for deep debugging</td></tr>
+            <tr><td><strong>RunbookJobID</strong></td><td>Single line</td><td>Azure Automation job GUID — use in Portal to see full runbook output</td></tr>
+            <tr><td><strong>RetryCount</strong></td><td>Number</td><td>How many times the Logic App has retried this operation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step 2: Manager Approval Flow (Power Automate)</h2>
+
+      <p>Create a new <strong>Automated cloud flow</strong> in Power Automate named <em>SP Site Request — Manager Approval</em>. This flow runs entirely within your Microsoft 365 tenant — no Azure subscription required.</p>
+
+      <h3>Trigger and guard condition</h3>
+      <p>Trigger: <strong>When an item is created</strong> (SharePoint connector) — pointing to the Site Requests list.</p>
+      <p>Immediately after the trigger, add a <strong>Condition</strong> that checks <code>Status Value</code> equals <em>Pending Approval</em>. This guards against re-triggering if an item is modified after the flow runs.</p>
+
+      <h3>Look up the manager</h3>
+      <p>Add a <strong>Get manager (V2)</strong> action from the Office 365 Users connector. Pass the requester's email from the trigger. This resolves the correct approver automatically — the flow never needs a hardcoded email.</p>
+
+      <h3>Send the approval</h3>
+      <p>Add a <strong>Start and wait for an approval</strong> action. Configure it as follows:</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Field</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Approval type</strong></td><td>Approve/Reject — First to respond</td></tr>
+            <tr><td><strong>Title</strong></td><td>Site request: <code>@{triggerOutputs()?['body/Title']}</code></td></tr>
+            <tr><td><strong>Assigned to</strong></td><td><code>@{outputs('Get_manager_(V2)')?['body/mail']}</code></td></tr>
+            <tr><td><strong>Details</strong></td><td>Requester: [Created By name]<br>URL alias: [SiteURLAlias]<br>Type: [SiteType]<br>Purpose: [BusinessPurpose]</td></tr>
+            <tr><td><strong>Item link</strong></td><td>Link to the SharePoint list item</td></tr>
+            <tr><td><strong>Timeout</strong></td><td>P2D (ISO 8601 for 48 hours)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Branch: Approved</h3>
+      <p>In the <strong>Yes</strong> branch of a Condition on <code>Outcome equals Approve</code>:</p>
+      <ol>
+        <li>Update the Site Requests item: <strong>Status = Approved</strong>, <strong>ManagerNotes</strong> = approval comment</li>
+        <li>Add an <strong>HTTP</strong> action (POST) to the Logic App HTTP trigger URL, passing a JSON body with all site request fields. This fires the Logic App without the flow waiting for it to complete.</li>
+      </ol>
+
+      <h3>Branch: Rejected</h3>
+      <p>In the <strong>No</strong> branch:</p>
+      <ol>
+        <li>Update the item: <strong>Status = Rejected</strong>, <strong>ManagerNotes</strong> = rejection comment</li>
+        <li>Send an email to the requester:</li>
+      </ol>
+
+      <div class="art-callout">
+        <p><strong>Rejection email template</strong><br><br>
+        Subject: Your SharePoint site request was not approved<br><br>
+        Hi [Requester first name],<br><br>
+        Your request for a SharePoint site named "<strong>[Site Title]</strong>" was reviewed by [Manager name] and was not approved at this time.<br><br>
+        <strong>Reason:</strong> [ManagerNotes]<br><br>
+        If you'd like to resubmit with amendments, <a href="[Site Requests list URL]">click here</a>. If you have questions, reply to this email.</p>
+      </div>
+
+      <h3>Branch: Timed out</h3>
+      <p>Use <strong>Configure run after</strong> on a parallel branch set to run when the approval action has <em>timed out</em>. In this branch: send a reminder email to the manager and a holding email to the requester ("We've chased your manager and are waiting for a response").</p>
+
+      <h2>Step 3: Azure Logic App — The Orchestrator</h2>
+
+      <p>The Logic App is the heart of the pipeline. It owns every step after approval: URL validation, runbook invocation, polling, error capture, and all notifications. Create a <strong>Consumption plan</strong> Logic App named <em>sp-site-provisioning-orchestrator</em>.</p>
+
+      <h3>HTTP trigger</h3>
+      <p>Add a <strong>When a HTTP request is received</strong> trigger. Use <strong>Use sample payload to generate schema</strong> and paste a representative JSON body to get the schema auto-generated. Copy the generated URL and paste it into the Power Automate HTTP action from Step 2.</p>
+
+      <div class="code-label">Sample JSON body from Power Automate</div>
+      <div class="code-block"><pre>{
+  "requestItemId": 42,
+  "siteTitle": "Marketing Hub 2026",
+  "siteUrlAlias": "marketing-hub-2026",
+  "siteType": "CommunicationSite",
+  "template": "General",
+  "primaryOwnerEmail": "jane.smith@contoso.com",
+  "secondaryOwnerEmail": "john.doe@contoso.com",
+  "description": "Central hub for the Marketing department",
+  "requesterEmail": "jane.smith@contoso.com",
+  "tenantName": "contoso"
+}</pre></div>
+
+      <h3>URL availability check</h3>
+      <p>Before invoking the runbook, verify the URL alias is not already taken. Add an <strong>HTTP</strong> action calling the SharePoint REST API:</p>
+
+      <div class="code-label">HTTP GET — check site existence</div>
+      <div class="code-block"><pre>GET https://@{body('Parse_JSON')?['tenantName']}-admin.sharepoint.com
+    /_api/SPO.Tenant/GetSitePropertiesByUrl(
+      url='https://@{body('Parse_JSON')?['tenantName']}.sharepoint.com
+           /sites/@{body('Parse_JSON')?['siteUrlAlias']}',
+      includeDetail=false)
+
+Authentication: Managed Identity
+Audience: https://@{body('Parse_JSON')?['tenantName']}-admin.sharepoint.com</pre></div>
+
+      <p>Follow this with a Condition: if the HTTP response Status code equals <strong>200</strong>, the site already exists — route to an error log entry and a "URL taken" email to the requester, then terminate. Any other status code means the URL is free.</p>
+
+      <h3>Try / Catch pattern with Scope actions</h3>
+      <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures errors are always handled.</p>
+
+      <p>Inside the <strong>Try</strong> scope:</p>
+      <ol>
+        <li><strong>Update item</strong> (SharePoint) — set Status = <em>Provisioning</em></li>
+        <li><strong>Create job</strong> (Azure Automation) — invoke the <em>SP-SiteProvisioning</em> runbook, passing all site parameters. Store the returned <strong>Job ID</strong> in a variable.</li>
+        <li><strong>Update item</strong> — write the Job ID to <em>LogicAppRunID</em></li>
+        <li><strong>Do Until</strong> loop — poll the job every 30 seconds (Delay action), using <strong>Get job</strong> to check its status. Exit when status equals <em>Completed</em>, <em>Failed</em>, or <em>Suspended</em>, or when the loop counter exceeds 20 (10 minutes maximum).</li>
+        <li>After the loop, check the final job status with a Condition:
+          <ul>
+            <li><strong>Completed</strong>: Update item (Status = Provisioned, ProvisionedURL = full site URL) → send success email</li>
+            <li>Anything else: use <strong>Terminate</strong> with status <em>Failed</em> and a descriptive message — this causes the Try scope to fail, triggering the Catch scope</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p>Inside the <strong>Catch</strong> scope (runs only on Try failure):</p>
+      <ol>
+        <li>Extract the error using the <code>result('Try')</code> expression</li>
+        <li>Create a row in the Site Provision Logs list</li>
+        <li>Update the Site Requests item (Status = Failed)</li>
+        <li>Send the failure email to the requester</li>
+      </ol>
+
+      <div class="code-label">Logic App expression — extract error from Try scope</div>
+      <div class="code-block"><pre># Error message
+@{result('Try')?[0]?['error']?['message']}
+
+# Failed action name
+@{result('Try')?[0]?['name']}
+
+# Full error code
+@{result('Try')?[0]?['error']?['code']}</pre></div>
+
+      <h2>Step 4: Azure Automation Runbook (PnP PowerShell)</h2>
+
+      <p>The runbook is a PowerShell 7.2 runbook in an Azure Automation account. It does all the actual SharePoint work: creates the site, adds owners, applies the template structure, and locks down sharing settings.</p>
+
+      <h3>Prerequisites</h3>
+      <ul>
+        <li>Azure Automation account with <strong>PnP.PowerShell</strong> imported from the module gallery (search for <em>PnP.PowerShell</em> under Modules &gt; Browse Gallery)</li>
+        <li>System-assigned <strong>Managed Identity</strong> enabled on the Automation account</li>
+        <li>The Managed Identity's Object ID granted <strong>SharePoint Administrator</strong> role in Microsoft 365 admin centre, <em>or</em> granted application permission <strong>Sites.FullControl.All</strong> on Microsoft Graph via Entra app consent</li>
+      </ul>
+
+      <div class="art-callout warning">
+        <p><strong>Never store credentials in a runbook.</strong> Use Managed Identity exclusively. If your Automation account cannot use Managed Identity (older accounts), use a Certificate credential stored in Azure Key Vault, fetched at runtime via <code>Get-AutomationCertificate</code>.</p>
+      </div>
+
+      <h3>Runbook: SP-SiteProvisioning</h3>
+
+      <div class="code-label">PowerShell 7.2 runbook — SP-SiteProvisioning</div>
+      <div class="code-block"><pre>param(
+    [Parameter(Mandatory=$true)] [string]$TenantName,
+    [Parameter(Mandatory=$true)] [string]$SiteTitle,
+    [Parameter(Mandatory=$true)] [string]$SiteUrlAlias,
+    [Parameter(Mandatory=$true)] [string]$SiteType,
+    [Parameter(Mandatory=$true)] [string]$Template,
+    [Parameter(Mandatory=$true)] [string]$PrimaryOwnerEmail,
+    [string]$SecondaryOwnerEmail = "",
+    [string]$Description = "",
+    [Parameter(Mandatory=$true)] [string]$RequestItemId
+)
+
+$ErrorActionPreference = 'Stop'
+
+$adminUrl   = "https://$TenantName-admin.sharepoint.com"
+$siteFullUrl = "https://$TenantName.sharepoint.com/sites/$SiteUrlAlias"
+
+Write-Output "INFO: Starting provisioning for $siteFullUrl"
+
+try {
+    # --- Connect to SharePoint admin via Managed Identity ---
+    Connect-PnPOnline -Url $adminUrl -ManagedIdentity
+    Write-Output "INFO: Connected to admin centre"
+
+    # --- Create the site ---
+    if ($SiteType -eq "CommunicationSite") {
+        New-PnPSite -Type CommunicationSite `
+            -Title       $SiteTitle `
+            -Url         $siteFullUrl `
+            -Owner       $PrimaryOwnerEmail `
+            -Description $Description `
+            -SiteDesign  Blank `
+            -Wait
+    } else {
+        New-PnPSite -Type TeamSiteWithoutMicrosoft365Group `
+            -Title       $SiteTitle `
+            -Url         $siteFullUrl `
+            -Owner       $PrimaryOwnerEmail `
+            -Description $Description `
+            -Wait
+    }
+    Write-Output "INFO: Site created at $siteFullUrl"
+
+    # --- Connect to the new site ---
+    Connect-PnPOnline -Url $siteFullUrl -ManagedIdentity
+
+    # --- Add secondary owner ---
+    if ($SecondaryOwnerEmail) {
+        Add-PnPSiteCollectionAdmin -Owners @($SecondaryOwnerEmail)
+        Write-Output "INFO: Added secondary owner $SecondaryOwnerEmail"
+    }
+
+    # --- Apply template structure ---
+    switch ($Template) {
+        "Project Team" {
+            New-PnPList -Title "Project Tasks" -Template GenericList -ErrorAction SilentlyContinue
+            New-PnPList -Title "Risk Register"  -Template GenericList -ErrorAction SilentlyContinue
+            Add-PnPFolder -Name "Project Plans"   -Folder "Shared Documents"
+            Add-PnPFolder -Name "Deliverables"    -Folder "Shared Documents"
+            Add-PnPFolder -Name "Meeting Notes"   -Folder "Shared Documents"
+            Add-PnPFolder -Name "Archive"         -Folder "Shared Documents"
+        }
+        "HR Department" {
+            New-PnPList -Title "Job Postings" -Template GenericList -ErrorAction SilentlyContinue
+            Add-PnPFolder -Name "Policies"    -Folder "Shared Documents"
+            Add-PnPFolder -Name "Templates"   -Folder "Shared Documents"
+            Add-PnPFolder -Name "Archive"     -Folder "Shared Documents"
+            # HR sites never share externally
+            Set-PnPTenantSite -Url $siteFullUrl -SharingCapability Disabled
+        }
+        "IT Service Desk" {
+            New-PnPList -Title "Tickets"      -Template GenericList -ErrorAction SilentlyContinue
+            New-PnPList -Title "Known Issues" -Template GenericList -ErrorAction SilentlyContinue
+            Add-PnPFolder -Name "Runbooks"    -Folder "Shared Documents"
+            Add-PnPFolder -Name "Procedures"  -Folder "Shared Documents"
+        }
+        default {
+            # General — minimal structure
+            Add-PnPFolder -Name "Working Documents" -Folder "Shared Documents"
+            Add-PnPFolder -Name "Archive"           -Folder "Shared Documents"
+        }
+    }
+    Write-Output "INFO: Template '$Template' applied"
+
+    # --- Default sharing policy (override per template above) ---
+    if ($Template -ne "HR Department") {
+        Set-PnPTenantSite -Url $siteFullUrl `
+            -SharingCapability ExistingExternalUserSharingOnly
+    }
+
+    Write-Output "PROVISIONED:$siteFullUrl"
+
+} catch {
+    $msg = $_.Exception.Message
+    Write-Error "FAILED at RequestID $RequestItemId — $msg"
+    throw "Provisioning failed for $siteFullUrl — $msg"
+}</pre></div>
+
+      <p>A few design decisions worth noting:</p>
+      <ul>
+        <li><strong><code>$ErrorActionPreference = 'Stop'</code></strong> — converts all non-terminating errors into terminating ones, so every failure is caught by the <code>catch</code> block and propagated back to the Logic App as a job failure.</li>
+        <li><strong><code>-Wait</code> on <code>New-PnPSite</code></strong> — blocks the runbook until the site is fully provisioned before executing subsequent steps. Without it, <code>Connect-PnPOnline</code> to the new site will fail because the site isn't ready yet.</li>
+        <li><strong><code>TeamSiteWithoutMicrosoft365Group</code></strong> — creates a SharePoint-only team site with no linked Microsoft 365 Group or Teams team. Use this unless the requester explicitly needs a Group-connected workspace.</li>
+        <li><strong><code>Write-Output "PROVISIONED:..."</code></strong> — the Logic App's <strong>Get job output</strong> action reads the runbook's stdout. Prefixing the final output with a known token makes it trivial to extract the URL via a Logic App expression.</li>
+      </ul>
+
+      <h2>Step 5: Error Logging to SharePoint</h2>
+
+      <p>Errors are inevitable — a site URL with a reserved word triggers a 409, a transient Microsoft API hiccup returns a 503, the PnP module has a version mismatch. The pipeline is designed so that none of these errors silently disappear.</p>
+
+      <p>The Logic App's Catch scope creates a row in the Site Provision Logs list. The key expressions used in that action are:</p>
+
+      <div class="code-label">Logic App — Catch scope expressions for log entry</div>
+      <div class="code-block"><pre># Title (unique identifier for the log row)
+ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
+
+# Which action inside Try scope failed
+@{result('Try')?[0]?['name']}
+
+# Human-readable error message
+@{result('Try')?[0]?['error']?['message']}
+
+# Full error code / raw detail
+@{result('Try')?[0]?['error']?['code']}
+
+# Azure Automation job ID (stored in variable during Try scope)
+@{variables('runbookJobId')}</pre></div>
+
+      <p>With these entries in the log list, an admin can:</p>
+      <ul>
+        <li>Filter by <strong>RequestID</strong> to see the full history for one request</li>
+        <li>Filter by <strong>LogLevel = Error</strong> and sort by date to see all recent failures</li>
+        <li>Copy the <strong>RunbookJobID</strong> and paste it into Azure Automation &gt; Jobs to see the full PowerShell output and stack trace</li>
+        <li>Set a Power Automate alert on new rows with LogLevel = Error to notify the IT team immediately</li>
+      </ul>
+
+      <div class="art-callout info">
+        <p><strong>Retention tip:</strong> Apply a SharePoint retention label to the Provision Logs list that deletes rows older than 12 months. This keeps the list fast to query and stops it growing unbounded over time.</p>
+      </div>
+
+      <h2>Step 6: End-User Notifications</h2>
+
+      <p>Every outcome sends the requester an email. No one is left guessing whether their request was processed.</p>
+
+      <h3>Success notification (sent from Logic App Try scope)</h3>
+      <div class="art-callout">
+        <p><strong>Subject:</strong> Your SharePoint site is ready — [Site Title]<br><br>
+        Hi [First Name],<br><br>
+        Your new SharePoint site has been created and is ready to use.<br><br>
+        <strong>Site name:</strong> [SiteTitle]<br>
+        <strong>URL:</strong> <a href="[ProvisionedURL]">[ProvisionedURL]</a><br>
+        <strong>Template applied:</strong> [Template]<br>
+        <strong>Primary owner:</strong> [PrimaryOwnerEmail]<br><br>
+        <strong>Getting started:</strong> Sign in, invite your team members via site Settings &gt; Site permissions, and review the default document library structure that's been set up for you.<br><br>
+        Questions? Contact the IT helpdesk.</p>
+      </div>
+
+      <h3>Rejection notification (sent from Power Automate)</h3>
+      <div class="art-callout">
+        <p><strong>Subject:</strong> Site request update — [Site Title] was not approved<br><br>
+        Hi [First Name],<br><br>
+        Your request for a SharePoint site named "<strong>[Site Title]</strong>" was reviewed by your manager and was not approved at this time.<br><br>
+        <strong>Manager's comment:</strong> [ManagerNotes]<br><br>
+        You can amend and resubmit your request <a href="[Site Requests list URL]">here</a>. If you believe this decision was made in error, please speak to your manager directly.</p>
+      </div>
+
+      <h3>Failure notification (sent from Logic App Catch scope)</h3>
+      <div class="art-callout warning">
+        <p><strong>Subject:</strong> Site creation issue — reference [RequestItemId]<br><br>
+        Hi [First Name],<br><br>
+        We ran into a technical problem while creating your SharePoint site "<strong>[Site Title]</strong>". Our team has been notified automatically.<br><br>
+        <strong>Reference number:</strong> [RequestItemId]<br>
+        <strong>Failed step:</strong> [FailedStep from log entry]<br><br>
+        You do not need to resubmit your request — the IT team will investigate and either resolve the issue or contact you within one business day. If you need to escalate, quote reference <strong>[RequestItemId]</strong> to the helpdesk.</p>
+      </div>
+
+      <h2>Testing the Pipeline End to End</h2>
+
+      <p>Before going live, run each scenario deliberately. Don't rely on happy-path testing alone — the error paths are the most important to verify.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Test scenario</th><th>How to trigger it</th><th>Expected outcome</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Happy path</strong></td><td>Submit a valid request with a fresh URL alias and approve it</td><td>Site provisioned, success email received, Status = Provisioned, ProvisionedURL populated</td></tr>
+            <tr><td><strong>Rejection</strong></td><td>Submit a request and reject it in the approval card with a comment</td><td>Status = Rejected, ManagerNotes populated, rejection email with reason delivered</td></tr>
+            <tr><td><strong>URL conflict</strong></td><td>Submit a request using the alias of an existing site</td><td>Logic App exits early, error log entry created, "URL taken" email sent to requester</td></tr>
+            <tr><td><strong>Runbook failure</strong></td><td>Temporarily revoke the Managed Identity's SharePoint permission, then submit and approve a request</td><td>Catch scope fires, error logged to Provision Logs with the auth error, failure email sent</td></tr>
+            <tr><td><strong>Approval timeout</strong></td><td>Reduce the approval timeout to PT2M for testing, do not respond</td><td>Reminder email to manager, holding email to requester delivered after timeout</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>After each test, verify three things: the SharePoint item Status column updated correctly, the correct email was received by the requester, and (for failure cases) a row appeared in the Provision Logs list with the right content.</p>
+
+      <h2>Governance and Maintenance Tips</h2>
+
+      <p>A provisioning pipeline creates sites quickly — which means it also creates governance debt quickly if left unchecked.</p>
+
+      <h3>URL alias validation in Power Automate</h3>
+      <p>Before even routing for approval, add a Condition in the Power Automate flow that validates the URL alias against a regex: <code>^[a-z0-9][a-z0-9\-]{0,38}[a-z0-9]$</code>. If it fails, immediately set Status = Failed and send the requester a validation error email, saving the manager from approving something that will always fail at the runbook stage.</p>
+
+      <h3>Reserved URL prefix enforcement</h3>
+      <p>Maintain a small SharePoint list of reserved prefixes (e.g. <em>hr-</em>, <em>legal-</em>, <em>exec-</em>) that require IT sign-off before provisioning. The Logic App checks the alias against this list before invoking the runbook, and if matched, flags the item for manual review.</p>
+
+      <h3>Site lifecycle and expiry</h3>
+      <p>Every provisioned site should have an expected lifetime. Add an <strong>ExpectedExpiryDate</strong> date column to the Site Requests list and populate it at provisioning time based on template type (Project = 18 months, HR = no expiry, General = 12 months). A separate scheduled Power Automate flow queries for sites expiring within 30 days and emails the primary owner to either extend or confirm deletion.</p>
+
+      <h3>Add a Teams team toggle</h3>
+      <p>If a requester needs Microsoft Teams alongside the SharePoint site, change the runbook's <code>New-PnPSite</code> call to use <code>-Type TeamSite</code> (which creates an M365 Group-connected site) and add a <strong>New-Team</strong> call via the Microsoft Teams PowerShell module. Surface this as a "Create linked Teams team?" Yes/No toggle in the request form — the Logic App passes it as a parameter to the runbook.</p>
+
+      <div class="art-cta-box">
+        <h3>Want this built for your organisation?</h3>
+        <p>OceanCloud delivers production-ready SharePoint provisioning pipelines as part of our Power Platform and admin automation practice — including custom templates, governance policies, and lifecycle management.</p>
+        <a href="../contact" class="btn-primary">Book a Free Discovery Call →</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related guides</p>
+        <div class="related-grid">
+          <!-- populated by article.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="../guides">All Guides</a></li>
+          <li><a href="guide-sharepoint-permissions">SharePoint Permissions</a></li>
+          <li><a href="guide-sharepoint-approval-workflow">Approval Workflows</a></li>
+          <li><a href="guide-m365-migration-checklist">Migration Checklist</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="../services">SharePoint Consulting</a></li>
+          <li><a href="../services">M365 Migration</a></li>
+          <li><a href="../services">Power Platform</a></li>
+          <li><a href="../services">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../privacy">Privacy Policy</a></li>
+          <li><a href="../terms">Terms of Service</a></li>
+          <li><a href="../cookies">Cookie Policy</a></li>
+          <li><a href="../contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</p></div></div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>
