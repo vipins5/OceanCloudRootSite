@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -186,6 +186,11 @@
 
       <p class="article-intro">Every SharePoint admin knows the pain: someone requests a new site, a ticket is raised, IT gets to it three days later, the site is created manually without a standard structure, and the requester gets a URL in a chat message. This guide replaces that entire process with a self-service pipeline that provisions a properly structured SharePoint site in under five minutes — with manager approval, audit logging, error recovery, and email notifications built in from the start.</p>
 
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/logic-apps-overview/example-enterprise-workflow.png" alt="Azure Logic Apps workflow designer showing an enterprise workflow" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Azure Logic Apps designer screenshot showing an enterprise workflow. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
       <h2>What We're Building</h2>
 
       <p>The pipeline is made up of six components working in sequence. Each has a single, clear responsibility, which makes the whole system easy to maintain and easy to debug when something goes wrong.</p>
@@ -259,7 +264,7 @@
           <tbody>
             <tr><td><strong>Title</strong></td><td>Single line</td><td>Site display name — shown in navigation and SharePoint home</td></tr>
             <tr><td><strong>SiteURLAlias</strong></td><td>Single line</td><td>The URL slug (e.g. <em>marketing-2026</em>). Validate: lowercase, letters/numbers/hyphens only, max 40 chars</td></tr>
-            <tr><td><strong>SiteType</strong></td><td>Choice</td><td>Team Site — SharePoint Only, Communication Site</td></tr>
+            <tr><td><strong>SiteType</strong></td><td>Choice</td><td>Communication Site · Team Site — SharePoint Only · Team Site with M365 Group</td></tr>
             <tr><td><strong>Template</strong></td><td>Choice</td><td>General, Project Team, HR Department, IT Service Desk</td></tr>
             <tr><td><strong>BusinessPurpose</strong></td><td>Multiple lines</td><td>Required — shown in the manager approval card</td></tr>
             <tr><td><strong>PrimaryOwner</strong></td><td>Person or Group</td><td>Gets Site Collection Admin rights</td></tr>
@@ -274,6 +279,46 @@
 
       <div class="art-callout info">
         <p><strong>Tip:</strong> Add a calculated column <em>SiteFullURL</em> with formula <code>="https://yourtenant.sharepoint.com/sites/"&amp;SiteURLAlias</code> to give approvers a preview of the exact URL before they approve.</p>
+      </div>
+
+      <h3>Choosing the right SiteType</h3>
+      <p>The <strong>SiteType</strong> choice has significant implications — it determines whether an M365 Group (Exchange mailbox, Planner, Teams) is created alongside the SharePoint site. Make this decision clear in the request form so users know what they're asking for.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Choice in form</th><th>Runbook value</th><th>M365 Group</th><th>Teams team</th><th>Best for</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Communication Site</strong></td>
+              <td><code>CommunicationSite</code></td>
+              <td>No</td>
+              <td>No</td>
+              <td>Intranet portals, news hubs, HR/IT/policy sites — content published <em>to</em> a broad audience. No Members group; visitors read, owners publish.</td>
+            </tr>
+            <tr>
+              <td><strong>Team Site — SharePoint Only</strong></td>
+              <td><code>TeamSiteWithoutMicrosoft365Group</code></td>
+              <td>No</td>
+              <td>No</td>
+              <td>Project or department collaboration without needing an M365 Group. Gets Owners/Members/Visitors groups. No Exchange mailbox, no Planner, no auto-Teams.</td>
+            </tr>
+            <tr>
+              <td><strong>Team Site with M365 Group</strong></td>
+              <td><code>TeamSite</code></td>
+              <td><strong>Yes</strong> — Exchange mailbox, Planner, Group email</td>
+              <td>Optional (created separately or by user)</td>
+              <td>Full M365 Group workspace. The SharePoint site, Group inbox, Planner, and (if needed) Teams team are all linked. Use when the team needs more than just file storage.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>Group-connected sites consume an M365 Group licence slot</strong> and create an Exchange Group mailbox. Each tenant has a default limit of 500,000 Groups (practically unlimited) but each Group also gets 50 GB mailbox storage included in E3/E5. For large organisations, governance of Group-connected sites is more complex — make sure your requester understands this before selecting "Team Site with M365 Group".</p>
+      </div>
+
+      <div class="art-callout info">
+        <p><strong>URL parameter difference:</strong> For <code>CommunicationSite</code> and <code>TeamSiteWithoutMicrosoft365Group</code>, the runbook passes <code>-Url</code> (full URL). For <code>TeamSite</code> (group-connected), PnP requires <code>-Alias</code> (the alias only, no URL prefix) — SharePoint constructs the URL automatically as <code>/sites/{Alias}</code>. The alias must also be unique across <em>all</em> M365 Groups in the tenant, not just SharePoint sites.</p>
       </div>
 
       <h3>Site Provision Logs list</h3>
@@ -314,6 +359,27 @@
       <h3>Trigger and guard condition</h3>
       <p>Trigger: <strong>When an item is created</strong> (SharePoint connector) — pointing to the Site Requests list.</p>
       <p>Immediately after the trigger, add a <strong>Condition</strong> that checks <code>Status Value</code> equals <em>Pending Approval</em>. This guards against re-triggering if an item is modified after the flow runs.</p>
+
+      <h3>URL alias validation (before approval routing)</h3>
+      <p>Validate the alias <em>before</em> it reaches the manager. If it fails, the manager never sees an approvable request that would fail at the runbook stage anyway. Add a <strong>Condition</strong> action with three checks combined using <code>and()</code>:</p>
+
+      <div class="screen-step">
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Power Automate — URL alias validation Condition</span></div>
+        <div class="screen-step-body">
+          <span class="ss-label">Condition (all must be true):</span><br><br>
+          <span class="ss-value">1. Length check (2–40 characters)</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{and(greaterOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 2), lessOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 40))}</code><br><br>
+          <span class="ss-value">2. Lowercase check (no uppercase characters)</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{equals(toLower(triggerOutputs()?['body/SiteURLAlias']), triggerOutputs()?['body/SiteURLAlias'])}</code><br><br>
+          <span class="ss-value">3. No spaces or special characters (only letters, digits, hyphens)</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{not(contains(triggerOutputs()?['body/SiteURLAlias'], ' '))}</code><br><br>
+          <span class="ss-note">If validation fails → set Status = Failed, send requester a "URL alias invalid" email, Terminate.</span>
+        </div>
+      </div>
+
+      <div class="art-callout info">
+        <p><strong>Why not full regex in Power Automate?</strong> Power Automate does not have a native regex <code>match()</code> function in standard expressions. The three checks above cover the most common mistakes (spaces, uppercase, too long). For stricter validation — including no leading/trailing hyphens and reserved words — add a separate <strong>Filter array</strong> action against a SharePoint list of reserved prefixes, or move the regex check into a small Azure Function called from the flow.</p>
+      </div>
 
       <h3>Look up the manager</h3>
       <p>Add a <strong>Get manager (V2)</strong> action from the Office 365 Users connector. Pass the requester's email from the trigger. This resolves the correct approver automatically — the flow never needs a hardcoded email.</p>
@@ -379,19 +445,57 @@
       <h3>HTTP trigger</h3>
       <p>Add a <strong>When a HTTP request is received</strong> trigger. Use <strong>Use sample payload to generate schema</strong> and paste a representative JSON body to get the schema auto-generated. Copy the generated URL and paste it into the Power Automate HTTP action from Step 2.</p>
 
-      <div class="code-label">Sample JSON body from Power Automate</div>
+      <div class="code-label">Sample JSON body from Power Automate — all three site type values</div>
       <div class="code-block"><pre>{
   "requestItemId": 42,
   "siteTitle": "Marketing Hub 2026",
   "siteUrlAlias": "marketing-hub-2026",
+
+  // siteType — THREE valid values only:
+  // "CommunicationSite"                  → publishing/intranet site, no group
+  // "TeamSiteWithoutMicrosoft365Group"   → collaboration site, no group, no Teams
+  // "TeamSite"                           → group-connected, creates M365 Group + optional Teams
   "siteType": "CommunicationSite",
+
+  // template — controls document structure applied by the runbook
+  // "General" | "Project Team" | "HR Department" | "IT Service Desk"
   "template": "General",
+
   "primaryOwnerEmail": "jane.smith@contoso.com",
-  "secondaryOwnerEmail": "john.doe@contoso.com",
+  "secondaryOwnerEmail": "john.doe@contoso.com",  // optional, empty string if not set
   "description": "Central hub for the Marketing department",
   "requesterEmail": "jane.smith@contoso.com",
-  "tenantName": "contoso"
+  "tenantName": "contoso"   // subdomain only — "contoso" not "contoso.sharepoint.com"
 }</pre></div>
+
+      <h3>JSON body validation</h3>
+      <p>After the <strong>Parse JSON</strong> action, add a <strong>Condition</strong> that validates all required fields before any SharePoint or Azure Automation actions run. One bad field at this stage is far cheaper to catch than a runbook failure 5 minutes later.</p>
+
+      <div class="screen-step">
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Logic App — JSON body validation Condition (all must be true)</span></div>
+        <div class="screen-step-body">
+          <span class="ss-value">siteTitle not empty</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{not(empty(body('Parse_JSON')?['siteTitle']))}</code><br><br>
+
+          <span class="ss-value">siteUrlAlias not empty AND ≤ 40 chars</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{and(not(empty(body('Parse_JSON')?['siteUrlAlias'])), lessOrEquals(length(body('Parse_JSON')?['siteUrlAlias']), 40))}</code><br><br>
+
+          <span class="ss-value">siteType is one of the three valid values</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{contains(createArray('CommunicationSite','TeamSiteWithoutMicrosoft365Group','TeamSite'), body('Parse_JSON')?['siteType'])}</code><br><br>
+
+          <span class="ss-value">template is one of the four valid values</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{contains(createArray('General','Project Team','HR Department','IT Service Desk'), body('Parse_JSON')?['template'])}</code><br><br>
+
+          <span class="ss-value">primaryOwnerEmail contains "@" (basic UPN check)</span><br>
+          <code style="color:#4ade80;font-size:.8rem">@{contains(body('Parse_JSON')?['primaryOwnerEmail'], '@')}</code><br><br>
+
+          <span class="ss-note">If any check fails → Create Provision Log entry (LogLevel=Error, FailedStep="JSON validation"), update Status=Failed, send requester a validation error email, Terminate.</span>
+        </div>
+      </div>
+
+      <div class="art-callout warning">
+        <p><strong>The <code>siteType</code> validation is critical.</strong> If an unexpected value reaches the runbook, <code>[ValidateSet]</code> on the <code>$SiteType</code> parameter will throw a <code>ParameterBindingValidationException</code> immediately. The Logic App validation catches this before a job is even created, saving the polling wait time and providing a cleaner error message to the requester.</p>
+      </div>
 
       <h3>URL availability check</h3>
       <p>Before invoking the runbook, verify the URL alias is not already taken. Use the <strong>Microsoft Graph API</strong> — it returns a clean <strong>404</strong> for non-existent sites and <strong>200</strong> for existing ones, making the check unambiguous.</p>
@@ -571,9 +675,13 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
     # and hyphens only; max 40 characters; validated in Power Automate before approval
     [Parameter(Mandatory=$true)] [string]$SiteUrlAlias,
 
-    # SiteType: determines site template family and whether an M365 Group is created
+    # SiteType: determines which New-PnPSite type is used and whether an M365 Group is created.
+    # Exactly three valid values — enforced here AND validated in the Logic App before this runs:
+    #   CommunicationSite                → publishing site, no group, -Url and -Owner params
+    #   TeamSiteWithoutMicrosoft365Group → collaboration site, no group, -Url and -Owner params
+    #   TeamSite                         → group-connected, -Alias param (NOT -Url), creates M365 Group
     [Parameter(Mandatory=$true)]
-    [ValidateSet("CommunicationSite","TeamSiteWithoutMicrosoft365Group")]
+    [ValidateSet("CommunicationSite","TeamSiteWithoutMicrosoft365Group","TeamSite")]
     [string]$SiteType,
 
     # Template: controls which lists, libraries, and folders are provisioned
@@ -623,22 +731,30 @@ try {
 
     # ── Create the site ───────────────────────────────────────────────────────
     #
-    # -Wait is essential: it blocks execution until the site is fully provisioned
-    # and responsive. Without it, the subsequent Connect-PnPOnline to the new site
-    # fails because SharePoint hasn't finished initialising the site collection.
+    # -Wait blocks until the site is fully provisioned and responsive.
+    # Without it, Connect-PnPOnline to the new site fails with 404.
     #
-    # CommunicationSite:
-    #   - Publishing/broadcast layout — no Members group, no Teams team
-    #   - -SiteDesign accepts: Blank | Topic | Showcase
-    #   - Good for intranets, news hubs, HR portals, executive sites
+    # PARAMETER DIFFERENCES BY TYPE — this is the most common source of runbook bugs:
     #
-    # TeamSiteWithoutMicrosoft365Group:
-    #   - Collaboration layout with default Members/Visitors/Owners groups
-    #   - No M365 Group, no Exchange mailbox, no linked Teams team
-    #   - Use when the requester does NOT need a Teams channel (selected in the form)
+    #   CommunicationSite:
+    #     Valid params: -Url (full URL), -Owner (UPN), -Description, -SiteDesign
+    #     -SiteDesign values: Blank | Topic | Showcase
+    #     No M365 Group. Good for intranets, news hubs, HR portals.
+    #
+    #   TeamSiteWithoutMicrosoft365Group:
+    #     Valid params: -Url (full URL), -Owner (UPN)
+    #     NO -Description, NO -SiteDesign — passing them throws ParameterBindingException.
+    #     No M365 Group. Gets Owners/Members/Visitors groups.
+    #     Description applied separately via Set-PnPSite after connecting.
+    #
+    #   TeamSite (group-connected):
+    #     Valid params: -Alias (alias only, NOT -Url), -Owner (UPN)
+    #     NO -Description, NO -Url — passing -Url throws ParameterBindingException.
+    #     SharePoint auto-constructs URL as /sites/{Alias}.
+    #     Creates M365 Group: Exchange mailbox, Planner, Group email address.
+    #     -Alias must be unique across ALL M365 Groups, not just SharePoint.
 
     if ($SiteType -eq "CommunicationSite") {
-        # CommunicationSite supports -Description and -SiteDesign (Blank | Topic | Showcase)
         New-PnPSite -Type CommunicationSite `
             -Title       $SiteTitle `
             -Url         $siteFullUrl `
@@ -647,13 +763,23 @@ try {
             -SiteDesign  Blank `
             -Wait `
             -Connection  $adminConn
-    } else {
-        # TeamSiteWithoutMicrosoft365Group does NOT support -Description or -SiteDesign.
-        # Attempting to pass -Description here throws ParameterBindingException.
-        # Description is applied separately via Set-PnPSite after connecting to the site.
+
+    } elseif ($SiteType -eq "TeamSiteWithoutMicrosoft365Group") {
+        # No -Description or -SiteDesign — applied separately below
         New-PnPSite -Type TeamSiteWithoutMicrosoft365Group `
             -Title      $SiteTitle `
             -Url        $siteFullUrl `
+            -Owner      $PrimaryOwnerEmail `
+            -Wait `
+            -Connection $adminConn
+
+    } else {
+        # TeamSite (group-connected): -Alias instead of -Url
+        # URL is auto-set to: https://{TenantName}.sharepoint.com/sites/{SiteUrlAlias}
+        # This also creates an M365 Group (Exchange mailbox, Planner, Group email)
+        New-PnPSite -Type TeamSite `
+            -Title      $SiteTitle `
+            -Alias      $SiteUrlAlias `
             -Owner      $PrimaryOwnerEmail `
             -Wait `
             -Connection $adminConn
@@ -664,10 +790,10 @@ try {
     $siteConn = Connect-PnPOnline -Url $siteFullUrl -ManagedIdentity -ReturnConnection
     Write-Output "INFO: Site connection established ($siteFullUrl)"
 
-    # Set description on team sites (not supported during New-PnPSite for this type)
+    # Apply description for site types that don't accept it during New-PnPSite
     if ($SiteType -ne "CommunicationSite" -and $Description -ne "") {
         Set-PnPSite -Description $Description -Connection $siteConn
-        Write-Output "INFO: Description applied"
+        Write-Output "INFO: Description applied via Set-PnPSite"
     }
 
     # ── Add site collection admins ────────────────────────────────────────────
