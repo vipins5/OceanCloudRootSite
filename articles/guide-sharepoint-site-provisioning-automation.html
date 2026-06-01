@@ -109,6 +109,42 @@
   .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
   .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
   .related-card:hover .rc-title{color:#00b4d8;}
+  /* Architecture diagram */
+  .arch-diagram{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px 20px 16px;margin:24px 0;overflow-x:auto;}
+  .arch-diagram svg{display:block;min-width:580px;width:100%;}
+  /* Email preview component */
+  .email-preview{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.10);border-radius:12px;overflow:hidden;margin:20px 0;}
+  .ep-chrome{background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08);padding:10px 16px;display:flex;align-items:center;gap:8px;}
+  .ep-chrome .ep-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14);}
+  .ep-chrome .ep-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-left:6px;}
+  .ep-header{padding:14px 20px 10px;border-bottom:1px solid rgba(255,255,255,.06);}
+  .ep-row{display:flex;gap:6px;font-size:.81rem;margin-bottom:5px;line-height:1.5;}
+  .ep-row:last-child{margin-bottom:0;}
+  .ep-field{color:var(--text-dim);font-weight:600;min-width:60px;flex-shrink:0;}
+  .ep-val{color:#c8daea;}
+  .ep-subject{font-size:.85rem;font-weight:700;color:var(--white);}
+  .ep-body{padding:18px 20px;font-size:.84rem;color:var(--text-mid);line-height:1.85;}
+  .ep-body p{margin:0 0 10px;}
+  .ep-body p:last-child{margin:0;}
+  .ep-body strong{color:var(--white);}
+  .ep-body .ep-detail{background:rgba(255,255,255,.03);border-left:2px solid rgba(255,255,255,.1);padding:8px 14px;margin:10px 0;border-radius:0 6px 6px 0;}
+  .ep-body .ep-detail p{margin:0 0 4px;font-size:.81rem;}
+  .ep-body .ep-cta{display:inline-block;margin-top:12px;padding:8px 22px;background:var(--ocean-blue);color:#fff;border-radius:6px;font-size:.81rem;font-weight:700;}
+  /* Prerequisites list */
+  .prereq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0;}
+  .prereq-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:16px 18px;}
+  .prereq-card .pc-service{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .prereq-card .pc-service.sp{color:#fbbf24;}
+  .prereq-card .pc-service.pa{color:#00b4d8;}
+  .prereq-card .pc-service.la{color:#a78bfa;}
+  .prereq-card .pc-service.aa{color:#4ade80;}
+  .prereq-card .pc-service.az{color:#60a5fa;}
+  .prereq-card ul{padding-left:16px;margin:0;}
+  .prereq-card li{font-size:.82rem;color:var(--text-mid);margin-bottom:5px;line-height:1.6;}
+  .prereq-card li:last-child{margin-bottom:0;}
+  .prereq-card li strong{color:var(--text);}
+  /* Timing table highlight */
+  .timing-total td{color:var(--white)!important;font-weight:700;background:rgba(74,222,128,.07);}
   .flow-diagram{display:flex;flex-direction:column;gap:0;margin:24px 0;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;}
   .fd-step{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;}
   .fd-step+.fd-step{border-top:1px solid rgba(255,255,255,.05);}
@@ -222,6 +258,76 @@
         </div>
       </div>
 
+      <h2>Pipeline Architecture</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/azure/automation/media/overview/automation-overview.png" alt="Azure Automation capabilities diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Azure Automation diagram showing runbook and automation capabilities. <a href="https://learn.microsoft.com/en-us/azure/automation/overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <p>The five services below form a linear chain for the happy path. On rejection or error, the flow branches left to send the requester an email and log the outcome.</p>
+
+      <div class="arch-diagram" role="img" aria-label="SharePoint site provisioning pipeline architecture diagram">
+        <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="rgba(255,255,255,0.28)"/></marker>
+            <marker id="arr-err" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="rgba(251,146,60,0.45)"/></marker>
+          </defs>
+          <!-- Happy path boxes -->
+          <!-- 1. Request Form -->
+          <rect x="10" y="20" width="118" height="64" rx="8" fill="rgba(251,191,36,.1)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="69" y="43" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#fbbf24" text-anchor="middle" font-weight="700">SharePoint</text>
+          <text x="69" y="57" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#fbbf24" text-anchor="middle">Request Form</text>
+          <text x="69" y="73" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(251,191,36,.6)" text-anchor="middle">Step 1</text>
+          <!-- arrow -->
+          <line x1="128" y1="52" x2="148" y2="52" stroke="rgba(255,255,255,.25)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <!-- 2. Power Automate -->
+          <rect x="150" y="20" width="118" height="64" rx="8" fill="rgba(0,180,216,.1)" stroke="#00b4d8" stroke-width="1.5"/>
+          <text x="209" y="43" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#00b4d8" text-anchor="middle" font-weight="700">Power Automate</text>
+          <text x="209" y="57" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#00b4d8" text-anchor="middle">Approval Flow</text>
+          <text x="209" y="73" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(0,180,216,.6)" text-anchor="middle">Step 2</text>
+          <!-- arrow -->
+          <line x1="268" y1="52" x2="288" y2="52" stroke="rgba(255,255,255,.25)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <!-- 3. Logic App -->
+          <rect x="290" y="20" width="118" height="64" rx="8" fill="rgba(167,139,250,.1)" stroke="#a78bfa" stroke-width="1.5"/>
+          <text x="349" y="43" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#a78bfa" text-anchor="middle" font-weight="700">Azure Logic App</text>
+          <text x="349" y="57" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#a78bfa" text-anchor="middle">Orchestrator</text>
+          <text x="349" y="73" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(167,139,250,.6)" text-anchor="middle">Step 3</text>
+          <!-- arrow -->
+          <line x1="408" y1="52" x2="428" y2="52" stroke="rgba(255,255,255,.25)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <!-- 4. Azure Automation -->
+          <rect x="430" y="20" width="118" height="64" rx="8" fill="rgba(74,222,128,.1)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="489" y="43" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#4ade80" text-anchor="middle" font-weight="700">Azure Automation</text>
+          <text x="489" y="57" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">PnP Runbook</text>
+          <text x="489" y="73" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(74,222,128,.6)" text-anchor="middle">Step 4</text>
+          <!-- arrow -->
+          <line x1="548" y1="52" x2="568" y2="52" stroke="rgba(255,255,255,.25)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <!-- 5. New SharePoint Site -->
+          <rect x="570" y="20" width="180" height="64" rx="8" fill="rgba(251,191,36,.1)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="660" y="43" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#fbbf24" text-anchor="middle" font-weight="700">New SharePoint Site</text>
+          <text x="660" y="57" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#fbbf24" text-anchor="middle">+ Template structure</text>
+          <text x="660" y="73" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(251,191,36,.6)" text-anchor="middle">Provisioned in 3–5 min</text>
+          <!-- Error / rejection path label -->
+          <text x="10" y="112" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(251,146,60,.7)" font-weight="600">REJECTION / ERROR PATH:</text>
+          <!-- Rejection from PA -->
+          <line x1="209" y1="84" x2="209" y2="118" stroke="rgba(251,146,60,.4)" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-err)"/>
+          <rect x="150" y="120" width="118" height="50" rx="7" fill="rgba(251,146,60,.07)" stroke="rgba(251,146,60,.35)" stroke-width="1.2"/>
+          <text x="209" y="142" font-family="Inter,system-ui,sans-serif" font-size="10" fill="rgba(251,146,60,.85)" text-anchor="middle">Rejection email</text>
+          <text x="209" y="156" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(251,146,60,.55)" text-anchor="middle">→ requester</text>
+          <!-- Error from Logic App -->
+          <line x1="349" y1="84" x2="349" y2="118" stroke="rgba(251,146,60,.4)" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-err)"/>
+          <rect x="290" y="120" width="118" height="50" rx="7" fill="rgba(251,146,60,.07)" stroke="rgba(251,146,60,.35)" stroke-width="1.2"/>
+          <text x="349" y="142" font-family="Inter,system-ui,sans-serif" font-size="10" fill="rgba(251,146,60,.85)" text-anchor="middle">Provision Logs +</text>
+          <text x="349" y="156" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(251,146,60,.55)" text-anchor="middle">failure email</text>
+          <!-- Success path label -->
+          <text x="570" y="112" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(74,222,128,.6)" font-weight="600">SUCCESS:</text>
+          <line x1="660" y1="84" x2="660" y2="118" stroke="rgba(74,222,128,.4)" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <rect x="600" y="120" width="148" height="50" rx="7" fill="rgba(74,222,128,.06)" stroke="rgba(74,222,128,.3)" stroke-width="1.2"/>
+          <text x="674" y="142" font-family="Inter,system-ui,sans-serif" font-size="10" fill="rgba(74,222,128,.85)" text-anchor="middle">Success email + URL</text>
+          <text x="674" y="156" font-family="Inter,system-ui,sans-serif" font-size="9" fill="rgba(74,222,128,.55)" text-anchor="middle">→ requester</text>
+        </svg>
+      </div>
+
       <h2>Component Summary</h2>
 
       <div class="art-table-wrap">
@@ -238,7 +344,55 @@
         </table>
       </div>
 
+      <h2>Before You Start</h2>
+
+      <p>This pipeline spans five Microsoft services. Set up all permissions and licences below before building any step — a missing permission causes silent failures that are painful to debug mid-build.</p>
+
+      <div class="prereq-grid">
+        <div class="prereq-card">
+          <div class="pc-service sp">SharePoint</div>
+          <ul>
+            <li><strong>Site Collection Admin</strong> on the IT admin site (for creating the lists)</li>
+            <li><strong>SharePoint Administrator</strong> tenant role — needed to grant Managed Identity admin rights and to run <code>Set-PnPTenantSite</code></li>
+          </ul>
+        </div>
+        <div class="prereq-card">
+          <div class="pc-service pa">Power Automate</div>
+          <ul>
+            <li><strong>Environment Maker</strong> role in the default Power Platform environment</li>
+            <li>Microsoft 365 <strong>E3/E5</strong> or Power Automate Per User/Per Flow — the <strong>HTTP connector</strong> (to call the Logic App) requires a premium licence</li>
+            <li>Office 365 Users connector (for manager lookup) is standard and included in most M365 plans</li>
+          </ul>
+        </div>
+        <div class="prereq-card">
+          <div class="pc-service la">Azure Logic Apps</div>
+          <ul>
+            <li><strong>Contributor</strong> on the target Azure resource group</li>
+            <li>Consumption plan — no fixed monthly cost, billed per execution (~$0.000025/action, first 4,000/month free)</li>
+            <li>System-assigned Managed Identity granted <strong>Sites.Read.All</strong> on Graph + <strong>Contributor</strong> on the Automation Account</li>
+          </ul>
+        </div>
+        <div class="prereq-card">
+          <div class="pc-service aa">Azure Automation</div>
+          <ul>
+            <li><strong>Contributor</strong> on the Automation Account resource</li>
+            <li>System-assigned Managed Identity enabled; Object ID granted <strong>SharePoint Administrator</strong> in M365 admin centre</li>
+            <li><strong>PnP.PowerShell 2.x</strong> imported from Browse Gallery</li>
+            <li>Runbook runtime: <strong>PowerShell 7.2</strong> (PnP.PowerShell 2.x requires .NET 8)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="art-callout info">
+        <p><strong>Estimated monthly Azure cost at 50 site requests/month:</strong> Azure Automation — first 500 job-minutes/month free, then ~$0.002/minute (~3 min per run = ~$0.006 per request beyond the free tier). Logic App Consumption — ~30 actions per run, first 4,000 free then $0.000025/action. Total Azure cost for 50 requests: typically <strong>under $2/month</strong>. Power Automate premium connector licence is the main cost driver ($15/user/month for Per User plan).</p>
+      </div>
+
       <h2>Step 1: Create the SharePoint Lists</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-triggers.png" alt="Power Automate SharePoint triggers screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing SharePoint triggers used to start site request flows. <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <div class="portal-path">
         <span class="pp-icon">🟩</span>
@@ -401,6 +555,11 @@
           <div class="ss-row"><div class="ss-field"><span class="ss-label">Timeout (ISO 8601)</span><br><span class="ss-value">P2D</span><br><span class="ss-note">— 48 hours; after this the approval action status = TimedOut</span></div></div>
         </div>
       </div>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/approvals/approvals-menu.png" alt="Power Automate approvals menu showing pending approvals" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Power Automate Approvals centre — managers respond here or via the Adaptive Card in Teams. <a href="https://learn.microsoft.com/en-us/power-automate/approvals-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h3>Branch: Approved</h3>
       <p>In the <strong>Yes</strong> branch of a Condition on <code>Outcome equals Approve</code>:</p>
@@ -661,6 +820,11 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
       <div class="art-callout warning">
         <p><strong>Never store credentials in a runbook.</strong> Use Managed Identity exclusively. If your Automation account cannot use Managed Identity (very old accounts), use a Certificate credential stored in Azure Key Vault and fetched at runtime via <code>Get-AutomationCertificate</code> — never a plaintext password.</p>
       </div>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/azure/automation/media/manage-runbooks/runbooks-view.png" alt="Azure Automation runbooks list in the Azure Portal" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Azure Automation runbooks list — the SP-SiteProvisioning runbook appears here once created. Use this view to test-run with parameters before wiring to the Logic App. <a href="https://learn.microsoft.com/en-us/azure/automation/manage-runbooks" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h3>Runbook: SP-SiteProvisioning</h3>
 
@@ -984,38 +1148,68 @@ Error</pre></div>
 
       <h2>Step 6: End-User Notifications</h2>
 
-      <p>Every outcome sends the requester an email. No one is left guessing whether their request was processed.</p>
+      <p>Every outcome sends the requester an email. Build all three using the <strong>Send an email (V2)</strong> action from the Office 365 Outlook connector — one in the Logic App Try scope (success), one in Power Automate's rejected branch, and one in the Logic App Catch scope (failure). The Logic App expressions for each dynamic field are included below.</p>
 
-      <h3>Success notification (sent from Logic App Try scope)</h3>
-      <div class="art-callout">
-        <p><strong>Subject:</strong> Your SharePoint site is ready — [Site Title]<br><br>
-        Hi [First Name],<br><br>
-        Your new SharePoint site has been created and is ready to use.<br><br>
-        <strong>Site name:</strong> [SiteTitle]<br>
-        <strong>URL:</strong> [ProvisionedURL — inserted dynamically by Logic App]<br>
-        <strong>Template applied:</strong> [Template]<br>
-        <strong>Primary owner:</strong> [PrimaryOwnerEmail]<br><br>
-        <strong>Getting started:</strong> Sign in, invite your team members via site Settings &gt; Site permissions, and review the default document library structure that's been set up for you.<br><br>
-        Questions? Contact the IT helpdesk.</p>
+      <h3>Success notification — Logic App Try scope (Completed branch)</h3>
+      <div class="email-preview">
+        <div class="ep-chrome"><div class="ep-dot"></div><div class="ep-dot"></div><div class="ep-dot"></div><span class="ep-label">Send an email (V2) — Success</span></div>
+        <div class="ep-header">
+          <div class="ep-row"><span class="ep-field">From:</span><span class="ep-val">no-reply@yourtenant.onmicrosoft.com (via Logic App)</span></div>
+          <div class="ep-row"><span class="ep-field">To:</span><span class="ep-val">@{body('Parse_JSON')?['requesterEmail']}</span></div>
+          <div class="ep-row ep-subject"><span class="ep-field">Subject:</span><span class="ep-val">Your SharePoint site is ready — @{body('Parse_JSON')?['siteTitle']}</span></div>
+        </div>
+        <div class="ep-body">
+          <p>Hi @{first(split(body('Parse_JSON')?['primaryOwnerEmail'], '.'))},</p>
+          <p>Your new SharePoint site has been created and is ready to use.</p>
+          <div class="ep-detail">
+            <p><strong>Site name:</strong> @{body('Parse_JSON')?['siteTitle']}</p>
+            <p><strong>URL:</strong> @{trim(last(split(body('Get_job_output')?['value'], 'PROVISIONED:')))}</p>
+            <p><strong>Template applied:</strong> @{body('Parse_JSON')?['template']}</p>
+            <p><strong>Site type:</strong> @{body('Parse_JSON')?['siteType']}</p>
+          </div>
+          <p><strong>Getting started:</strong> Sign in, invite your team via <em>Settings &gt; Site permissions</em>, and review the default document library structure that was set up for you.</p>
+          <p style="color:rgba(185,200,220,.6);font-size:.78rem;">Questions? Contact the IT helpdesk and quote your request ID: @{variables('requestItemId')}</p>
+        </div>
       </div>
 
-      <h3>Rejection notification (sent from Power Automate)</h3>
-      <div class="art-callout">
-        <p><strong>Subject:</strong> Site request update — [Site Title] was not approved<br><br>
-        Hi [First Name],<br><br>
-        Your request for a SharePoint site named "<strong>[Site Title]</strong>" was reviewed by your manager and was not approved at this time.<br><br>
-        <strong>Manager's comment:</strong> [ManagerNotes]<br><br>
-        You can amend and resubmit your request via the Site Requests list. If you believe this decision was made in error, please speak to your manager directly.</p>
+      <h3>Rejection notification — Power Automate rejected branch</h3>
+      <div class="email-preview">
+        <div class="ep-chrome"><div class="ep-dot"></div><div class="ep-dot"></div><div class="ep-dot"></div><span class="ep-label">Send an email (V2) — Rejection</span></div>
+        <div class="ep-header">
+          <div class="ep-row"><span class="ep-field">To:</span><span class="ep-val">@{triggerOutputs()?['body/Author/Email']}</span></div>
+          <div class="ep-row ep-subject"><span class="ep-field">Subject:</span><span class="ep-val">Site request update — @{triggerOutputs()?['body/Title']} was not approved</span></div>
+        </div>
+        <div class="ep-body">
+          <p>Hi @{triggerOutputs()?['body/Author/DisplayName']},</p>
+          <p>Your request for a SharePoint site named <strong>@{triggerOutputs()?['body/Title']}</strong> was reviewed by @{outputs('Get_manager_(V2)')?['body/displayName']} and was not approved at this time.</p>
+          <div class="ep-detail">
+            <p><strong>Manager's comment:</strong> @{outputs('Start_and_wait_for_an_approval')?['body/responses'][0]?['comments']}</p>
+          </div>
+          <p>You can amend and resubmit your request via the <a href="[Site Requests list URL]">Site Requests list</a>. If you believe this decision was made in error, please speak to your manager directly.</p>
+        </div>
       </div>
 
-      <h3>Failure notification (sent from Logic App Catch scope)</h3>
-      <div class="art-callout warning">
-        <p><strong>Subject:</strong> Site creation issue — reference [RequestItemId]<br><br>
-        Hi [First Name],<br><br>
-        We ran into a technical problem while creating your SharePoint site "<strong>[Site Title]</strong>". Our team has been notified automatically.<br><br>
-        <strong>Reference number:</strong> [RequestItemId]<br>
-        <strong>Failed step:</strong> [FailedStep from log entry]<br><br>
-        You do not need to resubmit your request — the IT team will investigate and either resolve the issue or contact you within one business day. If you need to escalate, quote reference <strong>[RequestItemId]</strong> to the helpdesk.</p>
+      <h3>Failure notification — Logic App Catch scope</h3>
+      <div class="email-preview">
+        <div class="ep-chrome"><div class="ep-dot"></div><div class="ep-dot"></div><div class="ep-dot"></div><span class="ep-label">Send an email (V2) — Failure</span></div>
+        <div class="ep-header">
+          <div class="ep-row"><span class="ep-field">To:</span><span class="ep-val">@{body('Parse_JSON')?['requesterEmail']}</span></div>
+          <div class="ep-row ep-subject"><span class="ep-field">Subject:</span><span class="ep-val">Site creation issue — reference @{variables('requestItemId')}</span></div>
+        </div>
+        <div class="ep-body">
+          <p>Hi @{first(split(body('Parse_JSON')?['requesterEmail'], '@'))},</p>
+          <p>We ran into a technical problem while creating your SharePoint site <strong>@{body('Parse_JSON')?['siteTitle']}</strong>. Our team has been notified automatically.</p>
+          <div class="ep-detail">
+            <p><strong>Reference number:</strong> @{variables('requestItemId')}</p>
+            <p><strong>Failed step:</strong> @{first(filter(result('Try'), item()?['status'] == 'Failed'))?['name']}</p>
+            <p><strong>Error:</strong> @{first(filter(result('Try'), item()?['status'] == 'Failed'))?['error']?['message']}</p>
+          </div>
+          <p>You do <strong>not</strong> need to resubmit — the IT team will investigate and either resolve the issue or contact you within one business day. To escalate, quote reference <strong>@{variables('requestItemId')}</strong> to the helpdesk.</p>
+        </div>
+      </div>
+
+      <div class="art-callout info">
+        <p><strong>Approval comment expression:</strong> In the rejection email, the manager's comment is accessed via <code>@{outputs('Start_and_wait_for_an_approval')?['body/responses'][0]?['comments']}</code>. The <code>[0]</code> index returns the first (and only) response since we used "First to respond" approval type.</p>
       </div>
 
       <h2>Testing the Pipeline End to End</h2>
@@ -1036,6 +1230,29 @@ Error</pre></div>
       </div>
 
       <p>After each test, verify three things: the SharePoint item Status column updated correctly, the correct email was received by the requester, and (for failure cases) a row appeared in the Provision Logs list with the right content.</p>
+
+      <h3>Pipeline timing reference</h3>
+      <p>Understanding where time is spent helps you set accurate expectations with requesters and choose appropriate Logic App polling intervals.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Stage</th><th>Controller</th><th>Typical duration</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>User submits request form</td><td>User</td><td>1–3 min</td><td>Filling the SharePoint list form including business purpose</td></tr>
+            <tr><td>Power Automate trigger + validation</td><td>Automated</td><td>30–90 sec</td><td>Trigger latency plus URL alias validation + manager lookup</td></tr>
+            <tr><td>Manager approval</td><td>Manager</td><td>0 min – 48 hrs</td><td>Fastest with Teams Adaptive Card; slowest via email only</td></tr>
+            <tr><td>Logic App setup + URL check</td><td>Automated</td><td>5–15 sec</td><td>Graph API call to check URL availability</td></tr>
+            <tr><td>Azure Automation job creation</td><td>Automated</td><td>5–10 sec</td><td>Job queuing and worker allocation</td></tr>
+            <tr><td>PnP PowerShell runbook execution</td><td>Automated</td><td>2–5 min</td><td>Site creation + template structure + sharing policy</td></tr>
+            <tr><td>Logic App polling + notifications</td><td>Automated</td><td>30–90 sec</td><td>30s poll interval + email delivery</td></tr>
+            <tr class="timing-total"><td><strong>Total (happy path, instant approval)</strong></td><td></td><td><strong>3–7 minutes</strong></td><td>From form submission to success email</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout info">
+        <p><strong>Reduce cold-start time:</strong> Azure Automation has a ~30-second job startup latency on the first run after a period of inactivity. For consistently faster provisioning, set the Logic App's Do-Until loop initial Delay to 60 seconds (not 30) to avoid polling before the job has started. This eliminates one wasted polling iteration without adding perceived latency.</p>
+      </div>
 
       <h2>Governance and Maintenance Tips</h2>
 
