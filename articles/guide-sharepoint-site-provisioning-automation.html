@@ -318,7 +318,10 @@
       </div>
 
       <div class="art-callout info">
-        <p><strong>URL parameter difference:</strong> For <code>CommunicationSite</code> and <code>TeamSiteWithoutMicrosoft365Group</code>, the runbook passes <code>-Url</code> (full URL). For <code>TeamSite</code> (group-connected), PnP requires <code>-Alias</code> (the alias only, no URL prefix) — SharePoint constructs the URL automatically as <code>/sites/{Alias}</code>. The alias must also be unique across <em>all</em> M365 Groups in the tenant, not just SharePoint sites.</p>
+        <p><strong>Parameter differences verified against PnP docs:</strong><br><br>
+        <code>CommunicationSite</code>: uses <code>-Url</code> (full URL), <code>-Owner</code>, <code>-SiteDesign</code>. Does <strong>not</strong> accept <code>-Description</code> — apply via <code>Set-PnPWeb</code> after creation.<br><br>
+        <code>TeamSiteWithoutMicrosoft365Group</code>: uses <code>-Url</code>, <code>-Owner</code>. Does <strong>not</strong> accept <code>-Description</code> or <code>-SiteDesign</code>.<br><br>
+        <code>TeamSite</code> (group-connected): uses <code>-Alias</code> (<strong>not</strong> <code>-Url</code>), <code>-Owner</code>, and <strong>does</strong> accept <code>-Description</code> (sets both Group and site description). The alias must be unique across all M365 Groups in the tenant.</p>
       </div>
 
       <h3>Site Provision Logs list</h3>
@@ -734,38 +737,40 @@ try {
     # -Wait blocks until the site is fully provisioned and responsive.
     # Without it, Connect-PnPOnline to the new site fails with 404.
     #
-    # PARAMETER DIFFERENCES BY TYPE — this is the most common source of runbook bugs:
+    # VERIFIED PARAMETER SETS (PnP PowerShell 2.x docs — common source of bugs):
     #
     #   CommunicationSite:
-    #     Valid params: -Url (full URL), -Owner (UPN), -Description, -SiteDesign
-    #     -SiteDesign values: Blank | Topic | Showcase
-    #     No M365 Group. Good for intranets, news hubs, HR portals.
+    #     Valid: -Url (full URL), -Owner (UPN), -SiteDesign (Blank|Topic|Showcase)
+    #     NO -Description — passing it throws ParameterBindingException.
+    #     Description applied after creation via Set-PnPWeb (see below).
     #
     #   TeamSiteWithoutMicrosoft365Group:
-    #     Valid params: -Url (full URL), -Owner (UPN)
-    #     NO -Description, NO -SiteDesign — passing them throws ParameterBindingException.
-    #     No M365 Group. Gets Owners/Members/Visitors groups.
-    #     Description applied separately via Set-PnPSite after connecting.
+    #     Valid: -Url (full URL), -Owner (UPN)
+    #     NO -Description, NO -SiteDesign — both throw ParameterBindingException.
+    #     No M365 Group. Gets Owners/Members/Visitors SharePoint groups.
     #
     #   TeamSite (group-connected):
-    #     Valid params: -Alias (alias only, NOT -Url), -Owner (UPN)
-    #     NO -Description, NO -Url — passing -Url throws ParameterBindingException.
+    #     Valid: -Alias (alias only — NOT -Url), -Owner (UPN), -Description
+    #     -Description IS supported here (sets both Group and site description).
+    #     Passing -Url for this type throws ParameterBindingException.
     #     SharePoint auto-constructs URL as /sites/{Alias}.
     #     Creates M365 Group: Exchange mailbox, Planner, Group email address.
     #     -Alias must be unique across ALL M365 Groups, not just SharePoint.
 
     if ($SiteType -eq "CommunicationSite") {
+        # -Description is NOT in the CommunicationSite parameter set.
+        # It is applied via Set-PnPWeb after connecting (see below).
         New-PnPSite -Type CommunicationSite `
-            -Title       $SiteTitle `
-            -Url         $siteFullUrl `
-            -Owner       $PrimaryOwnerEmail `
-            -Description $Description `
-            -SiteDesign  Blank `
+            -Title      $SiteTitle `
+            -Url        $siteFullUrl `
+            -Owner      $PrimaryOwnerEmail `
+            -SiteDesign Blank `
             -Wait `
-            -Connection  $adminConn
+            -Connection $adminConn
 
     } elseif ($SiteType -eq "TeamSiteWithoutMicrosoft365Group") {
-        # No -Description or -SiteDesign — applied separately below
+        # Neither -Description nor -SiteDesign exist in this parameter set.
+        # Description applied via Set-PnPWeb after connecting (see below).
         New-PnPSite -Type TeamSiteWithoutMicrosoft365Group `
             -Title      $SiteTitle `
             -Url        $siteFullUrl `
@@ -774,26 +779,29 @@ try {
             -Connection $adminConn
 
     } else {
-        # TeamSite (group-connected): -Alias instead of -Url
-        # URL is auto-set to: https://{TenantName}.sharepoint.com/sites/{SiteUrlAlias}
-        # This also creates an M365 Group (Exchange mailbox, Planner, Group email)
+        # TeamSite (group-connected): -Alias NOT -Url; -Description IS supported here.
+        # URL auto-created as: https://{TenantName}.sharepoint.com/sites/{SiteUrlAlias}
+        # Also creates M365 Group (Exchange mailbox, Planner, Group email address).
         New-PnPSite -Type TeamSite `
-            -Title      $SiteTitle `
-            -Alias      $SiteUrlAlias `
-            -Owner      $PrimaryOwnerEmail `
+            -Title       $SiteTitle `
+            -Alias       $SiteUrlAlias `
+            -Owner       $PrimaryOwnerEmail `
+            -Description $Description `
             -Wait `
-            -Connection $adminConn
+            -Connection  $adminConn
     }
     Write-Output "INFO: Site created at $siteFullUrl"
 
-    # Connect to the new site for all site-level operations
+    # Connect to the new site for all subsequent site-level operations
     $siteConn = Connect-PnPOnline -Url $siteFullUrl -ManagedIdentity -ReturnConnection
     Write-Output "INFO: Site connection established ($siteFullUrl)"
 
-    # Apply description for site types that don't accept it during New-PnPSite
-    if ($SiteType -ne "CommunicationSite" -and $Description -ne "") {
-        Set-PnPSite -Description $Description -Connection $siteConn
-        Write-Output "INFO: Description applied via Set-PnPSite"
+    # Apply description for the two types that do not accept it during New-PnPSite.
+    # Set-PnPWeb (not Set-PnPSite) is the correct cmdlet — it sets the web-level
+    # Description property. Set-PnPSite does not have a -Description parameter.
+    if ($SiteType -ne "TeamSite" -and $Description -ne "") {
+        Set-PnPWeb -Description $Description -Connection $siteConn
+        Write-Output "INFO: Description applied via Set-PnPWeb"
     }
 
     # ── Add site collection admins ────────────────────────────────────────────
@@ -909,12 +917,29 @@ try {
 
       <p>The key design decisions in this runbook:</p>
       <ul>
-        <li><strong>Two named connections (<code>$adminConn</code>, <code>$siteConn</code>)</strong> — <code>Set-PnPTenantSite</code> is a tenant-admin operation that must use the admin URL connection. Mixing connections without explicit <code>-Connection</code> parameters is the most common PnP runbook bug.</li>
+        <li><strong>Two named connections (<code>$adminConn</code>, <code>$siteConn</code>)</strong> — <code>Set-PnPTenantSite</code> is a tenant-admin operation that must use the admin URL connection. Mixing connections without explicit <code>-Connection</code> parameters is the most common PnP runbook bug and usually shows as a silent no-op or 403.</li>
         <li><strong><code>$ErrorActionPreference = 'Stop'</code></strong> — makes all errors terminating so the <code>catch</code> block always fires. Without it, some cmdlet failures only write to the error stream and the runbook keeps running and reports success.</li>
-        <li><strong><code>-Wait</code> on <code>New-PnPSite</code></strong> — blocks until the site is fully provisioned. Without it, <code>Connect-PnPOnline</code> to the new site fires before the site exists and fails.</li>
-        <li><strong><code>TeamSiteWithoutMicrosoft365Group</code></strong> — creates a SharePoint-only team site with no M365 Group, no Exchange mailbox, and no Teams team. If the form has a "Create Teams team" toggle, switch to <code>-Type TeamSite</code> and add <code>-Alias $SiteUrlAlias</code>.</li>
-        <li><strong><code>-ErrorAction SilentlyContinue</code> on <code>New-PnPList</code></strong> — prevents duplicate-name exceptions if the runbook is re-run on the same site after a partial failure.</li>
+        <li><strong><code>-Wait</code> on <code>New-PnPSite</code></strong> — blocks until the site is fully provisioned. Without it, <code>Connect-PnPOnline</code> to the new site fires before the site exists and fails with a 404.</li>
+        <li><strong>Parameter set differences by site type</strong> — verified against PnP docs: <code>CommunicationSite</code> accepts <code>-SiteDesign</code> but NOT <code>-Description</code>; <code>TeamSiteWithoutMicrosoft365Group</code> accepts neither; <code>TeamSite</code> (group-connected) uses <code>-Alias</code> (not <code>-Url</code>) and DOES accept <code>-Description</code>. Passing the wrong parameter for a given type throws <code>ParameterBindingException</code> immediately.</li>
+        <li><strong><code>Set-PnPWeb -Description</code> (not <code>Set-PnPSite</code>)</strong> — <code>Set-PnPSite</code> has no <code>-Description</code> parameter. <code>Set-PnPWeb</code> sets the web-level description property and works correctly for both CommunicationSite and TeamSiteWithoutMicrosoft365Group after connecting.</li>
+        <li><strong><code>-ErrorAction SilentlyContinue</code> on <code>New-PnPList</code></strong> — prevents duplicate-name exceptions if the runbook is re-run against the same site after a partial failure (idempotent re-runs).</li>
       </ul>
+
+      <h3>Common runbook errors and fixes</h3>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ParameterBindingException: -Description</strong></td><td>Passing <code>-Description</code> to <code>CommunicationSite</code> or <code>TeamSiteWithoutMicrosoft365Group</code></td><td>Remove <code>-Description</code> from <code>New-PnPSite</code>; apply via <code>Set-PnPWeb -Description</code> after connecting</td></tr>
+            <tr><td><strong>ParameterBindingException: -Url</strong></td><td>Passing <code>-Url</code> to <code>TeamSite</code> (group-connected)</td><td>Use <code>-Alias $SiteUrlAlias</code> instead — PnP constructs the URL automatically</td></tr>
+            <tr><td><strong>403 Access Denied on Set-PnPTenantSite</strong></td><td><code>Set-PnPTenantSite</code> called with site connection instead of admin connection</td><td>Explicitly pass <code>-Connection $adminConn</code></td></tr>
+            <tr><td><strong>404 on Connect-PnPOnline to new site</strong></td><td><code>-Wait</code> omitted on <code>New-PnPSite</code></td><td>Add <code>-Wait</code> to all three <code>New-PnPSite</code> calls</td></tr>
+            <tr><td><strong>Runbook shows Completed but site not created</strong></td><td><code>$ErrorActionPreference</code> left at default (Continue)</td><td>Set <code>$ErrorActionPreference = 'Stop'</code> at the top of the runbook</td></tr>
+            <tr><td><strong>Set-PnPSite: parameter -Description not found</strong></td><td>Using <code>Set-PnPSite</code> to set description</td><td>Use <code>Set-PnPWeb -Description $Description -Connection $siteConn</code></td></tr>
+            <tr><td><strong>Alias conflict: Group already exists</strong></td><td><code>TeamSite -Alias</code> conflicts with an existing M365 Group alias</td><td>Validate alias uniqueness against M365 Groups (not just SharePoint) — use <code>Get-MgGroup -Filter "mailNickname eq '$SiteUrlAlias'"</code> in the Logic App before invoking the runbook</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2>Step 5: Error Logging to SharePoint</h2>
 
