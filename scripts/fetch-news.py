@@ -273,6 +273,72 @@ ARTICLE_IMAGE_FALLBACKS = {
     },
 }
 
+ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
+    "copilot": {
+        "url": "https://learn.microsoft.com/en-us/viva/insights/org-team-insights/images/copilot-dashboard-readiness-full.png",
+        "alt": "Microsoft Copilot Dashboard readiness report screenshot",
+        "caption": "Microsoft Viva Insights screenshot showing Copilot readiness reporting.",
+        "source_url": "https://learn.microsoft.com/en-us/viva/insights/org-team-insights/copilot-dashboard",
+        "source_label": "Microsoft Learn",
+    },
+    "edge": {
+        "url": "https://learn.microsoft.com/en-us/deployEdge/media/microsoft-edge-configure-the-copilot-new-tab-page/img2.png",
+        "alt": "Microsoft Edge Copilot new tab page work cards screenshot",
+        "caption": "Microsoft Edge screenshot showing Copilot new tab page work cards.",
+        "source_url": "https://learn.microsoft.com/en-us/deployEdge/microsoft-edge-management-configure-the-copilot-new-tab-page",
+        "source_label": "Microsoft Learn",
+    },
+    "outlook": {
+        "url": "https://support.microsoft.com/images/en-us/9255871d-06a6-4de5-9236-5fd7af100c5c?format=png&w=900",
+        "alt": "Microsoft Outlook for Windows interface screenshot",
+        "caption": "Microsoft Support screenshot from the new Outlook for Windows guidance.",
+        "source_url": "https://support.microsoft.com/en-us/office/start-using-new-outlook-for-windows-4395454d-cb2f-4c16-bb24-fa4bb36650ae",
+        "source_label": "Microsoft Support",
+    },
+    "purview": {
+        "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-activity-explorer.png",
+        "alt": "Microsoft Purview Insider Risk Management activity explorer screenshot",
+        "caption": "Microsoft Purview screenshot showing Insider Risk Management activity explorer.",
+        "source_url": "https://learn.microsoft.com/en-us/purview/insider-risk-management-activities",
+        "source_label": "Microsoft Learn",
+    },
+    "teams-bookable": {
+        "url": "https://learn.microsoft.com/en-us/microsoftteams/devices/media/book-future-meetings-from-panel-device/panel-bookinfuture-01.jpg",
+        "alt": "Microsoft Teams panel home screen with room availability",
+        "caption": "Microsoft Teams panel screenshot showing room availability and booking context.",
+        "source_url": "https://learn.microsoft.com/en-us/microsoftteams/devices/book-future-meetings-from-panel-device",
+        "source_label": "Microsoft Learn",
+    },
+    "teams-interpreter": {
+        "url": "https://support.microsoft.com/images/en-us/1966f017-c609-407a-9029-48624089e9b5?format=png&w=900",
+        "alt": "Microsoft Teams product basics screenshot",
+        "caption": "Representative Microsoft Teams product screenshot from Microsoft Support.",
+        "source_url": "https://support.microsoft.com/en-us/teams",
+        "source_label": "Microsoft Support",
+    },
+    "teams": {
+        "url": "https://support.microsoft.com/images/en-us/3e38af2d-40e4-433c-8a21-01d5057ac90e?format=png&w=900",
+        "alt": "Microsoft Teams support product screenshot",
+        "caption": "Representative Microsoft Teams product screenshot from Microsoft Support.",
+        "source_url": "https://support.microsoft.com/en-us/teams",
+        "source_label": "Microsoft Support",
+    },
+    "sharepoint": {
+        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png",
+        "alt": "SharePoint Advanced Management screenshot in the SharePoint admin center",
+        "caption": "Microsoft SharePoint admin center screenshot showing SharePoint Advanced Management.",
+        "source_url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
+        "source_label": "Microsoft Learn",
+    },
+    "m365": {
+        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
+        "alt": "Microsoft diagram showing how Microsoft Entra ID, Teams, and SharePoint relate",
+        "caption": "Microsoft diagram showing how Microsoft Entra ID, Teams, and SharePoint work together.",
+        "source_url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
+        "source_label": "Microsoft Learn",
+    },
+}
+
 
 def image_for_item(item: dict) -> str:
     article_image = item.get("_article_image") or {}
@@ -340,6 +406,34 @@ def article_image_for_item(item: dict) -> dict:
     if "copilot" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["copilot"]
     return ARTICLE_IMAGE_FALLBACKS["m365"]
+
+
+def image_bucket_for_item(item: dict) -> str:
+    """Return the topic bucket used to pick representative secondary imagery."""
+    haystack = (item.get("title", "") + " " + item.get("summary", "")).lower()
+    if "edge" in haystack:
+        return "edge"
+    if "outlook" in haystack:
+        return "outlook"
+    if "purview" in haystack or "insider risk" in haystack:
+        return "purview"
+    if "bookable desk" in haystack or "desk" in haystack:
+        return "teams-bookable"
+    if "interpreter" in haystack:
+        return "teams-interpreter"
+    if "teams" in haystack:
+        return "teams"
+    if "sharepoint" in haystack:
+        return "sharepoint"
+    if "copilot" in haystack:
+        return "copilot"
+    return "m365"
+
+
+def secondary_article_image_for_item(item: dict) -> dict:
+    """Choose a second real image for generated news article context."""
+    bucket = image_bucket_for_item(item)
+    return ARTICLE_SECONDARY_IMAGE_FALLBACKS.get(bucket, ARTICLE_SECONDARY_IMAGE_FALLBACKS["m365"])
 
 
 def topic_for_item(item: dict) -> str:
@@ -532,6 +626,16 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
         <figcaption>{escape(article_image.get('caption', 'Microsoft product image.'))} <a href="{escape(article_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(article_image.get('source_label', item['source']))}</a>.</figcaption>
       </figure>
 """
+    secondary_image = item.get("_secondary_article_image") or secondary_article_image_for_item(item)
+    secondary_image_html = ""
+    if secondary_image.get("url") and secondary_image.get("url") != image_url:
+        secondary_image_html = f"""
+      <figure class="article-image">
+        <img src="{escape(secondary_image['url'])}" alt="{escape(secondary_image.get('alt', title))}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>{escape(secondary_image.get('caption', 'Related Microsoft product image.'))} <a href="{escape(secondary_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(secondary_image.get('source_label', item['source']))}</a>.</figcaption>
+      </figure>
+"""
+    og_image = image_url or f"{SITE_BASE_URL}/assets/og-home.jpg"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -549,7 +653,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <meta property="og:title"       content="{escape(title)}" />
   <meta property="og:description" content="{desc}" />
   <meta property="og:url"         content="{canonical}" />
-  <meta property="og:image"       content="{SITE_BASE_URL}/assets/og-home.jpg" />
+  <meta property="og:image"       content="{escape(og_image)}" />
   <meta property="og:locale"      content="en_US" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -663,6 +767,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
 {image_html}
 
       {body_html}
+{secondary_image_html}
 
       <div class="ms-source-ref">
         <strong>Original announcement:</strong>
@@ -1054,6 +1159,7 @@ def main() -> None:
         # Short commentary for news card
         item["_commentary"] = ai_rewrite(item["title"], item["summary"])
         item["_article_image"] = article_image_for_item(item)
+        item["_secondary_article_image"] = secondary_article_image_for_item(item)
         time.sleep(0.3)
 
         # Standalone article page (only if file doesn't already exist)

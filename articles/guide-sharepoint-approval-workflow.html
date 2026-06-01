@@ -182,6 +182,11 @@
       </ul>
 
       <h2>Step 1: Prepare Your SharePoint Library</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/select-sharepoint-site-info-new-designer.png" alt="Power Automate new designer SharePoint site information screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing SharePoint site information selection in the new designer. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
       <p>Before building the flow, configure the SharePoint document library with the columns the flow will read and write. Without these columns, the flow cannot track state or surface approver comments.</p>
 
       <h3>Required columns</h3>
@@ -225,6 +230,11 @@
       <a href="https://learn.microsoft.com/en-us/power-automate/approvals-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Overview of approvals in Power Automate — learn.microsoft.com</a>
 
       <h2>Step 3: Configure the Approval Action</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/create-approval-response-options/enter-title-assigned-to-details.png" alt="Power Automate approval title and assignee configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing approval title, assignee, and details configuration. <a href="https://learn.microsoft.com/en-us/power-automate/create-approval-response-options" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
       <p>In the Yes branch, add the action <strong>"Start and wait for an approval"</strong> from the Approvals connector. This is a blocking action — the flow pauses here until the approver responds (or the timeout expires).</p>
 
       <h3>Approval action settings</h3>

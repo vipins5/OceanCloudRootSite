@@ -244,6 +244,11 @@ $workflowInventory |
       </div>
 
       <h2>Step 2: Map Legacy Workflow Features to Power Automate</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-triggers.png" alt="Power Automate SharePoint triggers screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing SharePoint triggers used when replacing legacy workflows. <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
       <p>SharePoint Designer workflows had their own set of actions and conditions. Most have direct Power Automate equivalents; some require a different approach.</p>
 
       <div class="art-table-wrap">
@@ -314,6 +319,11 @@ $workflowInventory |
       </ul>
 
       <h2>Common Migration Challenges</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" alt="Power Automate approval flow overview screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing a modern approval flow used in workflow migrations. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h3>"Wait for Field Change" — the hardest pattern to migrate</h3>
       <p>SharePoint Designer's "Wait for field change" action allowed a single workflow to pause indefinitely until a column reached a specified value. Power Automate has no equivalent waiting pattern within a single flow. The solution is to split the logic into two flows: one that starts the initial process (triggered by item creation), and a second that continues the process (triggered by item modification with a condition checking the field value). This "two-flow" pattern is more reliable than the original waiting approach anyway — the old wait pattern was notoriously brittle under heavy load.</p>

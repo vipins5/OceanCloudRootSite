@@ -281,6 +281,11 @@
       </div>
 
       <h2>Step 1: Install PowerShell 7</h2>
+
+      <figure class="article-image">
+        <img src="https://pnp.github.io/powershell/images/authentication/allowPublicClient.png" alt="PnP PowerShell authentication public client configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>PnP PowerShell authentication screenshot showing public client configuration. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
+      </figure>
       <p>PnP.PowerShell is cross-platform and works on Windows PowerShell 5.1, but PowerShell 7 (built on .NET) is strongly recommended. It runs faster, supports more PnP cmdlets, and will be required in future module versions.</p>
 
       <h3>Check your current PowerShell version</h3>
@@ -337,6 +342,11 @@ Get-Module PnP.PowerShell | Select-Object Version</pre></div>
       <a href="https://pnp.github.io/powershell/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell documentation — pnp.github.io</a>
 
       <h2>Step 3: Roles Required for App Registration</h2>
+
+      <figure class="article-image">
+        <img src="https://pnp.github.io/powershell/images/authentication/conditionalAccess.png" alt="PnP PowerShell authentication conditional access screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>PnP PowerShell authentication screenshot showing conditional access considerations. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
+      </figure>
       <p>Creating an Entra app registration and granting it high-privilege permissions requires specific Azure AD roles. Confirm these with your tenant administrator before starting.</p>
 
       <div class="art-table-wrap">

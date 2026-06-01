@@ -238,6 +238,11 @@
       </div>
 
       <h2>Prerequisites</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepointmigration/media/spmt-settings/image.png" alt="SharePoint Migration Tool settings screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Learn screenshot showing SharePoint Migration Tool settings useful during migration validation. <a href="https://learn.microsoft.com/en-us/sharepointmigration/spmt-settings" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
       <p>You need PowerShell 7, the PnP.PowerShell module, and an Entra app registration with the right permissions. If you have not done this yet, start with our <a href="guide-pnp-entra-app-registration">PnP Entra App Registration guide</a> before continuing.</p>
 
       <div class="art-table-wrap">
@@ -310,6 +315,11 @@ Write-Host "Source     : $((Get-PnPWeb -Connection $src).Title)"
 Write-Host "Destination: $((Get-PnPWeb -Connection $dst).Title)"</pre></div>
 
       <h2>Step 2 — Inventory the Source Site</h2>
+
+      <figure class="article-image">
+        <img src="https://pnp.github.io/powershell/images/authentication/libraryVariables.png" alt="PnP PowerShell authentication configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>PnP PowerShell authentication screenshot relevant to scripted SharePoint migration connections. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
+      </figure>
       <p>Before migrating anything, produce a complete inventory of the source site. This CSV becomes your migration manifest and your post-migration validation baseline.</p>
 
       <div class="code-label">PowerShell 7 &mdash; export full site inventory to CSV</div>

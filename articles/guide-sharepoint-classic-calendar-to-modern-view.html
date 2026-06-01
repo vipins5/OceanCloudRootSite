@@ -141,6 +141,11 @@
       </table></div>
 
       <h2>What this script does</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/dev/images/sp-viewformatting-panel-listlayout.png" alt="SharePoint list layout formatting pane screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft SharePoint screenshot showing the list layout formatting pane. <a href="https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
       <p>The script in this guide is based on a proven pattern: connect with PnP.PowerShell, call SharePoint REST to add a view definition, then optionally set the created view as default. The hardened version adds a guardrail layer before and after the REST call so the script can fail early and explain exactly why.</p>
 
       <div class="check-flow">
@@ -171,6 +176,11 @@
       <p>Decide whether to skip, overwrite, or version an existing modern view title. In this guide, the default is safe-skip for an existing view title. You can switch behavior if your governance model prefers replacing old artifacts.</p>
 
       <h2>Hardened migration script (with pre-checks and PS verification)</h2>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/dev/images/sp-viewformatting-panel-tileslayout.png" alt="SharePoint gallery layout formatting pane screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft SharePoint screenshot showing gallery layout formatting options for modern views. <a href="https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
       <p>The script below includes your original REST pattern, but adds validation, dry-run support, and post-change verification so it can be used repeatedly across sites. Start with dry-run mode in a test site, then run in production once validation passes.</p>
 
       <div class="code-block"><div class="code-label">PowerShell - classic calendar to modern view with safeguards</div><pre><code>#requires -Modules PnP.PowerShell
