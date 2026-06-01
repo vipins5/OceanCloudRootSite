@@ -5,6 +5,7 @@ Generate a content QA report for OceanCloud.
 Hard-fail checks:
 - XML parseability for sitemap.xml and feed.xml
 - JSON parseability for key data index files
+- Sitemap URLs must not point at pages with a robots noindex directive
 
 Advisory checks (warnings only):
 - Missing <title>
@@ -51,6 +52,14 @@ CANONICAL_RE = re.compile(
     r"<link\s+[^>]*rel=[\"']canonical[\"'][^>]*>",
     re.IGNORECASE,
 )
+# Regex that extracts page-level robots directives.
+ROBOTS_RE = re.compile(
+    r"<meta\s+[^>]*name=[\"']robots[\"'][^>]*content=[\"']([^\"']*)[\"'][^>]*>",
+    re.IGNORECASE,
+)
+
+# Public URL prefix used in sitemap.xml.
+BASE_URL = "https://oceancloudconsults.com"
 
 
 def rel(path: Path) -> str:
@@ -80,6 +89,48 @@ def check_json(files: list[Path]) -> list[str]:
             json.loads(file_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
             errors.append(f"Invalid JSON in {rel(file_path)}: {exc}")
+    return errors
+
+
+def sitemap_url_to_file(loc: str) -> Path | None:
+    path = loc.replace(BASE_URL, "", 1).strip("/")
+    if not path:
+        return ROOT / "index.html"
+
+    candidates = [
+        ROOT / f"{path}.html",
+        ROOT / path,
+        ROOT / f"{path}/index.html",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def check_sitemap_noindex(sitemap_file: Path) -> list[str]:
+    errors: list[str] = []
+    if not sitemap_file.exists():
+        return errors
+
+    try:
+        tree = ET.parse(sitemap_file)
+    except ET.ParseError:
+        return errors
+
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    for loc_el in tree.findall(".//sm:loc", ns):
+        loc = (loc_el.text or "").strip()
+        file_path = sitemap_url_to_file(loc)
+        if file_path is None or file_path.suffix.lower() != ".html":
+            continue
+
+        content = file_path.read_text(encoding="utf-8", errors="ignore")
+        robots_match = ROBOTS_RE.search(content)
+        robots = robots_match.group(1).lower() if robots_match else ""
+        if "noindex" in robots:
+            errors.append(f"Sitemap URL points to noindex page: {loc} ({rel(file_path)})")
+
     return errors
 
 
@@ -177,6 +228,7 @@ def main() -> int:
     html_files = sorted(ROOT.glob("*.html")) + sorted((ROOT / "articles").glob("*.html"))
 
     xml_errors = check_xml(XML_FILES)
+    xml_errors.extend(check_sitemap_noindex(ROOT / "sitemap.xml"))
     json_errors = check_json(JSON_FILES)
     metadata = scan_metadata(html_files)
 

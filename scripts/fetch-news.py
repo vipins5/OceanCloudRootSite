@@ -5,11 +5,11 @@ OceanCloud News Fetcher
 Pulls the latest Microsoft SharePoint blog posts and M365 release
 communications, rewrites each item in OceanCloud's consulting voice
 using an AI API, then:
-  1. Generates a standalone article page in articles/news-*.html
+    1. Generates a standalone article page in articles/news-*.html for users
   2. Injects the latest cards into news.html (replaces each run)
   3. Appends new items to data/archive.json (cumulative, deduplicated)
   4. Regenerates archive.html from the full archive grouped by month
-  5. Updates sitemap.xml with new article URLs
+    5. Keeps short generated news detail pages out of sitemap.xml by default
 
 Sources
 -------
@@ -90,6 +90,9 @@ SITEMAP_XML     = ROOT / "sitemap.xml"
 SEARCH_INDEX    = ROOT / "data" / "search-index.json"
 # Canonical public base URL for generated links/canonical tags.
 SITE_BASE_URL   = "https://oceancloudconsults.com"
+# Generated news detail pages are short recaps for human readers coming from the
+# news/archive pages. Keep Google focused on the stronger hub and guide pages.
+INDEX_NEWS_ARTICLES = False
 
 # Marker comments delimiting auto-managed news block in news.html.
 NEWS_BEGIN      = "<!-- BEGIN:NEWS-CONTENT -->"
@@ -401,7 +404,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <meta name="theme-color" content="#0077b6" />
   <title>{escape(title)} | OceanCloud</title>
   <meta name="description" content="{desc}" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="robots" content="{'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' if INDEX_NEWS_ARTICLES else 'noindex, follow'}" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="{canonical}" />
   <meta property="og:type"        content="article" />
@@ -594,6 +597,9 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
 
 def update_sitemap(new_slugs: list[str]) -> None:
     """Append new article URLs to sitemap.xml if not already present."""
+    if not INDEX_NEWS_ARTICLES:
+        print("✓ sitemap.xml unchanged; generated news detail pages are noindex.")
+        return
     if not SITEMAP_XML.exists() or not new_slugs:
         return
     content = SITEMAP_XML.read_text(encoding="utf-8")
@@ -930,8 +936,11 @@ def main() -> None:
     update_sitemap(new_article_slugs)
 
     # ── Update search index ───────────────────────────────────────────────────
-    new_indexed = [it for it in all_items if it.get("_slug") in new_article_slugs]
-    update_search_index(new_indexed)
+    if INDEX_NEWS_ARTICLES:
+        new_indexed = [it for it in all_items if it.get("_slug") in new_article_slugs]
+        update_search_index(new_indexed)
+    else:
+        print("✓ search-index.json unchanged; generated news detail pages are noindex.")
 
     # ── Update news.html ──────────────────────────────────────────────────────
     html = NEWS_HTML.read_text(encoding="utf-8")
