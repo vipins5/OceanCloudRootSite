@@ -520,19 +520,26 @@
       <h3>URL alias validation (before approval routing)</h3>
       <p>Validate the alias <em>before</em> it reaches the manager. If it fails, the manager never sees an approvable request that would fail at the runbook stage anyway. Add a <strong>Condition</strong> action with three checks combined using <code>and()</code>:</p>
 
-      <div class="screen-step">
-        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Power Automate — URL alias validation Condition</span></div>
-        <div class="screen-step-body">
-          <span class="ss-label">Condition (all must be true):</span><br><br>
-          <span class="ss-value">1. Length check (2–40 characters)</span><br>
-          <code style="color:#4ade80;font-size:.8rem">@{and(greaterOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 2), lessOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 40))}</code><br><br>
-          <span class="ss-value">2. Lowercase check (no uppercase characters)</span><br>
-          <code style="color:#4ade80;font-size:.8rem">@{equals(toLower(triggerOutputs()?['body/SiteURLAlias']), triggerOutputs()?['body/SiteURLAlias'])}</code><br><br>
-          <span class="ss-value">3. No spaces or special characters (only letters, digits, hyphens)</span><br>
-          <code style="color:#4ade80;font-size:.8rem">@{not(contains(triggerOutputs()?['body/SiteURLAlias'], ' '))}</code><br><br>
-          <span class="ss-note">If validation fails → set Status = Failed, send requester a "URL alias invalid" email, Terminate.</span>
-        </div>
-      </div>
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/add-condition.png" alt="Power Automate Condition action showing approval outcome check" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Power Automate Condition action — this is where you place the three URL alias checks. Each check goes into a row using the <strong>And</strong> grouping so all must pass. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <p>In the Condition action, add three rows using <strong>And</strong>. Copy each expression into the left-hand value field and set the right-hand comparison to <strong>is equal to true</strong>:</p>
+
+      <div class="code-label">Power Automate — Condition expressions (all three must be true)</div>
+      <div class="code-block"><pre># Row 1: Length 2–40 characters
+@{and(greaterOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 2),
+      lessOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 40))}
+
+# Row 2: All lowercase — no uppercase characters allowed
+@{equals(toLower(triggerOutputs()?['body/SiteURLAlias']),
+          triggerOutputs()?['body/SiteURLAlias'])}
+
+# Row 3: No spaces (catches multi-word aliases)
+@{not(contains(triggerOutputs()?['body/SiteURLAlias'], ' '))}
+
+# If condition = false → Update Status to "Failed" → Send email "URL alias is invalid" → Terminate</pre></div>
 
       <div class="art-callout info">
         <p><strong>Why not full regex in Power Automate?</strong> Power Automate does not have a native regex <code>match()</code> function in standard expressions. The three checks above cover the most common mistakes (spaces, uppercase, too long). For stricter validation — including no leading/trailing hyphens and reserved words — add a separate <strong>Filter array</strong> action against a SharePoint list of reserved prefixes, or move the regex check into a small Azure Function called from the flow.</p>
@@ -544,17 +551,30 @@
       <h3>Send the approval</h3>
       <p>Add a <strong>Start and wait for an approval</strong> action from the Approvals connector. Configure it as follows:</p>
 
-      <div class="screen-step">
-        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Power Automate — Start and wait for an approval</span></div>
-        <div class="screen-step-body">
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">Approval type</span><br><span class="ss-value">Approve/Reject - First to respond</span></div></div>
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">Title</span><br><span class="ss-value">Site request: @{triggerOutputs()?['body/Title']}</span></div></div>
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">Assigned to</span><br><span class="ss-value">@{outputs('Get_manager_(V2)')?['body/mail']}</span></div></div>
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">Details</span><br><span class="ss-value">Requester: @{triggerOutputs()?['body/Author/DisplayName']}<br>URL alias: @{triggerOutputs()?['body/SiteURLAlias']}<br>Type: @{triggerOutputs()?['body/SiteType/Value']}<br>Purpose: @{triggerOutputs()?['body/BusinessPurpose']}</span></div></div>
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">Item link</span><br><span class="ss-value">@{triggerOutputs()?['body/{Link}']}</span><br><span class="ss-note">— opens the SharePoint list item for the approver</span></div></div>
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">Timeout (ISO 8601)</span><br><span class="ss-value">P2D</span><br><span class="ss-note">— 48 hours; after this the approval action status = TimedOut</span></div></div>
-        </div>
-      </div>
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/provide-approval-config-info-new-designer.png" alt="Power Automate Start and wait for an approval action configuration in the new designer" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Power Automate — <strong>Start and wait for an approval</strong> action configuration in the new designer. Your fields will match the expressions below. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <div class="code-label">Power Automate — Start and wait for an approval: field values</div>
+      <div class="code-block"><pre>Approval type:  Approve/Reject - First to respond
+
+Title:          Site request: @{triggerOutputs()?['body/Title']}
+
+Assigned to:    @{outputs('Get_manager_(V2)')?['body/mail']}
+                # This is the manager's email from the Get manager (V2) action
+
+Details:        Requester: @{triggerOutputs()?['body/Author/DisplayName']}
+                URL alias: @{triggerOutputs()?['body/SiteURLAlias']}
+                Type: @{triggerOutputs()?['body/SiteType/Value']}
+                Purpose: @{triggerOutputs()?['body/BusinessPurpose']}
+
+Item link:      @{triggerOutputs()?['body/{Link}']}
+                # Opens the SharePoint list item so the approver can review the full request
+
+Timeout:        P2D
+                # ISO 8601 for 48 hours — after this, approval action status = TimedOut
+                # Handle the timed-out branch via Configure run after → Has timed out</pre></div>
 
       <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/select-approvals.png" alt="Power Automate approval action selector screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
