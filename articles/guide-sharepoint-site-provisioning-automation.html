@@ -607,6 +607,11 @@ Timeout:        P2D
       <h3>Branch: Timed out</h3>
       <p>Use <strong>Configure run after</strong> on a parallel branch set to run when the approval action has <em>timed out</em>. In this branch: send a reminder email to the manager and a holding email to the requester ("We've chased your manager and are waiting for a response").</p>
 
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/completed-flow-new-designer.png" alt="Completed Power Automate approval flow in the new designer showing all branches" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Power Automate — completed approval flow structure in the new designer. Your site request flow follows the same pattern: trigger → validation → approval → approved/rejected branches. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
       <h2>Step 3: Azure Logic App — The Orchestrator</h2>
 
       <div class="portal-path">
@@ -718,30 +723,45 @@ Audience:       https://graph.microsoft.com
       <h3>Try / Catch pattern with Scope actions</h3>
       <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures no error path is left unhandled.</p>
 
-      <div class="screen-step">
-        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Logic App Designer — full action sequence</span></div>
-        <div class="screen-step-body">
-          <span class="ss-label">Before Try scope (top level — required for variables):</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Initialize variable — runbookJobId (String, value: "")</span><br>
-          <span class="ss-note">&nbsp;&nbsp;↑ Initialize variable must be at the top level, NOT inside a scope</span><br><br>
-          <span class="ss-label">▼ Scope: Try</span><br>
-          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (Status = Provisioning)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Azure Automation — Create job (runbook: SP-SiteProvisioning)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Set variable — runbookJobId = @{body('Create_job')?['properties/jobId']}</span><br>
-          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (LogicAppRunID = @{variables('runbookJobId')})</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Do Until — poll job (30s delay per loop, max 20 = 10 min)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Condition — if job Completed: get output, update Provisioned, email</span><br>
-          &nbsp;&nbsp;<span class="ss-value">&nbsp;&nbsp;&nbsp;No branch → Terminate (Status=Failed) ← makes Try fail</span><br><br>
-          <span class="ss-label">▼ Scope: Catch</span>
-          <span class="ss-note"> (Configure run after: Try → has failed)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">SharePoint — Create item in Site Provision Logs</span><br>
-          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (Status = Failed)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Send an email (V2) — failure notification to requester</span>
-        </div>
-      </div>
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/error-exception-handling/add-actions-into-scope.png" alt="Azure Logic Apps designer showing actions grouped inside a Scope action" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Azure Logic Apps designer — actions grouped inside a <strong>Scope</strong> action. Your provisioning actions go inside a Scope named "Try". A second Scope named "Catch" sits below it and runs only when Try fails. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/error-exception-handling" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/error-exception-handling/set-run-after-in-scope.png" alt="Azure Logic Apps designer showing Run after configuration for the Catch scope" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Logic Apps — <strong>Run after</strong> configuration for the Catch scope. Select the Try scope and tick <em>Has failed</em>. This means the Catch scope only fires when the Try scope encounters a failure. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/error-exception-handling" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
+
+      <div class="code-label">Logic App — full action order (top to bottom in the designer)</div>
+      <div class="code-block"><pre># TOP LEVEL (before the Try scope — Initialize variable MUST be here)
+Initialize variable — name: runbookJobId   type: String   value: ""
+Initialize variable — name: requestItemId  type: Integer  value: @{body('Parse_JSON')?['requestItemId']}
+
+# SCOPE: Try
+  SharePoint — Update item (SiteRequestsListId, Id=requestItemId, Status="Provisioning")
+  Azure Automation — Create job (runbook: SP-SiteProvisioning, all site params as key/value)
+  Set variable — runbookJobId = @{body('Create_job')?['properties/jobId']}
+  SharePoint — Update item (LogicAppRunID = @{variables('runbookJobId')})
+  Do Until (exit when job status is Completed/Failed/Suspended, or counter > 20)
+    Delay — 30 seconds
+    Azure Automation — Get job (@{variables('runbookJobId')})
+  Condition — @{equals(body('Get_job')?['properties/status'], 'Completed')}
+    TRUE branch:
+      Azure Automation — Get job output
+      SharePoint — Update item (Status="Provisioned", ProvisionedURL=extracted URL)
+      Office 365 Outlook — Send an email (V2) — success notification
+    FALSE branch:
+      Terminate (Status=Failed, message="Runbook did not complete successfully")
+      # Terminate with Failed causes the Try scope to fail → triggers Catch scope
+
+# SCOPE: Catch   (Configure run after: Try scope → Has failed)
+  SharePoint — Create item in Site Provision Logs (using result('Try') expressions)
+  SharePoint — Update item (Status = "Failed")
+  Office 365 Outlook — Send an email (V2) — failure notification</pre></div>
 
       <div class="art-callout warning">
-        <p><strong>Initialize variable must be before the Try scope.</strong> Logic Apps does not allow <code>Initialize variable</code> inside a Scope action — it throws a designer validation error. Declare <em>runbookJobId</em> (String) and <em>requestItemId</em> (Integer) at the top level before the Try scope. Inside the scope, use <strong>Set variable</strong> to assign values to them.</p>
+        <p><strong>Initialize variable must be before the Try scope.</strong> Logic Apps does not allow <code>Initialize variable</code> inside a Scope action — it throws a designer validation error. Declare both variables at the top level before the Try scope. Inside the scope, use <strong>Set variable</strong> (not Initialize variable) to assign values.</p>
       </div>
 
       <p>Inside the <strong>Try</strong> scope:</p>
