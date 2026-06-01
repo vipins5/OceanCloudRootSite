@@ -17,7 +17,7 @@
   <meta property="og:title"       content="SharePoint Permissions Best Practices for Secure Microsoft 365 Sites" />
   <meta property="og:description" content="Least privilege, group-based access, external sharing controls, audit methodology, and the top 10 SharePoint permission mistakes — a security-focused deep dive." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -159,6 +159,11 @@
       </div>
 
       <p class="article-intro">SharePoint permissions are deceptively easy to get wrong. The platform makes it trivially simple to share content — which is by design — but that ease of sharing, without governance, creates the oversharing problems that result in data breaches, compliance failures, and Copilot AI surfacing documents to people who should never have seen them. This guide sets out the permission design principles, structural patterns, and audit approaches that prevent those problems.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png" alt="SharePoint site access panel for adding members to a communication site" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft SharePoint screenshot showing the site access panel for managing members. <a href="https://learn.microsoft.com/en-us/sharepoint/customize-sharepoint-site-permissions" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h2>Principle 1: Always Start with Least Privilege</h2>
       <p>The least privilege principle means granting users the minimum access required to do their job — no more. In SharePoint, this translates to concrete decisions at every level of the permission hierarchy:</p>

@@ -87,6 +87,41 @@
   font-size: .93rem;
 }
 
+/* ── Reusable sourced article imagery ── */
+.article-image {
+  margin: 28px 0;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+}
+
+.article-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+  color: transparent;
+  font-size: 0;
+}
+
+.article-image figcaption {
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: .78rem;
+  line-height: 1.6;
+}
+
+.article-image figcaption a {
+  color: #00b4d8;
+  text-decoration: none;
+}
+
+.article-image figcaption a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
   .quick-points-box {
     margin: 16px 0 22px;

@@ -17,7 +17,7 @@
   <meta property="og:title"       content="SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel" />
   <meta property="og:description" content="Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate + SharePoint explained with implementation notes." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -165,6 +165,11 @@
       </div>
 
       <p class="article-intro">Single-approver workflows handle the easy case. Real business approval processes almost always involve multiple people — a line manager, a finance sign-off, a compliance check, and sometimes a final executive approval. Power Automate supports every combination of these patterns, but choosing the wrong model for your business process creates bottlenecks, compliance gaps, or both. This guide breaks down every multi-approver pattern and when to use each.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" alt="Power Automate approval flow with parallel branches screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing a parallel approval flow with multiple approvers. <a href="https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h2>The Four Multi-Approver Patterns</h2>
 

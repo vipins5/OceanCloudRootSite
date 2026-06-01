@@ -17,7 +17,7 @@
   <meta property="og:title"       content="Switch SharePoint Classic Calendar to Modern View with PnP PowerShell" />
   <meta property="og:description" content="A practical migration guide with hardened PowerShell pre-checks and verification steps for modernizing SharePoint calendar list views." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/dev/images/view-dropdown-menu.png" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=5" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -116,6 +116,11 @@
       </div>
 
       <p class="article-intro">A lot of SharePoint teams still run important scheduling workflows on classic calendar lists. The list itself may be stable, but the user experience is usually not: classic rendering behaves differently across browsers, responsive behavior is weak, and long-term support confidence is lower than modern list experiences. If your objective is to preserve calendar data while giving users a cleaner modern view, you do not need to rebuild everything from scratch. In many cases you can add a modern-friendly list view and set it as default, while retaining the original view for fallback.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/dev/images/view-dropdown-menu.png" alt="SharePoint view dropdown menu screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft SharePoint screenshot showing the modern view dropdown menu used for list view formatting. <a href="https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <p>This guide gives you a full admin runbook for switching from classic calendar view to modern view with PnP PowerShell and SharePoint REST endpoints. It includes hard pre-checks for PowerShell and module readiness, validation of list schema and fields, optional dry-run mode, post-change verification, and a practical rollback pattern. It is written for Microsoft 365 administrators and SharePoint owners who need low-risk execution, auditability, and repeatability across multiple sites.</p>
 

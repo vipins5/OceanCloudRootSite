@@ -17,7 +17,7 @@
   <meta property="og:title"       content="SharePoint External Sharing: Complete Admin Guide" />
   <meta property="og:description" content="A practical admin guide to secure SharePoint external sharing with tenant controls, site policies, Entra B2B, and PowerShell." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/externalsharing.png" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=3" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -114,6 +114,11 @@
       </div>
 
       <p class="article-intro">SharePoint external sharing is one of the most useful and most misunderstood collaboration features in Microsoft 365. It allows employees to work with clients, vendors, contractors, auditors, and partners without emailing document copies or creating unmanaged file stores. The challenge is that external sharing is controlled by several layers at once: organization settings, site settings, link defaults, Microsoft Entra B2B rules, guest lifecycle policies, and the permissions already present in the site.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/externalsharing.png" alt="SharePoint admin center external sharing settings screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft SharePoint admin center screenshot showing external sharing settings. <a href="https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <p>When those layers are planned together, SharePoint becomes a secure collaboration workspace. When they are not, a tenant can quietly accumulate anonymous links, orphaned guest accounts, over-permissioned project sites, and content that Microsoft 365 Copilot can surface to users who technically have access but should not. This guide explains how SharePoint external sharing works, how to choose the right settings, and how to validate the configuration with PowerShell.</p>
 

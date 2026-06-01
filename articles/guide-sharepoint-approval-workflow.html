@@ -17,7 +17,7 @@
   <meta property="og:title"       content="How to Build a SharePoint Approval Workflow with Power Automate" />
   <meta property="og:description" content="Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -168,6 +168,11 @@
       </div>
 
       <p class="article-intro">SharePoint approval workflows are one of the most requested Power Automate builds — and one of the most commonly built incorrectly. Developers skip the status column, forget the rejection branch, or build flows that break when the approver is out of office. This guide builds a complete, production-ready SharePoint document approval workflow from scratch, covering every step from list setup through edge-case handling.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" alt="Power Automate approval flow overview screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing a modern approval flow overview. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h2>What We're Building</h2>
       <p>A Power Automate cloud flow that triggers when a document is submitted to a SharePoint library, sends the configured approver a structured approval request in Microsoft Teams and email, waits for a response, and then:</p>

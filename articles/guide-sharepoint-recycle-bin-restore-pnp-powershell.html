@@ -17,7 +17,7 @@
   <meta property="og:title"       content="Restore SharePoint Recycle Bin Items with PnP PowerShell" />
   <meta property="og:description" content="A practical admin guide and script for restoring deleted SharePoint files and folders from first-stage recycle bin by folder path, deleted date, and optional deleted-by filter." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&amp;w=900" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=5" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -116,6 +116,11 @@
       </div>
 
       <p class="article-intro">When a SharePoint folder is accidentally deleted, the first instinct is often to open the recycle bin and restore everything that looks related. That works for small sites. It gets risky in large libraries, migration projects, or document centers where thousands of recycle bin entries may share similar names. This guide shows how to restore SharePoint deleted files and folders with PnP PowerShell using precise filters for folder path, deleted date, and deleted-by user.</p>
+
+      <figure class="article-image">
+        <img src="https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&amp;w=900" alt="SharePoint recycle bin page with items selected for restore" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Support screenshot showing SharePoint recycle bin items selected for restore. <a href="https://support.microsoft.com/en-us/office/restore-items-in-the-recycle-bin-that-were-deleted-from-sharepoint-or-teams-6df466b6-55f2-4898-8d6e-c0dff851a0be" target="_blank" rel="noopener noreferrer">Source: Microsoft Support</a>.</figcaption>
+      </figure>
 
       <p>The script below is designed for SharePoint Online admins who need a controlled recovery process. It reads first-stage recycle bin items in pages through CSOM, filters each page in memory, restores folders before files where possible, checks whether the original item already exists, and writes a CSV log of every action. It defaults to <strong>WhatIf mode</strong>, so your first run reports what would be restored before anything changes.</p>
 

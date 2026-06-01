@@ -34,6 +34,7 @@ import textwrap
 from datetime import datetime, timezone
 from html import escape, unescape
 from pathlib import Path
+from urllib.parse import urljoin
 
 import requests
 import feedparser
@@ -206,13 +207,139 @@ TOPIC_IMAGES: list[tuple[str, str]] = [
     ("document",       "sharepoint"),
 ]
 
+ARTICLE_IMAGE_FALLBACKS = {
+    "copilot": {
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2026/05/preview-copilot-hub.jpg",
+        "alt": "Microsoft 365 Copilot Hub preview from Microsoft Adoption",
+        "caption": "Representative Microsoft 365 Copilot product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/copilot/",
+        "source_label": "Microsoft Adoption",
+    },
+    "edge": {
+        "url": "https://learn.microsoft.com/en-us/deployEdge/media/microsoft-edge-configure-the-copilot-new-tab-page/img1.png",
+        "alt": "Microsoft Edge Copilot new tab page screenshot",
+        "caption": "Representative Microsoft Edge Copilot new tab page screenshot.",
+        "source_url": "https://learn.microsoft.com/en-us/deployEdge/microsoft-edge-management-configure-the-copilot-new-tab-page",
+        "source_label": "Microsoft Learn",
+    },
+    "outlook": {
+        "url": "https://support.microsoft.com/images/en-us/d42c7f8e-f190-488b-9c43-dd39755d72b5?format=png&w=900",
+        "alt": "Microsoft Outlook for Windows toggle screenshot",
+        "caption": "Representative Microsoft Outlook for Windows interface screenshot.",
+        "source_url": "https://support.microsoft.com/en-us/office/start-using-new-outlook-for-windows-4395454d-cb2f-4c16-bb24-fa4bb36650ae",
+        "source_label": "Microsoft Support",
+    },
+    "purview": {
+        "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-triage.png",
+        "alt": "Microsoft Purview Insider Risk Management triage screenshot",
+        "caption": "Representative Microsoft Purview Insider Risk Management screenshot.",
+        "source_url": "https://learn.microsoft.com/en-us/purview/insider-risk-management",
+        "source_label": "Microsoft Learn",
+    },
+    "teams-bookable": {
+        "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/media/bookable-desks/automatic-association-image.png",
+        "alt": "Microsoft Teams bookable desks automatic association screenshot",
+        "caption": "Representative Microsoft Teams bookable desks screenshot.",
+        "source_url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/bookable-desks",
+        "source_label": "Microsoft Learn",
+    },
+    "teams-interpreter": {
+        "url": "https://learn.microsoft.com/en-us/microsoftteams/media/interpreter-agent-diagram-small.png",
+        "alt": "Microsoft Teams Interpreter agent architecture diagram",
+        "caption": "Representative Microsoft Teams Interpreter agent diagram.",
+        "source_url": "https://learn.microsoft.com/en-us/microsoftteams/interpreter-agent-teams",
+        "source_label": "Microsoft Learn",
+    },
+    "teams": {
+        "url": "https://support.microsoft.com/images/en-us/1966f017-c609-407a-9029-48624089e9b5?format=png&w=900",
+        "alt": "Microsoft Teams product basics screenshot",
+        "caption": "Representative Microsoft Teams product image.",
+        "source_url": "https://support.microsoft.com/en-us/teams",
+        "source_label": "Microsoft Support",
+    },
+    "sharepoint": {
+        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
+        "alt": "Microsoft diagram showing how Microsoft Entra ID, Teams, and SharePoint relate",
+        "caption": "Representative Microsoft SharePoint and Teams relationship diagram.",
+        "source_url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
+        "source_label": "Microsoft Learn",
+    },
+    "m365": {
+        "url": "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/3892600-work-iq-api-4x3?resMode=sharp2&op_usm=1.5,0.65,15,0&wid=1920&hei=1080&qlt=100&fit=constrain",
+        "alt": "Microsoft 365 product image",
+        "caption": "Representative Microsoft 365 product image.",
+        "source_url": "https://www.microsoft.com/en-us/microsoft-365/roadmap",
+        "source_label": "Microsoft 365 Roadmap",
+    },
+}
+
 
 def image_for_item(item: dict) -> str:
+    article_image = item.get("_article_image") or {}
+    if article_image.get("url"):
+        return article_image["url"]
     haystack = (item["title"] + " " + item.get("summary", "")).lower()
     for keyword, img_name in TOPIC_IMAGES:
         if keyword in haystack:
             return f"assets/news/{img_name}.svg"
     return "assets/news/m365-roadmap.svg" if item["css_tag"] == "tag-roadmap" else "assets/news/m365.svg"
+
+
+def fetch_og_image(url: str) -> str:
+    """Return a public Open Graph/Twitter image for a source article, if present."""
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
+        resp.raise_for_status()
+    except Exception as exc:
+        print(f"  [warn] Could not fetch source image: {exc}", file=sys.stderr)
+        return ""
+
+    html = resp.text
+    patterns = [
+        r'<meta[^>]+(?:property|name)=["\'](?:og:image|twitter:image)["\'][^>]+content=["\']([^"\']+)["\']',
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\'](?:og:image|twitter:image)["\']',
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, html, flags=re.IGNORECASE)
+        if not match:
+            continue
+        image_url = urljoin(resp.url, unescape(match.group(1)))
+        if image_url and "RE1Mu3b" not in image_url:
+            return image_url
+    return ""
+
+
+def article_image_for_item(item: dict) -> dict:
+    """Choose a real source image for a generated news article."""
+    if item.get("css_tag") == "tag-blog":
+        source_image = fetch_og_image(item.get("url", ""))
+        if source_image:
+            return {
+                "url": source_image,
+                "alt": f"Microsoft TechCommunity image for {item['title']}",
+                "caption": "Original Microsoft TechCommunity image for this announcement.",
+                "source_url": item["url"],
+                "source_label": item.get("source", "Microsoft TechCommunity"),
+            }
+
+    haystack = (item.get("title", "") + " " + item.get("summary", "")).lower()
+    if "edge" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["edge"]
+    if "outlook" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["outlook"]
+    if "purview" in haystack or "insider risk" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["purview"]
+    if "bookable desk" in haystack or "desk" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["teams-bookable"]
+    if "interpreter" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["teams-interpreter"]
+    if "teams" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["teams"]
+    if "sharepoint" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["sharepoint"]
+    if "copilot" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["copilot"]
+    return ARTICLE_IMAGE_FALLBACKS["m365"]
 
 
 def topic_for_item(item: dict) -> str:
@@ -395,6 +522,16 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     short      = title[:45] + ("…" if len(title) > 45 else "")
     body_html  = md_to_html(body_md)
     desc       = escape(commentary[:160])
+    article_image = item.get("_article_image") or article_image_for_item(item)
+    image_url = article_image.get("url", "")
+    image_html = ""
+    if image_url:
+        image_html = f"""
+      <figure class="article-image">
+        <img src="{escape(image_url)}" alt="{escape(article_image.get('alt', title))}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>{escape(article_image.get('caption', 'Microsoft product image.'))} <a href="{escape(article_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(article_image.get('source_label', item['source']))}</a>.</figcaption>
+      </figure>
+"""
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -420,7 +557,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <link rel="stylesheet" href="../css/style.css?v=3" />
   <link rel="stylesheet" href="../css/pages.css?v=11" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
-  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="{SITE_BASE_URL}/feed.xml" />
   <script type="application/ld+json">
@@ -523,6 +660,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
       </div>
 
       <p class="article-intro">{escape(commentary)}</p>
+{image_html}
 
       {body_html}
 
@@ -739,6 +877,7 @@ def fetch_roadmap() -> list[dict]:
 def card_html(item: dict, commentary: str) -> str:
     date_str    = friendly_date(item["date"])
     img         = image_for_item(item)
+    img_alt     = (item.get("_article_image") or {}).get("alt", item["source"])
     source_slug = "roadmap" if item["css_tag"] == "tag-roadmap" else "blog"
     topic_slug  = topic_for_item(item)
     local_url   = item.get("_article_url", item["url"])
@@ -746,7 +885,7 @@ def card_html(item: dict, commentary: str) -> str:
     return f"""\
       <article class="news-card glass" data-source="{source_slug}" data-topic="{topic_slug}">
         <div class="nc-image-wrap">
-          <img class="nc-image" src="{escape(img)}" alt="{escape(item['source'])}" loading="lazy" />
+          <img class="nc-image" src="{escape(img)}" alt="{escape(img_alt)}" loading="lazy" />
         </div>
         <div class="nc-meta">
           <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
@@ -914,6 +1053,7 @@ def main() -> None:
 
         # Short commentary for news card
         item["_commentary"] = ai_rewrite(item["title"], item["summary"])
+        item["_article_image"] = article_image_for_item(item)
         time.sleep(0.3)
 
         # Standalone article page (only if file doesn't already exist)

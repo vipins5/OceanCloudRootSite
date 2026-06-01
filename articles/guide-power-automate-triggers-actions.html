@@ -17,7 +17,7 @@
   <meta property="og:title"       content="Power Automate SharePoint Triggers and Actions Explained" />
   <meta property="og:description" content="Every SharePoint trigger and action in Power Automate — when to use each, how to write OData filter queries, file vs list operations, and the HTTP request action for advanced scenarios." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png" />
   <meta property="og:locale"      content="en_US" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=6" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -158,6 +158,11 @@
       </div>
 
       <p class="article-intro">The SharePoint connector in Power Automate is the most widely used connector in the platform — and the most frequently misused. Choosing the wrong trigger causes double-fires and infinite loops. Using "Get items" without a filter query loads thousands of records unnecessarily. The "Send an HTTP request to SharePoint" action unlocks capabilities no other action provides. This guide covers every trigger and action with the context you need to use each one correctly.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png" alt="Power Automate SharePoint actions list screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Power Automate screenshot showing SharePoint actions available in flows. <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h2>SharePoint Triggers: The Complete Reference</h2>
       <p>Triggers determine when a flow starts. The SharePoint connector offers two categories: list/library triggers (respond to item or file changes) and site triggers (respond to page or structural changes).</p>
