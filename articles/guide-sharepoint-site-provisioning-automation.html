@@ -315,7 +315,7 @@
         Hi [Requester first name],<br><br>
         Your request for a SharePoint site named "<strong>[Site Title]</strong>" was reviewed by [Manager name] and was not approved at this time.<br><br>
         <strong>Reason:</strong> [ManagerNotes]<br><br>
-        If you'd like to resubmit with amendments, <a href="[Site Requests list URL]">click here</a>. If you have questions, reply to this email.</p>
+        If you'd like to resubmit with amendments, click the link to the Site Requests list in your confirmation email. If you have questions, reply to this email.</p>
       </div>
 
       <h3>Branch: Timed out</h3>
@@ -560,7 +560,7 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
         Hi [First Name],<br><br>
         Your new SharePoint site has been created and is ready to use.<br><br>
         <strong>Site name:</strong> [SiteTitle]<br>
-        <strong>URL:</strong> <a href="[ProvisionedURL]">[ProvisionedURL]</a><br>
+        <strong>URL:</strong> [ProvisionedURL — inserted dynamically by Logic App]<br>
         <strong>Template applied:</strong> [Template]<br>
         <strong>Primary owner:</strong> [PrimaryOwnerEmail]<br><br>
         <strong>Getting started:</strong> Sign in, invite your team members via site Settings &gt; Site permissions, and review the default document library structure that's been set up for you.<br><br>
@@ -573,7 +573,7 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
         Hi [First Name],<br><br>
         Your request for a SharePoint site named "<strong>[Site Title]</strong>" was reviewed by your manager and was not approved at this time.<br><br>
         <strong>Manager's comment:</strong> [ManagerNotes]<br><br>
-        You can amend and resubmit your request <a href="[Site Requests list URL]">here</a>. If you believe this decision was made in error, please speak to your manager directly.</p>
+        You can amend and resubmit your request via the Site Requests list. If you believe this decision was made in error, please speak to your manager directly.</p>
       </div>
 
       <h3>Failure notification (sent from Logic App Catch scope)</h3>
