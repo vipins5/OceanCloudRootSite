@@ -222,11 +222,6 @@
 
       <p class="article-intro">Every SharePoint admin knows the pain: someone requests a new site, a ticket is raised, IT gets to it three days later, the site is created manually without a standard structure, and the requester gets a URL in a chat message. This guide replaces that entire process with a self-service pipeline that provisions a properly structured SharePoint site in under five minutes — with manager approval, audit logging, error recovery, and email notifications built in from the start.</p>
 
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/logic-apps-overview/example-enterprise-workflow.png" alt="Azure Logic Apps workflow designer showing an enterprise workflow" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Azure Logic Apps designer screenshot showing an enterprise workflow. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
-
       <h2>What We're Building</h2>
 
       <p>The pipeline is made up of six components working in sequence. Each has a single, clear responsibility, which makes the whole system easy to maintain and easy to debug when something goes wrong.</p>
@@ -238,7 +233,7 @@
         </div>
         <div class="fd-step">
           <div class="fd-icon">✅</div>
-          <div class="fd-body"><strong>2 — Power Automate routes to manager</strong><p>A cloud flow detects the new item, looks up the requester's line manager from Azure AD, and sends an Adaptive Card approval to the manager's Teams and email. A 48-hour timeout triggers a reminder and notifies the requester.</p></div>
+          <div class="fd-body"><strong>2 — Power Automate routes to manager</strong><p>A cloud flow detects the new item, looks up the requester's line manager from Microsoft Entra ID, and sends an Adaptive Card approval to the manager's Teams and email. A 48-hour timeout triggers a reminder and notifies the requester.</p></div>
         </div>
         <div class="fd-step">
           <div class="fd-icon">⚡</div>
@@ -259,11 +254,6 @@
       </div>
 
       <h2>Pipeline Architecture</h2>
-
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/azure/automation/media/overview/automation-overview.png" alt="Azure Automation capabilities diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Azure Automation diagram showing runbook and automation capabilities. <a href="https://learn.microsoft.com/en-us/azure/automation/overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
 
       <p>The five services below form a linear chain for the happy path. On rejection or error, the flow branches left to send the requester an email and log the outcome.</p>
 
@@ -377,8 +367,8 @@
           <ul>
             <li><strong>Contributor</strong> on the Automation Account resource</li>
             <li>System-assigned Managed Identity enabled; Object ID granted <strong>SharePoint Administrator</strong> in M365 admin centre</li>
-            <li><strong>PnP.PowerShell 2.x</strong> imported from Browse Gallery</li>
-            <li>Runbook runtime: <strong>PowerShell 7.2</strong> (PnP.PowerShell 2.x requires .NET 8)</li>
+            <li>Latest stable <strong>PnP.PowerShell</strong> imported into the PowerShell 7.4 runtime environment</li>
+            <li>Runbook runtime: <strong>PowerShell 7.4</strong> (the current supported runtime for Azure Automation PowerShell runbooks)</li>
           </ul>
         </div>
       </div>
@@ -388,11 +378,6 @@
       </div>
 
       <h2>Step 1: Create the SharePoint Lists</h2>
-
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-triggers.png" alt="Power Automate SharePoint triggers screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Power Automate screenshot showing SharePoint triggers used to start site request flows. <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
 
       <div class="portal-path">
         <span class="pp-icon">🟩</span>
@@ -520,11 +505,6 @@
       <h3>URL alias validation (before approval routing)</h3>
       <p>Validate the alias <em>before</em> it reaches the manager. If it fails, the manager never sees an approvable request that would fail at the runbook stage anyway. Add a <strong>Condition</strong> action with three checks combined using <code>and()</code>:</p>
 
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/add-condition.png" alt="Power Automate Condition action showing approval outcome check" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Power Automate Condition action — this is where you place the three URL alias checks. Each check goes into a row using the <strong>And</strong> grouping so all must pass. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
-
       <p>In the Condition action, add three rows using <strong>And</strong>. Copy each expression into the left-hand value field and set the right-hand comparison to <strong>is equal to true</strong>:</p>
 
       <div class="code-label">Power Automate — Condition expressions (all three must be true)</div>
@@ -576,11 +556,6 @@ Timeout:        P2D
                 # ISO 8601 for 48 hours — after this, approval action status = TimedOut
                 # Handle the timed-out branch via Configure run after → Has timed out</pre></div>
 
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/select-approvals.png" alt="Power Automate approval action selector screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Power Automate screenshot showing the approval action selector used to build manager approval flows. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
-
       <h3>Branch: Approved</h3>
       <p>In the <strong>Yes</strong> branch of a Condition on <code>Outcome equals Approve</code>:</p>
       <ol>
@@ -606,11 +581,6 @@ Timeout:        P2D
 
       <h3>Branch: Timed out</h3>
       <p>Use <strong>Configure run after</strong> on a parallel branch set to run when the approval action has <em>timed out</em>. In this branch: send a reminder email to the manager and a holding email to the requester ("We've chased your manager and are waiting for a response").</p>
-
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/completed-flow-new-designer.png" alt="Completed Power Automate approval flow in the new designer showing all branches" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Power Automate — completed approval flow structure in the new designer. Your site request flow follows the same pattern: trigger → validation → approval → approved/rejected branches. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
 
       <h2>Step 3: Azure Logic App — The Orchestrator</h2>
 
@@ -724,11 +694,6 @@ Audience:       https://graph.microsoft.com
       <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures no error path is left unhandled.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/error-exception-handling/add-actions-into-scope.png" alt="Azure Logic Apps designer showing actions grouped inside a Scope action" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Azure Logic Apps designer — actions grouped inside a <strong>Scope</strong> action. Your provisioning actions go inside a Scope named "Try". A second Scope named "Catch" sits below it and runs only when Try fails. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/error-exception-handling" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
-
-      <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/error-exception-handling/set-run-after-in-scope.png" alt="Azure Logic Apps designer showing Run after configuration for the Catch scope" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         <figcaption>Logic Apps — <strong>Run after</strong> configuration for the Catch scope. Select the Try scope and tick <em>Has failed</em>. This means the Catch scope only fires when the Try scope encounters a failure. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/error-exception-handling" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
@@ -833,10 +798,10 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
         <span class="pp-sep">›</span>
         <span class="pp-step">+ Create a runbook</span>
         <span class="pp-sep">›</span>
-        <span class="pp-step">Runtime: PowerShell 7.2</span>
+        <span class="pp-step">Runtime: PowerShell 7.4</span>
       </div>
 
-      <p>The runbook is a PowerShell 7.2 runbook in an Azure Automation account. It does all the actual SharePoint work: creates the site, adds owners, applies the template structure, and locks down sharing settings.</p>
+      <p>The runbook is a PowerShell 7.4 runbook in an Azure Automation account. It does all the actual SharePoint work: creates the site, adds owners, applies the template structure, and locks down sharing settings.</p>
 
       <h3>Prerequisites</h3>
 
@@ -846,12 +811,12 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
           <div class="ss-row"><div class="ss-field"><span class="ss-label">1. Import PnP.PowerShell module</span><br><span class="ss-value">Automation Account → Modules → Browse Gallery → Search "PnP.PowerShell" → Import</span></div></div>
           <div class="ss-row"><div class="ss-field"><span class="ss-label">2. Enable Managed Identity</span><br><span class="ss-value">Automation Account → Identity → System assigned → Status: On → Save</span><br><span class="ss-note">Copy the Object (principal) ID shown after saving</span></div></div>
           <div class="ss-row"><div class="ss-field"><span class="ss-label">3. Grant SharePoint Admin role</span><br><span class="ss-value">Microsoft 365 admin centre → Roles → Role assignments → SharePoint Administrator → Add MI Object ID</span></div></div>
-          <div class="ss-row"><div class="ss-field"><span class="ss-label">4. Runbook runtime version</span><br><span class="ss-value">Create runbook → Runtime version: 7.2 (PowerShell) → not 5.1</span><br><span class="ss-note">PnP.PowerShell 2.x requires .NET 8, available only in PS 7.2 runtime</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">4. Runbook runtime version</span><br><span class="ss-value">Create runbook → Runtime version: 7.4 (PowerShell) → not 5.1</span><br><span class="ss-note">Import PnP.PowerShell into the same 7.4 runtime environment selected by the runbook</span></div></div>
         </div>
       </div>
 
       <ul>
-        <li>Azure Automation account with <strong>PnP.PowerShell 2.x</strong> imported from the module gallery</li>
+        <li>Azure Automation account with the latest stable <strong>PnP.PowerShell</strong> imported into the PowerShell 7.4 runtime environment</li>
         <li>System-assigned <strong>Managed Identity</strong> enabled on the Automation account</li>
         <li>Managed Identity's Object ID granted <strong>SharePoint Administrator</strong> role in the Microsoft 365 admin centre — this gives the runbook full control over all sites without storing any credentials</li>
         <li>For the Logic App Managed Identity: <strong>Sites.Read.All</strong> on Microsoft Graph (for the URL check in Step 3) and the Azure Automation <strong>Contributor</strong> role (to create jobs)</li>
@@ -870,7 +835,7 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
 
       <p>The critical design decision in this runbook is maintaining <strong>two named PnP connections</strong> — one to the SharePoint admin centre and one to the new site. <code>Set-PnPTenantSite</code> calls the Tenant Admin REST API and <em>must</em> go through the admin connection. If you call it while connected to the regular site, it silently fails or throws a 403.</p>
 
-      <div class="code-label">PowerShell 7.2 runbook — SP-SiteProvisioning</div>
+      <div class="code-label">PowerShell 7.4 runbook — SP-SiteProvisioning</div>
       <div class="code-block"><pre>param(
     # TenantName: the subdomain portion only — e.g. "contoso" not "contoso.sharepoint.com"
     [Parameter(Mandatory=$true)] [string]$TenantName,

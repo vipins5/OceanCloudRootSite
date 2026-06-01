@@ -47,9 +47,9 @@
         "description": "SharePoint Designer workflow retirement, inventory, feature mapping, and migration to Power Automate — a complete guide for every organisation size.",
         "keywords": ["SharePoint workflow migration", "SharePoint workflow retirement", "SharePoint Designer Power Automate", "legacy workflow migration"],
         "citation": [
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/general-development/sharepoint-2010-workflows-are-no-longer-supported", "name": "SharePoint 2010 workflows no longer supported" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-workflows", "name": "Modernize SharePoint workflows" },
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview", "name": "Use SharePoint with Power Automate" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-365/admin/misc/power-automate-sharepoint-workflows", "name": "Migrate SharePoint workflows to Power Automate" }
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepointmigration/spmt-workflow-overview", "name": "Migrate SharePoint Server workflows to Power Automate" }
         ],
         "inLanguage": "en-US",
         "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
@@ -171,7 +171,7 @@
         <p><strong>Retirement status (as of May 2026):</strong> SharePoint 2010 workflows — disabled in SharePoint Online since November 2020. SharePoint 2013 workflows (including Nintex for SP Online built on the 2013 platform) — disabled in SharePoint Online since April 2026. New workflow creation was blocked before these dates; execution is now blocked.</p>
       </div>
 
-      <a href="https://learn.microsoft.com/en-us/sharepoint/dev/general-development/sharepoint-2010-workflows-are-no-longer-supported" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint 2010 workflows no longer supported — learn.microsoft.com</a>
+      <a href="https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-workflows" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Modernize SharePoint workflows — learn.microsoft.com</a>
 
       <h2>Step 1: Inventory Your Existing Workflows</h2>
       <p>Before you can migrate workflows, you need a complete picture of what exists across your tenant. Most organisations underestimate this — they know about their 5 "important" workflows but have forgotten the 40 others built over the years.</p>
@@ -334,7 +334,7 @@ $workflowInventory |
       <h3>Impersonation steps</h3>
       <p>SharePoint Designer allowed "impersonation steps" that ran as the workflow administrator rather than the item submitter. Power Automate flows always run as the connection owner — typically a service account. Ensure your service account has the permissions needed (at minimum Contribute on the target lists) and document this in the flow description.</p>
 
-      <a href="https://learn.microsoft.com/en-us/microsoft-365/admin/misc/power-automate-sharepoint-workflows" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Migrate SharePoint workflows to Power Automate — learn.microsoft.com</a>
+      <a href="https://learn.microsoft.com/en-us/sharepointmigration/spmt-workflow-overview" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Migrate SharePoint Server workflows to Power Automate — learn.microsoft.com</a>
 
       <div class="art-cta-box">
         <h3>Need help migrating your SharePoint workflows?</h3>

@@ -161,7 +161,7 @@
       <p>Do not skip pre-checks. Most migration pain is not in the REST payload itself. It comes from running with the wrong shell, wrong module version, missing permissions, or a list schema that does not match calendar assumptions. A ten-minute pre-flight check can prevent a failed change window.</p>
 
       <h3>1. Verify PowerShell runtime</h3>
-      <p>For modern automation and predictable module behavior, run PowerShell 7 or newer. Windows PowerShell 5.1 can still run many commands, but module behavior and TLS defaults can cause friction. The script checks edition and version and exits with clear guidance if requirements are not met.</p>
+      <p>For modern automation and predictable module behavior, run PowerShell 7.4 or newer. Windows PowerShell 5.1 can still run many older commands, but the current PnP.PowerShell module requires PowerShell 7.4. The script checks edition and version and exits with clear guidance if requirements are not met.</p>
 
       <h3>2. Verify PnP.PowerShell version</h3>
       <p>Modern PnP authentication patterns and cmdlet behavior evolve. Pin a tested minimum version and enforce it in script logic. If the module is missing or too old, fail fast with a direct install/update command. That keeps execution deterministic across admin laptops and automation runners.</p>
@@ -212,7 +212,7 @@ param(
 
     # Minimum PnP.PowerShell version accepted by the pre-check.
     [Parameter(Mandatory = $false)]
-    [Version]$MinPnPVersion = [Version]"2.4.0"
+    [Version]$MinPnPVersion = [Version]"3.0.0"
 )
 
 $ErrorActionPreference = "Stop"
@@ -226,11 +226,11 @@ function Test-PowerShellRuntime {
     Write-Section "Runtime pre-check"
 
     if ($PSVersionTable.PSEdition -ne "Core") {
-        throw "PowerShell Core (7+) is required. Current edition: $($PSVersionTable.PSEdition)."
+        throw "PowerShell 7.4 or later is required. Current edition: $($PSVersionTable.PSEdition)."
     }
 
-    if ($PSVersionTable.PSVersion.Major -lt 7) {
-        throw "PowerShell 7+ is required. Current version: $($PSVersionTable.PSVersion)."
+    if ($PSVersionTable.PSVersion -lt [Version]"7.4.0") {
+        throw "PowerShell 7.4 or later is required. Current version: $($PSVersionTable.PSVersion)."
     }
 
     Write-Host "PowerShell edition : $($PSVersionTable.PSEdition)"

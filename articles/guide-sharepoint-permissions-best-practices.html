@@ -179,7 +179,7 @@
         <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/add-user-to-a-group.png" alt="SharePoint add user to group dialog screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         <figcaption>Microsoft SharePoint screenshot showing the dialog for adding a user to a group. <a href="https://learn.microsoft.com/en-us/sharepoint/customize-sharepoint-site-permissions" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
-      <p>Granting access to individual user accounts — rather than Azure AD groups or SharePoint groups — is the most common SharePoint permission anti-pattern. It creates three problems:</p>
+      <p>Granting access to individual user accounts — rather than Microsoft Entra groups or SharePoint groups — is the most common SharePoint permission anti-pattern. It creates three problems:</p>
       <ol>
         <li><strong>Leaver management:</strong> When an employee leaves, their individual access grants across dozens of sites must be manually removed. Group-based access is automatically removed when the user is removed from the group.</li>
         <li><strong>Auditability:</strong> Reviewing who has access to a site requires inspecting every individual grant rather than reviewing a small set of groups with clear, named membership.</li>
@@ -187,7 +187,7 @@
       </ol>
 
       <div class="art-callout">
-        <p><strong>Best practice:</strong> For every SharePoint site, use three Azure AD groups: Site Owners, Site Members, and Site Visitors. Map these directly to the SharePoint Owners, Members, and Visitors groups. Manage all access by adding users to the Azure AD groups — never by adding individuals directly to SharePoint groups.</p>
+        <p><strong>Best practice:</strong> For every SharePoint site, use three Microsoft Entra groups: Site Owners, Site Members, and Site Visitors. Map these directly to the SharePoint Owners, Members, and Visitors groups. Manage all access by adding users to the Entra groups — never by adding individuals directly to SharePoint groups.</p>
       </div>
 
       <a href="https://learn.microsoft.com/en-us/sharepoint/default-sharepoint-groups" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Default SharePoint groups — learn.microsoft.com</a>
@@ -203,7 +203,7 @@
           <tbody>
             <tr><td><strong>Anyone (anonymous)</strong></td><td>Any person with the link — no sign-in required; not tracked in audit logs as a named user</td><td>Avoid entirely for business data; acceptable for public-facing marketing assets only</td></tr>
             <tr><td><strong>New and existing guests</strong></td><td>External users; new guests must verify identity before first access</td><td>Client collaboration sites, partner project sites with appropriate governance</td></tr>
-            <tr><td><strong>Existing guests only</strong></td><td>External users already in the Azure AD directory</td><td>IT-controlled guest access; new guests require an Azure AD invite from IT</td></tr>
+            <tr><td><strong>Existing guests only</strong></td><td>External users already in Microsoft Entra ID</td><td>IT-controlled guest access; new guests require an Entra guest invitation from IT</td></tr>
             <tr><td><strong>Only people in your organisation</strong></td><td>Internal M365 users only; no external access possible</td><td>Default setting for all internal sites; HR, Finance, Legal, Executive sites</td></tr>
           </tbody>
         </table>
@@ -261,7 +261,7 @@
           <div class="bp-num">6</div>
           <div class="bp-body">
             <strong>Remove guest accounts immediately on relationship end</strong>
-            <p>Guest accounts in Azure AD persist until explicitly removed. An ex-client's employee with guest access to your SharePoint client site retains that access indefinitely unless removed. Build a process: when a client relationship ends, an offboarding checklist includes removing guest accounts.</p>
+            <p>Guest accounts in Microsoft Entra ID persist until explicitly removed. An ex-client's employee with guest access to your SharePoint client site retains that access indefinitely unless removed. Build a process: when a client relationship ends, an offboarding checklist includes removing guest accounts.</p>
           </div>
         </li>
         <li>
@@ -303,7 +303,7 @@
         <li><strong>Identify high-risk sites:</strong> Flag sites with "External sharing enabled", sites with "Everyone" or "Everyone except external users" in their member lists, and sites with no owner activity in 90+ days</li>
         <li><strong>Run SAM Data Access Governance reports:</strong> SharePoint Advanced Management provides pre-built oversharing reports — Anyone links, Org-wide sharing links, and sensitivity label coverage. These are the fastest way to identify high-risk content at scale.</li>
         <li><strong>Review broken inheritance:</strong> Use PnP PowerShell's <code>Get-PnPListItem</code> with permission expansion to find list items and folders with unique permissions — these are the blind spots in most permission reviews</li>
-        <li><strong>Validate external guest accounts:</strong> Export all Azure AD guest users and cross-reference against active business relationships; remove orphaned guest accounts</li>
+        <li><strong>Validate external guest accounts:</strong> Export all Microsoft Entra guest users and cross-reference against active business relationships; remove orphaned guest accounts</li>
         <li><strong>Document findings and prioritise remediation:</strong> Score findings by risk (sensitivity of content × breadth of unintended access × likelihood of exploitation) and build a prioritised remediation plan</li>
       </ol>
 

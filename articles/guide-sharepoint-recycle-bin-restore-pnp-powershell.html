@@ -147,7 +147,7 @@
         <figcaption>Microsoft Support screenshot showing the Restore action in the SharePoint recycle bin. <a href="https://support.microsoft.com/en-us/office/restore-items-in-the-recycle-bin-that-were-deleted-from-sharepoint-or-teams-6df466b6-55f2-4898-8d6e-c0dff851a0be" target="_blank" rel="noopener noreferrer">Source: Microsoft Support</a>.</figcaption>
       </figure>
       <div class="restore-flow">
-        <div class="restore-step"><span>Step 1</span><strong>Connect</strong><p>Uses <code>Connect-PnPOnline -Interactive -ClientId $ClientId</code> so PnP.PowerShell v2+ has a valid Entra app ID.</p></div>
+        <div class="restore-step"><span>Step 1</span><strong>Connect</strong><p>Uses <code>Connect-PnPOnline -Interactive -ClientId $ClientId</code> so the current PnP.PowerShell module has a valid Entra app ID.</p></div>
         <div class="restore-step"><span>Step 2</span><strong>Page</strong><p>Reads first-stage recycle bin items with CSOM paging to reduce threshold pressure.</p></div>
         <div class="restore-step"><span>Step 3</span><strong>Filter</strong><p>Matches original folder path, deleted date window, and optional deleted-by email.</p></div>
         <div class="restore-step"><span>Step 4</span><strong>Validate</strong><p>Checks whether the original file or folder already exists before restoring.</p></div>
@@ -157,7 +157,7 @@
 
       <h2>Before you run it</h2>
       <ul>
-        <li>Install <strong>PowerShell 7</strong> and the latest <strong>PnP.PowerShell</strong> module.</li>
+        <li>Install <strong>PowerShell 7.4 or later</strong> and the latest <strong>PnP.PowerShell</strong> module.</li>
         <li>Use an account that has sufficient permissions on the target site collection.</li>
         <li>Register an Entra app for interactive PnP sign-in and provide the Client ID.</li>
         <li>Confirm the site URL, folder paths, deleted date, and optional deleted-by email.</li>

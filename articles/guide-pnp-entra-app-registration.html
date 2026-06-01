@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0077b6" />
 
   <title>PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide | OceanCloud</title>
-  <meta name="description" content="Step-by-step guide to registering a PnP Entra app — install PowerShell 7, PnP module, create self-signed certs, and connect with -Interactive, -CertificatePath, or -Thumbprint." />
+  <meta name="description" content="Step-by-step guide to registering a PnP Entra app — install PowerShell 7.4+, PnP module, create self-signed certs, and connect with -Interactive, -CertificatePath, or -Thumbprint." />
   <meta name="keywords" content="pnp powershell app registration, connect-pnponline certificate, pnp powershell thumbprint, pnp entra app registration, pnp powershell client id certificate, sharepoint powershell automation, pnp powershell pfx" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
@@ -15,7 +15,7 @@
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide" />
-  <meta property="og:description" content="Install PowerShell 7 and PnP.PowerShell, register an Entra app, create self-signed certificates, and connect to SharePoint three ways — Interactive, PFX, or Thumbprint." />
+  <meta property="og:description" content="Install PowerShell 7.4+ and PnP.PowerShell, register an Entra app, create self-signed certificates, and connect to SharePoint three ways — Interactive, PFX, or Thumbprint." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration" />
   <meta property="og:image"       content="https://pnp.github.io/powershell/images/authentication/libraryVariables.png" />
   <meta property="og:locale"      content="en_US" />
@@ -44,7 +44,7 @@
         "dateModified": "2026-05-23",
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
-        "description": "End-to-end guide: install PowerShell 7, install PnP.PowerShell, register an Entra app, create a self-signed certificate, upload the public key, and connect with Interactive, CertificatePath, or Thumbprint.",
+        "description": "End-to-end guide: install PowerShell 7.4+, install PnP.PowerShell, register an Entra app, create a self-signed certificate, upload the public key, and connect with Interactive, CertificatePath, or Thumbprint.",
         "keywords": ["PnP PowerShell", "Entra app registration", "Connect-PnPOnline certificate", "PnP thumbprint", "SharePoint PowerShell automation"],
         "citation": [
           { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
@@ -280,13 +280,9 @@
         <p><strong>Interactive vs App-only permissions:</strong> The -Interactive method uses <em>delegated</em> permissions — the app can only do what the signed-in user can do. The -CertificatePath and -Thumbprint methods use <em>application</em> permissions — the app has its own identity and does not need a user account. For unattended automation, always use certificate-based authentication with application permissions.</p>
       </div>
 
-      <h2>Step 1: Install PowerShell 7</h2>
+      <h2>Step 1: Install PowerShell 7.4 or Later</h2>
 
-      <figure class="article-image">
-        <img src="https://pnp.github.io/powershell/images/authentication/allowPublicClient.png" alt="PnP PowerShell authentication public client configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>PnP PowerShell authentication screenshot showing public client configuration. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
-      </figure>
-      <p>PnP.PowerShell is cross-platform and works on Windows PowerShell 5.1, but PowerShell 7 (built on .NET) is strongly recommended. It runs faster, supports more PnP cmdlets, and will be required in future module versions.</p>
+      <p>PnP.PowerShell is cross-platform and current PnP documentation requires PowerShell 7.4.0 or later. Do not run these examples from Windows PowerShell 5.1; launch <code>pwsh</code> so the current module loads correctly.</p>
 
       <h3>Check your current PowerShell version</h3>
       <div class="code-label">PowerShell — check version</div>
@@ -304,10 +300,11 @@ pwsh --version
       <p>Download the Windows 64-bit MSI from the <a href="https://github.com/PowerShell/PowerShell/releases" target="_blank" rel="noopener noreferrer">PowerShell GitHub Releases page</a>. The file is named <code>PowerShell-7.x.x-win-x64.msi</code>. Run the installer with default options.</p>
 
       <div class="art-callout tip">
-        <p><strong>After installation:</strong> PowerShell 7 installs alongside Windows PowerShell 5.1 — it does not replace it. Launch PS7 by running <code>pwsh</code> instead of <code>powershell</code>. In the Windows Start menu it appears as "PowerShell 7".</p>
+        <p><strong>After installation:</strong> PowerShell 7.4+ installs alongside Windows PowerShell 5.1 — it does not replace it. Launch it by running <code>pwsh</code> instead of <code>powershell</code>. In the Windows Start menu it appears as "PowerShell 7".</p>
       </div>
 
       <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Install PowerShell on Windows — learn.microsoft.com</a>
+      <a href="https://pnp.github.io/powershell/articles/installation.html" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell installation requirements — pnp.github.io</a>
 
       <h2>Step 2: Install the PnP.PowerShell Module</h2>
       <p>The module is published to the PowerShell Gallery. Run these commands inside PowerShell 7 (<code>pwsh</code>).</p>
@@ -342,12 +339,7 @@ Get-Module PnP.PowerShell | Select-Object Version</pre></div>
       <a href="https://pnp.github.io/powershell/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell documentation — pnp.github.io</a>
 
       <h2>Step 3: Roles Required for App Registration</h2>
-
-      <figure class="article-image">
-        <img src="https://pnp.github.io/powershell/images/authentication/conditionalAccess.png" alt="PnP PowerShell authentication conditional access screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>PnP PowerShell authentication screenshot showing conditional access considerations. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
-      </figure>
-      <p>Creating an Entra app registration and granting it high-privilege permissions requires specific Azure AD roles. Confirm these with your tenant administrator before starting.</p>
+      <p>Creating an Entra app registration and granting it high-privilege permissions requires specific Microsoft Entra roles. Confirm these with your tenant administrator before starting.</p>
 
       <div class="art-table-wrap">
         <table class="art-table">
@@ -633,6 +625,11 @@ Write-Host "Connected to: $($web.Title)"</pre></div>
 
       <p>Before this variant will work your app registration needs two things in Entra:</p>
 
+      <figure class="article-image">
+        <img src="https://pnp.github.io/powershell/images/authentication/allowPublicClient.png" alt="PnP PowerShell authentication public client configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>PnP PowerShell authentication screenshot showing the public client setting needed for interactive delegated sign-in. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
+      </figure>
+
       <ul>
         <li><strong>A Redirect URI:</strong> In your app &rarr; Authentication &rarr; <em>+ Add a platform</em> &rarr; <em>Mobile and desktop applications</em> &rarr; tick <code>https://login.microsoftonline.com/common/oauth2/nativeclient</code> &rarr; Configure. Then scroll to <em>Advanced settings</em> and set <em>Allow public client flows</em> to <strong>Yes</strong>.</li>
         <li><strong>Delegated permissions</strong> (not Application permissions — those are for cert-based auth only):</li>
@@ -770,6 +767,11 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
 
       <h2>Security Best Practices</h2>
 
+      <figure class="article-image">
+        <img src="https://pnp.github.io/powershell/images/authentication/conditionalAccess.png" alt="PnP PowerShell authentication conditional access screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>PnP PowerShell authentication screenshot showing conditional access considerations for securing app-based authentication. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
+      </figure>
+
       <ul class="art-steps">
         <li>
           <div class="art-step-num">1</div>
@@ -829,7 +831,7 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
         </li>
         <li>
           <span class="ts-err">The term 'Connect-PnPOnline' is not recognized as the name of a cmdlet</span>
-          <span class="ts-fix"><strong>Cause:</strong> PnP.PowerShell is not installed in the current PowerShell session or version. <strong>Fix:</strong> Run <code>Get-Module PnP.PowerShell -ListAvailable</code> to check. If not found, run <code>Install-Module PnP.PowerShell -Scope CurrentUser</code>. Ensure you are running PowerShell 7 (<code>pwsh</code>), not Windows PowerShell 5.1 (<code>powershell</code>).</span>
+          <span class="ts-fix"><strong>Cause:</strong> PnP.PowerShell is not installed in the current PowerShell session or version. <strong>Fix:</strong> Run <code>Get-Module PnP.PowerShell -ListAvailable</code> to check. If not found, run <code>Install-Module PnP.PowerShell -Scope CurrentUser</code>. Ensure you are running PowerShell 7.4 or later (<code>pwsh</code>), not Windows PowerShell 5.1 (<code>powershell</code>).</span>
         </li>
         <li>
           <span class="ts-err">Cannot find certificate with thumbprint 'ABC123...' in certificate store</span>

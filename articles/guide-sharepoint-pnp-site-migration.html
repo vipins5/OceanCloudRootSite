@@ -194,11 +194,6 @@
 
       <p class="article-intro">Moving content between SharePoint Online sites is one of the most common — and most underestimated — admin tasks. Whether you are consolidating sites, restructuring an intranet, or splitting a department site into dedicated sub-sites, PnP PowerShell gives you fine-grained control over exactly what moves and how. This guide covers the complete workflow: connecting to both sites, inventorying the source, migrating document libraries, list items, modern pages, and permissions, then running a validation pass to confirm everything landed correctly.</p>
 
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepointmigration/media/mm-flow-3box.png" alt="Microsoft migration manager diagram showing migration agents setup" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft migration setup diagram that complements SharePoint site migration planning. <a href="https://learn.microsoft.com/en-us/sharepointmigration/mm-get-started" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
-
       <h2>What PnP PowerShell Can (and Cannot) Migrate</h2>
       <p>Before writing a single line of PowerShell, align expectations. PnP covers the majority of routine content migrations but some artifacts require supplementary tools.</p>
 
@@ -238,12 +233,7 @@
       </div>
 
       <h2>Prerequisites</h2>
-
-      <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepointmigration/media/spmt-settings/image.png" alt="SharePoint Migration Tool settings screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Learn screenshot showing SharePoint Migration Tool settings useful during migration validation. <a href="https://learn.microsoft.com/en-us/sharepointmigration/spmt-settings" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
-      </figure>
-      <p>You need PowerShell 7, the PnP.PowerShell module, and an Entra app registration with the right permissions. If you have not done this yet, start with our <a href="guide-pnp-entra-app-registration">PnP Entra App Registration guide</a> before continuing.</p>
+      <p>You need PowerShell 7.4 or later, the latest PnP.PowerShell module, and an Entra app registration with the right permissions. If you have not done this yet, start with our <a href="guide-pnp-entra-app-registration">PnP Entra App Registration guide</a> before continuing.</p>
 
       <div class="art-table-wrap">
         <table class="art-table">
@@ -252,7 +242,7 @@
           </thead>
           <tbody>
             <tr><td><strong>PowerShell</strong></td><td>7.4 or later (<code>pwsh --version</code>)</td></tr>
-            <tr><td><strong>PnP.PowerShell</strong></td><td>2.x or later (<code>Get-Module PnP.PowerShell -ListAvailable</code>)</td></tr>
+            <tr><td><strong>PnP.PowerShell</strong></td><td>Latest stable release (<code>Get-Module PnP.PowerShell -ListAvailable</code>)</td></tr>
             <tr><td><strong>Entra app permissions</strong></td><td><code>Sites.FullControl.All</code> (Application) on Microsoft Graph</td></tr>
             <tr><td><strong>SharePoint Admin role</strong></td><td>Required at tenant level for site collection operations</td></tr>
             <tr><td><strong>Access to both sites</strong></td><td>Site Collection Administrator on both source and destination</td></tr>
@@ -260,8 +250,8 @@
         </table>
       </div>
 
-      <div class="code-label">PowerShell 7 &mdash; verify and update PnP module</div>
-      <div class="code-block"><pre># Verify PowerShell version (must be 7+)
+      <div class="code-label">PowerShell 7.4 &mdash; verify and update PnP module</div>
+      <div class="code-block"><pre># Verify PowerShell version (must be 7.4+)
 $PSVersionTable.PSVersion
 
 # Install or update PnP.PowerShell
@@ -272,6 +262,11 @@ Get-Module PnP.PowerShell -ListAvailable | Select-Object Name, Version</pre></di
 
       <h2>Step 1 — Connect to Both Sites</h2>
       <p>You need two live connections — one to the source site and one to the destination. PnP PowerShell lets you switch between connections using the <code>-Connection</code> parameter, which keeps your code explicit about which site each cmdlet targets.</p>
+
+      <figure class="article-image">
+        <img src="https://pnp.github.io/powershell/images/authentication/libraryVariables.png" alt="PnP PowerShell authentication configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>PnP PowerShell authentication screenshot relevant to scripted SharePoint migration connections. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
+      </figure>
 
       <div class="art-callout tip">
         <p><strong>Tip:</strong> Store connections in clearly named variables (<code>$src</code> and <code>$dst</code>) and always pass <code>-Connection</code> explicitly. Without it, PnP uses the most recently established connection — a common source of accidental writes to the wrong site.</p>
@@ -315,11 +310,6 @@ Write-Host "Source     : $((Get-PnPWeb -Connection $src).Title)"
 Write-Host "Destination: $((Get-PnPWeb -Connection $dst).Title)"</pre></div>
 
       <h2>Step 2 — Inventory the Source Site</h2>
-
-      <figure class="article-image">
-        <img src="https://pnp.github.io/powershell/images/authentication/libraryVariables.png" alt="PnP PowerShell authentication configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>PnP PowerShell authentication screenshot relevant to scripted SharePoint migration connections. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
-      </figure>
       <p>Before migrating anything, produce a complete inventory of the source site. This CSV becomes your migration manifest and your post-migration validation baseline.</p>
 
       <div class="code-label">PowerShell 7 &mdash; export full site inventory to CSV</div>
@@ -817,7 +807,7 @@ Write-Host "Next: run validation script, then check page web parts manually."</p
 
       <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell authentication guide — pnp.github.io</a><br>
       <a href="https://learn.microsoft.com/en-us/sharepointmigration/migrate-to-sharepoint-online" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; SharePoint Migration overview — learn.microsoft.com</a><br>
-      <a href="https://learn.microsoft.com/en-us/powershell/module/sharepoint-pnp/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell cmdlet reference — learn.microsoft.com</a>
+      <a href="https://pnp.github.io/powershell/cmdlets/" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; PnP PowerShell cmdlet reference — pnp.github.io</a>
 
       <div class="art-cta-box">
         <h3>Need a hands-off SharePoint migration?</h3>

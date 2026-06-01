@@ -161,11 +161,11 @@
         <span class="art-read">11 min read</span>
       </div>
 
-      <p class="article-intro">Microsoft Graph is the single API that underpins every integration with Microsoft 365. Whether you're connecting SharePoint to Salesforce, building a custom Teams bot, pulling Azure AD user data into a third-party HR system, or creating an automated provisioning workflow — all of these ultimately go through Graph. Understanding what Graph is, how to query it safely, and how to use it without writing traditional code puts IT admins in a position to design and own integrations rather than depending entirely on external developers.</p>
+      <p class="article-intro">Microsoft Graph is the single API that underpins every integration with Microsoft 365. Whether you're connecting SharePoint to Salesforce, building a custom Teams bot, pulling Microsoft Entra ID user data into a third-party HR system, or creating an automated provisioning workflow — all of these ultimately go through Graph. Understanding what Graph is, how to query it safely, and how to use it without writing traditional code puts IT admins in a position to design and own integrations rather than depending entirely on external developers.</p>
 
       <figure class="article-image">
-        <img src="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp" alt="Microsoft Graph product visual showing Microsoft 365 data connections" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Graph product visual for connecting Microsoft 365 data and services. <a href="https://developer.microsoft.com/en-us/graph" target="_blank" rel="noopener noreferrer">Source: Microsoft Graph Developer Center</a>.</figcaption>
+        <img src="https://learn.microsoft.com/en-us/graph/images/microsoft-graph.png" alt="Microsoft Graph diagram showing connected Microsoft 365 resources" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Learn diagram showing the primary Microsoft Graph resources and relationships across Microsoft 365. <a href="https://learn.microsoft.com/en-us/graph/overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
       <h2>What is Microsoft Graph?</h2>
@@ -178,7 +178,7 @@
         <li><strong>OneDrive:</strong> Files, folders, sharing links, file versions</li>
         <li><strong>Teams:</strong> Teams, channels, messages, meetings, tabs, members</li>
         <li><strong>Outlook/Exchange:</strong> Mailboxes, calendar events, contacts, distribution lists</li>
-        <li><strong>Azure AD (Entra ID):</strong> Users, groups, guest accounts, application registrations, audit logs</li>
+        <li><strong>Microsoft Entra ID:</strong> Users, groups, guest accounts, application registrations, audit logs</li>
         <li><strong>Planner:</strong> Plans, buckets, tasks, assignments</li>
         <li><strong>To Do, OneNote, Forms, Viva Insights</strong></li>
       </ul>
@@ -188,8 +188,8 @@
       <h2>Graph Explorer: Your IT Admin Testing Tool</h2>
 
       <figure class="article-image">
-        <img src="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_gratstarted_VP1.webp" alt="Microsoft Graph getting started product visual" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Graph product visual for getting started with Microsoft 365 APIs. <a href="https://developer.microsoft.com/en-us/graph" target="_blank" rel="noopener noreferrer">Source: Microsoft Graph Developer Center</a>.</figcaption>
+        <img src="https://learn.microsoft.com/en-us/graph/graph-explorer/images/ge-tutorial-step2-explore-sample-query.png" alt="Microsoft Graph Explorer running a sample GET my profile query" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Microsoft Learn screenshot of Graph Explorer running a sample query and showing the response preview. <a href="https://learn.microsoft.com/en-us/graph/graph-explorer/graph-explorer-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Before building any integration, explore the API using Microsoft Graph Explorer — a browser-based tool that lets you make live Graph API calls against your own tenant (or a sample tenant) without writing any code. It's invaluable for understanding what data is returned before building a flow or integration.</p>
 
@@ -235,18 +235,13 @@
       </div>
 
       <h3>Using the HTTP connector for full Graph access</h3>
-      <p>The premium HTTP connector lets you call any Graph URL with full OAuth 2.0 authentication. This requires a Power Automate premium licence or Power Automate Per Flow plan, but unlocks access to every Graph endpoint — including Azure AD operations and cross-service queries not available through standard connectors.</p>
+      <p>The premium HTTP connector lets you call any Graph URL with full OAuth 2.0 authentication. This requires a Power Automate premium licence or Power Automate Per Flow plan, but unlocks access to every Graph endpoint — including Microsoft Entra ID operations and cross-service queries not available through standard connectors.</p>
 
       <div class="art-callout info">
         <p><strong>Licensing note:</strong> The SharePoint HTTP request action is a standard action (no premium licence needed). The generic HTTP connector for arbitrary Graph calls is a premium action and requires Power Automate premium licensing for the flow user or the flow itself.</p>
       </div>
 
       <h2>SharePoint Webhooks: Real-Time Change Notifications</h2>
-
-      <figure class="article-image">
-        <img src="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/HeroBanner_VP1.webp" alt="Microsoft Graph developer platform hero visual" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <figcaption>Microsoft Graph developer platform visual from Microsoft Graph Developer Center. <a href="https://developer.microsoft.com/en-us/graph" target="_blank" rel="noopener noreferrer">Source: Microsoft Graph Developer Center</a>.</figcaption>
-      </figure>
       <p>SharePoint webhooks allow external systems to receive immediate notifications when content changes in a SharePoint list or library — without polling the API repeatedly. When a webhook subscription is registered, SharePoint sends an HTTP POST to your specified endpoint (a webhook receiver) every time a change occurs.</p>
 
       <h3>How SharePoint webhooks work</h3>
@@ -302,7 +297,7 @@
             <tr><th></th><th>App Registration</th><th>Managed Identity</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>What it is</strong></td><td>An Azure AD application with a client ID and either a client secret or certificate</td><td>An Azure AD identity automatically provisioned and managed by Azure for a specific Azure resource (VM, Function App, Logic App, etc.)</td></tr>
+            <tr><td><strong>What it is</strong></td><td>A Microsoft Entra application with a client ID and either a client secret or certificate</td><td>A Microsoft Entra identity automatically provisioned and managed by Azure for a specific Azure resource (VM, Function App, Logic App, etc.)</td></tr>
             <tr><td><strong>Credential management</strong></td><td>Manual — you create and rotate client secrets or certificates; secrets expire and must be renewed</td><td>Automatic — Azure manages the underlying credentials; no secrets to store or rotate</td></tr>
             <tr><td><strong>Best for</strong></td><td>Integrations from non-Azure systems (on-premises, third-party SaaS, local scripts)</td><td>Integrations running inside Azure (Azure Functions, Logic Apps, App Service, VMs)</td></tr>
             <tr><td><strong>Security posture</strong></td><td>Good if managed well — but client secrets in code or config files are a common security incident cause</td><td>Excellent — no credentials to steal; authentication is handled by the Azure platform automatically</td></tr>
@@ -327,7 +322,7 @@
       <h2>Common Integration Mistakes</h2>
       <ul>
         <li><strong>Polling with a 1-minute interval when webhooks would do:</strong> Excessive polling adds load to the Graph API, counts against throttling limits, and creates unnecessary M365 audit log noise; use webhooks or scheduled flows at appropriate intervals</li>
-        <li><strong>App registrations with unlimited expiry client secrets:</strong> Azure now caps secrets at 24 months maximum; plan for rotation and set monitoring alerts on expiry dates in Azure AD</li>
+        <li><strong>App registrations with unlimited expiry client secrets:</strong> Microsoft Entra now caps secrets at 24 months maximum; plan for rotation and set monitoring alerts on expiry dates in Entra ID</li>
         <li><strong>Granting Global Administrator consent for Graph permissions:</strong> Many integrations request excessive permissions; always review the minimum permission set actually required before granting consent</li>
         <li><strong>Not handling Graph throttling:</strong> Graph enforces rate limits; integrations that don't implement exponential back-off retry logic will fail under load; look for <code>429 Too Many Requests</code> responses and implement retry-after header handling</li>
         <li><strong>Forgetting webhook subscription renewal:</strong> The most common cause of "the integration stopped working" — 180-day expiry without renewal monitoring causes silent failures that are hard to diagnose retroactively</li>

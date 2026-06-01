@@ -48,7 +48,7 @@
         "keywords": ["SharePoint automation", "Power Automate SharePoint", "SharePoint automation examples", "SharePoint workflows"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview", "name": "Power Automate SharePoint overview" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approvals-overview", "name": "Approvals in Power Automate" },
+          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approve-reject-requests", "name": "Manage approval requests in Power Automate" },
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/email-overview", "name": "Email with Power Automate" }
         ],
         "inLanguage": "en-US",
@@ -264,7 +264,7 @@
         <div class="idea-num">9</div>
         <div class="idea-dept">IT / Security</div>
         <div class="idea-title">External Guest Access Audit and Expiry</div>
-        <p class="idea-body">A monthly scheduled flow uses the Graph API (HTTP action) to retrieve all guest users in the Azure AD tenant who have access to SharePoint sites. For each guest account inactive for 90+ days, the flow emails the site owner asking them to confirm whether access should continue or be revoked. After 14 days without a response, it sends a final warning. After 30 days total, it removes the guest from the site's permission group — maintaining a clean, auditable guest access register.</p>
+        <p class="idea-body">A monthly scheduled flow uses the Graph API (HTTP action) to retrieve all guest users in the Microsoft Entra tenant who have access to SharePoint sites. For each guest account inactive for 90+ days, the flow emails the site owner asking them to confirm whether access should continue or be revoked. After 14 days without a response, it sends a final warning. After 30 days total, it removes the guest from the site's permission group — maintaining a clean, auditable guest access register.</p>
         <div class="idea-meta">
           <div class="idea-meta-item"><span class="idea-meta-label">Trigger</span><span class="idea-meta-val">Scheduled (monthly)</span></div>
           <div class="idea-meta-item"><span class="idea-meta-label">Time saved</span><span class="idea-meta-val">Ongoing security hygiene</span></div>
