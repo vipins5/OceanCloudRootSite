@@ -433,45 +433,61 @@ Audience:       https://graph.microsoft.com
       <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures no error path is left unhandled.</p>
 
       <div class="screen-step">
-        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Logic App Designer — Try / Catch scope structure</span></div>
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Logic App Designer — full action sequence</span></div>
         <div class="screen-step-body">
+          <span class="ss-label">Before Try scope (top level — required for variables):</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Initialize variable — runbookJobId (String, value: "")</span><br>
+          <span class="ss-note">&nbsp;&nbsp;↑ Initialize variable must be at the top level, NOT inside a scope</span><br><br>
           <span class="ss-label">▼ Scope: Try</span><br>
           &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (Status = Provisioning)</span><br>
           &nbsp;&nbsp;<span class="ss-value">Azure Automation — Create job (runbook: SP-SiteProvisioning)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Initialize variable — runbookJobId = job ID from previous step</span><br>
-          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (LogicAppRunID = runbookJobId)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Do Until — poll job status (30s delay, max 20 iterations = 10 min)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">Condition — job Completed → update Status=Provisioned + email</span><br>
-          &nbsp;&nbsp;<span class="ss-value">&nbsp;&nbsp;&nbsp;&nbsp;No branch: Terminate (Status=Failed) ← triggers Catch scope</span><br><br>
+          &nbsp;&nbsp;<span class="ss-value">Set variable — runbookJobId = @{body('Create_job')?['properties/jobId']}</span><br>
+          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (LogicAppRunID = @{variables('runbookJobId')})</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Do Until — poll job (30s delay per loop, max 20 = 10 min)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Condition — if job Completed: get output, update Provisioned, email</span><br>
+          &nbsp;&nbsp;<span class="ss-value">&nbsp;&nbsp;&nbsp;No branch → Terminate (Status=Failed) ← makes Try fail</span><br><br>
           <span class="ss-label">▼ Scope: Catch</span>
-          <span class="ss-note"> (Configure run after: has failed)</span><br>
-          &nbsp;&nbsp;<span class="ss-value">SharePoint — Create item in Provision Logs</span><br>
+          <span class="ss-note"> (Configure run after: Try → has failed)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">SharePoint — Create item in Site Provision Logs</span><br>
           &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (Status = Failed)</span><br>
           &nbsp;&nbsp;<span class="ss-value">Send an email (V2) — failure notification to requester</span>
         </div>
       </div>
 
+      <div class="art-callout warning">
+        <p><strong>Initialize variable must be before the Try scope.</strong> Logic Apps does not allow <code>Initialize variable</code> inside a Scope action — it throws a designer validation error. Declare <em>runbookJobId</em> (String) and <em>requestItemId</em> (Integer) at the top level before the Try scope. Inside the scope, use <strong>Set variable</strong> to assign values to them.</p>
+      </div>
+
       <p>Inside the <strong>Try</strong> scope:</p>
       <ol>
-        <li><strong>Update item</strong> (SharePoint) — set Status = <em>Provisioning</em> so the requester can see the request is being actioned</li>
-        <li><strong>Create job</strong> (Azure Automation) — invoke the <em>SP-SiteProvisioning</em> runbook, passing all site parameters as key/value pairs. Store the returned <strong>Job ID</strong> in a variable named <em>runbookJobId</em></li>
-        <li><strong>Update item</strong> — write <em>runbookJobId</em> to the <em>LogicAppRunID</em> column immediately, before polling starts, so the ID is available for debugging even if the poll loop fails</li>
-        <li><strong>Do Until</strong> — poll every 30 seconds with a <strong>Delay</strong> action followed by <strong>Get job</strong> (Azure Automation). Exit condition: <code>Status equals Completed OR Failed OR Suspended</code>, or loop counter exceeds <strong>20</strong> (10 minutes max)</li>
-        <li>After the loop, a <strong>Condition</strong> checks the final job status:
+        <li><strong>Update item</strong> (SharePoint) — set Status = <em>Provisioning</em> so the requester can see progress</li>
+        <li><strong>Create job</strong> (Azure Automation) — invoke <em>SP-SiteProvisioning</em>, passing all site parameters as key/value pairs in the runbook parameters section</li>
+        <li><strong>Set variable</strong> — <code>runbookJobId = @{body('Create_job')?['properties/jobId']}</code></li>
+        <li><strong>Update item</strong> — write runbookJobId to <em>LogicAppRunID</em> <em>before</em> polling starts, so it's available for debugging even if the loop itself fails</li>
+        <li><strong>Do Until</strong> — poll every 30 seconds (Delay + Get job). The exit condition expression is:
+          <div class="code-block" style="margin:8px 0"><pre>@{contains(createArray('Completed','Failed','Suspended'),
+  body('Get_job')?['properties/status'])}</pre></div>
+          Add a loop counter variable (limit: 20) as a safety stop — 20 × 30s = 10 minutes maximum wait.
+        </li>
+        <li>After the loop, <strong>Condition</strong> on final job status:
           <ul>
-            <li><strong>Completed</strong>: Get job output, extract the URL from <code>PROVISIONED:https://...</code>, update item (Status = Provisioned, ProvisionedURL), send success email</li>
-            <li><strong>Anything else</strong>: <strong>Terminate</strong> the run with Status = Failed — this makes the Try scope fail, which triggers the Catch scope</li>
+            <li><strong>Completed</strong>: Get job output → extract URL with <code>@{trim(last(split(body('Get_job_output')?['value'], 'PROVISIONED:')))}</code> → update item (Status=Provisioned, ProvisionedURL) → send success email</li>
+            <li><strong>Anything else</strong>: <strong>Terminate</strong> (Status=Failed) — this makes the Try scope fail, triggering the Catch scope automatically</li>
           </ul>
         </li>
       </ol>
 
-      <p>Inside the <strong>Catch</strong> scope (Configure run after → <em>has failed</em>):</p>
+      <p>Inside the <strong>Catch</strong> scope (Configure run after → <em>Try has failed</em>):</p>
       <ol>
-        <li>Use <code>result('Try')</code> to extract which action failed and the error detail</li>
+        <li>Use <code>result('Try')</code> to extract the failed action name and error detail</li>
         <li>Create a row in the Site Provision Logs list with the error context</li>
         <li>Update the Site Requests item (Status = Failed)</li>
         <li>Send the failure email to the requester</li>
       </ol>
+
+      <div class="art-callout info">
+        <p><strong>Make the Power Automate → Logic App HTTP call asynchronous.</strong> By default, Power Automate's HTTP action waits synchronously for the Logic App to finish — which means the approval flow hangs for the full provisioning duration (up to 10 minutes). In the HTTP action settings, enable <strong>Asynchronous Pattern</strong>. This lets Power Automate fire the Logic App and move on immediately; the Logic App sends all notifications independently.</p>
+      </div>
 
       <div class="code-label">Logic App — extract error info from Try scope (use in Catch)</div>
       <div class="code-block"><pre># result('Try') returns an array of all actions in the Try scope.
@@ -622,6 +638,7 @@ try {
     #   - Use when the requester does NOT need a Teams channel (selected in the form)
 
     if ($SiteType -eq "CommunicationSite") {
+        # CommunicationSite supports -Description and -SiteDesign (Blank | Topic | Showcase)
         New-PnPSite -Type CommunicationSite `
             -Title       $SiteTitle `
             -Url         $siteFullUrl `
@@ -631,13 +648,15 @@ try {
             -Wait `
             -Connection  $adminConn
     } else {
+        # TeamSiteWithoutMicrosoft365Group does NOT support -Description or -SiteDesign.
+        # Attempting to pass -Description here throws ParameterBindingException.
+        # Description is applied separately via Set-PnPSite after connecting to the site.
         New-PnPSite -Type TeamSiteWithoutMicrosoft365Group `
-            -Title       $SiteTitle `
-            -Url         $siteFullUrl `
-            -Owner       $PrimaryOwnerEmail `
-            -Description $Description `
+            -Title      $SiteTitle `
+            -Url        $siteFullUrl `
+            -Owner      $PrimaryOwnerEmail `
             -Wait `
-            -Connection  $adminConn
+            -Connection $adminConn
     }
     Write-Output "INFO: Site created at $siteFullUrl"
 
@@ -645,15 +664,19 @@ try {
     $siteConn = Connect-PnPOnline -Url $siteFullUrl -ManagedIdentity -ReturnConnection
     Write-Output "INFO: Site connection established ($siteFullUrl)"
 
+    # Set description on team sites (not supported during New-PnPSite for this type)
+    if ($SiteType -ne "CommunicationSite" -and $Description -ne "") {
+        Set-PnPSite -Description $Description -Connection $siteConn
+        Write-Output "INFO: Description applied"
+    }
+
     # ── Add site collection admins ────────────────────────────────────────────
     #
-    # New-PnPSite sets the -Owner as site collection admin, but we add them
-    # explicitly here to ensure the named human accounts appear in the UI
-    # (the Managed Identity account is also an admin — that's expected and fine).
-    # -Owners accepts a string array, so wrap single values in @()
-
-    Add-PnPSiteCollectionAdmin -Owners @($PrimaryOwnerEmail) -Connection $siteConn
-    Write-Output "INFO: Primary admin set: $PrimaryOwnerEmail"
+    # New-PnPSite -Owner already sets PrimaryOwnerEmail as site collection admin.
+    # We call Add-PnPSiteCollectionAdmin to also add SecondaryOwner when provided.
+    # The Managed Identity account is also an admin via its SharePoint Admin role —
+    # that's expected; it won't appear in the SharePoint "Site admins" UI as a named user.
+    # -Owners accepts a string (UPN) or array of strings.
 
     if ($SecondaryOwnerEmail -ne "") {
         Add-PnPSiteCollectionAdmin -Owners @($SecondaryOwnerEmail) -Connection $siteConn
@@ -732,10 +755,18 @@ try {
 
     # ── Signal success ────────────────────────────────────────────────────────
     #
-    # The Logic App reads the job output via "Get job output" and extracts the URL:
-    #   @{replace(body('Get_job_output')?['value'], 'PROVISIONED:', '')}
-    # The PROVISIONED: prefix makes the extraction unambiguous even if other
-    # Write-Output lines appear in the output stream.
+    # The Logic App reads the job output stream via "Get job output", which returns
+    # all Write-Output lines as a single newline-delimited string in body('Get_job_output')?['value'].
+    # Because the output contains multiple INFO: lines, a simple replace() would corrupt it.
+    # The Logic App expression to extract only the URL is:
+    #
+    #   @{trim(last(split(body('Get_job_output')?['value'], 'PROVISIONED:')))}
+    #
+    # This splits the output on "PROVISIONED:" and takes the last segment — the URL.
+    # trim() removes any trailing newline characters.
+    #
+    # The PROVISIONED: prefix must be unique in the output — do not use it in any
+    # other Write-Output statement in this runbook.
 
     Write-Output "PROVISIONED:$siteFullUrl"
 
@@ -765,21 +796,28 @@ try {
 
       <p>The Logic App's Catch scope creates a row in the Site Provision Logs list. The key expressions used in that action are:</p>
 
-      <div class="code-label">Logic App — Catch scope expressions for log entry</div>
-      <div class="code-block"><pre># Title (unique identifier for the log row)
+      <div class="code-label">Logic App — Catch scope expressions for Site Provision Logs "Create item"</div>
+      <div class="code-block"><pre># Title column — unique, sortable identifier for each log row
 ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
 
-# Which action inside Try scope failed
-@{result('Try')?[0]?['name']}
+# RequestID column — links back to the originating Site Requests list row
+@{variables('requestItemId')}
 
-# Human-readable error message
-@{result('Try')?[0]?['error']?['message']}
+# FailedStep column — name of the specific Logic App action that failed
+# result('Try') returns ALL actions; filter() isolates the first one with status=Failed
+@{first(filter(result('Try'), item()?['status'] == 'Failed'))?['name']}
 
-# Full error code / raw detail
-@{result('Try')?[0]?['error']?['code']}
+# ErrorMessage column — human-readable message from the failed action
+@{first(filter(result('Try'), item()?['status'] == 'Failed'))?['error']?['message']}
 
-# Azure Automation job ID (stored in variable during Try scope)
-@{variables('runbookJobId')}</pre></div>
+# RawError column — full error code for deep debugging
+@{first(filter(result('Try'), item()?['status'] == 'Failed'))?['error']?['code']}
+
+# RunbookJobID column — paste this into Azure Automation → Jobs for the full PS output
+@{variables('runbookJobId')}
+
+# LogLevel column — hardcode to "Error" for all Catch scope entries
+Error</pre></div>
 
       <p>With these entries in the log list, an admin can:</p>
       <ul>
