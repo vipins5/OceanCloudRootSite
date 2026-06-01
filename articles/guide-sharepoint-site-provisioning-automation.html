@@ -120,6 +120,22 @@
   .badge-la{background:rgba(139,92,246,.15);color:#a78bfa;}
   .badge-aa{background:rgba(74,222,128,.15);color:#4ade80;}
   .badge-sp{background:rgba(251,191,36,.15);color:#fbbf24;}
+  /* Portal navigation path (matches PnP guide style) */
+  .portal-path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.18);border-radius:8px;padding:10px 16px;margin:16px 0;font-size:.8rem;}
+  .portal-path .pp-step{color:#60a5fa;font-weight:600;}
+  .portal-path .pp-sep{color:rgba(255,255,255,.25);margin:0 2px;}
+  .portal-path .pp-icon{font-size:1rem;}
+  /* Screen step — shows key UI state in a styled panel */
+  .screen-step{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.10);border-radius:12px;overflow:hidden;margin:20px 0;}
+  .screen-step-bar{background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08);padding:8px 14px;display:flex;align-items:center;gap:8px;}
+  .screen-step-bar .ss-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15);}
+  .screen-step-bar .ss-title{font-size:.72rem;color:var(--text-dim);font-weight:600;letter-spacing:.04em;flex:1;text-align:center;}
+  .screen-step-body{padding:16px 20px;font-size:.82rem;color:#c9d1d9;font-family:'Courier New',monospace;line-height:1.75;}
+  .screen-step-body .ss-label{color:#60a5fa;font-weight:700;font-family:inherit;}
+  .screen-step-body .ss-value{color:#4ade80;}
+  .screen-step-body .ss-note{color:#6b7280;font-style:italic;}
+  .screen-step-body .ss-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:4px;}
+  .screen-step-body .ss-field{flex:1;min-width:140px;}
   </style>
 </head>
 <body>
@@ -219,7 +235,20 @@
 
       <h2>Step 1: Create the SharePoint Lists</h2>
 
-      <p>Two SharePoint lists underpin the entire pipeline. Create them in a central IT or admin site collection — not in a personal or team site.</p>
+      <div class="portal-path">
+        <span class="pp-icon">🟩</span>
+        <span class="pp-step">IT admin SharePoint site</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">+ New</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">List</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Blank list</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Name: Site Requests</span>
+      </div>
+
+      <p>Two SharePoint lists underpin the entire pipeline. Create them in a central IT or admin site collection — not in a personal or team site. You need <strong>Site Collection Administrator</strong> rights to create lists and columns.</p>
 
       <h3>Site Requests list</h3>
       <p>This is the intake form and the live status board. Every provisioning request flows through it from submission to completion.</p>
@@ -269,6 +298,17 @@
 
       <h2>Step 2: Manager Approval Flow (Power Automate)</h2>
 
+      <div class="portal-path">
+        <span class="pp-icon">🌐</span>
+        <span class="pp-step">make.powerautomate.com</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">+ Create</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Automated cloud flow</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Name: SP Site Request — Manager Approval</span>
+      </div>
+
       <p>Create a new <strong>Automated cloud flow</strong> in Power Automate named <em>SP Site Request — Manager Approval</em>. This flow runs entirely within your Microsoft 365 tenant — no Azure subscription required.</p>
 
       <h3>Trigger and guard condition</h3>
@@ -279,20 +319,18 @@
       <p>Add a <strong>Get manager (V2)</strong> action from the Office 365 Users connector. Pass the requester's email from the trigger. This resolves the correct approver automatically — the flow never needs a hardcoded email.</p>
 
       <h3>Send the approval</h3>
-      <p>Add a <strong>Start and wait for an approval</strong> action. Configure it as follows:</p>
+      <p>Add a <strong>Start and wait for an approval</strong> action from the Approvals connector. Configure it as follows:</p>
 
-      <div class="art-table-wrap">
-        <table class="art-table">
-          <thead><tr><th>Field</th><th>Value</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Approval type</strong></td><td>Approve/Reject — First to respond</td></tr>
-            <tr><td><strong>Title</strong></td><td>Site request: <code>@{triggerOutputs()?['body/Title']}</code></td></tr>
-            <tr><td><strong>Assigned to</strong></td><td><code>@{outputs('Get_manager_(V2)')?['body/mail']}</code></td></tr>
-            <tr><td><strong>Details</strong></td><td>Requester: [Created By name]<br>URL alias: [SiteURLAlias]<br>Type: [SiteType]<br>Purpose: [BusinessPurpose]</td></tr>
-            <tr><td><strong>Item link</strong></td><td>Link to the SharePoint list item</td></tr>
-            <tr><td><strong>Timeout</strong></td><td>P2D (ISO 8601 for 48 hours)</td></tr>
-          </tbody>
-        </table>
+      <div class="screen-step">
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Power Automate — Start and wait for an approval</span></div>
+        <div class="screen-step-body">
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Approval type</span><br><span class="ss-value">Approve/Reject - First to respond</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Title</span><br><span class="ss-value">Site request: @{triggerOutputs()?['body/Title']}</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Assigned to</span><br><span class="ss-value">@{outputs('Get_manager_(V2)')?['body/mail']}</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Details</span><br><span class="ss-value">Requester: @{triggerOutputs()?['body/Author/DisplayName']}<br>URL alias: @{triggerOutputs()?['body/SiteURLAlias']}<br>Type: @{triggerOutputs()?['body/SiteType/Value']}<br>Purpose: @{triggerOutputs()?['body/BusinessPurpose']}</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Item link</span><br><span class="ss-value">@{triggerOutputs()?['body/{Link}']}</span><br><span class="ss-note">— opens the SharePoint list item for the approver</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Timeout (ISO 8601)</span><br><span class="ss-value">P2D</span><br><span class="ss-note">— 48 hours; after this the approval action status = TimedOut</span></div></div>
+        </div>
       </div>
 
       <h3>Branch: Approved</h3>
@@ -323,7 +361,20 @@
 
       <h2>Step 3: Azure Logic App — The Orchestrator</h2>
 
-      <p>The Logic App is the heart of the pipeline. It owns every step after approval: URL validation, runbook invocation, polling, error capture, and all notifications. Create a <strong>Consumption plan</strong> Logic App named <em>sp-site-provisioning-orchestrator</em>.</p>
+      <div class="portal-path">
+        <span class="pp-icon">🔵</span>
+        <span class="pp-step">portal.azure.com</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">+ Create a resource</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Logic App</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Plan type: Consumption</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Name: sp-site-provisioning-orchestrator</span>
+      </div>
+
+      <p>The Logic App is the heart of the pipeline. It owns every step after approval: URL validation, runbook invocation, polling, error capture, and all notifications. Create a <strong>Consumption plan</strong> Logic App — this keeps costs near zero since provisioning requests are infrequent.</p>
 
       <h3>HTTP trigger</h3>
       <p>Add a <strong>When a HTTP request is received</strong> trigger. Use <strong>Use sample payload to generate schema</strong> and paste a representative JSON body to get the schema auto-generated. Copy the generated URL and paste it into the Power Automate HTTP action from Step 2.</p>
@@ -343,98 +394,233 @@
 }</pre></div>
 
       <h3>URL availability check</h3>
-      <p>Before invoking the runbook, verify the URL alias is not already taken. Add an <strong>HTTP</strong> action calling the SharePoint REST API:</p>
+      <p>Before invoking the runbook, verify the URL alias is not already taken. Use the <strong>Microsoft Graph API</strong> — it returns a clean <strong>404</strong> for non-existent sites and <strong>200</strong> for existing ones, making the check unambiguous.</p>
 
-      <div class="code-label">HTTP GET — check site existence</div>
-      <div class="code-block"><pre>GET https://@{body('Parse_JSON')?['tenantName']}-admin.sharepoint.com
-    /_api/SPO.Tenant/GetSitePropertiesByUrl(
-      url='https://@{body('Parse_JSON')?['tenantName']}.sharepoint.com
-           /sites/@{body('Parse_JSON')?['siteUrlAlias']}',
-      includeDetail=false)
+      <div class="art-callout warning">
+        <p><strong>Why not the SharePoint REST API?</strong> <code>GetSitePropertiesByUrl</code> returns HTTP 200 for both existing and non-existing sites — it embeds an error message in the JSON body rather than using HTTP status codes. This makes it unreliable as a branch condition. The Graph API is the correct tool here.</p>
+      </div>
 
+      <div class="screen-step">
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Logic App Designer — HTTP action: Check URL availability</span></div>
+        <div class="screen-step-body">
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Method</span><br><span class="ss-value">GET</span></div><div class="ss-field"><span class="ss-label">Authentication</span><br><span class="ss-value">Managed Identity</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">URI</span><br><span class="ss-value">https://graph.microsoft.com/v1.0/sites/<br>@{body('Parse_JSON')?['tenantName']}.sharepoint.com:<br>/sites/@{body('Parse_JSON')?['siteUrlAlias']}:</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">Audience</span><br><span class="ss-value">https://graph.microsoft.com</span></div></div>
+        </div>
+      </div>
+
+      <div class="code-label">Logic App — HTTP GET via Microsoft Graph</div>
+      <div class="code-block"><pre># Graph endpoint — reliable 200/404 for site existence check
+# 200 = site exists (URL taken)   |   404 = URL is free to use
+GET https://graph.microsoft.com/v1.0/sites/
+    @{body('Parse_JSON')?['tenantName']}.sharepoint.com:
+    /sites/@{body('Parse_JSON')?['siteUrlAlias']}:
+
+Method:         GET
 Authentication: Managed Identity
-Audience: https://@{body('Parse_JSON')?['tenantName']}-admin.sharepoint.com</pre></div>
+Audience:       https://graph.microsoft.com
 
-      <p>Follow this with a Condition: if the HTTP response Status code equals <strong>200</strong>, the site already exists — route to an error log entry and a "URL taken" email to the requester, then terminate. Any other status code means the URL is free.</p>
+# The Logic App Managed Identity needs "Sites.Read.All" on Graph
+# (granted via Entra → Enterprise applications → your Logic App MI → API permissions)</pre></div>
+
+      <p>Follow with a <strong>Condition</strong>: if <code>outputs('Check_URL')?['statusCode']</code> equals <strong>200</strong> → site exists. Route to an error log entry, update Status to <em>Failed</em>, email the requester with a "URL already taken" message, then <strong>Terminate</strong>. The <strong>404</strong> branch continues to provisioning.</p>
+
+      <div class="art-callout info">
+        <p><strong>Grant the Graph permission:</strong> In the Azure Portal, go to your Logic App → Identity → System assigned → Azure role assignments does NOT cover Graph. Instead go to <strong>Entra ID → Enterprise applications → search your Logic App's display name → Permissions → Grant admin consent</strong> for <code>Sites.Read.All</code>. Alternatively, use a PowerShell one-liner: <code>New-MgServicePrincipalAppRoleAssignment</code>.</p>
+      </div>
 
       <h3>Try / Catch pattern with Scope actions</h3>
-      <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures errors are always handled.</p>
+      <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures no error path is left unhandled.</p>
+
+      <div class="screen-step">
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Logic App Designer — Try / Catch scope structure</span></div>
+        <div class="screen-step-body">
+          <span class="ss-label">▼ Scope: Try</span><br>
+          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (Status = Provisioning)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Azure Automation — Create job (runbook: SP-SiteProvisioning)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Initialize variable — runbookJobId = job ID from previous step</span><br>
+          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (LogicAppRunID = runbookJobId)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Do Until — poll job status (30s delay, max 20 iterations = 10 min)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Condition — job Completed → update Status=Provisioned + email</span><br>
+          &nbsp;&nbsp;<span class="ss-value">&nbsp;&nbsp;&nbsp;&nbsp;No branch: Terminate (Status=Failed) ← triggers Catch scope</span><br><br>
+          <span class="ss-label">▼ Scope: Catch</span>
+          <span class="ss-note"> (Configure run after: has failed)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">SharePoint — Create item in Provision Logs</span><br>
+          &nbsp;&nbsp;<span class="ss-value">SharePoint — Update item (Status = Failed)</span><br>
+          &nbsp;&nbsp;<span class="ss-value">Send an email (V2) — failure notification to requester</span>
+        </div>
+      </div>
 
       <p>Inside the <strong>Try</strong> scope:</p>
       <ol>
-        <li><strong>Update item</strong> (SharePoint) — set Status = <em>Provisioning</em></li>
-        <li><strong>Create job</strong> (Azure Automation) — invoke the <em>SP-SiteProvisioning</em> runbook, passing all site parameters. Store the returned <strong>Job ID</strong> in a variable.</li>
-        <li><strong>Update item</strong> — write the Job ID to <em>LogicAppRunID</em></li>
-        <li><strong>Do Until</strong> loop — poll the job every 30 seconds (Delay action), using <strong>Get job</strong> to check its status. Exit when status equals <em>Completed</em>, <em>Failed</em>, or <em>Suspended</em>, or when the loop counter exceeds 20 (10 minutes maximum).</li>
-        <li>After the loop, check the final job status with a Condition:
+        <li><strong>Update item</strong> (SharePoint) — set Status = <em>Provisioning</em> so the requester can see the request is being actioned</li>
+        <li><strong>Create job</strong> (Azure Automation) — invoke the <em>SP-SiteProvisioning</em> runbook, passing all site parameters as key/value pairs. Store the returned <strong>Job ID</strong> in a variable named <em>runbookJobId</em></li>
+        <li><strong>Update item</strong> — write <em>runbookJobId</em> to the <em>LogicAppRunID</em> column immediately, before polling starts, so the ID is available for debugging even if the poll loop fails</li>
+        <li><strong>Do Until</strong> — poll every 30 seconds with a <strong>Delay</strong> action followed by <strong>Get job</strong> (Azure Automation). Exit condition: <code>Status equals Completed OR Failed OR Suspended</code>, or loop counter exceeds <strong>20</strong> (10 minutes max)</li>
+        <li>After the loop, a <strong>Condition</strong> checks the final job status:
           <ul>
-            <li><strong>Completed</strong>: Update item (Status = Provisioned, ProvisionedURL = full site URL) → send success email</li>
-            <li>Anything else: use <strong>Terminate</strong> with status <em>Failed</em> and a descriptive message — this causes the Try scope to fail, triggering the Catch scope</li>
+            <li><strong>Completed</strong>: Get job output, extract the URL from <code>PROVISIONED:https://...</code>, update item (Status = Provisioned, ProvisionedURL), send success email</li>
+            <li><strong>Anything else</strong>: <strong>Terminate</strong> the run with Status = Failed — this makes the Try scope fail, which triggers the Catch scope</li>
           </ul>
         </li>
       </ol>
 
-      <p>Inside the <strong>Catch</strong> scope (runs only on Try failure):</p>
+      <p>Inside the <strong>Catch</strong> scope (Configure run after → <em>has failed</em>):</p>
       <ol>
-        <li>Extract the error using the <code>result('Try')</code> expression</li>
-        <li>Create a row in the Site Provision Logs list</li>
+        <li>Use <code>result('Try')</code> to extract which action failed and the error detail</li>
+        <li>Create a row in the Site Provision Logs list with the error context</li>
         <li>Update the Site Requests item (Status = Failed)</li>
         <li>Send the failure email to the requester</li>
       </ol>
 
-      <div class="code-label">Logic App expression — extract error from Try scope</div>
-      <div class="code-block"><pre># Error message
-@{result('Try')?[0]?['error']?['message']}
+      <div class="code-label">Logic App — extract error info from Try scope (use in Catch)</div>
+      <div class="code-block"><pre># result('Try') returns an array of all actions in the Try scope.
+# Filter to the first failed action to get the most relevant error.
+# Use these expressions in the "Create item in Provision Logs" action:
 
-# Failed action name
-@{result('Try')?[0]?['name']}
+# Title — unique identifier for the log row
+ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
 
-# Full error code
-@{result('Try')?[0]?['error']?['code']}</pre></div>
+# Name of the Logic App action that failed
+@{first(filter(result('Try'), item()?['status'] == 'Failed'))?['name']}
+
+# Human-readable error message from the failed action
+@{first(filter(result('Try'), item()?['status'] == 'Failed'))?['error']?['message']}
+
+# Full error code (e.g. ActionFailed, BadRequest)
+@{first(filter(result('Try'), item()?['status'] == 'Failed'))?['error']?['code']}
+
+# Azure Automation job ID stored earlier in the Try scope
+@{variables('runbookJobId')}
+
+# Extract provisioned URL from job output (in the Completed branch):
+# job output format: "PROVISIONED:https://contoso.sharepoint.com/sites/marketing-hub-2026"
+@{replace(body('Get_job_output')?['value'], 'PROVISIONED:', '')}</pre></div>
 
       <h2>Step 4: Azure Automation Runbook (PnP PowerShell)</h2>
+
+      <div class="portal-path">
+        <span class="pp-icon">🔵</span>
+        <span class="pp-step">portal.azure.com</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Automation Accounts</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">[your account]</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Runbooks</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">+ Create a runbook</span>
+        <span class="pp-sep">›</span>
+        <span class="pp-step">Runtime: PowerShell 7.2</span>
+      </div>
 
       <p>The runbook is a PowerShell 7.2 runbook in an Azure Automation account. It does all the actual SharePoint work: creates the site, adds owners, applies the template structure, and locks down sharing settings.</p>
 
       <h3>Prerequisites</h3>
+
+      <div class="screen-step">
+        <div class="screen-step-bar"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><span class="ss-title">Azure Portal — Automation Account setup checklist</span></div>
+        <div class="screen-step-body">
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">1. Import PnP.PowerShell module</span><br><span class="ss-value">Automation Account → Modules → Browse Gallery → Search "PnP.PowerShell" → Import</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">2. Enable Managed Identity</span><br><span class="ss-value">Automation Account → Identity → System assigned → Status: On → Save</span><br><span class="ss-note">Copy the Object (principal) ID shown after saving</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">3. Grant SharePoint Admin role</span><br><span class="ss-value">Microsoft 365 admin centre → Roles → Role assignments → SharePoint Administrator → Add MI Object ID</span></div></div>
+          <div class="ss-row"><div class="ss-field"><span class="ss-label">4. Runbook runtime version</span><br><span class="ss-value">Create runbook → Runtime version: 7.2 (PowerShell) → not 5.1</span><br><span class="ss-note">PnP.PowerShell 2.x requires .NET 8, available only in PS 7.2 runtime</span></div></div>
+        </div>
+      </div>
+
       <ul>
-        <li>Azure Automation account with <strong>PnP.PowerShell</strong> imported from the module gallery (search for <em>PnP.PowerShell</em> under Modules &gt; Browse Gallery)</li>
+        <li>Azure Automation account with <strong>PnP.PowerShell 2.x</strong> imported from the module gallery</li>
         <li>System-assigned <strong>Managed Identity</strong> enabled on the Automation account</li>
-        <li>The Managed Identity's Object ID granted <strong>SharePoint Administrator</strong> role in Microsoft 365 admin centre, <em>or</em> granted application permission <strong>Sites.FullControl.All</strong> on Microsoft Graph via Entra app consent</li>
+        <li>Managed Identity's Object ID granted <strong>SharePoint Administrator</strong> role in the Microsoft 365 admin centre — this gives the runbook full control over all sites without storing any credentials</li>
+        <li>For the Logic App Managed Identity: <strong>Sites.Read.All</strong> on Microsoft Graph (for the URL check in Step 3) and the Azure Automation <strong>Contributor</strong> role (to create jobs)</li>
       </ul>
 
       <div class="art-callout warning">
-        <p><strong>Never store credentials in a runbook.</strong> Use Managed Identity exclusively. If your Automation account cannot use Managed Identity (older accounts), use a Certificate credential stored in Azure Key Vault, fetched at runtime via <code>Get-AutomationCertificate</code>.</p>
+        <p><strong>Never store credentials in a runbook.</strong> Use Managed Identity exclusively. If your Automation account cannot use Managed Identity (very old accounts), use a Certificate credential stored in Azure Key Vault and fetched at runtime via <code>Get-AutomationCertificate</code> — never a plaintext password.</p>
       </div>
 
       <h3>Runbook: SP-SiteProvisioning</h3>
 
+      <p>The critical design decision in this runbook is maintaining <strong>two named PnP connections</strong> — one to the SharePoint admin centre and one to the new site. <code>Set-PnPTenantSite</code> calls the Tenant Admin REST API and <em>must</em> go through the admin connection. If you call it while connected to the regular site, it silently fails or throws a 403.</p>
+
       <div class="code-label">PowerShell 7.2 runbook — SP-SiteProvisioning</div>
       <div class="code-block"><pre>param(
+    # TenantName: the subdomain portion only — e.g. "contoso" not "contoso.sharepoint.com"
     [Parameter(Mandatory=$true)] [string]$TenantName,
+
+    # SiteTitle: the display name shown in the browser tab and SharePoint navigation
     [Parameter(Mandatory=$true)] [string]$SiteTitle,
+
+    # SiteUrlAlias: the path segment after /sites/ — must be lowercase letters, numbers,
+    # and hyphens only; max 40 characters; validated in Power Automate before approval
     [Parameter(Mandatory=$true)] [string]$SiteUrlAlias,
-    [Parameter(Mandatory=$true)] [string]$SiteType,
-    [Parameter(Mandatory=$true)] [string]$Template,
+
+    # SiteType: determines site template family and whether an M365 Group is created
+    [Parameter(Mandatory=$true)]
+    [ValidateSet("CommunicationSite","TeamSiteWithoutMicrosoft365Group")]
+    [string]$SiteType,
+
+    # Template: controls which lists, libraries, and folders are provisioned
+    [Parameter(Mandatory=$true)]
+    [ValidateSet("General","Project Team","HR Department","IT Service Desk")]
+    [string]$Template,
+
+    # PrimaryOwnerEmail: UPN of the person who owns the site — gets Site Collection Admin rights
     [Parameter(Mandatory=$true)] [string]$PrimaryOwnerEmail,
+
+    # SecondaryOwnerEmail: optional second site collection admin (can be left empty)
     [string]$SecondaryOwnerEmail = "",
+
+    # Description: shown on the SharePoint site card in the home page and search results
     [string]$Description = "",
+
+    # RequestItemId: ID of the originating row in the Site Requests list —
+    # included in all log output so errors can be traced back to the request
     [Parameter(Mandatory=$true)] [string]$RequestItemId
 )
 
+# Convert all non-terminating errors to terminating so the catch block always fires.
+# Without this, some PnP cmdlet failures only write to the error stream and continue.
 $ErrorActionPreference = 'Stop'
 
-$adminUrl   = "https://$TenantName-admin.sharepoint.com"
+# Build both URLs up front — used multiple times and must be consistent
+$adminUrl    = "https://$TenantName-admin.sharepoint.com"
 $siteFullUrl = "https://$TenantName.sharepoint.com/sites/$SiteUrlAlias"
 
-Write-Output "INFO: Starting provisioning for $siteFullUrl"
+Write-Output "INFO: RequestID=$RequestItemId | Provisioning started | Target: $siteFullUrl"
 
 try {
-    # --- Connect to SharePoint admin via Managed Identity ---
-    Connect-PnPOnline -Url $adminUrl -ManagedIdentity
-    Write-Output "INFO: Connected to admin centre"
+    # ── Establish two named connections ──────────────────────────────────────
+    #
+    # WHY TWO CONNECTIONS?
+    #   - Set-PnPTenantSite calls the Tenant Admin REST API at *-admin.sharepoint.com
+    #     It MUST be called using the admin connection, not the site connection.
+    #     Calling it on a site connection silently fails or returns 403.
+    #   - Add-PnPSiteCollectionAdmin, New-PnPList, Add-PnPFolder all operate on
+    #     the site itself and must use the site connection.
+    #
+    # -ReturnConnection stores the connection object in a variable.
+    # Passing -Connection to each cmdlet explicitly controls which endpoint is called.
 
-    # --- Create the site ---
+    $adminConn = Connect-PnPOnline -Url $adminUrl -ManagedIdentity -ReturnConnection
+    Write-Output "INFO: Admin connection established ($adminUrl)"
+
+    # ── Create the site ───────────────────────────────────────────────────────
+    #
+    # -Wait is essential: it blocks execution until the site is fully provisioned
+    # and responsive. Without it, the subsequent Connect-PnPOnline to the new site
+    # fails because SharePoint hasn't finished initialising the site collection.
+    #
+    # CommunicationSite:
+    #   - Publishing/broadcast layout — no Members group, no Teams team
+    #   - -SiteDesign accepts: Blank | Topic | Showcase
+    #   - Good for intranets, news hubs, HR portals, executive sites
+    #
+    # TeamSiteWithoutMicrosoft365Group:
+    #   - Collaboration layout with default Members/Visitors/Owners groups
+    #   - No M365 Group, no Exchange mailbox, no linked Teams team
+    #   - Use when the requester does NOT need a Teams channel (selected in the form)
+
     if ($SiteType -eq "CommunicationSite") {
         New-PnPSite -Type CommunicationSite `
             -Title       $SiteTitle `
@@ -442,78 +628,135 @@ try {
             -Owner       $PrimaryOwnerEmail `
             -Description $Description `
             -SiteDesign  Blank `
-            -Wait
+            -Wait `
+            -Connection  $adminConn
     } else {
         New-PnPSite -Type TeamSiteWithoutMicrosoft365Group `
             -Title       $SiteTitle `
             -Url         $siteFullUrl `
             -Owner       $PrimaryOwnerEmail `
             -Description $Description `
-            -Wait
+            -Wait `
+            -Connection  $adminConn
     }
     Write-Output "INFO: Site created at $siteFullUrl"
 
-    # --- Connect to the new site ---
-    Connect-PnPOnline -Url $siteFullUrl -ManagedIdentity
+    # Connect to the new site for all site-level operations
+    $siteConn = Connect-PnPOnline -Url $siteFullUrl -ManagedIdentity -ReturnConnection
+    Write-Output "INFO: Site connection established ($siteFullUrl)"
 
-    # --- Add secondary owner ---
-    if ($SecondaryOwnerEmail) {
-        Add-PnPSiteCollectionAdmin -Owners @($SecondaryOwnerEmail)
-        Write-Output "INFO: Added secondary owner $SecondaryOwnerEmail"
+    # ── Add site collection admins ────────────────────────────────────────────
+    #
+    # New-PnPSite sets the -Owner as site collection admin, but we add them
+    # explicitly here to ensure the named human accounts appear in the UI
+    # (the Managed Identity account is also an admin — that's expected and fine).
+    # -Owners accepts a string array, so wrap single values in @()
+
+    Add-PnPSiteCollectionAdmin -Owners @($PrimaryOwnerEmail) -Connection $siteConn
+    Write-Output "INFO: Primary admin set: $PrimaryOwnerEmail"
+
+    if ($SecondaryOwnerEmail -ne "") {
+        Add-PnPSiteCollectionAdmin -Owners @($SecondaryOwnerEmail) -Connection $siteConn
+        Write-Output "INFO: Secondary admin set: $SecondaryOwnerEmail"
     }
 
-    # --- Apply template structure ---
+    # ── Apply template-specific structure ─────────────────────────────────────
+    #
+    # Each template adds the lists and folder structure appropriate to that team type.
+    # -ErrorAction SilentlyContinue on New-PnPList prevents duplicate-name errors
+    # if this runbook is re-run on the same site (e.g. after a partial failure).
+
     switch ($Template) {
         "Project Team" {
-            New-PnPList -Title "Project Tasks" -Template GenericList -ErrorAction SilentlyContinue
-            New-PnPList -Title "Risk Register"  -Template GenericList -ErrorAction SilentlyContinue
-            Add-PnPFolder -Name "Project Plans"   -Folder "Shared Documents"
-            Add-PnPFolder -Name "Deliverables"    -Folder "Shared Documents"
-            Add-PnPFolder -Name "Meeting Notes"   -Folder "Shared Documents"
-            Add-PnPFolder -Name "Archive"         -Folder "Shared Documents"
+            # Project sites: task tracking + risk register + structured document folders
+            New-PnPList -Title "Project Tasks" -Template GenericList `
+                -ErrorAction SilentlyContinue -Connection $siteConn
+            New-PnPList -Title "Risk Register" -Template GenericList `
+                -ErrorAction SilentlyContinue -Connection $siteConn
+            Add-PnPFolder -Name "Project Plans"  -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Deliverables"   -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Meeting Notes"  -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Archive"        -Folder "Shared Documents" -Connection $siteConn
         }
         "HR Department" {
-            New-PnPList -Title "Job Postings" -Template GenericList -ErrorAction SilentlyContinue
-            Add-PnPFolder -Name "Policies"    -Folder "Shared Documents"
-            Add-PnPFolder -Name "Templates"   -Folder "Shared Documents"
-            Add-PnPFolder -Name "Archive"     -Folder "Shared Documents"
-            # HR sites never share externally
-            Set-PnPTenantSite -Url $siteFullUrl -SharingCapability Disabled
+            # HR sites: job postings list + policy-focused document structure
+            New-PnPList -Title "Job Postings" -Template GenericList `
+                -ErrorAction SilentlyContinue -Connection $siteConn
+            Add-PnPFolder -Name "Policies"   -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Templates"  -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Archive"    -Folder "Shared Documents" -Connection $siteConn
+            # HR sharing is set to Disabled further below using $adminConn
         }
         "IT Service Desk" {
-            New-PnPList -Title "Tickets"      -Template GenericList -ErrorAction SilentlyContinue
-            New-PnPList -Title "Known Issues" -Template GenericList -ErrorAction SilentlyContinue
-            Add-PnPFolder -Name "Runbooks"    -Folder "Shared Documents"
-            Add-PnPFolder -Name "Procedures"  -Folder "Shared Documents"
+            # IT sites: tickets + known issues + operational runbooks
+            New-PnPList -Title "Tickets"      -Template GenericList `
+                -ErrorAction SilentlyContinue -Connection $siteConn
+            New-PnPList -Title "Known Issues" -Template GenericList `
+                -ErrorAction SilentlyContinue -Connection $siteConn
+            Add-PnPFolder -Name "Runbooks"   -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Procedures" -Folder "Shared Documents" -Connection $siteConn
         }
         default {
-            # General — minimal structure
-            Add-PnPFolder -Name "Working Documents" -Folder "Shared Documents"
-            Add-PnPFolder -Name "Archive"           -Folder "Shared Documents"
+            # General: minimal structure — two folders, no extra lists
+            Add-PnPFolder -Name "Working Documents" -Folder "Shared Documents" -Connection $siteConn
+            Add-PnPFolder -Name "Archive"           -Folder "Shared Documents" -Connection $siteConn
         }
     }
     Write-Output "INFO: Template '$Template' applied"
 
-    # --- Default sharing policy (override per template above) ---
-    if ($Template -ne "HR Department") {
+    # ── Set sharing policy ────────────────────────────────────────────────────
+    #
+    # IMPORTANT: Set-PnPTenantSite must use $adminConn — it calls the SPO Tenant
+    # Admin REST API at *-admin.sharepoint.com. Calling it with $siteConn (the
+    # regular site connection) will throw "Access denied" or silently do nothing.
+    #
+    # SharingCapability values:
+    #   Disabled                        = no external sharing whatsoever
+    #   ExistingExternalUserSharingOnly = existing guests only, no new invites
+    #   ExternalUserSharingOnly         = authenticated external users
+    #   ExternalUserAndGuestSharing     = anyone (including anonymous links)
+
+    if ($Template -eq "HR Department") {
+        # HR sites must never be accessible to anyone outside the organisation
         Set-PnPTenantSite -Url $siteFullUrl `
-            -SharingCapability ExistingExternalUserSharingOnly
+            -SharingCapability Disabled `
+            -Connection $adminConn
+        Write-Output "INFO: External sharing disabled (HR policy)"
+    } else {
+        # All other templates: existing guests may access, but no new external invites
+        Set-PnPTenantSite -Url $siteFullUrl `
+            -SharingCapability ExistingExternalUserSharingOnly `
+            -Connection $adminConn
+        Write-Output "INFO: Sharing set to ExistingExternalUserSharingOnly"
     }
+
+    # ── Signal success ────────────────────────────────────────────────────────
+    #
+    # The Logic App reads the job output via "Get job output" and extracts the URL:
+    #   @{replace(body('Get_job_output')?['value'], 'PROVISIONED:', '')}
+    # The PROVISIONED: prefix makes the extraction unambiguous even if other
+    # Write-Output lines appear in the output stream.
 
     Write-Output "PROVISIONED:$siteFullUrl"
 
 } catch {
+    # $_.Exception.Message contains the PnP / SharePoint REST error text.
+    # Re-throwing the exception causes the Automation job to end with status
+    # "Failed", which the Logic App Do-Until loop detects and routes to the
+    # Catch scope — which logs the error and sends the failure email.
+
     $msg = $_.Exception.Message
-    Write-Error "FAILED at RequestID $RequestItemId — $msg"
+    Write-Error "FAILED | RequestID=$RequestItemId | $siteFullUrl | $msg"
     throw "Provisioning failed for $siteFullUrl — $msg"
 }</pre></div>
 
-      <p>A few design decisions worth noting:</p>
+      <p>The key design decisions in this runbook:</p>
       <ul>
-        <li><strong><code>$ErrorActionPreference = 'Stop'</code></strong> — converts all non-terminating errors into terminating ones, so every failure is caught by the <code>catch</code> block and propagated back to the Logic App as a job failure.</li>
-        <li><strong><code>-Wait</code> on <code>New-PnPSite</code></strong> — blocks the runbook until the site is fully provisioned before executing subsequent steps. Without it, <code>Connect-PnPOnline</code> to the new site will fail because the site isn't ready yet.</li>
-        <li><strong><code>TeamSiteWithoutMicrosoft365Group</code></strong> — creates a SharePoint-only team site with no linked Microsoft 365 Group or Teams team. Use this unless the requester explicitly needs a Group-connected workspace.</li>
-        <li><strong><code>Write-Output "PROVISIONED:..."</code></strong> — the Logic App's <strong>Get job output</strong> action reads the runbook's stdout. Prefixing the final output with a known token makes it trivial to extract the URL via a Logic App expression.</li>
+        <li><strong>Two named connections (<code>$adminConn</code>, <code>$siteConn</code>)</strong> — <code>Set-PnPTenantSite</code> is a tenant-admin operation that must use the admin URL connection. Mixing connections without explicit <code>-Connection</code> parameters is the most common PnP runbook bug.</li>
+        <li><strong><code>$ErrorActionPreference = 'Stop'</code></strong> — makes all errors terminating so the <code>catch</code> block always fires. Without it, some cmdlet failures only write to the error stream and the runbook keeps running and reports success.</li>
+        <li><strong><code>-Wait</code> on <code>New-PnPSite</code></strong> — blocks until the site is fully provisioned. Without it, <code>Connect-PnPOnline</code> to the new site fires before the site exists and fails.</li>
+        <li><strong><code>TeamSiteWithoutMicrosoft365Group</code></strong> — creates a SharePoint-only team site with no M365 Group, no Exchange mailbox, and no Teams team. If the form has a "Create Teams team" toggle, switch to <code>-Type TeamSite</code> and add <code>-Alias $SiteUrlAlias</code>.</li>
+        <li><strong><code>-ErrorAction SilentlyContinue</code> on <code>New-PnPList</code></strong> — prevents duplicate-name exceptions if the runbook is re-run on the same site after a partial failure.</li>
       </ul>
 
       <h2>Step 5: Error Logging to SharePoint</h2>
