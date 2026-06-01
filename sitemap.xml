@@ -379,4 +379,39 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-copilot-suggested-rename</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-04-microsoft-edge-work-search-banner-for-google</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-04-microsoft-teams-security-detection-report-in-teams-admin-cen</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-04-microsoft-teams-report-external-users-for-security-concerns-</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-03-microsoft-edge-copilot-new-tab-page</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

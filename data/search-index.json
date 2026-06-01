@@ -730,5 +730,65 @@
     "url": "articles/news-2026-05-microsoft-copilot-microsoft-365-mcp-based-agent-enablement-f",
     "dateDisplay": "May 27, 2026",
     "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-copilot-microsoft-365-copilot-suggested-rename",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Copilot (Microsoft 365): Copilot suggested rename",
+    "heading": "Microsoft Copilot (Microsoft 365): Copilot suggested rename",
+    "excerpt": "Copilot Suggested Rename is an AI-powered OneDrive feature that automatically recommends clear, descriptive file names based on a file’s content—helping users organize and find their files more easily with minimal effort. What the feature does: - Analyzes the content of a file to…",
+    "body": "Microsoft Copilot (Microsoft 365): Copilot suggested rename | OceanCloud May 29, 2026 3 min read Copilot Suggested Rename is an AI-powered OneDrive feature that automatically recommends clear, descriptive file names based on a file’s content—helping users organize and find their files more easily with minimal effort. What the feature does: - Analyzes the content of a file to…",
+    "url": "articles/news-2026-05-microsoft-copilot-microsoft-365-copilot-suggested-rename",
+    "dateDisplay": "May 29, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-edge-work-search-banner-for-google",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Edge: Work Search Banner for Google",
+    "heading": "Microsoft Edge: Work Search Banner for Google",
+    "excerpt": "When a user performs a search on google.com from a work profile, Microsoft Edge can detect whether organization-specific results are available for that query. When relevant results are found, a banner is shown with a link to explore those work results with Microsoft 365 Copilot. …",
+    "body": "Microsoft Edge: Work Search Banner for Google | OceanCloud April 21, 2026 3 min read When a user performs a search on google.com from a work profile, Microsoft Edge can detect whether organization-specific results are available for that query. When relevant results are found, a banner is shown with a link to explore those work results with Microsoft 365 Copilot. …",
+    "url": "articles/news-2026-04-microsoft-edge-work-search-banner-for-google",
+    "dateDisplay": "April 21, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-security-detection-report-in-teams-admin-cen",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Security Detection Report in Teams Admin Center",
+    "heading": "Microsoft Teams: Security Detection Report in Teams Admin Center",
+    "excerpt": "A new Security Detection Report in the Teams admin center provides a centralized view of messaging security detections, including impersonation, malicious URLs, and weaponizable file types. Admins can review detection activity in one place and export detailed data to support inve…",
+    "body": "Microsoft Teams: Security Detection Report in Teams Admin Center | OceanCloud April 21, 2026 3 min read A new Security Detection Report in the Teams admin center provides a centralized view of messaging security detections, including impersonation, malicious URLs, and weaponizable file types. Admins can review detection activity in one place and export detailed data to support inve…",
+    "url": "articles/news-2026-04-microsoft-teams-security-detection-report-in-teams-admin-cen",
+    "dateDisplay": "April 21, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-microsoft-teams-report-external-users-for-security-concerns-",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Report external users for security concerns in Teams",
+    "heading": "Microsoft Teams: Report external users for security concerns in Teams",
+    "excerpt": "Users can now report suspicious external users directly within Teams, alongside existing block actions. Reports are surfaced in the Teams admin center, giving admins visibility into potentially risky interactions and enabling them to investigate and take appropriate actions. This…",
+    "body": "Microsoft Teams: Report external users for security concerns in Teams | OceanCloud April 17, 2026 3 min read Users can now report suspicious external users directly within Teams, alongside existing block actions. Reports are surfaced in the Teams admin center, giving admins visibility into potentially risky interactions and enabling them to investigate and take appropriate actions. This…",
+    "url": "articles/news-2026-04-microsoft-teams-report-external-users-for-security-concerns-",
+    "dateDisplay": "April 17, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-03-microsoft-edge-copilot-new-tab-page",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Edge: Copilot New Tab Page",
+    "heading": "Microsoft Edge: Copilot New Tab Page",
+    "excerpt": "Search, chat, and explore the web from one search box with Copilot-suggested actions and curated work content to help your users get things done faster on the new, refreshed Copilot New Tab Page. Users can also view personalized news and activities. GA date: May CY2026 Preview da…",
+    "body": "Microsoft Edge: Copilot New Tab Page | OceanCloud March 05, 2026 3 min read Search, chat, and explore the web from one search box with Copilot-suggested actions and curated work content to help your users get things done faster on the new, refreshed Copilot New Tab Page. Users can also view personalized news and activities. GA date: May CY2026 Preview da…",
+    "url": "articles/news-2026-03-microsoft-edge-copilot-new-tab-page",
+    "dateDisplay": "March 05, 2026",
+    "dateSort": ""
   }
 ]
