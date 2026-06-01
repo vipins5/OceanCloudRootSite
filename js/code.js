@@ -209,18 +209,24 @@
      Language detection — reads the .code-label above the block
      ═══════════════════════════════════════════════════════════ */
   var LANG_NAMES = {
-    ps:   'powershell',
-    html: 'html',
-    xml:  'xml',
-    json: 'json',
-    js:   'javascript',
-    text: 'text'
+    ps:             'powershell',
+    html:           'html',
+    xml:            'xml',
+    json:           'json',
+    js:             'javascript',
+    api:            'api',
+    logicapp:       'logic app',
+    powerautomate:  'power automate',
+    text:           'text'
   };
 
   function detectLang(block) {
     var explicit = (block.dataset.lang || '').toLowerCase();
     if (explicit === 'text' || explicit === 'plain' || explicit === 'prompt') return 'text';
     if (explicit === 'powershell' || explicit === 'ps1' || explicit === 'ps') return 'ps';
+    if (explicit === 'api' || explicit === 'http') return 'api';
+    if (explicit === 'logic-app' || explicit === 'logicapp' || explicit === 'logic-apps') return 'logicapp';
+    if (explicit === 'power-automate' || explicit === 'powerautomate' || explicit === 'flow') return 'powerautomate';
     if (explicit === 'html' || explicit === 'xml' || explicit === 'json' || explicit === 'js' || explicit === 'javascript') {
       return explicit === 'javascript' ? 'js' : explicit;
     }
@@ -232,6 +238,9 @@
       if (t.includes('html'))                       return 'html';
       if (t.includes('xml') || t.includes('sitemap')) return 'xml';
       if (t.includes('json'))                       return 'json';
+      if (t.includes('graph') || t.includes('http get') || t.includes('api')) return 'api';
+      if (t.includes('logic app'))                  return 'logicapp';
+      if (t.includes('power automate'))             return 'powerautomate';
       if (t.includes('javascript') || /\bjs\b/.test(t)) return 'js';
     }
     return 'ps';
@@ -295,7 +304,9 @@
       /* Apply syntax highlighting */
       if      (lang === 'html' || lang === 'xml') pre.innerHTML = hlHTML(raw);
       else if (lang === 'json')                   pre.innerHTML = hlJSON(raw);
-      else if (lang === 'text')                   pre.innerHTML = esc(raw);
+      else if (lang === 'text' || lang === 'api' || lang === 'logicapp' || lang === 'powerautomate') {
+        pre.innerHTML = esc(raw);
+      }
       else                                         pre.innerHTML = hlPS(raw);
 
       /* Build copy button */

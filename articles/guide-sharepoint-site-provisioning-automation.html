@@ -508,7 +508,7 @@
       <p>In the Condition action, add three rows using <strong>And</strong>. Copy each expression into the left-hand value field and set the right-hand comparison to <strong>is equal to true</strong>:</p>
 
       <div class="code-label">Power Automate — Condition expressions (all three must be true)</div>
-      <div class="code-block"><pre># Row 1: Length 2–40 characters
+      <div class="code-block" data-lang="power-automate"><pre># Row 1: Length 2–40 characters
 @{and(greaterOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 2),
       lessOrEquals(length(triggerOutputs()?['body/SiteURLAlias']), 40))}
 
@@ -537,7 +537,7 @@
       </figure>
 
       <div class="code-label">Power Automate — Start and wait for an approval: field values</div>
-      <div class="code-block"><pre>Approval type:  Approve/Reject - First to respond
+      <div class="code-block" data-lang="power-automate"><pre>Approval type:  Approve/Reject - First to respond
 
 Title:          Site request: @{triggerOutputs()?['body/Title']}
 
@@ -603,7 +603,7 @@ Timeout:        P2D
       <p>Add a <strong>When a HTTP request is received</strong> trigger. Use <strong>Use sample payload to generate schema</strong> and paste a representative JSON body to get the schema auto-generated. Copy the generated URL and paste it into the Power Automate HTTP action from Step 2.</p>
 
       <div class="code-label">Sample JSON body from Power Automate — all three site type values</div>
-      <div class="code-block"><pre>{
+      <div class="code-block" data-lang="json"><pre>{
   "requestItemId": 42,
   "siteTitle": "Marketing Hub 2026",
   "siteUrlAlias": "marketing-hub-2026",
@@ -671,7 +671,7 @@ Timeout:        P2D
       </div>
 
       <div class="code-label">Logic App — HTTP GET via Microsoft Graph</div>
-      <div class="code-block"><pre># Graph endpoint — reliable 200/404 for site existence check
+      <div class="code-block" data-lang="api"><pre># Graph endpoint — reliable 200/404 for site existence check
 # 200 = site exists (URL taken)   |   404 = URL is free to use
 GET https://graph.microsoft.com/v1.0/sites/
     @{body('Parse_JSON')?['tenantName']}.sharepoint.com:
@@ -699,7 +699,7 @@ Audience:       https://graph.microsoft.com
       </figure>
 
       <div class="code-label">Logic App — full action order (top to bottom in the designer)</div>
-      <div class="code-block"><pre># TOP LEVEL (before the Try scope — Initialize variable MUST be here)
+      <div class="code-block" data-lang="logic-app"><pre># TOP LEVEL (before the Try scope — Initialize variable MUST be here)
 Initialize variable — name: runbookJobId   type: String   value: ""
 Initialize variable — name: requestItemId  type: Integer  value: @{body('Parse_JSON')?['requestItemId']}
 
@@ -736,7 +736,7 @@ Initialize variable — name: requestItemId  type: Integer  value: @{body('Parse
         <li><strong>Set variable</strong> — <code>runbookJobId = @{body('Create_job')?['properties/jobId']}</code></li>
         <li><strong>Update item</strong> — write runbookJobId to <em>LogicAppRunID</em> <em>before</em> polling starts, so it's available for debugging even if the loop itself fails</li>
         <li><strong>Do Until</strong> — poll every 30 seconds (Delay + Get job). The exit condition expression is:
-          <div class="code-block" style="margin:8px 0"><pre>@{contains(createArray('Completed','Failed','Suspended'),
+          <div class="code-block" data-lang="logic-app" style="margin:8px 0"><pre>@{contains(createArray('Completed','Failed','Suspended'),
   body('Get_job')?['properties/status'])}</pre></div>
           Add a loop counter variable (limit: 20) as a safety stop — 20 × 30s = 10 minutes maximum wait.
         </li>
@@ -761,7 +761,7 @@ Initialize variable — name: requestItemId  type: Integer  value: @{body('Parse
       </div>
 
       <div class="code-label">Logic App — extract error info from Try scope (use in Catch)</div>
-      <div class="code-block"><pre># result('Try') returns an array of all actions in the Try scope.
+      <div class="code-block" data-lang="logic-app"><pre># result('Try') returns an array of all actions in the Try scope.
 # Filter to the first failed action to get the most relevant error.
 # Use these expressions in the "Create item in Provision Logs" action:
 
@@ -836,7 +836,7 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
       <p>The critical design decision in this runbook is maintaining <strong>two named PnP connections</strong> — one to the SharePoint admin centre and one to the new site. <code>Set-PnPTenantSite</code> calls the Tenant Admin REST API and <em>must</em> go through the admin connection. If you call it while connected to the regular site, it silently fails or throws a 403.</p>
 
       <div class="code-label">PowerShell 7.4 runbook — SP-SiteProvisioning</div>
-      <div class="code-block"><pre>param(
+      <div class="code-block" data-lang="powershell"><pre>param(
     # TenantName: the subdomain portion only — e.g. "contoso" not "contoso.sharepoint.com"
     [Parameter(Mandatory=$true)] [string]$TenantName,
 
@@ -1117,7 +1117,7 @@ try {
       <p>The Logic App's Catch scope creates a row in the Site Provision Logs list. The key expressions used in that action are:</p>
 
       <div class="code-label">Logic App — Catch scope expressions for Site Provision Logs "Create item"</div>
-      <div class="code-block"><pre># Title column — unique, sortable identifier for each log row
+      <div class="code-block" data-lang="logic-app"><pre># Title column — unique, sortable identifier for each log row
 ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
 
 # RequestID column — links back to the originating Site Requests list row
@@ -1333,12 +1333,12 @@ Error</pre></div>
 
 <button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script src="../js/main.js?v=9"></script>
+<script src="../js/main.js?v=10"></script>
 <script src="../js/chat.js?v=7"></script>
 <script src="../js/particles.js?v=6"></script>
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
-<script src="../js/code.js?v=2"></script>
+<script src="../js/code.js?v=4"></script>
 <script src="../js/article.js?v=5"></script>
 <script src="../js/comments.js?v=7"></script>
 </body>

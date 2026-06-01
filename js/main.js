@@ -211,7 +211,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const highlightCode = value => value.split('\n').map(highlightLine).join('\n');
 
-  const detectLabel = code => {
+  const explicitCodeLabel = value => {
+    const lang = (value || '').toLowerCase();
+    if (['powershell', 'ps1', 'ps'].includes(lang)) return 'PowerShell';
+    if (lang === 'json') return 'JSON';
+    if (['api', 'http'].includes(lang)) return 'API';
+    if (['logic-app', 'logicapp', 'logic-apps'].includes(lang)) return 'Logic App';
+    if (['power-automate', 'powerautomate', 'flow'].includes(lang)) return 'Power Automate';
+    if (['text', 'plain', 'prompt'].includes(lang)) return 'Text';
+    return '';
+  };
+
+  const detectLabel = (code, block) => {
+    const explicit = explicitCodeLabel(block?.dataset?.lang);
+    if (explicit) return explicit;
+
+    const previous = block?.previousElementSibling;
+    if (previous?.classList?.contains('code-label')) {
+      const labelText = previous.textContent.toLowerCase();
+      if (labelText.includes('json')) return 'JSON';
+      if (labelText.includes('graph') || labelText.includes('http get') || labelText.includes('api')) return 'API';
+      if (labelText.includes('logic app')) return 'Logic App';
+      if (labelText.includes('power automate')) return 'Power Automate';
+    }
+
     if (/\$[A-Za-z_]|\b(Get|Set|New|Connect|Install|Import|Export|Update)-[A-Za-z]/.test(code)) return 'PowerShell';
     if (/^\s*[{[]/.test(code)) return 'JSON';
     if (/\b(GET|POST|PUT|PATCH|DELETE)\b|_api\/|graph\.microsoft\.com/i.test(code)) return 'API';
@@ -252,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const label = document.createElement('span');
     label.className = 'oc-code-label';
-    label.textContent = detectLabel(originalText);
+    label.textContent = detectLabel(originalText, block);
 
     const button = document.createElement('button');
     button.type = 'button';
