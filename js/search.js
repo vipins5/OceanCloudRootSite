@@ -255,7 +255,9 @@ function getFuseIndex() {
 function switchTab(tab) {
   currentTab = tab;
   tabBtns.forEach(function (b) {
-    b.classList.toggle('active', b.getAttribute('data-tab') === tab);
+    var isActive = b.getAttribute('data-tab') === tab;
+    b.classList.toggle('active', isActive);
+    b.setAttribute('aria-selected', isActive ? 'true' : 'false');
   });
   panelArticles.classList.toggle('active', tab === 'articles');
   panelWeb.classList.toggle('active',      tab === 'web');

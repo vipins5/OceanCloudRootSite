@@ -124,7 +124,9 @@
     "What's involved?":       () => sendUserMsg('What is involved in a project?'),
   };
 
-  function navigate(path) { window.location.href = path; }
+  function navigate(path) {
+    window.location.href = path.charAt(0) === '/' ? path : '/' + path;
+  }
 
   // ── Build DOM ──────────────────────────────────────────────────────────────
   const widget = document.createElement('div');
@@ -156,7 +158,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </div>
-      <div id="oc-footer-note">Powered by <strong>Llama 3.3</strong> &nbsp;·&nbsp; <a href="privacy">Privacy</a></div>
+      <div id="oc-footer-note">Powered by <strong>Llama 3.3</strong> &nbsp;·&nbsp; <a href="/privacy">Privacy</a></div>
     </div>`;
   document.body.appendChild(widget);
 
@@ -178,7 +180,9 @@
   let isWaiting = false;
 
   // Conversation history sent to the AI proxy (max 8 turns kept)
-  const history = [];
+  const chatHistory = [];
+  let aiCallCount = 0;
+  const AI_CALL_LIMIT = 15;
 
   // ── Open / close ──────────────────────────────────────────────────────────
   function openChat() {
@@ -260,7 +264,7 @@
       const formatted = text.replace(/\n/g, '<br>');
       appendMsg(formatted, 'bot');
       renderChips(chips);
-      history.push({ role: 'assistant', content: text.replace(/<[^>]+>/g, '') });
+      chatHistory.push({ role: 'assistant', content: text.replace(/<[^>]+>/g, '') });
       trimHistory();
     }, delay || TYPING_MS);
   }
@@ -271,11 +275,20 @@
 
   function trimHistory() {
     // Keep last 8 entries (4 user + 4 assistant turns)
-    if (history.length > 8) history.splice(0, history.length - 8);
+    if (chatHistory.length > 8) chatHistory.splice(0, chatHistory.length - 8);
   }
 
   // ── AI proxy call ─────────────────────────────────────────────────────────
   async function respondWithGroq(userText) {
+    if (aiCallCount >= AI_CALL_LIMIT) {
+      appendMsg(
+        'You\'ve reached the session limit for AI queries. Our team can answer further questions — <a href="/contact" style="color:var(--accent)">get in touch here</a>.',
+        'bot'
+      );
+      renderChips(['Book a free call', 'Contact us']);
+      return;
+    }
+    aiCallCount++;
     isWaiting = true;
     inputEl.disabled = true;
     sendBtn.disabled = true;
@@ -290,7 +303,7 @@
         },
         body: JSON.stringify({
           message: userText,
-          history: history.slice(-6).map(m => ({
+          history: chatHistory.slice(-6).map(m => ({
             role: m.role === 'assistant' ? 'assistant' : 'user',
             content: m.content
           }))
@@ -314,14 +327,13 @@
       renderChips(['Book a free call', 'View services', 'Ask another question']);
       aiLabel.style.display = 'inline';
 
-      history.push({ role: 'assistant', content: raw });
+      chatHistory.push({ role: 'assistant', content: raw });
       trimHistory();
 
     } catch (err) {
       hideTyping();
-      console.warn('OceanBot AI error:', err.message);
       appendMsg(
-        'I couldn\'t reach the AI right now. Our team can answer this directly — <a href="contact" style="color:var(--accent)">get in touch here</a>.',
+        'I couldn\'t reach the AI right now. Our team can answer this directly — <a href="/contact" style="color:var(--accent)">get in touch here</a>.',
         'bot'
       );
       renderChips(['Book a free call', 'Contact us']);
@@ -382,7 +394,7 @@
     if (isWaiting) return;
     chipsEl.innerHTML = '';
     appendMsg(escHtml(text), 'user');
-    history.push({ role: 'user', content: text });
+    chatHistory.push({ role: 'user', content: text });
     trimHistory();
     respond(text);
   }

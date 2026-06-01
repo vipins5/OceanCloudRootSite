@@ -300,10 +300,22 @@
       });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
+  function hasConsent() {
+    try { return localStorage.getItem('oc_cookie_consent') === 'accepted'; } catch (e) { return false; }
+  }
+
+  function maybeInit() {
+    if (!hasConsent()) {
+      widget.remove();
+      return;
+    }
     init();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', maybeInit);
+  } else {
+    maybeInit();
   }
 
 })();

@@ -601,6 +601,12 @@ async function handleMicrosoftCallback(request: Request, env: Env): Promise<Resp
 async function handleGoogleCallback(request: Request, env: Env): Promise<Response> {
 	if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET) return htmlResponse("Comments are not configured", 503);
 	const url = new URL(request.url);
+	const oauthError = url.searchParams.get("error");
+	if (oauthError) {
+		let returnTo = "";
+		try { returnTo = JSON.parse(atob(url.searchParams.get("state") || "")).returnTo || ""; } catch {}
+		return friendlyOAuthError("Google", oauthError, url.searchParams.get("error_description") || "", returnTo);
+	}
 	const code = url.searchParams.get("code");
 	const encodedState = url.searchParams.get("state") || "";
 	if (!code || !encodedState) return htmlResponse("Missing OAuth response", 400);
@@ -636,6 +642,12 @@ async function handleGoogleCallback(request: Request, env: Env): Promise<Respons
 async function handleGithubCallback(request: Request, env: Env): Promise<Response> {
 	if (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) return htmlResponse("Comments are not configured", 503);
 	const url = new URL(request.url);
+	const oauthError = url.searchParams.get("error");
+	if (oauthError) {
+		let returnTo = "";
+		try { returnTo = JSON.parse(atob(url.searchParams.get("state") || "")).returnTo || ""; } catch {}
+		return friendlyOAuthError("GitHub", oauthError, url.searchParams.get("error_description") || "", returnTo);
+	}
 	const code = url.searchParams.get("code");
 	const encodedState = url.searchParams.get("state") || "";
 	if (!code || !encodedState) return htmlResponse("Missing OAuth response", 400);
@@ -701,8 +713,10 @@ async function handleAdminModerate(request: Request, env: Env, origin: string): 
 	const id = Number(payload?.id || 0);
 	const action = String(payload?.action || "");
 	if (id && action === "delete") {
-		await env.COMMENTS_DB.prepare("DELETE FROM comments WHERE parent_id = ?").bind(id).run();
-		await env.COMMENTS_DB.prepare("DELETE FROM comments WHERE id = ?").bind(id).run();
+		await env.COMMENTS_DB.batch([
+			env.COMMENTS_DB.prepare("DELETE FROM comments WHERE parent_id = ?").bind(id),
+			env.COMMENTS_DB.prepare("DELETE FROM comments WHERE id = ?").bind(id),
+		]);
 		return jsonResponse({ ok: true, status: "deleted" }, 200, origin);
 	}
 	const status = action === "approve" ? "approved" : action === "reject" ? "rejected" : "";

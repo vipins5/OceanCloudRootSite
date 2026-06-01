@@ -33,6 +33,27 @@
     }
   }
 
+  function getStoredToken() {
+    try {
+      return localStorage.getItem(TOKEN_KEY) || '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function setStoredToken(value) {
+    try {
+      localStorage.setItem(TOKEN_KEY, value);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function removeStoredToken() {
+    try { localStorage.removeItem(TOKEN_KEY); } catch (error) {}
+  }
+
   function renderRichText(value) {
     var html = escapeHtml(value).replace(/\r\n/g, '\n');
 
@@ -55,12 +76,12 @@
   function tokenFromHash() {
     var match = window.location.hash.match(/oc_comment_token=([^&]+)/);
     if (!match) return;
-    localStorage.setItem(TOKEN_KEY, decodeURIComponent(match[1]));
+    setStoredToken(decodeURIComponent(match[1]));
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }
 
   function authHeaders() {
-    var token = localStorage.getItem(TOKEN_KEY) || '';
+    var token = getStoredToken();
     return token ? { Authorization: 'Bearer ' + token } : {};
   }
 
@@ -78,7 +99,7 @@
     if (document.querySelector('link[data-oc-comments]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '../css/comments.css?v=7';
+    link.href = '/css/comments.css?v=7';
     link.setAttribute('data-oc-comments', 'true');
     document.head.appendChild(link);
   }
@@ -97,11 +118,17 @@
   function renderTurnstile() {
     var target = document.getElementById('oc-turnstile');
     if (!target || !config || !config.turnstileSiteKey || !window.turnstile || turnstileWidgetId !== null) return;
-    turnstileWidgetId = window.turnstile.render(target, {
-      sitekey: config.turnstileSiteKey,
-      callback: function (token) { turnstileToken = token; },
-      'expired-callback': function () { turnstileToken = ''; },
-    });
+    try {
+      turnstileWidgetId = window.turnstile.render(target, {
+        sitekey: config.turnstileSiteKey,
+        callback: function (token) { turnstileToken = token; },
+        'expired-callback': function () { turnstileToken = ''; },
+        'error-callback': function () { turnstileToken = ''; turnstileWidgetId = null; },
+      });
+    } catch (error) {
+      turnstileWidgetId = null;
+      turnstileToken = '';
+    }
   }
 
   function resetTurnstile() {
@@ -211,7 +238,7 @@
     }
 
     return '<article class="oc-comment' + (isReply ? ' oc-comment-reply' : '') + '" data-comment-id="' + item.id + '">' +
-      '<div class="oc-comment-meta"><strong>' + escapeHtml(item.display_name) + '</strong><span>' + escapeHtml(new Date(item.created_at).toLocaleDateString()) + '</span></div>' +
+      '<div class="oc-comment-meta"><strong>' + escapeHtml(item.display_name) + '</strong><span>' + escapeHtml(new Date(item.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })) + '</span></div>' +
       '<div class="oc-comment-body' + (item.is_deleted ? ' oc-comment-deleted' : '') + '">' + (item.is_deleted ? 'This comment was deleted.' : renderRichText(item.body)) + '</div>' +
       (actions.length ? '<div class="oc-comment-actions">' + actions.join('') + '</div>' : '') +
       '</article>';
@@ -264,7 +291,7 @@
     renderTurnstile();
 
     document.getElementById('oc-comments-signout').addEventListener('click', function () {
-      localStorage.removeItem(TOKEN_KEY);
+      removeStoredToken();
       session = { authenticated: false };
       replyTarget = null;
       renderForm();

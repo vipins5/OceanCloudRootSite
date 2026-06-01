@@ -7,9 +7,27 @@
   var statusEl = document.getElementById('status');
   var listEl = document.getElementById('commentList');
 
-  tokenInput.value = localStorage.getItem(TOKEN_KEY) || '';
+  function getStoredToken() {
+    try {
+      return localStorage.getItem(TOKEN_KEY) || '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function setStoredToken(value) {
+    try {
+      localStorage.setItem(TOKEN_KEY, value);
+      return true;
+    } catch (error) {
+      statusEl.textContent = 'Unable to save the admin token in this browser.';
+      return false;
+    }
+  }
+
+  tokenInput.value = getStoredToken();
   document.getElementById('saveToken').addEventListener('click', function () {
-    localStorage.setItem(TOKEN_KEY, tokenInput.value.trim());
+    if (!setStoredToken(tokenInput.value.trim())) return;
     loadPending();
   });
 
@@ -20,7 +38,7 @@
   }
 
   async function request(path, options) {
-    var token = localStorage.getItem(TOKEN_KEY) || '';
+    var token = getStoredToken();
     options = options || {};
     var response = await fetch(API_BASE + path, Object.assign({}, options, {
       headers: Object.assign({ Authorization: 'Bearer ' + token }, options.headers || {})

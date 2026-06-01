@@ -26,8 +26,16 @@
     setTimeout(function () { b.style.display = 'none'; }, 320);
   }
 
+  function getConsent() {
+    try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+  }
+
+  function setConsent(value) {
+    try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
+  }
+
   function init() {
-    var consent = localStorage.getItem(CONSENT_KEY);
+    var consent = getConsent();
 
     if (consent === 'accepted') { loadGA(); return; }
 
@@ -47,7 +55,7 @@
 
     if (btnAccept) {
       btnAccept.addEventListener('click', function () {
-        localStorage.setItem(CONSENT_KEY, 'accepted');
+        setConsent('accepted');
         hideBanner();
         loadGA();
       });
@@ -55,7 +63,7 @@
 
     if (btnDecline) {
       btnDecline.addEventListener('click', function () {
-        localStorage.setItem(CONSENT_KEY, 'declined');
+        setConsent('declined');
         hideBanner();
       });
     }
