@@ -231,11 +231,14 @@ ARTICLE_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "outlook": {
-        "url": "https://support.microsoft.com/images/en-us/d42c7f8e-f190-488b-9c43-dd39755d72b5?format=png&w=900",
-        "alt": "Microsoft Outlook for Windows toggle screenshot",
-        "caption": "Representative Microsoft Outlook for Windows interface screenshot.",
-        "source_url": "https://support.microsoft.com/en-us/office/start-using-new-outlook-for-windows-4395454d-cb2f-4c16-bb24-fa4bb36650ae",
-        "source_label": "Microsoft Support",
+        "url": "../assets/news/m365.svg",
+        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
+        "alt": "OceanCloud Microsoft 365 news graphic",
+        "caption": "OceanCloud Microsoft 365 news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "purview": {
         "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-triage.png",
@@ -259,11 +262,14 @@ ARTICLE_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "teams": {
-        "url": "https://support.microsoft.com/images/en-us/1966f017-c609-407a-9029-48624089e9b5?format=png&w=900",
-        "alt": "Microsoft Teams product basics screenshot",
-        "caption": "Representative Microsoft Teams product image.",
-        "source_url": "https://support.microsoft.com/en-us/teams",
-        "source_label": "Microsoft Support",
+        "url": "../assets/news/teams.svg",
+        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
+        "alt": "OceanCloud Microsoft Teams news graphic",
+        "caption": "OceanCloud Microsoft Teams news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "sharepoint": {
         "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
@@ -297,11 +303,13 @@ ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "outlook": {
-        "url": "https://support.microsoft.com/images/en-us/9255871d-06a6-4de5-9236-5fd7af100c5c?format=png&w=900",
-        "alt": "Microsoft Outlook for Windows interface screenshot",
-        "caption": "Microsoft Support screenshot from the new Outlook for Windows guidance.",
-        "source_url": "https://support.microsoft.com/en-us/office/start-using-new-outlook-for-windows-4395454d-cb2f-4c16-bb24-fa4bb36650ae",
-        "source_label": "Microsoft Support",
+        "url": "../assets/news/m365-roadmap.svg",
+        "alt": "OceanCloud Microsoft 365 roadmap graphic",
+        "caption": "OceanCloud Microsoft 365 roadmap graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "purview": {
         "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-activity-explorer.png",
@@ -318,18 +326,20 @@ ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "teams-interpreter": {
-        "url": "https://support.microsoft.com/images/en-us/1966f017-c609-407a-9029-48624089e9b5?format=png&w=900",
-        "alt": "Microsoft Teams product basics screenshot",
-        "caption": "Representative Microsoft Teams product screenshot from Microsoft Support.",
-        "source_url": "https://support.microsoft.com/en-us/teams",
-        "source_label": "Microsoft Support",
+        "url": "../assets/news/teams.svg",
+        "alt": "OceanCloud Microsoft Teams news graphic",
+        "caption": "OceanCloud Microsoft Teams news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "teams": {
-        "url": "https://support.microsoft.com/images/en-us/3e38af2d-40e4-433c-8a21-01d5057ac90e?format=png&w=900",
-        "alt": "Microsoft Teams support product screenshot",
-        "caption": "Representative Microsoft Teams product screenshot from Microsoft Support.",
-        "source_url": "https://support.microsoft.com/en-us/teams",
-        "source_label": "Microsoft Support",
+        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
+        "alt": "Microsoft Teams and SharePoint relationship diagram",
+        "caption": "Microsoft Learn diagram showing how Teams and SharePoint work together.",
+        "source_url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
+        "source_label": "Microsoft Learn",
     },
     "sharepoint": {
         "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png",
@@ -351,7 +361,7 @@ ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
 def image_for_item(item: dict) -> str:
     article_image = item.get("_article_image") or {}
     if article_image.get("url"):
-        return article_image["url"]
+        return article_image["url"].replace("../assets/", "assets/", 1)
     haystack = (item["title"] + " " + item.get("summary", "")).lower()
     for keyword, img_name in TOPIC_IMAGES:
         if keyword in haystack:
@@ -359,8 +369,11 @@ def image_for_item(item: dict) -> str:
     return "assets/news/m365-roadmap.svg" if item["css_tag"] == "tag-roadmap" else "assets/news/m365.svg"
 
 
-def image_dimension_attrs(url: str) -> str:
+def image_dimension_attrs(url: str, image: dict | None = None) -> str:
     """Return width/height attributes for a remote raster image when available."""
+    if image and image.get("width") and image.get("height"):
+        return f' width="{int(image["width"])}" height="{int(image["height"])}"'
+
     if Image is None or not url.startswith("http"):
         return ""
 
@@ -652,7 +665,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     image_url = article_image.get("url", "")
     image_html = ""
     if image_url:
-        image_attrs = image_dimension_attrs(image_url)
+        image_attrs = image_dimension_attrs(image_url, article_image)
         image_html = f"""
       <figure class="article-image">
         <img src="{escape(image_url)}" alt="{escape(article_image.get('alt', title))}"{image_attrs} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
@@ -662,14 +675,14 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     secondary_image = item.get("_secondary_article_image") or secondary_article_image_for_item(item)
     secondary_image_html = ""
     if secondary_image.get("url") and secondary_image.get("url") != image_url:
-        secondary_image_attrs = image_dimension_attrs(secondary_image["url"])
+        secondary_image_attrs = image_dimension_attrs(secondary_image["url"], secondary_image)
         secondary_image_html = f"""
       <figure class="article-image">
         <img src="{escape(secondary_image['url'])}" alt="{escape(secondary_image.get('alt', title))}"{secondary_image_attrs} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         <figcaption>{escape(secondary_image.get('caption', 'Related Microsoft product image.'))} <a href="{escape(secondary_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(secondary_image.get('source_label', item['source']))}</a>.</figcaption>
       </figure>
 """
-    og_image = image_url or f"{SITE_BASE_URL}/assets/og-home.jpg"
+    og_image = article_image.get("og_url") or image_url or f"{SITE_BASE_URL}/assets/og-home.jpg"
     og_image_alt = article_image.get("alt") or title
     json_title = json.dumps(title, ensure_ascii=False)
     json_desc = json.dumps(desc_text, ensure_ascii=False)

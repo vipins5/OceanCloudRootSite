@@ -634,7 +634,7 @@
 </nav>
 
 <!-- ===== MAIN SPLIT LAYOUT ===== -->
-<main style="padding-top:80px;">
+<main id="main-content" style="padding-top:80px;">
   <div class="contact-split">
 
     <!-- ── LEFT SIDEBAR ── -->
@@ -689,7 +689,7 @@
       <div class="map-block">
         <h4 class="map-label">&#128205; &nbsp;Our Location</h4>
         <iframe
-          src="https://www.google.com/maps?q=Dallas,TX,USA&output=embed"
+          src="https://www.google.com/maps?q=Dallas%2C%20TX%2C%20USA&output=embed"
           width="100%"
           height="200"
           style="border:0;border-radius:10px;display:block;"
@@ -725,7 +725,7 @@
           <div class="step-badge">Step 01</div>
           <div class="conv-question" id="q0"></div>
           <div class="conv-hint">Press <strong style="color:rgba(255,255,255,.5);">Enter ↵</strong> to continue</div>
-          <input class="conv-input" id="inp-name" type="text" placeholder="Your full name…" autocomplete="name" />
+          <input class="conv-input" id="inp-name" type="text" placeholder="Your full name…" autocomplete="name" aria-label="Your full name" />
           <div class="conv-actions">
             <button class="btn-conv-next" id="next-0" disabled>Continue &nbsp;&#8594;</button>
             <span class="enter-hint">or press Enter ↵</span>
@@ -737,7 +737,7 @@
           <div class="step-badge">Step 02</div>
           <div class="conv-question" id="q1"></div>
           <div class="conv-hint">We'll only use this to reply to you</div>
-          <input class="conv-input" id="inp-email" type="email" placeholder="your@company.com" autocomplete="email" />
+          <input class="conv-input" id="inp-email" type="email" placeholder="your@company.com" autocomplete="email" aria-label="Email address" />
           <div class="conv-actions">
             <button class="btn-conv-back" id="back-1">&#8592; Back</button>
             <button class="btn-conv-next" id="next-1" disabled>Continue &nbsp;&#8594;</button>
@@ -750,7 +750,7 @@
           <div class="step-badge">Step 03</div>
           <div class="conv-question" id="q2"></div>
           <div class="conv-hint">Organisation or company name</div>
-          <input class="conv-input" id="inp-company" type="text" placeholder="Your organisation…" autocomplete="organization" />
+          <input class="conv-input" id="inp-company" type="text" placeholder="Your organisation…" autocomplete="organization" aria-label="Organisation or company name" />
           <div class="conv-actions">
             <button class="btn-conv-back" id="back-2">&#8592; Back</button>
             <button class="btn-conv-next" id="next-2" disabled>Continue &nbsp;&#8594;</button>
@@ -800,7 +800,7 @@
           <div class="step-badge">Step 06</div>
           <div class="conv-question" id="q5"></div>
           <div class="conv-hint">No need to be precise — just tell us what's on your mind</div>
-          <textarea class="conv-textarea" id="inp-message" placeholder="We're currently on SharePoint 2016 on-prem and want to migrate to SPO, but we're not sure where to start…"></textarea>
+          <textarea class="conv-textarea" id="inp-message" placeholder="We're currently on SharePoint 2016 on-prem and want to migrate to SPO, but we're not sure where to start…" aria-label="Project message"></textarea>
           <div class="conv-actions">
             <button class="btn-conv-back" id="back-5">&#8592; Back</button>
             <button class="btn-conv-next" id="next-5" disabled>Send it &#8594;</button>

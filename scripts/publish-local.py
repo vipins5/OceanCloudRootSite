@@ -93,8 +93,8 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
     ET.register_namespace("", SITEMAP_NS)
     tree = ET.parse(SITEMAP)
     root = tree.getroot()
-    # ISO date string written into lastmod fields.
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    # Local ISO date string written into lastmod fields for working-tree edits.
+    today = datetime.now().astimezone().strftime("%Y-%m-%d")
     # Counter for total sitemap mutations performed in this run.
     changed_count = 0
     # Cache of existing loc values to avoid duplicate URL entries.

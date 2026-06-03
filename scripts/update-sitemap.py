@@ -53,7 +53,7 @@ def git_last_modified(file: Path) -> str:
             cwd=ROOT
         )
         if status.stdout.strip() and file.exists():
-            mtime = datetime.fromtimestamp(file.stat().st_mtime, tz=timezone.utc)
+            mtime = datetime.fromtimestamp(file.stat().st_mtime).astimezone()
             return mtime.strftime("%Y-%m-%d")
 
         result = subprocess.run(
@@ -68,9 +68,9 @@ def git_last_modified(file: Path) -> str:
         pass
     # Fallback: file mtime
     if file.exists():
-        mtime = datetime.fromtimestamp(file.stat().st_mtime, tz=timezone.utc)
+        mtime = datetime.fromtimestamp(file.stat().st_mtime).astimezone()
         return mtime.strftime("%Y-%m-%d")
-    return datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return datetime.now().astimezone().strftime("%Y-%m-%d")
 
 
 def main(dry_run: bool = False) -> None:
