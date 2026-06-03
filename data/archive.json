@@ -1,6 +1,46 @@
 {
   "items": [
     {
+      "title": "Microsoft Purview: Data Loss Prevention - AI Powered Data Loss Prevention Policy Optimizer",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564616",
+      "date_friendly": "June 02, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-data-loss-prevention-ai-powered-data-loss-"
+    },
+    {
+      "title": "Microsoft Teams: New layout when sharing content for Teams events",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564613",
+      "date_friendly": "June 02, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-new-layout-when-sharing-content-for-teams-ev"
+    },
+    {
+      "title": "Microsoft Teams: Manage Built-in Teams agents in the Teams admin center",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564766",
+      "date_friendly": "June 01, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-manage-built-in-teams-agents-in-the-teams-ad"
+    },
+    {
+      "title": "Microsoft Teams: Inline search in compose box",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564612",
+      "date_friendly": "June 01, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-inline-search-in-compose-box"
+    },
+    {
       "title": "Microsoft Copilot (Microsoft 365): Copilot suggested rename",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564909",
       "date_friendly": "May 29, 2026",
@@ -162,6 +202,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-teams-interpreter-simultaneous-mode-enhancements"
+    },
+    {
+      "title": "Microsoft Edge: Intune MAM Protected Downloads",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561551",
+      "date_friendly": "May 12, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-edge-intune-mam-protected-downloads"
     },
     {
       "title": "Microsoft Copilot (Microsoft 365): Vision in Microsoft 365 Copilot can analyze content shared on desktop screen and through mobile camera",
@@ -349,5 +399,5 @@
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     }
   ],
-  "last_updated": "2026-06-01"
+  "last_updated": "2026-06-03"
 }
