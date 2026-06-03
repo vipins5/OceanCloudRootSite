@@ -47,6 +47,15 @@ def url_to_file(path: str) -> Path | None:
 def git_last_modified(file: Path) -> str:
     """Return ISO date (YYYY-MM-DD) of the last git commit touching `file`."""
     try:
+        status = subprocess.run(
+            ["git", "status", "--porcelain", "--", str(file)],
+            capture_output=True, text=True, check=True,
+            cwd=ROOT
+        )
+        if status.stdout.strip() and file.exists():
+            mtime = datetime.fromtimestamp(file.stat().st_mtime, tz=timezone.utc)
+            return mtime.strftime("%Y-%m-%d")
+
         result = subprocess.run(
             ["git", "log", "-1", "--format=%aI", "--", str(file)],
             capture_output=True, text=True, check=True,
@@ -112,7 +121,7 @@ def main(dry_run: bool = False) -> None:
         if lastmod_el is None:
             lastmod_el = ET.SubElement(url_el, f"{{{ns}}}lastmod")
         lastmod_el.text = new_date
-        print(f"  {'[dry]' if dry_run else '[set]'} /{path}  {old_date or '(none)'} → {new_date}")
+        print(f"  {'[dry]' if dry_run else '[set]'} /{path}  {old_date or '(none)'} -> {new_date}")
         updated += 1
 
     print(f"\nResult: {updated} updated, {unchanged} unchanged, {missing} no-file.")
@@ -124,7 +133,7 @@ def main(dry_run: bool = False) -> None:
             '<?xml version="1.0" encoding="UTF-8"?>\n' + xml_str + "\n",
             encoding="utf-8"
         )
-        print(f"✓ {SITEMAP} written.")
+        print(f"[ok] {SITEMAP} written.")
     elif dry_run:
         print("Dry-run mode — sitemap not written.")
 

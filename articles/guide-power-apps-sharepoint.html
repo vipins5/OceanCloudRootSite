@@ -18,7 +18,12 @@
   <meta property="og:description" content="Canvas apps, model-driven apps, SharePoint as a data source, delegation limits, and publishing options — everything you need to build your first Power Apps solution." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-power-apps-sharepoint" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-site.png" />
+  <meta property="og:image:alt"   content="Power Apps SharePoint connection screen showing a SharePoint site selection" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Build Custom Business Apps with Power Apps and SharePoint | OceanCloud" />
+  <meta name="twitter:description" content="Build no-code business apps using Power Apps and SharePoint as a data source. Canvas vs model-driven apps, real-world examples, delegation limits, and publishing options explained." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-site.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Canvas apps, model-driven apps, SharePoint as a data source, delegation limits, and publishing options — a complete guide to building Power Apps solutions.",
+        "image": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-site.png",
         "keywords": ["Power Apps", "SharePoint Power Apps", "no-code apps", "canvas app", "Power Platform"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online", "name": "Use SharePoint Online with Power Apps" },
@@ -162,7 +168,7 @@
       <p class="article-intro">Most organisations already have SharePoint lists holding business data — asset registers, helpdesk tickets, purchase requests, employee records. The problem is that SharePoint's default list view is built for information managers, not the frontline staff who need to submit and update that data. Microsoft Power Apps solves this by letting you build custom, mobile-friendly interfaces on top of your existing SharePoint data — without writing any code. This guide shows you exactly how to do it.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-site.png" alt="Power Apps SharePoint connection screen showing a SharePoint site selection" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-site.png" alt="Power Apps SharePoint connection screen showing a SharePoint site selection" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="473" height="543" />
         <figcaption>Microsoft Power Apps screenshot showing SharePoint site selection for a data connection. <a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -192,7 +198,7 @@
       <h2>Using SharePoint as a Power Apps Data Source</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-tables.png" alt="Power Apps SharePoint connector table selection screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-tables.png" alt="Power Apps SharePoint connector table selection screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="367" height="266" />
         <figcaption>Microsoft Power Apps screenshot showing SharePoint lists selected as app data sources. <a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>SharePoint lists are one of the simplest data sources to connect in Power Apps. When you connect a SharePoint list to a canvas app, Power Apps reads the list's columns (including column types: text, choice, person, date, lookup) and uses them to generate forms automatically.</p>
@@ -270,7 +276,7 @@
       <h2>The Delegation Problem: What Every Power Apps Developer Must Know</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/media/delegation-overview/products-apple-delegationwarning.png" alt="Power Apps delegation warning screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/media/delegation-overview/products-apple-delegationwarning.png" alt="Power Apps delegation warning screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1041" height="436" />
         <figcaption>Microsoft Power Apps screenshot showing a delegation warning to watch for in SharePoint-backed apps. <a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/delegation-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Delegation is the most misunderstood concept in Power Apps, and ignoring it causes apps to silently return wrong data in production. Here is what it means and why it matters.</p>

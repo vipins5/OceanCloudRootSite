@@ -18,7 +18,12 @@
   <meta property="og:description" content="Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate + SharePoint explained with implementation notes." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" />
+  <meta property="og:image:alt"   content="Power Automate approval flow with parallel branches screenshot" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel | OceanCloud" />
+  <meta name="twitter:description" content="Build SharePoint approval workflows with multiple approvers using Power Automate. Understand sequential vs parallel approval patterns, how to escalate, and when to use each model." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate and SharePoint.",
+        "image": "https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png",
         "keywords": ["SharePoint multiple approvers", "Power Automate sequential approval", "parallel approval workflow", "SharePoint approval chain"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals", "name": "Manage sequential approvals with Power Automate" },
@@ -167,7 +173,7 @@
       <p class="article-intro">Single-approver workflows handle the easy case. Real business approval processes almost always involve multiple people — a line manager, a finance sign-off, a compliance check, and sometimes a final executive approval. Power Automate supports every combination of these patterns, but choosing the wrong model for your business process creates bottlenecks, compliance gaps, or both. This guide breaks down every multi-approver pattern and when to use each.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" alt="Power Automate approval flow with parallel branches screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" alt="Power Automate approval flow with parallel branches screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="460" height="531" />
         <figcaption>Microsoft Power Automate screenshot showing a parallel approval flow with multiple approvers. <a href="https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -190,7 +196,7 @@
       <h2>Pattern 1: Sequential Approval Chain</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/sequential-modern-approvals/visio-overview.png" alt="Sequential approval flow diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/sequential-modern-approvals/visio-overview.png" alt="Sequential approval flow diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="500" height="393" />
         <figcaption>Microsoft Power Automate diagram showing a sequential approval flow. <a href="https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -245,7 +251,7 @@
       <h2>Pattern 3: Parallel Approval — First to Respond</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/includes/media/modern-approvals/provide-approval-config-info.png" alt="Power Automate approval configuration card screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/includes/media/modern-approvals/provide-approval-config-info.png" alt="Power Automate approval configuration card screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="604" height="362" />
         <figcaption>Microsoft Power Automate screenshot showing approval card configuration details. <a href="https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 

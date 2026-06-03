@@ -18,7 +18,12 @@
   <meta property="og:description" content="Least privilege, group-based access, external sharing controls, audit methodology, and the top 10 SharePoint permission mistakes — a security-focused deep dive." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png" />
+  <meta property="og:image:alt"   content="SharePoint site access panel for adding members to a communication site" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="SharePoint Permissions Best Practices for Secure Microsoft 365 Sites | OceanCloud" />
+  <meta name="twitter:description" content="SharePoint permissions best practices for security-conscious organisations — least privilege principles, group-based access, external sharing controls, audit methodology, and common mistakes." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Least privilege, group-based access, external sharing controls, audit methodology, and the top SharePoint permission mistakes — a security-focused guide.",
+        "image": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png",
         "keywords": ["SharePoint permissions best practices", "SharePoint security", "SharePoint access control", "SharePoint permissions audit"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/default-sharepoint-groups", "name": "Default SharePoint groups" },
@@ -161,7 +167,7 @@
       <p class="article-intro">SharePoint permissions are deceptively easy to get wrong. The platform makes it trivially simple to share content — which is by design — but that ease of sharing, without governance, creates the oversharing problems that result in data breaches, compliance failures, and Copilot AI surfacing documents to people who should never have seen them. This guide sets out the permission design principles, structural patterns, and audit approaches that prevent those problems.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png" alt="SharePoint site access panel for adding members to a communication site" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/customize-permissions/communication-site-add-member.png" alt="SharePoint site access panel for adding members to a communication site" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="560" height="181" />
         <figcaption>Microsoft SharePoint screenshot showing the site access panel for managing members. <a href="https://learn.microsoft.com/en-us/sharepoint/customize-sharepoint-site-permissions" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -176,7 +182,7 @@
       <h2>Principle 2: Use Groups, Not Individual Accounts</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/add-user-to-a-group.png" alt="SharePoint add user to group dialog screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/add-user-to-a-group.png" alt="SharePoint add user to group dialog screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="359" height="519" />
         <figcaption>Microsoft SharePoint screenshot showing the dialog for adding a user to a group. <a href="https://learn.microsoft.com/en-us/sharepoint/customize-sharepoint-site-permissions" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Granting access to individual user accounts — rather than Microsoft Entra groups or SharePoint groups — is the most common SharePoint permission anti-pattern. It creates three problems:</p>
@@ -217,7 +223,7 @@
       <h2>The 10 SharePoint Permission Best Practices</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" alt="SharePoint Advanced Management screenshot in the SharePoint admin center" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" alt="SharePoint Advanced Management screenshot in the SharePoint admin center" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1680" height="1221" />
         <figcaption>Microsoft SharePoint admin center screenshot showing governance and access management capabilities. <a href="https://learn.microsoft.com/en-us/sharepoint/advanced-management" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 

@@ -18,7 +18,12 @@
   <meta property="og:description" content="A practical admin guide and script for restoring deleted SharePoint files and folders from first-stage recycle bin by folder path, deleted date, and optional deleted-by filter." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" />
   <meta property="og:image"       content="https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&amp;w=900" />
+  <meta property="og:image:alt"   content="SharePoint recycle bin page with items selected for restore" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Restore SharePoint Recycle Bin Items with PnP PowerShell | OceanCloud" />
+  <meta name="twitter:description" content="Restore SharePoint deleted files and folders from specific folders and dates with PnP PowerShell, CSOM paging, dry-run mode, conflict checks, and CSV logging." />
+  <meta name="twitter:image"       content="https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&amp;w=900" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Restore deleted SharePoint files and folders from first-stage recycle bin by folder path, deleted date, and deleted user using PnP PowerShell plus CSOM paging.",
+        "image": "https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&w=900",
         "keywords": ["SharePoint recycle bin restore", "PnP PowerShell", "Restore SharePoint deleted files", "First-stage recycle bin", "CSOM paging"],
         "citation": [
           { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
@@ -118,7 +124,7 @@
       <p class="article-intro">When a SharePoint folder is accidentally deleted, the first instinct is often to open the recycle bin and restore everything that looks related. That works for small sites. It gets risky in large libraries, migration projects, or document centers where thousands of recycle bin entries may share similar names. This guide shows how to restore SharePoint deleted files and folders with PnP PowerShell using precise filters for folder path, deleted date, and deleted-by user.</p>
 
       <figure class="article-image">
-        <img src="https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&amp;w=900" alt="SharePoint recycle bin page with items selected for restore" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://support.microsoft.com/images/en-us/80c0b08d-7c55-4bbf-b49f-9ce18cb39ddf?format=png&amp;w=900" alt="SharePoint recycle bin page with items selected for restore" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="435" height="361" />
         <figcaption>Microsoft Support screenshot showing SharePoint recycle bin items selected for restore. <a href="https://support.microsoft.com/en-us/office/restore-items-in-the-recycle-bin-that-were-deleted-from-sharepoint-or-teams-6df466b6-55f2-4898-8d6e-c0dff851a0be" target="_blank" rel="noopener noreferrer">Source: Microsoft Support</a>.</figcaption>
       </figure>
 
@@ -143,7 +149,7 @@
       <h2>What the script does</h2>
 
       <figure class="article-image">
-        <img src="https://support.microsoft.com/images/en-us/c408ceef-ad95-46a6-8c1a-55abac5f4554?format=png&amp;w=900" alt="SharePoint recycle bin Restore button screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://support.microsoft.com/images/en-us/c408ceef-ad95-46a6-8c1a-55abac5f4554?format=png&amp;w=900" alt="SharePoint recycle bin Restore button screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="435" height="197" />
         <figcaption>Microsoft Support screenshot showing the Restore action in the SharePoint recycle bin. <a href="https://support.microsoft.com/en-us/office/restore-items-in-the-recycle-bin-that-were-deleted-from-sharepoint-or-teams-6df466b6-55f2-4898-8d6e-c0dff851a0be" target="_blank" rel="noopener noreferrer">Source: Microsoft Support</a>.</figcaption>
       </figure>
       <div class="restore-flow">
@@ -169,7 +175,7 @@
       <h2>Important limitations</h2>
 
       <figure class="article-image">
-        <img src="https://support.microsoft.com/images/en-us/3a460d8d-1cd5-40dc-a71a-03340c87a683?format=png&amp;w=900" alt="SharePoint online recycle bin second-level link screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://support.microsoft.com/images/en-us/3a460d8d-1cd5-40dc-a71a-03340c87a683?format=png&amp;w=900" alt="SharePoint online recycle bin second-level link screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="395" height="90" />
         <figcaption>Microsoft Support screenshot showing the second-stage recycle bin link for site collection recovery. <a href="https://support.microsoft.com/en-gb/office/restore-deleted-items-from-the-site-collection-recycle-bin-5fa924ee-16d7-487b-9a0a-021b9062d14b" target="_blank" rel="noopener noreferrer">Source: Microsoft Support</a>.</figcaption>
       </figure>
       <ul>

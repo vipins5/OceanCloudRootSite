@@ -9,8 +9,8 @@ Hard-fail checks:
 
 Advisory checks (warnings only):
 - Missing <title>
-- Missing <meta name="description">
-- Missing canonical link tag
+- Missing <meta name="description"> on indexable pages
+- Missing canonical link tag on indexable pages
 """
 
 from __future__ import annotations
@@ -144,6 +144,10 @@ def scan_metadata(html_files: list[Path]) -> dict[str, list[str]]:
         r = rel(file_path)
         if TITLE_RE.search(content) is None:
             missing_title.append(r)
+        robots_match = ROBOTS_RE.search(content)
+        robots = robots_match.group(1).lower() if robots_match else ""
+        if "noindex" in robots:
+            continue
         if DESC_RE.search(content) is None:
             missing_description.append(r)
         if CANONICAL_RE.search(content) is None:
@@ -210,13 +214,13 @@ def build_report(
 
     lines.extend([
         "",
-        f"Missing meta description: {len(metadata['description'])}",
+        f"Missing meta description on indexable pages: {len(metadata['description'])}",
     ])
     lines.extend(format_samples(metadata["description"]))
 
     lines.extend([
         "",
-        f"Missing canonical link: {len(metadata['canonical'])}",
+        f"Missing canonical link on indexable pages: {len(metadata['canonical'])}",
     ])
     lines.extend(format_samples(metadata["canonical"]))
 

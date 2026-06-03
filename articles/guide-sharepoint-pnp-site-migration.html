@@ -18,7 +18,12 @@
   <meta property="og:description" content="Migrate document libraries, lists, modern pages, and permissions between SharePoint Online sites using PnP PowerShell — with complete scripts and validation." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepointmigration/media/mm-flow-3box.png" />
+  <meta property="og:image:alt"   content="PnP PowerShell authentication configuration screenshot" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide | OceanCloud" />
+  <meta name="twitter:description" content="Step-by-step PowerShell guide to migrate document libraries, lists, pages, and permissions from one SharePoint Online site to another — including full scripts, error handling, and post-migration validation." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/sharepointmigration/media/mm-flow-3box.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Complete PowerShell guide to migrating document libraries, list items, modern pages, and permissions between SharePoint Online sites using PnP PowerShell — including inventory, migration, validation, and troubleshooting scripts.",
+        "image": "https://learn.microsoft.com/en-us/sharepointmigration/media/mm-flow-3box.png",
         "keywords": ["SharePoint migration", "PnP PowerShell", "SharePoint Online site migration", "Copy-PnPFile", "SharePoint list migration"],
         "citation": [
           { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
@@ -264,7 +270,7 @@ Get-Module PnP.PowerShell -ListAvailable | Select-Object Name, Version</pre></di
       <p>You need two live connections — one to the source site and one to the destination. PnP PowerShell lets you switch between connections using the <code>-Connection</code> parameter, which keeps your code explicit about which site each cmdlet targets.</p>
 
       <figure class="article-image">
-        <img src="https://pnp.github.io/powershell/images/authentication/libraryVariables.png" alt="PnP PowerShell authentication configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://pnp.github.io/powershell/images/authentication/libraryVariables.png" alt="PnP PowerShell authentication configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="2192" height="1060" />
         <figcaption>PnP PowerShell authentication screenshot relevant to scripted SharePoint migration connections. <a href="https://pnp.github.io/powershell/articles/authentication.html" target="_blank" rel="noopener noreferrer">Source: PnP PowerShell documentation</a>.</figcaption>
       </figure>
 

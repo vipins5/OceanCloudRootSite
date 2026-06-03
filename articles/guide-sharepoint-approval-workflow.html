@@ -18,7 +18,12 @@
   <meta property="og:description" content="Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" />
+  <meta property="og:image:alt"   content="Power Automate approval flow overview screenshot" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="How to Build a SharePoint Approval Workflow with Power Automate | OceanCloud" />
+  <meta name="twitter:description" content="Step-by-step guide to building a SharePoint approval workflow with Power Automate — configure the approval action, handle responses, send notifications, and update document status automatically." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide.",
+        "image": "https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png",
         "keywords": ["SharePoint approval workflow", "Power Automate approval", "SharePoint document approval", "Power Automate SharePoint"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approve-reject-requests", "name": "Manage approval requests in Power Automate" },
@@ -170,7 +176,7 @@
       <p class="article-intro">SharePoint approval workflows are one of the most requested Power Automate builds — and one of the most commonly built incorrectly. Developers skip the status column, forget the rejection branch, or build flows that break when the approver is out of office. This guide builds a complete, production-ready SharePoint document approval workflow from scratch, covering every step from list setup through edge-case handling.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" alt="Power Automate approval flow overview screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/create-flow-overview.png" alt="Power Automate approval flow overview screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="666" height="337" />
         <figcaption>Microsoft Power Automate screenshot showing a modern approval flow overview. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -184,7 +190,7 @@
       <h2>Step 1: Prepare Your SharePoint Library</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/select-sharepoint-site-info-new-designer.png" alt="Power Automate new designer SharePoint site information screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/select-sharepoint-site-info-new-designer.png" alt="Power Automate new designer SharePoint site information screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="622" height="302" />
         <figcaption>Microsoft Power Automate screenshot showing SharePoint site information selection in the new designer. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Before building the flow, configure the SharePoint document library with the columns the flow will read and write. Without these columns, the flow cannot track state or surface approver comments.</p>
@@ -232,7 +238,7 @@
       <h2>Step 3: Configure the Approval Action</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/create-approval-response-options/enter-title-assigned-to-details.png" alt="Power Automate approval title and assignee configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/create-approval-response-options/enter-title-assigned-to-details.png" alt="Power Automate approval title and assignee configuration screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="465" height="233" />
         <figcaption>Microsoft Power Automate screenshot showing approval title, assignee, and details configuration. <a href="https://learn.microsoft.com/en-us/power-automate/create-approval-response-options" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>In the Yes branch, add the action <strong>"Start and wait for an approval"</strong> from the Approvals connector. This is a blocking action — the flow pauses here until the approver responds (or the timeout expires).</p>

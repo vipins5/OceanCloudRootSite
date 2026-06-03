@@ -18,7 +18,12 @@
   <meta property="og:description" content="Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint" />
   <meta property="og:image"       content="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp" />
+  <meta property="og:image:alt"   content="Microsoft Graph diagram showing connected Microsoft 365 resources" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Microsoft Graph and SharePoint: M365 Integrations for IT Admins | OceanCloud" />
+  <meta name="twitter:description" content="What IT admins need to know about Microsoft Graph API and SharePoint integrations — Graph operations, Power Automate HTTP connector, webhooks, Salesforce and ServiceNow connectors, app registrations vs managed identities." />
+  <meta name="twitter:image"       content="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins.",
+        "image": "https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp",
         "keywords": ["Microsoft Graph", "SharePoint API", "SharePoint webhooks", "M365 integrations", "Graph Explorer"],
         "citation": [
           { "@type": "WebPage", "url": "https://developer.microsoft.com/en-us/graph", "name": "Microsoft Graph Developer Portal" },
@@ -164,7 +170,7 @@
       <p class="article-intro">Microsoft Graph is the single API that underpins every integration with Microsoft 365. Whether you're connecting SharePoint to Salesforce, building a custom Teams bot, pulling Microsoft Entra ID user data into a third-party HR system, or creating an automated provisioning workflow — all of these ultimately go through Graph. Understanding what Graph is, how to query it safely, and how to use it without writing traditional code puts IT admins in a position to design and own integrations rather than depending entirely on external developers.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/graph/images/microsoft-graph.png" alt="Microsoft Graph diagram showing connected Microsoft 365 resources" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/graph/images/microsoft-graph.png" alt="Microsoft Graph diagram showing connected Microsoft 365 resources" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="800" height="391" />
         <figcaption>Microsoft Learn diagram showing the primary Microsoft Graph resources and relationships across Microsoft 365. <a href="https://learn.microsoft.com/en-us/graph/overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -188,7 +194,7 @@
       <h2>Graph Explorer: Your IT Admin Testing Tool</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/graph/graph-explorer/images/ge-tutorial-step2-explore-sample-query.png" alt="Microsoft Graph Explorer running a sample GET my profile query" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/graph/graph-explorer/images/ge-tutorial-step2-explore-sample-query.png" alt="Microsoft Graph Explorer running a sample GET my profile query" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="2106" height="1317" />
         <figcaption>Microsoft Learn screenshot of Graph Explorer running a sample query and showing the response preview. <a href="https://learn.microsoft.com/en-us/graph/graph-explorer/graph-explorer-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Before building any integration, explore the API using Microsoft Graph Explorer — a browser-based tool that lets you make live Graph API calls against your own tenant (or a sample tenant) without writing any code. It's invaluable for understanding what data is returned before building a flow or integration.</p>

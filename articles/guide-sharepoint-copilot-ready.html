@@ -18,7 +18,12 @@
   <meta property="og:description" content="Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and clean stale content — the SharePoint readiness checklist before Copilot rollout." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" />
+  <meta property="og:image:alt"   content="SharePoint Advanced Management screenshot in the SharePoint admin center" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="How to Prepare Your SharePoint for Microsoft Copilot | OceanCloud" />
+  <meta name="twitter:description" content="Get SharePoint Copilot-ready: audit oversharing with SharePoint Advanced Management, enable Restricted SharePoint Search, apply Purview sensitivity labels, and validate search quality." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and validate search quality — the SharePoint readiness checklist before Copilot rollout.",
+        "image": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png",
         "keywords": ["SharePoint Copilot", "Copilot readiness", "SharePoint Advanced Management", "Restricted SharePoint Search", "Purview sensitivity labels"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management", "name": "SharePoint Advanced Management" },
@@ -168,7 +174,7 @@
       <p class="article-intro">Microsoft 365 Copilot is grounded in your organisation's data via the Microsoft 365 Graph. That means it can only be as good as your SharePoint is clean, well-governed, and correctly permissioned. Organisations that skip this preparation phase experience two painful outcomes: Copilot surfaces confidential documents to people who shouldn't see them, and it returns poor answers because it's searching through years of outdated, redundant, and trivial content. This guide walks through every remediation step — in the right order — to get SharePoint Copilot-ready.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" alt="SharePoint Advanced Management screenshot in the SharePoint admin center" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" alt="SharePoint Advanced Management screenshot in the SharePoint admin center" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1680" height="1221" />
         <figcaption>Microsoft SharePoint admin center screenshot showing SharePoint Advanced Management. <a href="https://learn.microsoft.com/en-us/sharepoint/advanced-management" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -202,7 +208,7 @@
       <h2>Step 2: Enable Restricted SharePoint Search</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/rss-hubsite-example.png" alt="Restricted SharePoint Search hub site example diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/rss-hubsite-example.png" alt="Restricted SharePoint Search hub site example diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="649" height="604" />
         <figcaption>Microsoft SharePoint diagram showing a hub site example for Restricted SharePoint Search planning. <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Restricted SharePoint Search (RSS) is a tenant-level setting that limits which SharePoint sites appear in organisation-wide search, Copilot chat, and agentic experiences while you clean up permissions. It is useful as a temporary rollout control, not a long-term security boundary.</p>
@@ -285,7 +291,7 @@ Get-SPOTenantRestrictedSearchAllowedList</pre></div>
       <h2>Step 4: Clean Stale and Low-Quality Content</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/purview/media/sensitivity-labels-scopes.png" alt="Microsoft Purview sensitivity label scopes screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/purview/media/sensitivity-labels-scopes.png" alt="Microsoft Purview sensitivity label scopes screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="701" height="522" />
         <figcaption>Microsoft Purview screenshot showing scope options for sensitivity labels. <a href="https://learn.microsoft.com/en-us/purview/sensitivity-labels" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>Copilot searches across your SharePoint environment and synthesises answers from what it finds. If your SharePoint is full of outdated policy documents from 2018, duplicated project folders, and half-finished draft files that were never deleted, Copilot will confidently cite them in its responses — and those responses will be wrong.</p>

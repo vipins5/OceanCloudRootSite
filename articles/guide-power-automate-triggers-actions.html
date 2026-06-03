@@ -18,7 +18,12 @@
   <meta property="og:description" content="Every SharePoint trigger and action in Power Automate — when to use each, how to write OData filter queries, file vs list operations, and the HTTP request action for advanced scenarios." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions" />
   <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png" />
+  <meta property="og:image:alt"   content="Power Automate SharePoint actions list screenshot" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Power Automate SharePoint Triggers and Actions Explained | OceanCloud" />
+  <meta name="twitter:description" content="Complete reference for Power Automate SharePoint triggers and actions — when item is created, get items filter query, create file, send HTTP request, and every connector option explained." />
+  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "Every SharePoint trigger and action in Power Automate — when to use each, OData filter queries, file vs list operations, and the HTTP request action.",
+        "image": "https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png",
         "keywords": ["Power Automate SharePoint triggers", "SharePoint connector", "get items filter query", "create file Power Automate"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/connectors/sharepointonline/", "name": "SharePoint connector reference" },
@@ -160,7 +166,7 @@
       <p class="article-intro">The SharePoint connector in Power Automate is the most widely used connector in the platform — and the most frequently misused. Choosing the wrong trigger causes double-fires and infinite loops. Using "Get items" without a filter query loads thousands of records unnecessarily. The "Send an HTTP request to SharePoint" action unlocks capabilities no other action provides. This guide covers every trigger and action with the context you need to use each one correctly.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-triggers.png" alt="Power Automate SharePoint triggers screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-triggers.png" alt="Power Automate SharePoint triggers screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="402" height="602" />
         <figcaption>Microsoft Power Automate screenshot showing SharePoint triggers that start flows. <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -230,7 +236,7 @@
       <h2>SharePoint Actions: The Complete Reference</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png" alt="Power Automate SharePoint actions list screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-actions.png" alt="Power Automate SharePoint actions list screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="315" height="592" />
         <figcaption>Microsoft Power Automate screenshot showing SharePoint actions available in flows. <a href="https://learn.microsoft.com/en-us/power-automate/sharepoint-overview" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -310,7 +316,7 @@
       <h2>The "Send an HTTP Request to SharePoint" Action</h2>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/sharepoint/dev/images/spf15con_rest_queryoptionsyntax.png" alt="SharePoint REST query option syntax diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/sharepoint/dev/images/spf15con_rest_queryoptionsyntax.png" alt="SharePoint REST query option syntax diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="625" height="782" />
         <figcaption>Microsoft SharePoint REST diagram showing OData query option syntax used by advanced flow actions. <a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/use-odata-query-operations-in-sharepoint-rest-requests" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
       <p>This action is the most powerful in the SharePoint connector and should be in every advanced flow builder's toolkit. It lets you call SharePoint's REST API directly — accessing capabilities not exposed through the standard actions, including:</p>

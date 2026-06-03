@@ -18,7 +18,12 @@
   <meta property="og:description" content="A complete end-to-end guide to automating SharePoint site creation — from user request and manager approval to PnP PowerShell provisioning, error logging, and automated notifications." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
+  <meta property="og:image:alt"   content="Power Automate Start and wait for an approval action configuration in the new designer" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="SharePoint Site Provisioning Automation: Logic Apps, Azure Automation &amp; Self-Service Recovery | OceanCloud" />
+  <meta name="twitter:description" content="Build a fully automated SharePoint site provisioning pipeline: user request form, manager approval, Azure Logic App orchestration, PnP PowerShell runbook, error logging to SharePoint, and email notifications." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,6 +50,7 @@
         "author": { "@id": "https://oceancloudconsults.com/#organization" },
         "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
         "description": "A complete end-to-end guide to automating SharePoint site creation — from user request and manager approval to PnP PowerShell provisioning, error logging, and automated notifications.",
+        "image": "https://oceancloudconsults.com/assets/og-services.jpg",
         "keywords": ["SharePoint provisioning automation", "Azure Logic Apps", "Azure Automation", "PnP PowerShell", "Power Automate approval", "SharePoint self-service"],
         "citation": [
           { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview", "name": "Azure Logic Apps overview" },
@@ -532,7 +538,7 @@
       <p>Add a <strong>Start and wait for an approval</strong> action from the Approvals connector. Configure it as follows:</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/provide-approval-config-info-new-designer.png" alt="Power Automate Start and wait for an approval action configuration in the new designer" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/power-automate/media/modern-approvals/provide-approval-config-info-new-designer.png" alt="Power Automate Start and wait for an approval action configuration in the new designer" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="610" height="590" />
         <figcaption>Power Automate — <strong>Start and wait for an approval</strong> action configuration in the new designer. Your fields will match the expressions below. <a href="https://learn.microsoft.com/en-us/power-automate/modern-approvals" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -694,7 +700,7 @@ Audience:       https://graph.microsoft.com
       <p>Wrap all remaining steps inside a <strong>Scope</strong> action named <em>Try</em>. Then add a second Scope named <em>Catch</em> configured via <strong>Configure run after</strong> to run only when <em>Try</em> has failed. This is the Logic App equivalent of try/catch and ensures no error path is left unhandled.</p>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/error-exception-handling/set-run-after-in-scope.png" alt="Azure Logic Apps designer showing Run after configuration for the Catch scope" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/azure/logic-apps/media/error-exception-handling/set-run-after-in-scope.png" alt="Azure Logic Apps designer showing Run after configuration for the Catch scope" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1044" height="667" />
         <figcaption>Logic Apps — <strong>Run after</strong> configuration for the Catch scope. Select the Try scope and tick <em>Has failed</em>. This means the Catch scope only fires when the Try scope encounters a failure. <a href="https://learn.microsoft.com/en-us/azure/logic-apps/error-exception-handling" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 
@@ -827,7 +833,7 @@ ERR-@{variables('requestItemId')}-@{formatDateTime(utcNow(),'yyyyMMdd-HHmmss')}
       </div>
 
       <figure class="article-image">
-        <img src="https://learn.microsoft.com/en-us/azure/automation/media/automation-runbook-types/runbook-types.png" alt="Azure Automation runbook types diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://learn.microsoft.com/en-us/azure/automation/media/automation-runbook-types/runbook-types.png" alt="Azure Automation runbook types diagram" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1021" height="211" />
         <figcaption>Microsoft Azure Automation diagram showing available runbook types for automation design. <a href="https://learn.microsoft.com/en-us/azure/automation/automation-runbook-types" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
       </figure>
 

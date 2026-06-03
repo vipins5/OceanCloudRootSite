@@ -31,6 +31,7 @@ import re
 import sys
 import time
 import textwrap
+from io import BytesIO
 from datetime import datetime, timezone
 from html import escape, unescape
 from pathlib import Path
@@ -38,6 +39,10 @@ from urllib.parse import urljoin
 
 import requests
 import feedparser
+try:
+    from PIL import Image
+except ImportError:  # Image dimensions are an enhancement, not a hard dependency.
+    Image = None
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
@@ -81,6 +86,9 @@ ROOT            = Path(__file__).parent.parent
 NEWS_HTML       = ROOT / "news.html"
 # Archive landing page rebuilt from full archive data.
 ARCHIVE_HTML    = ROOT / "archive.html"
+
+# Cache image dimensions during a run so repeated Microsoft fallback images are fetched once.
+IMAGE_DIMENSIONS: dict[str, tuple[int, int] | None] = {}
 # Canonical JSON archive store (deduplicated and cumulative).
 ARCHIVE_JSON    = ROOT / "data" / "archive.json"
 # Directory where generated article pages are written.
@@ -351,6 +359,29 @@ def image_for_item(item: dict) -> str:
     return "assets/news/m365-roadmap.svg" if item["css_tag"] == "tag-roadmap" else "assets/news/m365.svg"
 
 
+def image_dimension_attrs(url: str) -> str:
+    """Return width/height attributes for a remote raster image when available."""
+    if Image is None or not url.startswith("http"):
+        return ""
+
+    clean_url = unescape(url)
+    if clean_url not in IMAGE_DIMENSIONS:
+        try:
+            resp = requests.get(clean_url, headers=HEADERS, timeout=15, allow_redirects=True)
+            resp.raise_for_status()
+            with Image.open(BytesIO(resp.content)) as img:
+                IMAGE_DIMENSIONS[clean_url] = img.size
+        except Exception as exc:
+            IMAGE_DIMENSIONS[clean_url] = None
+            print(f"  [warn] Could not read image dimensions: {exc}", file=sys.stderr)
+
+    size = IMAGE_DIMENSIONS.get(clean_url)
+    if not size:
+        return ""
+    width, height = size
+    return f' width="{width}" height="{height}"'
+
+
 def fetch_og_image(url: str) -> str:
     """Return a public Open Graph/Twitter image for a source article, if present."""
     try:
@@ -615,27 +646,35 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     canonical  = f"{SITE_BASE_URL}/articles/{slug}"
     short      = title[:45] + ("…" if len(title) > 45 else "")
     body_html  = md_to_html(body_md)
-    desc       = escape(commentary[:160])
+    desc_text  = commentary[:160]
+    desc       = escape(desc_text)
     article_image = item.get("_article_image") or article_image_for_item(item)
     image_url = article_image.get("url", "")
     image_html = ""
     if image_url:
+        image_attrs = image_dimension_attrs(image_url)
         image_html = f"""
       <figure class="article-image">
-        <img src="{escape(image_url)}" alt="{escape(article_image.get('alt', title))}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="{escape(image_url)}" alt="{escape(article_image.get('alt', title))}"{image_attrs} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         <figcaption>{escape(article_image.get('caption', 'Microsoft product image.'))} <a href="{escape(article_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(article_image.get('source_label', item['source']))}</a>.</figcaption>
       </figure>
 """
     secondary_image = item.get("_secondary_article_image") or secondary_article_image_for_item(item)
     secondary_image_html = ""
     if secondary_image.get("url") and secondary_image.get("url") != image_url:
+        secondary_image_attrs = image_dimension_attrs(secondary_image["url"])
         secondary_image_html = f"""
       <figure class="article-image">
-        <img src="{escape(secondary_image['url'])}" alt="{escape(secondary_image.get('alt', title))}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="{escape(secondary_image['url'])}" alt="{escape(secondary_image.get('alt', title))}"{secondary_image_attrs} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         <figcaption>{escape(secondary_image.get('caption', 'Related Microsoft product image.'))} <a href="{escape(secondary_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(secondary_image.get('source_label', item['source']))}</a>.</figcaption>
       </figure>
 """
     og_image = image_url or f"{SITE_BASE_URL}/assets/og-home.jpg"
+    og_image_alt = article_image.get("alt") or title
+    json_title = json.dumps(title, ensure_ascii=False)
+    json_desc = json.dumps(desc_text, ensure_ascii=False)
+    json_image = json.dumps(og_image, ensure_ascii=False)
+    json_short = json.dumps(short, ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -654,7 +693,12 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <meta property="og:description" content="{desc}" />
   <meta property="og:url"         content="{canonical}" />
   <meta property="og:image"       content="{escape(og_image)}" />
+  <meta property="og:image:alt"   content="{escape(og_image_alt)}" />
   <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="{escape(title)}" />
+  <meta name="twitter:description" content="{desc}" />
+  <meta name="twitter:image"       content="{escape(og_image)}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -671,20 +715,22 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
       {{
         "@type": "Article",
         "@id": "{canonical}#article",
-        "headline": "{escape(title)}",
+        "headline": {json_title},
         "url": "{canonical}",
         "datePublished": "{pub_date}",
         "dateModified": "{pub_date}",
         "author": {{ "@id": "{SITE_BASE_URL}/#organization" }},
         "publisher": {{ "@id": "{SITE_BASE_URL}/#organization" }},
-        "description": "{desc}"
+        "description": {json_desc},
+        "image": {json_image},
+        "inLanguage": "en-US"
       }},
       {{
         "@type": "BreadcrumbList",
         "itemListElement": [
           {{ "@type": "ListItem", "position": 1, "name": "Home",  "item": "{SITE_BASE_URL}" }},
           {{ "@type": "ListItem", "position": 2, "name": "News",  "item": "{SITE_BASE_URL}/news" }},
-          {{ "@type": "ListItem", "position": 3, "name": "{escape(short)}", "item": "{canonical}" }}
+          {{ "@type": "ListItem", "position": 3, "name": {json_short}, "item": "{canonical}" }}
         ]
       }}
     ]
@@ -841,7 +887,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
 def update_sitemap(new_slugs: list[str]) -> None:
     """Append new article URLs to sitemap.xml if not already present."""
     if not INDEX_NEWS_ARTICLES:
-        print("✓ sitemap.xml unchanged; generated news detail pages are noindex.")
+        print("[ok] sitemap.xml unchanged; generated news detail pages are noindex.")
         return
     if not SITEMAP_XML.exists() or not new_slugs:
         return
@@ -866,7 +912,7 @@ def update_sitemap(new_slugs: list[str]) -> None:
         return
     content = content.replace("</urlset>", entries + "</urlset>")
     SITEMAP_XML.write_text(content, encoding="utf-8")
-    print(f"✓ sitemap.xml updated with {added} new article URL(s).")
+    print(f"[ok] sitemap.xml updated with {added} new article URL(s).")
 
 
 # ── Search index updater ──────────────────────────────────────────────────────
@@ -912,7 +958,7 @@ def update_search_index(new_items: list[dict]) -> None:
         SEARCH_INDEX.write_text(
             json.dumps(index, indent=2, ensure_ascii=False), encoding="utf-8"
         )
-        print(f"✓ search-index.json updated with {added} new article entry/entries.")
+        print(f"[ok] search-index.json updated with {added} new article entry/entries.")
 
 
 # ── Fetchers ──────────────────────────────────────────────────────────────────
@@ -937,7 +983,7 @@ def fetch_blog() -> list[dict]:
                 "source":  "SharePoint Blog",
                 "css_tag": "tag-blog",
             })
-        print(f"  → {len(posts)} blog posts selected")
+        print(f"  -> {len(posts)} blog posts selected")
         return posts
     except Exception as exc:
         print(f"  [error] Blog fetch failed: {exc}", file=sys.stderr)
@@ -970,7 +1016,7 @@ def fetch_roadmap() -> list[dict]:
             })
             if len(items) >= MAX_ROADMAP:
                 break
-        print(f"  → {len(items)} roadmap items (relevance matched {matched}/{len(feed.entries)})")
+        print(f"  -> {len(items)} roadmap items (relevance matched {matched}/{len(feed.entries)})")
         return items
     except Exception as exc:
         print(f"  [error] Roadmap fetch failed: {exc}", file=sys.stderr)
@@ -982,6 +1028,7 @@ def fetch_roadmap() -> list[dict]:
 def card_html(item: dict, commentary: str) -> str:
     date_str    = friendly_date(item["date"])
     img         = image_for_item(item)
+    img_attrs   = image_dimension_attrs(img)
     img_alt     = (item.get("_article_image") or {}).get("alt", item["source"])
     source_slug = "roadmap" if item["css_tag"] == "tag-roadmap" else "blog"
     topic_slug  = topic_for_item(item)
@@ -990,7 +1037,7 @@ def card_html(item: dict, commentary: str) -> str:
     return f"""\
       <article class="news-card glass" data-source="{source_slug}" data-topic="{topic_slug}">
         <div class="nc-image-wrap">
-          <img class="nc-image" src="{escape(img)}" alt="{escape(img_alt)}" loading="lazy" />
+          <img class="nc-image" src="{escape(img)}" alt="{escape(img_alt)}"{img_attrs} loading="lazy" />
         </div>
         <div class="nc-meta">
           <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
@@ -1169,14 +1216,14 @@ def main() -> None:
         item["_article_url"] = f"/articles/{slug}"
 
         if not art_path.exists():
-            print(f"    → generating article page: {slug}.html")
+            print(f"    -> generating article page: {slug}.html")
             body_md = ai_article_body(item["title"], item["summary"])
             time.sleep(0.3)
             art_html = generate_article_page(item, item["_commentary"], body_md, slug)
             art_path.write_text(art_html, encoding="utf-8")
             new_article_slugs.append(slug)
         else:
-            print(f"    → article page already exists, skipping")
+            print(f"    -> article page already exists, skipping")
 
     # ── Update sitemap ────────────────────────────────────────────────────────
     update_sitemap(new_article_slugs)
@@ -1186,7 +1233,7 @@ def main() -> None:
         new_indexed = [it for it in all_items if it.get("_slug") in new_article_slugs]
         update_search_index(new_indexed)
     else:
-        print("✓ search-index.json unchanged; generated news detail pages are noindex.")
+        print("[ok] search-index.json unchanged; generated news detail pages are noindex.")
 
     # ── Update news.html ──────────────────────────────────────────────────────
     html = NEWS_HTML.read_text(encoding="utf-8")
@@ -1195,14 +1242,14 @@ def main() -> None:
         print(f"[error] News markers not found in news.html", file=sys.stderr)
         sys.exit(1)
     NEWS_HTML.write_text(updated, encoding="utf-8")
-    print(f"\n✓ news.html updated with {len(all_items)} items.")
+    print(f"\n[ok] news.html updated with {len(all_items)} items.")
 
     # ── Update archive ────────────────────────────────────────────────────────
     print("\nUpdating archive…")
     archive = load_archive()
     archive, added = merge_archive(archive, all_items)
     save_archive(archive)
-    print(f"  → {added} new items added ({len(archive)} total in archive)")
+    print(f"  -> {added} new items added ({len(archive)} total in archive)")
 
     if ARCHIVE_HTML.exists():
         arc_html = ARCHIVE_HTML.read_text(encoding="utf-8")
@@ -1211,12 +1258,12 @@ def main() -> None:
             print("[warn] Archive markers not found in archive.html", file=sys.stderr)
         else:
             ARCHIVE_HTML.write_text(updated_arc, encoding="utf-8")
-            print(f"✓ archive.html updated with {len(archive)} total items.")
+            print(f"[ok] archive.html updated with {len(archive)} total items.")
     else:
         print("[warn] archive.html not found — skipping.", file=sys.stderr)
 
     if new_article_slugs:
-        print(f"\n✓ {len(new_article_slugs)} new article page(s) created in articles/")
+        print(f"\n[ok] {len(new_article_slugs)} new article page(s) created in articles/")
 
 
 if __name__ == "__main__":
