@@ -23,6 +23,8 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 - [Case Studies](https://oceancloudconsults.com/case-studies): Example outcomes across intranet, migration, automation, security, Teams, and governance projects.
 - [News](https://oceancloudconsults.com/news): Microsoft 365, SharePoint, Teams, Copilot, Purview, and Power Platform updates.
 - [Guides](https://oceancloudconsults.com/guides): Practical long-form Microsoft 365 and SharePoint guides.
+- [Microsoft 365 Service Health](https://oceancloudconsults.com/status): Live Microsoft 365 service health, active incidents, advisories, and regional filtering powered by Microsoft Graph.
+- [Microsoft 365 Message Center](https://oceancloudconsults.com/message-center): Tenant communications, planned changes, feature updates, and action-required Microsoft 365 messages.
 - [FAQ](https://oceancloudconsults.com/faq): Answers to common Microsoft 365 and SharePoint questions.
 - [Contact](https://oceancloudconsults.com/contact): Consultation request and contact information.
 
