@@ -191,6 +191,13 @@
     return issue.id || slug(issue.title || 'issue-' + index);
   }
 
+  function selectedServiceFrom(services) {
+    if (activeService === 'all') return null;
+    return (Array.isArray(services) ? services : []).find(function (service) {
+      return slug(service.service) === activeService;
+    }) || null;
+  }
+
   function findDetail(issue, names) {
     var details = Array.isArray(issue.details) ? issue.details : [];
     var keys = names.map(function (name) { return String(name).toLowerCase(); });
@@ -302,6 +309,37 @@
       '</article>';
   }
 
+  function renderServiceDetailPane(service, data) {
+    var cls = statusClass(service && service.status, service && service.issueCount);
+    var regionMode = data && data.regionMode === 'text-match' ? 'regional text match' : 'tenant health overview';
+    var status = statusLabel(service && service.status);
+    var serviceName = service && service.service ? service.service : 'Microsoft 365 service';
+    var hasIssueRecords = service && service.issueCount > 0;
+
+    return '<article class="mh-detail-pane mh-service-detail-pane">' +
+      '<header class="mh-detail-head">' +
+      '<div><span>Service status</span><h3>' + escapeHtml(serviceName) + '</h3></div>' +
+      '<div class="mh-detail-actions" aria-label="Service actions"><button type="button" data-health-clear>Clear selection</button></div>' +
+      '</header>' +
+      '<div class="mh-detail-layout">' +
+      '<div class="mh-detail-main">' +
+      '<section class="mh-detail-section is-primary"><h4>Microsoft Graph health signal</h4><p>Microsoft Graph currently reports this service as ' + escapeHtml(status) + ' in the ' + escapeHtml(regionMode) + ' view.</p></section>' +
+      '<section class="mh-detail-section"><h4>Incident detail availability</h4><p>' + escapeHtml(hasIssueRecords ? 'Incident or advisory detail records are available for this service. Use the incident/advisory count controls to view them.' : 'Microsoft did not return a matching active incident or advisory detail record for this service. This can happen when the health overview changes before the issue feed exposes a customer-visible post, or when Microsoft reports the condition at service-summary level only.') + '</p></section>' +
+      '</div>' +
+      '<aside class="mh-detail-side">' +
+      '<dl>' +
+      '<div><dt>Affected service</dt><dd>' + escapeHtml(serviceName) + '</dd></div>' +
+      '<div><dt>Status</dt><dd><span class="mh-inline-status ' + cls + '"><span class="mh-dot ' + cls + '"></span>' + escapeHtml(status) + '</span></dd></div>' +
+      '<div><dt>Incidents</dt><dd>' + escapeHtml(String((service && service.incidents) || 0)) + '</dd></div>' +
+      '<div><dt>Advisories</dt><dd>' + escapeHtml(String((service && service.advisories) || 0)) + '</dd></div>' +
+      '<div><dt>Region mode</dt><dd>' + escapeHtml(regionMode) + '</dd></div>' +
+      '<div><dt>Last checked</dt><dd>' + escapeHtml(formatDate(data && data.fetchedAt)) + '</dd></div>' +
+      '</dl>' +
+      '</aside>' +
+      '</div>' +
+      '</article>';
+  }
+
   function setLoading() {
     root.classList.add('is-loading');
     activeService = 'all';
@@ -333,17 +371,33 @@
     if (updated) updated.textContent = 'Not connected';
   }
 
-  function renderIssues(issues) {
+  function renderIssues(issues, services, data) {
     if (!issueList) return;
 
     var filtered = filterIssues(issues);
-    var selectedService = activeService === 'all' ? 'All services' : (filtered[0] && filtered[0].service) || 'Selected service';
+    var serviceSelection = selectedServiceFrom(services);
+    var selectedService = activeService === 'all' ? 'All services' : (filtered[0] && filtered[0].service) || (serviceSelection && serviceSelection.service) || 'Selected service';
     var selectedClass = activeClass === 'all' ? 'All types' : (activeClass === 'incident' ? 'Incidents' : 'Advisories');
     var toolbar = '<div class="mh-issue-filter"><span>' + escapeHtml(selectedService + ' · ' + selectedClass) + '</span>' +
       (activeService !== 'all' || activeClass !== 'all' ? '<button type="button" data-health-clear>Clear</button>' : '') +
       '</div>';
 
     if (!filtered.length) {
+      if (serviceSelection) {
+        issueList.innerHTML = '<li class="mh-issue-tools">' + toolbar + '</li>' +
+          '<li class="mh-issue-browser"><div class="mh-issue-index"><div class="mh-subtitle">Issue title</div><div class="mh-service-only-note">No incident/advisory detail record returned for this service.</div></div>' +
+          '<div class="mh-issue-detail-host">' + renderServiceDetailPane(serviceSelection, data || currentData || {}) + '</div></li>';
+        var serviceClear = issueList.querySelector('[data-health-clear]');
+        if (serviceClear) {
+          serviceClear.addEventListener('click', function () {
+            activeService = 'all';
+            activeClass = 'all';
+            activeIssueId = '';
+            render(currentData);
+          });
+        }
+        return;
+      }
       issueList.innerHTML = '<li class="mh-empty">' + toolbar + '<span>No active issues matched this selection.</span></li>';
       return;
     }
@@ -456,7 +510,7 @@
       });
     }
 
-    renderIssues(issues);
+    renderIssues(issues, services, data);
   }
 
   function load(region) {
