@@ -20,3 +20,6 @@ node_modules/
 
 # Action items (internal only)
 ACTION-ITEMS.md
+
+# Local Claude Code settings (may contain API keys in allowlist entries)
+.claude/settings.local.json
