@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Microsoft 365 Service Health Status | OceanCloud</title>
+  <meta name="description" content="Live Microsoft 365 service health dashboard for OceanCloud visitors, powered by official Microsoft Graph service communications data with regional filtering." />
+  <meta name="keywords" content="Microsoft 365 service health, M365 status, Microsoft 365 outage, Microsoft Graph service health, OceanCloud status" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <meta name="geo.region" content="US" />
+  <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
+  <link rel="canonical" href="https://oceancloudconsults.com/status" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/status" />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Microsoft 365 Service Health Status | OceanCloud" />
+  <meta property="og:description" content="Live Microsoft 365 service health status from official Microsoft Graph service communications data." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/status" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-news.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"    content="OceanCloud Microsoft 365 service health status" />
+  <meta property="og:locale"      content="en_US" />
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
+  <meta name="twitter:title"       content="Microsoft 365 Service Health Status | OceanCloud" />
+  <meta name="twitter:description" content="Live Microsoft 365 status dashboard with regional filtering." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-news.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=6" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/status#webpage",
+        "url": "https://oceancloudconsults.com/status",
+        "name": "Microsoft 365 Service Health Status | OceanCloud",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
+        "description": "Live Microsoft 365 service health dashboard powered by official Microsoft Graph service communications data.",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
+            { "@type": "ListItem", "position": 2, "name": "Status", "item": "https://oceancloudconsults.com/status" }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .status-main { padding: 112px 0 96px; background: var(--bg); min-height: 100vh; }
+  .m365-health-shell {
+    border: 1px solid rgba(120,160,220,.16);
+    background: linear-gradient(180deg, rgba(10,18,32,.82), rgba(8,13,24,.92));
+    border-radius: 8px;
+    padding: 28px;
+    box-shadow: 0 22px 60px rgba(0,0,0,.28);
+  }
+  .m365-health-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+  .m365-health-kicker {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    font-size: .72rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .m365-health-top h1 {
+    color: var(--white);
+    font-size: clamp(1.8rem, 4vw, 3.1rem);
+    line-height: 1.08;
+    margin: 0 0 10px;
+    letter-spacing: 0;
+  }
+  .m365-health-top p {
+    color: var(--text-mid);
+    max-width: 700px;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .mh-summary {
+    min-width: 220px;
+    border: 1px solid rgba(120,160,220,.16);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    color: var(--text-mid);
+    background: rgba(255,255,255,.035);
+  }
+  .mh-summary strong { color: var(--white); display: block; font-size: .92rem; }
+  .mh-summary span:last-child { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; }
+  .mh-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; background: #7b8799; box-shadow: 0 0 18px rgba(123,135,153,.35); }
+  .mh-dot.is-healthy, .mh-service-status.is-healthy .mh-dot { background: #3bd671; box-shadow: 0 0 16px rgba(59,214,113,.35); }
+  .mh-dot.is-warning, .mh-service-status.is-warning .mh-dot { background: #ffae57; box-shadow: 0 0 16px rgba(255,174,87,.34); }
+  .mh-dot.is-neutral, .mh-service-status.is-neutral .mh-dot { background: #5ba9ff; box-shadow: 0 0 16px rgba(91,169,255,.32); }
+  .mh-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px 0 20px;
+    border-top: 1px solid rgba(120,160,220,.13);
+    border-bottom: 1px solid rgba(120,160,220,.13);
+  }
+  .mh-region-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .mh-region-btn,
+  .mh-refresh {
+    border: 1px solid rgba(120,160,220,.18);
+    background: rgba(255,255,255,.035);
+    color: var(--text-mid);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: .8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color .18s, color .18s, background .18s;
+  }
+  .mh-region-btn.active,
+  .mh-region-btn:hover,
+  .mh-refresh:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,180,216,.1); }
+  .mh-updated { color: var(--text-dim); font-size: .78rem; }
+  .mh-grid { display: grid; grid-template-columns: minmax(280px, .9fr) minmax(0, 1.1fr); gap: 22px; padding-top: 22px; }
+  .mh-panel-title {
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-size: .72rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .mh-service-list,
+  .mh-issue-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .mh-service-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    min-height: 46px;
+    border: 1px solid rgba(120,160,220,.12);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,.025);
+  }
+  .mh-service-name { color: var(--white); font-weight: 800; font-size: .9rem; overflow-wrap: anywhere; }
+  .mh-service-status { display: inline-flex; align-items: center; gap: 7px; color: var(--text-mid); font-size: .78rem; white-space: nowrap; }
+  .mh-service-status.is-warning { color: #ffca91; }
+  .mh-service-status.is-healthy { color: #9df0b9; }
+  .mh-issue-card {
+    border: 1px solid rgba(120,160,220,.13);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(255,255,255,.025);
+  }
+  .mh-issue-meta { display: flex; flex-wrap: wrap; gap: 8px; color: var(--accent); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+  .mh-issue-card strong { display: block; color: var(--white); line-height: 1.35; margin-bottom: 8px; }
+  .mh-issue-card p { color: var(--text-mid); line-height: 1.6; margin: 0 0 8px; font-size: .86rem; }
+  .mh-issue-card time,
+  .mh-empty { color: var(--text-dim); font-size: .78rem; }
+  .mh-empty { border: 1px dashed rgba(120,160,220,.18); border-radius: 8px; padding: 14px; }
+  @media (max-width: 900px) {
+    .status-main { padding-top: 96px; }
+    .m365-health-top,
+    .mh-grid { grid-template-columns: 1fr; }
+    .mh-summary { min-width: 0; }
+  }
+  @media (max-width: 580px) {
+    .status-main { padding: 84px 0 72px; }
+    .m365-health-shell { padding: 18px; }
+    .mh-service-row { grid-template-columns: 1fr; }
+    .mh-service-status { white-space: normal; }
+  }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">OC</div>
+      <span class="logo-text">Ocean<span>Cloud</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="guides"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="status" class="active-link"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="search" class="nav-search-btn" aria-label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main id="main-content" class="status-main">
+  <div class="container">
+    <div class="m365-health-shell" id="m365-health" data-default-region="global">
+      <div class="m365-health-top">
+        <div>
+          <div class="m365-health-kicker">Live Operations</div>
+          <h1>Microsoft 365 Service Health</h1>
+          <p>Official tenant health from Microsoft Graph, refreshed through OceanCloud's secure worker with short caching. Region buttons highlight active issues when Microsoft mentions a geography in the service-health incident text.</p>
+        </div>
+        <div class="mh-summary" id="m365-health-summary" aria-live="polite">
+          <span class="mh-dot is-neutral"></span>
+          <strong>Checking status...</strong>
+        </div>
+      </div>
+
+      <div class="mh-toolbar">
+        <div class="mh-region-group" aria-label="Region filter">
+          <button class="mh-region-btn active" type="button" data-health-region="global">Global</button>
+          <button class="mh-region-btn" type="button" data-health-region="us">US</button>
+          <button class="mh-region-btn" type="button" data-health-region="emea">EMEA</button>
+          <button class="mh-region-btn" type="button" data-health-region="apac">APAC/APGC</button>
+          <button class="mh-region-btn" type="button" data-health-region="india">India</button>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <span class="mh-updated" id="m365-health-updated">Not checked yet</span>
+          <button class="mh-refresh" type="button" id="m365-health-refresh">Refresh</button>
+        </div>
+      </div>
+
+      <div class="mh-grid">
+        <div>
+          <div class="mh-panel-title">Service Status</div>
+          <ul class="mh-service-list" id="m365-health-services">
+            <li class="mh-empty">Loading service status...</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mh-panel-title">Active Issues</div>
+          <ul class="mh-issue-list" id="m365-health-issues">
+            <li class="mh-empty">Loading active issues...</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">
+          <div class="logo-mark">OC</div>
+          Ocean<span>Cloud</span>
+        </div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="services#migration">M365 Migration</a></li>
+          <li><a href="services#teams">Teams &amp; Viva</a></li>
+          <li><a href="services#power">Power Platform</a></li>
+          <li><a href="services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="case-studies">Case Studies</a></li>
+          <li><a href="news">News &amp; Updates</a></li>
+          <li><a href="archive">News Archive</a></li>
+          <li><a href="status">Service Status</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">+1 (469) 809-4053</a></li>
+          <li><a href="https://wa.me/19176753126" target="_blank" rel="noopener noreferrer">WhatsApp &#8599;</a></li>
+          <li><span style="color:var(--text-dim)">Mon&ndash;Fri, 9 AM&ndash;6 PM EST</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="fb-left">
+          <span class="fb-copy">&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</span>
+          <span class="fb-craft">Turning Microsoft complexity into clarity, one deployment at a time.</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot-anim"></span>
+          Accepting new engagements
+        </div>
+        <div class="fb-right">
+          <a href="privacy">Privacy</a>
+          <span class="fb-sep">&middot;</span>
+          <a href="terms">Terms</a>
+          <span class="fb-sep">&middot;</span>
+          <a href="cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js?v=8"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=7"></script>
+<script src="js/service-health.js?v=1"></script>
+</body>
+</html>
