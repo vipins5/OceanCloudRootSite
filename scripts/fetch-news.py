@@ -318,18 +318,21 @@ ARTICLE_IMAGE_FALLBACKS = {
 }
 
 # TechCommunity blog matching for roadmap items
-# Strategy: roadmap items published in month M map to that product's monthly
-# "What's New in [Product] | Month Year" blog post. Those posts have rich
-# product screenshots and cover exactly the features in that month's roadmap.
+# Strategy:
+#   Pass 1 — keyword match on SPECIFIC (non-roundup) posts (score >= 2).
+#            Gives each roadmap item its own unique post image when one exists.
+#   Pass 2 — monthly "What's New" roundup post matched by publication month.
+#            Unique per product+month; better than a static product photo.
 # Falls back to adoption.microsoft.com product images when no match is found.
 
-# product -> TechCommunity board.id  (only boards confirmed to return entries)
+# product -> TechCommunity board.id  (confirmed to return entries)
 PRODUCT_BLOG_FEEDS: dict[str, str] = {
     "teams":      "MicrosoftTeamsBlog",
     "sharepoint": "SPBlog",
     "copilot":    "Microsoft365CopilotBlog",
     "outlook":    "Outlook",
     "onedrive":   "OneDriveBlog",
+    "m365":       "Microsoft365Blog",
 }
 
 # Per-run RSS cache: product -> list of (lowercased_title, article_url)
@@ -387,43 +390,37 @@ def _is_valid_image(url: str) -> bool:
     return bool(url) and "open-graph-image" not in url and "RE1Mu3b" not in url
 
 
+def _keyword_match_entries(
+    entries: list[tuple[str, str]], words: list[str], min_score: int = 2
+) -> str:
+    """Search entries for the best keyword match; return OG image URL or ''."""
+    best_url, best_score = "", 0
+    for blog_title, blog_url in entries:
+        if _ROUNDUP_RE.search(blog_title):
+            continue
+        score = sum(1 for w in words if w in blog_title)
+        if score > best_score:
+            best_score, best_url = score, blog_url
+    if best_score < min_score or not best_url:
+        return ""
+    img = _fetch_og_cached(best_url)
+    if _is_valid_image(img):
+        print(f"  [blog] Keyword match score={best_score} '{best_url[-50:]}' -> {img[:80]}")
+        return img
+    return ""
+
+
 def find_blog_image_for_roadmap(item_date: str, title: str, product: str) -> str:
     """Return a TechCommunity OG image for a roadmap item.
 
-    Two-pass strategy:
-    1. Monthly roundup match: find the 'What's New | Month Year' post whose
-       month+year matches the item's publication date. These posts have rich
-       product screenshots and directly cover that month's roadmap features.
-    2. Keyword match: scan non-roundup posts for 2+ content-word matches.
+    Priority order (most specific → least specific):
+    1. Keyword match on the product's own blog (non-roundup posts, score >= 2).
+    2. Keyword match on the general Microsoft 365 blog (cross-product catch-all).
+    3. Monthly 'What's New' roundup post matched by publish month (per product).
 
-    Returns empty string if nothing suitable is found.
+    Each pass produces a unique image for that specific item/month.
+    Returns '' if nothing suitable is found.
     """
-    entries = _get_blog_entries(product)
-    if not entries:
-        return ""
-
-    # --- Pass 1: monthly roundup post matching by publication date ------------
-    # Parse item_date (YYYY-MM-DD or RSS date string) to get month name + year
-    pub_month_label = ""
-    try:
-        from email.utils import parsedate_to_datetime
-        try:
-            dt = parsedate_to_datetime(item_date)
-        except Exception:
-            dt = datetime.strptime(item_date[:10], "%Y-%m-%d")
-        pub_month_label = dt.strftime("%B %Y").lower()   # e.g. "may 2026"
-    except Exception:
-        pass
-
-    if pub_month_label:
-        for blog_title, blog_url in entries:
-            if _ROUNDUP_RE.search(blog_title) and pub_month_label in blog_title:
-                img = _fetch_og_cached(blog_url)
-                if _is_valid_image(img):
-                    print(f"  [blog] Monthly match '{blog_title[:60]}' -> {img[:80]}")
-                    return img
-
-    # --- Pass 2: keyword match on non-roundup posts ---------------------------
     stopwords = {
         "microsoft", "teams", "sharepoint", "copilot", "outlook", "onedrive",
         "purview", "with", "from", "that", "this", "your", "when", "will",
@@ -435,24 +432,42 @@ def find_blog_image_for_roadmap(item_date: str, title: str, product: str) -> str
         w for w in re.split(r"\W+", title.lower())
         if len(w) > 3 and w not in stopwords
     ]
-    if not words:
-        return ""
 
-    best_url, best_score = "", 0
-    for blog_title, blog_url in entries:
-        if _ROUNDUP_RE.search(blog_title):
-            continue
-        score = sum(1 for w in words if w in blog_title)
-        if score > best_score:
-            best_score, best_url = score, blog_url
+    # --- Pass 1: keyword match on the product's own blog ---------------------
+    entries = _get_blog_entries(product)
+    if entries and words:
+        img = _keyword_match_entries(entries, words)
+        if img:
+            return img
 
-    if best_score < 2 or not best_url:
-        return ""
+    # --- Pass 2: keyword match on general M365 blog (cross-product) ----------
+    if product != "m365" and words:
+        m365_entries = _get_blog_entries("m365")
+        if m365_entries:
+            img = _keyword_match_entries(m365_entries, words)
+            if img:
+                return img
 
-    img = _fetch_og_cached(best_url)
-    if _is_valid_image(img):
-        print(f"  [blog] Keyword match score={best_score} '{best_url[-50:]}' -> {img[:80]}")
-        return img
+    # --- Pass 3: monthly roundup post matched by publication month -----------
+    pub_month_label = ""
+    try:
+        from email.utils import parsedate_to_datetime
+        try:
+            dt = parsedate_to_datetime(item_date)
+        except Exception:
+            dt = datetime.strptime(item_date[:10], "%Y-%m-%d")
+        pub_month_label = dt.strftime("%B %Y").lower()   # e.g. "may 2026"
+    except Exception:
+        pass
+
+    if pub_month_label and entries:
+        for blog_title, blog_url in entries:
+            if _ROUNDUP_RE.search(blog_title) and pub_month_label in blog_title:
+                img = _fetch_og_cached(blog_url)
+                if _is_valid_image(img):
+                    print(f"  [blog] Monthly roundup '{blog_title[:60]}' -> {img[:80]}")
+                    return img
+
     return ""
 
 
@@ -598,22 +613,49 @@ def fetch_og_image(url: str) -> str:
     return ""
 
 
-def _detect_product(haystack: str) -> str:
-    """Return the product bucket name for a news item."""
-    if "teams" in haystack:
-        return "teams"
-    if "sharepoint" in haystack:
-        return "sharepoint"
-    if "copilot" in haystack:
-        return "copilot"
-    if "outlook" in haystack:
-        return "outlook"
-    if "onedrive" in haystack:
-        return "onedrive"
+_PRODUCT_PREFIXES: list[tuple[str, str]] = [
+    ("microsoft teams:",           "teams"),
+    ("teams:",                     "teams"),
+    ("microsoft sharepoint:",      "sharepoint"),
+    ("sharepoint:",                "sharepoint"),
+    ("microsoft purview:",         "purview"),
+    ("purview:",                   "purview"),
+    ("microsoft 365 copilot:",     "copilot"),
+    ("m365 copilot:",              "copilot"),
+    ("microsoft copilot:",         "copilot"),
+    ("copilot:",                   "copilot"),
+    ("microsoft onedrive:",        "onedrive"),
+    ("onedrive:",                  "onedrive"),
+    ("microsoft outlook:",         "outlook"),
+    ("outlook:",                   "outlook"),
+    ("microsoft edge:",            "edge"),
+    ("edge:",                      "edge"),
+    ("microsoft viva:",            "viva"),
+    ("viva:",                      "viva"),
+]
+
+
+def _detect_product(haystack: str, title: str = "") -> str:
+    """Return the product bucket for a news item.
+
+    Checks the title colon-prefix first (most reliable — e.g. 'Microsoft Teams:
+    ...' → 'teams' even when the body mentions Copilot), then falls back to
+    keyword search in the full lowercased haystack.
+    """
+    t = title.lower() if title else ""
+    for prefix, product in _PRODUCT_PREFIXES:
+        if t.startswith(prefix):
+            return product
+    # Keyword fallback — more-specific products checked before generic ones
     if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
         return "purview"
-    if "edge" in haystack:
-        return "edge"
+    if "sharepoint" in haystack:    return "sharepoint"
+    if "onedrive" in haystack:      return "onedrive"
+    if "copilot" in haystack:       return "copilot"
+    if "teams" in haystack:         return "teams"
+    if "outlook" in haystack:       return "outlook"
+    if "edge" in haystack:          return "edge"
+    if "viva" in haystack:          return "viva"
     return "m365"
 
 
@@ -657,7 +699,7 @@ def article_image_for_item(item: dict) -> dict:
 
     # 3. For roadmap items: search TechCommunity product blog for a matching post
     if item.get("css_tag") == "tag-roadmap":
-        product = _detect_product(haystack)
+        product = _detect_product(haystack, title)
         blog_img = find_blog_image_for_roadmap(item.get("date", ""), title, product)
         if blog_img:
             product_label = {
@@ -674,7 +716,7 @@ def article_image_for_item(item: dict) -> dict:
             }
 
     # 4. adoption.microsoft.com real product photo (much better than SVGs)
-    product = _detect_product(haystack)
+    product = _detect_product(haystack, title)
     return ARTICLE_IMAGE_FALLBACKS.get(product, ARTICLE_IMAGE_FALLBACKS["m365"])
 
 
@@ -708,6 +750,57 @@ def secondary_article_image_for_item(item: dict) -> dict:
     """Choose a second real image for generated news article context."""
     bucket = image_bucket_for_item(item)
     return ARTICLE_SECONDARY_IMAGE_FALLBACKS.get(bucket, ARTICLE_SECONDARY_IMAGE_FALLBACKS["m365"])
+
+
+# Matches any <figure class="article-image">...</figure> block (with or without SVG)
+_FIGURE_RE = re.compile(
+    r'\s*<figure class="article-image">\s*'
+    r'<img[^>]*/>\s*'
+    r'<figcaption[^>]*>.*?</figcaption>\s*'
+    r'</figure>',
+    re.DOTALL,
+)
+
+
+def refresh_article_images(html: str, item: dict) -> str:
+    """Replace article figure blocks with the current best images for this item.
+
+    First SVG figure → replaced with primary image.
+    First non-SVG figure whose URL matches the current best → left unchanged.
+    Additional figures → removed (keeps one clean image per article).
+    Called every run even for existing articles so images stay current.
+    """
+    art_img = item.get("_article_image") or {}
+    new_url = art_img.get("url", "")
+    if not new_url:
+        return html
+
+    # If the first figure already has the correct image, nothing to do
+    first_match = _FIGURE_RE.search(html)
+    if first_match and new_url in first_match.group(0):
+        return html
+
+    new_figure = (
+        '\n      <figure class="article-image">\n'
+        '        <img src="' + escape(new_url) + '" '
+        'alt="' + escape(art_img.get("alt", "")) + '" '
+        'loading="lazy" decoding="async" referrerpolicy="no-referrer" />\n'
+        '        <figcaption>' + escape(art_img.get("caption", "")) +
+        ' <a href="' + escape(art_img.get("source_url", "")) + '" '
+        'target="_blank" rel="noopener noreferrer">Source: ' +
+        escape(art_img.get("source_label", "")) + '</a>.</figcaption>\n'
+        '      </figure>'
+    )
+
+    state = [False]
+
+    def _replacer(m, _s=state, _rep=new_figure):
+        if not _s[0]:
+            _s[0] = True
+            return _rep
+        return ""
+
+    return _FIGURE_RE.sub(_replacer, html)
 
 
 def topic_for_item(item: dict) -> str:
@@ -1543,7 +1636,15 @@ def main() -> None:
             art_path.write_text(art_html, encoding="utf-8")
             new_article_slugs.append(slug)
         else:
-            print(f"    -> article page already exists, skipping")
+            # Article body already written — only refresh images so they stay
+            # current without touching the AI-generated prose or metadata.
+            current_html = art_path.read_text(encoding="utf-8")
+            refreshed_html = refresh_article_images(current_html, item)
+            if refreshed_html != current_html:
+                art_path.write_text(refreshed_html, encoding="utf-8")
+                print(f"    -> refreshed images in: {slug}.html")
+            else:
+                print(f"    -> article page up to date, no image change")
 
     # ── Update sitemap ────────────────────────────────────────────────────────
     update_sitemap(new_article_slugs)
