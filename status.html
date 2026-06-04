@@ -141,6 +141,7 @@
   }
   .mh-region-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .mh-region-btn,
+  .mh-auto-refresh,
   .mh-refresh {
     border: 1px solid rgba(120,160,220,.18);
     background: rgba(255,255,255,.035);
@@ -155,7 +156,10 @@
   }
   .mh-region-btn.active,
   .mh-region-btn:hover,
+  .mh-auto-refresh[aria-pressed="true"],
+  .mh-auto-refresh:hover,
   .mh-refresh:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,180,216,.1); }
+  .mh-auto-refresh[aria-pressed="false"] { color: var(--text-dim); }
   .mh-updated { color: var(--text-dim); font-size: .78rem; }
   .mh-grid { display: grid; grid-template-columns: minmax(280px, .64fr) minmax(0, 1.36fr); gap: 22px; padding-top: 22px; }
   .mh-panel-title {
@@ -476,6 +480,7 @@
         </div>
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
           <span class="mh-updated" id="m365-health-updated">Not checked yet</span>
+          <button class="mh-auto-refresh" type="button" id="m365-health-auto-refresh" aria-pressed="true">Auto refresh on</button>
           <button class="mh-refresh" type="button" id="m365-health-refresh">Refresh</button>
         </div>
       </div>
@@ -579,6 +584,6 @@
 <script src="js/main.js?v=8"></script>
 <script src="js/consent.js?v=3"></script>
 <script src="js/chat.js?v=7"></script>
-<script src="js/service-health.js?v=7"></script>
+<script src="js/service-health.js?v=8"></script>
 </body>
 </html>

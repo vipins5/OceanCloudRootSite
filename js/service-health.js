@@ -11,12 +11,16 @@
   var summary = document.getElementById('m365-health-summary');
   var updated = document.getElementById('m365-health-updated');
   var refresh = document.getElementById('m365-health-refresh');
+  var autoRefresh = document.getElementById('m365-health-auto-refresh');
+  var AUTO_REFRESH_MS = 5 * 60 * 1000;
   var activeRegion = root.getAttribute('data-default-region') || 'global';
   var activeService = 'all';
   var activeClass = 'all';
   var activeIssueId = '';
   var detailsCompact = localStorage.getItem('m365HealthCompactDetails') === 'true';
+  var autoRefreshEnabled = localStorage.getItem('m365HealthAutoRefresh') !== 'false';
   var currentData = null;
+  var lastRefreshStartedAt = 0;
   var controller = null;
 
   function escapeHtml(value) {
@@ -215,6 +219,21 @@
     } catch (err) {}
   }
 
+  function setAutoRefreshEnabled(value) {
+    autoRefreshEnabled = Boolean(value);
+    try {
+      localStorage.setItem('m365HealthAutoRefresh', autoRefreshEnabled ? 'true' : 'false');
+    } catch (err) {}
+    updateAutoRefreshUi();
+  }
+
+  function updateAutoRefreshUi() {
+    if (!autoRefresh) return;
+    autoRefresh.textContent = autoRefreshEnabled ? 'Auto refresh on' : 'Auto refresh off';
+    autoRefresh.setAttribute('aria-pressed', autoRefreshEnabled ? 'true' : 'false');
+    autoRefresh.title = autoRefreshEnabled ? 'Refreshes every 5 minutes while this tab is active.' : 'Auto refresh is paused.';
+  }
+
   function renderDetailSection(title, body, className) {
     if (!body) return '';
     return '<section class="mh-detail-section ' + escapeHtml(className || '') + '"><h4>' + escapeHtml(title) + '</h4><p>' + escapeHtml(body) + '</p></section>';
@@ -340,11 +359,13 @@
       '</article>';
   }
 
-  function setLoading() {
+  function setLoading(options) {
     root.classList.add('is-loading');
-    activeService = 'all';
-    activeClass = 'all';
-    activeIssueId = '';
+    if (!options || !options.preserveSelection) {
+      activeService = 'all';
+      activeClass = 'all';
+      activeIssueId = '';
+    }
     if (summary) summary.innerHTML = '<span class="mh-dot is-neutral"></span><strong>Checking Microsoft 365 health...</strong>';
     if (serviceList) serviceList.innerHTML = '<li class="mh-empty">Loading service status...</li>';
     if (issueList) issueList.innerHTML = '<li class="mh-empty">Loading active issues...</li>';
@@ -513,14 +534,16 @@
     renderIssues(issues, services, data);
   }
 
-  function load(region) {
+  function load(region, options) {
+    options = options || {};
     activeRegion = region || activeRegion;
     buttons.forEach(function (button) {
       button.classList.toggle('active', button.getAttribute('data-health-region') === activeRegion);
     });
     if (controller) controller.abort();
     controller = new AbortController();
-    setLoading();
+    lastRefreshStartedAt = Date.now();
+    setLoading(options);
     fetch(HEALTH_ENDPOINT + '?region=' + encodeURIComponent(activeRegion), {
       cache: 'no-store',
       signal: controller.signal
@@ -545,8 +568,28 @@
   });
 
   if (refresh) {
-    refresh.addEventListener('click', function () { load(activeRegion); });
+    refresh.addEventListener('click', function () { load(activeRegion, { preserveSelection: true }); });
   }
+
+  if (autoRefresh) {
+    autoRefresh.addEventListener('click', function () {
+      setAutoRefreshEnabled(!autoRefreshEnabled);
+    });
+  }
+
+  updateAutoRefreshUi();
+
+  window.setInterval(function () {
+    if (!autoRefreshEnabled || document.hidden) return;
+    load(activeRegion, { preserveSelection: true });
+  }, AUTO_REFRESH_MS);
+
+  document.addEventListener('visibilitychange', function () {
+    if (!autoRefreshEnabled || document.hidden) return;
+    if (Date.now() - lastRefreshStartedAt >= AUTO_REFRESH_MS) {
+      load(activeRegion, { preserveSelection: true });
+    }
+  });
 
   load(activeRegion);
 })();
