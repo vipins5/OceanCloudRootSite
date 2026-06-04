@@ -120,7 +120,12 @@ describe("OceanCloud AI proxy", () => {
 							service: "Exchange Online",
 							isResolved: false,
 							lastModifiedDateTime: "2026-06-04T12:00:00Z",
+							startDateTime: "2026-06-04T10:00:00Z",
+							feature: "Calendar",
+							featureGroup: "Exchange Online",
 							impactDescription: "Impact is scoped to EMEA users.",
+							details: [{ name: "Current status", value: "Microsoft is investigating the source of the impact." }],
+							posts: [{ description: { content: "<p>Admins can review EX1 in the Microsoft 365 admin center.</p>" } }],
 						},
 						{
 							id: "TM1",
@@ -147,6 +152,9 @@ describe("OceanCloud AI proxy", () => {
 		expect(data.totals.matchingIssues).toBe(1);
 		expect(data.totals.incidents).toBe(1);
 		expect(data.issues[0].id).toBe("EX1");
+		expect(data.issues[0].feature).toBe("Calendar");
+		expect(data.issues[0].details[0]).toEqual({ name: "Current status", value: "Microsoft is investigating the source of the impact." });
+		expect(data.issues[0].posts[0]).toBe("Admins can review EX1 in the Microsoft 365 admin center.");
 
 		vi.unstubAllGlobals();
 	});

@@ -170,7 +170,7 @@
   .mh-issue-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   .mh-service-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) minmax(160px, auto);
     gap: 12px;
     align-items: center;
     min-height: 46px;
@@ -179,22 +179,108 @@
     padding: 10px 12px;
     background: rgba(255,255,255,.025);
   }
+  .mh-service-row.is-selected { border-color: rgba(0,214,255,.5); background: rgba(0,214,255,.06); }
   .mh-service-name { color: var(--white); font-weight: 800; font-size: .9rem; overflow-wrap: anywhere; }
-  .mh-service-status { display: inline-flex; align-items: center; gap: 7px; color: var(--text-mid); font-size: .78rem; white-space: nowrap; }
+  .mh-service-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 6px; min-width: 0; }
+  .mh-service-status,
+  .mh-count-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 28px;
+    border: 1px solid rgba(120,160,220,.14);
+    border-radius: 999px;
+    background: rgba(255,255,255,.035);
+    color: var(--text-mid);
+    padding: 5px 9px;
+    font-family: inherit;
+    font-size: .76rem;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .mh-count-pill.is-incident { border-color: rgba(255,174,87,.45); color: #ffd2a1; background: rgba(255,174,87,.08); }
+  .mh-count-pill.is-advisory { border-color: rgba(0,214,255,.35); color: var(--accent); background: rgba(0,214,255,.07); }
+  .mh-service-status:hover,
+  .mh-count-pill:hover { border-color: var(--accent); color: var(--white); }
   .mh-service-status.is-warning { color: #ffca91; }
   .mh-service-status.is-healthy { color: #9df0b9; }
+  .mh-issue-tools { list-style: none; }
+  .mh-issue-filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 38px;
+    border: 1px solid rgba(120,160,220,.14);
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: rgba(0,214,255,.045);
+    color: var(--text-mid);
+    font-size: .8rem;
+    font-weight: 800;
+  }
+  .mh-issue-filter button {
+    border: 1px solid rgba(120,160,220,.18);
+    border-radius: 999px;
+    background: rgba(255,255,255,.04);
+    color: var(--accent);
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: .74rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
   .mh-issue-card {
     border: 1px solid rgba(120,160,220,.13);
     border-radius: 8px;
-    padding: 14px;
+    padding: 0;
     background: rgba(255,255,255,.025);
+    overflow: hidden;
   }
+  .mh-issue-card details { display: block; }
+  .mh-issue-card summary {
+    position: relative;
+    display: block;
+    padding: 14px 42px 14px 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .mh-issue-card summary::-webkit-details-marker { display: none; }
+  .mh-issue-card summary::after {
+    content: "+";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(0,214,255,.35);
+    border-radius: 999px;
+    color: var(--accent);
+    font-weight: 900;
+    line-height: 1;
+  }
+  .mh-issue-card details[open] summary::after { content: "-"; }
+  .mh-issue-card summary:focus-visible { outline: 2px solid rgba(0,214,255,.65); outline-offset: -2px; }
   .mh-issue-meta { display: flex; flex-wrap: wrap; gap: 8px; color: var(--accent); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
   .mh-issue-card strong { display: block; color: var(--white); line-height: 1.35; margin-bottom: 8px; }
   .mh-issue-card p { color: var(--text-mid); line-height: 1.6; margin: 0 0 8px; font-size: .86rem; }
   .mh-issue-card time,
   .mh-empty { color: var(--text-dim); font-size: .78rem; }
+  .mh-issue-body { border-top: 1px solid rgba(120,160,220,.12); padding: 12px 14px 14px; background: rgba(0,0,0,.12); }
+  .mh-issue-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; margin: 0 0 12px; }
+  .mh-issue-facts div { min-width: 0; }
+  .mh-issue-facts dt { color: var(--text-dim); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+  .mh-issue-facts dd { margin: 3px 0 0; color: var(--white); font-size: .82rem; overflow-wrap: anywhere; }
+  .mh-issue-section { display: grid; gap: 10px; }
+  .mh-issue-detail { border-top: 1px solid rgba(120,160,220,.1); padding-top: 10px; }
+  .mh-issue-detail strong { color: var(--accent); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+  .mh-issue-posts { border-top: 1px solid rgba(120,160,220,.1); margin-top: 10px; padding-top: 10px; }
   .mh-empty { border: 1px dashed rgba(120,160,220,.18); border-radius: 8px; padding: 14px; }
+  .mh-empty .mh-issue-filter { margin-bottom: 10px; }
+  .mh-empty > span { display: block; }
   @media (max-width: 900px) {
     .status-main { padding-top: 96px; }
     .m365-health-top,
@@ -205,7 +291,10 @@
     .status-main { padding: 84px 0 72px; }
     .m365-health-shell { padding: 18px; }
     .mh-service-row { grid-template-columns: 1fr; }
-    .mh-service-status { white-space: normal; }
+    .mh-service-actions { justify-content: flex-start; }
+    .mh-service-status,
+    .mh-count-pill { white-space: normal; }
+    .mh-issue-facts { grid-template-columns: 1fr; }
   }
   </style>
 </head>
@@ -369,6 +458,6 @@
 <script src="js/main.js?v=8"></script>
 <script src="js/consent.js?v=3"></script>
 <script src="js/chat.js?v=7"></script>
-<script src="js/service-health.js?v=2"></script>
+<script src="js/service-health.js?v=3"></script>
 </body>
 </html>

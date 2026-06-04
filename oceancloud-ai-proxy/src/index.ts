@@ -413,15 +413,39 @@ function summarizeM365Health(raw: { services: GraphServiceHealth[]; issues: Grap
 		.slice()
 		.sort((a, b) => String(b.lastModifiedDateTime || "").localeCompare(String(a.lastModifiedDateTime || "")))
 		.slice(0, 12)
-		.map((issue) => ({
-			id: issue.id || "",
-			title: stripHtml(issue.title),
-			service: issue.service || "Microsoft 365",
-			classification: issue.classification || "Advisory",
-			status: issue.status || "Active",
-			lastModifiedDateTime: issue.lastModifiedDateTime || issue.startDateTime || "",
-			impact: stripHtml(issue.impactDescription).slice(0, 240),
-		}));
+		.map((issue) => {
+			const details = Array.isArray(issue.details)
+				? issue.details
+					.map((detail) => ({
+						name: stripHtml(detail.name).slice(0, 80),
+						value: stripHtml(detail.value).slice(0, 500),
+					}))
+					.filter((detail) => detail.name || detail.value)
+					.slice(0, 8)
+				: [];
+			const posts = Array.isArray(issue.posts)
+				? issue.posts
+					.map((post) => stripHtml(post.description?.content).slice(0, 900))
+					.filter(Boolean)
+					.slice(0, 3)
+				: [];
+
+			return {
+				id: issue.id || "",
+				title: stripHtml(issue.title),
+				service: issue.service || "Microsoft 365",
+				feature: stripHtml(issue.feature).slice(0, 120),
+				featureGroup: stripHtml(issue.featureGroup).slice(0, 120),
+				classification: issue.classification || "Advisory",
+				status: issue.status || "Active",
+				startDateTime: issue.startDateTime || "",
+				endDateTime: issue.endDateTime || "",
+				lastModifiedDateTime: issue.lastModifiedDateTime || issue.startDateTime || "",
+				impact: stripHtml(issue.impactDescription).slice(0, 500),
+				details,
+				posts,
+			};
+		});
 
 	return {
 		ok: true,
