@@ -140,10 +140,19 @@ if (parallaxEls.length) {
 }
 
 /* ─── Active nav link ─── */
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+const normalizePath = (value) => {
+  try {
+    const url = new URL(value, window.location.origin);
+    let path = url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '');
+    return path || '/';
+  } catch (_) {
+    return value;
+  }
+};
+const currentPage = normalizePath(window.location.pathname);
 document.querySelectorAll('.nav-links a').forEach(a => {
-  const href = a.getAttribute('href');
-  if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+  const href = normalizePath(a.getAttribute('href'));
+  if (href === currentPage) {
     a.classList.add('active-link');
   }
 });
