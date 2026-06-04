@@ -15,14 +15,15 @@
   var countEl   = document.getElementById('mc-count');
   var searchEl  = document.getElementById('mc-search');
 
-  var allMessages = [];
-  var activeId    = null;
-  var filterCat   = 'all';
-  var filterSvc   = 'all';
-  var filterTag   = 'all';
-  var searchQuery = '';
-  var autoOn      = true;
-  var timer       = null;
+  var allMessages  = [];
+  var activeId     = null;
+  var filterInbox  = 'active';
+  var filterCat    = 'all';
+  var filterSvc    = 'all';
+  var filterTag    = 'all';
+  var searchQuery  = '';
+  var autoOn       = true;
+  var timer        = null;
 
   var CAT_LABELS = {
     stayInformed:      'Stay Informed',
@@ -81,6 +82,8 @@
 
   function filtered() {
     return allMessages.filter(function (m) {
+      if (filterInbox === 'active'   &&  m.isArchived) return false;
+      if (filterInbox === 'archived' && !m.isArchived) return false;
       if (filterCat !== 'all' && m.category !== filterCat) return false;
       if (filterSvc !== 'all' && !m.services.includes(filterSvc)) return false;
       if (filterTag !== 'all' && !m.tags.some(function (t) { return t === filterTag; })) return false;
@@ -101,15 +104,33 @@
     return { services: Object.keys(svcs).sort(), tags: Object.keys(tags).sort() };
   }
 
+  function buildDropdownMenu(menuEl, labelEl, items, current, onSelect) {
+    menuEl.innerHTML = '<li><button class="mc-dropdown-opt' + (current === 'all' ? ' active' : '') + '" data-value="all" type="button">All</button></li>' +
+      items.map(function (v) {
+        return '<li><button class="mc-dropdown-opt' + (current === v ? ' active' : '') + '" data-value="' + esc(v) + '" type="button">' + esc(v) + '</button></li>';
+      }).join('');
+    menuEl.querySelectorAll('.mc-dropdown-opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var val = btn.getAttribute('data-value');
+        labelEl.textContent = val === 'all' ? (menuEl.id === 'mc-svc-menu' ? 'All Services' : 'All Tags') : val;
+        menuEl.querySelectorAll('.mc-dropdown-opt').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var dd = menuEl.closest('.mc-dropdown');
+        if (dd) { dd.classList.remove('open'); dd.querySelector('.mc-dropdown-btn').setAttribute('aria-expanded', 'false'); }
+        onSelect(val);
+      });
+    });
+  }
+
   function renderFilterDropdowns(messages) {
-    var svcEl = document.getElementById('mc-filter-svc');
-    var tagEl = document.getElementById('mc-filter-tag');
-    if (!svcEl || !tagEl) return;
+    var svcMenu  = document.getElementById('mc-svc-menu');
+    var tagMenu  = document.getElementById('mc-tag-menu');
+    var svcLabel = document.getElementById('mc-svc-label');
+    var tagLabel = document.getElementById('mc-tag-label');
+    if (!svcMenu || !tagMenu) return;
     var opts = buildFilters(messages);
-    svcEl.innerHTML = '<option value="all">All Services</option>' +
-      opts.services.map(function (s) { return '<option value="' + esc(s) + '">' + esc(s) + '</option>'; }).join('');
-    tagEl.innerHTML = '<option value="all">All Tags</option>' +
-      opts.tags.map(function (t) { return '<option value="' + esc(t) + '">' + esc(t) + '</option>'; }).join('');
+    buildDropdownMenu(svcMenu, svcLabel, opts.services, filterSvc, function (val) { filterSvc = val; renderTable(); });
+    buildDropdownMenu(tagMenu, tagLabel, opts.tags,     tagLabel,  function (val) { filterTag = val; renderTable(); });
   }
 
   function renderTable() {
@@ -216,11 +237,15 @@
   function renderSummary(totals) {
     if (!summaryEl || !totals) return;
     var dotCls = totals.actionRequired > 0 ? 'mc-sum-dot warn' : 'mc-sum-dot ok';
+    var parts = [totals.total + ' total'];
+    if (totals.active !== undefined)   parts.push(totals.active + ' inbox');
+    if (totals.archived !== undefined) parts.push(totals.archived + ' archived');
+    if (totals.actionRequired > 0)     parts.push(totals.actionRequired + ' action required');
     summaryEl.innerHTML =
       '<span class="' + dotCls + '"></span>' +
       '<div>' +
         '<strong>' + esc(totals.total + ' message' + (totals.total !== 1 ? 's' : '')) + '</strong>' +
-        '<span>' + esc(totals.planForChange + ' changes planned · ' + totals.actionRequired + ' action required') + '</span>' +
+        '<span>' + esc(parts.slice(1).join(' · ')) + '</span>' +
       '</div>';
   }
 
@@ -259,11 +284,13 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var refreshBtn  = document.getElementById('mc-refresh');
-    var autoBtn     = document.getElementById('mc-auto-refresh');
-    var catBtns     = root.querySelectorAll('[data-mc-cat]');
-    var svcEl       = document.getElementById('mc-filter-svc');
-    var tagEl       = document.getElementById('mc-filter-tag');
+    var refreshBtn = document.getElementById('mc-refresh');
+    var autoBtn    = document.getElementById('mc-auto-refresh');
+    var catBtns    = root.querySelectorAll('[data-mc-cat]');
+    var svcBtn     = document.getElementById('mc-svc-btn');
+    var tagBtn     = document.getElementById('mc-tag-btn');
+    var svcDd      = document.getElementById('mc-svc-dropdown');
+    var tagDd      = document.getElementById('mc-tag-dropdown');
 
     if (refreshBtn) refreshBtn.addEventListener('click', function () { load(); scheduleRefresh(); });
 
@@ -276,6 +303,16 @@
       });
     }
 
+    var inboxBtns = root.querySelectorAll('[data-mc-inbox]');
+    inboxBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterInbox = btn.getAttribute('data-mc-inbox') || 'active';
+        inboxBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderTable();
+      });
+    });
+
     catBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         filterCat = btn.getAttribute('data-mc-cat') || 'all';
@@ -285,8 +322,29 @@
       });
     });
 
-    if (svcEl) svcEl.addEventListener('change', function () { filterSvc = svcEl.value; renderTable(); });
-    if (tagEl) tagEl.addEventListener('change', function () { filterTag = tagEl.value; renderTable(); });
+    // Custom dropdown toggle
+    function toggleDropdown(dd, btn) {
+      var isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.mc-dropdown.open').forEach(function (d) {
+        d.classList.remove('open');
+        d.querySelector('.mc-dropdown-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        dd.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+    if (svcBtn && svcDd) svcBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleDropdown(svcDd, svcBtn); });
+    if (tagBtn && tagDd) tagBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleDropdown(tagDd, tagBtn); });
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', function () {
+      document.querySelectorAll('.mc-dropdown.open').forEach(function (d) {
+        d.classList.remove('open');
+        d.querySelector('.mc-dropdown-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+
     if (searchEl) searchEl.addEventListener('input', function () { searchQuery = searchEl.value.trim(); renderTable(); });
 
     load();

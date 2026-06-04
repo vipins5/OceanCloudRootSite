@@ -505,16 +505,25 @@ function stripHtmlKeepBreaks(value: unknown): string {
 
 async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMessage[]; fetchedAt: string }> {
 	const token = await getGraphAccessToken(env);
-	const data = await graphGet("/admin/serviceAnnouncement/messages?$top=100", token);
-	return {
-		messages: Array.isArray(data?.value) ? data.value : [],
-		fetchedAt: new Date().toISOString(),
-	};
+	const allMessages: GraphMessage[] = [];
+	let nextUrl: string | null = `${GRAPH_BASE_URL}/admin/serviceAnnouncement/messages?$top=100`;
+	const MAX_PAGES = 10;
+	let page = 0;
+	while (nextUrl && page < MAX_PAGES) {
+		const response = await fetch(nextUrl, {
+			headers: { Authorization: `Bearer ${token}`, Prefer: "odata.maxpagesize=100" },
+		});
+		const data = await response.json().catch(() => null) as { value?: GraphMessage[]; "@odata.nextLink"?: string; error?: { message?: string } } | null;
+		if (!response.ok) throw new Error(data?.error?.message || `Microsoft Graph returned HTTP ${response.status}`);
+		if (Array.isArray(data?.value)) allMessages.push(...data.value);
+		nextUrl = (data?.["@odata.nextLink"] as string) || null;
+		page++;
+	}
+	return { messages: allMessages, fetchedAt: new Date().toISOString() };
 }
 
 function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: string }) {
 	const messages = raw.messages
-		.filter((m) => !m.isArchived)
 		.sort((a, b) => String(b.lastModifiedDateTime || "").localeCompare(String(a.lastModifiedDateTime || "")))
 		.map((m) => ({
 			id: m.id || "",
@@ -527,6 +536,7 @@ function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: strin
 			startDateTime: m.startDateTime || "",
 			lastModifiedDateTime: m.lastModifiedDateTime || "",
 			isMajorChange: Boolean(m.isMajorChange),
+			isArchived: Boolean(m.isArchived),
 			body: stripHtmlKeepBreaks(m.body?.content).slice(0, 1200),
 		}));
 
@@ -538,6 +548,8 @@ function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: strin
 		cachedForSeconds: M365_MC_CACHE_SECONDS,
 		totals: {
 			total: messages.length,
+			active: messages.filter((m) => !m.isArchived).length,
+			archived: messages.filter((m) => m.isArchived).length,
 			planForChange: messages.filter((m) => m.category === "planForChange").length,
 			actionRequired: messages.filter((m) => m.actionRequiredByDateTime && new Date(m.actionRequiredByDateTime) > now).length,
 		},
@@ -556,7 +568,7 @@ async function handleM365MessageCenter(request: Request, env: Env, origin: strin
 	}
 
 	const cache = caches.default;
-	const cacheKey = new Request(`${new URL(request.url).origin}/m365/message-center/raw-v1`, { method: "GET" });
+	const cacheKey = new Request(`${new URL(request.url).origin}/m365/message-center/raw-v2`, { method: "GET" });
 	let raw: { messages: GraphMessage[]; fetchedAt: string } | null = null;
 	const cached = await cache.match(cacheKey);
 	if (cached) {

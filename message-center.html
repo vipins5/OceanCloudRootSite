@@ -123,6 +123,14 @@
     border-bottom: 1px solid rgba(120,160,220,.12);
     margin-bottom: 12px;
   }
+  .mc-tab-btn {
+    border: none; background: rgba(255,255,255,.03); color: var(--text-dim);
+    padding: 6px 14px; font-family: inherit; font-size: .77rem; font-weight: 700; cursor: pointer;
+    transition: background .15s, color .15s; border-right: 1px solid rgba(120,160,220,.16);
+  }
+  .mc-tab-btn:last-child { border-right: none; }
+  .mc-tab-btn.active { background: rgba(0,180,216,.12); color: var(--accent); }
+  .mc-tab-btn:hover:not(.active) { background: rgba(255,255,255,.06); color: var(--white); }
   .mc-cat-group { display: flex; flex-wrap: wrap; gap: 5px; }
   .mc-cat-btn, .mc-auto-refresh, .mc-refresh {
     border: 1px solid rgba(120,160,220,.18); background: rgba(255,255,255,.03);
@@ -140,14 +148,43 @@
   .mc-filter-row {
     display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px;
   }
-  .mc-filter-row select, .mc-search-input {
+  /* Custom dropdown */
+  .mc-dropdown { position: relative; }
+  .mc-dropdown-btn {
+    display: flex; align-items: center; gap: 6px;
     border: 1px solid rgba(120,160,220,.16); background: rgba(255,255,255,.03);
     color: var(--text-mid); border-radius: 6px; padding: 6px 10px;
     font-family: inherit; font-size: .78rem; font-weight: 600; cursor: pointer;
-    outline: none; transition: border-color .15s;
+    white-space: nowrap; min-width: 120px; justify-content: space-between;
+    transition: border-color .15s, color .15s;
   }
-  .mc-filter-row select:focus, .mc-search-input:focus { border-color: var(--accent); color: var(--white); }
-  .mc-search-input { flex: 1; min-width: 160px; max-width: 280px; }
+  .mc-dropdown-btn:hover, .mc-dropdown.open .mc-dropdown-btn { border-color: var(--accent); color: var(--white); }
+  .mc-dropdown-btn svg { flex-shrink: 0; transition: transform .15s; }
+  .mc-dropdown.open .mc-dropdown-btn svg { transform: rotate(180deg); }
+  .mc-dropdown-menu {
+    display: none; position: absolute; top: calc(100% + 4px); left: 0;
+    min-width: 100%; max-height: 260px; overflow-y: auto; z-index: 200;
+    background: #0d1628; border: 1px solid rgba(120,160,220,.22);
+    border-radius: 6px; box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    list-style: none; margin: 0; padding: 4px 0;
+  }
+  .mc-dropdown.open .mc-dropdown-menu { display: block; }
+  .mc-dropdown-menu li { padding: 0; }
+  .mc-dropdown-opt {
+    width: 100%; background: none; border: none; padding: 7px 14px;
+    font-family: inherit; font-size: .78rem; color: var(--text-mid);
+    text-align: left; cursor: pointer; white-space: nowrap;
+    transition: background .1s, color .1s;
+  }
+  .mc-dropdown-opt:hover { background: rgba(0,214,255,.08); color: var(--white); }
+  .mc-dropdown-opt.active { color: var(--accent); background: rgba(0,180,216,.07); }
+  .mc-search-input {
+    border: 1px solid rgba(120,160,220,.16); background: rgba(255,255,255,.03);
+    color: var(--text-mid); border-radius: 6px; padding: 6px 10px;
+    font-family: inherit; font-size: .78rem; font-weight: 600;
+    outline: none; transition: border-color .15s; flex: 1; min-width: 160px; max-width: 280px;
+  }
+  .mc-search-input:focus { border-color: var(--accent); color: var(--white); }
   .mc-search-input::placeholder { color: var(--text-dim); }
   .mc-count { color: var(--text-dim); font-size: .76rem; margin-left: auto; white-space: nowrap; }
 
@@ -306,11 +343,18 @@
       </div>
 
       <div class="mc-toolbar">
-        <div class="mc-cat-group" aria-label="Category filter">
-          <button class="mc-cat-btn active" type="button" data-mc-cat="all">All</button>
-          <button class="mc-cat-btn" type="button" data-mc-cat="planForChange">Plan for Change</button>
-          <button class="mc-cat-btn" type="button" data-mc-cat="stayInformed">Stay Informed</button>
-          <button class="mc-cat-btn" type="button" data-mc-cat="preventOrFixIssue">Action Required</button>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+          <div class="mc-tab-group" aria-label="Inbox or Archive" style="display:flex;gap:0;border:1px solid rgba(120,160,220,.16);border-radius:6px;overflow:hidden;">
+            <button class="mc-tab-btn active" type="button" data-mc-inbox="active">Inbox</button>
+            <button class="mc-tab-btn" type="button" data-mc-inbox="archived">Archive</button>
+            <button class="mc-tab-btn" type="button" data-mc-inbox="all">All</button>
+          </div>
+          <div class="mc-cat-group" aria-label="Category filter">
+            <button class="mc-cat-btn active" type="button" data-mc-cat="all">All</button>
+            <button class="mc-cat-btn" type="button" data-mc-cat="planForChange">Plan for Change</button>
+            <button class="mc-cat-btn" type="button" data-mc-cat="stayInformed">Stay Informed</button>
+            <button class="mc-cat-btn" type="button" data-mc-cat="preventOrFixIssue">Action Required</button>
+          </div>
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
           <span class="mc-updated" id="mc-updated">Not loaded yet</span>
@@ -320,12 +364,24 @@
       </div>
 
       <div class="mc-filter-row">
-        <select id="mc-filter-svc" aria-label="Filter by service">
-          <option value="all">All Services</option>
-        </select>
-        <select id="mc-filter-tag" aria-label="Filter by tag">
-          <option value="all">All Tags</option>
-        </select>
+        <div class="mc-dropdown" id="mc-svc-dropdown" aria-label="Filter by service">
+          <button class="mc-dropdown-btn" id="mc-svc-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span id="mc-svc-label">All Services</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="mc-dropdown-menu" id="mc-svc-menu" role="listbox">
+            <li><button class="mc-dropdown-opt active" data-value="all" type="button">All Services</button></li>
+          </ul>
+        </div>
+        <div class="mc-dropdown" id="mc-tag-dropdown" aria-label="Filter by tag">
+          <button class="mc-dropdown-btn" id="mc-tag-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span id="mc-tag-label">All Tags</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="mc-dropdown-menu" id="mc-tag-menu" role="listbox">
+            <li><button class="mc-dropdown-opt active" data-value="all" type="button">All Tags</button></li>
+          </ul>
+        </div>
         <input type="search" id="mc-search" class="mc-search-input" placeholder="Search messages…" aria-label="Search messages" />
         <span class="mc-count" id="mc-count"></span>
       </div>
