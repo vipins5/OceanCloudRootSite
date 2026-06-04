@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "title": "OneDrive: New Shortcuts folder option when adding shortcuts",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565028",
+      "date_friendly": "June 03, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-onedrive-new-shortcuts-folder-option-when-adding-shortcuts"
+    },
+    {
+      "title": "Microsoft Purview: Information Protection - Rights Management connector – Certificate-based authentication",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564617",
+      "date_friendly": "June 03, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-information-protection-rights-management-c"
+    },
+    {
       "title": "Microsoft Purview: Data Loss Prevention - AI Powered Data Loss Prevention Policy Optimizer",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564616",
       "date_friendly": "June 02, 2026",
@@ -234,6 +254,26 @@
       "article_slug": "news-2026-05-microsoft-teams-enhanced-bookable-desk-experience-with-teams"
     },
     {
+      "title": "Outlook: Copilot Settings in classic Outlook for Windows",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561491",
+      "date_friendly": "May 06, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-outlook-copilot-settings-in-classic-outlook-for-windows"
+    },
+    {
+      "title": "Microsoft Teams: Proximity join support for presenters in Teams events from Teams Rooms on Windows and Android",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561550",
+      "date_friendly": "May 05, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-proximity-join-support-for-presenters-in-tea"
+    },
+    {
       "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for/ba-p/4516252",
       "date_friendly": "April 30, 2026",
@@ -399,5 +439,5 @@
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     }
   ],
-  "last_updated": "2026-06-03"
+  "last_updated": "2026-06-04"
 }
