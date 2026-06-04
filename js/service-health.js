@@ -35,6 +35,127 @@
     return count + ' ' + (count === 1 ? singular : pluralText);
   }
 
+  function watchedIssues() {
+    try {
+      return JSON.parse(localStorage.getItem('m365HealthWatchedIssues') || '{}') || {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  function setWatchedIssue(issue, enabled) {
+    var watched = watchedIssues();
+    if (!issue || !issue.id) return false;
+    if (enabled) {
+      watched[issue.id] = {
+        title: issue.title || issue.id,
+        service: issue.service || 'Microsoft 365',
+        lastSeen: issue.lastModifiedDateTime || issue.startDateTime || new Date().toISOString()
+      };
+    } else {
+      delete watched[issue.id];
+    }
+    try {
+      localStorage.setItem('m365HealthWatchedIssues', JSON.stringify(watched));
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function isWatched(issue) {
+    return Boolean(issue && issue.id && watchedIssues()[issue.id]);
+  }
+
+  function selectedIssueText(issue) {
+    var updates = Array.isArray(issue.posts) ? issue.posts.map(function (post) {
+      var content = typeof post === 'string' ? post : post.content;
+      var created = typeof post === 'string' ? '' : post.createdDateTime;
+      return (created ? formatDate(created) + ': ' : '') + (content || '');
+    }).filter(Boolean).join('\n\n') : '';
+
+    return [
+      issue.title,
+      'Issue ID: ' + (issue.id || 'Not provided'),
+      'Service: ' + (issue.service || 'Microsoft 365'),
+      'Status: ' + statusLabel(issue.status),
+      'Type: ' + (issue.classification || 'Advisory'),
+      'Start time: ' + formatDate(issue.startDateTime),
+      'Last updated: ' + formatDate(issue.lastModifiedDateTime),
+      issue.impact ? '\nUser impact:\n' + issue.impact : '',
+      updates ? '\nUpdates:\n' + updates : ''
+    ].filter(Boolean).join('\n');
+  }
+
+  function showActionMessage(message, type) {
+    var messageNode = issueList && issueList.querySelector('[data-health-action-message]');
+    if (!messageNode) return;
+    messageNode.textContent = message;
+    messageNode.className = 'mh-action-message ' + (type || '');
+  }
+
+  function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(value);
+    }
+    var textarea = document.createElement('textarea');
+    textarea.value = value;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    var copied = document.execCommand('copy');
+    document.body.removeChild(textarea);
+    return copied ? Promise.resolve() : Promise.reject(new Error('Copy failed'));
+  }
+
+  function notifyForIssue(issue) {
+    if (!('Notification' in window)) {
+      showActionMessage('Browser notifications are not supported here.', 'is-error');
+      return;
+    }
+    if (!issue || !issue.id) {
+      showActionMessage('This issue cannot be tracked because Microsoft did not provide an issue ID.', 'is-error');
+      return;
+    }
+    var currentlyWatched = isWatched(issue);
+    if (currentlyWatched) {
+      setWatchedIssue(issue, false);
+      render(currentData);
+      showActionMessage('Notifications removed for this issue.', 'is-success');
+      return;
+    }
+
+    function enableNotification() {
+      if (!setWatchedIssue(issue, true)) {
+        showActionMessage('Could not save notification preference in this browser.', 'is-error');
+        return;
+      }
+      try {
+        new Notification('OceanCloud status notification enabled', {
+          body: (issue.service || 'Microsoft 365') + ': ' + (issue.title || issue.id),
+          tag: 'oceancloud-status-' + issue.id
+        });
+      } catch (err) {}
+      render(currentData);
+      showActionMessage('Notifications enabled for this issue on this browser.', 'is-success');
+    }
+
+    if (Notification.permission === 'granted') {
+      enableNotification();
+      return;
+    }
+    if (Notification.permission === 'denied') {
+      showActionMessage('Notifications are blocked for this browser. Enable them in site settings.', 'is-error');
+      return;
+    }
+    Notification.requestPermission().then(function (permission) {
+      if (permission === 'granted') enableNotification();
+      else showActionMessage('Notification permission was not granted.', 'is-error');
+    });
+  }
+
   function statusClass(status, count) {
     var value = String(status || '').toLowerCase();
     if (count > 0 || value.includes('degradation') || value.includes('interruption') || value.includes('issue')) return 'is-warning';
@@ -130,6 +251,7 @@
     var nextSteps = findDetail(issue, ['next step', 'current status', 'latest update']);
     var fallbackDetails = renderIssueDetails(issue);
     var posts = Array.isArray(issue.posts) ? issue.posts : [];
+    var watched = isWatched(issue);
 
     var updateHtml = posts.length ? '<section class="mh-detail-section mh-detail-updates"><h4>Updates</h4>' + posts.map(function (post) {
       var content = typeof post === 'string' ? post : post.content;
@@ -140,7 +262,12 @@
     return '<article class="mh-detail-pane">' +
       '<header class="mh-detail-head">' +
       '<div><span>' + escapeHtml(issue.classification || 'Issue') + '</span><h3>' + escapeHtml(issue.title) + '</h3></div>' +
-      '<div class="mh-detail-actions"><button type="button" data-health-copy="text">Copy text</button><button type="button" data-health-copy="link">Copy link</button></div>' +
+      '<div class="mh-detail-actions" aria-label="Issue actions">' +
+      '<button type="button" data-health-notify="issue">' + (watched ? 'Notifications on' : 'Notify me') + '</button>' +
+      '<button type="button" data-health-copy="text">Copy text</button>' +
+      '<button type="button" data-health-copy="link">Copy link</button>' +
+      '<span class="mh-action-message" data-health-action-message aria-live="polite"></span>' +
+      '</div>' +
       '</header>' +
       '<div class="mh-detail-layout">' +
       '<div class="mh-detail-main">' +
@@ -247,12 +374,20 @@
     });
     issueList.querySelectorAll('[data-health-copy]').forEach(function (control) {
       control.addEventListener('click', function () {
-        if (!navigator.clipboard || !selectedIssue) return;
+        if (!selectedIssue) return;
         var mode = control.getAttribute('data-health-copy');
-        var text = mode === 'link' ? location.href.split('#')[0] + '#m365-health' : selectedIssue.title + '\n' + (selectedIssue.impact || '');
-        navigator.clipboard.writeText(text).catch(function () {});
+        var text = mode === 'link'
+          ? location.href.split('#')[0] + '#m365-health?issue=' + encodeURIComponent(selectedIssue.id || activeIssueId)
+          : selectedIssueText(selectedIssue);
+        copyText(text)
+          .then(function () { showActionMessage(mode === 'link' ? 'Issue link copied.' : 'Issue details copied.'); })
+          .catch(function () { showActionMessage('Copy failed. Your browser may be blocking clipboard access.', 'is-error'); });
       });
     });
+    var notify = issueList.querySelector('[data-health-notify]');
+    if (notify) {
+      notify.addEventListener('click', function () { notifyForIssue(selectedIssue); });
+    }
   }
 
   function render(data) {
