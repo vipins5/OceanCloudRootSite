@@ -1021,7 +1021,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     title      = item["title"]
     ms_url     = item["url"]
     is_roadmap = item["css_tag"] == "tag-roadmap"
-    tag_label  = "M365 Roadmap" if is_roadmap else "SharePoint Blog"
+    tag_label  = source_tag_label(item)
     tag_color  = "rgba(0,180,216,.12)" if is_roadmap else "rgba(59,130,246,.12)"
     tag_tc     = "#00b4d8" if is_roadmap else "#60a5fa"
     canonical  = f"{SITE_BASE_URL}/articles/{slug}"
@@ -1429,6 +1429,30 @@ def fetch_roadmap() -> list[dict]:
 
 # ── News HTML ─────────────────────────────────────────────────────────────────
 
+_PRODUCT_TAG_LABELS: dict[str, str] = {
+    "teams":          "Teams Roadmap",
+    "sharepoint":     "SharePoint Roadmap",
+    "copilot":        "Copilot Roadmap",
+    "purview":        "Purview Roadmap",
+    "onedrive":       "OneDrive Roadmap",
+    "outlook":        "Outlook Roadmap",
+    "edge":           "Edge Roadmap",
+    "viva":           "Viva Roadmap",
+    "power-platform": "Power Platform Roadmap",
+    "m365":           "M365 Roadmap",
+}
+
+
+def source_tag_label(item: dict, topic: str = "") -> str:
+    """Return the human-readable category label for a news card or article tag."""
+    if item.get("css_tag") == "tag-roadmap":
+        if not topic:
+            haystack = (item.get("title", "") + " " + item.get("summary", "")).lower()
+            topic = _detect_product(haystack, item.get("title", ""))
+        return _PRODUCT_TAG_LABELS.get(topic, "M365 Roadmap")
+    return item.get("source", "SharePoint Blog")
+
+
 def card_html(item: dict, commentary: str) -> str:
     date_str    = friendly_date(item["date"])
     img         = image_for_item(item)
@@ -1453,7 +1477,7 @@ def card_html(item: dict, commentary: str) -> str:
           <img class="nc-image" src="{escape(img)}" alt="{escape(img_alt)}"{img_attrs} loading="lazy" onerror="this.onerror=null;this.src='{escape(fallback_img)}';" />
         </div>
         <div class="nc-meta">
-          <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>
+          <span class="nc-tag {item['css_tag']}">{escape(source_tag_label(item, topic_slug))}</span>
           {f'<span class="nc-date">{escape(date_str)}</span>' if date_str else ''}
         </div>
         <h3 class="nc-title">
@@ -1554,7 +1578,7 @@ def build_archive_block(archive: list[dict]) -> str:
         count = len(g["items"])
         rows  = ""
         for it in g["items"]:
-            short      = "Blog" if "Blog" in it["source"] else "M365"
+            short      = source_tag_label(it)
             art_slug   = it.get("article_slug", "")
             link_url   = f"/articles/{art_slug}" if art_slug else it["url"]
             link_attrs = "" if art_slug else ' target="_blank" rel="noopener noreferrer"'
