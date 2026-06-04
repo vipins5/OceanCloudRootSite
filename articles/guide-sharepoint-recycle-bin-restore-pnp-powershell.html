@@ -189,10 +189,9 @@
       </div>
 
       <p class="article-intro">When a SharePoint folder is accidentally deleted, the first instinct is often to open the recycle bin and restore everything that looks related. That works for small sites. It gets risky in large libraries, migration projects, or document centers where thousands of recycle bin entries may share similar names. This guide shows how to restore SharePoint deleted files and folders with PnP PowerShell using precise filters for folder path, deleted date, and deleted-by user.</p>
-
       <figure class="article-image">
-        <img src="../assets/news/sharepoint.svg" alt="OceanCloud SharePoint recovery planning graphic" loading="lazy" decoding="async" width="800" height="280" />
-        <figcaption>OceanCloud SharePoint recovery planning graphic. <a href="https://oceancloudconsults.com/services" target="_blank" rel="noopener noreferrer">Source: OceanCloud</a>.</figcaption>
+        <img src="https://adoption.microsoft.com/wp-content/uploads/2025/05/preview-sharepoint.jpg" alt="Microsoft SharePoint product image from Microsoft Adoption" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <figcaption>Representative Microsoft SharePoint product image from Microsoft Adoption. <a href="https://adoption.microsoft.com/en-us/sharepoint/" target="_blank" rel="noopener noreferrer">Source: Microsoft Adoption</a>.</figcaption>
       </figure>
 
       <p>The script below is designed for SharePoint Online admins who need a controlled recovery process. It reads first-stage recycle bin items in pages through CSOM, filters each page in memory, restores folders before files where possible, checks whether the original item already exists, and writes a CSV log of every action. It defaults to <strong>WhatIf mode</strong>, so your first run reports what would be restored before anything changes.</p>
@@ -214,11 +213,6 @@
       </table></div>
 
       <h2>What the script does</h2>
-
-      <figure class="article-image">
-        <img src="../assets/news/m365.svg" alt="OceanCloud SharePoint restore workflow graphic" loading="lazy" decoding="async" width="800" height="280" />
-        <figcaption>OceanCloud SharePoint restore workflow graphic. <a href="https://oceancloudconsults.com/services" target="_blank" rel="noopener noreferrer">Source: OceanCloud</a>.</figcaption>
-      </figure>
       <div class="restore-flow">
         <div class="restore-step"><span>Step 1</span><strong>Connect</strong><p>Uses <code>Connect-PnPOnline -Interactive -ClientId $ClientId</code> so the current PnP.PowerShell module has a valid Entra app ID.</p></div>
         <div class="restore-step"><span>Step 2</span><strong>Page</strong><p>Reads first-stage recycle bin items with CSOM paging to reduce threshold pressure.</p></div>
@@ -240,11 +234,6 @@
       <div class="art-callout"><p><strong>Folder path format:</strong> The folder paths should not start with a slash. Use values like <code>sites/Retail/Shared Documents/Folder1</code>. The script normalizes the paths and compares them against each recycle bin item's original directory.</p></div>
 
       <h2>Important limitations</h2>
-
-      <figure class="article-image">
-        <img src="../assets/news/sharepoint.svg" alt="OceanCloud SharePoint administration graphic" loading="lazy" decoding="async" width="800" height="280" />
-        <figcaption>OceanCloud SharePoint administration graphic. <a href="https://oceancloudconsults.com/services" target="_blank" rel="noopener noreferrer">Source: OceanCloud</a>.</figcaption>
-      </figure>
       <ul>
         <li>This script targets the <strong>first-stage recycle bin</strong>. If items have moved to the second-stage recycle bin, adjust the recycle bin state and test carefully.</li>
         <li>Restore order can matter. The script sorts folders before files, but SharePoint may still fail a restore if a parent path cannot be recreated.</li>
