@@ -99,9 +99,8 @@ SITEMAP_XML     = ROOT / "sitemap.xml"
 SEARCH_INDEX    = ROOT / "data" / "search-index.json"
 # Canonical public base URL for generated links/canonical tags.
 SITE_BASE_URL   = "https://oceancloudconsults.com"
-# Generated news detail pages are short recaps for human readers coming from the
-# news/archive pages. Keep Google focused on the stronger hub and guide pages.
-INDEX_NEWS_ARTICLES = False
+# Index news detail pages so Google can discover individual roadmap/blog articles.
+INDEX_NEWS_ARTICLES = True
 
 # Marker comments delimiting auto-managed news block in news.html.
 NEWS_BEGIN      = "<!-- BEGIN:NEWS-CONTENT -->"
@@ -1058,6 +1057,14 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     json_desc = json.dumps(desc_text, ensure_ascii=False)
     json_image = json.dumps(og_image, ensure_ascii=False)
     json_short = json.dumps(short, ensure_ascii=False)
+    product_name = tag_label.replace(" Roadmap", "").replace(" Blog", "").replace(" Showcase", "")
+    kw_parts = [f"Microsoft {product_name}", product_name, "Microsoft 365", "M365 updates"]
+    if is_roadmap:
+        kw_parts.extend([f"{product_name} roadmap", "M365 roadmap"])
+    else:
+        kw_parts.extend([f"{product_name} news", "Microsoft 365 blog"])
+    kw_parts.append("OceanCloud")
+    keywords_str = escape(", ".join(kw_parts))
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -1067,8 +1074,12 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <meta name="theme-color" content="#0077b6" />
   <title>{escape(title)} | OceanCloud</title>
   <meta name="description" content="{desc}" />
-    <meta name="robots" content="{'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' if INDEX_NEWS_ARTICLES else 'noindex, follow'}" />
+  <meta name="keywords" content="{keywords_str}" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
+  <meta name="geo.region" content="US" />
+  <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="{canonical}" />
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
