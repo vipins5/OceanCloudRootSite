@@ -237,7 +237,19 @@
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (!data.ok) {
-          listEl.innerHTML = '<li class="mc-empty"><span>' + esc(data.error || 'Unable to load messages.') + '</span></li>';
+          var errMsg = data.error || 'Unable to load messages.';
+          var hint = '';
+          if (data.detail && data.detail.indexOf('403') !== -1) {
+            hint = ' — The Azure app needs the <strong>ServiceMessage.Read.All</strong> application permission granted in Entra ID.';
+          } else if (data.detail) {
+            hint = ' (' + esc(data.detail) + ')';
+          }
+          listEl.innerHTML = '<li style="padding:18px;color:#ffb2a1;font-size:.86rem;line-height:1.6">' +
+            '<strong style="display:block;margin-bottom:6px;">⚠ ' + esc(errMsg) + '</strong>' +
+            (hint ? '<span>' + hint + '</span>' : '') +
+            '</li>';
+          if (updatedEl) updatedEl.textContent = 'Error loading';
+          if (summaryEl) summaryEl.innerHTML = '<span class="mc-sum-dot" style="background:#ff9c8a"></span><div><strong>Not available</strong></div>';
           return;
         }
         allMessages = data.messages || [];
@@ -252,8 +264,8 @@
           renderDetail(null);
         }
       })
-      .catch(function () {
-        listEl.innerHTML = '<li class="mc-empty"><span>Could not connect to Message Center.</span></li>';
+      .catch(function (err) {
+        listEl.innerHTML = '<li style="padding:18px;color:#ffb2a1;font-size:.86rem">Could not connect to Message Center.</li>';
         if (updatedEl) updatedEl.textContent = 'Failed to refresh';
       });
   }

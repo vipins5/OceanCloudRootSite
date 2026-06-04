@@ -505,7 +505,7 @@ function stripHtmlKeepBreaks(value: unknown): string {
 
 async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMessage[]; fetchedAt: string }> {
 	const token = await getGraphAccessToken(env);
-	const data = await graphGet("/admin/serviceAnnouncement/messages?$top=100&$orderby=lastModifiedDateTime desc", token);
+	const data = await graphGet("/admin/serviceAnnouncement/messages?$top=100", token);
 	return {
 		messages: Array.isArray(data?.value) ? data.value : [],
 		fetchedAt: new Date().toISOString(),
@@ -515,6 +515,7 @@ async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMe
 function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: string }) {
 	const messages = raw.messages
 		.filter((m) => !m.isArchived)
+		.sort((a, b) => String(b.lastModifiedDateTime || "").localeCompare(String(a.lastModifiedDateTime || "")))
 		.map((m) => ({
 			id: m.id || "",
 			title: stripHtml(m.title),
