@@ -629,7 +629,9 @@ body:not(.has-mouse) #c-ring { opacity: 0; }
   gap: 32px;
   padding: 32px 0;
   border-bottom: 1px solid var(--border);
-  cursor: default;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
   position: relative;
   overflow: hidden;
   transition: background var(--t);
@@ -643,6 +645,11 @@ body:not(.has-mouse) #c-ring { opacity: 0; }
   transition: opacity var(--t);
 }
 .svc-row:hover::before { opacity: 1; }
+.svc-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
 
 .svc-num {
   font-size: .68rem;
