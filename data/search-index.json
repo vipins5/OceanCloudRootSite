@@ -84,6 +84,30 @@
     "dateSort": ""
   },
   {
+    "id": "status",
+    "type": "page",
+    "tag": "Operations",
+    "title": "Microsoft 365 Service Health Status",
+    "heading": "Microsoft 365 Service Health",
+    "excerpt": "Live Microsoft 365 service health dashboard with active incidents, advisories, tenant health, and regional filtering powered by Microsoft Graph.",
+    "body": "Microsoft 365 Service Health Status OceanCloud live operations Microsoft 365 service health active incidents outages advisories tenant health regional filtering Microsoft Graph Exchange Online SharePoint Online Teams Defender Entra status dashboard service degradation auto refresh.",
+    "url": "status",
+    "dateDisplay": "",
+    "dateSort": ""
+  },
+  {
+    "id": "message-center",
+    "type": "page",
+    "tag": "Operations",
+    "title": "Microsoft 365 Message Center",
+    "heading": "M365 Message Center",
+    "excerpt": "Microsoft 365 tenant communications dashboard for planned changes, feature updates, action-required notices, services, tags, and Message Center search.",
+    "body": "Microsoft 365 Message Center OceanCloud tenant communications planned changes feature updates action required advisories Microsoft Graph service messages inbox archive tags services search auto refresh admin notifications roadmap updates.",
+    "url": "message-center",
+    "dateDisplay": "",
+    "dateSort": ""
+  },
+  {
     "id": "guides",
     "type": "page",
     "tag": "Page",

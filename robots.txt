@@ -10,76 +10,91 @@ Allow: /feed.xml
 User-agent: GPTBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: ChatGPT-User
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: OAI-SearchBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: ClaudeBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Claude-User
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Claude-SearchBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: PerplexityBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Perplexity-User
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Google-Extended
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: GoogleOther
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Applebot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Applebot-Extended
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: CCBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: meta-externalagent
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 User-agent: Bytespider
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Disallow: /coming-soon.html
+Disallow: /comments-admin.html
 Allow: /
 
 Sitemap: https://oceancloudconsults.com/sitemap.xml
