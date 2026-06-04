@@ -1,155 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
-  xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <channel>
-    <title>OceanCloud — Microsoft 365 &amp; SharePoint News</title>
-    <link>https://oceancloudconsults.com/news</link>
-    <atom:link href="https://oceancloudconsults.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <description>The latest Microsoft 365 and SharePoint news, roadmap updates, and expert commentary from OceanCloud — Microsoft Solutions Partner.</description>
-    <language>en-us</language>
-    <copyright>© 2026 OceanCloud LLC</copyright>
-    <managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
-    <webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
-    <lastBuildDate>Thu, 04 Jun 2026 00:00:00 +0000</lastBuildDate>
-    <ttl>1440</ttl>
-    <image>
-      <url>https://oceancloudconsults.com/assets/og-home.jpg</url>
-      <title>OceanCloud — Microsoft 365 &amp; SharePoint News</title>
-      <link>https://oceancloudconsults.com/news</link>
-    </image>
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>OceanCloud - Microsoft 365 &amp; SharePoint News</title>
+		<link>https://oceancloudconsults.com/news</link>
+		<atom:link href="https://oceancloudconsults.com/feed.xml" rel="self" type="application/rss+xml"/>
+		<description>The latest Microsoft 365 and SharePoint news, roadmap updates, and expert commentary from OceanCloud - Microsoft Solutions Partner.</description>
+		<language>en-us</language>
+		<copyright>Copyright 2026 OceanCloud LLC</copyright>
+		<managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
+		<webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
+		<lastBuildDate>Thu, 04 Jun 2026 18:15:00 +0000</lastBuildDate>
+		<ttl>1440</ttl>
+		<image>
+			<url>https://oceancloudconsults.com/assets/og-home.jpg</url>
+			<title>OceanCloud - Microsoft 365 &amp; SharePoint News</title>
+			<link>https://oceancloudconsults.com/news</link>
+		</image>
 
-    <item>
-      <title>Microsoft Teams: Interpreter agent support in Teams Rooms on Android</title>
-      <link>https://oceancloudconsults.com/archive</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/archive</guid>
-      <pubDate>Wed, 20 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft M365 Roadmap</dc:creator>
-      <category>M365 Roadmap</category>
-      <category>Teams</category>
-      <description><![CDATA[The Interpreter agent acts as a translator in Microsoft Teams meetings, allowing participants to listen to the meeting in their chosen language with real-time translation so speaking different languages isn't a barrier to effective understanding and collaboration. It's now available in Teams Rooms on Android.]]></description>
-    </item>
+		<item>
+			<title>OneDrive: New Shortcuts folder option when adding shortcuts</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-06-onedrive-new-shortcuts-folder-option-when-adding-shortcuts</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-06-onedrive-new-shortcuts-folder-option-when-adding-shortcuts</guid>
+			<pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>OneDrive</category>
+			<description><![CDATA[OneDrive makes it easy to add shortcuts to the files and folders you use most. Now you can choose to keep those shortcuts neatly together in one place instead of mixed.]]></description>
+		</item>
 
-    <item>
-      <title>Microsoft Purview: Information Protection – Auto-labeling Simulation Evaluation</title>
-      <link>https://oceancloudconsults.com/archive</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/archive</guid>
-      <pubDate>Wed, 20 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft M365 Roadmap</dc:creator>
-      <category>M365 Roadmap</category>
-      <category>Purview</category>
-      <description><![CDATA[The Simulation Grader helps admins understand and improve auto-labeling accuracy before enforcing a policy. When enabled during simulation, matched items are evaluated by an AI-powered grader to determine whether each match is a true positive or false positive, along with an explanation.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Purview: Information Protection - Rights Management connector - Certificate-based authentication</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-06-microsoft-purview-information-protection-rights-management-c</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-06-microsoft-purview-information-protection-rights-management-c</guid>
+			<pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Purview</category>
+			<description><![CDATA[The Microsoft Rights Management connector is moving from shared-secret authentication to certificate-based authentication, improving its security posture.]]></description>
+		</item>
 
-    <item>
-      <title>Microsoft Teams: Support human interpreter listening mode in Microsoft Teams Rooms on Windows</title>
-      <link>https://oceancloudconsults.com/archive</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/archive</guid>
-      <pubDate>Mon, 18 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft M365 Roadmap</dc:creator>
-      <category>M365 Roadmap</category>
-      <category>Teams</category>
-      <description><![CDATA[Microsoft Teams Rooms on Windows now supports human interpreter listening mode in meetings where organizers enable language interpretation in Meeting options, allowing room participants to select a language and hear interpreter audio. GA date: July CY2026.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Purview: Data Loss Prevention - AI Powered Data Loss Prevention Policy Optimizer</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-06-microsoft-purview-data-loss-prevention-ai-powered-data-loss-</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-06-microsoft-purview-data-loss-prevention-ai-powered-data-loss-</guid>
+			<pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Purview</category>
+			<description><![CDATA[DLP Policy Optimizer uses AI to analyze your organization's DLP policies, rule structure, and activity signals to identify optimization opportunities.]]></description>
+		</item>
 
-    <item>
-      <title>Microsoft Teams: Searchable keyboard shortcuts from the dialog in Teams</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-searchable-keyboard-shortcuts-from-the-dialo</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-searchable-keyboard-shortcuts-from-the-dialo</guid>
-      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft M365 Roadmap</dc:creator>
-      <category>M365 Roadmap</category>
-      <category>Teams</category>
-      <description><![CDATA[Easily find keyboard shortcuts with a new searchable experience in Microsoft Teams. Search by shortcut name or enter part of a key combination directly in the dialog. GA date: June CY2026.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Teams: New layout when sharing content for Teams events</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-new-layout-when-sharing-content-for-teams-ev</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-new-layout-when-sharing-content-for-teams-ev</guid>
+			<pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Teams</category>
+			<description><![CDATA[Microsoft Teams events are getting a new layout when sharing content, improving the presenter and attendee experience for event production.]]></description>
+		</item>
 
-    <item>
-      <title>Microsoft Purview: Data Lifecycle Management - DLM Meter Change</title>
-      <link>https://oceancloudconsults.com/archive</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/archive</guid>
-      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft M365 Roadmap</dc:creator>
-      <category>M365 Roadmap</category>
-      <category>Purview</category>
-      <description><![CDATA[Data Lifecycle Management (DLM) billing will be based on the volume of data retained. Any number of non-Microsoft 365 generative AI prompts and responses that collectively amount to 1 GB of retained data will be billed at $0.25 per GB per month.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Teams: Manage Built-in Teams agents in the Teams admin center</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-manage-built-in-teams-agents-in-the-teams-ad</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-manage-built-in-teams-agents-in-the-teams-ad</guid>
+			<pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Teams</category>
+			<description><![CDATA[Teams admins will be able to manage built-in Teams agents from the Teams admin center, giving IT more control over tenant agent availability.]]></description>
+		</item>
 
-    <item>
-      <title>Microsoft Teams: Preloaded video for Teams Events and Meetings</title>
-      <link>https://oceancloudconsults.com/archive</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/archive</guid>
-      <pubDate>Thu, 14 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft M365 Roadmap</dc:creator>
-      <category>M365 Roadmap</category>
-      <category>Teams</category>
-      <description><![CDATA[Users can now upload videos directly into a Teams event or meeting from OneDrive from the "Manage view" options when an organizer has turned on Manage What Attendees See mode. This ensures a smoother high quality video playback with a more consistent experience for attendees.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Teams: Inline search in compose box</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-inline-search-in-compose-box</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-inline-search-in-compose-box</guid>
+			<pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Teams</category>
+			<description><![CDATA[Microsoft Teams is adding inline search in the compose box so users can find and insert relevant content without leaving the message flow.]]></description>
+		</item>
 
-    <item>
-      <title>Proven intranet framework - Involv Intranet - SharePoint Partner Showcase</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-05-proven-intranet-framework-involv-intranet-sharepoint-partner</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-proven-intranet-framework-involv-intranet-sharepoint-partner</guid>
-      <pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft SharePoint Blog</dc:creator>
-      <category>SharePoint Blog</category>
-      <category>SharePoint</category>
-      <description><![CDATA[A new episode on our partner showcase series focused on SharePoint in Microsoft 365. Tim Bogemans and Pascal Herreweghe from Involv Intranet join Vesa Juvonen from Microsoft to highlight capabilities they've built for Microsoft 365 customers.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Copilot (Microsoft 365): Copilot suggested rename</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-copilot-suggested-rename</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-copilot-suggested-rename</guid>
+			<pubDate>Fri, 29 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Copilot</category>
+			<description><![CDATA[Microsoft 365 Copilot is adding suggested rename support to help users give files and content clearer names based on context.]]></description>
+		</item>
 
-    <item>
-      <title>Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-04-microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-04-microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-</guid>
-      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft SharePoint Blog</dc:creator>
-      <category>SharePoint Blog</category>
-      <category>SharePoint</category>
-      <description><![CDATA[AI is raising the bar for document management. It's no longer enough to store and share files — content needs to be governed, structured, and connected to the way teams actually work so AI can reason over it responsibly and help people move from information to action.]]></description>
-    </item>
+		<item>
+			<title>SharePoint Showcase: From Chaos to AI-Ready with the SharePoint Admin Agent</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-sharepoint-showcase-from-chaos-to-ai-ready-with-the-sharepoi</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-sharepoint-showcase-from-chaos-to-ai-ready-with-the-sharepoi</guid>
+			<pubDate>Thu, 28 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft SharePoint Blog</dc:creator>
+			<category>SharePoint Blog</category>
+			<category>SharePoint</category>
+			<description><![CDATA[The SharePoint Admin Agent helps organizations move from content chaos to AI-ready information architecture and governance.]]></description>
+		</item>
 
-    <item>
-      <title>SharePoint Showcase: AI-Forward Content Creation &amp; Curation for the Modern Intranet</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-04-sharepoint-showcase-ai-forward-content-creation-curation-for</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-04-sharepoint-showcase-ai-forward-content-creation-curation-for</guid>
-      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft SharePoint Blog</dc:creator>
-      <category>SharePoint Blog</category>
-      <category>SharePoint</category>
-      <description><![CDATA[More than 2,700 Microsoft 365 customers joined us at the Microsoft 365 Community Conference in Orlando to learn what's new across Microsoft 365. In this session, AI-Forward Content Creation & Curation for the Modern Intranet, we shared how SharePoint is evolving from a content repository into an intelligent publishing platform.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Purview: Insider Risk Management - Unified alert queue</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-unified-alert-queu</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-unified-alert-queu</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Purview</category>
+			<description><![CDATA[Microsoft Purview Insider Risk Management is adding a unified alert queue to help investigators review and prioritize alerts more efficiently.]]></description>
+		</item>
 
-    <item>
-      <title>Solutions for document-centric business processes - Portal Systems - SharePoint Partner Showcase</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-04-solutions-for-document-centric-business-processes-portal-sys</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-04-solutions-for-document-centric-business-processes-portal-sys</guid>
-      <pubDate>Wed, 29 Apr 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft SharePoint Blog</dc:creator>
-      <category>SharePoint Blog</category>
-      <category>SharePoint</category>
-      <description><![CDATA[Patrick Carl from Portal Systems AG joins Vesa Juvonen from Microsoft to showcase different features and capabilities they've built for Microsoft 365 customers — focused on document-centric business process automation.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Purview: Insider Risk Management - Expanding note capabilities across alerts &amp; cases</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-expanding-note-cap</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-expanding-note-cap</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Purview</category>
+			<description><![CDATA[Microsoft Purview Insider Risk Management is expanding note capabilities across alerts and cases for better investigation context.]]></description>
+		</item>
 
-    <item>
-      <title>Building a modern digital workplace on Microsoft 365 - WebVine - SharePoint Partner Showcase</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-04-building-a-modern-digital-workplace-on-microsoft-365-webvine</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-04-building-a-modern-digital-workplace-on-microsoft-365-webvine</guid>
-      <pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft SharePoint Blog</dc:creator>
-      <category>SharePoint Blog</category>
-      <category>SharePoint</category>
-      <description><![CDATA[Chloe Dervin and James Dellow from WebVine join Vesa Juvonen from Microsoft to showcase different features and capabilities they've built for Microsoft 365 — focused on modern digital workplace design and employee experience.]]></description>
-    </item>
+		<item>
+			<title>Microsoft Purview: Insider Risk Management - Enhanced user profile in IRM alerts</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-enhanced-user-prof</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-insider-risk-management-enhanced-user-prof</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Purview</category>
+			<description><![CDATA[Microsoft Purview Insider Risk Management is enhancing the user profile in IRM alerts to give investigators more useful context.]]></description>
+		</item>
 
-    <item>
-      <title>AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act</title>
-      <link>https://oceancloudconsults.com/articles/news-2026-04-ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoin</link>
-      <guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-04-ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoin</guid>
-      <pubDate>Mon, 21 Apr 2026 00:00:00 +0000</pubDate>
-      <dc:creator>Microsoft SharePoint Blog</dc:creator>
-      <category>SharePoint Blog</category>
-      <category>SharePoint</category>
-      <description><![CDATA[In March, Microsoft shared their vision for AI in SharePoint: transforming how teams build solutions, publish content, and organize information using AI. AI Skills are now available in Public Preview — start with intent, describe it in natural language, and move directly to working solutions.]]></description>
-    </item>
+		<item>
+			<title>Outlook: All Accounts view (Unified Inbox) brings your email into a single inbox view</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-outlook-all-accounts-view-unified-inbox-brings-your-email-in</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-outlook-all-accounts-view-unified-inbox-brings-your-email-in</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Outlook</category>
+			<description><![CDATA[Outlook is adding an All Accounts view that brings email from multiple accounts into a single unified inbox experience.]]></description>
+		</item>
 
-  </channel>
+		<item>
+			<title>Microsoft Copilot (Microsoft 365): Support for MCP Agents with Interactive UI Widgets in Government Clouds</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-support-for-mcp-agents-with-</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-support-for-mcp-agents-with-</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Copilot</category>
+			<description><![CDATA[Microsoft 365 Copilot is adding support for MCP agents with interactive UI widgets in government clouds.]]></description>
+		</item>
+
+		<item>
+			<title>Microsoft Copilot (Microsoft 365): MCP-Based Agent Enablement for U.S. Government Clouds</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-mcp-based-agent-enablement-f</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-mcp-based-agent-enablement-f</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Copilot</category>
+			<description><![CDATA[Microsoft 365 Copilot is enabling MCP-based agents for U.S. Government Clouds.]]></description>
+		</item>
+
+		<item>
+			<title>Microsoft Copilot (Microsoft 365): Chat History Filtering by Copilot Experience</title>
+			<link>https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-chat-history-filtering-by-co</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/news-2026-05-microsoft-copilot-microsoft-365-chat-history-filtering-by-co</guid>
+			<pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>Microsoft M365 Roadmap</dc:creator>
+			<category>M365 Roadmap</category>
+			<category>Copilot</category>
+			<description><![CDATA[Microsoft 365 Copilot is adding chat history filtering by Copilot experience so users can focus on the conversations that matter.]]></description>
+		</item>
+
+	</channel>
 </rss>
