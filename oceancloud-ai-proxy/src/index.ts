@@ -45,7 +45,7 @@ interface GraphServiceIssue {
 	endDateTime?: string;
 	lastModifiedDateTime?: string;
 	details?: Array<{ name?: string; value?: string }>;
-	posts?: Array<{ description?: { content?: string } }>;
+	posts?: Array<{ createdDateTime?: string; description?: { content?: string } }>;
 }
 
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
@@ -425,8 +425,11 @@ function summarizeM365Health(raw: { services: GraphServiceHealth[]; issues: Grap
 				: [];
 			const posts = Array.isArray(issue.posts)
 				? issue.posts
-					.map((post) => stripHtml(post.description?.content).slice(0, 900))
-					.filter(Boolean)
+					.map((post) => ({
+						createdDateTime: post.createdDateTime || "",
+						content: stripHtml(post.description?.content).slice(0, 900),
+					}))
+					.filter((post) => post.content)
 					.slice(0, 3)
 				: [];
 

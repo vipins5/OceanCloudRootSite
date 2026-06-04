@@ -157,7 +157,7 @@
   .mh-region-btn:hover,
   .mh-refresh:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,180,216,.1); }
   .mh-updated { color: var(--text-dim); font-size: .78rem; }
-  .mh-grid { display: grid; grid-template-columns: minmax(280px, .9fr) minmax(0, 1.1fr); gap: 22px; padding-top: 22px; }
+  .mh-grid { display: grid; grid-template-columns: minmax(280px, .64fr) minmax(0, 1.36fr); gap: 22px; padding-top: 22px; }
   .mh-panel-title {
     color: var(--text-dim);
     text-transform: uppercase;
@@ -231,6 +231,94 @@
     font-weight: 800;
     cursor: pointer;
   }
+  .mh-issue-browser {
+    display: grid;
+    grid-template-columns: minmax(220px, .62fr) minmax(0, 1.38fr);
+    gap: 14px;
+    min-height: 520px;
+  }
+  .mh-issue-index,
+  .mh-detail-pane {
+    border: 1px solid rgba(120,160,220,.13);
+    border-radius: 8px;
+    background: rgba(255,255,255,.025);
+    min-width: 0;
+  }
+  .mh-issue-index { overflow: hidden; }
+  .mh-subtitle {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(120,160,220,.12);
+    color: var(--text-dim);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .mh-issue-index ul { list-style: none; margin: 0; padding: 0; }
+  .mh-issue-index li + li { border-top: 1px solid rgba(120,160,220,.1); }
+  .mh-issue-row {
+    display: grid;
+    gap: 7px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--text-mid);
+    padding: 13px 14px;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .mh-issue-row:hover,
+  .mh-issue-row.is-active { background: rgba(0,214,255,.07); }
+  .mh-issue-row.is-active { box-shadow: inset 3px 0 0 var(--accent); }
+  .mh-issue-row strong { color: var(--white); font-size: .86rem; line-height: 1.38; }
+  .mh-issue-row > span:last-child { color: var(--text-dim); font-size: .72rem; line-height: 1.35; }
+  .mh-issue-type { color: var(--accent); font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+  .mh-issue-type.incident { color: #ffd2a1; }
+  .mh-issue-detail-host { min-width: 0; }
+  .mh-detail-pane { padding: 0; overflow: hidden; }
+  .mh-detail-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: start;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(120,160,220,.12);
+  }
+  .mh-detail-head span { color: var(--accent); font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+  .mh-detail-head h3 { color: var(--white); font-size: 1.05rem; line-height: 1.42; margin: 6px 0 0; letter-spacing: 0; }
+  .mh-detail-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .mh-detail-actions button {
+    border: 1px solid rgba(120,160,220,.17);
+    border-radius: 999px;
+    background: rgba(255,255,255,.035);
+    color: var(--text-mid);
+    padding: 7px 10px;
+    font-family: inherit;
+    font-size: .72rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .mh-detail-actions button:hover { border-color: var(--accent); color: var(--accent); }
+  .mh-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(170px, .36fr); gap: 0; }
+  .mh-detail-main { padding: 18px 20px 22px; }
+  .mh-detail-side { border-left: 1px solid rgba(120,160,220,.12); padding: 18px; background: rgba(0,0,0,.11); }
+  .mh-detail-section {
+    border: 1px solid rgba(120,160,220,.12);
+    border-radius: 8px;
+    padding: 15px 16px;
+    background: rgba(0,0,0,.1);
+  }
+  .mh-detail-section + .mh-detail-section { margin-top: 12px; }
+  .mh-detail-section h4 { color: var(--white); font-size: .88rem; margin: 0 0 10px; letter-spacing: 0; }
+  .mh-detail-section p { color: var(--text-mid); line-height: 1.6; margin: 0; font-size: .86rem; }
+  .mh-detail-updates article { display: grid; gap: 5px; border-top: 1px solid rgba(120,160,220,.11); padding-top: 10px; margin-top: 10px; }
+  .mh-detail-updates article:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+  .mh-detail-updates time { color: var(--accent); font-size: .74rem; font-weight: 800; }
+  .mh-detail-side dl { display: grid; gap: 18px; margin: 0; }
+  .mh-detail-side dt { color: var(--text-dim); font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .mh-detail-side dd { margin: 4px 0 0; color: var(--white); font-size: .82rem; line-height: 1.45; overflow-wrap: anywhere; }
+  .mh-detail-empty { border: 1px dashed rgba(120,160,220,.18); border-radius: 8px; padding: 18px; color: var(--text-dim); }
   .mh-issue-card {
     border: 1px solid rgba(120,160,220,.13);
     border-radius: 8px;
@@ -284,8 +372,11 @@
   @media (max-width: 900px) {
     .status-main { padding-top: 96px; }
     .m365-health-top,
-    .mh-grid { grid-template-columns: 1fr; }
+    .mh-grid,
+    .mh-issue-browser,
+    .mh-detail-layout { grid-template-columns: 1fr; }
     .mh-summary { min-width: 0; }
+    .mh-detail-side { border-left: 0; border-top: 1px solid rgba(120,160,220,.12); }
   }
   @media (max-width: 580px) {
     .status-main { padding: 84px 0 72px; }
@@ -295,6 +386,8 @@
     .mh-service-status,
     .mh-count-pill { white-space: normal; }
     .mh-issue-facts { grid-template-columns: 1fr; }
+    .mh-detail-head { grid-template-columns: 1fr; }
+    .mh-detail-actions { justify-content: flex-start; }
   }
   </style>
 </head>
@@ -458,6 +551,6 @@
 <script src="js/main.js?v=8"></script>
 <script src="js/consent.js?v=3"></script>
 <script src="js/chat.js?v=7"></script>
-<script src="js/service-health.js?v=3"></script>
+<script src="js/service-health.js?v=4"></script>
 </body>
 </html>

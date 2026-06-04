@@ -14,6 +14,7 @@
   var activeRegion = root.getAttribute('data-default-region') || 'global';
   var activeService = 'all';
   var activeClass = 'all';
+  var activeIssueId = '';
   var currentData = null;
   var controller = null;
 
@@ -64,6 +65,25 @@
     });
   }
 
+  function issueKey(issue, index) {
+    return issue.id || slug(issue.title || 'issue-' + index);
+  }
+
+  function findDetail(issue, names) {
+    var details = Array.isArray(issue.details) ? issue.details : [];
+    var keys = names.map(function (name) { return String(name).toLowerCase(); });
+    var match = details.find(function (detail) {
+      var name = String(detail.name || '').toLowerCase();
+      return keys.some(function (key) { return name.includes(key); });
+    });
+    return match && match.value ? match.value : '';
+  }
+
+  function renderDetailSection(title, body) {
+    if (!body) return '';
+    return '<section class="mh-detail-section"><h4>' + escapeHtml(title) + '</h4><p>' + escapeHtml(body) + '</p></section>';
+  }
+
   function renderIssueDetails(issue) {
     var rows = [];
     if (issue.id) rows.push(['Issue ID', issue.id]);
@@ -89,17 +109,68 @@
     var posts = Array.isArray(issue.posts) ? issue.posts : [];
     if (posts.length) {
       html += '<div class="mh-issue-section mh-issue-posts">' + posts.map(function (post) {
-        return '<p>' + escapeHtml(post) + '</p>';
+        var content = typeof post === 'string' ? post : post.content;
+        var created = typeof post === 'string' ? '' : post.createdDateTime;
+        return '<p>' + (created ? '<time>' + escapeHtml(formatDate(created)) + '</time>' : '') + escapeHtml(content) + '</p>';
       }).join('') + '</div>';
     }
 
     return html;
   }
 
+  function renderIssueDetailPane(issue) {
+    if (!issue) {
+      return '<div class="mh-detail-empty">Select an issue to view Microsoft Graph details.</div>';
+    }
+
+    var userImpact = issue.impact || findDetail(issue, ['user impact', 'impact']);
+    var moreInfo = findDetail(issue, ['more info', 'more information', 'additional information']);
+    var scope = findDetail(issue, ['scope']);
+    var rootCause = findDetail(issue, ['root cause']);
+    var nextSteps = findDetail(issue, ['next step', 'current status', 'latest update']);
+    var fallbackDetails = renderIssueDetails(issue);
+    var posts = Array.isArray(issue.posts) ? issue.posts : [];
+
+    var updateHtml = posts.length ? '<section class="mh-detail-section mh-detail-updates"><h4>Updates</h4>' + posts.map(function (post) {
+      var content = typeof post === 'string' ? post : post.content;
+      var created = typeof post === 'string' ? '' : post.createdDateTime;
+      return '<article><time>' + escapeHtml(created ? formatDate(created) : formatDate(issue.lastModifiedDateTime)) + '</time><p>' + escapeHtml(content) + '</p></article>';
+    }).join('') + '</section>' : '';
+
+    return '<article class="mh-detail-pane">' +
+      '<header class="mh-detail-head">' +
+      '<div><span>' + escapeHtml(issue.classification || 'Issue') + '</span><h3>' + escapeHtml(issue.title) + '</h3></div>' +
+      '<div class="mh-detail-actions"><button type="button" data-health-copy="text">Copy text</button><button type="button" data-health-copy="link">Copy link</button></div>' +
+      '</header>' +
+      '<div class="mh-detail-layout">' +
+      '<div class="mh-detail-main">' +
+      renderDetailSection('User impact', userImpact) +
+      renderDetailSection('More info', moreInfo) +
+      renderDetailSection('Scope of impact', scope) +
+      renderDetailSection('Root cause', rootCause) +
+      renderDetailSection('Current status', nextSteps) +
+      (!moreInfo && !scope && !rootCause && !nextSteps ? '<section class="mh-detail-section"><h4>Microsoft Graph details</h4>' + fallbackDetails + '</section>' : '') +
+      updateHtml +
+      '</div>' +
+      '<aside class="mh-detail-side">' +
+      '<dl>' +
+      '<div><dt>Issue ID</dt><dd>' + escapeHtml(issue.id || 'Not provided') + '</dd></div>' +
+      '<div><dt>Affected service</dt><dd>' + escapeHtml(issue.service || 'Microsoft 365') + '</dd></div>' +
+      '<div><dt>Status</dt><dd>' + escapeHtml(statusLabel(issue.status)) + '</dd></div>' +
+      '<div><dt>Start time</dt><dd>' + escapeHtml(formatDate(issue.startDateTime)) + '</dd></div>' +
+      '<div><dt>Last updated</dt><dd>' + escapeHtml(formatDate(issue.lastModifiedDateTime)) + '</dd></div>' +
+      '<div><dt>Issue type</dt><dd>' + escapeHtml(issue.classification || 'Advisory') + '</dd></div>' +
+      '</dl>' +
+      '</aside>' +
+      '</div>' +
+      '</article>';
+  }
+
   function setLoading() {
     root.classList.add('is-loading');
     activeService = 'all';
     activeClass = 'all';
+    activeIssueId = '';
     if (summary) summary.innerHTML = '<span class="mh-dot is-neutral"></span><strong>Checking Microsoft 365 health...</strong>';
     if (serviceList) serviceList.innerHTML = '<li class="mh-empty">Loading service status...</li>';
     if (issueList) issueList.innerHTML = '<li class="mh-empty">Loading active issues...</li>';
@@ -126,7 +197,7 @@
     if (updated) updated.textContent = 'Not connected';
   }
 
-  function renderIssues(issues, totals) {
+  function renderIssues(issues) {
     if (!issueList) return;
 
     var filtered = filterIssues(issues);
@@ -141,29 +212,47 @@
       return;
     }
 
-    issueList.innerHTML = '<li class="mh-issue-tools">' + toolbar + '</li>' + filtered.slice(0, 8).map(function (issue, index) {
-      var detailHtml = renderIssueDetails(issue);
-      return '<li class="mh-issue-card">' +
-        '<details' + (index === 0 ? ' open' : '') + '>' +
-        '<summary>' +
-        '<span class="mh-issue-meta"><span>' + escapeHtml(issue.classification || 'Issue') + '</span><span>' + escapeHtml(issue.status || 'Active') + '</span><span>' + escapeHtml(issue.service) + '</span></span>' +
+    if (!filtered.some(function (issue, index) { return issueKey(issue, index) === activeIssueId; })) {
+      activeIssueId = issueKey(filtered[0], 0);
+    }
+    var selectedIssue = filtered.find(function (issue, index) { return issueKey(issue, index) === activeIssueId; }) || filtered[0];
+
+    var issueRows = filtered.slice(0, 12).map(function (issue, index) {
+      var key = issueKey(issue, index);
+      return '<li><button type="button" class="mh-issue-row' + (key === activeIssueId ? ' is-active' : '') + '" data-health-issue="' + escapeHtml(key) + '">' +
+        '<span class="mh-issue-type ' + escapeHtml(classificationKey(issue.classification)) + '">' + escapeHtml(issue.classification || 'Issue') + '</span>' +
         '<strong>' + escapeHtml(issue.title) + '</strong>' +
-        (issue.impact ? '<p>' + escapeHtml(issue.impact) + '</p>' : '') +
-        '<time>' + escapeHtml(formatDate(issue.lastModifiedDateTime)) + '</time>' +
-        '</summary>' +
-        (detailHtml ? '<div class="mh-issue-body">' + detailHtml + '</div>' : '<div class="mh-issue-body"><p>No additional Microsoft Graph details are available for this issue.</p></div>') +
-        '</details>' +
-        '</li>';
+        '<span>' + escapeHtml(issue.service || 'Microsoft 365') + ' · ' + escapeHtml(formatDate(issue.lastModifiedDateTime)) + '</span>' +
+        '</button></li>';
     }).join('');
+
+    issueList.innerHTML = '<li class="mh-issue-tools">' + toolbar + '</li>' +
+      '<li class="mh-issue-browser"><div class="mh-issue-index"><div class="mh-subtitle">Issue title</div><ul>' + issueRows + '</ul></div>' +
+      '<div class="mh-issue-detail-host">' + renderIssueDetailPane(selectedIssue) + '</div></li>';
 
     var clear = issueList.querySelector('[data-health-clear]');
     if (clear) {
       clear.addEventListener('click', function () {
         activeService = 'all';
         activeClass = 'all';
+        activeIssueId = '';
         render(currentData);
       });
     }
+    issueList.querySelectorAll('[data-health-issue]').forEach(function (control) {
+      control.addEventListener('click', function () {
+        activeIssueId = control.getAttribute('data-health-issue') || '';
+        render(currentData);
+      });
+    });
+    issueList.querySelectorAll('[data-health-copy]').forEach(function (control) {
+      control.addEventListener('click', function () {
+        if (!navigator.clipboard || !selectedIssue) return;
+        var mode = control.getAttribute('data-health-copy');
+        var text = mode === 'link' ? location.href.split('#')[0] + '#m365-health' : selectedIssue.title + '\n' + (selectedIssue.impact || '');
+        navigator.clipboard.writeText(text).catch(function () {});
+      });
+    });
   }
 
   function render(data) {
@@ -209,12 +298,13 @@
         control.addEventListener('click', function () {
           activeService = control.getAttribute('data-health-service') || 'all';
           activeClass = control.getAttribute('data-health-class') || 'all';
+          activeIssueId = '';
           render(currentData);
         });
       });
     }
 
-    renderIssues(issues, totals);
+    renderIssues(issues);
   }
 
   function load(region) {
