@@ -130,7 +130,7 @@
     if (!svcMenu || !tagMenu) return;
     var opts = buildFilters(messages);
     buildDropdownMenu(svcMenu, svcLabel, opts.services, filterSvc, function (val) { filterSvc = val; renderTable(); });
-    buildDropdownMenu(tagMenu, tagLabel, opts.tags,     tagLabel,  function (val) { filterTag = val; renderTable(); });
+    buildDropdownMenu(tagMenu, tagLabel, opts.tags,     filterTag, function (val) { filterTag = val; renderTable(); });
   }
 
   function renderTable() {
