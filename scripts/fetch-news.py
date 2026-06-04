@@ -74,7 +74,7 @@ MAX_ROADMAP     = 6
 
 # Topic terms used to filter relevant news content.
 RELEVANT_TERMS  = {
-    "sharepoint", "copilot", "teams", "viva", "onedrive",
+    "sharepoint", "copilot", "teams", "viva", "onedrive", "edge",
     "power platform", "power apps", "power automate",
     "purview", "entra", "defender", "syntex", "loop",
     "microsoft 365", "m365"
@@ -1141,12 +1141,21 @@ def card_html(item: dict, commentary: str) -> str:
     img_alt     = (item.get("_article_image") or {}).get("alt", item["source"])
     source_slug = "roadmap" if item["css_tag"] == "tag-roadmap" else "blog"
     topic_slug  = topic_for_item(item)
+    topic_fallbacks = {
+        "sharepoint", "teams", "edge", "onedrive", "copilot",
+        "power-platform", "purview", "viva",
+    }
+    fallback_img = (
+        f"/assets/news/{topic_slug}.svg"
+        if topic_slug in topic_fallbacks
+        else "/assets/news/m365-roadmap.svg" if item["css_tag"] == "tag-roadmap" else "/assets/news/m365.svg"
+    )
     local_url   = item.get("_article_url", item["url"])
     ms_url      = item["url"]
     return f"""\
       <article class="news-card glass" data-source="{source_slug}" data-topic="{topic_slug}">
         <div class="nc-image-wrap">
-          <img class="nc-image" src="{escape(img)}" alt="{escape(img_alt)}"{img_attrs} loading="lazy" />
+          <img class="nc-image" src="{escape(img)}" alt="{escape(img_alt)}"{img_attrs} loading="lazy" onerror="this.onerror=null;this.src='{escape(fallback_img)}';" />
         </div>
         <div class="nc-meta">
           <span class="nc-tag {item['css_tag']}">{escape(item['source'])}</span>

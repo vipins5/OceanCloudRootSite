@@ -443,6 +443,8 @@
         <button class="nf-btn nf-topic active" data-topic="all">All Topics</button>
         <button class="nf-btn nf-topic" data-topic="sharepoint">SharePoint</button>
         <button class="nf-btn nf-topic" data-topic="teams">Teams</button>
+        <button class="nf-btn nf-topic" data-topic="edge">Edge</button>
+        <button class="nf-btn nf-topic" data-topic="onedrive">OneDrive</button>
         <button class="nf-btn nf-topic" data-topic="copilot">Copilot</button>
         <button class="nf-btn nf-topic" data-topic="power-platform">Power Platform</button>
         <button class="nf-btn nf-topic" data-topic="purview">Purview</button>
@@ -661,7 +663,7 @@
           <a class="nc-link" href="https://www.microsoft.com/microsoft-365/roadmap?id=562413" target="_blank" rel="noopener noreferrer" style="opacity:.6;font-size:.75rem;">Microsoft &#8599;</a>
         </div>
       </article>
-      <article class="news-card glass" data-source="roadmap" data-topic="onedrive">
+      <article class="news-card glass" data-source="roadmap" data-topic="edge">
         <div class="nc-image-wrap">
           <img class="nc-image" src="/assets/news/edge.svg" alt="OceanCloud Microsoft Edge news graphic" loading="lazy" width="800" height="280" />
         </div>
@@ -800,6 +802,33 @@
 <script src="js/chat.js?v=7"></script>
 
 <script>
+/* ── Local fallback images for third-party news thumbnails ── */
+(function () {
+  var fallbackByTopic = {
+    sharepoint: '/assets/news/sharepoint.svg',
+    teams: '/assets/news/teams.svg',
+    edge: '/assets/news/edge.svg',
+    onedrive: '/assets/news/onedrive.svg',
+    copilot: '/assets/news/copilot.svg',
+    'power-platform': '/assets/news/power-platform.svg',
+    purview: '/assets/news/purview.svg',
+    viva: '/assets/news/viva.svg',
+    other: '/assets/news/m365.svg'
+  };
+
+  document.querySelectorAll('.news-card .nc-image').forEach(function (img) {
+    function useFallback() {
+      var card = img.closest('.news-card');
+      var topic = card ? card.getAttribute('data-topic') : 'other';
+      var fallback = fallbackByTopic[topic] || fallbackByTopic.other;
+      if (!img.src.endsWith(fallback)) img.src = fallback;
+    }
+
+    img.addEventListener('error', useFallback);
+    if (img.complete && img.naturalWidth === 0) useFallback();
+  });
+})();
+
 /* ── Backfill data-source / data-topic on cards that predate these attributes ── */
 (function () {
   document.querySelectorAll('.news-card').forEach(function (card) {
