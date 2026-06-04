@@ -300,6 +300,7 @@
     cursor: pointer;
   }
   .mh-detail-actions button[data-health-notify] { border-color: rgba(0,214,255,.34); color: var(--accent); background: rgba(0,214,255,.08); }
+  .mh-detail-actions button[data-health-compact] { border-color: rgba(120,160,220,.28); color: var(--white); }
   .mh-detail-actions button:hover { border-color: var(--accent); color: var(--accent); }
   .mh-action-message {
     flex-basis: 100%;
@@ -322,6 +323,19 @@
   .mh-detail-section + .mh-detail-section { margin-top: 12px; }
   .mh-detail-section h4 { color: var(--white); font-size: .88rem; margin: 0 0 10px; letter-spacing: 0; }
   .mh-detail-section p { color: var(--text-mid); line-height: 1.6; margin: 0; font-size: .86rem; }
+  .mh-detail-pane.is-compact .mh-detail-head { padding: 14px 16px; }
+  .mh-detail-pane.is-compact .mh-detail-main { padding: 14px 16px; }
+  .mh-detail-pane.is-compact .mh-detail-side { padding: 14px; }
+  .mh-detail-pane.is-compact .mh-detail-section:not(.is-primary) { display: none; }
+  .mh-detail-pane.is-compact .mh-detail-section.is-primary p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mh-detail-pane.is-compact .mh-detail-side dl { gap: 12px; }
+  .mh-detail-pane.is-compact .mh-detail-side dl div:nth-child(4),
+  .mh-detail-pane.is-compact .mh-detail-side dl div:nth-child(5) { display: none; }
   .mh-detail-updates article { display: grid; gap: 5px; border-top: 1px solid rgba(120,160,220,.11); padding-top: 10px; margin-top: 10px; }
   .mh-detail-updates article:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
   .mh-detail-updates time { color: var(--accent); font-size: .74rem; font-weight: 800; }
@@ -561,6 +575,6 @@
 <script src="js/main.js?v=8"></script>
 <script src="js/consent.js?v=3"></script>
 <script src="js/chat.js?v=7"></script>
-<script src="js/service-health.js?v=5"></script>
+<script src="js/service-health.js?v=6"></script>
 </body>
 </html>

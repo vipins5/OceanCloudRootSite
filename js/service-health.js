@@ -15,6 +15,7 @@
   var activeService = 'all';
   var activeClass = 'all';
   var activeIssueId = '';
+  var detailsCompact = localStorage.getItem('m365HealthCompactDetails') === 'true';
   var currentData = null;
   var controller = null;
 
@@ -200,9 +201,16 @@
     return match && match.value ? match.value : '';
   }
 
-  function renderDetailSection(title, body) {
+  function setDetailsCompact(value) {
+    detailsCompact = Boolean(value);
+    try {
+      localStorage.setItem('m365HealthCompactDetails', detailsCompact ? 'true' : 'false');
+    } catch (err) {}
+  }
+
+  function renderDetailSection(title, body, className) {
     if (!body) return '';
-    return '<section class="mh-detail-section"><h4>' + escapeHtml(title) + '</h4><p>' + escapeHtml(body) + '</p></section>';
+    return '<section class="mh-detail-section ' + escapeHtml(className || '') + '"><h4>' + escapeHtml(title) + '</h4><p>' + escapeHtml(body) + '</p></section>';
   }
 
   function renderIssueDetails(issue) {
@@ -259,10 +267,11 @@
       return '<article><time>' + escapeHtml(created ? formatDate(created) : formatDate(issue.lastModifiedDateTime)) + '</time><p>' + escapeHtml(content) + '</p></article>';
     }).join('') + '</section>' : '';
 
-    return '<article class="mh-detail-pane">' +
+    return '<article class="mh-detail-pane' + (detailsCompact ? ' is-compact' : '') + '">' +
       '<header class="mh-detail-head">' +
       '<div><span>' + escapeHtml(issue.classification || 'Issue') + '</span><h3>' + escapeHtml(issue.title) + '</h3></div>' +
       '<div class="mh-detail-actions" aria-label="Issue actions">' +
+      '<button type="button" data-health-compact="details" aria-pressed="' + (detailsCompact ? 'true' : 'false') + '">' + (detailsCompact ? 'Show full details' : 'Compact details') + '</button>' +
       '<button type="button" data-health-notify="issue">' + (watched ? 'Notifications on' : 'Notify me') + '</button>' +
       '<button type="button" data-health-copy="text">Copy text</button>' +
       '<button type="button" data-health-copy="link">Copy link</button>' +
@@ -271,7 +280,7 @@
       '</header>' +
       '<div class="mh-detail-layout">' +
       '<div class="mh-detail-main">' +
-      renderDetailSection('User impact', userImpact) +
+      renderDetailSection('User impact', userImpact, 'is-primary') +
       renderDetailSection('More info', moreInfo) +
       renderDetailSection('Scope of impact', scope) +
       renderDetailSection('Root cause', rootCause) +
@@ -387,6 +396,14 @@
     var notify = issueList.querySelector('[data-health-notify]');
     if (notify) {
       notify.addEventListener('click', function () { notifyForIssue(selectedIssue); });
+    }
+    var compact = issueList.querySelector('[data-health-compact]');
+    if (compact) {
+      compact.addEventListener('click', function () {
+        setDetailsCompact(!detailsCompact);
+        render(currentData);
+        showActionMessage(detailsCompact ? 'Compact details enabled.' : 'Full details restored.', 'is-success');
+      });
     }
   }
 
