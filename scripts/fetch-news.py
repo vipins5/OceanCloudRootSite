@@ -554,7 +554,52 @@ def secondary_article_image_for_item(item: dict) -> dict:
 
 
 def topic_for_item(item: dict) -> str:
+    title = item["title"].lower()
     haystack = (item["title"] + " " + item.get("summary", "")).lower()
+
+    title_prefix_topics = [
+        ("microsoft teams:", "teams"),
+        ("teams:", "teams"),
+        ("microsoft purview:", "purview"),
+        ("purview:", "purview"),
+        ("microsoft edge:", "edge"),
+        ("edge:", "edge"),
+        ("microsoft onedrive:", "onedrive"),
+        ("onedrive:", "onedrive"),
+        ("microsoft viva:", "viva"),
+        ("viva:", "viva"),
+        ("microsoft copilot:", "copilot"),
+        ("copilot:", "copilot"),
+    ]
+    for prefix, topic in title_prefix_topics:
+        if title.startswith(prefix):
+            return topic
+
+    if "sharepoint" in title:
+        return "sharepoint"
+    if "power automate" in title or "power apps" in title or "power platform" in title:
+        return "power-platform"
+    if "document management" in title or item.get("css_tag") == "tag-blog":
+        return "sharepoint"
+
+    fallback_terms = [
+        ("edge", "edge"),
+        ("teams", "teams"),
+        ("purview", "purview"),
+        ("data loss prevention", "purview"),
+        ("dlp", "purview"),
+        ("onedrive", "onedrive"),
+        ("sharepoint", "sharepoint"),
+        ("copilot", "copilot"),
+        ("power automate", "power-platform"),
+        ("power apps", "power-platform"),
+        ("power platform", "power-platform"),
+        ("viva", "viva"),
+    ]
+    for keyword, topic in fallback_terms:
+        if re.search(r"\b" + re.escape(keyword) + r"\b", haystack):
+            return topic
+
     for keyword, img_name in TOPIC_IMAGES:
         if keyword in haystack:
             return img_name
