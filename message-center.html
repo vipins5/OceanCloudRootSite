@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Microsoft 365 Message Center | OceanCloud</title>
+  <meta name="description" content="Microsoft 365 Message Center – stay ahead of planned changes, new features, and action-required notifications for your tenant." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/message-center" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/message-center" />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="Microsoft 365 Message Center | OceanCloud" />
+  <meta property="og:description" content="Stay ahead of planned changes and new features in your Microsoft 365 tenant." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/message-center" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-news.jpg" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"       content="summary_large_image" />
+  <meta name="twitter:site"       content="@oceancloud_x" />
+  <meta name="twitter:title"      content="Microsoft 365 Message Center | OceanCloud" />
+  <meta name="twitter:image"      content="https://oceancloudconsults.com/assets/og-news.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/pages.css?v=6" />
+  <link rel="stylesheet" href="css/darkstar.css?v=3" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/message-center#webpage",
+        "url": "https://oceancloudconsults.com/message-center",
+        "name": "Microsoft 365 Message Center | OceanCloud",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
+        "description": "Microsoft 365 Message Center dashboard showing planned changes, new features, and action-required notifications.",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home",           "item": "https://oceancloudconsults.com" },
+            { "@type": "ListItem", "position": 2, "name": "Message Center", "item": "https://oceancloudconsults.com/message-center" }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .mc-main { padding: 112px 0 96px; background: var(--bg); min-height: 100vh; }
+  .mc-shell {
+    border: 1px solid rgba(120,160,220,.16);
+    background: linear-gradient(180deg, rgba(10,18,32,.82), rgba(8,13,24,.92));
+    border-radius: 8px;
+    padding: 28px;
+    box-shadow: 0 22px 60px rgba(0,0,0,.28);
+  }
+  .mc-top {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+  .mc-kicker {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    font-size: .72rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .mc-top h1 {
+    color: var(--white);
+    font-size: clamp(1.8rem,4vw,3.1rem);
+    line-height: 1.08;
+    margin: 0 0 10px;
+    letter-spacing: 0;
+  }
+  .mc-top p { color: var(--text-mid); max-width: 700px; line-height: 1.65; margin: 0; }
+  .mc-summary {
+    min-width: 220px;
+    border: 1px solid rgba(120,160,220,.16);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    color: var(--text-mid);
+    background: rgba(255,255,255,.035);
+  }
+  .mc-sum-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; background: #5ba9ff; box-shadow: 0 0 16px rgba(91,169,255,.32); }
+  .mc-summary strong { color: var(--white); display: block; font-size: .92rem; }
+  .mc-summary span { font-size: .74rem; }
+
+  /* Toolbar */
+  .mc-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 14px 0 18px;
+    border-top: 1px solid rgba(120,160,220,.13);
+    border-bottom: 1px solid rgba(120,160,220,.13);
+    margin-bottom: 16px;
+  }
+  .mc-cat-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .mc-cat-btn,
+  .mc-auto-refresh,
+  .mc-refresh {
+    border: 1px solid rgba(120,160,220,.18);
+    background: rgba(255,255,255,.035);
+    color: var(--text-mid);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color .18s, color .18s, background .18s;
+  }
+  .mc-cat-btn.active,
+  .mc-cat-btn:hover,
+  .mc-auto-refresh[aria-pressed="true"],
+  .mc-auto-refresh:hover,
+  .mc-refresh:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,180,216,.1); }
+  .mc-auto-refresh[aria-pressed="false"] { color: var(--text-dim); }
+  .mc-updated { color: var(--text-dim); font-size: .78rem; }
+
+  /* Filter row */
+  .mc-filter-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .mc-filter-row select,
+  .mc-search-input {
+    border: 1px solid rgba(120,160,220,.18);
+    background: rgba(255,255,255,.035);
+    color: var(--text-mid);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: inherit;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .18s;
+  }
+  .mc-filter-row select:focus,
+  .mc-search-input:focus { border-color: var(--accent); color: var(--white); }
+  .mc-search-input { flex: 1; min-width: 180px; max-width: 300px; }
+  .mc-search-input::placeholder { color: var(--text-dim); }
+  .mc-count { color: var(--text-dim); font-size: .78rem; margin-left: auto; white-space: nowrap; }
+
+  /* Split pane */
+  .mc-pane {
+    display: grid;
+    grid-template-columns: minmax(260px,.44fr) minmax(0,1.56fr);
+    gap: 16px;
+    min-height: 560px;
+  }
+  .mc-list-wrap {
+    border: 1px solid rgba(120,160,220,.13);
+    border-radius: 8px;
+    background: rgba(255,255,255,.018);
+    overflow: hidden;
+    min-width: 0;
+  }
+  .mc-list {
+    list-style: none;
+    margin: 0; padding: 0;
+    overflow-y: auto;
+    max-height: 640px;
+  }
+  .mc-list li + li { border-top: 1px solid rgba(120,160,220,.09); }
+
+  .mc-row {
+    display: grid;
+    gap: 5px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--text-mid);
+    padding: 13px 14px;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .mc-row:hover { background: rgba(0,214,255,.06); }
+  .mc-row.is-active { background: rgba(0,214,255,.09); box-shadow: inset 3px 0 0 var(--accent); }
+
+  .mc-row-top { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .mc-row-cat {
+    font-size: .64rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .mc-cat-info   { background: rgba(91,169,255,.12);  color: #7bbfff; }
+  .mc-cat-plan   { background: rgba(255,174,87,.12);  color: #ffc07a; }
+  .mc-cat-action { background: rgba(255,120,100,.12); color: #ff9c8a; }
+
+  .mc-act-badge {
+    font-size: .64rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 999px;
+    background: rgba(255,174,87,.18); color: #ffd2a1; border: 1px solid rgba(255,174,87,.3);
+  }
+  .mc-row-title  { color: var(--white); font-size: .86rem; font-weight: 700; line-height: 1.35; }
+  .mc-row-meta   { display: flex; gap: 10px; justify-content: space-between; align-items: center; }
+  .mc-row-svc    { font-size: .72rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mc-row-date   { font-size: .7rem; color: var(--text-dim); white-space: nowrap; flex-shrink: 0; }
+  .mc-row-tags   { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 3px; }
+
+  /* Tags */
+  .mc-tag {
+    font-size: .61rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 999px; border: 1px solid transparent;
+  }
+  .mc-tag-feature { background: rgba(0,180,216,.1);  color: var(--accent);   border-color: rgba(0,180,216,.25); }
+  .mc-tag-user    { background: rgba(91,169,255,.1); color: #7bbfff;          border-color: rgba(91,169,255,.25); }
+  .mc-tag-admin   { background: rgba(255,174,87,.1); color: #ffc07a;          border-color: rgba(255,174,87,.25); }
+  .mc-tag-major   { background: rgba(255,120,100,.1);color: #ff9c8a;          border-color: rgba(255,120,100,.25); }
+  .mc-tag-default { background: rgba(255,255,255,.06); color: var(--text-mid); border-color: rgba(255,255,255,.1); }
+
+  /* Detail pane */
+  .mc-detail-pane {
+    border: 1px solid rgba(120,160,220,.13);
+    border-radius: 8px;
+    background: rgba(255,255,255,.02);
+    min-width: 0;
+    overflow: hidden;
+  }
+  .mc-detail-empty { padding: 28px 22px; color: var(--text-dim); font-size: .9rem; }
+  .mc-detail-head {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 14px;
+    align-items: start;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(120,160,220,.12);
+  }
+  .mc-detail-cats { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 8px; }
+  .mc-detail-title { color: var(--white); font-size: 1.05rem; font-weight: 800; line-height: 1.38; margin: 0 0 8px; letter-spacing: 0; }
+  .mc-detail-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .mc-close-btn {
+    border: 1px solid rgba(120,160,220,.18);
+    background: rgba(255,255,255,.04);
+    color: var(--text-mid);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: .84rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .mc-close-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .mc-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(160px,.32fr);
+    gap: 0;
+  }
+  .mc-detail-body { padding: 18px 20px; overflow-y: auto; max-height: 520px; }
+  .mc-detail-body p { color: var(--text-mid); line-height: 1.7; margin: 0 0 12px; font-size: .88rem; }
+  .mc-no-body { color: var(--text-dim); font-style: italic; }
+  .mc-detail-side { border-left: 1px solid rgba(120,160,220,.12); padding: 18px; background: rgba(0,0,0,.1); }
+  .mc-detail-side dl { display: grid; gap: 16px; margin: 0; }
+  .mc-detail-side dt { color: var(--text-dim); font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .mc-detail-side dd { margin: 4px 0 0; color: var(--white); font-size: .82rem; line-height: 1.45; overflow-wrap: anywhere; }
+  .mc-act-date { color: #ffc07a; font-weight: 700; }
+  .mc-past     { color: var(--text-dim); text-decoration: line-through; }
+
+  .mc-empty {
+    padding: 18px;
+    color: var(--text-dim);
+    font-size: .84rem;
+    border: 1px dashed rgba(120,160,220,.16);
+    border-radius: 6px;
+    margin: 12px;
+  }
+
+  @media (max-width: 960px) {
+    .mc-main { padding-top: 96px; }
+    .mc-top, .mc-pane, .mc-detail-layout { grid-template-columns: 1fr; }
+    .mc-summary { min-width: 0; }
+    .mc-detail-side { border-left: 0; border-top: 1px solid rgba(120,160,220,.12); }
+    .mc-list { max-height: 340px; }
+  }
+  @media (max-width: 580px) {
+    .mc-main { padding: 84px 0 72px; }
+    .mc-shell { padding: 18px; }
+    .mc-search-input { max-width: 100%; }
+    .mc-count { margin-left: 0; }
+  }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">OC</div>
+      <span class="logo-text">Ocean<span>Cloud</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main id="main-content" class="mc-main">
+  <div class="container">
+    <div class="mc-shell" id="mc-shell">
+
+      <div class="mc-top">
+        <div>
+          <div class="mc-kicker">Tenant Communications</div>
+          <h1>M365 Message Center</h1>
+          <p>Planned changes, new features, and action-required notifications from Microsoft 365, powered by Microsoft Graph and refreshed through OceanCloud's secure proxy.</p>
+        </div>
+        <div class="mc-summary" id="mc-summary" aria-live="polite">
+          <span class="mc-sum-dot"></span>
+          <div><strong>Loading messages…</strong></div>
+        </div>
+      </div>
+
+      <div class="mc-toolbar">
+        <div class="mc-cat-group" aria-label="Category filter">
+          <button class="mc-cat-btn active" type="button" data-mc-cat="all">All</button>
+          <button class="mc-cat-btn" type="button" data-mc-cat="planForChange">Plan for Change</button>
+          <button class="mc-cat-btn" type="button" data-mc-cat="stayInformed">Stay Informed</button>
+          <button class="mc-cat-btn" type="button" data-mc-cat="preventOrFixIssue">Action Required</button>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span class="mc-updated" id="mc-updated">Not loaded yet</span>
+          <button class="mc-auto-refresh" type="button" id="mc-auto-refresh" aria-pressed="true">Auto refresh on</button>
+          <button class="mc-refresh" type="button" id="mc-refresh">Refresh</button>
+        </div>
+      </div>
+
+      <div class="mc-filter-row">
+        <select id="mc-filter-svc" aria-label="Filter by service">
+          <option value="all">All Services</option>
+        </select>
+        <select id="mc-filter-tag" aria-label="Filter by tag">
+          <option value="all">All Tags</option>
+        </select>
+        <input type="search" id="mc-search" class="mc-search-input" placeholder="Search messages…" aria-label="Search messages" />
+        <span class="mc-count" id="mc-count"></span>
+      </div>
+
+      <div class="mc-pane">
+        <div class="mc-list-wrap">
+          <ul class="mc-list" id="mc-list" aria-label="Message list">
+            <li class="mc-empty"><span>Loading messages…</span></li>
+          </ul>
+        </div>
+        <div class="mc-detail-pane" id="mc-detail" aria-live="polite">
+          <div class="mc-detail-empty"><p>Select a message to read it.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/case-studies">Case Studies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/archive">News Archive</a></li>
+        <li><a href="/guides">Guides &amp; Tips</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Operations</h4>
+      <ul>
+        <li><a href="/status">Service Health</a></li>
+        <li><a href="/message-center">Message Center</a></li>
+        <li><a href="/services">Our Services</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/cookies">Cookie Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+
+<div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ccb-inner">
+    <div class="ccb-text">
+      <strong>&#127850; We use cookies</strong>
+      <span>Google Analytics helps us improve this site. No personal data is sold or shared. <a href="/cookies">Cookie policy</a></span>
+    </div>
+    <div class="ccb-btns">
+      <button id="ccb-decline">Decline</button>
+      <button id="ccb-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js?v=8"></script>
+<script src="js/consent.js?v=3"></script>
+<script src="js/chat.js?v=7"></script>
+<script src="js/message-center.js?v=1"></script>
+</body>
+</html>

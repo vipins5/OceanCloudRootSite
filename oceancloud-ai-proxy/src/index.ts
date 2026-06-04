@@ -31,6 +31,21 @@ interface GraphServiceHealth {
 	status?: string;
 }
 
+interface GraphMessage {
+	id?: string;
+	title?: string;
+	body?: { contentType?: string; content?: string };
+	category?: string;
+	severity?: string;
+	tags?: string[];
+	services?: string[];
+	actionRequiredByDateTime?: string;
+	startDateTime?: string;
+	lastModifiedDateTime?: string;
+	isArchived?: boolean;
+	isMajorChange?: boolean;
+}
+
 interface GraphServiceIssue {
 	id?: string;
 	title?: string;
@@ -76,6 +91,7 @@ const GITHUB_USER_ENDPOINT = "https://api.github.com/user";
 const GITHUB_EMAILS_ENDPOINT = "https://api.github.com/user/emails";
 const GRAPH_BASE_URL = "https://graph.microsoft.com/v1.0";
 const M365_HEALTH_CACHE_SECONDS = 300;
+const M365_MC_CACHE_SECONDS = 900;
 
 const HEALTH_REGION_TERMS: Record<HealthRegion, string[]> = {
 	global: [],
@@ -468,6 +484,109 @@ function summarizeM365Health(raw: { services: GraphServiceHealth[]; issues: Grap
 		services,
 		issues,
 	};
+}
+
+function stripHtmlKeepBreaks(value: unknown): string {
+	return String(value || "")
+		.replace(/<\/p>/gi, "\n")
+		.replace(/<br\s*\/?>/gi, "\n")
+		.replace(/<\/li>/gi, "\n")
+		.replace(/<li>/gi, "• ")
+		.replace(/<[^>]+>/g, "")
+		.replace(/&nbsp;/gi, " ")
+		.replace(/&amp;/gi, "&")
+		.replace(/&lt;/gi, "<")
+		.replace(/&gt;/gi, ">")
+		.replace(/&quot;/gi, "\"")
+		.replace(/&#39;/gi, "'")
+		.replace(/\n{3,}/g, "\n\n")
+		.trim();
+}
+
+async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMessage[]; fetchedAt: string }> {
+	const token = await getGraphAccessToken(env);
+	const data = await graphGet("/admin/serviceAnnouncement/messages?$top=100&$orderby=lastModifiedDateTime desc", token);
+	return {
+		messages: Array.isArray(data?.value) ? data.value : [],
+		fetchedAt: new Date().toISOString(),
+	};
+}
+
+function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: string }) {
+	const messages = raw.messages
+		.filter((m) => !m.isArchived)
+		.map((m) => ({
+			id: m.id || "",
+			title: stripHtml(m.title),
+			category: m.category || "stayInformed",
+			severity: m.severity || "normal",
+			tags: Array.isArray(m.tags) ? m.tags.slice(0, 6) : [],
+			services: Array.isArray(m.services) ? m.services.slice(0, 8) : [],
+			actionRequiredByDateTime: m.actionRequiredByDateTime || "",
+			startDateTime: m.startDateTime || "",
+			lastModifiedDateTime: m.lastModifiedDateTime || "",
+			isMajorChange: Boolean(m.isMajorChange),
+			body: stripHtmlKeepBreaks(m.body?.content).slice(0, 1200),
+		}));
+
+	const now = new Date();
+	return {
+		ok: true,
+		configured: true,
+		fetchedAt: raw.fetchedAt,
+		cachedForSeconds: M365_MC_CACHE_SECONDS,
+		totals: {
+			total: messages.length,
+			planForChange: messages.filter((m) => m.category === "planForChange").length,
+			actionRequired: messages.filter((m) => m.actionRequiredByDateTime && new Date(m.actionRequiredByDateTime) > now).length,
+		},
+		messages,
+	};
+}
+
+async function handleM365MessageCenter(request: Request, env: Env, origin: string, ctx?: ExecutionContext): Promise<Response> {
+	if (!env.M365_HEALTH_TENANT_ID || !env.M365_HEALTH_CLIENT_ID || !env.M365_HEALTH_CLIENT_SECRET) {
+		return cachedJsonResponse({
+			ok: false,
+			configured: false,
+			error: "Message Center is not configured",
+			requiredSecrets: ["M365_HEALTH_TENANT_ID", "M365_HEALTH_CLIENT_ID", "M365_HEALTH_CLIENT_SECRET"],
+		}, 503, origin, 60);
+	}
+
+	const cache = caches.default;
+	const cacheKey = new Request(`${new URL(request.url).origin}/m365/message-center/raw-v1`, { method: "GET" });
+	let raw: { messages: GraphMessage[]; fetchedAt: string } | null = null;
+	const cached = await cache.match(cacheKey);
+	if (cached) {
+		raw = await cached.json().catch(() => null) as typeof raw;
+	}
+
+	if (!raw) {
+		try {
+			raw = await fetchM365MessagesFromGraph(env);
+		} catch (error) {
+			return cachedJsonResponse({
+				ok: false,
+				configured: true,
+				error: "Microsoft Graph message center request failed",
+				detail: error instanceof Error ? error.message : "Unknown Microsoft Graph error",
+			}, 502, origin, 60);
+		}
+		const cacheResponse = new Response(JSON.stringify(raw), {
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+				"Cache-Control": `public, max-age=${M365_MC_CACHE_SECONDS}`,
+			},
+		});
+		if (ctx) {
+			ctx.waitUntil(cache.put(cacheKey, cacheResponse));
+		} else {
+			await cache.put(cacheKey, cacheResponse);
+		}
+	}
+
+	return cachedJsonResponse(summarizeM365Messages(raw), 200, origin, 60);
 }
 
 async function handleM365ServiceHealth(request: Request, env: Env, origin: string, ctx?: ExecutionContext): Promise<Response> {
@@ -1146,6 +1265,10 @@ export default {
 
 		if (url.pathname === "/m365/service-health" && request.method === "GET") {
 			return handleM365ServiceHealth(request, env, origin, ctx);
+		}
+
+		if (url.pathname === "/m365/message-center" && request.method === "GET") {
+			return handleM365MessageCenter(request, env, origin, ctx);
 		}
 
 		if (url.pathname === "/comments/config" && request.method === "GET") {
