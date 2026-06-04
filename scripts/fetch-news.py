@@ -328,6 +328,78 @@ ARTICLE_IMAGE_FALLBACKS = {
     },
 }
 
+# Microsoft Learn OG image lookup
+# For roadmap items that don't have a hardcoded screenshot, we attempt to fetch
+# a real OG image from the most relevant Microsoft Learn documentation page.
+# Keyword lists are AND-matched against title+summary (lowercased).
+# First match wins; result is cached for the run to avoid duplicate fetches.
+
+LEARN_OG_IMAGE_CACHE: dict[str, str] = {}
+
+LEARN_DOCS_CANDIDATES: list[tuple[list[str], str]] = [
+    # Teams - specific features
+    (["inline search", "compose"],           "https://learn.microsoft.com/en-us/microsoftteams/search-overview"),
+    (["new layout", "sharing content"],      "https://learn.microsoft.com/en-us/microsoftteams/configure-desktop-sharing"),
+    (["manage", "built-in", "agents"],       "https://learn.microsoft.com/en-us/microsoftteams/manage-apps"),
+    (["report", "external users"],           "https://learn.microsoft.com/en-us/microsoftteams/communicate-with-users-from-other-organizations"),
+    (["sharing recap"],                      "https://learn.microsoft.com/en-us/microsoftteams/meeting-policies-content-sharing"),
+    (["quick share", "image"],               "https://learn.microsoft.com/en-us/microsoftteams/configure-meetings-baseline-protection"),
+    (["unblock", "send message"],            "https://learn.microsoft.com/en-us/microsoftteams/block-inbound-calls"),
+    (["facilitator", "detects"],             "https://learn.microsoft.com/en-us/microsoftteams/meeting-transcription-captions"),
+    (["security detection", "admin center"], "https://learn.microsoft.com/en-us/microsoftteams/security-compliance-overview"),
+    (["download", "visibility", "control"],  "https://learn.microsoft.com/en-us/microsoftteams/teams-app-setup-policies"),
+    (["keyboard shortcuts"],                 "https://learn.microsoft.com/en-us/microsoftteams/keyboard-shortcuts"),
+    (["enhanced bookable desk"],             "https://learn.microsoft.com/en-us/microsoftteams/rooms/bookable-desks"),
+    # Purview - specific features
+    (["dlp", "optimizer"],                   "https://learn.microsoft.com/en-us/purview/dlp-overview"),
+    (["data loss prevention", "ai"],         "https://learn.microsoft.com/en-us/purview/dlp-overview"),
+    (["insider risk", "user profil"],        "https://learn.microsoft.com/en-us/purview/insider-risk-management-users"),
+    (["insider risk", "note"],               "https://learn.microsoft.com/en-us/purview/insider-risk-management-cases"),
+    (["insider risk", "alert"],              "https://learn.microsoft.com/en-us/purview/insider-risk-management-alerts"),
+    (["auto-labeling", "simulation"],        "https://learn.microsoft.com/en-us/purview/apply-sensitivity-label-automatically"),
+    # Copilot - specific features
+    (["mcp", "agent"],                       "https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-business-applications"),
+    (["copilot", "suggested rename"],        "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
+    (["copilot", "chat history"],            "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
+    (["copilot", "vision"],                  "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
+    (["mind maps", "copilot notebook"],      "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
+    # Edge / Intune
+    (["intune", "mam", "download"],          "https://learn.microsoft.com/en-us/mem/intune/apps/app-protection-policy"),
+    (["edge", "work search"],                "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-overview"),
+    (["edge", "copilot", "new tab"],         "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies"),
+    # Outlook
+    (["outlook", "unified inbox"],           "https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/outlook-for-ios-and-android/outlook-for-ios-and-android-in-the-government-cloud"),
+    # SharePoint
+    (["ai skills", "sharepoint"],            "https://learn.microsoft.com/en-us/sharepoint/sharepoint-copilot-best-practices"),
+    (["sharepoint", "copilot new tab"],      "https://learn.microsoft.com/en-us/sharepoint/sharepoint-copilot-best-practices"),
+]
+
+
+def try_learn_image(title: str, summary: str) -> tuple[str, str]:
+    """Fetch an OG image from a matching Microsoft Learn docs page.
+
+    Tries LEARN_DOCS_CANDIDATES in order (AND-matching all keywords against
+    title+summary). Caches results keyed by Learn URL so a popular URL is only
+    fetched once per run. Returns (image_url, learn_url), or empty strings if
+    nothing useful is found.
+    """
+    haystack = (title + " " + summary).lower()
+    for keywords, learn_url in LEARN_DOCS_CANDIDATES:
+        if not all(kw in haystack for kw in keywords):
+            continue
+        if learn_url not in LEARN_OG_IMAGE_CACHE:
+            img = fetch_og_image(learn_url)
+            LEARN_OG_IMAGE_CACHE[learn_url] = img
+            if img:
+                print(f"  [learn] Found OG image for '{keywords}' at {learn_url}")
+            else:
+                print(f"  [learn] No OG image at {learn_url}", file=sys.stderr)
+        cached = LEARN_OG_IMAGE_CACHE[learn_url]
+        if cached:
+            return cached, learn_url
+    return "", ""
+
+
 ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
     "copilot": {
         "url": "https://learn.microsoft.com/en-us/viva/insights/org-team-insights/images/copilot-dashboard-readiness-full.png",
@@ -485,19 +557,32 @@ def fetch_og_image(url: str) -> str:
 
 
 def article_image_for_item(item: dict) -> dict:
-    """Choose a real source image for a generated news article."""
+    """Choose a real source image for a generated news article.
+
+    Priority order:
+    1. Blog items -> real OG image scraped from TechCommunity source URL
+    2. Any item -> specific hardcoded Microsoft Learn screenshot (exact topic match)
+    3. Roadmap items -> OG image fetched from the best-matching Learn docs page
+    4. Any item -> broad-topic branded SVG fallback
+    """
+    title   = item.get("title", "")
+    summary = item.get("summary", "")
+
+    # 1. Blog posts: fetch the OG image directly from the TechCommunity article
     if item.get("css_tag") == "tag-blog":
         source_image = fetch_og_image(item.get("url", ""))
         if source_image:
             return {
-                "url": source_image,
-                "alt": f"Microsoft TechCommunity image for {item['title']}",
-                "caption": "Original Microsoft TechCommunity image for this announcement.",
-                "source_url": item["url"],
+                "url":          source_image,
+                "alt":          f"Microsoft TechCommunity image for {title}",
+                "caption":      "Original Microsoft TechCommunity image for this announcement.",
+                "source_url":   item["url"],
                 "source_label": item.get("source", "Microsoft TechCommunity"),
             }
 
-    haystack = (item.get("title", "") + " " + item.get("summary", "")).lower()
+    haystack = (title + " " + summary).lower()
+
+    # 2. Specific hardcoded screenshots for well-known sub-topics
     if "edge" in haystack:
         if "copilot new tab" in haystack or "new tab page" in haystack:
             return ARTICLE_IMAGE_FALLBACKS["edge-copilot"]
@@ -506,12 +591,29 @@ def article_image_for_item(item: dict) -> dict:
         return ARTICLE_IMAGE_FALLBACKS["outlook"]
     if "insider risk" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["purview-insider-risk"]
-    if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
-        return ARTICLE_IMAGE_FALLBACKS["purview"]
     if "bookable desk" in haystack or re.search(r"\bdesk\b", haystack):
         return ARTICLE_IMAGE_FALLBACKS["teams-bookable"]
     if "interpreter" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["teams-interpreter"]
+
+    # 3. For roadmap items: try to fetch a real OG image from the matching Learn docs page
+    if item.get("css_tag") == "tag-roadmap":
+        learn_img, learn_url = try_learn_image(title, summary)
+        if learn_img:
+            product = "Microsoft Teams" if "teams" in haystack else (
+                      "Microsoft Purview" if "purview" in haystack else (
+                      "Microsoft 365 Copilot" if "copilot" in haystack else "Microsoft 365"))
+            return {
+                "url":          learn_img,
+                "alt":          f"{product} feature documentation screenshot",
+                "caption":      f"Representative {product} documentation image from Microsoft Learn.",
+                "source_url":   learn_url,
+                "source_label": "Microsoft Learn",
+            }
+
+    # 4. Broad-topic SVG fallback
+    if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
+        return ARTICLE_IMAGE_FALLBACKS["purview"]
     if "teams" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["teams"]
     if "sharepoint" in haystack:
