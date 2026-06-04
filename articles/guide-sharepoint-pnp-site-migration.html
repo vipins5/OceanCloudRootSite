@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=11" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=6" />
+  <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -153,7 +153,7 @@
   }
   </style>
 </head>
-<body>
+<body class="guide-article">
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div id="c-dot"></div>
@@ -200,6 +200,11 @@
       </div>
 
       <p class="article-intro">Moving content between SharePoint Online sites is one of the most common — and most underestimated — admin tasks. Whether you are consolidating sites, restructuring an intranet, or splitting a department site into dedicated sub-sites, PnP PowerShell gives you fine-grained control over exactly what moves and how. This guide covers the complete workflow: connecting to both sites, inventorying the source, migrating document libraries, list items, modern pages, and permissions, then running a validation pass to confirm everything landed correctly.</p>
+
+      <figure class="article-image">
+        <img src="https://learn.microsoft.com/en-us/sharepointmigration/media/mm-flow-3box.png" alt="Microsoft migration manager diagram showing migration agents setup" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="854" height="272" />
+        <figcaption>Microsoft migration planning diagram useful when scoping SharePoint Online moves before scripted migration work. <a href="https://learn.microsoft.com/en-us/sharepointmigration/introducing-the-sharepoint-migration-tool" target="_blank" rel="noopener noreferrer">Source: Microsoft Learn</a>.</figcaption>
+      </figure>
 
       <h2>What PnP PowerShell Can (and Cannot) Migrate</h2>
       <p>Before writing a single line of PowerShell, align expectations. PnP covers the majority of routine content migrations but some artifacts require supplementary tools.</p>
@@ -348,6 +353,11 @@ Write-Host "Total items          : $(($inventory | Measure-Object ItemCount -Sum
       <div class="art-callout warning">
         <p><strong>Large libraries:</strong> If a library has more than 5,000 items, <code>Get-PnPListItem</code> will hit the list view threshold. Use <code>-PageSize 500</code> combined with <code>-Fields</code> to fetch only the columns you need, and consider batching by folder.</p>
       </div>
+
+      <figure class="article-image">
+        <img src="../assets/news/sharepoint.svg" alt="OceanCloud SharePoint migration planning graphic" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="800" height="280" />
+        <figcaption>OceanCloud SharePoint migration planning graphic for inventory, validation, and governance checkpoints. <a href="https://oceancloudconsults.com/guides" target="_blank" rel="noopener noreferrer">Source: OceanCloud</a>.</figcaption>
+      </figure>
 
       <h2>Step 3 — Export the Site Template (Structure)</h2>
       <p>The site template captures columns, content types, list schemas, navigation, and regional settings — everything except the actual content. Apply it to the destination site first so that the structure exists before you copy data.</p>

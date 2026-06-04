@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=6" />
+  <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
 
@@ -122,7 +122,7 @@
   .related-card:hover .rc-title{color:#00b4d8;}
   </style>
 </head>
-<body>
+<body class="guide-article">
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div id="c-dot"></div>
@@ -268,6 +268,11 @@
 
       <h3>Webhook vs polling: when to use each</h3>
       <p>Use webhooks when your integration needs near-real-time data (seconds of latency acceptable). Use polling when webhooks are impractical (short-lived integrations, external systems that can't receive HTTP posts, Power Automate flows with scheduled recurrence). For most business integrations, Power Automate's scheduled flows (5-minute minimum interval) are sufficient and far simpler to implement than custom webhook receivers.</p>
+
+      <figure class="article-image">
+        <img src="../assets/news/sharepoint.svg" alt="OceanCloud SharePoint integration planning graphic" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="800" height="280" />
+        <figcaption>OceanCloud SharePoint integration planning graphic for Graph, webhooks, and Power Automate scenarios. <a href="https://oceancloudconsults.com/guides" target="_blank" rel="noopener noreferrer">Source: OceanCloud</a>.</figcaption>
+      </figure>
 
       <h2>Real-World Integration Scenarios</h2>
 
