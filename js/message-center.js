@@ -2,72 +2,83 @@
   'use strict';
 
   var MC_ENDPOINT = 'https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/m365/message-center';
-  var REFRESH_MS = 15 * 60 * 1000;
+  var REFRESH_MS  = 15 * 60 * 1000;
 
-  var root        = document.getElementById('mc-shell');
+  var root      = document.getElementById('mc-shell');
   if (!root) return;
 
-  var listEl      = document.getElementById('mc-list');
-  var detailEl    = document.getElementById('mc-detail');
-  var summaryEl   = document.getElementById('mc-summary');
-  var updatedEl   = document.getElementById('mc-updated');
-  var searchEl    = document.getElementById('mc-search');
-  var countEl     = document.getElementById('mc-count');
+  var tbody     = document.getElementById('mc-tbody');
+  var detailEl  = document.getElementById('mc-detail');
+  var mainArea  = document.getElementById('mc-main-area');
+  var summaryEl = document.getElementById('mc-summary');
+  var updatedEl = document.getElementById('mc-updated');
+  var countEl   = document.getElementById('mc-count');
+  var searchEl  = document.getElementById('mc-search');
 
-  var allMessages  = [];
-  var activeId     = null;
-  var filterCat    = 'all';
-  var filterSvc    = 'all';
-  var filterTag    = 'all';
-  var searchQuery  = '';
-  var autoOn       = true;
-  var timer        = null;
+  var allMessages = [];
+  var activeId    = null;
+  var filterCat   = 'all';
+  var filterSvc   = 'all';
+  var filterTag   = 'all';
+  var searchQuery = '';
+  var autoOn      = true;
+  var timer       = null;
 
-  // ── Category config ──────────────────────────────────────────────────────────
   var CAT_LABELS = {
     stayInformed:      'Stay Informed',
     planForChange:     'Plan for Change',
     preventOrFixIssue: 'Action Required',
   };
-  var CAT_CLASS = {
-    stayInformed:      'mc-cat-info',
-    planForChange:     'mc-cat-plan',
-    preventOrFixIssue: 'mc-cat-action',
-  };
 
-  // ── Tag colours ──────────────────────────────────────────────────────────────
   function tagClass(tag) {
     var t = (tag || '').toLowerCase();
-    if (t.includes('new feature'))   return 'mc-tag-feature';
-    if (t.includes('user impact'))   return 'mc-tag-user';
-    if (t.includes('admin impact'))  return 'mc-tag-admin';
-    if (t.includes('major change'))  return 'mc-tag-major';
+    if (t.includes('new feature'))  return 'mc-tag-feature';
+    if (t.includes('user impact'))  return 'mc-tag-user';
+    if (t.includes('admin impact')) return 'mc-tag-admin';
+    if (t.includes('major change')) return 'mc-tag-major';
     return 'mc-tag-default';
   }
 
-  // ── Date helpers ─────────────────────────────────────────────────────────────
-  function fmtDate(iso) {
-    if (!iso) return '';
-    try {
-      return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    } catch (e) { return iso.slice(0, 10); }
-  }
-  function fmtDateTime(iso) {
-    if (!iso) return '';
-    try {
-      return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
-    } catch (e) { return iso; }
-  }
-  function isPast(iso) {
-    return iso && new Date(iso) < new Date();
+  function relevance(m) {
+    if (m.category === 'preventOrFixIssue') return { level: 'High',   dots: 4 };
+    if (m.isMajorChange)                    return { level: 'High',   dots: 4 };
+    if (m.category === 'planForChange')     return { level: 'Medium', dots: 2 };
+    return                                         { level: 'Normal', dots: 1 };
   }
 
-  // ── Escape ───────────────────────────────────────────────────────────────────
+  function relHtml(m) {
+    var r = relevance(m);
+    var dots = '';
+    for (var i = 0; i < 4; i++) {
+      dots += '<span class="mc-rel-dot' + (i < r.dots ? ' on' : '') + '"></span>';
+    }
+    return '<span class="mc-rel mc-rel-' + r.level.toLowerCase() + '">' + dots + r.level + '</span>';
+  }
+
+  function categoryClass(category) {
+    if (category === 'preventOrFixIssue') return 'mc-cat-action';
+    if (category === 'planForChange') return 'mc-cat-plan';
+    return 'mc-cat-info';
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '';
+    try { return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+    catch (e) { return iso.slice(0, 10); }
+  }
+
+  function fmtDateTime(iso) {
+    if (!iso) return '';
+    try { return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+    catch (e) { return iso; }
+  }
+
+  function isPast(iso) { return iso && new Date(iso) < new Date(); }
+
   function esc(s) {
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── Filtered messages ────────────────────────────────────────────────────────
   function filtered() {
     return allMessages.filter(function (m) {
       if (filterCat !== 'all' && m.category !== filterCat) return false;
@@ -75,15 +86,12 @@
       if (filterTag !== 'all' && !m.tags.some(function (t) { return t === filterTag; })) return false;
       if (searchQuery) {
         var q = searchQuery.toLowerCase();
-        if (!m.title.toLowerCase().includes(q) &&
-            !m.body.toLowerCase().includes(q) &&
-            !m.services.join(' ').toLowerCase().includes(q)) return false;
+        if (!m.title.toLowerCase().includes(q) && !m.body.toLowerCase().includes(q) && !m.services.join(' ').toLowerCase().includes(q)) return false;
       }
       return true;
     });
   }
 
-  // ── Build service/tag filter options ─────────────────────────────────────────
   function buildFilters(messages) {
     var svcs = {}, tags = {};
     messages.forEach(function (m) {
@@ -93,114 +101,106 @@
     return { services: Object.keys(svcs).sort(), tags: Object.keys(tags).sort() };
   }
 
-  function renderFilterBar(messages) {
-    var opts = buildFilters(messages);
+  function renderFilterDropdowns(messages) {
     var svcEl = document.getElementById('mc-filter-svc');
     var tagEl = document.getElementById('mc-filter-tag');
     if (!svcEl || !tagEl) return;
-
+    var opts = buildFilters(messages);
     svcEl.innerHTML = '<option value="all">All Services</option>' +
-      opts.services.map(function (s) {
-        return '<option value="' + esc(s) + '"' + (filterSvc === s ? ' selected' : '') + '>' + esc(s) + '</option>';
-      }).join('');
-
+      opts.services.map(function (s) { return '<option value="' + esc(s) + '">' + esc(s) + '</option>'; }).join('');
     tagEl.innerHTML = '<option value="all">All Tags</option>' +
-      opts.tags.map(function (t) {
-        return '<option value="' + esc(t) + '"' + (filterTag === t ? ' selected' : '') + '>' + esc(t) + '</option>';
-      }).join('');
+      opts.tags.map(function (t) { return '<option value="' + esc(t) + '">' + esc(t) + '</option>'; }).join('');
   }
 
-  // ── Render message list ───────────────────────────────────────────────────────
-  function renderList() {
+  function renderTable() {
+    if (!tbody) return;
     var msgs = filtered();
     if (countEl) countEl.textContent = msgs.length + ' message' + (msgs.length !== 1 ? 's' : '');
 
     if (!msgs.length) {
-      listEl.innerHTML = '<li class="mc-empty"><span>No messages match the current filters.</span></li>';
+      tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.</td></tr>';
       return;
     }
 
-    listEl.innerHTML = msgs.map(function (m) {
+    tbody.innerHTML = msgs.map(function (m) {
       var isActive = m.id === activeId;
       var actBy    = m.actionRequiredByDateTime;
-      var catCls   = CAT_CLASS[m.category] || 'mc-cat-info';
-      var tagHtml  = m.tags.slice(0, 3).map(function (t) {
+      var actByHtml = actBy
+        ? '<span class="' + (isPast(actBy) ? 'mc-past' : 'mc-actby') + '">' + esc(fmtDate(actBy)) + '</span>'
+        : '<span class="mc-dim">-</span>';
+      var tagsHtml = m.tags.slice(0, 2).map(function (t) {
         return '<span class="mc-tag ' + tagClass(t) + '">' + esc(t) + '</span>';
       }).join('');
+      var svc = m.services.slice(0, 2).join(', ');
 
-      return '<li>' +
-        '<button class="mc-row' + (isActive ? ' is-active' : '') + '" data-id="' + esc(m.id) + '">' +
-          '<div class="mc-row-top">' +
-            '<span class="mc-row-cat ' + catCls + '">' + esc(CAT_LABELS[m.category] || m.category) + '</span>' +
-            (actBy && !isPast(actBy) ? '<span class="mc-act-badge">Act by ' + esc(fmtDate(actBy)) + '</span>' : '') +
-          '</div>' +
-          '<strong class="mc-row-title">' + esc(m.title) + '</strong>' +
-          '<div class="mc-row-meta">' +
-            '<span class="mc-row-svc">' + esc(m.services.slice(0, 2).join(', ')) + '</span>' +
-            '<span class="mc-row-date">' + esc(fmtDate(m.lastModifiedDateTime)) + '</span>' +
-          '</div>' +
-          (tagHtml ? '<div class="mc-row-tags">' + tagHtml + '</div>' : '') +
-        '</button>' +
-      '</li>';
+      return '<tr class="mc-row' + (isActive ? ' is-active' : '') + '" data-id="' + esc(m.id) + '">' +
+        '<td class="mc-col-star"><button class="mc-star-btn" type="button" aria-label="Favourite" tabindex="-1">&#9734;</button></td>' +
+        '<td class="mc-col-title">' +
+          '<div class="mc-row-id">' + esc(m.id) + '</div>' +
+          '<div class="mc-row-title">' + esc(m.title) + '</div>' +
+          (m.isMajorChange ? '<span class="mc-badge-major">Major change</span>' : '') +
+        '</td>' +
+        '<td class="mc-col-svc">' + esc(svc || 'Microsoft 365') + '</td>' +
+        '<td class="mc-col-date">' + esc(fmtDate(m.lastModifiedDateTime)) + '</td>' +
+        '<td class="mc-col-actby">' + actByHtml + '</td>' +
+        '<td class="mc-col-rel">' + relHtml(m) + '</td>' +
+        '<td class="mc-col-tags">' + tagsHtml + '</td>' +
+      '</tr>';
     }).join('');
 
-    listEl.querySelectorAll('[data-id]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        selectMessage(btn.getAttribute('data-id'));
+    tbody.querySelectorAll('tr[data-id]').forEach(function (row) {
+      row.addEventListener('click', function () {
+        selectMessage(row.getAttribute('data-id'));
       });
     });
   }
 
-  // ── Render detail pane ───────────────────────────────────────────────────────
   function renderDetail(m) {
     if (!m) {
-      detailEl.innerHTML = '<div class="mc-detail-empty"><p>Select a message to read it.</p></div>';
+      mainArea.classList.remove('has-detail');
+      detailEl.innerHTML = '';
       return;
     }
 
-    var catCls  = CAT_CLASS[m.category] || 'mc-cat-info';
-    var tagHtml = m.tags.map(function (t) {
+    var catLabel = CAT_LABELS[m.category] || m.category;
+    var tagsHtml = m.tags.map(function (t) {
       return '<span class="mc-tag ' + tagClass(t) + '">' + esc(t) + '</span>';
     }).join('');
 
     var bodyHtml = m.body
-      ? m.body.split('\n').filter(function (l) { return l.trim(); }).map(function (l) {
-          return '<p>' + esc(l) + '</p>';
-        }).join('')
-      : '<p class="mc-no-body">No body content available.</p>';
+      ? m.body.split('\n').filter(function (l) { return l.trim(); })
+          .map(function (l) { return '<p>' + esc(l) + '</p>'; }).join('')
+      : '<p class="mc-dim">No body content.</p>';
 
     detailEl.innerHTML =
       '<div class="mc-detail-head">' +
         '<div>' +
-          '<div class="mc-detail-cats">' +
-            '<span class="mc-row-cat ' + catCls + '">' + esc(CAT_LABELS[m.category] || m.category) + '</span>' +
-            (m.isMajorChange ? '<span class="mc-tag mc-tag-major">Major Change</span>' : '') +
+          '<div class="mc-detail-meta">' +
+            '<span class="mc-detail-id">' + esc(m.id) + '</span>' +
+            '<span class="mc-detail-cat mc-cat-' + esc(m.category) + '">' + esc(catLabel) + '</span>' +
           '</div>' +
           '<h2 class="mc-detail-title">' + esc(m.title) + '</h2>' +
-          (tagHtml ? '<div class="mc-detail-tags">' + tagHtml + '</div>' : '') +
+          (tagsHtml ? '<div class="mc-detail-tags">' + tagsHtml + '</div>' : '') +
         '</div>' +
-        '<button class="mc-close-btn" id="mc-close" aria-label="Close detail">&#x2715;</button>' +
+        '<button class="mc-close-btn" id="mc-close" aria-label="Close">&#x2715;</button>' +
       '</div>' +
-      '<div class="mc-detail-layout">' +
+      '<div class="mc-detail-scroll">' +
+        '<dl class="mc-detail-facts">' +
+          '<div><dt>Service</dt><dd>' + esc(m.services.join(', ') || '-') + '</dd></div>' +
+          '<div><dt>Last Updated</dt><dd>' + esc(fmtDateTime(m.lastModifiedDateTime) || '-') + '</dd></div>' +
+          '<div><dt>Published</dt><dd>' + esc(fmtDate(m.startDateTime) || '-') + '</dd></div>' +
+          (m.actionRequiredByDateTime ? '<div><dt>Act By</dt><dd class="' + (isPast(m.actionRequiredByDateTime) ? 'mc-past' : 'mc-actby') + '">' + esc(fmtDate(m.actionRequiredByDateTime)) + '</dd></div>' : '') +
+        '</dl>' +
         '<div class="mc-detail-body">' + bodyHtml + '</div>' +
-        '<div class="mc-detail-side">' +
-          '<dl>' +
-            '<div><dt>Message ID</dt><dd>' + esc(m.id) + '</dd></div>' +
-            '<div><dt>Services</dt><dd>' + esc(m.services.join(', ') || '—') + '</dd></div>' +
-            '<div><dt>Last Updated</dt><dd>' + esc(fmtDateTime(m.lastModifiedDateTime) || '—') + '</dd></div>' +
-            '<div><dt>Published</dt><dd>' + esc(fmtDate(m.startDateTime) || '—') + '</dd></div>' +
-            (m.actionRequiredByDateTime
-              ? '<div><dt>Act By</dt><dd class="' + (isPast(m.actionRequiredByDateTime) ? 'mc-past' : 'mc-act-date') + '">' + esc(fmtDate(m.actionRequiredByDateTime)) + '</dd></div>'
-              : '') +
-          '</dl>' +
-        '</div>' +
       '</div>';
+
+    mainArea.classList.add('has-detail');
 
     var closeBtn = document.getElementById('mc-close');
     if (closeBtn) {
       closeBtn.addEventListener('click', function () {
         activeId = null;
-        renderList();
+        renderTable();
         renderDetail(null);
       });
     }
@@ -209,64 +209,47 @@
   function selectMessage(id) {
     activeId = id;
     var m = allMessages.find(function (x) { return x.id === id; });
-    renderList();
+    renderTable();
     renderDetail(m || null);
   }
 
-  // ── Render summary pill ───────────────────────────────────────────────────────
   function renderSummary(totals) {
     if (!summaryEl || !totals) return;
-    var parts = [totals.total + ' message' + (totals.total !== 1 ? 's' : '')];
-    if (totals.actionRequired > 0) {
-      parts.push(totals.actionRequired + ' requiring action');
-    }
-    if (totals.planForChange > 0) {
-      parts.push(totals.planForChange + ' change' + (totals.planForChange !== 1 ? 's' : '') + ' planned');
-    }
+    var dotCls = totals.actionRequired > 0 ? 'mc-sum-dot warn' : 'mc-sum-dot ok';
     summaryEl.innerHTML =
-      '<span class="mc-sum-dot"></span>' +
-      '<div><strong>' + esc(parts[0]) + '</strong>' +
-      (parts.length > 1 ? '<span>' + esc(parts.slice(1).join(' · ')) + '</span>' : '') +
+      '<span class="' + dotCls + '"></span>' +
+      '<div>' +
+        '<strong>' + esc(totals.total + ' message' + (totals.total !== 1 ? 's' : '')) + '</strong>' +
+        '<span>' + esc(totals.planForChange + ' changes planned · ' + totals.actionRequired + ' action required') + '</span>' +
       '</div>';
   }
 
-  // ── Fetch & render ────────────────────────────────────────────────────────────
   function load() {
     if (updatedEl) updatedEl.textContent = 'Refreshing…';
     fetch(MC_ENDPOINT)
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (!data.ok) {
-          var errMsg = data.error || 'Unable to load messages.';
-          var hint = '';
-          if (data.detail && data.detail.indexOf('403') !== -1) {
-            hint = ' — The Azure app needs the <strong>ServiceMessage.Read.All</strong> application permission granted in Entra ID.';
-          } else if (data.detail) {
-            hint = ' (' + esc(data.detail) + ')';
-          }
-          listEl.innerHTML = '<li style="padding:18px;color:#ffb2a1;font-size:.86rem;line-height:1.6">' +
-            '<strong style="display:block;margin-bottom:6px;">⚠ ' + esc(errMsg) + '</strong>' +
-            (hint ? '<span>' + hint + '</span>' : '') +
-            '</li>';
+          if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row" style="color:#ffb2a1">' +
+            '<strong>' + esc(data.error || 'Failed to load') + '</strong>' +
+            (data.detail && data.detail.indexOf('403') !== -1 ? '<br><small>Azure app needs ServiceMessage.Read.All permission.</small>' : '') +
+            '</td></tr>';
           if (updatedEl) updatedEl.textContent = 'Error loading';
-          if (summaryEl) summaryEl.innerHTML = '<span class="mc-sum-dot" style="background:#ff9c8a"></span><div><strong>Not available</strong></div>';
           return;
         }
         allMessages = data.messages || [];
-        renderFilterBar(allMessages);
+        renderFilterDropdowns(allMessages);
         renderSummary(data.totals);
         if (updatedEl) updatedEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
-        renderList();
+        renderTable();
         if (activeId) {
           var m = allMessages.find(function (x) { return x.id === activeId; });
           renderDetail(m || null);
-        } else {
-          renderDetail(null);
         }
       })
-      .catch(function (err) {
-        listEl.innerHTML = '<li style="padding:18px;color:#ffb2a1;font-size:.86rem">Could not connect to Message Center.</li>';
-        if (updatedEl) updatedEl.textContent = 'Failed to refresh';
+      .catch(function () {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row" style="color:#ffb2a1">Could not connect to Message Center.</td></tr>';
+        if (updatedEl) updatedEl.textContent = 'Failed';
       });
   }
 
@@ -275,22 +258,19 @@
     if (autoOn) timer = setTimeout(function () { load(); scheduleRefresh(); }, REFRESH_MS);
   }
 
-  // ── Event wiring ──────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
-    var refreshBtn = document.getElementById('mc-refresh');
-    var autoBtn    = document.getElementById('mc-auto-refresh');
-    var catBtns    = root.querySelectorAll('[data-mc-cat]');
-    var svcEl2     = document.getElementById('mc-filter-svc');
-    var tagEl2     = document.getElementById('mc-filter-tag');
+    var refreshBtn  = document.getElementById('mc-refresh');
+    var autoBtn     = document.getElementById('mc-auto-refresh');
+    var catBtns     = root.querySelectorAll('[data-mc-cat]');
+    var svcEl       = document.getElementById('mc-filter-svc');
+    var tagEl       = document.getElementById('mc-filter-tag');
 
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', function () { load(); scheduleRefresh(); });
-    }
+    if (refreshBtn) refreshBtn.addEventListener('click', function () { load(); scheduleRefresh(); });
 
     if (autoBtn) {
       autoBtn.addEventListener('click', function () {
         autoOn = !autoOn;
-        autoBtn.setAttribute('aria-pressed', autoOn ? 'true' : 'false');
+        autoBtn.setAttribute('aria-pressed', String(autoOn));
         autoBtn.textContent = autoOn ? 'Auto refresh on' : 'Auto refresh off';
         scheduleRefresh();
       });
@@ -301,19 +281,13 @@
         filterCat = btn.getAttribute('data-mc-cat') || 'all';
         catBtns.forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
-        renderList();
+        renderTable();
       });
     });
 
-    if (svcEl2) {
-      svcEl2.addEventListener('change', function () { filterSvc = svcEl2.value; renderList(); });
-    }
-    if (tagEl2) {
-      tagEl2.addEventListener('change', function () { filterTag = tagEl2.value; renderList(); });
-    }
-    if (searchEl) {
-      searchEl.addEventListener('input', function () { searchQuery = searchEl.value.trim(); renderList(); });
-    }
+    if (svcEl) svcEl.addEventListener('change', function () { filterSvc = svcEl.value; renderTable(); });
+    if (tagEl) tagEl.addEventListener('change', function () { filterTag = tagEl.value; renderTable(); });
+    if (searchEl) searchEl.addEventListener('input', function () { searchQuery = searchEl.value.trim(); renderTable(); });
 
     load();
     scheduleRefresh();
