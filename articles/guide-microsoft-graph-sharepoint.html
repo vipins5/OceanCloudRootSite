@@ -11,19 +11,21 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="Microsoft Graph and SharePoint Guide" />
   <meta property="og:description" content="Graph API, Power Automate HTTP, SharePoint webhooks, Salesforce and ServiceNow integrations, and app identity options for IT admins." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint" />
-  <meta property="og:image"       content="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="Microsoft Graph diagram showing connected Microsoft 365 resources" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Microsoft Graph and SharePoint Guide | OceanCloud" />
   <meta name="twitter:description" content="Graph API, Power Automate HTTP, SharePoint webhooks, Salesforce and ServiceNow integrations, and app identity options for IT admins." />
-  <meta name="twitter:image"       content="https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +36,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -45,29 +49,91 @@
         "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint#article",
         "headline": "Microsoft Graph and SharePoint: What IT Admins Need to Know About M365 Integrations",
         "url": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint"
+        },
         "datePublished": "2026-05-23",
-        "dateModified": "2026-05-23",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins.",
-        "image": "https://res.public.onecdn.static.microsoft/s01-prod/media/graph/Graph_img01_VP1.webp",
-        "keywords": ["Microsoft Graph", "SharePoint API", "SharePoint webhooks", "M365 integrations", "Graph Explorer"],
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "Microsoft Graph",
+          "SharePoint API",
+          "SharePoint webhooks",
+          "M365 integrations",
+          "Graph Explorer"
+        ],
         "citation": [
-          { "@type": "WebPage", "url": "https://developer.microsoft.com/en-us/graph", "name": "Microsoft Graph Developer Portal" },
-          { "@type": "WebPage", "url": "https://developer.microsoft.com/en-us/graph/graph-explorer", "name": "Microsoft Graph Explorer" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks", "name": "SharePoint webhooks overview" }
+          {
+            "@type": "WebPage",
+            "url": "https://developer.microsoft.com/en-us/graph",
+            "name": "Microsoft Graph Developer Portal"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://developer.microsoft.com/en-us/graph/graph-explorer",
+            "name": "Microsoft Graph Explorer"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks",
+            "name": "SharePoint webhooks overview"
+          }
         ],
         "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "Microsoft Graph and SharePoint", "item": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Microsoft Graph and SharePoint",
+            "item": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint"
+          }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
       }
     ]
   }

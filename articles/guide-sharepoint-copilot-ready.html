@@ -11,19 +11,21 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="How to Prepare Your SharePoint for Microsoft Copilot" />
   <meta property="og:description" content="Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and clean stale content before Copilot rollout." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready" />
-  <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="SharePoint Advanced Management screenshot in the SharePoint admin center" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="How to Prepare Your SharePoint for Microsoft Copilot | OceanCloud" />
   <meta name="twitter:description" content="Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and clean stale content before Copilot rollout." />
-  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +36,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -45,29 +49,91 @@
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready#article",
         "headline": "How to Prepare Your SharePoint for Microsoft Copilot",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready"
+        },
         "datePublished": "2026-05-23",
-        "dateModified": "2026-05-23",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and validate search quality — the SharePoint readiness checklist before Copilot rollout.",
-        "image": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png",
-        "keywords": ["SharePoint Copilot", "Copilot readiness", "SharePoint Advanced Management", "Restricted SharePoint Search", "Purview sensitivity labels"],
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "SharePoint Copilot",
+          "Copilot readiness",
+          "SharePoint Advanced Management",
+          "Restricted SharePoint Search",
+          "Purview sensitivity labels"
+        ],
         "citation": [
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management", "name": "SharePoint Advanced Management" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search", "name": "Restricted SharePoint Search" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels", "name": "Microsoft Purview Sensitivity Labels" }
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
+            "name": "SharePoint Advanced Management"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search",
+            "name": "Restricted SharePoint Search"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels",
+            "name": "Microsoft Purview Sensitivity Labels"
+          }
         ],
         "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "SharePoint Copilot Readiness", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "SharePoint Copilot Readiness",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready"
+          }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
       }
     ]
   }

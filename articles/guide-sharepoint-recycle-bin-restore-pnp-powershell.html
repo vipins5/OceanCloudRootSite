@@ -11,6 +11,7 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
@@ -21,6 +22,7 @@
   <meta property="og:image:alt"   content="SharePoint restore automation graphic" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Restore SharePoint Recycle Bin Items with PnP PowerShell | OceanCloud" />
   <meta name="twitter:description" content="Restore SharePoint deleted files and folders from specific folders and dates with PnP PowerShell, CSOM paging, dry-run mode, conflict checks, and CSV logging." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
@@ -34,7 +36,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -45,29 +49,91 @@
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell#article",
         "headline": "Restore SharePoint Recycle Bin Items with PnP PowerShell",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell"
+        },
         "datePublished": "2026-05-26",
-        "dateModified": "2026-05-26",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Restore deleted SharePoint files and folders from first-stage recycle bin by folder path, deleted date, and deleted user using PnP PowerShell plus CSOM paging.",
         "image": "https://oceancloudconsults.com/assets/og-services.jpg",
-        "keywords": ["SharePoint recycle bin restore", "PnP PowerShell", "Restore SharePoint deleted files", "First-stage recycle bin", "CSOM paging"],
+        "keywords": [
+          "SharePoint recycle bin restore",
+          "PnP PowerShell",
+          "Restore SharePoint deleted files",
+          "First-stage recycle bin",
+          "CSOM paging"
+        ],
         "citation": [
-          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/restore-deleted-items-from-the-site-collection-recycle-bin", "name": "Restore deleted items from the site collection recycle bin" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee542778(v=office.15)", "name": "SharePoint CSOM RecycleBinItem class" }
+          {
+            "@type": "WebPage",
+            "url": "https://pnp.github.io/powershell/",
+            "name": "PnP PowerShell documentation"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/restore-deleted-items-from-the-site-collection-recycle-bin",
+            "name": "Restore deleted items from the site collection recycle bin"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee542778(v=office.15)",
+            "name": "SharePoint CSOM RecycleBinItem class"
+          }
         ],
         "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "SharePoint Recycle Bin Restore", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "SharePoint Recycle Bin Restore",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell"
+          }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
       }
     ]
   }

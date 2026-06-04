@@ -11,19 +11,21 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="SharePoint External Sharing: Complete Admin Guide" />
   <meta property="og:description" content="A practical admin guide to secure SharePoint external sharing with tenant controls, site policies, Entra B2B, and PowerShell." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
-  <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/externalsharing.png" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="SharePoint admin center external sharing settings screenshot" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="SharePoint External Sharing: Complete Admin Guide | OceanCloud" />
   <meta name="twitter:description" content="Complete SharePoint external sharing guide covering tenant settings, site controls, guest links, Entra B2B, governance, auditing, and PowerShell." />
-  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/externalsharing.png" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +36,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -45,27 +49,84 @@
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#article",
         "headline": "SharePoint External Sharing: Complete Admin Guide",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
+        },
         "datePublished": "2026-05-25",
-        "dateModified": "2026-05-25",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Complete SharePoint external sharing guide covering tenant settings, site controls, guest links, Entra B2B, governance, auditing, and PowerShell.",
-        "image": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/externalsharing.png",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
         "citation": [
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview", "name": "Overview of external sharing in SharePoint and OneDrive" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off", "name": "Manage sharing settings for SharePoint and OneDrive" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration", "name": "SharePoint and OneDrive integration with Microsoft Entra B2B" }
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview",
+            "name": "Overview of external sharing in SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off",
+            "name": "Manage sharing settings for SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration",
+            "name": "SharePoint and OneDrive integration with Microsoft Entra B2B"
+          }
         ],
-        "inLanguage": "en-US"
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "SharePoint External Sharing", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "SharePoint External Sharing",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
+          }
         ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }

@@ -11,19 +11,21 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="SharePoint Multi-Approver Workflows" />
   <meta property="og:description" content="Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate + SharePoint explained with implementation notes." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" />
-  <meta property="og:image"       content="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="Power Automate approval flow with parallel branches screenshot" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="SharePoint Multi-Approver Workflows | OceanCloud" />
   <meta name="twitter:description" content="Build SharePoint approval workflows with multiple approvers using Power Automate. Understand sequential vs parallel approval patterns, how to escalate, and when to use each model." />
-  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +36,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -45,29 +49,90 @@
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers#article",
         "headline": "SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers"
+        },
         "datePublished": "2026-05-23",
-        "dateModified": "2026-05-23",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Sequential chains, parallel fan-outs, first-to-respond, escalation, and delegation — every multiple-approver pattern for Power Automate and SharePoint.",
-        "image": "https://learn.microsoft.com/en-us/power-automate/media/parallel-modern-approvals/flow-with-parallel-branches.png",
-        "keywords": ["SharePoint multiple approvers", "Power Automate sequential approval", "parallel approval workflow", "SharePoint approval chain"],
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "SharePoint multiple approvers",
+          "Power Automate sequential approval",
+          "parallel approval workflow",
+          "SharePoint approval chain"
+        ],
         "citation": [
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals", "name": "Manage sequential approvals with Power Automate" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals", "name": "Manage parallel approvals with Power Automate" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/power-automate/approve-reject-requests", "name": "Manage approval requests in Power Automate" }
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/power-automate/sequential-modern-approvals",
+            "name": "Manage sequential approvals with Power Automate"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals",
+            "name": "Manage parallel approvals with Power Automate"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/power-automate/approve-reject-requests",
+            "name": "Manage approval requests in Power Automate"
+          }
         ],
         "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "Multiple Approvers Guide", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Multiple Approvers Guide",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers"
+          }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
       }
     ]
   }

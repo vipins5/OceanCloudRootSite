@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/contact" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/contact" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -29,6 +31,7 @@
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Free SharePoint Consultation | OceanCloud" />
   <meta name="twitter:description" content="Talk to a certified M365 consultant for free. SharePoint, migration, Teams, Power Platform — get expert advice in 60 minutes." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-contact.jpg" />
@@ -41,6 +44,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
   <script type="application/ld+json">
@@ -52,16 +56,40 @@
         "@id": "https://oceancloudconsults.com/contact#webpage",
         "url": "https://oceancloudconsults.com/contact",
         "name": "Free SharePoint & M365 Consultation | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-        "about": { "@id": "https://oceancloudconsults.com/#organization" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
+        "about": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Book a free 60-min SharePoint & M365 consultation with OceanCloud. Certified M365 architects — call +1 (469) 809-4053.",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-            { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://oceancloudconsults.com/contact" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Contact",
+              "item": "https://oceancloudconsults.com/contact"
+            }
           ]
         }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }
@@ -1200,74 +1228,102 @@
 </script>
 
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "ContactPage",
-      "@id": "https://oceancloudconsults.com/contact",
-      "url": "https://oceancloudconsults.com/contact",
-      "name": "Free SharePoint Consultation | Contact OceanCloud — M365 Experts",
-      "description": "Book a free 60-minute SharePoint and Microsoft 365 consultation with OceanCloud. Talk to a certified M365 consultant about your migration, intranet, or support needs.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://oceancloudconsults.com/contact" }
-        ]
-      }
-    },
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://oceancloudconsults.com/#localbusiness",
-      "name": "OceanCloud",
-      "url": "https://oceancloudconsults.com/",
-      "description": "Microsoft Solutions Partner offering SharePoint consulting, Microsoft 365 migration, and M365 support across the United States.",
-      "telephone": "+14698094053",
-      "email": "oceancloudconsults@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "US"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "United States"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-          "opens": "09:00",
-          "closes": "18:00"
-        }
-      ],
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+14698094053",
-          "contactType": "sales",
-          "availableLanguage": "English"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": "https://oceancloudconsults.com/contact",
+        "url": "https://oceancloudconsults.com/contact",
+        "name": "Free SharePoint Consultation | Contact OceanCloud — M365 Experts",
+        "description": "Book a free 60-minute SharePoint and Microsoft 365 consultation with OceanCloud. Talk to a certified M365 consultant about your migration, intranet, or support needs.",
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
         },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+19176753126",
-          "contactType": "customer support",
-          "contactOption": "WhatsApp",
-          "availableLanguage": "English"
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Contact",
+              "item": "https://oceancloudconsults.com/contact"
+            }
+          ]
         }
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "47",
-        "bestRating": "5"
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://oceancloudconsults.com/#localbusiness",
+        "name": "OceanCloud",
+        "url": "https://oceancloudconsults.com/",
+        "description": "Microsoft Solutions Partner offering SharePoint consulting, Microsoft 365 migration, and M365 support across the United States.",
+        "telephone": "+14698094053",
+        "email": "oceancloudconsults@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "US"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+14698094053",
+            "contactType": "sales",
+            "availableLanguage": "English"
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+19176753126",
+            "contactType": "customer support",
+            "contactOption": "WhatsApp",
+            "availableLanguage": "English"
+          }
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "47",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
-    }
-  ]
-}
-</script>
+    ]
+  }
+  </script>
 
 <!-- ===== COOKIE CONSENT BANNER ===== -->
 <div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">

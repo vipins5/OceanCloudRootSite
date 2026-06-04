@@ -13,11 +13,14 @@ It does not generate articles, fetch news, call AI APIs, create branches, or ope
 from __future__ import annotations
 
 import argparse
+import json
+import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import format_datetime
+from html import unescape
 from pathlib import Path
 
 # Repo root path used for git and content file operations.
@@ -26,6 +29,8 @@ ROOT = Path(__file__).parent.parent
 SITEMAP = ROOT / "sitemap.xml"
 # Target RSS feed whose lastBuildDate is refreshed on publish.
 FEED = ROOT / "feed.xml"
+# Canonical archive data used to map RSS items to local article pages.
+ARCHIVE_JSON = ROOT / "data" / "archive.json"
 # Canonical site base URL used in file-to-URL mapping.
 BASE_URL = "https://oceancloudconsults.com"
 # XML namespace for sitemap URL set parsing/writing.
@@ -106,6 +111,11 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
             continue
         loc = loc_el.text.strip()
         existing_locs.add(loc)
+        if loc == f"{BASE_URL}/llms.txt":
+            root.remove(url_el)
+            changed_count += 1
+            print(f"  [remove] {loc}")
+            continue
         file = url_to_file(loc)
         if file is None:
             root.remove(url_el)
@@ -154,6 +164,36 @@ def update_feed(dry_run: bool) -> bool:
         return False
     end += len("</lastBuildDate>")
     new_text = text[:start] + f"<lastBuildDate>{build_date}</lastBuildDate>" + text[end:]
+
+    if ARCHIVE_JSON.exists():
+        try:
+            archive = json.loads(ARCHIVE_JSON.read_text(encoding="utf-8"))
+            title_to_url = {
+                item["title"]: f"{BASE_URL}/articles/{item['article_slug']}" if item.get("article_slug") else f"{BASE_URL}/archive"
+                for item in archive.get("items", [])
+                if item.get("title")
+            }
+
+            def localize_item(match: re.Match[str]) -> str:
+                block = match.group(0)
+                title_match = re.search(r"<title>(.*?)</title>", block, re.DOTALL)
+                if not title_match:
+                    return block
+                local_url = title_to_url.get(unescape(title_match.group(1).strip()))
+                if not local_url:
+                    return block
+                block = re.sub(r"<link>.*?</link>", f"<link>{local_url}</link>", block, count=1, flags=re.DOTALL)
+                return re.sub(
+                    r'<guid isPermaLink="true">.*?</guid>',
+                    f'<guid isPermaLink="true">{local_url}</guid>',
+                    block,
+                    count=1,
+                    flags=re.DOTALL,
+                )
+
+            new_text = re.sub(r"<item>.*?</item>", localize_item, new_text, flags=re.DOTALL)
+        except (OSError, json.JSONDecodeError, KeyError) as exc:
+            print(f"  [warn] Could not localize feed item links: {exc}")
     if new_text == text:
         return False
     print(f"  [feed] lastBuildDate -> {build_date}")

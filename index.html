@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="United States" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -29,6 +31,7 @@
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="SharePoint Consulting & M365 Support | OceanCloud" />
   <meta name="twitter:description" content="Expert SharePoint & Microsoft 365 consultants. Migration, support, Power Platform and Teams — Microsoft Solutions Partner, United States." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
@@ -48,15 +51,18 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["Organization", "ProfessionalService"],
+        "@type": [
+          "Organization",
+          "ProfessionalService"
+        ],
         "@id": "https://oceancloudconsults.com/#organization",
         "name": "OceanCloud",
         "url": "https://oceancloudconsults.com/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://oceancloudconsults.com/assets/og-home.jpg",
-          "width": 1200,
-          "height": 630
+          "url": "https://oceancloudconsults.com/assets/logo.png",
+          "width": 512,
+          "height": 512
         },
         "image": "https://oceancloudconsults.com/assets/og-home.jpg",
         "description": "Microsoft Solutions Partner specialising in SharePoint Online, Microsoft 365, Power Platform, and workplace transformation across the United States.",
@@ -88,7 +94,13 @@
             "availableLanguage": "English",
             "hoursAvailable": {
               "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ],
               "opens": "09:00",
               "closes": "18:00"
             }
@@ -116,12 +128,48 @@
           "@type": "OfferCatalog",
           "name": "SharePoint and Microsoft 365 Services",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SharePoint Consulting" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Migration" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft Teams and Viva Implementation" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Power Platform Development" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Security and Compliance" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Microsoft 365 Copilot Readiness and Rollout" } }
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "SharePoint Consulting"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Microsoft 365 Migration"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Microsoft Teams and Viva Implementation"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Power Platform Development"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Microsoft 365 Security and Compliance"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Microsoft 365 Copilot Readiness and Rollout"
+              }
+            }
           ]
         },
         "aggregateRating": {
@@ -137,7 +185,9 @@
         "url": "https://oceancloudconsults.com/",
         "name": "OceanCloud",
         "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US.",
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "inLanguage": "en-US",
         "potentialAction": {
           "@type": "SearchAction",
@@ -153,8 +203,12 @@
         "@id": "https://oceancloudconsults.com/#webpage",
         "url": "https://oceancloudconsults.com/",
         "name": "SharePoint Consulting & M365 Migration | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-        "about": { "@id": "https://oceancloudconsults.com/#organization" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
+        "about": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Microsoft Solutions Partner: SharePoint consulting, M365 migration, Power Platform & Teams across the US. 150+ projects, 98% satisfaction. Free 60-min call.",
         "inLanguage": "en-US",
         "breadcrumb": {
@@ -172,7 +226,9 @@
       {
         "@type": "FAQPage",
         "@id": "https://oceancloudconsults.com/#faq",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#webpage" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#webpage"
+        },
         "mainEntity": [
           {
             "@type": "Question",

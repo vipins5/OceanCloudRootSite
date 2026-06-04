@@ -190,6 +190,20 @@ def slugify(title: str) -> str:
     return s.strip("-")[:60]
 
 
+def seo_description(text: str, limit: int = 170) -> str:
+    """Return a complete, social-card-safe description without mid-word cuts."""
+    clean = re.sub(r"\s+", " ", strip_html(text)).strip()
+    if len(clean) <= limit:
+        return clean
+    cut = clean.rfind(" ", 0, limit)
+    if cut < 90:
+        cut = limit
+    clean = clean[:cut].rstrip(" ,;:-")
+    if clean and clean[-1] not in ".!?":
+        clean += "."
+    return clean
+
+
 def article_slug(item: dict) -> str:
     """Generate a unique filename slug: news-YYYY-MM-<title-slug>."""
     sort_key, _ = month_parts(item["date"])
@@ -718,7 +732,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     canonical  = f"{SITE_BASE_URL}/articles/{slug}"
     short      = title[:45] + ("…" if len(title) > 45 else "")
     body_html  = md_to_html(body_md)
-    desc_text  = commentary[:160]
+    desc_text  = seo_description(commentary)
     desc       = escape(desc_text)
     article_image = item.get("_article_image") or article_image_for_item(item)
     image_url = article_image.get("url", "")
@@ -741,7 +755,9 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
         <figcaption>{escape(secondary_image.get('caption', 'Related Microsoft product image.'))} <a href="{escape(secondary_image.get('source_url', ms_url))}" target="_blank" rel="noopener noreferrer">Source: {escape(secondary_image.get('source_label', item['source']))}</a>.</figcaption>
       </figure>
 """
-    og_image = article_image.get("og_url") or image_url or f"{SITE_BASE_URL}/assets/og-home.jpg"
+    og_image = article_image.get("og_url") or image_url or f"{SITE_BASE_URL}/assets/og-news.jpg"
+    if og_image == f"{SITE_BASE_URL}/assets/og-home.jpg":
+        og_image = f"{SITE_BASE_URL}/assets/og-news.jpg"
     og_image_alt = article_image.get("alt") or title
     json_title = json.dumps(title, ensure_ascii=False)
     json_desc = json.dumps(desc_text, ensure_ascii=False)
@@ -767,7 +783,8 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <meta property="og:image"       content="{escape(og_image)}" />
   <meta property="og:image:alt"   content="{escape(og_image_alt)}" />
   <meta property="og:locale"      content="en_US" />
-  <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="{escape(title)}" />
   <meta name="twitter:description" content="{desc}" />
   <meta name="twitter:image"       content="{escape(og_image)}" />
@@ -778,8 +795,11 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <link rel="stylesheet" href="../css/pages.css?v=11" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/article.css?v=6" />
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="{SITE_BASE_URL}/feed.xml" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="{SITE_BASE_URL}/assets/apple-touch-icon.png" />
+    <link rel="alternate" hreflang="en-US" href="{canonical}" />
+    <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="{SITE_BASE_URL}/feed.xml" />
+    <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="{SITE_BASE_URL}/llms.txt" />
   <script type="application/ld+json">
   {{
     "@context": "https://schema.org",
@@ -791,11 +811,28 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
         "url": "{canonical}",
         "datePublished": "{pub_date}",
         "dateModified": "{pub_date}",
-        "author": {{ "@id": "{SITE_BASE_URL}/#organization" }},
+        "author": {{ "@id": "{SITE_BASE_URL}/#james-whitfield" }},
         "publisher": {{ "@id": "{SITE_BASE_URL}/#organization" }},
-        "description": {json_desc},
-        "image": {json_image},
-        "inLanguage": "en-US"
+                "description": {json_desc},
+                "image": {json_image},
+                "inLanguage": "en-US",
+                "isPartOf": {{ "@id": "{SITE_BASE_URL}/#website" }}
+            }},
+            {{
+                "@type": "Person",
+                "@id": "{SITE_BASE_URL}/#james-whitfield",
+                "name": "James Whitfield",
+                "jobTitle": "Chief Executive Officer",
+                "url": "{SITE_BASE_URL}/about#team",
+                "worksFor": {{ "@id": "{SITE_BASE_URL}/#organization" }}
+            }},
+            {{
+                "@type": "WebSite",
+                "@id": "{SITE_BASE_URL}/#website",
+                "url": "{SITE_BASE_URL}/",
+                "name": "OceanCloud",
+                "publisher": {{ "@id": "{SITE_BASE_URL}/#organization" }},
+                "inLanguage": "en-US"
       }},
       {{
         "@type": "BreadcrumbList",

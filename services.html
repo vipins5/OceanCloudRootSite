@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/services" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/services" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -29,6 +31,7 @@
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="SharePoint Consulting Services | OceanCloud" />
   <meta name="twitter:description" content="SharePoint intranet, M365 migration, Teams, Power Platform, security — full-service Microsoft 365 consulting from OceanCloud." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
@@ -41,6 +44,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
   <script type="application/ld+json">
@@ -52,23 +56,59 @@
         "@id": "https://oceancloudconsults.com/services#webpage",
         "url": "https://oceancloudconsults.com/services",
         "name": "SharePoint & M365 Consulting Services | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-        "about": { "@id": "https://oceancloudconsults.com/#organization" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
+        "about": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "SharePoint intranet, M365 migration, Teams, Power Platform & security consulting. Fixed-price engagements. Microsoft Solutions Partner, USA.",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://oceancloudconsults.com/services" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://oceancloudconsults.com/services"
+            }
           ]
         }
       },
       {
         "@type": "Service",
         "name": "Microsoft 365 & SharePoint Consulting",
-        "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-        "areaServed": { "@type": "Country", "name": "United States" },
-        "serviceType": ["SharePoint Consulting", "M365 Migration", "Teams Implementation", "Power Platform", "Security & Compliance", "Adoption Training"]
+        "provider": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "serviceType": [
+          "SharePoint Consulting",
+          "M365 Migration",
+          "Teams Implementation",
+          "Power Platform",
+          "Security & Compliance",
+          "Adoption Training"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }
@@ -594,107 +634,141 @@
 <script src="js/chat.js?v=7"></script>
 
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "https://oceancloudconsults.com/services",
-      "url": "https://oceancloudconsults.com/services",
-      "name": "SharePoint Consulting Services | M365 Migration & Support | OceanCloud",
-      "description": "Full-service SharePoint consulting: intranet design, SharePoint Online migration, Microsoft Teams implementation, Power Platform, security & compliance, and M365 training.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://oceancloudconsults.com/services" }
-        ]
-      }
-    },
-    {
-      "@type": "ItemList",
-      "name": "OceanCloud Microsoft 365 Consulting Services",
-      "description": "Comprehensive SharePoint and Microsoft 365 consulting services offered by OceanCloud.",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "Service",
-            "name": "SharePoint Consulting & Intranet Design",
-            "description": "Design and build modern SharePoint Online intranets — from information architecture to custom branding, departmental hubs, and search optimisation.",
-            "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-            "serviceType": "SharePoint Consulting",
-            "areaServed": "US"
-          }
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/services",
+        "url": "https://oceancloudconsults.com/services",
+        "name": "SharePoint Consulting Services | M365 Migration & Support | OceanCloud",
+        "description": "Full-service SharePoint consulting: intranet design, SharePoint Online migration, Microsoft Teams implementation, Power Platform, security & compliance, and M365 training.",
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
         },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "Service",
-            "name": "Microsoft 365 Migration",
-            "description": "Zero-downtime migration from on-premises Exchange, SharePoint 2013/2016/2019, and file shares to Microsoft 365 cloud.",
-            "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-            "serviceType": "M365 Migration",
-            "areaServed": "US"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "Service",
-            "name": "Microsoft Teams & Viva Implementation",
-            "description": "End-to-end Teams deployment including governance, channel structure, app configuration, Viva Connections, and frontline worker enablement.",
-            "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-            "serviceType": "Microsoft Teams Consulting",
-            "areaServed": "US"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "item": {
-            "@type": "Service",
-            "name": "Power Platform Development",
-            "description": "Custom Power Apps, Power Automate flows, and Power BI dashboards to automate business processes and surface real-time insights.",
-            "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-            "serviceType": "Power Platform Consulting",
-            "areaServed": "US"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 5,
-          "item": {
-            "@type": "Service",
-            "name": "Security & Compliance",
-            "description": "Zero Trust architecture, Entra ID, Conditional Access, Microsoft Purview, DLP, and Defender for Microsoft 365 — protecting your data and meeting regulatory requirements.",
-            "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-            "serviceType": "Microsoft 365 Security Consulting",
-            "areaServed": "US"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 6,
-          "item": {
-            "@type": "Service",
-            "name": "Adoption & Training",
-            "description": "Change management programmes, end-user training workshops, and champions networks to drive sustained Microsoft 365 adoption across your organisation.",
-            "provider": { "@id": "https://oceancloudconsults.com/#organization" },
-            "serviceType": "Microsoft 365 Training",
-            "areaServed": "US"
-          }
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://oceancloudconsults.com/services"
+            }
+          ]
         }
-      ]
-    }
-  ]
-}
-</script>
+      },
+      {
+        "@type": "ItemList",
+        "name": "OceanCloud Microsoft 365 Consulting Services",
+        "description": "Comprehensive SharePoint and Microsoft 365 consulting services offered by OceanCloud.",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "Service",
+              "name": "SharePoint Consulting & Intranet Design",
+              "description": "Design and build modern SharePoint Online intranets — from information architecture to custom branding, departmental hubs, and search optimisation.",
+              "provider": {
+                "@id": "https://oceancloudconsults.com/#organization"
+              },
+              "serviceType": "SharePoint Consulting",
+              "areaServed": "US"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "Service",
+              "name": "Microsoft 365 Migration",
+              "description": "Zero-downtime migration from on-premises Exchange, SharePoint 2013/2016/2019, and file shares to Microsoft 365 cloud.",
+              "provider": {
+                "@id": "https://oceancloudconsults.com/#organization"
+              },
+              "serviceType": "M365 Migration",
+              "areaServed": "US"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "Service",
+              "name": "Microsoft Teams & Viva Implementation",
+              "description": "End-to-end Teams deployment including governance, channel structure, app configuration, Viva Connections, and frontline worker enablement.",
+              "provider": {
+                "@id": "https://oceancloudconsults.com/#organization"
+              },
+              "serviceType": "Microsoft Teams Consulting",
+              "areaServed": "US"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "Service",
+              "name": "Power Platform Development",
+              "description": "Custom Power Apps, Power Automate flows, and Power BI dashboards to automate business processes and surface real-time insights.",
+              "provider": {
+                "@id": "https://oceancloudconsults.com/#organization"
+              },
+              "serviceType": "Power Platform Consulting",
+              "areaServed": "US"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "Service",
+              "name": "Security & Compliance",
+              "description": "Zero Trust architecture, Entra ID, Conditional Access, Microsoft Purview, DLP, and Defender for Microsoft 365 — protecting your data and meeting regulatory requirements.",
+              "provider": {
+                "@id": "https://oceancloudconsults.com/#organization"
+              },
+              "serviceType": "Microsoft 365 Security Consulting",
+              "areaServed": "US"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+              "@type": "Service",
+              "name": "Adoption & Training",
+              "description": "Change management programmes, end-user training workshops, and champions networks to drive sustained Microsoft 365 adoption across your organisation.",
+              "provider": {
+                "@id": "https://oceancloudconsults.com/#organization"
+              },
+              "serviceType": "Microsoft 365 Training",
+              "areaServed": "US"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
 
 <!-- ===== COOKIE CONSENT BANNER ===== -->
 <div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">

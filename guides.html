@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/guides" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/guides" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -21,17 +23,18 @@
   <meta property="og:title"       content="Microsoft 365 &amp; SharePoint Guides | OceanCloud" />
   <meta property="og:description" content="Free in-depth guides on SharePoint, M365 migration, Power Automate, and more — written by OceanCloud's certified M365 consultants." />
   <meta property="og:url"         content="https://oceancloudconsults.com/guides" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
-  <meta property="og:image:alt"   content="Microsoft 365 &amp; SharePoint Guides" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt"   content="OceanCloud Microsoft 365 and SharePoint guides" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale"      content="en_US" />
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Microsoft 365 &amp; SharePoint Guides | OceanCloud" />
   <meta name="twitter:description" content="Free in-depth guides on SharePoint permissions, M365 migration, Power Automate, and intranet best practices." />
-  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -54,15 +57,37 @@
         "@id": "https://oceancloudconsults.com/guides#webpage",
         "url": "https://oceancloudconsults.com/guides",
         "name": "Microsoft 365 & SharePoint Guides | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
         "description": "Free, in-depth guides on SharePoint permissions, Microsoft 365 migration, Teams vs SharePoint, Power Automate, and intranet best practices — written by OceanCloud's certified consultants.",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://oceancloudconsults.com/guides"
+            }
           ]
         }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }

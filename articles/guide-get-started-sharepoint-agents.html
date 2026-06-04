@@ -11,6 +11,7 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
@@ -23,6 +24,7 @@
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Agents in SharePoint Guide: Custom Copilot Agents" />
   <meta name="twitter:description" content="Plain-English 2026 guide to SharePoint agents, custom Copilot agents, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and fixes." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
@@ -36,7 +38,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -47,46 +51,181 @@
         "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents#article",
         "headline": "Agents in SharePoint Guide: Custom Copilot Agents",
         "url": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents"
+        },
         "datePublished": "2026-05-28",
-        "dateModified": "2026-05-29",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "2026 guide to SharePoint agents and custom Copilot agents: setup, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and troubleshooting.",
         "image": "https://oceancloudconsults.com/assets/og-services.jpg",
-        "keywords": ["agents in SharePoint", "SharePoint agents", "SharePoint agent limits", "SharePoint agent troubleshooting", "custom Copilot agents", "Copilot Studio SharePoint", "Microsoft 365 Copilot agents", "SharePoint agent PowerShell", "Agent Insights", "Agent Access Insights"],
+        "keywords": [
+          "agents in SharePoint",
+          "SharePoint agents",
+          "SharePoint agent limits",
+          "SharePoint agent troubleshooting",
+          "custom Copilot agents",
+          "Copilot Studio SharePoint",
+          "Microsoft 365 Copilot agents",
+          "SharePoint agent PowerShell",
+          "Agent Insights",
+          "Agent Access Insights"
+        ],
         "citation": [
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf", "name": "Get started with agents in SharePoint" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42", "name": "Create an agent in SharePoint" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/interact-with-agents-in-sharepoint-bda7dd7a-2498-49de-acd7-a830d6d9fb24", "name": "Interact with agents in SharePoint" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3", "name": "Share an agent from SharePoint in Teams" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/manage-agents-in-sharepoint-bcab837a-835c-4a1a-8ad4-d53a353c369f", "name": "Manage agents in SharePoint" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/office/frequently-asked-questions-about-copilot-in-sharepoint-eb1b7668-3d98-4a93-98ef-f0c6dfc694f0", "name": "FAQs about Copilot in SharePoint" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint", "name": "Publish an agent to SharePoint" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint", "name": "Add SharePoint as a knowledge source" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas", "name": "Copilot Studio quotas and limits" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/optimize-content-retrieval", "name": "Optimize content retrieval" },
-          { "@type": "WebPage", "url": "https://azure.microsoft.com/en-us/pricing/details/copilot-studio/", "name": "Microsoft Copilot Studio pricing" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-agents-azure-billing", "name": "Use agents with pay-as-you-go billing" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint", "name": "Manage access to agents in SharePoint" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/insights-on-sharepoint-agents", "name": "Insights report on agents in SharePoint" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/insights-on-agent-access", "name": "Monitor agent access to SharePoint and OneDrive" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery", "name": "Restricted Content Discovery for SharePoint" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/topic/authoring-with-ai-in-sharepoint-an-overview-a22514c9-7bc5-4c04-a599-455d573a1800", "name": "Authoring with AI in SharePoint" },
-          { "@type": "WebPage", "url": "https://support.microsoft.com/en-us/topic/ai-in-sharepoint-an-overview-c0b1efc3-81d0-4981-8be9-7ba3a75fae15", "name": "AI in SharePoint overview" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new", "name": "What's new in Copilot Studio" },
-          { "@type": "WebPage", "url": "https://www.microsoft.com/en-us/microsoft-365/roadmap?filters=&searchterms=515465", "name": "Microsoft 365 Roadmap item 515465" }
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-au/office/get-started-with-agents-in-sharepoint-69e2faf9-2c1e-4baa-8305-23e625021bcf",
+            "name": "Get started with agents in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-us/office/create-an-agent-in-sharepoint-d16c6ca1-a8e3-4096-af49-67e1cfdddd42",
+            "name": "Create an agent in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-au/office/interact-with-agents-in-sharepoint-bda7dd7a-2498-49de-acd7-a830d6d9fb24",
+            "name": "Interact with agents in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-au/office/share-an-agent-from-sharepoint-in-teams-6dcbf7b5-8c13-44e5-a68a-dbd71fb76ad3",
+            "name": "Share an agent from SharePoint in Teams"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-us/office/manage-agents-in-sharepoint-bcab837a-835c-4a1a-8ad4-d53a353c369f",
+            "name": "Manage agents in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-us/office/frequently-asked-questions-about-copilot-in-sharepoint-eb1b7668-3d98-4a93-98ef-f0c6dfc694f0",
+            "name": "FAQs about Copilot in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint",
+            "name": "Publish an agent to SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint",
+            "name": "Add SharePoint as a knowledge source"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas",
+            "name": "Copilot Studio quotas and limits"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/optimize-content-retrieval",
+            "name": "Optimize content retrieval"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://azure.microsoft.com/en-us/pricing/details/copilot-studio/",
+            "name": "Microsoft Copilot Studio pricing"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-agents-azure-billing",
+            "name": "Use agents with pay-as-you-go billing"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/manage-access-agents-in-sharepoint",
+            "name": "Manage access to agents in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/insights-on-sharepoint-agents",
+            "name": "Insights report on agents in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/insights-on-agent-access",
+            "name": "Monitor agent access to SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery",
+            "name": "Restricted Content Discovery for SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-us/topic/authoring-with-ai-in-sharepoint-an-overview-a22514c9-7bc5-4c04-a599-455d573a1800",
+            "name": "Authoring with AI in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-us/topic/ai-in-sharepoint-an-overview-c0b1efc3-81d0-4981-8be9-7ba3a75fae15",
+            "name": "AI in SharePoint overview"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new",
+            "name": "What's new in Copilot Studio"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://www.microsoft.com/en-us/microsoft-365/roadmap?filters=&searchterms=515465",
+            "name": "Microsoft 365 Roadmap item 515465"
+          }
         ],
         "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "Get Started with SharePoint Agents", "item": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Get Started with SharePoint Agents",
+            "item": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents"
+          }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
       }
     ]
   }

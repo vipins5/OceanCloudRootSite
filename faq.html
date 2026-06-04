@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/faq" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/faq" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -21,13 +23,14 @@
   <meta property="og:title"       content="Microsoft 365 &amp; SharePoint FAQ | OceanCloud" />
   <meta property="og:description" content="Answers to common Microsoft 365 and SharePoint questions from OceanCloud&#x27;s certified consultants." />
   <meta property="og:url"         content="https://oceancloudconsults.com/faq" />
-  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
-  <meta property="og:image:alt"   content="Microsoft 365 &amp; SharePoint FAQ" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-faq.jpg" />
+  <meta property="og:image:alt"   content="OceanCloud Microsoft 365 and SharePoint FAQ" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Microsoft 365 &amp; SharePoint FAQ | OceanCloud" />
   <meta name="twitter:description" content="Answers to common Microsoft 365 and SharePoint questions from OceanCloud&#x27;s certified consultants." />
-  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-faq.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,6 +41,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
   <script type="application/ld+json">
@@ -49,21 +53,71 @@
         "@id": "https://oceancloudconsults.com/faq#webpage",
         "url": "https://oceancloudconsults.com/faq",
         "name": "Microsoft 365 & SharePoint FAQ | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
         "description": "Answers to the most common Microsoft 365 and SharePoint questions from OceanCloud's certified consultants.",
         "mainEntity": [
-          {"@type":"Question","name":"What is SharePoint Online?","acceptedAnswer":{"@type":"Answer","text":"SharePoint Online is Microsoft's cloud-based collaboration and document management platform, included in Microsoft 365 subscriptions. It allows teams to store, organise, and share documents and data, build intranet sites, and automate business processes — all without managing on-premises servers."}},
-          {"@type":"Question","name":"What's the difference between SharePoint and OneDrive?","acceptedAnswer":{"@type":"Answer","text":"OneDrive is personal cloud storage for individual files — think of it as your private drive in the cloud. SharePoint is a team collaboration platform for shared documents, team sites, and intranet content. In practice, files you share in Microsoft Teams are stored in SharePoint, while files you keep private live in OneDrive."}},
-          {"@type":"Question","name":"How long does a Microsoft 365 migration typically take?","acceptedAnswer":{"@type":"Answer","text":"For a small organisation (under 100 users), a well-planned M365 migration can take 4–8 weeks. Mid-size organisations (100–500 users) typically need 8–16 weeks. Large enterprises may run phased migrations over 6–12 months. The single biggest variable is how much cleanup and governance work is needed before migration begins."}},
-          {"@type":"Question","name":"Do I need a consultant for SharePoint?","acceptedAnswer":{"@type":"Answer","text":"For basic document storage, no. But if you're planning an intranet, migrating from another platform, configuring governance and permissions at scale, or building Power Automate workflows, a consultant will save significant time and prevent costly mistakes. Most clients save more in rework avoidance than they spend on consulting fees."}}
+          {
+            "@type": "Question",
+            "name": "What is SharePoint Online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint Online is Microsoft's cloud-based collaboration and document management platform, included in Microsoft 365 subscriptions. It allows teams to store, organise, and share documents and data, build intranet sites, and automate business processes — all without managing on-premises servers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What's the difference between SharePoint and OneDrive?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OneDrive is personal cloud storage for individual files — think of it as your private drive in the cloud. SharePoint is a team collaboration platform for shared documents, team sites, and intranet content. In practice, files you share in Microsoft Teams are stored in SharePoint, while files you keep private live in OneDrive."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a Microsoft 365 migration typically take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For a small organisation (under 100 users), a well-planned M365 migration can take 4–8 weeks. Mid-size organisations (100–500 users) typically need 8–16 weeks. Large enterprises may run phased migrations over 6–12 months. The single biggest variable is how much cleanup and governance work is needed before migration begins."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a consultant for SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For basic document storage, no. But if you're planning an intranet, migrating from another platform, configuring governance and permissions at scale, or building Power Automate workflows, a consultant will save significant time and prevent costly mistakes. Most clients save more in rework avoidance than they spend on consulting fees."
+            }
+          }
         ],
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-            { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://oceancloudconsults.com/faq" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "FAQ",
+              "item": "https://oceancloudconsults.com/faq"
+            }
           ]
         }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }

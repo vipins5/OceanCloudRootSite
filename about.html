@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/about" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/about" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -29,6 +31,7 @@
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="About OceanCloud | SharePoint & M365 Consultants" />
   <meta name="twitter:description" content="Microsoft Solutions Partner with 12+ years of SharePoint and M365 expertise. 40+ certifications, 150+ projects delivered." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-about.jpg" />
@@ -41,6 +44,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
   <script type="application/ld+json">
@@ -52,16 +56,40 @@
         "@id": "https://oceancloudconsults.com/about#webpage",
         "url": "https://oceancloudconsults.com/about",
         "name": "Expert SharePoint & M365 Consultants | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-        "about": { "@id": "https://oceancloudconsults.com/#organization" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
+        "about": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Certified Microsoft Solutions Partner. 12+ years, 150+ SharePoint & M365 projects, 40+ certifications, 98% client satisfaction.",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-            { "@type": "ListItem", "position": 2, "name": "About", "item": "https://oceancloudconsults.com/about" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About",
+              "item": "https://oceancloudconsults.com/about"
+            }
           ]
         }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }
@@ -467,68 +495,101 @@
 <script src="js/chat.js?v=7"></script>
 
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "AboutPage",
-      "@id": "https://oceancloudconsults.com/about",
-      "url": "https://oceancloudconsults.com/about",
-      "name": "About OceanCloud | Expert SharePoint & M365 Consultants | Microsoft Solutions Partner",
-      "description": "Meet OceanCloud — a certified Microsoft Solutions Partner with 12+ years of SharePoint and Microsoft 365 consulting experience serving businesses across the United States.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
-      "about": { "@id": "https://oceancloudconsults.com/#organization" },
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com/" },
-          { "@type": "ListItem", "position": 2, "name": "About", "item": "https://oceancloudconsults.com/about" }
-        ]
-      }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://oceancloudconsults.com/#organization",
-      "name": "OceanCloud",
-      "url": "https://oceancloudconsults.com/",
-      "logo": "https://oceancloudconsults.com/assets/logo.png",
-      "foundingDate": "2013",
-      "description": "Microsoft Solutions Partner specialising in SharePoint consulting, Microsoft 365 migration, Power Platform development, and workplace transformation.",
-      "areaServed": "US",
-      "numberOfEmployees": { "@type": "QuantitativeValue", "value": 15 },
-      "employee": [
-        {
-          "@type": "Person",
-          "name": "James Whitfield",
-          "jobTitle": "Chief Executive Officer",
-          "description": "SharePoint MVP with 18 years of enterprise Microsoft deployments. Personally oversees every client engagement.",
-          "worksFor": { "@id": "https://oceancloudconsults.com/#organization" }
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://oceancloudconsults.com/about",
+        "url": "https://oceancloudconsults.com/about",
+        "name": "About OceanCloud | Expert SharePoint & M365 Consultants | Microsoft Solutions Partner",
+        "description": "Meet OceanCloud — a certified Microsoft Solutions Partner with 12+ years of SharePoint and Microsoft 365 consulting experience serving businesses across the United States.",
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
         },
-        {
-          "@type": "Person",
-          "name": "Sara Okafor",
-          "jobTitle": "Head of Architecture",
-          "description": "Microsoft Certified Solutions Architect specialising in M365 governance and Zero Trust security frameworks.",
-          "worksFor": { "@id": "https://oceancloudconsults.com/#organization" }
+        "about": {
+          "@id": "https://oceancloudconsults.com/#organization"
         },
-        {
-          "@type": "Person",
-          "name": "Ben Marchetti",
-          "jobTitle": "Lead Power Platform Engineer",
-          "description": "Power Platform champion who has automated over 200 business processes across finance, legal, and retail sectors.",
-          "worksFor": { "@id": "https://oceancloudconsults.com/#organization" }
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About",
+              "item": "https://oceancloudconsults.com/about"
+            }
+          ]
         }
-      ],
-      "award": [
-        "Microsoft Solutions Partner — Modern Work",
-        "Microsoft Solutions Partner — Security",
-        "ISO 27001 Certified"
-      ]
-    }
-  ]
-}
-</script>
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://oceancloudconsults.com/#organization",
+        "name": "OceanCloud",
+        "url": "https://oceancloudconsults.com/",
+        "logo": "https://oceancloudconsults.com/assets/logo.png",
+        "foundingDate": "2013",
+        "description": "Microsoft Solutions Partner specialising in SharePoint consulting, Microsoft 365 migration, Power Platform development, and workplace transformation.",
+        "areaServed": "US",
+        "numberOfEmployees": {
+          "@type": "QuantitativeValue",
+          "value": 15
+        },
+        "employee": [
+          {
+            "@type": "Person",
+            "name": "James Whitfield",
+            "jobTitle": "Chief Executive Officer",
+            "description": "SharePoint MVP with 18 years of enterprise Microsoft deployments. Personally oversees every client engagement.",
+            "worksFor": {
+              "@id": "https://oceancloudconsults.com/#organization"
+            }
+          },
+          {
+            "@type": "Person",
+            "name": "Sara Okafor",
+            "jobTitle": "Head of Architecture",
+            "description": "Microsoft Certified Solutions Architect specialising in M365 governance and Zero Trust security frameworks.",
+            "worksFor": {
+              "@id": "https://oceancloudconsults.com/#organization"
+            }
+          },
+          {
+            "@type": "Person",
+            "name": "Ben Marchetti",
+            "jobTitle": "Lead Power Platform Engineer",
+            "description": "Power Platform champion who has automated over 200 business processes across finance, legal, and retail sectors.",
+            "worksFor": {
+              "@id": "https://oceancloudconsults.com/#organization"
+            }
+          }
+        ],
+        "award": [
+          "Microsoft Solutions Partner — Modern Work",
+          "Microsoft Solutions Partner — Security",
+          "ISO 27001 Certified"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
 
 <!-- ===== COOKIE CONSENT BANNER ===== -->
 <div id="oc-cookie-banner" role="dialog" aria-label="Cookie consent">

@@ -13,7 +13,9 @@
   <meta name="author" content="OceanCloud" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
+  <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="https://oceancloudconsults.com/archive" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/archive" />
 
   <!-- ═══ OPEN GRAPH ═══ -->
   <meta property="og:type"        content="website" />
@@ -29,6 +31,7 @@
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="M365 News Archive | OceanCloud" />
   <meta name="twitter:description" content="Every Microsoft 365 and SharePoint update we have covered, organised by month." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-home.jpg" />
@@ -42,6 +45,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
   <script type="application/ld+json">
@@ -53,16 +57,43 @@
         "@id": "https://oceancloudconsults.com/archive#webpage",
         "url": "https://oceancloudconsults.com/archive",
         "name": "Microsoft 365 News Archive | OceanCloud",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" },
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        },
         "description": "Full archive of Microsoft SharePoint and M365 news updates curated by OceanCloud.",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-            { "@type": "ListItem", "position": 2, "name": "News", "item": "https://oceancloudconsults.com/news" },
-            { "@type": "ListItem", "position": 3, "name": "Archive", "item": "https://oceancloudconsults.com/archive" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://oceancloudconsults.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "News",
+              "item": "https://oceancloudconsults.com/news"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Archive",
+              "item": "https://oceancloudconsults.com/archive"
+            }
           ]
         }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
       }
     ]
   }

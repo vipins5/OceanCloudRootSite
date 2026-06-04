@@ -11,19 +11,21 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="OceanCloud" />
   <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" />
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
   <meta property="og:title"       content="Modernize SharePoint Classic Calendars" />
   <meta property="og:description" content="Modernize SharePoint classic calendar lists with PnP PowerShell pre-checks, dry-run support, and post-change validation." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" />
-  <meta property="og:image"       content="https://learn.microsoft.com/en-us/sharepoint/dev/images/view-dropdown-menu.png" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="SharePoint view dropdown menu screenshot" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
   <meta name="twitter:title"       content="Modernize SharePoint Classic Calendars | OceanCloud" />
   <meta name="twitter:description" content="Modernize SharePoint classic calendar lists with PnP PowerShell pre-checks, dry-run support, and post-change validation." />
-  <meta name="twitter:image"       content="https://learn.microsoft.com/en-us/sharepoint/dev/images/view-dropdown-menu.png" />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +36,9 @@
   <link rel="stylesheet" href="../css/code.css?v=1" />
   <link rel="stylesheet" href="../css/article.css?v=7" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
 
   <script type="application/ld+json">
   {
@@ -45,29 +49,91 @@
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#article",
         "headline": "Switch SharePoint Classic Calendar to Modern View with PnP PowerShell",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view"
+        },
         "datePublished": "2026-05-27",
-        "dateModified": "2026-05-27",
-        "author": { "@id": "https://oceancloudconsults.com/#organization" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "dateModified": "2026-06-04",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
         "description": "Switch classic calendar list views to modern-friendly SharePoint list views using PnP PowerShell with pre-checks for PowerShell version, module version, permissions, list schema, and post-change verification.",
-        "image": "https://learn.microsoft.com/en-us/sharepoint/dev/images/view-dropdown-menu.png",
-        "keywords": ["SharePoint calendar modern view", "PnP PowerShell", "SharePoint list view migration", "classic to modern", "PowerShell pre-checks"],
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "SharePoint calendar modern view",
+          "PnP PowerShell",
+          "SharePoint list view migration",
+          "classic to modern",
+          "PowerShell pre-checks"
+        ],
         "citation": [
-          { "@type": "WebPage", "url": "https://pnp.github.io/powershell/", "name": "PnP PowerShell documentation" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting", "name": "SharePoint view and formatting guidance" },
-          { "@type": "WebPage", "url": "https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints", "name": "SharePoint REST API operations" }
+          {
+            "@type": "WebPage",
+            "url": "https://pnp.github.io/powershell/",
+            "name": "PnP PowerShell documentation"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting",
+            "name": "SharePoint view and formatting guidance"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints",
+            "name": "SharePoint REST API operations"
+          }
         ],
         "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "Classic Calendar to Modern View", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view" }
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Classic Calendar to Modern View",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view"
+          }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
       }
     ]
   }
