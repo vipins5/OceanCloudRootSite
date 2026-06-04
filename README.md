@@ -98,6 +98,28 @@ npm run deploy
 
 ---
 
+### Microsoft 365 Service Health via Cloudflare Worker
+| Detail | Value |
+|---|---|
+| Provider | [Microsoft Graph service communications API](https://learn.microsoft.com/graph/api/resources/service-communications-api-overview) |
+| Public endpoint | `https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/m365/service-health` |
+| Worker folder | `oceancloud-ai-proxy/` |
+| Required Graph application permission | `ServiceHealth.Read.All` with admin consent |
+| Secret bindings | `M365_HEALTH_TENANT_ID`, `M365_HEALTH_CLIENT_ID`, `M365_HEALTH_CLIENT_SECRET` |
+
+The service health dashboard uses tenant-scoped Microsoft Graph data. Region buttons filter active issue text when Microsoft mentions a region such as US, EMEA, APAC/APGC, India, UK, Canada, or Australia.
+
+To connect a Microsoft Entra app:
+```powershell
+cd oceancloud-ai-proxy
+npx wrangler secret put M365_HEALTH_TENANT_ID
+npx wrangler secret put M365_HEALTH_CLIENT_ID
+npx wrangler secret put M365_HEALTH_CLIENT_SECRET
+npm run deploy
+```
+
+---
+
 ### Google Custom Search Engine — Web Search
 | Detail | Value |
 |---|---|

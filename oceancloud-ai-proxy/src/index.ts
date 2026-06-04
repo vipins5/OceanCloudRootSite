@@ -1,6 +1,9 @@
 interface Env {
 	GROQ_API_KEY: string;
 	COMMENTS_DB?: D1Database;
+	M365_HEALTH_TENANT_ID?: string;
+	M365_HEALTH_CLIENT_ID?: string;
+	M365_HEALTH_CLIENT_SECRET?: string;
 	MICROSOFT_CLIENT_ID?: string;
 	MICROSOFT_CLIENT_SECRET?: string;
 	GOOGLE_CLIENT_ID?: string;
@@ -18,6 +21,31 @@ type ChatRole = "user" | "assistant";
 interface ChatMessage {
 	role: ChatRole;
 	content: string;
+}
+
+type HealthRegion = "global" | "us" | "emea" | "apac" | "india" | "uk" | "canada" | "australia";
+
+interface GraphServiceHealth {
+	id?: string;
+	service?: string;
+	status?: string;
+}
+
+interface GraphServiceIssue {
+	id?: string;
+	title?: string;
+	classification?: string;
+	status?: string;
+	service?: string;
+	feature?: string;
+	featureGroup?: string;
+	impactDescription?: string;
+	isResolved?: boolean;
+	startDateTime?: string;
+	endDateTime?: string;
+	lastModifiedDateTime?: string;
+	details?: Array<{ name?: string; value?: string }>;
+	posts?: Array<{ description?: { content?: string } }>;
 }
 
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
@@ -46,6 +74,19 @@ const GITHUB_AUTH_ENDPOINT = "https://github.com/login/oauth/authorize";
 const GITHUB_TOKEN_ENDPOINT = "https://github.com/login/oauth/access_token";
 const GITHUB_USER_ENDPOINT = "https://api.github.com/user";
 const GITHUB_EMAILS_ENDPOINT = "https://api.github.com/user/emails";
+const GRAPH_BASE_URL = "https://graph.microsoft.com/v1.0";
+const M365_HEALTH_CACHE_SECONDS = 300;
+
+const HEALTH_REGION_TERMS: Record<HealthRegion, string[]> = {
+	global: [],
+	us: ["united states", " u.s.", " u.s ", " us ", "usa", "north america", "nam", "americas"],
+	emea: ["emea", "europe", "middle east", "africa", "european", "eu ", "uk", "united kingdom", "germany", "france"],
+	apac: ["apac", "apgc", "asia pacific", "asia-pacific", "asia", "australia", "japan", "singapore", "korea"],
+	india: ["india", "south asia"],
+	uk: ["uk", "united kingdom", "great britain", "britain", "england"],
+	canada: ["canada", "canadian"],
+	australia: ["australia", "australian", "anz"],
+};
 
 const SYSTEM_PROMPT = `You are OceanBot, the AI assistant for OceanCloud — a Microsoft Solutions Partner based in the United States specialising in SharePoint Online, Microsoft 365, Power Platform, Microsoft Teams, Viva, and workplace transformation.
 
@@ -107,6 +148,17 @@ function jsonResponse(data: unknown, status: number, origin: string): Response {
 		headers: {
 			"Content-Type": "application/json; charset=utf-8",
 			"Cache-Control": "no-store",
+			...corsHeaders(origin),
+		},
+	});
+}
+
+function cachedJsonResponse(data: unknown, status: number, origin: string, maxAgeSeconds: number): Response {
+	return new Response(JSON.stringify(data), {
+		status,
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+			"Cache-Control": `public, max-age=${maxAgeSeconds}`,
 			...corsHeaders(origin),
 		},
 	});
@@ -212,6 +264,221 @@ function getBearerToken(request: Request): string {
 	const header = request.headers.get("Authorization") || "";
 	const match = header.match(/^Bearer\s+(.+)$/i);
 	return match ? match[1].trim() : "";
+}
+
+function stripHtml(value: unknown): string {
+	return String(value || "")
+		.replace(/<[^>]+>/g, " ")
+		.replace(/&nbsp;/gi, " ")
+		.replace(/&amp;/gi, "&")
+		.replace(/&lt;/gi, "<")
+		.replace(/&gt;/gi, ">")
+		.replace(/&quot;/gi, "\"")
+		.replace(/&#39;/gi, "'")
+		.replace(/\s+/g, " ")
+		.trim();
+}
+
+function normalizeHealthRegion(value: string | null): HealthRegion {
+	const normalized = String(value || "global").trim().toLowerCase();
+	if (["us", "usa", "united-states", "united_states"].includes(normalized)) return "us";
+	if (["emea", "europe", "eu"].includes(normalized)) return "emea";
+	if (["apac", "apgc", "asia", "asia-pacific", "asia_pacific"].includes(normalized)) return "apac";
+	if (["india", "in"].includes(normalized)) return "india";
+	if (["uk", "gb", "united-kingdom", "united_kingdom"].includes(normalized)) return "uk";
+	if (["canada", "ca"].includes(normalized)) return "canada";
+	if (["australia", "au", "anz"].includes(normalized)) return "australia";
+	return "global";
+}
+
+function issueSearchText(issue: GraphServiceIssue): string {
+	const details = Array.isArray(issue.details)
+		? issue.details.map((detail) => `${detail.name || ""} ${detail.value || ""}`).join(" ")
+		: "";
+	const posts = Array.isArray(issue.posts)
+		? issue.posts.map((post) => post.description?.content || "").join(" ")
+		: "";
+	return stripHtml([
+		issue.title,
+		issue.service,
+		issue.feature,
+		issue.featureGroup,
+		issue.impactDescription,
+		details,
+		posts,
+	].join(" ")).toLowerCase();
+}
+
+function issueMatchesRegion(issue: GraphServiceIssue, region: HealthRegion): boolean {
+	if (region === "global") return true;
+	const terms = HEALTH_REGION_TERMS[region] || [];
+	const text = ` ${issueSearchText(issue)} `;
+	return terms.some((term) => text.includes(term));
+}
+
+function severityRank(status: string | undefined): number {
+	const value = String(status || "").toLowerCase();
+	if (value.includes("interruption") || value.includes("degradation") || value.includes("investigating")) return 3;
+	if (value.includes("advisory") || value.includes("extended") || value.includes("restoring")) return 2;
+	if (value.includes("restored") || value.includes("operational")) return 1;
+	return 0;
+}
+
+function activeIssue(issue: GraphServiceIssue): boolean {
+	if (issue.isResolved === true) return false;
+	const status = String(issue.status || "").toLowerCase();
+	return !status.includes("restored") && !status.includes("resolved");
+}
+
+async function getGraphAccessToken(env: Env): Promise<string> {
+	if (!env.M365_HEALTH_TENANT_ID || !env.M365_HEALTH_CLIENT_ID || !env.M365_HEALTH_CLIENT_SECRET) {
+		throw new Error("Microsoft 365 service health is not configured");
+	}
+
+	const tokenUrl = `https://login.microsoftonline.com/${encodeURIComponent(env.M365_HEALTH_TENANT_ID)}/oauth2/v2.0/token`;
+	const response = await fetch(tokenUrl, {
+		method: "POST",
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		body: new URLSearchParams({
+			client_id: env.M365_HEALTH_CLIENT_ID,
+			client_secret: env.M365_HEALTH_CLIENT_SECRET,
+			grant_type: "client_credentials",
+			scope: "https://graph.microsoft.com/.default",
+		}),
+	});
+
+	const data = await response.json().catch(() => null) as { access_token?: string; error_description?: string } | null;
+	if (!response.ok || !data?.access_token) {
+		throw new Error(data?.error_description || `Microsoft token request failed with HTTP ${response.status}`);
+	}
+	return data.access_token;
+}
+
+async function graphGet(path: string, token: string): Promise<any> {
+	const response = await fetch(`${GRAPH_BASE_URL}${path}`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			Prefer: "odata.maxpagesize=100",
+		},
+	});
+	const data = await response.json().catch(() => null) as { error?: { message?: string } } | null;
+	if (!response.ok) {
+		throw new Error(data?.error?.message || `Microsoft Graph returned HTTP ${response.status}`);
+	}
+	return data;
+}
+
+async function fetchM365HealthFromGraph(env: Env): Promise<{ services: GraphServiceHealth[]; issues: GraphServiceIssue[]; fetchedAt: string }> {
+	const token = await getGraphAccessToken(env);
+	const [healthData, issueData] = await Promise.all([
+		graphGet("/admin/serviceAnnouncement/healthOverviews", token),
+		graphGet("/admin/serviceAnnouncement/issues?$top=100", token),
+	]);
+	return {
+		services: Array.isArray(healthData?.value) ? healthData.value : [],
+		issues: Array.isArray(issueData?.value) ? issueData.value.filter(activeIssue) : [],
+		fetchedAt: new Date().toISOString(),
+	};
+}
+
+function summarizeM365Health(raw: { services: GraphServiceHealth[]; issues: GraphServiceIssue[]; fetchedAt: string }, region: HealthRegion) {
+	const regionIssues = raw.issues.filter((issue) => issueMatchesRegion(issue, region));
+	const issuesForCounts = region === "global" ? raw.issues : regionIssues;
+	const issuesByService = new Map<string, GraphServiceIssue[]>();
+
+	for (const issue of issuesForCounts) {
+		const key = issue.service || "Microsoft 365";
+		issuesByService.set(key, [...(issuesByService.get(key) || []), issue]);
+	}
+
+	const services = raw.services.map((service) => {
+		const matchingIssues = issuesByService.get(service.service || "") || [];
+		const incidents = matchingIssues.filter((issue) => String(issue.classification || "").toLowerCase() === "incident").length;
+		const advisories = matchingIssues.filter((issue) => String(issue.classification || "").toLowerCase() !== "incident").length;
+		return {
+			id: service.id || service.service || "",
+			service: service.service || service.id || "Microsoft 365",
+			status: region === "global" ? service.status || "Unknown" : matchingIssues.length ? "IssueReported" : "NoRegionalMatch",
+			incidents,
+			advisories,
+			issueCount: matchingIssues.length,
+		};
+	}).sort((a, b) => {
+		const issueDelta = b.issueCount - a.issueCount;
+		if (issueDelta) return issueDelta;
+		return severityRank(b.status) - severityRank(a.status);
+	});
+
+	const issues = issuesForCounts
+		.slice()
+		.sort((a, b) => String(b.lastModifiedDateTime || "").localeCompare(String(a.lastModifiedDateTime || "")))
+		.slice(0, 12)
+		.map((issue) => ({
+			id: issue.id || "",
+			title: stripHtml(issue.title),
+			service: issue.service || "Microsoft 365",
+			classification: issue.classification || "Advisory",
+			status: issue.status || "Active",
+			lastModifiedDateTime: issue.lastModifiedDateTime || issue.startDateTime || "",
+			impact: stripHtml(issue.impactDescription).slice(0, 240),
+		}));
+
+	return {
+		ok: true,
+		configured: true,
+		source: "Microsoft Graph service communications API",
+		region,
+		regionMode: region === "global" ? "tenant" : "text-match",
+		fetchedAt: raw.fetchedAt,
+		cachedForSeconds: M365_HEALTH_CACHE_SECONDS,
+		totals: {
+			services: raw.services.length,
+			activeIssues: raw.issues.length,
+			matchingIssues: issuesForCounts.length,
+			incidents: issuesForCounts.filter((issue) => String(issue.classification || "").toLowerCase() === "incident").length,
+			advisories: issuesForCounts.filter((issue) => String(issue.classification || "").toLowerCase() !== "incident").length,
+		},
+		services,
+		issues,
+	};
+}
+
+async function handleM365ServiceHealth(request: Request, env: Env, origin: string, ctx?: ExecutionContext): Promise<Response> {
+	const region = normalizeHealthRegion(new URL(request.url).searchParams.get("region"));
+	if (!env.M365_HEALTH_TENANT_ID || !env.M365_HEALTH_CLIENT_ID || !env.M365_HEALTH_CLIENT_SECRET) {
+		return cachedJsonResponse({
+			ok: false,
+			configured: false,
+			error: "Microsoft 365 service health is not configured",
+			requiredSecrets: ["M365_HEALTH_TENANT_ID", "M365_HEALTH_CLIENT_ID", "M365_HEALTH_CLIENT_SECRET"],
+			region,
+		}, 503, origin, 60);
+	}
+
+	const cache = caches.default;
+	const cacheKey = new Request(`${new URL(request.url).origin}/m365/service-health/raw-v1`, { method: "GET" });
+	let raw: { services: GraphServiceHealth[]; issues: GraphServiceIssue[]; fetchedAt: string } | null = null;
+	const cached = await cache.match(cacheKey);
+	if (cached) {
+		raw = await cached.json().catch(() => null) as typeof raw;
+	}
+
+	if (!raw) {
+		raw = await fetchM365HealthFromGraph(env);
+		const cacheResponse = new Response(JSON.stringify(raw), {
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+				"Cache-Control": `public, max-age=${M365_HEALTH_CACHE_SECONDS}`,
+			},
+		});
+		if (ctx) {
+			ctx.waitUntil(cache.put(cacheKey, cacheResponse));
+		} else {
+			await cache.put(cacheKey, cacheResponse);
+		}
+	}
+
+	return cachedJsonResponse(summarizeM365Health(raw, region), 200, origin, 60);
 }
 
 function getAdminToken(request: Request): string {
@@ -800,7 +1067,7 @@ async function handleChat(request: Request, env: Env, origin: string): Promise<R
 }
 
 export default {
-	async fetch(request, env): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		const url = new URL(request.url);
 
 		if (request.method === "GET" && url.pathname === "/comments/auth/microsoft/start") {
@@ -838,6 +1105,10 @@ export default {
 
 		if (request.method === "GET" && url.pathname === "/") {
 			return jsonResponse({ ok: true, service: "OceanCloud AI proxy" }, 200, origin);
+		}
+
+		if (url.pathname === "/m365/service-health" && request.method === "GET") {
+			return handleM365ServiceHealth(request, env, origin, ctx);
 		}
 
 		if (url.pathname === "/comments/config" && request.method === "GET") {
