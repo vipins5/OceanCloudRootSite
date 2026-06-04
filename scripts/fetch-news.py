@@ -246,24 +246,18 @@ ARTICLE_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "edge": {
-        "url": "../assets/news/edge.svg",
-        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
-        "alt": "OceanCloud Microsoft Edge news graphic",
-        "caption": "OceanCloud Microsoft Edge news graphic.",
-        "source_url": f"{SITE_BASE_URL}/news",
-        "source_label": "OceanCloud",
-        "width": 800,
-        "height": 280,
+        "url": "https://learn.microsoft.com/en-us/deployEdge/media/microsoft-edge-configure-the-copilot-new-tab-page/img1.png",
+        "alt": "Microsoft Edge browser interface screenshot",
+        "caption": "Representative Microsoft Edge browser screenshot from Microsoft Learn.",
+        "source_url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-overview",
+        "source_label": "Microsoft Learn",
     },
     "outlook": {
-        "url": "../assets/news/m365.svg",
-        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
-        "alt": "OceanCloud Microsoft 365 news graphic",
-        "caption": "OceanCloud Microsoft 365 news graphic.",
-        "source_url": f"{SITE_BASE_URL}/news",
-        "source_label": "OceanCloud",
-        "width": 800,
-        "height": 280,
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2025/09/header-microsoft-teams.jpg",
+        "alt": "Microsoft 365 product image from Microsoft Adoption",
+        "caption": "Representative Microsoft 365 product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/microsoft-365/",
+        "source_label": "Microsoft Adoption",
     },
     "purview-insider-risk": {
         "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-triage.png",
@@ -273,14 +267,11 @@ ARTICLE_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "purview": {
-        "url": "../assets/news/purview.svg",
-        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
-        "alt": "OceanCloud Microsoft Purview news graphic",
-        "caption": "OceanCloud Microsoft Purview news graphic.",
-        "source_url": f"{SITE_BASE_URL}/news",
-        "source_label": "OceanCloud",
-        "width": 800,
-        "height": 280,
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2024/11/header-purview.jpg",
+        "alt": "Microsoft Purview product image from Microsoft Adoption",
+        "caption": "Representative Microsoft Purview product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/microsoft-purview/",
+        "source_label": "Microsoft Adoption",
     },
     "teams-bookable": {
         "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/media/bookable-desks/automatic-association-image.png",
@@ -297,107 +288,172 @@ ARTICLE_IMAGE_FALLBACKS = {
         "source_label": "Microsoft Learn",
     },
     "teams": {
-        "url": "../assets/news/teams.svg",
-        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
-        "alt": "OceanCloud Microsoft Teams news graphic",
-        "caption": "OceanCloud Microsoft Teams news graphic.",
-        "source_url": f"{SITE_BASE_URL}/news",
-        "source_label": "OceanCloud",
-        "width": 800,
-        "height": 280,
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2025/09/header-microsoft-teams.jpg",
+        "alt": "Microsoft Teams product image from Microsoft Adoption",
+        "caption": "Representative Microsoft Teams product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/microsoft-teams/",
+        "source_label": "Microsoft Adoption",
     },
     "sharepoint": {
-        "url": "../assets/news/sharepoint.svg",
-        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
-        "alt": "OceanCloud SharePoint news graphic",
-        "caption": "OceanCloud SharePoint news graphic.",
-        "source_url": f"{SITE_BASE_URL}/news",
-        "source_label": "OceanCloud",
-        "width": 800,
-        "height": 280,
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2025/05/preview-sharepoint.jpg",
+        "alt": "Microsoft SharePoint product image from Microsoft Adoption",
+        "caption": "Representative Microsoft SharePoint product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/sharepoint/",
+        "source_label": "Microsoft Adoption",
+    },
+    "onedrive": {
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2025/10/preview-onedrive.jpg",
+        "alt": "Microsoft OneDrive product image from Microsoft Adoption",
+        "caption": "Representative Microsoft OneDrive product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/onedrive/",
+        "source_label": "Microsoft Adoption",
     },
     "m365": {
-        "url": "../assets/news/m365.svg",
-        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
-        "alt": "OceanCloud Microsoft 365 news graphic",
-        "caption": "OceanCloud Microsoft 365 news graphic.",
-        "source_url": f"{SITE_BASE_URL}/news",
-        "source_label": "OceanCloud",
-        "width": 800,
-        "height": 280,
+        "url": "https://adoption.microsoft.com/wp-content/uploads/2025/09/header-microsoft-teams.jpg",
+        "alt": "Microsoft 365 product image from Microsoft Adoption",
+        "caption": "Representative Microsoft 365 product image from Microsoft Adoption.",
+        "source_url": "https://adoption.microsoft.com/en-us/microsoft-365/",
+        "source_label": "Microsoft Adoption",
     },
 }
 
-# Microsoft Learn OG image lookup
-# For roadmap items that don't have a hardcoded screenshot, we attempt to fetch
-# a real OG image from the most relevant Microsoft Learn documentation page.
-# Keyword lists are AND-matched against title+summary (lowercased).
-# First match wins; result is cached for the run to avoid duplicate fetches.
+# TechCommunity blog matching for roadmap items
+# Strategy: roadmap items published in month M map to that product's monthly
+# "What's New in [Product] | Month Year" blog post. Those posts have rich
+# product screenshots and cover exactly the features in that month's roadmap.
+# Falls back to adoption.microsoft.com product images when no match is found.
 
-LEARN_OG_IMAGE_CACHE: dict[str, str] = {}
+# product -> TechCommunity board.id  (only boards confirmed to return entries)
+PRODUCT_BLOG_FEEDS: dict[str, str] = {
+    "teams":      "MicrosoftTeamsBlog",
+    "sharepoint": "SPBlog",
+    "copilot":    "Microsoft365CopilotBlog",
+    "outlook":    "Outlook",
+    "onedrive":   "OneDriveBlog",
+}
 
-LEARN_DOCS_CANDIDATES: list[tuple[list[str], str]] = [
-    # Teams - specific features
-    (["inline search", "compose"],           "https://learn.microsoft.com/en-us/microsoftteams/search-overview"),
-    (["new layout", "sharing content"],      "https://learn.microsoft.com/en-us/microsoftteams/configure-desktop-sharing"),
-    (["manage", "built-in", "agents"],       "https://learn.microsoft.com/en-us/microsoftteams/manage-apps"),
-    (["report", "external users"],           "https://learn.microsoft.com/en-us/microsoftteams/communicate-with-users-from-other-organizations"),
-    (["sharing recap"],                      "https://learn.microsoft.com/en-us/microsoftteams/meeting-policies-content-sharing"),
-    (["quick share", "image"],               "https://learn.microsoft.com/en-us/microsoftteams/configure-meetings-baseline-protection"),
-    (["unblock", "send message"],            "https://learn.microsoft.com/en-us/microsoftteams/block-inbound-calls"),
-    (["facilitator", "detects"],             "https://learn.microsoft.com/en-us/microsoftteams/meeting-transcription-captions"),
-    (["security detection", "admin center"], "https://learn.microsoft.com/en-us/microsoftteams/security-compliance-overview"),
-    (["download", "visibility", "control"],  "https://learn.microsoft.com/en-us/microsoftteams/teams-app-setup-policies"),
-    (["keyboard shortcuts"],                 "https://learn.microsoft.com/en-us/microsoftteams/keyboard-shortcuts"),
-    (["enhanced bookable desk"],             "https://learn.microsoft.com/en-us/microsoftteams/rooms/bookable-desks"),
-    # Purview - specific features
-    (["dlp", "optimizer"],                   "https://learn.microsoft.com/en-us/purview/dlp-overview"),
-    (["data loss prevention", "ai"],         "https://learn.microsoft.com/en-us/purview/dlp-overview"),
-    (["insider risk", "user profil"],        "https://learn.microsoft.com/en-us/purview/insider-risk-management-users"),
-    (["insider risk", "note"],               "https://learn.microsoft.com/en-us/purview/insider-risk-management-cases"),
-    (["insider risk", "alert"],              "https://learn.microsoft.com/en-us/purview/insider-risk-management-alerts"),
-    (["auto-labeling", "simulation"],        "https://learn.microsoft.com/en-us/purview/apply-sensitivity-label-automatically"),
-    # Copilot - specific features
-    (["mcp", "agent"],                       "https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-business-applications"),
-    (["copilot", "suggested rename"],        "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
-    (["copilot", "chat history"],            "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
-    (["copilot", "vision"],                  "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
-    (["mind maps", "copilot notebook"],      "https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview"),
-    # Edge / Intune
-    (["intune", "mam", "download"],          "https://learn.microsoft.com/en-us/mem/intune/apps/app-protection-policy"),
-    (["edge", "work search"],                "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-overview"),
-    (["edge", "copilot", "new tab"],         "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies"),
-    # Outlook
-    (["outlook", "unified inbox"],           "https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/outlook-for-ios-and-android/outlook-for-ios-and-android-in-the-government-cloud"),
-    # SharePoint
-    (["ai skills", "sharepoint"],            "https://learn.microsoft.com/en-us/sharepoint/sharepoint-copilot-best-practices"),
-    (["sharepoint", "copilot new tab"],      "https://learn.microsoft.com/en-us/sharepoint/sharepoint-copilot-best-practices"),
+# Per-run RSS cache: product -> list of (lowercased_title, article_url)
+_BLOG_CACHE: dict[str, list[tuple[str, str]]] = {}
+
+# Cache for already-fetched OG images: blog_url -> image_url
+_OG_IMAGE_CACHE: dict[str, str] = {}
+
+# Patterns that identify monthly "What's New" roundup posts
+_ROUNDUP_RE = re.compile(
+    r"what.s new|new in microsoft|new in sharepoint|new in teams|new in onedrive|new in outlook|"
+    r"new in copilot|monthly|build edition|release notes|new features|roundup|recap",
+    re.IGNORECASE,
+)
+
+# Month names for date-based matching
+_MONTHS = [
+    "january", "february", "march", "april", "may", "june",
+    "july", "august", "september", "october", "november", "december",
 ]
 
 
-def try_learn_image(title: str, summary: str) -> tuple[str, str]:
-    """Fetch an OG image from a matching Microsoft Learn docs page.
+def _get_blog_entries(product: str) -> list[tuple[str, str]]:
+    """Fetch and cache all TechCommunity RSS entries for a product (once per run)."""
+    if product in _BLOG_CACHE:
+        return _BLOG_CACHE[product]
+    board_id = PRODUCT_BLOG_FEEDS.get(product, "")
+    if not board_id:
+        _BLOG_CACHE[product] = []
+        return []
+    url = (
+        "https://techcommunity.microsoft.com"
+        f"/t5/s/gxcuf89792/rss/board?board.id={board_id}"
+    )
+    try:
+        feed = feedparser.parse(url, request_headers=HEADERS)
+        entries = [(e.title.lower(), e.link) for e in feed.entries]
+        _BLOG_CACHE[product] = entries
+        print(f"  [blog] Fetched {len(entries)} entries for '{product}'")
+    except Exception as exc:
+        print(f"  [blog] RSS fetch failed for '{product}': {exc}", file=sys.stderr)
+        _BLOG_CACHE[product] = []
+    return _BLOG_CACHE[product]
 
-    Tries LEARN_DOCS_CANDIDATES in order (AND-matching all keywords against
-    title+summary). Caches results keyed by Learn URL so a popular URL is only
-    fetched once per run. Returns (image_url, learn_url), or empty strings if
-    nothing useful is found.
+
+def _fetch_og_cached(url: str) -> str:
+    """fetch_og_image() with a per-run cache to avoid duplicate fetches."""
+    if url not in _OG_IMAGE_CACHE:
+        img = fetch_og_image(url)
+        _OG_IMAGE_CACHE[url] = img
+    return _OG_IMAGE_CACHE[url]
+
+
+def _is_valid_image(url: str) -> bool:
+    return bool(url) and "open-graph-image" not in url and "RE1Mu3b" not in url
+
+
+def find_blog_image_for_roadmap(item_date: str, title: str, product: str) -> str:
+    """Return a TechCommunity OG image for a roadmap item.
+
+    Two-pass strategy:
+    1. Monthly roundup match: find the 'What's New | Month Year' post whose
+       month+year matches the item's publication date. These posts have rich
+       product screenshots and directly cover that month's roadmap features.
+    2. Keyword match: scan non-roundup posts for 2+ content-word matches.
+
+    Returns empty string if nothing suitable is found.
     """
-    haystack = (title + " " + summary).lower()
-    for keywords, learn_url in LEARN_DOCS_CANDIDATES:
-        if not all(kw in haystack for kw in keywords):
+    entries = _get_blog_entries(product)
+    if not entries:
+        return ""
+
+    # --- Pass 1: monthly roundup post matching by publication date ------------
+    # Parse item_date (YYYY-MM-DD or RSS date string) to get month name + year
+    pub_month_label = ""
+    try:
+        from email.utils import parsedate_to_datetime
+        try:
+            dt = parsedate_to_datetime(item_date)
+        except Exception:
+            dt = datetime.strptime(item_date[:10], "%Y-%m-%d")
+        pub_month_label = dt.strftime("%B %Y").lower()   # e.g. "may 2026"
+    except Exception:
+        pass
+
+    if pub_month_label:
+        for blog_title, blog_url in entries:
+            if _ROUNDUP_RE.search(blog_title) and pub_month_label in blog_title:
+                img = _fetch_og_cached(blog_url)
+                if _is_valid_image(img):
+                    print(f"  [blog] Monthly match '{blog_title[:60]}' -> {img[:80]}")
+                    return img
+
+    # --- Pass 2: keyword match on non-roundup posts ---------------------------
+    stopwords = {
+        "microsoft", "teams", "sharepoint", "copilot", "outlook", "onedrive",
+        "purview", "with", "from", "that", "this", "your", "when", "will",
+        "users", "items", "using", "admin", "center", "support", "feature",
+        "update", "adds", "added", "adding", "enables", "allows",
+        "experience", "improved", "improvement", "enhancements", "enhancement",
+    }
+    words = [
+        w for w in re.split(r"\W+", title.lower())
+        if len(w) > 3 and w not in stopwords
+    ]
+    if not words:
+        return ""
+
+    best_url, best_score = "", 0
+    for blog_title, blog_url in entries:
+        if _ROUNDUP_RE.search(blog_title):
             continue
-        if learn_url not in LEARN_OG_IMAGE_CACHE:
-            img = fetch_og_image(learn_url)
-            LEARN_OG_IMAGE_CACHE[learn_url] = img
-            if img:
-                print(f"  [learn] Found OG image for '{keywords}' at {learn_url}")
-            else:
-                print(f"  [learn] No OG image at {learn_url}", file=sys.stderr)
-        cached = LEARN_OG_IMAGE_CACHE[learn_url]
-        if cached:
-            return cached, learn_url
-    return "", ""
+        score = sum(1 for w in words if w in blog_title)
+        if score > best_score:
+            best_score, best_url = score, blog_url
+
+    if best_score < 2 or not best_url:
+        return ""
+
+    img = _fetch_og_cached(best_url)
+    if _is_valid_image(img):
+        print(f"  [blog] Keyword match score={best_score} '{best_url[-50:]}' -> {img[:80]}")
+        return img
+    return ""
 
 
 ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
@@ -556,19 +612,38 @@ def fetch_og_image(url: str) -> str:
     return ""
 
 
+def _detect_product(haystack: str) -> str:
+    """Return the product bucket name for a news item."""
+    if "teams" in haystack:
+        return "teams"
+    if "sharepoint" in haystack:
+        return "sharepoint"
+    if "copilot" in haystack:
+        return "copilot"
+    if "outlook" in haystack:
+        return "outlook"
+    if "onedrive" in haystack:
+        return "onedrive"
+    if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
+        return "purview"
+    if "edge" in haystack:
+        return "edge"
+    return "m365"
+
+
 def article_image_for_item(item: dict) -> dict:
     """Choose a real source image for a generated news article.
 
     Priority order:
-    1. Blog items -> real OG image scraped from TechCommunity source URL
-    2. Any item -> specific hardcoded Microsoft Learn screenshot (exact topic match)
-    3. Roadmap items -> OG image fetched from the best-matching Learn docs page
-    4. Any item -> broad-topic branded SVG fallback
+    1. Blog items   -> real OG image scraped from the TechCommunity article URL
+    2. Any item     -> specific hardcoded screenshot (exact sub-topic match)
+    3. Roadmap items -> OG image from best-matching TechCommunity product blog post
+    4. Any item     -> adoption.microsoft.com real product photo fallback
     """
     title   = item.get("title", "")
     summary = item.get("summary", "")
 
-    # 1. Blog posts: fetch the OG image directly from the TechCommunity article
+    # 1. Blog posts: scrape OG image directly from the TechCommunity article
     if item.get("css_tag") == "tag-blog":
         source_image = fetch_og_image(item.get("url", ""))
         if source_image:
@@ -582,13 +657,11 @@ def article_image_for_item(item: dict) -> dict:
 
     haystack = (title + " " + summary).lower()
 
-    # 2. Specific hardcoded screenshots for well-known sub-topics
+    # 2. Specific hardcoded screenshots for exact sub-topics
     if "edge" in haystack:
         if "copilot new tab" in haystack or "new tab page" in haystack:
             return ARTICLE_IMAGE_FALLBACKS["edge-copilot"]
         return ARTICLE_IMAGE_FALLBACKS["edge"]
-    if "outlook" in haystack:
-        return ARTICLE_IMAGE_FALLBACKS["outlook"]
     if "insider risk" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["purview-insider-risk"]
     if "bookable desk" in haystack or re.search(r"\bdesk\b", haystack):
@@ -596,31 +669,27 @@ def article_image_for_item(item: dict) -> dict:
     if "interpreter" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["teams-interpreter"]
 
-    # 3. For roadmap items: try to fetch a real OG image from the matching Learn docs page
+    # 3. For roadmap items: search TechCommunity product blog for a matching post
     if item.get("css_tag") == "tag-roadmap":
-        learn_img, learn_url = try_learn_image(title, summary)
-        if learn_img:
-            product = "Microsoft Teams" if "teams" in haystack else (
-                      "Microsoft Purview" if "purview" in haystack else (
-                      "Microsoft 365 Copilot" if "copilot" in haystack else "Microsoft 365"))
+        product = _detect_product(haystack)
+        blog_img = find_blog_image_for_roadmap(item.get("date", ""), title, product)
+        if blog_img:
+            product_label = {
+                "teams": "Microsoft Teams", "sharepoint": "Microsoft SharePoint",
+                "copilot": "Microsoft 365 Copilot", "outlook": "Microsoft Outlook",
+                "onedrive": "Microsoft OneDrive",
+            }.get(product, "Microsoft 365")
             return {
-                "url":          learn_img,
-                "alt":          f"{product} feature documentation screenshot",
-                "caption":      f"Representative {product} documentation image from Microsoft Learn.",
-                "source_url":   learn_url,
-                "source_label": "Microsoft Learn",
+                "url":          blog_img,
+                "alt":          f"Microsoft TechCommunity image for {title}",
+                "caption":      f"Image from the Microsoft TechCommunity {product_label} blog.",
+                "source_url":   "https://techcommunity.microsoft.com/",
+                "source_label": "Microsoft TechCommunity",
             }
 
-    # 4. Broad-topic SVG fallback
-    if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
-        return ARTICLE_IMAGE_FALLBACKS["purview"]
-    if "teams" in haystack:
-        return ARTICLE_IMAGE_FALLBACKS["teams"]
-    if "sharepoint" in haystack:
-        return ARTICLE_IMAGE_FALLBACKS["sharepoint"]
-    if "copilot" in haystack:
-        return ARTICLE_IMAGE_FALLBACKS["copilot"]
-    return ARTICLE_IMAGE_FALLBACKS["m365"]
+    # 4. adoption.microsoft.com real product photo (much better than SVGs)
+    product = _detect_product(haystack)
+    return ARTICLE_IMAGE_FALLBACKS.get(product, ARTICLE_IMAGE_FALLBACKS["m365"])
 
 
 def image_bucket_for_item(item: dict) -> str:
