@@ -50,12 +50,22 @@
 
   function renderError(data) {
     root.classList.remove('is-loading');
-    var message = data && data.configured === false
-      ? 'Connect Microsoft Graph app secrets to enable live tenant service health.'
-      : 'Service health is temporarily unavailable.';
-    if (summary) summary.innerHTML = '<span class="mh-dot is-neutral"></span><strong>' + escapeHtml(message) + '</strong>';
-    if (serviceList) serviceList.innerHTML = '<li class="mh-empty">Official Microsoft Graph data will appear here after configuration.</li>';
-    if (issueList) issueList.innerHTML = '<li class="mh-empty">No live issue data loaded.</li>';
+    var isMissingConfig = data && data.configured === false;
+    var message = isMissingConfig
+      ? 'Microsoft Graph service health is not connected.'
+      : 'Microsoft Graph service health could not be loaded.';
+    var detail = isMissingConfig
+      ? 'Add the M365_HEALTH_TENANT_ID, M365_HEALTH_CLIENT_ID, and M365_HEALTH_CLIENT_SECRET Worker secrets with ServiceHealth.Read.All admin consent.'
+      : (data && (data.detail || data.error)) || 'Check the Worker logs and Microsoft Graph app permissions.';
+    if (summary) {
+      summary.innerHTML = '<span class="mh-dot is-neutral"></span><strong>' + escapeHtml(message) + '</strong>';
+    }
+    if (serviceList) {
+      serviceList.innerHTML = '<li class="mh-empty">Live service rows will appear after Microsoft Graph is connected.</li>';
+    }
+    if (issueList) {
+      issueList.innerHTML = '<li class="mh-empty">' + escapeHtml(detail) + '</li>';
+    }
     if (updated) updated.textContent = 'Not connected';
   }
 
@@ -64,12 +74,16 @@
     var totals = data.totals || {};
     var issues = Array.isArray(data.issues) ? data.issues : [];
     var services = Array.isArray(data.services) ? data.services : [];
-    var issueText = totals.matchingIssues === 1 ? '1 active issue' : (totals.matchingIssues || 0) + ' active issues';
+    var matchingIssues = totals.matchingIssues || 0;
+    var incidents = totals.incidents || 0;
+    var advisories = totals.advisories || 0;
+    var issueText = matchingIssues === 1 ? '1 active issue' : matchingIssues + ' active issues';
     var mode = data.regionMode === 'text-match' ? 'regional signal' : 'tenant view';
 
     if (summary) {
-      summary.innerHTML = '<span class="mh-dot ' + (totals.matchingIssues > 0 ? 'is-warning' : 'is-healthy') + '"></span>' +
-        '<strong>' + escapeHtml(issueText) + '</strong><span>' + escapeHtml(mode) + '</span>';
+      summary.innerHTML = '<span class="mh-dot ' + (matchingIssues > 0 ? 'is-warning' : 'is-healthy') + '"></span>' +
+        '<strong>' + escapeHtml(issueText) + '</strong><span>' +
+        escapeHtml(incidents + ' incidents/outages, ' + advisories + ' advisories · ' + mode) + '</span>';
     }
 
     if (updated) updated.textContent = 'Last checked ' + formatDate(data.fetchedAt);
@@ -98,7 +112,7 @@
       } else {
         issueList.innerHTML = issues.slice(0, 6).map(function (issue) {
           return '<li class="mh-issue-card">' +
-            '<div class="mh-issue-meta"><span>' + escapeHtml(issue.classification) + '</span><span>' + escapeHtml(issue.service) + '</span></div>' +
+            '<div class="mh-issue-meta"><span>' + escapeHtml(issue.classification || 'Issue') + '</span><span>' + escapeHtml(issue.status || 'Active') + '</span><span>' + escapeHtml(issue.service) + '</span></div>' +
             '<strong>' + escapeHtml(issue.title) + '</strong>' +
             (issue.impact ? '<p>' + escapeHtml(issue.impact) + '</p>' : '') +
             '<time>' + escapeHtml(formatDate(issue.lastModifiedDateTime)) + '</time>' +

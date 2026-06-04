@@ -464,7 +464,17 @@ async function handleM365ServiceHealth(request: Request, env: Env, origin: strin
 	}
 
 	if (!raw) {
-		raw = await fetchM365HealthFromGraph(env);
+		try {
+			raw = await fetchM365HealthFromGraph(env);
+		} catch (error) {
+			return cachedJsonResponse({
+				ok: false,
+				configured: true,
+				error: "Microsoft Graph service health request failed",
+				detail: error instanceof Error ? error.message : "Unknown Microsoft Graph error",
+				region,
+			}, 502, origin, 60);
+		}
 		const cacheResponse = new Response(JSON.stringify(raw), {
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",

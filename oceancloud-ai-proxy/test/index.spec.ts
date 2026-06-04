@@ -150,4 +150,30 @@ describe("OceanCloud AI proxy", () => {
 
 		vi.unstubAllGlobals();
 	});
+
+	it("returns structured Microsoft Graph service health failures", async () => {
+		vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+			const url = String(input);
+			if (url.includes("/oauth2/v2.0/token")) {
+				return new Response(JSON.stringify({ access_token: "graph-token" }), {
+					status: 200,
+					headers: { "Content-Type": "application/json" },
+				});
+			}
+			return new Response(JSON.stringify({ error: { message: "Missing ServiceHealth.Read.All permission" } }), {
+				status: 403,
+				headers: { "Content-Type": "application/json" },
+			});
+		}));
+
+		const response = await worker.fetch(request("/m365/service-health?region=global"), healthEnv);
+		const data = await response.json() as any;
+
+		expect(response.status).toBe(502);
+		expect(data.configured).toBe(true);
+		expect(data.error).toBe("Microsoft Graph service health request failed");
+		expect(data.detail).toContain("Missing ServiceHealth.Read.All permission");
+
+		vi.unstubAllGlobals();
+	});
 });
