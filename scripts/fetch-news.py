@@ -199,6 +199,7 @@ def article_slug(item: dict) -> str:
 # Keyword → SVG thumbnail mapping (checked in order, first match wins)
 TOPIC_IMAGES: list[tuple[str, str]] = [
     ("copilot",        "copilot"),
+    ("edge",           "edge"),
     ("viva",           "viva"),
     ("onedrive",       "onedrive"),
     ("power automate", "power-platform"),
@@ -223,12 +224,22 @@ ARTICLE_IMAGE_FALLBACKS = {
         "source_url": "https://adoption.microsoft.com/en-us/copilot/",
         "source_label": "Microsoft Adoption",
     },
-    "edge": {
+    "edge-copilot": {
         "url": "https://learn.microsoft.com/en-us/deployEdge/media/microsoft-edge-configure-the-copilot-new-tab-page/img1.png",
         "alt": "Microsoft Edge Copilot new tab page screenshot",
         "caption": "Representative Microsoft Edge Copilot new tab page screenshot.",
         "source_url": "https://learn.microsoft.com/en-us/deployEdge/microsoft-edge-management-configure-the-copilot-new-tab-page",
         "source_label": "Microsoft Learn",
+    },
+    "edge": {
+        "url": "../assets/news/edge.svg",
+        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
+        "alt": "OceanCloud Microsoft Edge news graphic",
+        "caption": "OceanCloud Microsoft Edge news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "outlook": {
         "url": "../assets/news/m365.svg",
@@ -240,12 +251,22 @@ ARTICLE_IMAGE_FALLBACKS = {
         "width": 800,
         "height": 280,
     },
-    "purview": {
+    "purview-insider-risk": {
         "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-triage.png",
         "alt": "Microsoft Purview Insider Risk Management triage screenshot",
         "caption": "Representative Microsoft Purview Insider Risk Management screenshot.",
         "source_url": "https://learn.microsoft.com/en-us/purview/insider-risk-management",
         "source_label": "Microsoft Learn",
+    },
+    "purview": {
+        "url": "../assets/news/purview.svg",
+        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
+        "alt": "OceanCloud Microsoft Purview news graphic",
+        "caption": "OceanCloud Microsoft Purview news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "teams-bookable": {
         "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/media/bookable-desks/automatic-association-image.png",
@@ -272,18 +293,24 @@ ARTICLE_IMAGE_FALLBACKS = {
         "height": 280,
     },
     "sharepoint": {
-        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
-        "alt": "Microsoft diagram showing how Microsoft Entra ID, Teams, and SharePoint relate",
-        "caption": "Representative Microsoft SharePoint and Teams relationship diagram.",
-        "source_url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
-        "source_label": "Microsoft Learn",
+        "url": "../assets/news/sharepoint.svg",
+        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
+        "alt": "OceanCloud SharePoint news graphic",
+        "caption": "OceanCloud SharePoint news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "m365": {
-        "url": "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/3892600-work-iq-api-4x3?resMode=sharp2&op_usm=1.5,0.65,15,0&wid=1920&hei=1080&qlt=100&fit=constrain",
-        "alt": "Microsoft 365 product image",
-        "caption": "Representative Microsoft 365 product image.",
-        "source_url": "https://www.microsoft.com/en-us/microsoft-365/roadmap",
-        "source_label": "Microsoft 365 Roadmap",
+        "url": "../assets/news/m365.svg",
+        "og_url": f"{SITE_BASE_URL}/assets/og-home.jpg",
+        "alt": "OceanCloud Microsoft 365 news graphic",
+        "caption": "OceanCloud Microsoft 365 news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
 }
 
@@ -295,12 +322,21 @@ ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
         "source_url": "https://learn.microsoft.com/en-us/viva/insights/org-team-insights/copilot-dashboard",
         "source_label": "Microsoft Learn",
     },
-    "edge": {
-        "url": "https://learn.microsoft.com/en-us/deployEdge/media/microsoft-edge-configure-the-copilot-new-tab-page/img2.png",
+    "edge-copilot": {
+        "url": "https://learn.microsoft.com/en-us/deployedge/media/microsoft-edge-configure-the-copilot-new-tab-page/img2.png",
         "alt": "Microsoft Edge Copilot new tab page work cards screenshot",
         "caption": "Microsoft Edge screenshot showing Copilot new tab page work cards.",
         "source_url": "https://learn.microsoft.com/en-us/deployEdge/microsoft-edge-management-configure-the-copilot-new-tab-page",
         "source_label": "Microsoft Learn",
+    },
+    "edge": {
+        "url": "../assets/news/m365-roadmap.svg",
+        "alt": "OceanCloud Microsoft 365 roadmap graphic",
+        "caption": "OceanCloud Microsoft 365 roadmap graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "outlook": {
         "url": "../assets/news/m365-roadmap.svg",
@@ -311,12 +347,21 @@ ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
         "width": 800,
         "height": 280,
     },
-    "purview": {
+    "purview-insider-risk": {
         "url": "https://learn.microsoft.com/en-us/purview/media/insider-risk-activity-explorer.png",
         "alt": "Microsoft Purview Insider Risk Management activity explorer screenshot",
         "caption": "Microsoft Purview screenshot showing Insider Risk Management activity explorer.",
         "source_url": "https://learn.microsoft.com/en-us/purview/insider-risk-management-activities",
         "source_label": "Microsoft Learn",
+    },
+    "purview": {
+        "url": "../assets/news/m365-roadmap.svg",
+        "alt": "OceanCloud Microsoft 365 roadmap graphic",
+        "caption": "OceanCloud Microsoft 365 roadmap graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "teams-bookable": {
         "url": "https://learn.microsoft.com/en-us/microsoftteams/devices/media/book-future-meetings-from-panel-device/panel-bookinfuture-01.jpg",
@@ -335,25 +380,31 @@ ARTICLE_SECONDARY_IMAGE_FALLBACKS = {
         "height": 280,
     },
     "teams": {
-        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
-        "alt": "Microsoft Teams and SharePoint relationship diagram",
-        "caption": "Microsoft Learn diagram showing how Teams and SharePoint work together.",
-        "source_url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
-        "source_label": "Microsoft Learn",
+        "url": "../assets/news/m365-roadmap.svg",
+        "alt": "OceanCloud Microsoft 365 roadmap graphic",
+        "caption": "OceanCloud Microsoft 365 roadmap graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "sharepoint": {
-        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/sam-overview/advanced-management.png",
-        "alt": "SharePoint Advanced Management screenshot in the SharePoint admin center",
-        "caption": "Microsoft SharePoint admin center screenshot showing SharePoint Advanced Management.",
-        "source_url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
-        "source_label": "Microsoft Learn",
+        "url": "../assets/news/sharepoint.svg",
+        "alt": "OceanCloud SharePoint news graphic",
+        "caption": "OceanCloud SharePoint news graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
     "m365": {
-        "url": "https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/teams-sharepoint-interactions.png",
-        "alt": "Microsoft diagram showing how Microsoft Entra ID, Teams, and SharePoint relate",
-        "caption": "Microsoft diagram showing how Microsoft Entra ID, Teams, and SharePoint work together.",
-        "source_url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
-        "source_label": "Microsoft Learn",
+        "url": "../assets/news/m365-roadmap.svg",
+        "alt": "OceanCloud Microsoft 365 roadmap graphic",
+        "caption": "OceanCloud Microsoft 365 roadmap graphic.",
+        "source_url": f"{SITE_BASE_URL}/news",
+        "source_label": "OceanCloud",
+        "width": 800,
+        "height": 280,
     },
 }
 
@@ -434,12 +485,16 @@ def article_image_for_item(item: dict) -> dict:
 
     haystack = (item.get("title", "") + " " + item.get("summary", "")).lower()
     if "edge" in haystack:
+        if "copilot new tab" in haystack or "new tab page" in haystack:
+            return ARTICLE_IMAGE_FALLBACKS["edge-copilot"]
         return ARTICLE_IMAGE_FALLBACKS["edge"]
     if "outlook" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["outlook"]
-    if "purview" in haystack or "insider risk" in haystack:
+    if "insider risk" in haystack:
+        return ARTICLE_IMAGE_FALLBACKS["purview-insider-risk"]
+    if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
         return ARTICLE_IMAGE_FALLBACKS["purview"]
-    if "bookable desk" in haystack or "desk" in haystack:
+    if "bookable desk" in haystack or re.search(r"\bdesk\b", haystack):
         return ARTICLE_IMAGE_FALLBACKS["teams-bookable"]
     if "interpreter" in haystack:
         return ARTICLE_IMAGE_FALLBACKS["teams-interpreter"]
@@ -456,12 +511,16 @@ def image_bucket_for_item(item: dict) -> str:
     """Return the topic bucket used to pick representative secondary imagery."""
     haystack = (item.get("title", "") + " " + item.get("summary", "")).lower()
     if "edge" in haystack:
+        if "copilot new tab" in haystack or "new tab page" in haystack:
+            return "edge-copilot"
         return "edge"
     if "outlook" in haystack:
         return "outlook"
-    if "purview" in haystack or "insider risk" in haystack:
+    if "insider risk" in haystack:
+        return "purview-insider-risk"
+    if "purview" in haystack or "data loss prevention" in haystack or re.search(r"\bdlp\b", haystack):
         return "purview"
-    if "bookable desk" in haystack or "desk" in haystack:
+    if "bookable desk" in haystack or re.search(r"\bdesk\b", haystack):
         return "teams-bookable"
     if "interpreter" in haystack:
         return "teams-interpreter"
