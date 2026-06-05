@@ -231,6 +231,14 @@ The pre-push hook blocks pushes unless all checks pass:
 - `npm --prefix oceancloud-ai-proxy run -s test -- --run`
 - `npm --prefix oceancloud-ai-proxy run -s typecheck`
 
+### Secrets & Tokens
+
+Store local Cloudflare API tokens in `.secrets/cf-api-token.txt` (first line only).
+
+- `.secrets/` is git-ignored.
+- `scripts/set-cloudflare-html-redirect.ps1` is git-ignored.
+- Do not commit API tokens, `.env` files with secrets, or local secret helper files.
+
 ---
 
 ## Cache Busting
