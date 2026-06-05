@@ -2,8 +2,8 @@
 
 /* ─── Microsoft Clarity ─── */
 (function () {
-  const clarityId = 'x2dopuqkbg';
-  const claritySrc = 'https://www.clarity.ms/tag/' + clarityId + '?ref=bwt';
+  const clarityId = 'x2dqrjs3gs';
+  const claritySrc = 'https://www.clarity.ms/tag/' + clarityId;
 
   if (document.querySelector('script[src*="clarity.ms/tag/' + clarityId + '"]')) return;
 
