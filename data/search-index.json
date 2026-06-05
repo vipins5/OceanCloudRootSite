@@ -466,5 +466,65 @@
     "url": "articles/guide-sharepoint-site-provisioning-automation",
     "id": "articles-guide-sharepoint-site-provisioning-automation",
     "type": "guide"
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-teams-multi-line-calling-on-teams-mobile",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Multi-line Calling on Teams Mobile",
+    "heading": "Microsoft Teams: Multi-line Calling on Teams Mobile",
+    "excerpt": "Make and receive calls using multiple assigned phone numbers directly from your mobile device - choose the right line for every call, with unified call history and seamless switching across all your lines. GA date: July CY2026",
+    "body": "Microsoft Teams: Multi-line Calling on Teams Mobile | OceanCloud June 04, 2026 3 min read Make and receive calls using multiple assigned phone numbers directly from your mobile device - choose the right line for every call, with unified call history and seamless switching across all your lines. GA date: July CY2026",
+    "url": "articles/news-2026-06-microsoft-teams-multi-line-calling-on-teams-mobile",
+    "dateDisplay": "June 04, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-sharepoint-agent-access-insights-heatmap-for-sharepoint-and-",
+    "type": "article",
+    "tag": "Article",
+    "title": "SharePoint: Agent Access Insights heatmap for SharePoint and OneDrive sites",
+    "heading": "SharePoint: Agent Access Insights heatmap for SharePoint and OneDrive sites",
+    "excerpt": "Provides a visual heatmap of agent activity to help admins quickly detect patterns, hotspots, and unusual access behavior. GA date: July CY2026",
+    "body": "SharePoint: Agent Access Insights heatmap for SharePoint and OneDrive sites | OceanCloud June 04, 2026 3 min read Provides a visual heatmap of agent activity to help admins quickly detect patterns, hotspots, and unusual access behavior. GA date: July CY2026",
+    "url": "articles/news-2026-06-sharepoint-agent-access-insights-heatmap-for-sharepoint-and-",
+    "dateDisplay": "June 04, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-365-admin-center-notifications-for-organizational-",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft 365 admin center: Notifications for organizational data processing status",
+    "heading": "Microsoft 365 admin center: Notifications for organizational data processing status",
+    "excerpt": "With this feature, organizational data source admins receive email notifications when data processing through one of their configured connectors completes successfully or requires attention. Notifications are enabled by default with the option to unsubscribe. GA date: July CY2026…",
+    "body": "Microsoft 365 admin center: Notifications for organizational data processing status | OceanCloud June 04, 2026 3 min read With this feature, organizational data source admins receive email notifications when data processing through one of their configured connectors completes successfully or requires attention. Notifications are enabled by default with the option to unsubscribe. GA date: July CY2026…",
+    "url": "articles/news-2026-06-microsoft-365-admin-center-notifications-for-organizational-",
+    "dateDisplay": "June 04, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-purview-endpoint-data-loss-prevention-policy-sync-",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Purview: Endpoint Data Loss Prevention - Policy Sync & Device Health AI-Powered Investigation",
+    "heading": "Microsoft Purview: Endpoint Data Loss Prevention - Policy Sync & Device Health AI-Powered Investigation",
+    "excerpt": "AI agent skill to detect and alert unhealthy policy sync and device configuration. GA date: July CY2026 Preview date: June CY2026",
+    "body": "Microsoft Purview: Endpoint Data Loss Prevention - Policy Sync & Device Health AI-Powered Investigation | OceanCloud May 12, 2026 3 min read AI agent skill to detect and alert unhealthy policy sync and device configuration. GA date: July CY2026 Preview date: June CY2026",
+    "url": "articles/news-2026-05-microsoft-purview-endpoint-data-loss-prevention-policy-sync-",
+    "dateDisplay": "May 12, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-04-sharepoint-create-word-excel-and-powerpoint-files-with-ai",
+    "type": "article",
+    "tag": "Article",
+    "title": "SharePoint: Create Word, Excel, and PowerPoint files with AI",
+    "heading": "SharePoint: Create Word, Excel, and PowerPoint files with AI",
+    "excerpt": "You can ask AI in SharePoint to create a Word, Excel or PowerPoint file based on the information you've gathered within SharePoint GA date: December CY2026",
+    "body": "SharePoint: Create Word, Excel, and PowerPoint files with AI | OceanCloud April 21, 2026 3 min read You can ask AI in SharePoint to create a Word, Excel or PowerPoint file based on the information you've gathered within SharePoint GA date: December CY2026",
+    "url": "articles/news-2026-04-sharepoint-create-word-excel-and-powerpoint-files-with-ai",
+    "dateDisplay": "April 21, 2026",
+    "dateSort": ""
   }
 ]
