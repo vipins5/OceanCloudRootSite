@@ -1,5 +1,18 @@
 /* ===== OceanCloud — main.js ===== */
 
+/* ─── Microsoft Clarity ─── */
+(function () {
+  const clarityId = 'x2dopuqkbg';
+  const claritySrc = 'https://www.clarity.ms/tag/' + clarityId + '?ref=bwt';
+
+  if (document.querySelector('script[src*="clarity.ms/tag/' + clarityId + '"]')) return;
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = claritySrc;
+  document.head.appendChild(script);
+})();
+
 /* ─── Custom cursor ─── */
 (function () {
   const dot  = document.getElementById('c-dot');
