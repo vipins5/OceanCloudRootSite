@@ -6,7 +6,10 @@ param(
   [string]$Key = "06cee573ae0340f5a94afb65ed605874",
 
   [Parameter(Mandatory = $false)]
-  [string]$Endpoint = "https://www.bing.com/indexnow",
+  [string]$Endpoint = "https://api.indexnow.org/indexnow",
+
+  [Parameter(Mandatory = $false)]
+  [string[]]$AdditionalEndpoints = @("https://www.bing.com/indexnow"),
 
   [Parameter(Mandatory = $false)]
   [string]$SitemapPath = "sitemap.xml",
@@ -71,11 +74,31 @@ $payload = @{
 }
 
 Write-Host "Submitting $($urls.Count) URL(s) to IndexNow endpoint: $Endpoint"
-$response = Invoke-WebRequest -Method Post -Uri $Endpoint -ContentType "application/json; charset=utf-8" -Body ($payload | ConvertTo-Json -Depth 20)
 
-Write-Host "IndexNow response status: $($response.StatusCode) $($response.StatusDescription)"
-if ($response.Content) {
-  Write-Host $response.Content
+$submitEndpoints = @($Endpoint) + @($AdditionalEndpoints | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+$submitEndpoints = $submitEndpoints | Select-Object -Unique
+
+$response = $null
+foreach ($submitEndpoint in $submitEndpoints) {
+  Write-Host "Trying IndexNow endpoint: $submitEndpoint"
+  try {
+    $response = Invoke-WebRequest -Method Post -Uri $submitEndpoint -ContentType "application/json; charset=utf-8" -Body ($payload | ConvertTo-Json -Depth 20)
+    if ($response.StatusCode -in 200, 202) {
+      Write-Host "IndexNow response status: $($response.StatusCode) $($response.StatusDescription)"
+      if ($response.Content) {
+        Write-Host $response.Content
+      }
+      break
+    }
+  }
+  catch {
+    Write-Host "Endpoint failed: $submitEndpoint"
+    Write-Host $_.Exception.Message
+  }
+}
+
+if (-not $response) {
+  throw "All IndexNow endpoints failed."
 }
 
 Write-Host "\nSubmitted URLs:"
