@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222",
+      "date_friendly": "June 05, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-ediscovery-in-product-diagnostics-to-troub"
+    },
+    {
+      "title": "Microsoft Teams: Meeting recap app",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564614",
+      "date_friendly": "June 05, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-meeting-recap-app"
+    },
+    {
       "title": "Microsoft Teams: Multi-line Calling on Teams Mobile",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565131",
       "date_friendly": "June 04, 2026",
@@ -226,6 +246,16 @@
       "css_tag": "tag-roadmap"
     },
     {
+      "title": "Microsoft Teams: Shared & Delegate Mailbox Scheduling for Events",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561912",
+      "date_friendly": "May 15, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-shared-delegate-mailbox-scheduling-for-event"
+    },
+    {
       "title": "Microsoft Teams: Preloaded video for Teams Events and Meetings",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562340",
       "date_friendly": "May 14, 2026",
@@ -282,6 +312,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-vision-in-microsoft-365-copi"
+    },
+    {
+      "title": "Microsoft Teams: Room availability signal for Teams events",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561647",
+      "date_friendly": "May 08, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-room-availability-signal-for-teams-events"
     },
     {
       "title": "Microsoft Teams: Enhanced bookable desk experience with Teams panel-based desk dock devices",
@@ -489,5 +529,5 @@
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     }
   ],
-  "last_updated": "2026-06-05"
+  "last_updated": "2026-06-08"
 }

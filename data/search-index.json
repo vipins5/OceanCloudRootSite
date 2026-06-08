@@ -526,5 +526,53 @@
     "url": "articles/news-2026-04-sharepoint-create-word-excel-and-powerpoint-files-with-ai",
     "dateDisplay": "April 21, 2026",
     "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-purview-ediscovery-in-product-diagnostics-to-troub",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
+    "heading": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
+    "excerpt": "Self-service diagnostics help identify common issues with case permissions, security filters, and policy status. The experience highlights potential misconfigurations and provides simple guidance to help customers understand and resolve them. This brings basic troubleshooting int…",
+    "body": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges | OceanCloud June 05, 2026 3 min read Self-service diagnostics help identify common issues with case permissions, security filters, and policy status. The experience highlights potential misconfigurations and provides simple guidance to help customers understand and resolve them. This brings basic troubleshooting int…",
+    "url": "articles/news-2026-06-microsoft-purview-ediscovery-in-product-diagnostics-to-troub",
+    "dateDisplay": "June 05, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-teams-meeting-recap-app",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Meeting recap app",
+    "heading": "Microsoft Teams: Meeting recap app",
+    "excerpt": "The meeting recap app brings all your meeting recaps into one place, making it easier to find, filter, and catch up. Quick filters help you surface the right meetings instantly, while audio recap lets you efficiently review multiple meetings at once. You can also browse and revis…",
+    "body": "Microsoft Teams: Meeting recap app | OceanCloud June 05, 2026 3 min read The meeting recap app brings all your meeting recaps into one place, making it easier to find, filter, and catch up. Quick filters help you surface the right meetings instantly, while audio recap lets you efficiently review multiple meetings at once. You can also browse and revis…",
+    "url": "articles/news-2026-06-microsoft-teams-meeting-recap-app",
+    "dateDisplay": "June 05, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-teams-shared-delegate-mailbox-scheduling-for-event",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Shared & Delegate Mailbox Scheduling for Events",
+    "heading": "Microsoft Teams: Shared & Delegate Mailbox Scheduling for Events",
+    "excerpt": "Empower Chiefs of Staff and delegated roles to efficiently organize events on behalf of leaders or teams using shared or delegated mailboxes. By sending trusted invites from the chosen mailbox, this capability ensures consistent identity, improved trust, and smoother event setup.…",
+    "body": "Microsoft Teams: Shared & Delegate Mailbox Scheduling for Events | OceanCloud May 15, 2026 3 min read Empower Chiefs of Staff and delegated roles to efficiently organize events on behalf of leaders or teams using shared or delegated mailboxes. By sending trusted invites from the chosen mailbox, this capability ensures consistent identity, improved trust, and smoother event setup.…",
+    "url": "articles/news-2026-05-microsoft-teams-shared-delegate-mailbox-scheduling-for-event",
+    "dateDisplay": "May 15, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-teams-room-availability-signal-for-teams-events",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Room availability signal for Teams events",
+    "heading": "Microsoft Teams: Room availability signal for Teams events",
+    "excerpt": "In the Events app in Teams, Teams events organizers will now be able to see if the chosen room or space they have selected for their event is available at the designated time or not. This feature is available for any Teams event organizer with a Teams Enterprise license. GA date:…",
+    "body": "Microsoft Teams: Room availability signal for Teams events | OceanCloud May 08, 2026 3 min read In the Events app in Teams, Teams events organizers will now be able to see if the chosen room or space they have selected for their event is available at the designated time or not. This feature is available for any Teams event organizer with a Teams Enterprise license. GA date:…",
+    "url": "articles/news-2026-05-microsoft-teams-room-availability-signal-for-teams-events",
+    "dateDisplay": "May 08, 2026",
+    "dateSort": ""
   }
 ]
