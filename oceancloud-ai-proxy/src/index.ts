@@ -90,6 +90,7 @@ const GITHUB_TOKEN_ENDPOINT = "https://github.com/login/oauth/access_token";
 const GITHUB_USER_ENDPOINT = "https://api.github.com/user";
 const GITHUB_EMAILS_ENDPOINT = "https://api.github.com/user/emails";
 const GRAPH_BASE_URL = "https://graph.microsoft.com/v1.0";
+const GRAPH_BETA_BASE_URL = "https://graph.microsoft.com/beta";
 const M365_HEALTH_CACHE_SECONDS = 300;
 const M365_MC_CACHE_SECONDS = 900;
 
@@ -532,8 +533,24 @@ async function fetchM365MessageByIdFromGraph(env: Env, id: string): Promise<Grap
 	}
 
 	// Some tenants may still support direct key lookup.
-	const data = await graphGet(`/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, token);
-	if (data && typeof data === "object") return data as GraphMessage;
+	try {
+		const data = await graphGet(`/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, token);
+		if (data && typeof data === "object") return data as GraphMessage;
+	} catch {
+		// Continue to beta fallback.
+	}
+
+	// Fallback to Graph beta, which can expose records not visible in v1.0.
+	const betaResponse = await fetch(`${GRAPH_BETA_BASE_URL}/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			Prefer: "odata.maxpagesize=100",
+		},
+	});
+	if (betaResponse.ok) {
+		const betaData = await betaResponse.json().catch(() => null) as GraphMessage | null;
+		if (betaData && typeof betaData === "object") return betaData;
+	}
 	return null;
 }
 
