@@ -152,7 +152,14 @@
     if (countEl) countEl.textContent = msgs.length + ' message' + (msgs.length !== 1 ? 's' : '');
 
     if (!msgs.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.</td></tr>';
+      var wanted = String(searchQuery || '').trim().toUpperCase();
+      if (/^MC\d+$/.test(wanted)) {
+        var adminUrl = 'https://admin.cloud.microsoft/#/MessageCenter?search=' + encodeURIComponent(wanted);
+        tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.' +
+          '<br><a href="' + adminUrl + '" target="_blank" rel="noopener noreferrer" style="color:#6fd9ff">Open ' + esc(wanted) + ' in Microsoft Admin Center</a></td></tr>';
+      } else {
+        tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.</td></tr>';
+      }
       return;
     }
 
