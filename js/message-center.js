@@ -80,6 +80,10 @@
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function normalizeSearchText(s) {
+    return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
   function filtered() {
     return allMessages.filter(function (m) {
       if (filterInbox === 'active'   &&  m.isArchived) return false;
@@ -89,7 +93,15 @@
       if (filterTag !== 'all' && !m.tags.some(function (t) { return t === filterTag; })) return false;
       if (searchQuery) {
         var q = searchQuery.toLowerCase();
-        if (!m.title.toLowerCase().includes(q) && !m.body.toLowerCase().includes(q) && !m.services.join(' ').toLowerCase().includes(q)) return false;
+        var nq = normalizeSearchText(searchQuery);
+        var matchesText = m.title.toLowerCase().includes(q) ||
+          m.body.toLowerCase().includes(q) ||
+          m.services.join(' ').toLowerCase().includes(q) ||
+          m.tags.join(' ').toLowerCase().includes(q) ||
+          String(m.category || '').toLowerCase().includes(q) ||
+          String(m.id || '').toLowerCase().includes(q);
+        var matchesNormalizedId = nq && normalizeSearchText(m.id).includes(nq);
+        if (!matchesText && !matchesNormalizedId) return false;
       }
       return true;
     });
