@@ -15,6 +15,9 @@ param(
   [string]$SitemapPath = "sitemap.xml",
 
   [Parameter(Mandatory = $false)]
+  [string[]]$AdditionalSitemapPaths = @("sitemap-mc.xml"),
+
+  [Parameter(Mandatory = $false)]
   [string[]]$UrlList,
 
   [Parameter(Mandatory = $false)]
@@ -51,7 +54,16 @@ if (-not $UseSitemap -and (-not $UrlList -or $UrlList.Count -eq 0)) {
 
 $urls = @()
 if ($UseSitemap) {
-  $urls = Get-UrlsFromSitemap -Path $SitemapPath
+  $sitemapPaths = @($SitemapPath) + @($AdditionalSitemapPaths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+  $sitemapPaths = $sitemapPaths | Select-Object -Unique
+  foreach ($path in $sitemapPaths) {
+    if (Test-Path -LiteralPath $path) {
+      $urls += Get-UrlsFromSitemap -Path $path
+    }
+    else {
+      Write-Host "Skipping missing sitemap: $path"
+    }
+  }
 }
 elseif ($UrlList) {
   $urls = $UrlList
