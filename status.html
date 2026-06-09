@@ -420,6 +420,14 @@
     .mh-issue-facts { grid-template-columns: 1fr; }
     .mh-detail-head { grid-template-columns: 1fr; }
     .mh-detail-actions { justify-content: flex-start; }
+    .mh-region-group { width: 100%; }
+  }
+  /* Touch devices: enlarge tap targets and stop iOS focus-zoom (needs >=16px) */
+  @media (hover: none) {
+    .mh-region-btn, .mh-auto-refresh, .mh-refresh { padding: 11px 16px; font-size: 16px; }
+    .mh-service-status, .mh-count-pill { min-height: 40px; padding: 9px 13px; font-size: .85rem; }
+    .mh-issue-filter button { padding: 10px 14px; font-size: 16px; }
+    .mh-detail-actions button { padding: 10px 14px; min-height: 40px; }
   }
   </style>
 </head>

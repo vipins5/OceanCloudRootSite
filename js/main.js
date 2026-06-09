@@ -19,7 +19,15 @@
   const ring = document.getElementById('c-ring');
   if (!dot || !ring) return;
 
-  document.body.classList.add('has-mouse');
+  // Only treat this as a mouse device once a real pointer moves. Touch-only
+  // devices never fire mousemove, so the custom cursor stays hidden and the
+  // native touch behaviour is preserved.
+  document.addEventListener('pointermove', e => {
+    if (e.pointerType === 'mouse') document.body.classList.add('has-mouse');
+  }, { passive: true });
+  document.addEventListener('touchstart', () => {
+    document.body.classList.remove('has-mouse');
+  }, { passive: true });
 
   let mx = -100, my = -100, rx = -100, ry = -100;
 

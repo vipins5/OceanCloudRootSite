@@ -83,7 +83,8 @@
     'line-height:1;transition:color .2s;}',
     '#oc-w-close:hover{color:#00b4d8;}',
     '#oc-weather.oc-w-open #oc-w-close{display:block;}',
-    '@media(max-width:480px){#oc-weather{bottom:14px;left:10px;}#oc-w-card{min-width:180px;}}'
+    '@media(max-width:480px){#oc-weather{bottom:14px;left:10px;}#oc-w-card{min-width:180px;}}',
+    '@media(hover:none){#oc-w-close{padding:8px 11px;font-size:18px;}#oc-w-card{padding:14px 16px 12px;}}'
   ].join('');
   document.head.appendChild(styleEl);
 
