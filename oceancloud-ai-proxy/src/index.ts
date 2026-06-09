@@ -522,6 +522,15 @@ async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMe
 	return { messages: allMessages, fetchedAt: new Date().toISOString() };
 }
 
+async function fetchM365MessageByIdFromGraph(env: Env, id: string): Promise<GraphMessage | null> {
+	const token = await getGraphAccessToken(env);
+	const data = await graphGet(`/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, token);
+	if (data && typeof data === "object") {
+		return data as GraphMessage;
+	}
+	return null;
+}
+
 function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: string }) {
 	const messages = raw.messages
 		.sort((a, b) => String(b.lastModifiedDateTime || "").localeCompare(String(a.lastModifiedDateTime || "")))
@@ -599,7 +608,27 @@ async function handleM365MessageCenter(request: Request, env: Env, origin: strin
 		}
 	}
 
-	return cachedJsonResponse(summarizeM365Messages(raw), 200, origin, 60);
+	let responseRaw = raw;
+	const idLookup = new URL(request.url).searchParams.get("id");
+	const normalizedId = String(idLookup || "").trim().toUpperCase();
+	if (/^MC\d+$/.test(normalizedId)) {
+		const exists = raw.messages.some((m) => String(m.id || "").toUpperCase() === normalizedId);
+		if (!exists) {
+			try {
+				const lookedUp = await fetchM365MessageByIdFromGraph(env, normalizedId);
+				if (lookedUp?.id) {
+					responseRaw = {
+						...raw,
+						messages: [lookedUp, ...raw.messages],
+					};
+				}
+			} catch {
+				// Ignore lookup failures and return cached list.
+			}
+		}
+	}
+
+	return cachedJsonResponse(summarizeM365Messages(responseRaw), 200, origin, 60);
 }
 
 async function handleM365ServiceHealth(request: Request, env: Env, origin: string, ctx?: ExecutionContext): Promise<Response> {

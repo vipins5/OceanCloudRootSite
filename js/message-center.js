@@ -23,6 +23,7 @@
   var filterTag    = 'all';
   var searchQuery  = '';
   var autoOn       = true;
+  var lookedUpId   = '';
   var timer        = null;
 
   var CAT_LABELS = {
@@ -262,6 +263,7 @@
   }
 
   function load() {
+    lookedUpId = '';
     if (updatedEl) updatedEl.textContent = 'Refreshing…';
     fetch(MC_ENDPOINT)
       .then(function (r) { return r.json(); })
@@ -287,6 +289,30 @@
       .catch(function () {
         if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row" style="color:#ffb2a1">Could not connect to Message Center.</td></tr>';
         if (updatedEl) updatedEl.textContent = 'Failed';
+      });
+  }
+
+  function maybeLookupMessageId() {
+    var wanted = String(searchQuery || '').trim().toUpperCase();
+    if (!/^MC\d+$/.test(wanted)) return;
+    if (lookedUpId === wanted) return;
+    if (allMessages.some(function (m) { return String(m.id || '').toUpperCase() === wanted; })) {
+      lookedUpId = wanted;
+      return;
+    }
+
+    fetch(MC_ENDPOINT + '?id=' + encodeURIComponent(wanted))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok || !Array.isArray(data.messages)) return;
+        allMessages = data.messages;
+        lookedUpId = wanted;
+        renderFilterDropdowns(allMessages);
+        renderSummary(data.totals);
+        renderTable();
+      })
+      .catch(function () {
+        // Keep current table state if lookup fails.
       });
   }
 
@@ -357,7 +383,11 @@
       });
     });
 
-    if (searchEl) searchEl.addEventListener('input', function () { searchQuery = searchEl.value.trim(); renderTable(); });
+    if (searchEl) searchEl.addEventListener('input', function () {
+      searchQuery = searchEl.value.trim();
+      renderTable();
+      maybeLookupMessageId();
+    });
 
     load();
     scheduleRefresh();
