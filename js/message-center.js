@@ -85,6 +85,41 @@
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  // Microsoft 365 Roadmap deep link for a given feature ID.
+  function roadmapUrl(id) {
+    return 'https://www.microsoft.com/microsoft-365/roadmap?searchterms=' + encodeURIComponent(id);
+  }
+
+  // Pull roadmap feature IDs out of the message body, e.g.
+  // "This message is associated with Microsoft 365 Roadmap ID 483158."
+  function extractRoadmapIds(body) {
+    var ids = [];
+    var re = /Roadmap ID[s]?\s*:?\s*((?:\d{4,}\s*,\s*)*\d{4,})/gi;
+    var match;
+    while ((match = re.exec(String(body || '')))) {
+      match[1].split(/[,\s]+/).forEach(function (n) {
+        n = n.trim();
+        if (n && ids.indexOf(n) === -1) ids.push(n);
+      });
+    }
+    return ids;
+  }
+
+  // Turn "Roadmap ID 483158" mentions inside already-escaped body text into
+  // clickable links to the Microsoft 365 Roadmap.
+  function linkifyRoadmap(escapedLine) {
+    return escapedLine.replace(
+      /(Roadmap ID[s]?\s*:?\s*)((?:\d{4,}\s*,\s*)*\d{4,})/gi,
+      function (whole, label, nums) {
+        var linked = nums.replace(/\d{4,}/g, function (n) {
+          return '<a class="mc-roadmap-link" href="' + roadmapUrl(n) +
+            '" target="_blank" rel="noopener noreferrer">' + n + '</a>';
+        });
+        return label + linked;
+      }
+    );
+  }
+
   function normalizeSearchText(s) {
     return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
@@ -241,8 +276,16 @@
 
     var bodyHtml = m.body
       ? m.body.split('\n').filter(function (l) { return l.trim(); })
-          .map(function (l) { return '<p>' + esc(l) + '</p>'; }).join('')
+          .map(function (l) { return '<p>' + linkifyRoadmap(esc(l)) + '</p>'; }).join('')
       : '<p class="mc-dim">No body content.</p>';
+
+    var roadmapIds = extractRoadmapIds(m.body);
+    var roadmapHtml = roadmapIds.length
+      ? '<div><dt>Roadmap ID</dt><dd>' + roadmapIds.map(function (rid) {
+          return '<a class="mc-roadmap-link" href="' + roadmapUrl(rid) +
+            '" target="_blank" rel="noopener noreferrer">' + esc(rid) + '</a>';
+        }).join(', ') + '</dd></div>'
+      : '';
 
     detailEl.innerHTML =
       '<div class="mc-detail-head">' +
@@ -262,6 +305,7 @@
           '<div><dt>Last Updated</dt><dd>' + esc(fmtDateTime(m.lastModifiedDateTime) || '-') + '</dd></div>' +
           '<div><dt>Published</dt><dd>' + esc(fmtDate(m.startDateTime) || '-') + '</dd></div>' +
           (m.actionRequiredByDateTime ? '<div><dt>Act By</dt><dd class="' + (isPast(m.actionRequiredByDateTime) ? 'mc-past' : 'mc-actby') + '">' + esc(fmtDate(m.actionRequiredByDateTime)) + '</dd></div>' : '') +
+          roadmapHtml +
         '</dl>' +
         '<div class="mc-detail-body">' + bodyHtml + '</div>' +
       '</div>';
