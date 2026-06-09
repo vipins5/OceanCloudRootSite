@@ -243,17 +243,19 @@ Store local Cloudflare API tokens in `.secrets/cf-api-token.txt` (first line onl
 
 ## Cache Busting
 
-JS files use `?v=N` query parameters on all `<script>` tags to force browsers to load updated files after deploys. Current versions:
+JS files use `?v=N` query parameters on `<script>` tags to force browsers to load updated files after deploys.
 
-| File | Version |
+### Versions currently in use
+
+| File | Versions found in repo |
 |---|---|
-| `main.js` | `?v=8` |
-| `particles.js` | `?v=3` |
+| `main.js` | `?v=8`, `?v=9`, `?v=10` |
+| `particles.js` | `?v=3`, `?v=6` |
 | `consent.js` | `?v=3` |
-| `chat.js` | `?v=6` |
-| `search.js` | `?v=1` |
+| `chat.js` | `?v=7` |
+| `search.js` | `?v=2` |
 
-Increment the version number on all pages when updating a JS file.
+When updating a JS file, increment and align the version across all relevant templates/pages to avoid mixed cache states.
 
 ---
 
