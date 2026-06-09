@@ -504,6 +504,60 @@ function stripHtmlKeepBreaks(value: unknown): string {
 		.trim();
 }
 
+// Tags we keep when rendering the rich message body. Everything else is
+// stripped while preserving its inner text, so the markup matches what the
+// Microsoft 365 admin center shows (headings, lists, links, images, code).
+const MC_ALLOWED_TAGS = new Set([
+	"p", "br", "strong", "b", "em", "i", "u", "ul", "ol", "li",
+	"a", "img", "h2", "h3", "h4", "code", "pre", "blockquote", "span",
+]);
+
+function getHtmlAttr(attrs: string, name: string): string {
+	const re = new RegExp(`${name}\\s*=\\s*("([^"]*)"|'([^']*)'|([^\\s">]+))`, "i");
+	const m = re.exec(String(attrs || ""));
+	if (!m) return "";
+	return (m[2] ?? m[3] ?? m[4] ?? "").trim();
+}
+
+// Whitelist-based HTML sanitizer for Message Center bodies. Microsoft Graph is
+// a trusted source, but we still strip scripts, event handlers and unsafe URLs
+// as defense in depth before the browser renders the markup.
+function sanitizeMessageHtml(value: unknown): string {
+	let html = String(value || "");
+	if (!html) return "";
+	// Remove dangerous elements together with their content.
+	html = html.replace(/<(script|style|iframe|object|embed|noscript|template|svg|math)[\s\S]*?<\/\1\s*>/gi, "");
+	// Drop layout/table wrappers we don't render, keeping their inner text.
+	html = html.replace(/<\/?(div|section|article|header|footer|main|table|thead|tbody|tfoot|tr|td|th|colgroup|col|figure|figcaption)[^>]*>/gi, "");
+	// Walk remaining tags and keep only whitelisted ones with safe attributes.
+	html = html.replace(/<(\/?)([a-zA-Z][a-zA-Z0-9]*)((?:[^<>"']|"[^"]*"|'[^']*')*)\/?>/g, (_match, slash: string, rawTag: string, rawAttrs: string) => {
+		const tag = rawTag.toLowerCase();
+		if (!MC_ALLOWED_TAGS.has(tag)) return "";
+		if (slash === "/") return `</${tag}>`;
+		if (tag === "a") {
+			const href = getHtmlAttr(rawAttrs, "href");
+			if (href && /^(https?:|mailto:)/i.test(href)) {
+				return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">`;
+			}
+			return "<a>";
+		}
+		if (tag === "img") {
+			const src = getHtmlAttr(rawAttrs, "src");
+			if (src && /^https:\/\//i.test(src)) {
+				return `<img src="${escapeHtml(src)}" alt="${escapeHtml(getHtmlAttr(rawAttrs, "alt"))}" loading="lazy">`;
+			}
+			return "";
+		}
+		return `<${tag}>`;
+	});
+	// Collapse empty paragraphs and excess whitespace left behind by stripping.
+	return html
+		.replace(/<p>\s*<\/p>/gi, "")
+		.replace(/[\t ]{2,}/g, " ")
+		.replace(/(\s*\n\s*){3,}/g, "\n\n")
+		.trim();
+}
+
 async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMessage[]; fetchedAt: string }> {
 	const token = await getGraphAccessToken(env);
 	const allMessages: GraphMessage[] = [];
@@ -646,6 +700,7 @@ function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: strin
 			isMajorChange: Boolean(m.isMajorChange),
 			isArchived: Boolean(m.isArchived),
 			body: stripHtmlKeepBreaks(m.body?.content).slice(0, 12000),
+			bodyHtml: sanitizeMessageHtml(m.body?.content).slice(0, 40000),
 		}));
 
 	const now = new Date();

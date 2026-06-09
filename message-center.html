@@ -296,6 +296,41 @@
   .mc-detail-body p { color: var(--text-mid); line-height: 1.72; margin: 0 0 10px; font-size: .84rem; }
   .mc-roadmap-link { color: var(--accent); font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(0,180,216,.4); transition: color .15s, border-color .15s; }
   .mc-roadmap-link:hover { color: var(--white); border-bottom-color: var(--accent); }
+  /* Rich message body (sanitized HTML from Microsoft Graph) */
+  .mc-detail-body { color: var(--text-mid); font-size: .84rem; line-height: 1.72; }
+  .mc-detail-body h2, .mc-detail-body h3, .mc-detail-body h4 {
+    color: var(--white); font-weight: 800; line-height: 1.35;
+    margin: 18px 0 8px; font-size: .95rem;
+  }
+  .mc-detail-body ul, .mc-detail-body ol { margin: 0 0 10px; padding-left: 20px; }
+  .mc-detail-body li { margin: 0 0 5px; }
+  .mc-detail-body a {
+    color: var(--accent); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid rgba(0,180,216,.4); overflow-wrap: anywhere;
+    transition: color .15s, border-color .15s;
+  }
+  .mc-detail-body a:hover { color: var(--white); border-bottom-color: var(--accent); }
+  .mc-detail-body strong, .mc-detail-body b { color: var(--white); font-weight: 800; }
+  .mc-detail-body img {
+    max-width: 100%; height: auto; display: block; margin: 12px 0;
+    border: 1px solid rgba(120,160,220,.18); border-radius: 8px; background: rgba(255,255,255,.02);
+  }
+  /* PowerShell / cmdlet / inline code styled like the M365 admin center */
+  .mc-detail-body code {
+    font-family: "SFMono-Regular", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+    font-size: .82em; color: #8fe3ff; background: rgba(0,180,216,.1);
+    border: 1px solid rgba(0,180,216,.2); border-radius: 5px; padding: 1px 6px;
+    overflow-wrap: anywhere;
+  }
+  .mc-detail-body pre {
+    background: #0a1120; border: 1px solid rgba(120,160,220,.2); border-radius: 8px;
+    padding: 12px 14px; margin: 0 0 12px; overflow-x: auto;
+  }
+  .mc-detail-body pre code { background: none; border: 0; padding: 0; color: #cfe8ff; font-size: .8rem; display: block; }
+  .mc-detail-body blockquote {
+    margin: 0 0 12px; padding: 6px 0 6px 14px; border-left: 3px solid rgba(0,180,216,.4);
+    color: var(--text-dim);
+  }
 
   @media (max-width: 1024px) {
     .mc-main-area.has-detail .mc-table-wrap { flex: 0 0 46%; }
@@ -501,6 +536,6 @@
 <script src="js/consent.js?v=3"></script>
 <script src="js/chat.js?v=7"></script>
 <script src="js/weather.js?v=6"></script>
-<script src="js/message-center.js?v=4"></script>
+<script src="js/message-center.js?v=5"></script>
 </body>
 </html>

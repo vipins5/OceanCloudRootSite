@@ -120,6 +120,25 @@
     );
   }
 
+  // Linkify roadmap IDs inside rendered HTML by walking text nodes only, so we
+  // never touch existing anchors, attributes or tag names.
+  function linkifyRoadmapInElement(root) {
+    if (!root) return;
+    var re = /Roadmap ID[s]?\s*:?\s*(?:\d{4,}[\s,]*)*\d{4,}/i;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var targets = [];
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.parentNode && node.parentNode.closest && node.parentNode.closest('a')) continue;
+      if (re.test(node.nodeValue)) targets.push(node);
+    }
+    targets.forEach(function (textNode) {
+      var span = document.createElement('span');
+      span.innerHTML = linkifyRoadmap(esc(textNode.nodeValue));
+      textNode.parentNode.replaceChild(span, textNode);
+    });
+  }
+
   function normalizeSearchText(s) {
     return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
@@ -274,12 +293,20 @@
       return '<span class="mc-tag ' + tagClass(t) + '">' + esc(t) + '</span>';
     }).join('');
 
-    var bodyHtml = m.body
-      ? m.body.split('\n').filter(function (l) { return l.trim(); })
-          .map(function (l) { return '<p>' + linkifyRoadmap(esc(l)) + '</p>'; }).join('')
-      : '<p class="mc-dim">No body content.</p>';
+    // Prefer the worker-sanitized rich HTML (keeps headings, lists, links and
+    // images like the Microsoft 365 admin center). Fall back to plain-text
+    // paragraphs for older payloads that only carry `body`.
+    var bodyHtml;
+    if (m.bodyHtml) {
+      bodyHtml = m.bodyHtml;
+    } else if (m.body) {
+      bodyHtml = m.body.split('\n').filter(function (l) { return l.trim(); })
+        .map(function (l) { return '<p>' + linkifyRoadmap(esc(l)) + '</p>'; }).join('');
+    } else {
+      bodyHtml = '<p class="mc-dim">No body content.</p>';
+    }
 
-    var roadmapIds = extractRoadmapIds(m.body);
+    var roadmapIds = extractRoadmapIds(m.body || m.bodyHtml);
     var roadmapHtml = roadmapIds.length
       ? '<div><dt>Roadmap ID</dt><dd>' + roadmapIds.map(function (rid) {
           return '<a class="mc-roadmap-link" href="' + roadmapUrl(rid) +
@@ -311,6 +338,12 @@
       '</div>';
 
     mainArea.classList.add('has-detail');
+
+    // For the rich HTML body, links/numbers are already inside markup, so make
+    // roadmap mentions clickable via a safe text-node pass.
+    if (m.bodyHtml) {
+      linkifyRoadmapInElement(detailEl.querySelector('.mc-detail-body'));
+    }
 
     var closeBtn = document.getElementById('mc-close');
     if (closeBtn) {
