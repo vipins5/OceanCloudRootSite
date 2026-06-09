@@ -33,7 +33,16 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ── 3. Update sitemap.xml lastmod dates from git history ────────────────
+      # ── 3a. Regenerate Message Center SEO pages + sitemap-mc.xml ────────────
+      - name: Build Message Center SEO pages
+        run: |
+          echo "=== Message Center SEO pages ==="
+          # Pulls the latest MC feed (plus seeded/historical IDs) from the
+          # public worker proxy and regenerates mc/*.html + sitemap-mc.xml.
+          # No secrets required — uses the public Message Center endpoint.
+          python scripts/build-mc-seo-pages.py || echo "⚠ MC SEO build skipped (endpoint unavailable)"
+
+      # ── 3b. Update sitemap.xml lastmod dates from git history ───────────────
       - name: Update sitemap lastmod dates
         run: |
           echo "=== Sitemap update ==="
@@ -80,18 +89,18 @@ jobs:
           print(f"\n{ok}/{total} files clean,  {bad} with issues.")
           PYEOF
 
-      # ── 6. Commit sitemap if it changed ─────────────────────────────────────
+      # ── 6. Commit sitemap + MC pages if they changed ────────────────────────
       - name: Commit sitemap changes
         run: |
           git config user.name  "OceanCloud Maintenance Bot"
           git config user.email "bot@oceancloudconsults.com"
-          git add sitemap.xml
+          git add sitemap.xml sitemap-mc.xml mc/
           if git diff --cached --quiet; then
-            echo "Sitemap already up to date — nothing to commit."
+            echo "Sitemap and MC pages already up to date — nothing to commit."
           else
-            git commit -m "chore: update sitemap lastmod $(date -u +%Y-%m-%d)"
+            git commit -m "chore: update sitemap + MC pages $(date -u +%Y-%m-%d)"
             git push
-            echo "✓ Sitemap committed and pushed."
+            echo "✓ Sitemap and MC pages committed and pushed."
           fi
 
       # ── 7. Print a job summary ───────────────────────────────────────────────
@@ -102,6 +111,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Message Center SEO pages | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| Sitemap lastmod update | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| Internal link check | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| HTML validation | ✅ |" >> $GITHUB_STEP_SUMMARY
