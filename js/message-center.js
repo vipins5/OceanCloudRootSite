@@ -95,6 +95,27 @@
     return location.origin + location.pathname + '?id=' + encodeURIComponent(id);
   }
 
+  // Persisted reading-pane width (as a CSS width value like "48%").
+  var MC_WIDTH_KEY = 'mcDetailWidth';
+  var MC_MIN_PCT = 32;
+  var MC_MAX_PCT = 82;
+
+  function getStoredDetailWidth() {
+    try {
+      var v = localStorage.getItem(MC_WIDTH_KEY);
+      if (v && /^\d+(\.\d+)?%$/.test(v)) return v;
+    } catch (e) { /* ignore */ }
+    return '48%';
+  }
+
+  function storeDetailWidth(value) {
+    try { localStorage.setItem(MC_WIDTH_KEY, value); } catch (e) { /* ignore */ }
+  }
+
+  function clampPct(pct) {
+    return Math.max(MC_MIN_PCT, Math.min(MC_MAX_PCT, pct));
+  }
+
   // Briefly show feedback text on an action button after copy/share.
   function flashActionButton(btn, text) {
     if (!btn) return;
@@ -366,7 +387,12 @@
           '<h2 class="mc-detail-title">' + esc(m.title) + '</h2>' +
           (tagsHtml ? '<div class="mc-detail-tags">' + tagsHtml + '</div>' : '') +
         '</div>' +
-        '<button class="mc-close-btn" id="mc-close" aria-label="Close">&#x2715;</button>' +
+        '<div class="mc-detail-head-btns">' +
+          '<button class="mc-close-btn mc-expand-btn" id="mc-expand" aria-label="Expand reading pane" title="Expand / restore reading pane">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>' +
+          '</button>' +
+          '<button class="mc-close-btn" id="mc-close" aria-label="Close">&#x2715;</button>' +
+        '</div>' +
       '</div>' +
       '<div class="mc-detail-scroll">' +
         '<div class="mc-detail-actions">' +
@@ -430,6 +456,27 @@
         }
       });
     }
+
+    var expandBtn = document.getElementById('mc-expand');
+    if (expandBtn) {
+      syncExpandBtn(expandBtn);
+      expandBtn.addEventListener('click', function () {
+        var expanded = mainArea.classList.toggle('is-expanded');
+        if (expanded) {
+          mainArea.style.setProperty('--mc-detail-w', '82%');
+        } else {
+          mainArea.style.setProperty('--mc-detail-w', getStoredDetailWidth());
+        }
+        syncExpandBtn(expandBtn);
+      });
+    }
+  }
+
+  // Keep the expand button's pressed state/label in sync with the layout.
+  function syncExpandBtn(btn) {
+    var expanded = mainArea.classList.contains('is-expanded');
+    btn.setAttribute('aria-pressed', String(expanded));
+    btn.setAttribute('aria-label', expanded ? 'Restore reading pane' : 'Expand reading pane');
   }
 
   function selectMessage(id) {
@@ -542,6 +589,67 @@
     if (autoOn) timer = setTimeout(function () { load(); scheduleRefresh(); }, REFRESH_MS);
   }
 
+  // Drag-to-resize the reading pane (and keyboard support on the divider).
+  function setupResizer() {
+    var resizer = document.getElementById('mc-resizer');
+    if (!resizer || !mainArea) return;
+
+    // Apply any previously saved width.
+    mainArea.style.setProperty('--mc-detail-w', getStoredDetailWidth());
+
+    function widthFromClientX(clientX) {
+      var rect = mainArea.getBoundingClientRect();
+      if (rect.width <= 0) return null;
+      var pct = ((rect.right - clientX) / rect.width) * 100;
+      return clampPct(pct);
+    }
+
+    function applyPct(pct) {
+      var value = pct.toFixed(1) + '%';
+      mainArea.classList.remove('is-expanded');
+      mainArea.style.setProperty('--mc-detail-w', value);
+      storeDetailWidth(value);
+      var expandBtn = document.getElementById('mc-expand');
+      if (expandBtn) syncExpandBtn(expandBtn);
+    }
+
+    function onPointerMove(e) {
+      var pct = widthFromClientX(e.clientX);
+      if (pct != null) {
+        mainArea.style.setProperty('--mc-detail-w', pct.toFixed(1) + '%');
+      }
+    }
+
+    function onPointerUp(e) {
+      resizer.classList.remove('is-dragging');
+      mainArea.classList.remove('is-resizing');
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      var pct = widthFromClientX(e.clientX);
+      if (pct != null) applyPct(pct);
+    }
+
+    resizer.addEventListener('pointerdown', function (e) {
+      if (!mainArea.classList.contains('has-detail')) return;
+      e.preventDefault();
+      resizer.classList.add('is-dragging');
+      mainArea.classList.add('is-resizing');
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
+    });
+
+    // Keyboard: arrow keys nudge the divider by 4% steps.
+    resizer.addEventListener('keydown', function (e) {
+      if (!mainArea.classList.contains('has-detail')) return;
+      var current = parseFloat(getStoredDetailWidth()) || 48;
+      if (e.key === 'ArrowLeft')  { applyPct(clampPct(current + 4)); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { applyPct(clampPct(current - 4)); e.preventDefault(); }
+    });
+
+    // Double-click the divider to reset to the default width.
+    resizer.addEventListener('dblclick', function () { applyPct(48); });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var refreshBtn = document.getElementById('mc-refresh');
     var autoBtn    = document.getElementById('mc-auto-refresh');
@@ -600,6 +708,7 @@
       maybeLookupMessageId();
     });
 
+    setupResizer();
     load();
     scheduleRefresh();
   });
