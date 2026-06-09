@@ -7,6 +7,23 @@
   <title>404 — Page Not Found | OceanCloud</title>
   <meta name="description" content="The page you're looking for doesn't exist. Head back to OceanCloud — Microsoft 365 consulting specialists." />
   <meta name="robots" content="noindex, follow" />
+  <!-- MC-ID catch-all: resolve any Message Center ID (e.g. /mc/MC123456 or
+       ?id=MC123456) that has no pre-generated page by forwarding to the live
+       Message Center, which looks the ID up via the Microsoft Graph proxy. -->
+  <script>
+  (function () {
+    try {
+      var hay = (location.pathname + ' ' + location.search).toUpperCase();
+      var match = hay.match(/MC\d{4,}/);
+      if (match) {
+        var id = match[0];
+        if (!/\/MESSAGE-CENTER/.test(location.pathname.toUpperCase())) {
+          location.replace('/message-center?id=' + id);
+        }
+      }
+    } catch (e) { /* fall through to normal 404 */ }
+  })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
