@@ -526,31 +526,61 @@ async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMe
 async function fetchM365MessageByIdFromGraph(env: Env, id: string): Promise<GraphMessage | null> {
 	const token = await getGraphAccessToken(env);
 	const escapedId = String(id || "").replace(/'/g, "''");
-	const filterPath = `/admin/serviceAnnouncement/messages?$top=25&$filter=id eq '${escapedId}'`;
-	const filtered = await graphGet(filterPath, token);
-	if (Array.isArray(filtered?.value) && filtered.value.length) {
-		return filtered.value[0] as GraphMessage;
+
+	// 1) Graph v1 filter lookup.
+	try {
+		const filterPath = `/admin/serviceAnnouncement/messages?$top=25&$filter=id eq '${escapedId}'`;
+		const filtered = await graphGet(filterPath, token);
+		if (Array.isArray(filtered?.value) && filtered.value.length) {
+			return filtered.value[0] as GraphMessage;
+		}
+	} catch {
+		// Continue with additional fallbacks.
 	}
 
-	// Some tenants may still support direct key lookup.
+	// 2) Graph v1 direct lookup.
 	try {
 		const data = await graphGet(`/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, token);
 		if (data && typeof data === "object") return data as GraphMessage;
 	} catch {
-		// Continue to beta fallback.
+		// Continue with beta fallback.
 	}
 
-	// Fallback to Graph beta, which can expose records not visible in v1.0.
-	const betaResponse = await fetch(`${GRAPH_BETA_BASE_URL}/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, {
-		headers: {
-			Authorization: `Bearer ${token}`,
-			Prefer: "odata.maxpagesize=100",
-		},
-	});
-	if (betaResponse.ok) {
-		const betaData = await betaResponse.json().catch(() => null) as GraphMessage | null;
-		if (betaData && typeof betaData === "object") return betaData;
+	// 3) Graph beta filter lookup.
+	try {
+		const betaFilterUrl = `${GRAPH_BETA_BASE_URL}/admin/serviceAnnouncement/messages?$top=25&$filter=id eq '${encodeURIComponent(id)}'`;
+		const betaFilteredResponse = await fetch(betaFilterUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				Prefer: "odata.maxpagesize=100",
+			},
+		});
+		if (betaFilteredResponse.ok) {
+			const betaFilteredData = await betaFilteredResponse.json().catch(() => null) as { value?: GraphMessage[] } | null;
+			if (Array.isArray(betaFilteredData?.value) && betaFilteredData.value.length) {
+				return betaFilteredData.value[0];
+			}
+		}
+	} catch {
+		// Continue with beta direct lookup.
 	}
+
+	// 4) Graph beta direct lookup.
+	try {
+		const betaResponse = await fetch(`${GRAPH_BETA_BASE_URL}/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				Prefer: "odata.maxpagesize=100",
+			},
+		});
+		if (betaResponse.ok) {
+			const betaData = await betaResponse.json().catch(() => null) as GraphMessage | null;
+			if (betaData && typeof betaData === "object") return betaData;
+		}
+	} catch {
+		// Final fallback exhausted.
+	}
+
 	return null;
 }
 

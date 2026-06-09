@@ -157,19 +157,9 @@
     }
 
     if (!msgs.length) {
-      var wanted = String(searchQuery || '').trim().toUpperCase();
-      if (/^MC\d+$/.test(wanted)) {
-        var adminUrl = 'https://admin.cloud.microsoft/#/MessageCenter?search=' + encodeURIComponent(wanted);
-        if (hintEl) {
-          hintEl.classList.remove('is-empty');
-          hintEl.innerHTML = 'Message ' + esc(wanted) + ' is not available through the current Graph API response. ' +
-            '<a href="' + adminUrl + '" target="_blank" rel="noopener noreferrer">Open it in Microsoft Admin Center</a>.';
-        }
-      } else {
-        if (hintEl) {
-          hintEl.classList.remove('is-empty');
-          hintEl.textContent = 'No messages match the current filters.';
-        }
+      if (hintEl) {
+        hintEl.classList.remove('is-empty');
+        hintEl.textContent = 'No messages match the current filters.';
       }
       tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.</td></tr>';
       return;
