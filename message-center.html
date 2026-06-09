@@ -160,6 +160,14 @@
   .mc-filter-row {
     display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px;
   }
+    .mc-search-hint {
+      margin: 0 0 10px;
+      font-size: .84rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+    .mc-search-hint a { color: #6fd9ff; text-decoration: underline; }
+    .mc-search-hint.is-empty { display: none; }
   /* Custom dropdown */
   .mc-dropdown { position: relative; }
   .mc-dropdown-btn {
@@ -396,6 +404,7 @@
         </div>
         <input type="search" id="mc-search" class="mc-search-input" placeholder="Search messages…" aria-label="Search messages" />
         <span class="mc-count" id="mc-count"></span>
+        <div class="mc-search-hint is-empty" id="mc-search-hint" aria-live="polite"></div>
       </div>
 
       <div class="mc-main-area" id="mc-main-area">

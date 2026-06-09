@@ -14,6 +14,7 @@
   var updatedEl = document.getElementById('mc-updated');
   var countEl   = document.getElementById('mc-count');
   var searchEl  = document.getElementById('mc-search');
+  var hintEl    = document.getElementById('mc-search-hint');
 
   var allMessages  = [];
   var activeId     = null;
@@ -150,16 +151,27 @@
     if (!tbody) return;
     var msgs = filtered();
     if (countEl) countEl.textContent = msgs.length + ' message' + (msgs.length !== 1 ? 's' : '');
+    if (hintEl) {
+      hintEl.classList.add('is-empty');
+      hintEl.innerHTML = '';
+    }
 
     if (!msgs.length) {
       var wanted = String(searchQuery || '').trim().toUpperCase();
       if (/^MC\d+$/.test(wanted)) {
         var adminUrl = 'https://admin.cloud.microsoft/#/MessageCenter?search=' + encodeURIComponent(wanted);
-        tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.' +
-          '<br><a href="' + adminUrl + '" target="_blank" rel="noopener noreferrer" style="color:#6fd9ff">Open ' + esc(wanted) + ' in Microsoft Admin Center</a></td></tr>';
+        if (hintEl) {
+          hintEl.classList.remove('is-empty');
+          hintEl.innerHTML = 'Message ' + esc(wanted) + ' is not available through the current Graph API response. ' +
+            '<a href="' + adminUrl + '" target="_blank" rel="noopener noreferrer">Open it in Microsoft Admin Center</a>.';
+        }
       } else {
-        tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.</td></tr>';
+        if (hintEl) {
+          hintEl.classList.remove('is-empty');
+          hintEl.textContent = 'No messages match the current filters.';
+        }
       }
+      tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row">No messages match the current filters.</td></tr>';
       return;
     }
 
