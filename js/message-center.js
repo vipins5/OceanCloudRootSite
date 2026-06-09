@@ -90,6 +90,48 @@
     return 'https://www.microsoft.com/microsoft-365/roadmap?searchterms=' + encodeURIComponent(id);
   }
 
+  // Build a shareable deep link to a specific message on this page.
+  function shareUrlFor(id) {
+    return location.origin + location.pathname + '?id=' + encodeURIComponent(id);
+  }
+
+  // Briefly show feedback text on an action button after copy/share.
+  function flashActionButton(btn, text) {
+    if (!btn) return;
+    var label = btn.querySelector('.mc-action-label');
+    if (!label) return;
+    var original = label.getAttribute('data-original') || label.textContent;
+    label.setAttribute('data-original', original);
+    label.textContent = text;
+    btn.classList.add('is-done');
+    clearTimeout(btn._flashTimer);
+    btn._flashTimer = setTimeout(function () {
+      label.textContent = original;
+      btn.classList.remove('is-done');
+    }, 1600);
+  }
+
+  // Copy text to the clipboard with a graceful fallback for older browsers.
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        resolve();
+      } catch (e) { reject(e); }
+    });
+  }
+
   // Pull roadmap feature IDs out of the message body, e.g.
   // "This message is associated with Microsoft 365 Roadmap ID 483158."
   function extractRoadmapIds(body) {
@@ -327,6 +369,16 @@
         '<button class="mc-close-btn" id="mc-close" aria-label="Close">&#x2715;</button>' +
       '</div>' +
       '<div class="mc-detail-scroll">' +
+        '<div class="mc-detail-actions">' +
+          '<button type="button" class="mc-action-btn" id="mc-copy-link" data-id="' + esc(m.id) + '">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' +
+            '<span class="mc-action-label">Copy link</span>' +
+          '</button>' +
+          '<button type="button" class="mc-action-btn" id="mc-share" data-id="' + esc(m.id) + '">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>' +
+            '<span class="mc-action-label">Share</span>' +
+          '</button>' +
+        '</div>' +
         '<dl class="mc-detail-facts">' +
           '<div><dt>Service</dt><dd>' + esc(m.services.join(', ') || '-') + '</dd></div>' +
           '<div><dt>Last Updated</dt><dd>' + esc(fmtDateTime(m.lastModifiedDateTime) || '-') + '</dd></div>' +
@@ -351,6 +403,31 @@
         activeId = null;
         renderTable();
         renderDetail(null);
+        try { history.replaceState(null, '', location.origin + location.pathname); } catch (e) { /* no-op */ }
+      });
+    }
+
+    var copyBtn = document.getElementById('mc-copy-link');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        copyToClipboard(shareUrlFor(m.id))
+          .then(function () { flashActionButton(copyBtn, 'Link copied'); })
+          .catch(function () { flashActionButton(copyBtn, 'Copy failed'); });
+      });
+    }
+
+    var shareBtn = document.getElementById('mc-share');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function () {
+        var url = shareUrlFor(m.id);
+        if (navigator.share) {
+          navigator.share({ title: m.title, text: m.id + ' · ' + m.title, url: url })
+            .catch(function () { /* user cancelled or share failed */ });
+        } else {
+          copyToClipboard(url)
+            .then(function () { flashActionButton(shareBtn, 'Link copied'); })
+            .catch(function () { flashActionButton(shareBtn, 'Copy failed'); });
+        }
       });
     }
   }
@@ -360,6 +437,9 @@
     var m = allMessages.find(function (x) { return x.id === id; });
     renderTable();
     renderDetail(m || null);
+    if (id) {
+      try { history.replaceState(null, '', shareUrlFor(id)); } catch (e) { /* no-op */ }
+    }
   }
 
   function renderSummary(totals) {
@@ -398,12 +478,39 @@
         if (activeId) {
           var m = allMessages.find(function (x) { return x.id === activeId; });
           renderDetail(m || null);
+        } else {
+          openFromUrl();
         }
       })
       .catch(function () {
         if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="mc-empty-row" style="color:#ffb2a1">Could not connect to Message Center.</td></tr>';
         if (updatedEl) updatedEl.textContent = 'Failed';
       });
+  }
+
+  // Open a message automatically when the page is loaded with ?id=MC###### so
+  // shared/copied links land directly on that notification.
+  function openFromUrl() {
+    var wanted = '';
+    try { wanted = String(new URLSearchParams(location.search).get('id') || '').trim().toUpperCase(); }
+    catch (e) { return; }
+    if (!/^MC\d+$/.test(wanted)) return;
+
+    var existing = allMessages.find(function (m) { return String(m.id || '').toUpperCase() === wanted; });
+    if (existing) { selectMessage(existing.id); return; }
+
+    fetch(MC_ENDPOINT + '?id=' + encodeURIComponent(wanted))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok || !Array.isArray(data.messages)) return;
+        allMessages = data.messages;
+        renderFilterDropdowns(allMessages);
+        renderSummary(data.totals);
+        renderTable();
+        var found = allMessages.find(function (m) { return String(m.id || '').toUpperCase() === wanted; });
+        if (found) selectMessage(found.id);
+      })
+      .catch(function () { /* ignore deep-link lookup failures */ });
   }
 
   function maybeLookupMessageId() {

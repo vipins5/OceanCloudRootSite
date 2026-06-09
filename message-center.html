@@ -290,6 +290,19 @@
   }
   .mc-close-btn:hover { border-color: var(--accent); color: var(--accent); }
   .mc-detail-scroll { padding: 16px 18px; }
+  /* Per-message actions (Copy link / Share) like the M365 admin center */
+  .mc-detail-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(120,160,220,.1); }
+  .mc-action-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid rgba(120,160,220,.2); background: rgba(255,255,255,.035);
+    color: var(--text-mid); border-radius: 6px; padding: 7px 13px;
+    font-family: inherit; font-size: .78rem; font-weight: 700; cursor: pointer;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .mc-action-btn svg { flex-shrink: 0; }
+  .mc-action-btn:hover { border-color: var(--accent); color: var(--white); background: rgba(0,180,216,.08); }
+  .mc-action-btn.is-done { border-color: rgba(59,214,113,.5); color: #9df0b9; background: rgba(59,214,113,.08); }
+  @media (hover: none) { .mc-action-btn { padding: 10px 15px; font-size: 16px; } }
   .mc-detail-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(120,160,220,.1); }
   .mc-detail-facts dt { color: var(--text-dim); font-size: .65rem; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; }
   .mc-detail-facts dd { margin: 3px 0 0; color: var(--white); font-size: .8rem; line-height: 1.4; overflow-wrap: anywhere; }
@@ -536,6 +549,6 @@
 <script src="js/consent.js?v=3"></script>
 <script src="js/chat.js?v=7"></script>
 <script src="js/weather.js?v=6"></script>
-<script src="js/message-center.js?v=5"></script>
+<script src="js/message-center.js?v=6"></script>
 </body>
 </html>
