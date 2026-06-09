@@ -524,10 +524,16 @@ async function fetchM365MessagesFromGraph(env: Env): Promise<{ messages: GraphMe
 
 async function fetchM365MessageByIdFromGraph(env: Env, id: string): Promise<GraphMessage | null> {
 	const token = await getGraphAccessToken(env);
-	const data = await graphGet(`/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, token);
-	if (data && typeof data === "object") {
-		return data as GraphMessage;
+	const escapedId = String(id || "").replace(/'/g, "''");
+	const filterPath = `/admin/serviceAnnouncement/messages?$top=25&$filter=id eq '${escapedId}'`;
+	const filtered = await graphGet(filterPath, token);
+	if (Array.isArray(filtered?.value) && filtered.value.length) {
+		return filtered.value[0] as GraphMessage;
 	}
+
+	// Some tenants may still support direct key lookup.
+	const data = await graphGet(`/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, token);
+	if (data && typeof data === "object") return data as GraphMessage;
 	return null;
 }
 

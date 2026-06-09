@@ -17,7 +17,7 @@
 
   var allMessages  = [];
   var activeId     = null;
-  var filterInbox  = 'active';
+  var filterInbox  = 'all';
   var filterCat    = 'all';
   var filterSvc    = 'all';
   var filterTag    = 'all';
