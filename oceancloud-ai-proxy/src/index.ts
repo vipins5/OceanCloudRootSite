@@ -584,6 +584,52 @@ async function fetchM365MessageByIdFromGraph(env: Env, id: string): Promise<Grap
 	return null;
 }
 
+async function diagnoseM365MessageId(env: Env, id: string): Promise<unknown> {
+	const attempts: Array<{ label: string; url: string; status: number | string; ok: boolean; found: boolean; detail?: string }> = [];
+	let token = "";
+	try {
+		token = await getGraphAccessToken(env);
+	} catch (error) {
+		return { id, tokenError: error instanceof Error ? error.message : "Failed to acquire Graph token", attempts };
+	}
+	const escapedId = String(id || "").replace(/'/g, "''");
+	const probes: Array<{ label: string; url: string; isList: boolean }> = [
+		{ label: "v1 direct", url: `${GRAPH_BASE_URL}/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, isList: false },
+		{ label: "v1 filter", url: `${GRAPH_BASE_URL}/admin/serviceAnnouncement/messages?$top=25&$filter=id eq '${escapedId}'`, isList: true },
+		{ label: "beta direct", url: `${GRAPH_BETA_BASE_URL}/admin/serviceAnnouncement/messages/${encodeURIComponent(id)}`, isList: false },
+		{ label: "beta filter", url: `${GRAPH_BETA_BASE_URL}/admin/serviceAnnouncement/messages?$top=25&$filter=id eq '${escapedId}'`, isList: true },
+	];
+	for (const probe of probes) {
+		try {
+			const response = await fetch(probe.url, {
+				headers: { Authorization: `Bearer ${token}`, Prefer: "odata.maxpagesize=100" },
+			});
+			const body = await response.json().catch(() => null) as { value?: unknown[]; id?: string; error?: { code?: string; message?: string } } | null;
+			let found = false;
+			if (probe.isList) found = Array.isArray(body?.value) && body!.value.length > 0;
+			else found = Boolean(body && typeof body === "object" && (body as { id?: string }).id);
+			attempts.push({
+				label: probe.label,
+				url: probe.url,
+				status: response.status,
+				ok: response.ok,
+				found,
+				detail: body?.error ? `${body.error.code || ""}: ${body.error.message || ""}`.trim() : undefined,
+			});
+		} catch (error) {
+			attempts.push({
+				label: probe.label,
+				url: probe.url,
+				status: "fetch-error",
+				ok: false,
+				found: false,
+				detail: error instanceof Error ? error.message : "Unknown fetch error",
+			});
+		}
+	}
+	return { id, attempts };
+}
+
 function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: string }) {
 	const messages = raw.messages
 		.sort((a, b) => String(b.lastModifiedDateTime || "").localeCompare(String(a.lastModifiedDateTime || "")))
@@ -664,6 +710,11 @@ async function handleM365MessageCenter(request: Request, env: Env, origin: strin
 	let responseRaw = raw;
 	const idLookup = new URL(request.url).searchParams.get("id");
 	const normalizedId = String(idLookup || "").trim().toUpperCase();
+	const debugLookup = new URL(request.url).searchParams.get("debug") === "1";
+	if (debugLookup && /^MC\d+$/.test(normalizedId)) {
+		const diagnostics = await diagnoseM365MessageId(env, normalizedId);
+		return cachedJsonResponse({ ok: true, diagnostics }, 200, origin, 0);
+	}
 	if (/^MC\d+$/.test(normalizedId)) {
 		const exists = raw.messages.some((m) => String(m.id || "").toUpperCase() === normalizedId);
 		if (!exists) {
