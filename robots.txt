@@ -1,6 +1,8 @@
 User-agent: *
 Disallow: /coming-soon.html
 Disallow: /comments-admin.html
+Disallow: /search?
+Disallow: /search/
 Allow: /
 Allow: /llms.txt
 Allow: /data/search-index.json
