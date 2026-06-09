@@ -23,9 +23,9 @@ from typing import Any
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MC_DIR = ROOT / "mc"
 SITEMAP_PATH = ROOT / "sitemap-mc.xml"
+SEEDS_PATH = ROOT / "data" / "mc-id-seeds.txt"
 SITE = "https://oceancloudconsults.com"
 API = "https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/m365/message-center"
-MAX_PAGES = 180
 
 
 def esc(value: Any) -> str:
@@ -51,6 +51,46 @@ def fetch_messages() -> list[dict[str, Any]]:
         payload = json.loads(resp.read().decode("utf-8", errors="ignore"))
     msgs = payload.get("messages") or []
     return [m for m in msgs if isinstance(m, dict) and re.fullmatch(r"MC\d+", str(m.get("id", "")).upper())]
+
+
+def fetch_message_by_id(mcid: str) -> dict[str, Any] | None:
+    req = urllib.request.Request(
+        f"{API}?id={mcid}",
+        headers={
+            "Origin": SITE,
+            "User-Agent": "OceanCloud-MC-SEO-Builder/1.0",
+            "Accept": "application/json",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=45) as resp:
+        payload = json.loads(resp.read().decode("utf-8", errors="ignore"))
+    msgs = payload.get("messages") or []
+    for m in msgs:
+        if isinstance(m, dict) and str(m.get("id", "")).upper() == mcid:
+            return m
+    return None
+
+
+def load_seed_ids() -> list[str]:
+    if not SEEDS_PATH.exists():
+        return []
+    ids: list[str] = []
+    for line in SEEDS_PATH.read_text(encoding="utf-8", errors="ignore").splitlines():
+        candidate = line.strip().upper()
+        if re.fullmatch(r"MC\d+", candidate):
+            ids.append(candidate)
+    return ids
+
+
+def existing_ids() -> list[str]:
+    ids: list[str] = []
+    if not MC_DIR.exists():
+        return ids
+    for p in MC_DIR.glob("MC*.html"):
+        mcid = p.stem.upper()
+        if re.fullmatch(r"MC\d+", mcid):
+            ids.append(mcid)
+    return ids
 
 
 def page_html(m: dict[str, Any]) -> str:
@@ -209,13 +249,32 @@ def write_sitemap(messages: list[dict[str, Any]]) -> None:
 
 def main() -> int:
     messages = fetch_messages()
-    messages = messages[:MAX_PAGES]
+    by_id: dict[str, dict[str, Any]] = {
+        str(m.get("id", "")).upper(): m
+        for m in messages
+        if re.fullmatch(r"MC\d+", str(m.get("id", "")).upper())
+    }
+
+    # Union current feed IDs with previously generated and explicit seed IDs.
+    wanted_ids = set(by_id.keys())
+    wanted_ids.update(existing_ids())
+    wanted_ids.update(load_seed_ids())
+
+    # For IDs not in the current feed, try direct lookup one-by-one.
+    for mcid in sorted(wanted_ids):
+        if mcid in by_id:
+            continue
+        try:
+            found = fetch_message_by_id(mcid)
+            if found:
+                by_id[mcid] = found
+        except Exception:
+            # Keep generator resilient; skip IDs that cannot be resolved now.
+            continue
+
+    messages = list(by_id.values())
 
     MC_DIR.mkdir(parents=True, exist_ok=True)
-
-    # Clean old generated files except index.
-    for p in MC_DIR.glob("MC*.html"):
-        p.unlink(missing_ok=True)
 
     for m in messages:
         mcid = str(m.get("id", "")).upper()
