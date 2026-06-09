@@ -31,20 +31,73 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 function Get-UrlsFromSitemap {
-  param([string]$Path)
+  param(
+    [string]$Path,
+    [System.Collections.Generic.HashSet[string]]$Visited
+  )
 
   if (-not (Test-Path -LiteralPath $Path)) {
     throw "Sitemap not found: $Path"
   }
 
+  $resolvedPath = (Resolve-Path -LiteralPath $Path).Path
+  if ($Visited.Contains($resolvedPath)) {
+    return @()
+  }
+  [void]$Visited.Add($resolvedPath)
+
   $xml = [xml](Get-Content -Raw -LiteralPath $Path)
   $urls = @()
-  foreach ($loc in $xml.urlset.url.loc) {
-    $value = [string]$loc
-    if (-not [string]::IsNullOrWhiteSpace($value)) {
-      $urls += $value.Trim()
+
+  if ($xml.urlset -and $xml.urlset.url) {
+    foreach ($loc in $xml.urlset.url.loc) {
+      $value = [string]$loc
+      if (-not [string]::IsNullOrWhiteSpace($value)) {
+        $urls += $value.Trim()
+      }
     }
+    return $urls
   }
+
+  if ($xml.sitemapindex -and $xml.sitemapindex.sitemap) {
+    $baseDir = Split-Path -Parent $resolvedPath
+    foreach ($s in $xml.sitemapindex.sitemap) {
+      $loc = ([string]$s.loc).Trim()
+      if ([string]::IsNullOrWhiteSpace($loc)) {
+        continue
+      }
+
+      $nestedPath = $null
+      if ($loc -match '^https?://') {
+        try {
+          $uri = [Uri]$loc
+          $candidate = Join-Path $baseDir ($uri.AbsolutePath.TrimStart('/') -replace '/', [IO.Path]::DirectorySeparatorChar)
+          if (Test-Path -LiteralPath $candidate) {
+            $nestedPath = $candidate
+          }
+        }
+        catch {
+          # Ignore invalid URI and continue.
+        }
+      }
+      else {
+        $candidate = Join-Path $baseDir $loc
+        if (Test-Path -LiteralPath $candidate) {
+          $nestedPath = $candidate
+        }
+      }
+
+      if ($nestedPath) {
+        $urls += Get-UrlsFromSitemap -Path $nestedPath -Visited $Visited
+      }
+      else {
+        Write-Host "Skipping sitemap entry not available locally: $loc"
+      }
+    }
+    return $urls
+  }
+
+  Write-Host "Skipping unsupported sitemap format: $Path"
   return $urls
 }
 
@@ -56,9 +109,10 @@ $urls = @()
 if ($UseSitemap) {
   $sitemapPaths = @($SitemapPath) + @($AdditionalSitemapPaths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
   $sitemapPaths = $sitemapPaths | Select-Object -Unique
+  $visitedSitemaps = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
   foreach ($path in $sitemapPaths) {
     if (Test-Path -LiteralPath $path) {
-      $urls += Get-UrlsFromSitemap -Path $path
+      $urls += Get-UrlsFromSitemap -Path $path -Visited $visitedSitemaps
     }
     else {
       Write-Host "Skipping missing sitemap: $path"

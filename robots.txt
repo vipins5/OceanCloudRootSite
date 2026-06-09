@@ -83,6 +83,7 @@ Disallow: /coming-soon.html
 Disallow: /comments-admin.html
 Allow: /
 
+Sitemap: https://oceancloudconsults.com/sitemap-index.xml
 Sitemap: https://oceancloudconsults.com/sitemap.xml
 Sitemap: https://oceancloudconsults.com/sitemap-mc.xml
 # LLM discovery map: https://oceancloudconsults.com/llms.txt
