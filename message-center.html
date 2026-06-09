@@ -207,6 +207,12 @@
   }
   .mc-table-wrap { flex: 1; min-width: 0; overflow-x: auto; transition: flex .2s; }
   .mc-main-area.has-detail .mc-table-wrap { flex: 0 0 52%; }
+  /* When the detail panel is open, collapse secondary columns so the
+     narrowed table fits without a horizontal scrollbar. */
+  .mc-main-area.has-detail .mc-col-svc,
+  .mc-main-area.has-detail .mc-col-actby,
+  .mc-main-area.has-detail .mc-col-rel,
+  .mc-main-area.has-detail .mc-col-tags { display: none; }
 
   /* Table */
   .mc-table { width: 100%; border-collapse: collapse; font-size: .82rem; }

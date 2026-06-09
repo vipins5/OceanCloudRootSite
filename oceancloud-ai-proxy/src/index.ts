@@ -645,7 +645,7 @@ function summarizeM365Messages(raw: { messages: GraphMessage[]; fetchedAt: strin
 			lastModifiedDateTime: m.lastModifiedDateTime || "",
 			isMajorChange: Boolean(m.isMajorChange),
 			isArchived: Boolean(m.isArchived),
-			body: stripHtmlKeepBreaks(m.body?.content).slice(0, 1200),
+			body: stripHtmlKeepBreaks(m.body?.content).slice(0, 12000),
 		}));
 
 	const now = new Date();
