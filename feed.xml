@@ -184,5 +184,282 @@
 			<description><![CDATA[Microsoft 365 Copilot is adding chat history filtering by Copilot experience so users can focus on the conversations that matter.]]></description>
 		</item>
 
+		<!-- ═══ Evergreen guides & tutorials ═══ -->
+
+		<item>
+			<title>Automate SharePoint Site Provisioning End to End: Logic Apps, Azure Automation &amp; Self-Service Recovery</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation</guid>
+			<pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Admin &amp; Automation</category>
+			<description><![CDATA[Automate SharePoint site creation with request intake, approval, Logic Apps orchestration, PnP PowerShell, logging, and notifications.]]></description>
+		</item>
+
+		<item>
+			<title>Agents in SharePoint Guide: Custom Copilot Agents</title>
+			<link>https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</guid>
+			<pubDate>Thu, 28 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[2026 guide to SharePoint agents and custom Copilot agents: setup, PAYG costs, source limits, Copilot Studio, Agent Insights, PowerShell, and troubleshooting.]]></description>
+		</item>
+
+		<item>
+			<title>Switch SharePoint Classic Calendar to Modern View with PnP PowerShell</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view</guid>
+			<pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Admin &amp; Automation</category>
+			<description><![CDATA[Modernize SharePoint classic calendar lists with PnP PowerShell pre-checks, dry-run support, and post-change validation.]]></description>
+		</item>
+
+		<item>
+			<title>Restore SharePoint Recycle Bin Items with PnP PowerShell</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell</guid>
+			<pubDate>Tue, 26 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Admin &amp; Automation</category>
+			<description><![CDATA[Restore SharePoint deleted files and folders from specific folders and dates with PnP PowerShell, CSOM paging, dry-run mode, conflict checks, and CSV logging.]]></description>
+		</item>
+
+		<item>
+			<title>SharePoint External Sharing: Complete Admin Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide</guid>
+			<pubDate>Mon, 25 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint</category>
+			<description><![CDATA[Complete SharePoint external sharing guide covering tenant settings, site controls, guest links, Entra B2B, governance, auditing, and PowerShell.]]></description>
+		</item>
+
+		<item>
+			<title>The Complete Guide to SharePoint Permissions in Microsoft 365</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-permissions</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-permissions</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint</category>
+			<description><![CDATA[Master SharePoint permission levels, groups, sharing links, inheritance, and governance best practices. A practical guide for IT admins and site owners managing Microsoft 365.]]></description>
+		</item>
+
+		<item>
+			<title>SharePoint Permissions Best Practices for Secure Microsoft 365 Sites</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint</category>
+			<description><![CDATA[Least privilege, group-based access, external sharing controls, audit methods, and common SharePoint permission mistakes.]]></description>
+		</item>
+
+		<item>
+			<title>The 10-Step Microsoft 365 Migration Checklist</title>
+			<link>https://oceancloudconsults.com/articles/guide-m365-migration-checklist</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-m365-migration-checklist</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Migration</category>
+			<description><![CDATA[A practical 10-step Microsoft 365 migration checklist covering discovery, tenant setup, identity, pilot testing, cutover, and validation.]]></description>
+		</item>
+
+		<item>
+			<title>SharePoint vs Microsoft Teams: When to Use Which</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-vs-teams</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-vs-teams</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint &amp; Teams</category>
+			<description><![CDATA[Choose between SharePoint and Teams with a clear comparison table, collaboration guidance, and a simple decision framework.]]></description>
+		</item>
+
+		<item>
+			<title>Microsoft 365 Copilot: The Complete Business Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-m365-copilot</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-m365-copilot</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[Licensing, app capabilities, SharePoint readiness, rollout steps, and adoption measurement before deploying Microsoft 365 Copilot.]]></description>
+		</item>
+
+		<item>
+			<title>How to Prepare Your SharePoint for Microsoft Copilot</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[Audit oversharing, enable Restricted SharePoint Search, apply sensitivity labels, and clean stale content before Copilot rollout.]]></description>
+		</item>
+
+		<item>
+			<title>SharePoint Copilot Agents: Licensing, Limits &amp; Use Cases</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[What SharePoint Copilot agents are, how Copilot Studio powers them, licensing and Copilot Credits work, and real-world use cases for HR, IT helpdesk, and policy lookup.]]></description>
+		</item>
+
+		<item>
+			<title>How to Build a Modern SharePoint Intranet in 2026</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-intranet</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-intranet</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint</category>
+			<description><![CDATA[Plan a modern SharePoint intranet with hub architecture, navigation, news, search, mobile access, governance, and adoption basics.]]></description>
+		</item>
+
+		<item>
+			<title>5 Power Automate Flows Every SharePoint Admin Should Build</title>
+			<link>https://oceancloudconsults.com/articles/guide-power-automate-sharepoint</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-power-automate-sharepoint</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[Five SharePoint Power Automate workflows for approvals, expiry reminders, onboarding, stale content alerts, and escalation.]]></description>
+		</item>
+
+		<item>
+			<title>How to Build a SharePoint Approval Workflow with Power Automate</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[Configure approval actions, handle responses, send notifications, and update SharePoint item status with Power Automate.]]></description>
+		</item>
+
+		<item>
+			<title>SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[Build SharePoint approval workflows with multiple approvers using Power Automate. Understand sequential vs parallel approval patterns, how to escalate, and when to use each model.]]></description>
+		</item>
+
+		<item>
+			<title>10 SharePoint Automation Ideas Using Power Automate</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-automation-ideas</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-automation-ideas</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[10 practical SharePoint automation examples built with Power Automate — HR onboarding, contract management, IT requests, compliance alerts, site provisioning, and more.]]></description>
+		</item>
+
+		<item>
+			<title>Power Automate SharePoint Triggers and Actions Explained</title>
+			<link>https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[A practical guide to SharePoint triggers and actions in Power Automate, including OData filters, file operations, and HTTP requests.]]></description>
+		</item>
+
+		<item>
+			<title>How to Replace Legacy SharePoint Workflows with Power Automate</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[SharePoint 2010 and 2013 workflow retirement guide — discover which workflows are retiring, how to inventory them, and migrate to Power Automate equivalents step by step.]]></description>
+		</item>
+
+		<item>
+			<title>Build Custom Business Apps with Power Apps and SharePoint</title>
+			<link>https://oceancloudconsults.com/articles/guide-power-apps-sharepoint</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-power-apps-sharepoint</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[Build no-code business apps using Power Apps and SharePoint as a data source. Canvas vs model-driven apps, real-world examples, delegation limits, and publishing options explained.]]></description>
+		</item>
+
+		<item>
+			<title>5 Microsoft Teams Automations That Save Hours Every Week</title>
+			<link>https://oceancloudconsults.com/articles/guide-teams-automation</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-teams-automation</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Teams</category>
+			<description><![CDATA[Five Microsoft Teams automations with Power Automate, from meeting action items to Adaptive Card approvals and weekly digests.]]></description>
+		</item>
+
+		<item>
+			<title>Microsoft Graph and SharePoint: M365 Integrations for IT Admins</title>
+			<link>https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Integration</category>
+			<description><![CDATA[Graph API, Power Automate HTTP, SharePoint webhooks, Salesforce and ServiceNow integrations, and app identity options for IT admins.]]></description>
+		</item>
+
+		<item>
+			<title>Best SharePoint Integrations: Teams, Power BI, Salesforce &amp; Dynamics 365</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-integrations</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-integrations</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Integration</category>
+			<description><![CDATA[How SharePoint integrates with Microsoft Teams, Power BI, Salesforce, ServiceNow, and Dynamics 365 — connector options, implementation patterns, and what each integration delivers.]]></description>
+		</item>
+
+		<item>
+			<title>PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Admin &amp; Automation</category>
+			<description><![CDATA[Step-by-step guide to registering a PnP Entra app — install PowerShell 7.4+, PnP module, create self-signed certs, and connect with -Interactive, -CertificatePath, or -Thumbprint.]]></description>
+		</item>
+
+		<item>
+			<title>Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration</guid>
+			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Admin &amp; Automation</category>
+			<description><![CDATA[Migrate SharePoint Online libraries, lists, pages, and permissions with PnP PowerShell scripts, error handling, and validation.]]></description>
+		</item>
+
 	</channel>
 </rss>
