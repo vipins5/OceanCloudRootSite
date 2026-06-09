@@ -18,7 +18,6 @@
 
   var allMessages  = [];
   var activeId     = null;
-  var filterInbox  = 'all';
   var filterCat    = 'all';
   var filterSvc    = 'all';
   var filterTag    = 'all';
@@ -42,11 +41,15 @@
     return 'mc-tag-default';
   }
 
+  // Relevance is driven primarily by Microsoft's authoritative `severity`
+  // field (normal | high | critical), falling back to category/major-change.
   function relevance(m) {
-    if (m.category === 'preventOrFixIssue') return { level: 'High',   dots: 4 };
-    if (m.isMajorChange)                    return { level: 'High',   dots: 4 };
-    if (m.category === 'planForChange')     return { level: 'Medium', dots: 2 };
-    return                                         { level: 'Normal', dots: 1 };
+    var sev = String(m.severity || '').toLowerCase();
+    if (sev === 'critical' || sev === 'high') return { level: 'High',   dots: 4 };
+    if (m.category === 'preventOrFixIssue')   return { level: 'High',   dots: 4 };
+    if (m.isMajorChange)                      return { level: 'High',   dots: 4 };
+    if (m.category === 'planForChange')       return { level: 'Medium', dots: 2 };
+    return                                           { level: 'Normal', dots: 1 };
   }
 
   function relHtml(m) {
@@ -86,10 +89,24 @@
     return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
+  // Local (browser-only) favourites. Microsoft's `viewPoint.isFavorited` is
+  // null under application permissions, so we persist favourites in this
+  // browser instead.
+  function getFavourites() {
+    try { return JSON.parse(localStorage.getItem('mcFavourites') || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  function isFavourite(id) { return Boolean(id && getFavourites()[id]); }
+  function toggleFavourite(id) {
+    if (!id) return false;
+    var favs = getFavourites();
+    if (favs[id]) { delete favs[id]; } else { favs[id] = true; }
+    try { localStorage.setItem('mcFavourites', JSON.stringify(favs)); } catch (e) {}
+    return Boolean(favs[id]);
+  }
+
   function filtered() {
     return allMessages.filter(function (m) {
-      if (filterInbox === 'active'   &&  m.isArchived) return false;
-      if (filterInbox === 'archived' && !m.isArchived) return false;
       if (filterCat !== 'all' && m.category !== filterCat) return false;
       if (filterSvc !== 'all' && !m.services.includes(filterSvc)) return false;
       if (filterTag !== 'all' && !m.tags.some(function (t) { return t === filterTag; })) return false;
@@ -175,9 +192,10 @@
         return '<span class="mc-tag ' + tagClass(t) + '">' + esc(t) + '</span>';
       }).join('');
       var svc = m.services.slice(0, 2).join(', ');
+      var fav = isFavourite(m.id);
 
       return '<tr class="mc-row' + (isActive ? ' is-active' : '') + '" data-id="' + esc(m.id) + '">' +
-        '<td class="mc-col-star"><button class="mc-star-btn" type="button" aria-label="Favourite" tabindex="-1">&#9734;</button></td>' +
+        '<td class="mc-col-star"><button class="mc-star-btn' + (fav ? ' is-on' : '') + '" type="button" data-star="' + esc(m.id) + '" aria-label="' + (fav ? 'Remove favourite' : 'Favourite') + '" aria-pressed="' + (fav ? 'true' : 'false') + '">' + (fav ? '&#9733;' : '&#9734;') + '</button></td>' +
         '<td class="mc-col-title">' +
           '<div class="mc-row-id">' + esc(m.id) + '</div>' +
           '<div class="mc-row-title">' + esc(m.title) + '</div>' +
@@ -194,6 +212,17 @@
     tbody.querySelectorAll('tr[data-id]').forEach(function (row) {
       row.addEventListener('click', function () {
         selectMessage(row.getAttribute('data-id'));
+      });
+    });
+
+    tbody.querySelectorAll('.mc-star-btn[data-star]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var on = toggleFavourite(btn.getAttribute('data-star'));
+        btn.classList.toggle('is-on', on);
+        btn.innerHTML = on ? '&#9733;' : '&#9734;';
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? 'Remove favourite' : 'Favourite');
       });
     });
   }
@@ -259,15 +288,14 @@
   function renderSummary(totals) {
     if (!summaryEl || !totals) return;
     var dotCls = totals.actionRequired > 0 ? 'mc-sum-dot warn' : 'mc-sum-dot ok';
-    var parts = [totals.total + ' total'];
-    if (totals.active !== undefined)   parts.push(totals.active + ' inbox');
-    if (totals.archived !== undefined) parts.push(totals.archived + ' archived');
-    if (totals.actionRequired > 0)     parts.push(totals.actionRequired + ' action required');
+    var parts = [];
+    if (totals.actionRequired > 0) parts.push(totals.actionRequired + ' action required');
+    if (totals.planForChange)      parts.push(totals.planForChange + ' plan for change');
     summaryEl.innerHTML =
       '<span class="' + dotCls + '"></span>' +
       '<div>' +
         '<strong>' + esc(totals.total + ' message' + (totals.total !== 1 ? 's' : '')) + '</strong>' +
-        '<span>' + esc(parts.slice(1).join(' · ')) + '</span>' +
+        '<span>' + esc(parts.join(' · ')) + '</span>' +
       '</div>';
   }
 
@@ -349,16 +377,6 @@
         scheduleRefresh();
       });
     }
-
-    var inboxBtns = root.querySelectorAll('[data-mc-inbox]');
-    inboxBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        filterInbox = btn.getAttribute('data-mc-inbox') || 'active';
-        inboxBtns.forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        renderTable();
-      });
-    });
 
     catBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
