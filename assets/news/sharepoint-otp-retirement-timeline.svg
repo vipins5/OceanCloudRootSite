@@ -1,76 +1,62 @@
-<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">SharePoint OTP retirement and Entra B2B transition timeline</title>
-  <desc id="desc">Timeline showing March 2026 announcement, May 2026 tenant rollout, July 2026 external access impact, and August 31 2026 retirement milestone.</desc>
+<svg width="1400" height="820" viewBox="0 0 1400 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tldesc">
+  <title id="tldesc">SharePoint OTP retirement and Entra B2B transition timeline for MC 1243549</title>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="tlbg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#071425"/>
       <stop offset="100%" stop-color="#0c1f37"/>
     </linearGradient>
-    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="tlline" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#00b4d8"/>
       <stop offset="100%" stop-color="#4ade80"/>
     </linearGradient>
-    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="12" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-
-  <rect width="1600" height="900" fill="url(#bg)"/>
-  <circle cx="1440" cy="120" r="220" fill="#00b4d8" opacity="0.12"/>
-  <circle cx="240" cy="780" r="260" fill="#4ade80" opacity="0.08"/>
-
-  <text x="120" y="120" fill="#e5f4ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="54" font-weight="800">
-    SharePoint OTP Retirement Timeline
-  </text>
-  <text x="120" y="170" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="28">
-    MC 1243549: Transition from legacy SPO OTP to Microsoft Entra B2B collaboration flow
-  </text>
-
-  <line x1="140" y1="430" x2="1460" y2="430" stroke="url(#line)" stroke-width="8" stroke-linecap="round"/>
-
-  <g filter="url(#softGlow)">
-    <circle cx="260" cy="430" r="20" fill="#00b4d8"/>
-    <circle cx="610" cy="430" r="20" fill="#00b4d8"/>
-    <circle cx="960" cy="430" r="20" fill="#f59e0b"/>
-    <circle cx="1310" cy="430" r="20" fill="#4ade80"/>
+  <rect width="1400" height="820" fill="url(#tlbg)"/>
+  <circle cx="1280" cy="110" r="200" fill="#00b4d8" opacity="0.10"/>
+  <circle cx="180" cy="720" r="240" fill="#4ade80" opacity="0.07"/>
+  <text x="700" y="90" text-anchor="middle" fill="#e5f4ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="50" font-weight="800">SharePoint OTP Retirement Timeline</text>
+  <text x="700" y="136" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24">MC 1243549: Transition from legacy SPO OTP to Microsoft Entra B2B collaboration flow</text>
+  <line x1="120" y1="400" x2="1280" y2="400" stroke="url(#tlline)" stroke-width="7" stroke-linecap="round"/>
+  <g filter="url(#glow)">
+    <circle cx="180" cy="400" r="18" fill="#00b4d8"/>
+    <circle cx="520" cy="400" r="18" fill="#00b4d8"/>
+    <circle cx="860" cy="400" r="18" fill="#f59e0b"/>
+    <circle cx="1200" cy="400" r="18" fill="#4ade80"/>
   </g>
-
   <g font-family="Inter,Segoe UI,Arial,sans-serif">
-    <!-- March 2026 — dot at cx=260, label box centered on dot -->
-    <rect x="160" y="250" width="200" height="62" rx="10" fill="#00b4d8" opacity="0.18"/>
-    <text x="260" y="292" text-anchor="middle" fill="#84e7ff" font-size="26" font-weight="700">March 2026</text>
-    <text x="260" y="520" text-anchor="middle" fill="#dbefff" font-size="32" font-weight="700">Announcement</text>
-    <text x="260" y="560" text-anchor="middle" fill="#9ec6de" font-size="22">Microsoft posts MC 1243549</text>
-    <text x="260" y="590" text-anchor="middle" fill="#9ec6de" font-size="22">about OTP retirement and B2B move</text>
+    <rect x="90" y="230" width="180" height="58" rx="10" fill="#00b4d8" opacity="0.18"/>
+    <text x="180" y="268" text-anchor="middle" fill="#84e7ff" font-size="24" font-weight="700">March 2026</text>
+    <text x="180" y="488" text-anchor="middle" fill="#dbefff" font-size="28" font-weight="700">Announcement</text>
+    <text x="180" y="522" text-anchor="middle" fill="#9ec6de" font-size="19">Microsoft posts MC 1243549</text>
+    <text x="180" y="546" text-anchor="middle" fill="#9ec6de" font-size="19">about OTP retirement and</text>
+    <text x="180" y="570" text-anchor="middle" fill="#9ec6de" font-size="19">the move to Entra B2B</text>
 
-    <!-- May 2026 — dot at cx=610 -->
-    <rect x="510" y="250" width="200" height="62" rx="10" fill="#00b4d8" opacity="0.18"/>
-    <text x="610" y="292" text-anchor="middle" fill="#84e7ff" font-size="26" font-weight="700">May 2026</text>
-    <text x="610" y="520" text-anchor="middle" fill="#dbefff" font-size="32" font-weight="700">Rollout Starts</text>
-    <text x="610" y="560" text-anchor="middle" fill="#9ec6de" font-size="22">Tenant integration with Entra B2B</text>
-    <text x="610" y="590" text-anchor="middle" fill="#9ec6de" font-size="22">begins in phased deployment</text>
+    <rect x="430" y="230" width="180" height="58" rx="10" fill="#00b4d8" opacity="0.18"/>
+    <text x="520" y="268" text-anchor="middle" fill="#84e7ff" font-size="24" font-weight="700">May 2026</text>
+    <text x="520" y="488" text-anchor="middle" fill="#dbefff" font-size="28" font-weight="700">Rollout Starts</text>
+    <text x="520" y="522" text-anchor="middle" fill="#9ec6de" font-size="19">Tenant integration with</text>
+    <text x="520" y="546" text-anchor="middle" fill="#9ec6de" font-size="19">Entra B2B begins across</text>
+    <text x="520" y="570" text-anchor="middle" fill="#9ec6de" font-size="19">tenants in phased rollout</text>
 
-    <!-- July 2026 — dot at cx=960 -->
-    <rect x="860" y="250" width="200" height="62" rx="10" fill="#f59e0b" opacity="0.20"/>
-    <text x="960" y="292" text-anchor="middle" fill="#ffd08a" font-size="26" font-weight="700">July 2026</text>
-    <text x="960" y="520" text-anchor="middle" fill="#dbefff" font-size="32" font-weight="700">Impact Window</text>
-    <text x="960" y="560" text-anchor="middle" fill="#9ec6de" font-size="22">Some external users without</text>
-    <text x="960" y="590" text-anchor="middle" fill="#9ec6de" font-size="22">proper redemption may see issues</text>
+    <rect x="776" y="230" width="168" height="58" rx="10" fill="#f59e0b" opacity="0.20"/>
+    <text x="860" y="268" text-anchor="middle" fill="#ffd08a" font-size="24" font-weight="700">July 2026</text>
+    <text x="860" y="488" text-anchor="middle" fill="#dbefff" font-size="28" font-weight="700">Impact Window</text>
+    <text x="860" y="522" text-anchor="middle" fill="#9ec6de" font-size="19">External users without</text>
+    <text x="860" y="546" text-anchor="middle" fill="#9ec6de" font-size="19">proper redemption may</text>
+    <text x="860" y="570" text-anchor="middle" fill="#9ec6de" font-size="19">see access friction</text>
 
-    <!-- August 31, 2026 — dot at cx=1310 -->
-    <rect x="1186" y="250" width="248" height="62" rx="10" fill="#4ade80" opacity="0.20"/>
-    <text x="1310" y="292" text-anchor="middle" fill="#baf7d1" font-size="26" font-weight="700">August 31, 2026</text>
-    <text x="1310" y="520" text-anchor="middle" fill="#dbefff" font-size="32" font-weight="700">Retirement Target</text>
-    <text x="1310" y="560" text-anchor="middle" fill="#9ec6de" font-size="22">Legacy SharePoint OTP expected</text>
-    <text x="1310" y="590" text-anchor="middle" fill="#9ec6de" font-size="22">to be retired across all tenants</text>
+    <rect x="1092" y="230" width="216" height="58" rx="10" fill="#4ade80" opacity="0.20"/>
+    <text x="1200" y="268" text-anchor="middle" fill="#baf7d1" font-size="24" font-weight="700">August 31, 2026</text>
+    <text x="1200" y="488" text-anchor="middle" fill="#dbefff" font-size="28" font-weight="700">Retirement Target</text>
+    <text x="1200" y="522" text-anchor="middle" fill="#9ec6de" font-size="19">Legacy SharePoint OTP</text>
+    <text x="1200" y="546" text-anchor="middle" fill="#9ec6de" font-size="19">expected to be retired</text>
+    <text x="1200" y="570" text-anchor="middle" fill="#9ec6de" font-size="19">across all tenants</text>
   </g>
-
-  <rect x="120" y="680" width="1360" height="140" rx="14" fill="#0d2138" stroke="#2d5370" stroke-width="2"/>
-  <text x="150" y="736" fill="#dbefff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="30" font-weight="700">Important clarification</text>
-  <text x="150" y="778" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24">Legacy SharePoint OTP is retiring, but Entra B2B email one-time passcode</text>
-  <text x="150" y="808" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24">can still appear as a fallback when no suitable identity provider matches.</text>
+  <rect x="100" y="628" width="1200" height="138" rx="14" fill="#0d2138" stroke="#2d5370" stroke-width="2"/>
+  <text x="700" y="682" text-anchor="middle" fill="#dbefff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="26" font-weight="700">Important clarification</text>
+  <text x="700" y="718" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="21">Legacy SharePoint OTP is retiring, but Entra B2B email one-time passcode</text>
+  <text x="700" y="748" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="21">can still appear as a fallback when no suitable identity provider matches.</text>
 </svg>
