@@ -334,7 +334,7 @@
       <p>This is a pattern we see often in Microsoft 365 modernization: old controls remain visible for a period while underlying architecture moves forward. For support teams, this means checking both configuration and live behavior, not configuration alone. The most reliable source of truth is still a controlled test invite with known user identities.</p>
 
       <h2>Why Google identity provider setup is now urgent</h2>
-      <p>You specifically called out a pending task: configuring Google as an identity provider in Entra External ID. That is the right focus. For many organizations, the largest group of external collaborators is still Gmail-based consultants, vendors, and partner staff. Without Google federation configured, those users can fall into alternate paths, including Entra email OTP fallback, depending on tenant setup and user account profile.</p>
+      <p>One task that often gets deferred is configuring Google as an identity provider in Entra External ID, and right now it deserves priority. For many organizations, the largest group of external collaborators is still Gmail-based consultants, vendors, and partner staff. Without Google federation configured, those users can fall into alternate paths, including Entra email OTP fallback, depending on tenant setup and user account profile.</p>
 
       <p>That fallback may technically work, but it is not always the smoothest or most consistent user experience, especially when your help desk scripts tell users to "sign in with Google" while the user sees a passcode prompt instead. Aligning configuration with expected user behavior reduces confusion dramatically.</p>
 
@@ -351,7 +351,7 @@
       <h3>Part A: create and configure Google OAuth app</h3>
       <div class="portal-path">
         <span class="pp-icon">1</span>
-        <span class="pp-step">Google Developers Console</span>
+        <span class="pp-step">Google Cloud Console</span>
         <span class="pp-sep">&gt;</span>
         <span class="pp-step">Create project</span>
         <span class="pp-sep">&gt;</span>
@@ -361,7 +361,7 @@
       </div>
 
       <ol>
-        <li>Open <a href="https://console.developers.google.com" target="_blank" rel="noopener noreferrer">Google Developers Console</a> and create a new project dedicated to Entra B2B federation.</li>
+        <li>Open the <a href="https://console.cloud.google.com" target="_blank" rel="noopener noreferrer">Google Cloud Console</a> and create a new project dedicated to Entra B2B federation.</li>
         <li>Configure the OAuth consent screen and include the authorized domain <code>microsoftonline.com</code>.</li>
         <li>Create OAuth credentials with application type <strong>Web application</strong>.</li>
         <li>Add authorized redirect URIs:
@@ -388,7 +388,7 @@
 
       <ol>
         <li>In Entra admin center, go to <strong>External Identities</strong> then <strong>All identity providers</strong>.</li>
-        <li>Select Google, enable it, and paste the Client ID and Client Secret from Google Cloud.</li>
+        <li>Select Google, enable it, and paste the Client ID and Client Secret from the Google Cloud Console.</li>
         <li>Save and validate configuration by sending a controlled invite to a test <code>@gmail.com</code> account.</li>
         <li>Document the setup date, owner, and credential rotation plan in your tenant runbook.</li>
       </ol>
@@ -440,7 +440,7 @@
       <p>If a user already redeemed a guest invitation using an older path, you may not see the new expected sign-in route immediately. In those situations, administrators commonly reset invitation redemption state (or remove and re-invite the guest) to test the updated authentication experience cleanly. Always perform this in a controlled test cycle first, not on active client accounts during business hours.</p>
 
       <h2>PowerShell quick checks for admin teams</h2>
-      <p>You asked for PowerShell if needed, so here are practical snippets your team can use for pre-checks and audit context. These are not the only commands you need, but they are useful sanity checks before and after rollout windows.</p>
+      <p>For teams that prefer the command line, here are practical snippets to use for pre-checks and audit context. These are not the only commands you need, but they are useful sanity checks before and after rollout windows.</p>
 
       <div class="code-block">
         <div class="code-label">SharePoint Online Management Shell (tenant sharing posture)</div>
@@ -599,7 +599,7 @@ Get-SPOTenant | Select-Object `
       <p>That short message avoids unnecessary technical details while still preparing people for visible sign-in changes.</p>
 
       <h2>Communication template you can send internally</h2>
-      <div class="code-block">
+      <div class="code-block" data-lang="text">
         <div class="code-label">Internal change notice template</div>
 <pre>Subject: External sharing sign-in update for SharePoint and OneDrive
 
