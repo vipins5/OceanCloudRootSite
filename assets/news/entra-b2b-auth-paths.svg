@@ -27,12 +27,14 @@
   </text>
 
   <g font-family="Inter,Segoe UI,Arial,sans-serif">
+    <!-- Top box: "External user opens invitation link" — centered at x=800 -->
     <rect x="560" y="220" width="480" height="120" rx="16" fill="#0f2f48" stroke="#3a88ad" stroke-width="2.5"/>
     <text x="800" y="275" text-anchor="middle" fill="#d9f2ff" font-size="34" font-weight="700">External user opens invitation link</text>
     <text x="800" y="314" text-anchor="middle" fill="#9ec6de" font-size="24">Microsoft Entra B2B evaluates available identity options</text>
 
     <line x1="800" y1="340" x2="800" y2="410" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
 
+    <!-- Decision box — centered at x=800 -->
     <rect x="520" y="410" width="560" height="110" rx="14" fill="#12344f" stroke="#4f90b8" stroke-width="2"/>
     <text x="800" y="462" text-anchor="middle" fill="#e8f6ff" font-size="31" font-weight="700">Does the user match a supported identity path?</text>
     <text x="800" y="498" text-anchor="middle" fill="#9ec6de" font-size="23">Entra account, Microsoft account, Google IdP, or fallback email OTP</text>
@@ -42,24 +44,28 @@
     <line x1="800" y1="520" x2="960" y2="610" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
     <line x1="800" y1="520" x2="1250" y2="610" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
 
+    <!-- Card 1: Home Entra — box x=130 w=430 → center=345 -->
     <rect x="130" y="620" width="430" height="190" rx="16" fill="#0f2a40" stroke="#4b91b7" stroke-width="2"/>
-    <text x="165" y="676" fill="#dff3ff" font-size="28" font-weight="700">1) Home Entra Account</text>
-    <text x="165" y="716" fill="#9ec6de" font-size="23">Work or school identity from</text>
-    <text x="165" y="748" fill="#9ec6de" font-size="23">another organization tenant</text>
-    <text x="165" y="786" fill="#8ce1ff" font-size="22">Most seamless enterprise route</text>
+    <text x="345" y="676" text-anchor="middle" fill="#dff3ff" font-size="28" font-weight="700">1) Home Entra Account</text>
+    <text x="345" y="716" text-anchor="middle" fill="#9ec6de" font-size="22">Work or school identity from</text>
+    <text x="345" y="746" text-anchor="middle" fill="#9ec6de" font-size="22">another organization tenant</text>
+    <text x="345" y="784" text-anchor="middle" fill="#8ce1ff" font-size="21">Most seamless enterprise route</text>
 
+    <!-- Card 2: Microsoft Account — box x=580 w=430 → center=795 -->
     <rect x="580" y="620" width="430" height="190" rx="16" fill="#0f2a40" stroke="#4b91b7" stroke-width="2"/>
-    <text x="615" y="676" fill="#dff3ff" font-size="28" font-weight="700">2) Microsoft Account</text>
-    <text x="615" y="716" fill="#9ec6de" font-size="23">Outlook.com, Hotmail.com,</text>
-    <text x="615" y="748" fill="#9ec6de" font-size="23">Live.com or other MSA identity</text>
-    <text x="615" y="786" fill="#8ce1ff" font-size="22">Typical for personal accounts</text>
+    <text x="795" y="676" text-anchor="middle" fill="#dff3ff" font-size="28" font-weight="700">2) Microsoft Account</text>
+    <text x="795" y="716" text-anchor="middle" fill="#9ec6de" font-size="22">Outlook.com, Hotmail.com,</text>
+    <text x="795" y="746" text-anchor="middle" fill="#9ec6de" font-size="22">Live.com or other MSA identity</text>
+    <text x="795" y="784" text-anchor="middle" fill="#8ce1ff" font-size="21">Typical for personal accounts</text>
 
+    <!-- Card 3: Google Sign-In — box x=1030 w=430 → center=1245 -->
     <rect x="1030" y="620" width="430" height="190" rx="16" fill="#0f2a40" stroke="#4b91b7" stroke-width="2"/>
-    <text x="1065" y="676" fill="#dff3ff" font-size="28" font-weight="700">3) Google Sign-In</text>
-    <text x="1065" y="716" fill="#9ec6de" font-size="23">Available when Google is</text>
-    <text x="1065" y="748" fill="#9ec6de" font-size="23">configured as identity provider</text>
-    <text x="1065" y="786" fill="#8ce1ff" font-size="22">Best path for gmail/googlemail users</text>
+    <text x="1245" y="676" text-anchor="middle" fill="#dff3ff" font-size="28" font-weight="700">3) Google Sign-In</text>
+    <text x="1245" y="716" text-anchor="middle" fill="#9ec6de" font-size="22">Available when Google is</text>
+    <text x="1245" y="746" text-anchor="middle" fill="#9ec6de" font-size="22">configured as identity provider</text>
+    <text x="1245" y="784" text-anchor="middle" fill="#8ce1ff" font-size="21">Best path for gmail/googlemail users</text>
 
+    <!-- Fallback box — box x=470 w=660 → center=800 -->
     <rect x="470" y="850" width="660" height="110" rx="16" fill="#21363f" stroke="#86b1bf" stroke-width="2"/>
     <text x="800" y="900" text-anchor="middle" fill="#e6f8ff" font-size="30" font-weight="700">4) Email One-Time Passcode (Fallback)</text>
     <text x="800" y="936" text-anchor="middle" fill="#b8d6df" font-size="22">Still part of Entra B2B flow when no other supported identity provider applies</text>
