@@ -468,6 +468,19 @@
     "type": "guide"
   },
   {
+    "id": "articles-guide-sharepoint-otp-retirement-entra-b2b",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "sharepoint",
+    "title": "SharePoint OTP Retirement: Simple Entra B2B Guide",
+    "heading": "SharePoint OTP Retirement: Simple Entra B2B Guide",
+    "excerpt": "Plain-English guide to MC 1243549: legacy SharePoint OTP retirement, Entra B2B invitation redemption, Google identity provider setup, and fallback OTP behavior.",
+    "body": "SharePoint OTP Retirement: Simple Entra B2B Guide | OceanCloud June 10, 2026 21 min read Microsoft 365 Message Center notification MC 1243549 retires the legacy SharePoint OTP authentication experience and transitions external sharing sign-in to Microsoft Entra B2B invitation redemption. This guide explains the timeline, what changes in July and by August 31, 2026, why OTP can still appear as Entra B2B email OTP fallback, and how to configure Google as an identity provider for gmail.com and googlemail.com users. It also covers custom Google Workspace domain caveats, testing strategy, PowerShell checks, and operational rollout guidance for service desk and site owners.",
+    "url": "articles/guide-sharepoint-otp-retirement-entra-b2b",
+    "dateDisplay": "June 10, 2026",
+    "dateSort": "2026-06-10"
+  },
+  {
     "id": "articles-news-2026-06-microsoft-teams-multi-line-calling-on-teams-mobile",
     "type": "article",
     "tag": "Article",

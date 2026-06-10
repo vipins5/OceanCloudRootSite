@@ -1,0 +1,67 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Microsoft Entra B2B external user authentication paths</title>
+  <desc id="desc">Decision flow for external user sign-in: Entra work account, Microsoft account, Google identity provider, or email OTP fallback.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06121f"/>
+      <stop offset="100%" stop-color="#102840"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00b4d8"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#7bc6e8" />
+    </marker>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="1380" cy="180" r="220" fill="#00b4d8" opacity="0.10"/>
+  <circle cx="280" cy="860" r="300" fill="#60a5fa" opacity="0.08"/>
+
+  <text x="90" y="100" fill="#e8f6ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="52" font-weight="800">
+    Entra B2B Invitation Redemption: Auth Paths
+  </text>
+  <text x="90" y="152" fill="#a8cfdf" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="28">
+    After SharePoint legacy OTP retirement, external access follows Microsoft Entra B2B identity routing
+  </text>
+
+  <g font-family="Inter,Segoe UI,Arial,sans-serif">
+    <rect x="560" y="220" width="480" height="120" rx="16" fill="#0f2f48" stroke="#3a88ad" stroke-width="2.5"/>
+    <text x="800" y="275" text-anchor="middle" fill="#d9f2ff" font-size="34" font-weight="700">External user opens invitation link</text>
+    <text x="800" y="314" text-anchor="middle" fill="#9ec6de" font-size="24">Microsoft Entra B2B evaluates available identity options</text>
+
+    <line x1="800" y1="340" x2="800" y2="410" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="520" y="410" width="560" height="110" rx="14" fill="#12344f" stroke="#4f90b8" stroke-width="2"/>
+    <text x="800" y="462" text-anchor="middle" fill="#e8f6ff" font-size="31" font-weight="700">Does the user match a supported identity path?</text>
+    <text x="800" y="498" text-anchor="middle" fill="#9ec6de" font-size="23">Entra account, Microsoft account, Google IdP, or fallback email OTP</text>
+
+    <line x1="800" y1="520" x2="350" y2="610" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="800" y1="520" x2="640" y2="610" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="800" y1="520" x2="960" y2="610" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="800" y1="520" x2="1250" y2="610" stroke="#7bc6e8" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="130" y="620" width="430" height="190" rx="16" fill="#0f2a40" stroke="#4b91b7" stroke-width="2"/>
+    <text x="165" y="676" fill="#dff3ff" font-size="28" font-weight="700">1) Home Entra Account</text>
+    <text x="165" y="716" fill="#9ec6de" font-size="23">Work or school identity from</text>
+    <text x="165" y="748" fill="#9ec6de" font-size="23">another organization tenant</text>
+    <text x="165" y="786" fill="#8ce1ff" font-size="22">Most seamless enterprise route</text>
+
+    <rect x="580" y="620" width="430" height="190" rx="16" fill="#0f2a40" stroke="#4b91b7" stroke-width="2"/>
+    <text x="615" y="676" fill="#dff3ff" font-size="28" font-weight="700">2) Microsoft Account</text>
+    <text x="615" y="716" fill="#9ec6de" font-size="23">Outlook.com, Hotmail.com,</text>
+    <text x="615" y="748" fill="#9ec6de" font-size="23">Live.com or other MSA identity</text>
+    <text x="615" y="786" fill="#8ce1ff" font-size="22">Typical for personal accounts</text>
+
+    <rect x="1030" y="620" width="430" height="190" rx="16" fill="#0f2a40" stroke="#4b91b7" stroke-width="2"/>
+    <text x="1065" y="676" fill="#dff3ff" font-size="28" font-weight="700">3) Google Sign-In</text>
+    <text x="1065" y="716" fill="#9ec6de" font-size="23">Available when Google is</text>
+    <text x="1065" y="748" fill="#9ec6de" font-size="23">configured as identity provider</text>
+    <text x="1065" y="786" fill="#8ce1ff" font-size="22">Best path for gmail/googlemail users</text>
+
+    <rect x="470" y="850" width="660" height="110" rx="16" fill="#21363f" stroke="#86b1bf" stroke-width="2"/>
+    <text x="800" y="900" text-anchor="middle" fill="#e6f8ff" font-size="30" font-weight="700">4) Email One-Time Passcode (Fallback)</text>
+    <text x="800" y="936" text-anchor="middle" fill="#b8d6df" font-size="22">Still part of Entra B2B flow when no other supported identity provider applies</text>
+  </g>
+</svg>

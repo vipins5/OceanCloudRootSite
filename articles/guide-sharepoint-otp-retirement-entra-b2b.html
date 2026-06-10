@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint OTP Retirement and Entra B2B Transition Guide | OceanCloud</title>
+  <meta name="description" content="Plain-English guide to MC 1243549: retirement of legacy SharePoint OTP, move to Entra B2B, Google IdP setup for Gmail users, testing checklist, and rollout planning." />
+  <meta name="keywords" content="MC 1243549, SharePoint OTP retirement, Entra B2B SharePoint OneDrive, Google federation Entra External ID, external sharing authentication Microsoft 365" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="SharePoint OTP Retirement and Entra B2B Transition Guide" />
+  <meta property="og:description" content="Simple breakdown of Microsoft 365 Message Center MC 1243549, migration timeline, identity behavior, Gmail handling, and a practical admin checklist." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt"   content="Timeline and authentication flow for SharePoint OTP retirement" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
+  <meta name="twitter:title"       content="SharePoint OTP Retirement and Entra B2B Transition Guide | OceanCloud" />
+  <meta name="twitter:description" content="Understand MC 1243549 in plain English: what is changing, what is not, and how to prepare external sharing for Gmail users." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b#article",
+        "headline": "SharePoint OTP Retirement and Entra B2B Transition Guide",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b"
+        },
+        "datePublished": "2026-06-10",
+        "dateModified": "2026-06-10",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "A practical, plain-English guide to Microsoft 365 Message Center MC 1243549: retirement of legacy SharePoint One-Time Passcode authentication, Entra B2B transition, Google identity provider setup, and external access testing.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "MC 1243549",
+          "SharePoint OTP retirement",
+          "Microsoft Entra B2B",
+          "External sharing authentication",
+          "Google federation"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration",
+            "name": "Microsoft Entra B2B integration for SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/faqs-odspintegrationwithentrab2b",
+            "name": "Improvements to external sharing in OneDrive and SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/entra/external-id/redemption-experience",
+            "name": "B2B collaboration invitation redemption"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/entra/external-id/one-time-passcode",
+            "name": "Email one-time passcode authentication"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/entra/external-id/google-federation",
+            "name": "Google federation with Microsoft Entra B2B"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "SharePoint OTP Retirement Guide",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b"
+          }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:860px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.16);color:#7cb6ff;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.64rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:28px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.86;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.86;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .article-image{margin:30px 0;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);}
+  .article-image img{width:100%;height:auto;border-radius:10px;display:block;}
+  .article-image figcaption{margin-top:11px;color:var(--text-dim);font-size:.82rem;line-height:1.7;}
+  .art-callout{background:rgba(59,130,246,.08);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#cce2ff;font-size:.92rem;}
+  .art-callout.warn{background:rgba(251,146,60,.08);border-left-color:#fb923c;}
+  .art-callout.warn p{color:#ffd8b5;}
+  .art-callout.ok{background:rgba(74,222,128,.08);border-left-color:#4ade80;}
+  .art-callout.ok p{color:#c9f7d8;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(59,130,246,.14);color:#9fd1ff;font-weight:700;padding:11px 14px;text-align:left;border-bottom:1px solid rgba(96,165,250,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .portal-path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 16px;margin:14px 0;font-size:.8rem;}
+  .portal-path .pp-step{color:#7cb6ff;font-weight:600;}
+  .portal-path .pp-sep{color:rgba(255,255,255,.25);margin:0 2px;}
+  .portal-path .pp-icon{font-size:1rem;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#60a5fa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:34px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .quick-points-source{display:none;}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>SharePoint OTP Retirement</span></nav>
+      <h1>SharePoint OTP Retirement: <span class="grad-text">Simple Entra B2B Guide</span></h1>
+      <p>What MC 1243549 means, what is changing, what is not changing, and exactly how to prepare your tenant.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint &amp; Security</span>
+        <span class="art-date">June 10, 2026</span>
+        <span class="art-read">21 min read</span>
+      </div>
+
+      <ul class="quick-points-source">
+        <li>MC 1243549 retires legacy SharePoint OTP, but Entra B2B email OTP still exists as fallback.</li>
+        <li>From May 2026 rollout onward, EnableAzureB2BIntegration no longer controls behavior in migrated tenants.</li>
+        <li>Gmail users should use Google sign-in only after Google is configured as an Entra identity provider.</li>
+        <li>Different tenants may show different sign-in behavior during phased rollout.</li>
+        <li>Custom Google Workspace domains usually need SAML or WS-Fed federation, not built-in Google IdP.</li>
+        <li>Run pilot testing before August 31, 2026 to prevent external access disruption.</li>
+      </ul>
+
+      <p class="article-intro">Microsoft 365 Message Center notification <strong>MC 1243549</strong> has made one topic suddenly urgent for SharePoint and OneDrive administrators: external user sign-in behavior is changing. Many teams read the headline and assume one thing only: "OTP is being removed." That is incomplete, and in some cases misleading. What Microsoft is retiring is the <strong>legacy SharePoint Online One-Time Passcode (OTP) experience</strong>. What remains available is <strong>Microsoft Entra B2B email one-time passcode</strong>, which can still appear as a fallback in the Entra B2B invitation redemption flow when no supported identity provider matches the invited user.</p>
+
+      <p>This guide explains the change in plain language, with practical examples and no jargon-heavy assumptions. If you are the person who gets escalation tickets that begin with "External user cannot open the file we shared," this article is for you. If you are a solution architect preparing governance standards for multiple tenants, this article is also for you. The goal is simple: help you understand exactly what changed, what action is needed, and how to prevent avoidable disruption as we move through 2026.</p>
+
+      <figure class="article-image">
+        <img src="/assets/news/sharepoint-otp-retirement-timeline.svg" alt="Timeline of SharePoint OTP retirement and Entra B2B transition milestones" loading="lazy" decoding="async" width="1600" height="900" />
+        <figcaption>Timeline summary for MC 1243549: announcement, phased rollout, impact window, and retirement target date.</figcaption>
+      </figure>
+
+      <h2>One-minute summary in plain English</h2>
+      <p>For years, some external users accessed SharePoint and OneDrive links through a legacy OTP flow tied to SharePoint itself. Microsoft is now standardizing this experience under <strong>Microsoft Entra B2B collaboration</strong>. That means external users are expected to redeem invitations through Entra's identity routing process instead of the old SharePoint-specific mechanism.</p>
+      <p>The practical effect is not "everyone loses OTP." Instead, the sign-in experience becomes more identity-aware. A user from another organization may sign in with their work account. A personal Microsoft account user may sign in with MSA. A Gmail user may sign in through Google <em>if you configure Google federation</em>. If none of those paths apply and your tenant allows it, Entra B2B email OTP can still be used as the fallback method.</p>
+
+      <div class="art-callout">
+        <p><strong>Key clarification:</strong> "SharePoint OTP retirement" and "all OTP removed" are not the same statement. Legacy SPO OTP is retiring. Entra B2B email OTP can still exist in supported fallback scenarios.</p>
+      </div>
+
+      <h2>Chronology: what happened and when</h2>
+      <p>The timeline matters because many organizations compare behavior across tenants and conclude something is wrong when outcomes differ. In reality, phased rollout means one tenant can look modern while another still appears "old" for a short period.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Date/phase</th><th>What happened</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>March 2026</strong></td>
+              <td>Microsoft published Message Center <strong>MC 1243549</strong> about retirement of legacy SharePoint OTP and transition to Entra B2B.</td>
+              <td>Admins were given advance notice to validate external access and update identity provider configuration.</td>
+            </tr>
+            <tr>
+              <td><strong>May 2026</strong></td>
+              <td>Microsoft began enabling SharePoint/OneDrive integration with Entra B2B across tenants.</td>
+              <td>In migrated tenants, old setting behavior changed, including reduced dependence on <code>EnableAzureB2BIntegration</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>July 2026 onward</strong></td>
+              <td>Some external collaborators without proper guest redemption started seeing access friction.</td>
+              <td>This is often where support incidents rise, especially for long-standing ad hoc sharing patterns.</td>
+            </tr>
+            <tr>
+              <td><strong>By August 31, 2026</strong></td>
+              <td>Legacy SharePoint OTP expected to be retired.</td>
+              <td>Tenants still relying on old assumptions should complete readiness checks before this date.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>What exactly changes for external sharing</h2>
+      <p>At a high level, the change is a move from a SharePoint-owned authentication experience to an Entra-owned collaboration identity experience. This sounds abstract, so here is the operational version: when an external user clicks a sharing link, Entra B2B now decides how that user authenticates based on available identity options and tenant configuration.</p>
+
+      <figure class="article-image">
+        <img src="/assets/news/entra-b2b-auth-paths.svg" alt="Decision flow of Entra B2B invitation redemption authentication options" loading="lazy" decoding="async" width="1600" height="1000" />
+        <figcaption>Entra B2B identity routing model used during invitation redemption for SharePoint and OneDrive external access.</figcaption>
+      </figure>
+
+      <h3>Common authentication outcomes after the transition</h3>
+      <ul>
+        <li><strong>Home organization account:</strong> external users from another Entra tenant generally use their work or school account.</li>
+        <li><strong>Microsoft account:</strong> Outlook.com/Hotmail/Live users sign in with Microsoft account credentials.</li>
+        <li><strong>Google sign-in:</strong> Gmail/Googlemail users can be redirected to Google if Google is configured in Entra External Identities.</li>
+        <li><strong>Email OTP fallback:</strong> if no supported identity provider applies and tenant policy allows it, Entra B2B email OTP can be presented.</li>
+      </ul>
+
+      <p>The end-user experience therefore becomes more predictable <em>when identity provider configuration is done correctly</em>. If it is not configured, behavior can still work, but often through fallback paths you did not intend, which can make troubleshooting and user guidance harder.</p>
+
+      <h2>The setting everyone asks about: EnableAzureB2BIntegration</h2>
+      <p>One of the biggest points of confusion is the historical tenant setting <code>EnableAzureB2BIntegration</code>. In earlier phases of the platform journey, this setting was often discussed as the switch that influenced external auth behavior. With the 2026 rollout, Microsoft has indicated that once integration is applied to a tenant, this old control no longer acts as the main behavior gate it used to be.</p>
+
+      <div class="art-callout warn">
+        <p><strong>Practical advice:</strong> do not build operational runbooks that assume this old setting will fully describe external sign-in outcomes in every tenant post-rollout. Validate real invitation redemption behavior instead.</p>
+      </div>
+
+      <p>This is a pattern we see often in Microsoft 365 modernization: old controls remain visible for a period while underlying architecture moves forward. For support teams, this means checking both configuration and live behavior, not configuration alone. The most reliable source of truth is still a controlled test invite with known user identities.</p>
+
+      <h2>Why Google identity provider setup is now urgent</h2>
+      <p>You specifically called out a pending task: configuring Google as an identity provider in Entra External ID. That is the right focus. For many organizations, the largest group of external collaborators is still Gmail-based consultants, vendors, and partner staff. Without Google federation configured, those users can fall into alternate paths, including Entra email OTP fallback, depending on tenant setup and user account profile.</p>
+
+      <p>That fallback may technically work, but it is not always the smoothest or most consistent user experience, especially when your help desk scripts tell users to "sign in with Google" while the user sees a passcode prompt instead. Aligning configuration with expected user behavior reduces confusion dramatically.</p>
+
+      <h3>What changes after Google IdP is configured</h3>
+      <ul>
+        <li>Invited users at <code>@gmail.com</code> and <code>@googlemail.com</code> are typically redirected to Google sign-in during redemption.</li>
+        <li>Users should redeem with the <strong>same account that received the invite</strong>; mismatched accounts cause common failures.</li>
+        <li>If a user redeemed previously with another method, you may need to reset redemption state before retesting policy behavior.</li>
+      </ul>
+
+      <h2>Step-by-step: configure Google federation in Entra External ID</h2>
+      <p>The process has two sides: Google Developer configuration and Entra identity provider configuration. The order matters. Build the Google OAuth app first, then enter its values in Entra.</p>
+
+      <h3>Part A: create and configure Google OAuth app</h3>
+      <div class="portal-path">
+        <span class="pp-icon">1</span>
+        <span class="pp-step">Google Developers Console</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Create project</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">OAuth consent screen</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">OAuth client ID (Web app)</span>
+      </div>
+
+      <ol>
+        <li>Open <a href="https://console.developers.google.com" target="_blank" rel="noopener noreferrer">Google Developers Console</a> and create a new project dedicated to Entra B2B federation.</li>
+        <li>Configure the OAuth consent screen and include the authorized domain <code>microsoftonline.com</code>.</li>
+        <li>Create OAuth credentials with application type <strong>Web application</strong>.</li>
+        <li>Add authorized redirect URIs:
+          <ul>
+            <li><code>https://login.microsoftonline.com</code></li>
+            <li><code>https://login.microsoftonline.com/te/&lt;tenant-id&gt;/oauth2/authresp</code></li>
+            <li><code>https://login.microsoftonline.com/te/&lt;tenant-name&gt;.onmicrosoft.com/oauth2/authresp</code></li>
+          </ul>
+        </li>
+        <li>Copy the generated <strong>Client ID</strong> and <strong>Client Secret</strong> securely.</li>
+      </ol>
+
+      <h3>Part B: configure Google provider in Entra admin center</h3>
+      <div class="portal-path">
+        <span class="pp-icon">2</span>
+        <span class="pp-step">Microsoft Entra admin center</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">External Identities</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">All identity providers</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Google</span>
+      </div>
+
+      <ol>
+        <li>In Entra admin center, go to <strong>External Identities</strong> then <strong>All identity providers</strong>.</li>
+        <li>Select Google, enable it, and paste the Client ID and Client Secret from Google Cloud.</li>
+        <li>Save and validate configuration by sending a controlled invite to a test <code>@gmail.com</code> account.</li>
+        <li>Document the setup date, owner, and credential rotation plan in your tenant runbook.</li>
+      </ol>
+
+      <div class="art-callout ok">
+        <p><strong>Governance tip:</strong> keep this as a one-time tenant foundation task, but add annual secret rotation and quarterly redemption testing to your security operations calendar.</p>
+      </div>
+
+      <h2>Custom Google Workspace domains: common trap</h2>
+      <p>One of the biggest real-world confusion points is this: "We configured Google, why is user@contoso.com not redirected to Google?" If that custom domain is hosted in Google Workspace, the built-in Google identity provider in Entra does not always handle it the same way as <code>@gmail.com</code> and <code>@googlemail.com</code>. Microsoft documentation typically points to <strong>SAML/WS-Fed identity provider federation</strong> for custom domains.</p>
+      <p>In other words, built-in Google federation is not a universal "all Google-hosted mail" switch. It is focused on consumer Google identities. For enterprise-like custom domains on Google Workspace, plan dedicated federation architecture and testing.</p>
+
+      <h2>Testing strategy before production communication</h2>
+      <p>Do not announce "all external access updated" until you run controlled invitations against identity personas that represent your actual partner ecosystem. The right test matrix is simple and usually catches hidden issues in under one hour.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Persona</th><th>Example account</th><th>Expected path</th><th>Validation check</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Enterprise partner</td>
+              <td>user@partnercorp.com (Entra tenant)</td>
+              <td>Home Entra sign-in</td>
+              <td>User redeems invite and accesses file/site without OTP fallback.</td>
+            </tr>
+            <tr>
+              <td>Consumer Microsoft</td>
+              <td>user@outlook.com</td>
+              <td>Microsoft account sign-in</td>
+              <td>Invitation redemption maps correctly and repeat access is stable.</td>
+            </tr>
+            <tr>
+              <td>Gmail user</td>
+              <td>user@gmail.com</td>
+              <td>Google sign-in (after setup)</td>
+              <td>User is redirected to Google and can open shared content post redemption.</td>
+            </tr>
+            <tr>
+              <td>No matching IdP</td>
+              <td>user@yahoo.com</td>
+              <td>Entra B2B email OTP fallback</td>
+              <td>Email OTP prompt appears only as fallback, not because of misconfiguration.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Redemption reset when testing new behavior</h3>
+      <p>If a user already redeemed a guest invitation using an older path, you may not see the new expected sign-in route immediately. In those situations, administrators commonly reset invitation redemption state (or remove and re-invite the guest) to test the updated authentication experience cleanly. Always perform this in a controlled test cycle first, not on active client accounts during business hours.</p>
+
+      <h2>PowerShell quick checks for admin teams</h2>
+      <p>You asked for PowerShell if needed, so here are practical snippets your team can use for pre-checks and audit context. These are not the only commands you need, but they are useful sanity checks before and after rollout windows.</p>
+
+      <div class="code-block">
+        <div class="code-label">SharePoint Online Management Shell (tenant sharing posture)</div>
+<pre>Connect-SPOService -Url https://&lt;tenant&gt;-admin.sharepoint.com
+
+Get-SPOTenant | Select-Object `
+  SharingCapability, `
+  DefaultSharingLinkType, `
+  RequireAnonymousLinksExpireInDays, `
+  EnableAzureB2BIntegration
+</pre>
+      </div>
+
+      <p>This output helps you understand your external sharing baseline and record state during change windows. Remember, in migrated tenants, the legacy integration setting may no longer fully control behavior. Use it as context, not as your only decision source.</p>
+
+      <div class="code-block">
+        <div class="code-label">Sample site-level verification (external sharing limits)</div>
+<pre>Get-SPOSite -Limit ALL |
+  Select-Object Url, SharingCapability |
+  Sort-Object Url
+</pre>
+      </div>
+
+      <p>This lets you identify sites that are more permissive than expected. If your organization plans to tighten collaboration models during the Entra transition, this report is often your fastest cleanup starting point.</p>
+
+      <div class="code-block">
+        <div class="code-label">Example export for stakeholder review</div>
+<pre>Get-SPOSite -Limit ALL |
+  Select-Object Url, Owner, SharingCapability, LastContentModifiedDate |
+  Export-Csv .\spo-sharing-review.csv -NoTypeInformation -Encoding UTF8
+</pre>
+      </div>
+
+      <h2>Operational plan you can use immediately</h2>
+      <p>Most organizations do better with a short, staged plan than a large migration project. The change itself is platform-driven by Microsoft, so your job is readiness, communication, and exception handling.</p>
+
+      <h3>Stage 1: tenant readiness (week 1)</h3>
+      <ul>
+        <li>Confirm external sharing policy and high-risk site exceptions.</li>
+        <li>Configure Google identity provider if Gmail/Googlemail collaboration is common.</li>
+        <li>Create or refresh test identities for Entra, MSA, Gmail, and fallback domains.</li>
+        <li>Document expected sign-in path per identity type for service desk reference.</li>
+      </ul>
+
+      <h3>Stage 2: pilot and support prep (week 2)</h3>
+      <ul>
+        <li>Run invitation and redemption tests using real sharing scenarios (file link, folder link, site access).</li>
+        <li>Capture screenshots for support runbook: what users should see at each step.</li>
+        <li>Update help desk templates to distinguish legacy OTP from Entra B2B fallback OTP.</li>
+        <li>Define escalation path for guest redemption reset requests.</li>
+      </ul>
+
+      <h3>Stage 3: broad communication (week 3)</h3>
+      <ul>
+        <li>Send concise internal message to site owners and project leads.</li>
+        <li>Share external-facing "what to expect" note for vendors and client contacts.</li>
+        <li>Provide one support mailbox and one fallback owner for urgent collaboration outages.</li>
+      </ul>
+
+      <h3>Stage 4: post-change observation (week 4 and onward)</h3>
+      <ul>
+        <li>Track ticket volume related to "cannot access shared content" by domain type.</li>
+        <li>Review redemption failures and identify recurring user behavior issues.</li>
+        <li>Tune documentation and templates, especially for users who redeem with wrong account identities.</li>
+      </ul>
+
+      <h2>Troubleshooting playbook: fastest path to root cause</h2>
+      <p>When external sharing breaks, teams often jump straight into tenant-wide setting changes. That usually makes things worse because the failure is commonly user-level identity mismatch, not a platform outage. A better approach is a short triage sequence that isolates what failed: invitation routing, identity redemption, or post-redemption authorization.</p>
+
+      <h3>First five checks for service desk</h3>
+      <ol>
+        <li><strong>Verify invited email address:</strong> confirm the user is attempting sign-in with the exact invited address, not an alternate personal or corporate identity.</li>
+        <li><strong>Check expected auth path by domain:</strong> for example, Gmail should usually route to Google sign-in if Google IdP is configured.</li>
+        <li><strong>Use clean browser session:</strong> stale sessions are one of the top causes of wrong-identity redemption prompts.</li>
+        <li><strong>Validate invitation state:</strong> was the guest already redeemed previously with a different method?</li>
+        <li><strong>Confirm content permission:</strong> successful redemption does not guarantee file or site authorization.</li>
+      </ol>
+
+      <p>These checks resolve a large portion of incidents without tenant-wide policy changes. If they fail, escalate with concrete facts: invited email, observed sign-in prompt, timestamp, target URL, and expected identity path. Escalations with those five data points are much faster to resolve than generic "external user cannot access" tickets.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Symptom</th><th>Likely cause</th><th>Quick remediation</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>User gets unexpected OTP when expecting Google sign-in</td>
+              <td>Google IdP not configured or not matching invited identity path</td>
+              <td>Validate Google provider config and retest with fresh invite + private session</td>
+            </tr>
+            <tr>
+              <td>User says "I can sign in, but still cannot open file"</td>
+              <td>Auth succeeded but SharePoint permission missing</td>
+              <td>Verify item/site ACL and link scope; re-share to named user if needed</td>
+            </tr>
+            <tr>
+              <td>User sees account chooser loops</td>
+              <td>Multiple cached sessions causing identity mismatch</td>
+              <td>Test in private browser or clear session cookies and retry</td>
+            </tr>
+            <tr>
+              <td>Behavior changed after policy updates but old user still follows old path</td>
+              <td>Existing redemption state bound to prior method</td>
+              <td>Reset redemption status or remove/re-invite guest for clean validation</td>
+            </tr>
+            <tr>
+              <td>Custom Google Workspace domain not redirecting to Google</td>
+              <td>Built-in Google IdP does not automatically cover custom domains</td>
+              <td>Plan SAML/WS-Fed federation for that domain per Microsoft guidance</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Tenant rollout worksheet for consulting teams</h2>
+      <p>If you manage multiple client tenants, consistency matters more than speed. Use a lightweight worksheet so each tenant is assessed using the same logic. This avoids "hero admin" decisions that work once and fail at scale.</p>
+
+      <h3>Recommended worksheet fields</h3>
+      <ul>
+        <li><strong>Tenant name and primary admin contact</strong></li>
+        <li><strong>Top external domains by volume</strong> (last 90 days)</li>
+        <li><strong>Expected identity path per domain</strong> (Entra, MSA, Google, fallback)</li>
+        <li><strong>Google IdP status</strong> (Not required, Pending, Configured, Validated)</li>
+        <li><strong>Custom domain federation required</strong> (Yes/No + owner)</li>
+        <li><strong>Pilot test completion date</strong> and issue summary</li>
+        <li><strong>Business communication sent date</strong></li>
+        <li><strong>Support readiness owner</strong> and escalation path</li>
+      </ul>
+
+      <p>With this worksheet, you can run weekly reviews and quickly identify which tenants are at risk before the retirement deadline. It also helps leadership teams understand that this is not just a technical task. It is a coordination task between identity admins, SharePoint admins, support teams, and business stakeholders who frequently share with external contacts.</p>
+
+      <p>A useful maturity checkpoint is simple: if your service desk can correctly explain why one user sees Google sign-in and another sees email OTP fallback without escalating to engineering, your rollout documentation is strong. If they cannot, keep refining the domain-path matrix and troubleshooting guide until they can.</p>
+
+      <h2>Direct answers to common admin questions</h2>
+
+      <h3>1) Do we need to do this for every client?</h3>
+      <p>The platform transition is Microsoft-led across tenants, but <strong>Google identity provider setup is tenant-specific</strong>. So the answer is: the rollout happens everywhere, but your configuration actions still happen per tenant. If a tenant expects Gmail users to authenticate via Google sign-in, that tenant must configure Google in Entra External Identities.</p>
+
+      <h3>2) Is Google identity provider setup one-time?</h3>
+      <p>Usually yes. It is generally a one-time tenant-level setup that then supports future B2B invitation redemption flows. Operationally, treat it as one-time foundation plus ongoing maintenance: secret rotation, periodic test redemption, and documentation review.</p>
+
+      <h3>3) Why do other tenants still look like OTP is active?</h3>
+      <p>Because rollout is phased and identity resolution is contextual. One tenant may already be moved to new behavior, another may still be in transition. Also, seeing an OTP prompt does not always mean old SharePoint OTP is still in control; it may be Entra B2B email OTP fallback for a user with no matching supported identity path.</p>
+
+      <h3>4) What about Yahoo and similar domains?</h3>
+      <p>If users do not have Entra, Microsoft account, Google federation match, or another configured IdP, Entra B2B email OTP can be used as fallback if enabled in your tenant. This is why your support playbook should include a domain-to-expected-auth map rather than a one-line rule.</p>
+
+      <h3>5) What about corporate custom domains hosted on Google Workspace?</h3>
+      <p>Do not assume built-in Google provider automatically covers them. Microsoft guidance generally points to SAML/WS-Fed federation for custom domains. Plan this separately from Gmail consumer identity handling.</p>
+
+      <h2>Simple explanation for business stakeholders</h2>
+      <p>If you need to explain this to non-technical leaders, use this version:</p>
+      <div class="art-callout">
+        <p>"Microsoft is standardizing external file-sharing sign-in. Instead of an older SharePoint passcode flow, external users now go through Entra B2B identity checks. This improves consistency and security. For Gmail users, we need Google sign-in configured in our tenant so their login journey stays smooth."</p>
+      </div>
+
+      <p>That short message avoids unnecessary technical details while still preparing people for visible sign-in changes.</p>
+
+      <h2>Communication template you can send internally</h2>
+      <div class="code-block">
+        <div class="code-label">Internal change notice template</div>
+<pre>Subject: External sharing sign-in update for SharePoint and OneDrive
+
+Microsoft is updating external access authentication for SharePoint and OneDrive.
+
+What changes:
+- Legacy SharePoint one-time passcode flow is being retired.
+- External access now uses Microsoft Entra B2B invitation redemption.
+
+What this means for users:
+- Some external users may see a different sign-in prompt than before.
+- Users must redeem invitations with the same email account that was invited.
+
+For Gmail users:
+- We are enabling Google sign-in support in Entra External Identities.
+
+Support:
+If an external collaborator cannot access a shared file or site, contact
+&lt;support mailbox&gt; with the invitee email address and URL.</pre>
+      </div>
+
+      <h2>Mistakes to avoid during this transition</h2>
+      <ul>
+        <li><strong>Treating all OTP prompts as legacy behavior:</strong> some OTP prompts are valid Entra fallback, not rollback failures.</li>
+        <li><strong>Testing with previously redeemed guests only:</strong> old redemption state can mask new expected behavior.</li>
+        <li><strong>Skipping Google setup while expecting Google UX:</strong> without tenant configuration, Gmail flows may not route as expected.</li>
+        <li><strong>Communicating too late:</strong> even technical changes need user guidance to avoid avoidable access tickets.</li>
+        <li><strong>Assuming one tenant experience equals all tenants:</strong> phased rollout means temporary variation is normal.</li>
+      </ul>
+
+      <h2>Final checklist before August 31, 2026</h2>
+      <ol>
+        <li>Review external sharing policy and high-risk sites.</li>
+        <li>Configure Google IdP if Gmail collaboration is required.</li>
+        <li>Test invitation redemption for all major identity personas.</li>
+        <li>Update help desk script with expected auth path by domain type.</li>
+        <li>Prepare fallback process for redemption reset and re-invite.</li>
+        <li>Publish short communication for internal owners and external partners.</li>
+      </ol>
+
+      <p>If you complete these six items, you are in a strong position for a smooth transition. Most post-change incidents then become user guidance issues instead of platform incidents.</p>
+
+      <h2>Reference links</h2>
+      <ul>
+        <li><a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration" target="_blank" rel="noopener noreferrer">Microsoft Learn: Microsoft Entra B2B integration for SharePoint and OneDrive</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/sharepoint/faqs-odspintegrationwithentrab2b" target="_blank" rel="noopener noreferrer">Microsoft Learn: Improvements to external sharing in OneDrive and SharePoint</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/entra/external-id/redemption-experience" target="_blank" rel="noopener noreferrer">Microsoft Learn: B2B collaboration invitation redemption</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/entra/external-id/one-time-passcode" target="_blank" rel="noopener noreferrer">Microsoft Learn: Email one-time passcode authentication</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/entra/external-id/google-federation" target="_blank" rel="noopener noreferrer">Microsoft Learn: Google federation with Microsoft Entra B2B</a></li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help validating external sharing across multiple tenants?</h3>
+        <p>OceanCloud can run a tenant-by-tenant B2B readiness review, configure identity providers, test redemption flows, and produce a support-ready operational runbook for your team.</p>
+        <a href="/contact" class="btn-primary">Book a Free Discovery Call &#8594;</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related guides</p>
+        <div class="related-grid">
+          <!-- populated by article.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/guides">All Guides</a></li>
+          <li><a href="guide-sharepoint-permissions">SharePoint Permissions</a></li>
+          <li><a href="guide-sharepoint-approval-workflow">Approval Workflows</a></li>
+          <li><a href="guide-m365-migration-checklist">Migration Checklist</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services">SharePoint Consulting</a></li>
+          <li><a href="/services">M365 Migration</a></li>
+          <li><a href="/services">Power Platform</a></li>
+          <li><a href="/services">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/cookies">Cookie Policy</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</p></div></div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=10"></script>
+<script src="../js/consent.js?v=3"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=4"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

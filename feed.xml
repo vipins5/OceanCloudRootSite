@@ -187,6 +187,17 @@
 		<!-- ═══ Evergreen guides & tutorials ═══ -->
 
 		<item>
+			<title>SharePoint OTP Retirement: Simple Entra B2B Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b</guid>
+			<pubDate>Wed, 10 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint</category>
+			<description><![CDATA[Plain-English guide to MC 1243549: legacy SharePoint OTP retirement, Entra B2B invitation redemption, Google identity provider setup, and fallback OTP behavior.]]></description>
+		</item>
+
+		<item>
 			<title>Automate SharePoint Site Provisioning End to End: Logic Apps, Azure Automation &amp; Self-Service Recovery</title>
 			<link>https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation</guid>

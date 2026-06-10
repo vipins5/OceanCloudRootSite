@@ -1,7 +1,7 @@
 # Content QA Report
 
-Generated: 2026-06-09 21:33 UTC
-HTML files scanned: 92
+Generated: 2026-06-10 16:20 UTC
+HTML files scanned: 93
 Hard-fail issues: 0
 
 ## Hard Checks
