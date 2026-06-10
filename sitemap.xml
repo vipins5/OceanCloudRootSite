@@ -544,4 +544,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-tenant-level-dashboard-for-interpreter</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-mandatory-pre-meeting-consent</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-04-microsoft-copilot-microsoft-365-now-smarter-with-visuals-cop</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-04-outlook-copilot-in-file-previewer-for-ios</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-01-microsoft-copilot-microsoft-365-microsoft-copilot-microsoft-</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

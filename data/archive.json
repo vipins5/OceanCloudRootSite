@@ -1,6 +1,16 @@
 {
   "items": [
     {
+      "title": "Microsoft Teams: Tenant-level dashboard for Interpreter",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565217",
+      "date_friendly": "June 09, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-tenant-level-dashboard-for-interpreter"
+    },
+    {
       "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222",
       "date_friendly": "June 05, 2026",
@@ -189,6 +199,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-mcp-based-agent-enablement-f"
+    },
+    {
+      "title": "Microsoft Teams: Mandatory pre-meeting consent",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561914",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-mandatory-pre-meeting-consent"
     },
     {
       "title": "Microsoft Copilot (Microsoft 365): Chat History Filtering by Copilot Experience",
@@ -479,6 +499,26 @@
       "article_slug": "news-2026-04-microsoft-teams-report-external-users-for-security-concerns-"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Now smarter with visuals: Copilot Chat leverages embedded images for richer, more accurate answers.",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560540",
+      "date_friendly": "April 17, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-copilot-microsoft-365-now-smarter-with-visuals-cop"
+    },
+    {
+      "title": "Outlook: Copilot in File Previewer for iOS",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560340",
+      "date_friendly": "April 14, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-outlook-copilot-in-file-previewer-for-ios"
+    },
+    {
       "title": "Microsoft Teams: Sharing recap access",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559606",
       "date_friendly": "April 03, 2026",
@@ -527,7 +567,27 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Microsoft Copilot (Microsoft 365): Open Word, Excel, and PowerPoint Files in Copilot Chat",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=548641",
+      "date_friendly": "January 30, 2026",
+      "month_sort": "2026-01",
+      "month_label": "January 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-01-microsoft-copilot-microsoft-365-microsoft-copilot-microsoft-"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Learning Agent in Microsoft 365 Copilot",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=490154",
+      "date_friendly": "October 29, 2025",
+      "month_sort": "2025-10",
+      "month_label": "October 2025",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-08"
+  "last_updated": "2026-06-10"
 }
