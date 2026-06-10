@@ -38,13 +38,13 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/status</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://oceancloudconsults.com/message-center</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -68,7 +68,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/faq</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -92,7 +92,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-power-automate-sharepoint</loc>
-    <lastmod>2026-06-04</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -146,7 +146,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-automation-ideas</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -519,28 +519,28 @@
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-purview-ediscovery-in-product-diagnostics-to-troub</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-meeting-recap-app</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-shared-delegate-mailbox-scheduling-for-event</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-room-availability-signal-for-teams-events</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
