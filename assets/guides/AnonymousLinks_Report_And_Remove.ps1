@@ -28,7 +28,7 @@
 #   Remove-PnPFolderSharingLink -Folder <server-relative url> -Identity <Id> -Force
 #   Sharing link object model:
 #     .Id, .Roles, .ExpirationDateTime, .HasPassword,
-#     .GrantedToIdentitiesV2, and nested .Link.{WebUrl,Type,Scope,PreventsDowload}
+#     .GrantedToIdentitiesV2, and nested .Link.{WebUrl,Type,Scope,PreventsDownload}
 #   .Link.Scope values: Anonymous | Organization | Users
 # ============================================================
 
@@ -781,7 +781,7 @@ try {
                         LinkScope          = Get-LinkProperty -SharingLink $sharingLink -PropertyName "Scope"
                         LinkType           = Get-LinkProperty -SharingLink $sharingLink -PropertyName "Type"
                         LinkRoles          = $linkRoles
-                        BlocksDownload     = Get-LinkProperty -SharingLink $sharingLink -PropertyName "PreventsDowload"
+                        BlocksDownload     = Get-LinkProperty -SharingLink $sharingLink -PropertyName "PreventsDownload"
                         RequiresPassword   = $hasPassword
                         GrantedTo          = $grantedTo
                         ExpirationDateTime = $linkExpiration
