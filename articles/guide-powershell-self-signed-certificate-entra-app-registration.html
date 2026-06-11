@@ -181,6 +181,22 @@
       <h2>Entra app registration basics</h2>
       <p>Before running any script, create an app registration in Microsoft Entra admin center, note the <strong>Application (client) ID</strong> and <strong>Directory (tenant) ID</strong>, and upload the generated <code>.cer</code> file under <strong>Certificates &amp; secrets</strong>. Never upload the <code>.pfx</code> file.</p>
 
+      <h3>Where to upload the certificate in Entra (exact path)</h3>
+      <ol>
+        <li>Open <strong>Microsoft Entra admin center</strong> and go to <strong>Identity &gt; Applications &gt; App registrations</strong>.</li>
+        <li>Select your app, then open <strong>Certificates &amp; secrets</strong>.</li>
+        <li>Go to the <strong>Certificates</strong> tab (not Client secrets).</li>
+        <li>Click <strong>Upload certificate</strong> and select <code>pnp-apponly.cer</code>.</li>
+        <li>Save and confirm the certificate appears with thumbprint and expiry date.</li>
+      </ol>
+
+      <figure style="margin:20px 0 24px;">
+        <img src="/assets/guides/pnp-entra-registration-map.svg" alt="Entra app registration certificate upload path: App registrations, Certificates and secrets, then Upload certificate" loading="lazy" decoding="async" style="width:100%;max-width:860px;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:block;" />
+        <figcaption style="margin-top:8px;color:var(--text-dim);font-size:.82rem;">Upload location: App registrations &rarr; your app &rarr; Certificates &amp; secrets &rarr; Certificates &rarr; Upload certificate.</figcaption>
+      </figure>
+
+      <div class="art-callout"><p><strong>Important:</strong> upload only the public <code>.cer</code> file to Entra. Keep the private <code>.pfx</code> file in a secure location and use it only from your automation runtime.</p></div>
+
       <h3>Delegated vs application API permissions</h3>
       <div class="art-table-wrap"><table class="art-table">
         <thead><tr><th>Model</th><th>How it runs</th><th>Best for</th><th>Common PnP pattern</th></tr></thead>
