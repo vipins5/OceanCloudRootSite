@@ -101,7 +101,10 @@
   .art-tag { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,.15); border: 1px solid rgba(96,165,250,.3); color: #93c5fd; }
   .art-date,.art-read { font-size: .8rem; color: var(--text-dim); }
   .article-intro { font-size: 1.05rem; color: #c6d7e4; line-height: 1.88; }
-  .article-wrap h2 { font-size: clamp(1.26rem, 3vw, 1.68rem); margin: 48px 0 14px; letter-spacing: -.02em; }
+    .article-wrap h2 { font-size: clamp(1.26rem, 3vw, 1.68rem); margin: 48px 0 14px; letter-spacing: -.02em; }
+    .article-wrap h2,
+    .article-wrap h3,
+    .article-wrap [id] { scroll-margin-top: 92px; }
   .article-wrap h3 { font-size: 1.05rem; margin: 28px 0 10px; color: #dbe8f3; }
   .article-wrap p,.article-wrap li { line-height: 1.85; color: var(--text-mid); }
   .article-wrap ul,.article-wrap ol { padding-left: 22px; }
@@ -126,6 +129,7 @@
   .code-block pre { margin: 0; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: .82rem; line-height: 1.68; color: #d0dbea; white-space: pre; }
     .full-script-panel { margin: 14px 0 8px; border: 1px solid rgba(96,165,250,.24); border-radius: 12px; background: rgba(2,8,23,.34); }
     .full-script-panel summary { cursor: pointer; padding: 12px 14px; list-style: none; color: #bfdbfe; font-weight: 700; }
+    .full-script-panel summary:hover { background: rgba(96,165,250,.08); }
     .full-script-panel summary:focus-visible { outline: 2px solid rgba(125,211,252,.8); outline-offset: 2px; border-radius: 8px; }
     .full-script-panel summary::-webkit-details-marker { display: none; }
     .full-script-panel summary::before { content: "+"; display: inline-block; margin-right: 8px; color: #93c5fd; }
@@ -137,9 +141,9 @@
   .art-cta-box p { margin: 0 0 20px; }
   .related-section { margin-top: 58px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.08); }
   .related-label { font-size: .72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
-  .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-  .related-card { padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(2,8,23,.38); text-decoration: none; display: flex; flex-direction: column; gap: 6px; }
-    .related-card:hover { border-color: rgba(96,165,250,.42); transform: translateY(-2px); transition: transform .18s ease, border-color .18s ease; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .related-card { padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(2,8,23,.38); text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: transform .18s ease, border-color .18s ease; }
+    .related-card:hover { border-color: rgba(96,165,250,.42); transform: translateY(-2px); }
     .related-card:focus-visible { outline: 2px solid rgba(125,211,252,.85); outline-offset: 2px; }
   .rc-topic { font-size: .68rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: .08em; }
   .rc-title { font-size: .88rem; font-weight: 600; color: var(--white); line-height: 1.4; }
@@ -147,11 +151,21 @@
   @media (max-width: 640px) {
     .article-section { padding: 40px 0 84px; }
     .article-wrap h2 { margin-top: 40px; }
+        .article-wrap h2,
+        .article-wrap h3,
+        .article-wrap [id] { scroll-margin-top: 84px; }
     .code-block { padding: 14px; }
     .code-block pre { font-size: .77rem; }
+        .full-script-panel summary { padding: 11px 12px; }
+        .full-script-panel .code-block { margin: 0 10px 10px; max-height: 56vh; }
     .art-cta-box { padding: 22px 16px; }
     .related-grid { grid-template-columns: 1fr; }
   }
+
+    @media (prefers-reduced-motion: reduce) {
+        .related-card { transition: none; }
+        .related-card:hover { transform: none; }
+    }
   </style>
 </head>
 <body class="guide-article">
