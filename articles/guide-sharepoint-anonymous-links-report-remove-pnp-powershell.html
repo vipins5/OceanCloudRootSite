@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Report and Remove Anonymous Sharing Links with PnP PowerShell | OceanCloud</title>
+  <meta name="description" content="Step-by-step guide to run AnonymousLinks_Report_And_Remove.ps1 for SharePoint Online and OneDrive, including prerequisites, app registration, PnP.PowerShell setup, and safe report-only execution." />
+  <meta name="keywords" content="SharePoint anonymous links report, remove anyone links PowerShell, PnP PowerShell sharing links, OneDrive anonymous sharing audit, Remove-PnPFileSharingLink" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="OceanCloud" />
+  <meta property="og:title" content="Report and Remove Anonymous Sharing Links with PnP PowerShell" />
+  <meta property="og:description" content="Production guide for auditing and optionally removing Anyone links in SharePoint Online and OneDrive using PnP.PowerShell." />
+  <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell" />
+  <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt" content="SharePoint anonymous link audit and remediation with PowerShell" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@oceancloud_x" />
+  <meta name="twitter:title" content="Report and Remove Anonymous Sharing Links with PnP PowerShell | OceanCloud" />
+  <meta name="twitter:description" content="Install prerequisites, configure auth, run report-only safely, and optionally remove Anyone links in SharePoint and OneDrive." />
+  <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell#article",
+        "headline": "Report and Remove Anonymous Sharing Links with PnP PowerShell",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell"
+        },
+        "datePublished": "2026-06-12",
+        "dateModified": "2026-06-12",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "How to safely report and optionally remove Anyone links in SharePoint Online and OneDrive with PnP PowerShell.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Anonymous Links Report and Remove",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section { padding: clamp(48px, 7vw, 72px) 0 104px; }
+  .article-wrap { max-width: 860px; margin: 0 auto; }
+  .article-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 26px; padding-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .art-tag { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,.15); border: 1px solid rgba(96,165,250,.3); color: #93c5fd; }
+  .art-date,.art-read { font-size: .8rem; color: var(--text-dim); }
+  .article-intro { font-size: 1.05rem; color: #c6d7e4; line-height: 1.88; }
+  .article-wrap h2 { font-size: clamp(1.26rem, 3vw, 1.68rem); margin: 48px 0 14px; letter-spacing: -.02em; }
+  .article-wrap h3 { font-size: 1.05rem; margin: 28px 0 10px; color: #dbe8f3; }
+  .article-wrap p,.article-wrap li { line-height: 1.85; color: var(--text-mid); }
+  .article-wrap ul,.article-wrap ol { padding-left: 22px; }
+  .article-wrap strong { color: var(--white); }
+  .article-wrap a { color: #7ec0ff; }
+  .article-wrap :not(pre) > code { background: rgba(125,211,252,.1); border: 1px solid rgba(125,211,252,.2); padding: 1px 6px; border-radius: 6px; font-size: .88em; color: #d8e9ff; }
+  .art-callout { background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(59,130,246,.03)); border-left: 3px solid #60a5fa; border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 22px 0; box-shadow: inset 0 0 0 1px rgba(96,165,250,.11); }
+  .art-callout p { margin: 0; color: #bfdbfe; font-size: .93rem; }
+  .art-callout.warning { background: linear-gradient(135deg, rgba(251,146,60,.12), rgba(251,146,60,.04)); border-left-color: #fb923c; box-shadow: inset 0 0 0 1px rgba(251,146,60,.14); }
+  .art-callout.warning p { color: #fed7aa; }
+  .art-callout.tip { background: linear-gradient(135deg, rgba(74,222,128,.12), rgba(74,222,128,.04)); border-left-color: #4ade80; box-shadow: inset 0 0 0 1px rgba(74,222,128,.14); }
+  .art-callout.tip p { color: #bbf7d0; }
+  .art-table-wrap { overflow-x: auto; margin: 22px 0; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: rgba(2,8,23,.42); }
+  .art-table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: .89rem; }
+  .art-table th { background: rgba(59,130,246,.18); color: #93c5fd; padding: 10px 14px; text-align: left; }
+  .art-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top; }
+  .art-table tr:last-child td { border-bottom: none; }
+  .code-label { display: inline-block; margin: 6px 0 8px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(96,165,250,.28); background: rgba(59,130,246,.12); color: #93c5fd; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .code-block { background: linear-gradient(180deg, #0d1117 0%, #0b1322 100%); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 18px 20px; margin: 18px 0; overflow-x: auto; }
+  .code-block pre { margin: 0; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: .82rem; line-height: 1.68; color: #d0dbea; white-space: pre; }
+  .art-cta-box { background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(14,165,233,.06)); border: 1px solid rgba(96,165,250,.25); border-radius: 16px; padding: 32px; text-align: center; margin-top: 54px; }
+  .art-cta-box h3 { margin: 0 0 8px; }
+  .art-cta-box p { margin: 0 0 20px; }
+  .related-section { margin-top: 58px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.08); }
+  .related-label { font-size: .72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .related-card { padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(2,8,23,.38); text-decoration: none; display: flex; flex-direction: column; gap: 6px; }
+  .related-card:hover { border-color: rgba(96,165,250,.42); }
+  .rc-topic { font-size: .68rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: .08em; }
+  .rc-title { font-size: .88rem; font-weight: 600; color: var(--white); line-height: 1.4; }
+  .rc-read { font-size: .78rem; color: var(--text-dim); }
+  @media (max-width: 640px) {
+    .article-section { padding: 40px 0 84px; }
+    .article-wrap h2 { margin-top: 40px; }
+    .code-block { padding: 14px; }
+    .code-block pre { font-size: .77rem; }
+    .art-cta-box { padding: 22px 16px; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Anonymous Links Script</span></nav>
+      <h1>Report and Remove <span class="grad-text">Anonymous Sharing Links</span> with PnP PowerShell</h1>
+      <p>Use a safety-first script to audit Anyone links across SharePoint Online and OneDrive, then optionally remove them with explicit confirmation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">June 12, 2026</span>
+        <span class="art-read">12 min read</span>
+      </div>
+
+      <p class="article-intro">This guide walks you through running <code>AnonymousLinks_Report_And_Remove.ps1</code> safely in production. You will start in report-only mode, validate results, and only then enable removal if needed.</p>
+
+      <div class="art-callout warning"><p><strong>Built-in safety:</strong> the script defaults to <code>Report</code> mode and requires a second explicit confirmation switch before deleting links.</p></div>
+
+      <h2>Download the script</h2>
+      <p>Download the exact script used in this guide:</p>
+      <ul>
+        <li><a href="/assets/guides/AnonymousLinks_Report_And_Remove.ps1" download>Download AnonymousLinks_Report_And_Remove.ps1</a></li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <h3>1) PowerShell version</h3>
+      <ul>
+        <li><strong>Supported:</strong> Windows PowerShell 5.1 and PowerShell 7+ on Windows.</li>
+        <li><strong>Recommended:</strong> latest PowerShell 7 for better runtime behavior and module consistency.</li>
+        <li><strong>Download PowerShell:</strong> <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows" target="_blank" rel="noopener">Microsoft official install guide</a>.</li>
+      </ul>
+
+      <h3>2) PnP.PowerShell module</h3>
+      <ul>
+        <li><strong>Recommended version:</strong> latest stable PnP.PowerShell 2.x.</li>
+        <li><strong>Install:</strong> <code>Install-Module PnP.PowerShell -Scope CurrentUser</code></li>
+        <li><strong>Update:</strong> <code>Update-Module PnP.PowerShell</code></li>
+        <li><strong>Check version:</strong> <code>Get-Module PnP.PowerShell -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version</code></li>
+        <li><strong>PnP install docs:</strong> <a href="https://pnp.github.io/powershell/articles/installation.html" target="_blank" rel="noopener">pnp.github.io/powershell installation</a></li>
+      </ul>
+
+      <h3>3) Entra app registration and permissions</h3>
+      <p>You need an Entra application with PnP PowerShell authentication configured.</p>
+      <ul>
+        <li><strong>Report-only scans:</strong> grant read permissions sufficient for inventory (for example <code>Sites.Read.All</code>).</li>
+        <li><strong>Removal mode:</strong> script notes that app-only removal requires broader permission such as <code>Sites.FullControl.All</code>.</li>
+        <li>Grant admin consent before running in production.</li>
+      </ul>
+      <div class="art-callout tip"><p><strong>If your app is already registered:</strong> keep using the same app and skip registration creation. Just verify permissions and proceed.</p></div>
+
+      <h3>4) Certificate / auth setup</h3>
+      <p>The script supports:</p>
+      <ul>
+        <li><code>Interactive</code> login (user context)</li>
+        <li><code>Thumbprint</code> (app-only, certificate in local store)</li>
+      </ul>
+
+      <h3>5) VS Code (optional)</h3>
+      <ul>
+        <li>Optional editor for reviewing and versioning the script.</li>
+        <li>Download: <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener">VS Code official download</a></li>
+      </ul>
+
+      <h2>Configuration before first run</h2>
+      <p>Open the script and edit the hard-coded variables at the top:</p>
+
+      <div class="code-label">PowerShell - minimum required config values</div>
+      <div class="code-block"><pre>$TenantName = "contoso"
+$ClientId   = "00000000-0000-0000-0000-000000000000"
+$AuthMode   = "Thumbprint"   # or "Interactive"
+$TenantId              = "contoso.onmicrosoft.com"
+$CertificateThumbprint = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+$Mode = "Report"              # Report or Remove
+$ConfirmRemoval = $false       # Must be true to allow deletion in Remove mode
+$WhatIfRemoval = $false        # Preview only in Remove mode</pre></div>
+
+      <div class="art-callout"><p><strong>Recommended rollout:</strong> start with <code>Mode = "Report"</code>, review CSV output, then switch to <code>Mode = "Remove"</code> only after approval.</p></div>
+
+      <h2>How to run the script</h2>
+      <ol>
+        <li>Open PowerShell as your admin/automation identity.</li>
+        <li>Navigate to the folder containing the script.</li>
+        <li>Run in report mode first.</li>
+      </ol>
+
+      <div class="code-label">PowerShell - report-only run (safe default)</div>
+      <div class="code-block"><pre>Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.\AnonymousLinks_Report_And_Remove.ps1</pre></div>
+
+      <p>After completion, check the generated files:</p>
+      <ul>
+        <li><code>AnonymousLinks_Report.csv</code> (main findings and actions)</li>
+        <li><code>AnonymousLinks_Report_Errors.csv</code> (failures by stage)</li>
+        <li><code>AnonymousLinks_Transcript_yyyyMMdd_HHmmss.txt</code> (execution log)</li>
+      </ul>
+
+      <h3>Removal run (only after validation)</h3>
+      <p>To remove anonymous links, set all of the following in script config:</p>
+      <ul>
+        <li><code>$Mode = "Remove"</code></li>
+        <li><code>$ConfirmRemoval = $true</code></li>
+        <li><code>$WhatIfRemoval = $false</code> (or <code>$true</code> to preview only)</li>
+      </ul>
+
+      <div class="art-callout warning"><p><strong>Scope reminder:</strong> according to script notes and PnP behavior, removal cmdlets target file/folder sharing links. List-item link removal is not covered by these commands.</p></div>
+
+      <h2>Understanding output actions</h2>
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Action</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ReportOnly</strong></td><td>Link was detected and logged. No deletion attempted.</td></tr>
+          <tr><td><strong>WouldRemove</strong></td><td>Preview mode. Script logged what would be removed.</td></tr>
+          <tr><td><strong>Removed</strong></td><td>Anonymous link deletion succeeded.</td></tr>
+          <tr><td><strong>RemoveFailed</strong></td><td>Deletion attempt failed; check error CSV and transcript.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>References from existing OceanCloud guides</h2>
+      <ul>
+        <li><a href="/articles/guide-pnp-entra-app-registration">PnP PowerShell: Complete Entra App Registration and Certificate Guide</a></li>
+        <li><a href="/articles/guide-powershell-self-signed-certificate-entra-app-registration">PowerShell Script to Create Self-Signed Certificate for Entra App Registration</a></li>
+        <li><a href="/articles/guide-sharepoint-external-sharing-complete-admin-guide">SharePoint External Sharing Complete Admin Guide</a></li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need a safe rollout plan for anonymous link remediation?</h3>
+        <p>OceanCloud can help you run report-only baselines, design approval workflows, and execute controlled remediation across SharePoint and OneDrive.</p>
+        <a href="/contact" class="btn btn-primary">Book a Governance Review</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-pnp-entra-app-registration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</span>
+            <span class="rc-read">15 min read &rarr;</span>
+          </a>
+          <a href="guide-powershell-self-signed-certificate-entra-app-registration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">PowerShell Script to Create Self-Signed Certificate for Entra App Registration</span>
+            <span class="rc-read">13 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-recycle-bin-restore-pnp-powershell" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Restore SharePoint Recycle Bin Items with PnP PowerShell</span>
+            <span class="rc-read">14 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/case-studies">Case Studies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/archive">News Archive</a></li>
+        <li><a href="/status">Service Status</a></li>
+        <li><a href="/message-center">Message Center</a></li>
+        <li><a href="/guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services">SharePoint Development</a></li>
+        <li><a href="/services">Teams Configuration</a></li>
+        <li><a href="/services">M365 Migration</a></li>
+        <li><a href="/services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/cookies">Cookie Policy</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=3"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

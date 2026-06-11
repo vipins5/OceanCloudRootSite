@@ -494,6 +494,19 @@
     "dateSort": "2026-06-12"
   },
   {
+    "id": "articles-guide-sharepoint-anonymous-links-report-remove-pnp-powershell",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "admin",
+    "title": "Report and Remove Anonymous Sharing Links with PnP PowerShell",
+    "heading": "Report and Remove Anonymous Sharing Links with PnP PowerShell",
+    "excerpt": "Run a safety-first script to report Anyone links across SharePoint Online and OneDrive, then optionally remove them with explicit confirmation controls.",
+    "body": "Report and Remove Anonymous Sharing Links with PnP PowerShell | OceanCloud June 12, 2026 12 min read Practical execution guide for AnonymousLinks_Report_And_Remove.ps1 covering prerequisites (PowerShell, PnP.PowerShell, Entra app registration, certificate auth), download path, report-only first run, optional removal mode, WhatIf preview behavior, output CSV interpretation, and links to related OceanCloud PnP and certificate setup guides.",
+    "url": "articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell",
+    "dateDisplay": "June 12, 2026",
+    "dateSort": "2026-06-12"
+  },
+  {
     "id": "articles-news-2026-06-microsoft-teams-multi-line-calling-on-teams-mobile",
     "type": "article",
     "tag": "Article",
