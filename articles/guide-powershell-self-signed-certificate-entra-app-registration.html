@@ -183,19 +183,22 @@
 
       <h3>Where to upload the certificate in Entra (exact path)</h3>
       <ol>
-        <li>Open <strong>Microsoft Entra admin center</strong> and go to <strong>Identity &gt; Applications &gt; App registrations</strong>.</li>
-        <li>Select your app, then open <strong>Certificates &amp; secrets</strong>.</li>
-        <li>Go to the <strong>Certificates</strong> tab (not Client secrets).</li>
-        <li>Click <strong>Upload certificate</strong> and select <code>pnp-apponly.cer</code>.</li>
-        <li>Save and confirm the certificate appears with thumbprint and expiry date.</li>
+        <li>Open <a href="https://entra.microsoft.com/" target="_blank" rel="noopener">Microsoft Entra admin center</a>.</li>
+        <li>Navigate to <strong>Identity &gt; Applications &gt; App registrations</strong>, then open your app registration.</li>
+        <li>From the left menu, select <strong>Certificates &amp; secrets</strong>.</li>
+        <li>Open the <strong>Certificates</strong> tab (not <strong>Client secrets</strong>).</li>
+        <li>Select <strong>Upload certificate</strong>, choose <code>pnp-apponly.cer</code>, then select <strong>Add</strong>.</li>
+        <li>Confirm you can see <strong>Thumbprint</strong>, <strong>Start date</strong>, and <strong>Expires</strong> values after upload.</li>
       </ol>
 
       <figure style="margin:20px 0 24px;">
-        <img src="/assets/guides/pnp-entra-registration-map.svg" alt="Entra app registration certificate upload path: App registrations, Certificates and secrets, then Upload certificate" loading="lazy" decoding="async" style="width:100%;max-width:860px;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:block;" />
-        <figcaption style="margin-top:8px;color:var(--text-dim);font-size:.82rem;">Upload location: App registrations &rarr; your app &rarr; Certificates &amp; secrets &rarr; Certificates &rarr; Upload certificate.</figcaption>
+        <img src="https://learn.microsoft.com/en-us/entra/identity-platform/media/howto-create-service-principal-portal/create-app.png" alt="Microsoft Entra app registration page from Microsoft Docs" loading="lazy" decoding="async" style="width:100%;max-width:860px;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:block;" />
+        <figcaption style="margin-top:8px;color:var(--text-dim);font-size:.82rem;">Microsoft Docs reference image (app registration entry point). After this page, go to your app &rarr; Certificates &amp; secrets &rarr; Certificates &rarr; Upload certificate.</figcaption>
       </figure>
 
       <div class="art-callout"><p><strong>Important:</strong> upload only the public <code>.cer</code> file to Entra. Keep the private <code>.pfx</code> file in a secure location and use it only from your automation runtime.</p></div>
+
+      <div class="art-callout tip"><p><strong>Post-upload check:</strong> copy the uploaded certificate thumbprint from Entra and compare it with your script output thumbprint. If they do not match, the wrong certificate was uploaded.</p></div>
 
       <h3>Delegated vs application API permissions</h3>
       <div class="art-table-wrap"><table class="art-table">
