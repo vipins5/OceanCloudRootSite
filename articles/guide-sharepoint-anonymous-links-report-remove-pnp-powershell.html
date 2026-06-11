@@ -107,6 +107,8 @@
   .article-wrap ul,.article-wrap ol { padding-left: 22px; }
   .article-wrap strong { color: var(--white); }
   .article-wrap a { color: #7ec0ff; }
+    .article-wrap a:hover { color: #a8d4ff; text-decoration: underline; text-underline-offset: 2px; }
+    .article-wrap a:focus-visible { outline: 2px solid rgba(125,211,252,.8); outline-offset: 2px; border-radius: 4px; }
   .article-wrap :not(pre) > code { background: rgba(125,211,252,.1); border: 1px solid rgba(125,211,252,.2); padding: 1px 6px; border-radius: 6px; font-size: .88em; color: #d8e9ff; }
   .art-callout { background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(59,130,246,.03)); border-left: 3px solid #60a5fa; border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 22px 0; box-shadow: inset 0 0 0 1px rgba(96,165,250,.11); }
   .art-callout p { margin: 0; color: #bfdbfe; font-size: .93rem; }
@@ -122,6 +124,14 @@
   .code-label { display: inline-block; margin: 6px 0 8px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(96,165,250,.28); background: rgba(59,130,246,.12); color: #93c5fd; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
   .code-block { background: linear-gradient(180deg, #0d1117 0%, #0b1322 100%); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 18px 20px; margin: 18px 0; overflow-x: auto; }
   .code-block pre { margin: 0; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: .82rem; line-height: 1.68; color: #d0dbea; white-space: pre; }
+    .full-script-panel { margin: 14px 0 8px; border: 1px solid rgba(96,165,250,.24); border-radius: 12px; background: rgba(2,8,23,.34); }
+    .full-script-panel summary { cursor: pointer; padding: 12px 14px; list-style: none; color: #bfdbfe; font-weight: 700; }
+    .full-script-panel summary:focus-visible { outline: 2px solid rgba(125,211,252,.8); outline-offset: 2px; border-radius: 8px; }
+    .full-script-panel summary::-webkit-details-marker { display: none; }
+    .full-script-panel summary::before { content: "+"; display: inline-block; margin-right: 8px; color: #93c5fd; }
+    .full-script-panel[open] summary::before { content: "-"; }
+    .full-script-panel .code-label { margin: 0 14px 8px; }
+    .full-script-panel .code-block { margin: 0 14px 14px; max-height: 68vh; overflow: auto; }
   .art-cta-box { background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(14,165,233,.06)); border: 1px solid rgba(96,165,250,.25); border-radius: 16px; padding: 32px; text-align: center; margin-top: 54px; }
   .art-cta-box h3 { margin: 0 0 8px; }
   .art-cta-box p { margin: 0 0 20px; }
@@ -129,7 +139,8 @@
   .related-label { font-size: .72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
   .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
   .related-card { padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(2,8,23,.38); text-decoration: none; display: flex; flex-direction: column; gap: 6px; }
-  .related-card:hover { border-color: rgba(96,165,250,.42); }
+    .related-card:hover { border-color: rgba(96,165,250,.42); transform: translateY(-2px); transition: transform .18s ease, border-color .18s ease; }
+    .related-card:focus-visible { outline: 2px solid rgba(125,211,252,.85); outline-offset: 2px; }
   .rc-topic { font-size: .68rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: .08em; }
   .rc-title { font-size: .88rem; font-weight: 600; color: var(--white); line-height: 1.4; }
   .rc-read { font-size: .78rem; color: var(--text-dim); }
@@ -200,11 +211,98 @@
         <li><a href="/assets/guides/AnonymousLinks_Report_And_Remove.ps1" download>Download AnonymousLinks_Report_And_Remove.ps1</a></li>
       </ul>
 
+<h2>Prerequisites</h2>
+      <h3>1) PowerShell version</h3>
+      <ul>
+        <li><strong>Supported:</strong> Windows PowerShell 5.1 and PowerShell 7+ on Windows.</li>
+        <li><strong>Recommended:</strong> latest PowerShell 7 for better runtime behavior and module consistency.</li>
+        <li><strong>Download PowerShell:</strong> <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows" target="_blank" rel="noopener">Microsoft official install guide</a>.</li>
+      </ul>
 
-      <h2>Complete script (full copy)</h2>
-      <p>The full script is included below for direct copy/paste use.</p>
-      <div class="code-label">PowerShell - AnonymousLinks_Report_And_Remove.ps1 (full script)</div>
-      <div class="code-block"><pre># ============================================================
+      <h3>2) PnP.PowerShell module</h3>
+      <ul>
+        <li><strong>Recommended version:</strong> latest stable PnP.PowerShell 2.x.</li>
+        <li><strong>Install:</strong> <code>Install-Module PnP.PowerShell -Scope CurrentUser</code></li>
+        <li><strong>Update:</strong> <code>Update-Module PnP.PowerShell</code></li>
+        <li><strong>Check version:</strong> <code>Get-Module PnP.PowerShell -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version</code></li>
+        <li><strong>PnP install docs:</strong> <a href="https://pnp.github.io/powershell/articles/installation.html" target="_blank" rel="noopener">pnp.github.io/powershell installation</a></li>
+      </ul>
+
+      <h3>3) Entra app registration and permissions</h3>
+      <p>You need an Entra application with PnP PowerShell authentication configured.</p>
+      <ul>
+        <li><strong>Report-only scans:</strong> grant read permissions sufficient for inventory (for example <code>Sites.Read.All</code>).</li>
+        <li><strong>Removal mode:</strong> script notes that app-only removal requires broader permission such as <code>Sites.FullControl.All</code>.</li>
+        <li>Grant admin consent before running in production.</li>
+      </ul>
+      <div class="art-callout tip"><p><strong>If your app is already registered:</strong> keep using the same app and skip registration creation. Just verify permissions and proceed.</p></div>
+
+      <h3>4) Certificate / auth setup</h3>
+      <p>The script supports:</p>
+      <ul>
+        <li><code>Interactive</code> login (user context)</li>
+        <li><code>Thumbprint</code> (app-only, certificate in local store)</li>
+      </ul>
+
+      <h3>5) VS Code (optional)</h3>
+      <ul>
+        <li>Optional editor for reviewing and versioning the script.</li>
+        <li>Download: <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener">VS Code official download</a></li>
+      </ul>
+
+      <h2>Configuration before first run</h2>
+      <p>Open the script and edit the hard-coded variables at the top:</p>
+
+      <div class="code-label">PowerShell - minimum required config values</div>
+      <div class="code-block"><pre>$TenantName = "contoso"
+$ClientId   = "00000000-0000-0000-0000-000000000000"
+$AuthMode   = "Thumbprint"   # or "Interactive"
+$TenantId              = "contoso.onmicrosoft.com"
+$CertificateThumbprint = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+$Mode = "Report"              # Report or Remove
+$ConfirmRemoval = $false       # Must be true to allow deletion in Remove mode
+$WhatIfRemoval = $false        # Preview only in Remove mode</pre></div>
+
+      <div class="art-callout"><p><strong>Recommended rollout:</strong> start with <code>Mode = "Report"</code>, review CSV output, then switch to <code>Mode = "Remove"</code> only after approval.</p></div>
+
+      <h2>How to run the script</h2>
+      <ol>
+        <li>Open PowerShell as your admin/automation identity.</li>
+        <li>Navigate to the folder containing the script.</li>
+        <li>Run in report mode first.</li>
+      </ol>
+
+      <div class="code-label">PowerShell - report-only run (safe default)</div>
+      <div class="code-block"><pre>Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.\AnonymousLinks_Report_And_Remove.ps1</pre></div>
+
+      <p>After completion, check the generated files:</p>
+      <ul>
+        <li><code>AnonymousLinks_Report.csv</code> (main findings and actions)</li>
+        <li><code>AnonymousLinks_Report_Errors.csv</code> (failures by stage)</li>
+        <li><code>AnonymousLinks_Transcript_yyyyMMdd_HHmmss.txt</code> (execution log)</li>
+      </ul>
+
+      <h3>Removal run (only after validation)</h3>
+      <p>To remove anonymous links, set all of the following in script config:</p>
+      <ul>
+        <li><code>$Mode = "Remove"</code></li>
+        <li><code>$ConfirmRemoval = $true</code></li>
+        <li><code>$WhatIfRemoval = $false</code> (or <code>$true</code> to preview only)</li>
+      </ul>
+
+      <div class="art-callout warning"><p><strong>Scope reminder:</strong> according to script notes and PnP behavior, removal cmdlets target file/folder sharing links. List-item link removal is not covered by these commands.</p></div>
+
+      
+
+
+            <h2>Complete script (full copy)</h2>
+            <p>The full script is included below for direct copy/paste use.</p>
+            <details class="full-script-panel">
+                <summary>Expand full script (click to view or collapse)</summary>
+                <div class="code-label">PowerShell - AnonymousLinks_Report_And_Remove.ps1 (full script)</div>
+                <div class="code-block"><pre># ============================================================
 # Anonymous / "Anyone" Sharing Link Report + Remediation
 # SharePoint Online + OneDrive
 # ============================================================
@@ -1081,91 +1179,10 @@ finally {
     }
 }
 </pre></div>
+    </details>
 
-    <h2>Prerequisites</h2>
-      <h3>1) PowerShell version</h3>
-      <ul>
-        <li><strong>Supported:</strong> Windows PowerShell 5.1 and PowerShell 7+ on Windows.</li>
-        <li><strong>Recommended:</strong> latest PowerShell 7 for better runtime behavior and module consistency.</li>
-        <li><strong>Download PowerShell:</strong> <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows" target="_blank" rel="noopener">Microsoft official install guide</a>.</li>
-      </ul>
-
-      <h3>2) PnP.PowerShell module</h3>
-      <ul>
-        <li><strong>Recommended version:</strong> latest stable PnP.PowerShell 2.x.</li>
-        <li><strong>Install:</strong> <code>Install-Module PnP.PowerShell -Scope CurrentUser</code></li>
-        <li><strong>Update:</strong> <code>Update-Module PnP.PowerShell</code></li>
-        <li><strong>Check version:</strong> <code>Get-Module PnP.PowerShell -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version</code></li>
-        <li><strong>PnP install docs:</strong> <a href="https://pnp.github.io/powershell/articles/installation.html" target="_blank" rel="noopener">pnp.github.io/powershell installation</a></li>
-      </ul>
-
-      <h3>3) Entra app registration and permissions</h3>
-      <p>You need an Entra application with PnP PowerShell authentication configured.</p>
-      <ul>
-        <li><strong>Report-only scans:</strong> grant read permissions sufficient for inventory (for example <code>Sites.Read.All</code>).</li>
-        <li><strong>Removal mode:</strong> script notes that app-only removal requires broader permission such as <code>Sites.FullControl.All</code>.</li>
-        <li>Grant admin consent before running in production.</li>
-      </ul>
-      <div class="art-callout tip"><p><strong>If your app is already registered:</strong> keep using the same app and skip registration creation. Just verify permissions and proceed.</p></div>
-
-      <h3>4) Certificate / auth setup</h3>
-      <p>The script supports:</p>
-      <ul>
-        <li><code>Interactive</code> login (user context)</li>
-        <li><code>Thumbprint</code> (app-only, certificate in local store)</li>
-      </ul>
-
-      <h3>5) VS Code (optional)</h3>
-      <ul>
-        <li>Optional editor for reviewing and versioning the script.</li>
-        <li>Download: <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener">VS Code official download</a></li>
-      </ul>
-
-      <h2>Configuration before first run</h2>
-      <p>Open the script and edit the hard-coded variables at the top:</p>
-
-      <div class="code-label">PowerShell - minimum required config values</div>
-      <div class="code-block"><pre>$TenantName = "contoso"
-$ClientId   = "00000000-0000-0000-0000-000000000000"
-$AuthMode   = "Thumbprint"   # or "Interactive"
-$TenantId              = "contoso.onmicrosoft.com"
-$CertificateThumbprint = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-
-$Mode = "Report"              # Report or Remove
-$ConfirmRemoval = $false       # Must be true to allow deletion in Remove mode
-$WhatIfRemoval = $false        # Preview only in Remove mode</pre></div>
-
-      <div class="art-callout"><p><strong>Recommended rollout:</strong> start with <code>Mode = "Report"</code>, review CSV output, then switch to <code>Mode = "Remove"</code> only after approval.</p></div>
-
-      <h2>How to run the script</h2>
-      <ol>
-        <li>Open PowerShell as your admin/automation identity.</li>
-        <li>Navigate to the folder containing the script.</li>
-        <li>Run in report mode first.</li>
-      </ol>
-
-      <div class="code-label">PowerShell - report-only run (safe default)</div>
-      <div class="code-block"><pre>Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
-.\AnonymousLinks_Report_And_Remove.ps1</pre></div>
-
-      <p>After completion, check the generated files:</p>
-      <ul>
-        <li><code>AnonymousLinks_Report.csv</code> (main findings and actions)</li>
-        <li><code>AnonymousLinks_Report_Errors.csv</code> (failures by stage)</li>
-        <li><code>AnonymousLinks_Transcript_yyyyMMdd_HHmmss.txt</code> (execution log)</li>
-      </ul>
-
-      <h3>Removal run (only after validation)</h3>
-      <p>To remove anonymous links, set all of the following in script config:</p>
-      <ul>
-        <li><code>$Mode = "Remove"</code></li>
-        <li><code>$ConfirmRemoval = $true</code></li>
-        <li><code>$WhatIfRemoval = $false</code> (or <code>$true</code> to preview only)</li>
-      </ul>
-
-      <div class="art-callout warning"><p><strong>Scope reminder:</strong> according to script notes and PnP behavior, removal cmdlets target file/folder sharing links. List-item link removal is not covered by these commands.</p></div>
-
-      <h2>Understanding output actions</h2>
+    
+<h2>Understanding output actions</h2>
       <div class="art-table-wrap"><table class="art-table">
         <thead><tr><th>Action</th><th>Meaning</th></tr></thead>
         <tbody>
