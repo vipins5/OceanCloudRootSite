@@ -187,6 +187,17 @@
 		<!-- ═══ Evergreen guides & tutorials ═══ -->
 
 		<item>
+			<title>PowerShell Script to Create Self-Signed Certificate for Entra App Registration</title>
+			<link>https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration</guid>
+			<pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Admin &amp; Automation</category>
+			<description><![CDATA[PowerShell 5.1 and 7 compatible script to generate PFX, CER, and PEM files for Entra app registration, plus delegated vs application API permission guidance for PnP automation.]]></description>
+		</item>
+
+		<item>
 			<title>SharePoint OTP Retirement: Simple Entra B2B Guide</title>
 			<link>https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b</guid>

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>PowerShell Script to Create Self-Signed Certificate for Entra App Registration | OceanCloud</title>
+  <meta name="description" content="Production-ready PowerShell script to generate PFX, CER, and PEM files for Microsoft Entra app registration. Compatible with Windows PowerShell 5.1 and PowerShell 7 on Windows." />
+  <meta name="keywords" content="PowerShell self signed certificate script, Entra app registration certificate, PnP PowerShell certificate authentication, delegated vs application permissions, Export-PfxCertificate, cert.pem key.pem" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="OceanCloud" />
+  <meta property="og:title" content="PowerShell Self-Signed Certificate for Entra App Registration" />
+  <meta property="og:description" content="Generate PFX, CER, cert.pem, key.pem, and combined.pem for Entra app registration and PnP PowerShell app-only authentication." />
+  <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
+  <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt" content="PowerShell script for Entra app registration certificate" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@oceancloud_x" />
+  <meta name="twitter:title" content="PowerShell Self-Signed Certificate for Entra App Registration | OceanCloud" />
+  <meta name="twitter:description" content="Script and setup guide for Entra app certificates with PowerShell 5.1 and 7 compatibility, plus delegated vs application API permission guidance." />
+  <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#article",
+        "headline": "PowerShell Script to Create Self-Signed Certificate for Entra App Registration",
+        "url": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
+        },
+        "datePublished": "2026-06-12",
+        "dateModified": "2026-06-12",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "Step-by-step guide and script to generate self-signed certificates for Entra app registrations and use them with PnP PowerShell app-only authentication.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "PowerShell self-signed certificate",
+          "Entra app registration",
+          "PnP PowerShell",
+          "delegated permissions",
+          "application permissions"
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "PowerShell Certificate for Entra App",
+            "item": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}.article-wrap{max-width:840px;margin:0 auto;}.article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07)}.art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.12);color:#60a5fa}.art-date,.art-read{font-size:.8rem;color:var(--text-dim)}.article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85}.article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em}.article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea}.article-wrap p,.article-wrap li{color:var(--text-mid);line-height:1.85}.article-wrap ul,.article-wrap ol{padding-left:22px}.article-wrap strong{color:var(--white)}.article-wrap a{color:#60a5fa}.art-callout{background:rgba(59,130,246,.07);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0}.art-callout p{margin:0;color:#bfdbfe;font-size:.92rem}.art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c}.art-callout.warning p{color:#fed7aa}.art-callout.tip{background:rgba(74,222,128,.08);border-left-color:#4ade80}.art-callout.tip p{color:#bbf7d0}.art-table-wrap{overflow-x:auto;margin:24px 0}.art-table{width:100%;border-collapse:collapse;font-size:.87rem}.art-table th{background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700;padding:10px 14px;text-align:left}.art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top}.art-table tr:last-child td{border-bottom:none}.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto}.code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre}.code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}.art-cta-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px}.art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white)}.art-cta-box p{margin:0 0 22px;color:var(--text-mid)}.related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08)}.related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07)}.rc-topic{font-size:.68rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em}.rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4}.rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Self-Signed Certificate Script</span></nav>
+      <h1>PowerShell Script to Create <span class="grad-text">Self-Signed Certificate</span> for Entra App Registration</h1>
+      <p>Create PFX, CER, cert.pem, key.pem, and combined.pem for PnP PowerShell app-only authentication with Windows PowerShell 5.1 and PowerShell 7 compatibility.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">June 12, 2026</span>
+        <span class="art-read">13 min read</span>
+      </div>
+
+      <p class="article-intro">If your automation uses <code>Connect-PnPOnline</code> with Entra app registration, certificate-based authentication is usually the most stable option. This guide gives you a practical script that generates all common certificate outputs used in real projects: <code>.pfx</code>, <code>.cer</code>, <code>cert.pem</code>, <code>key.pem</code>, and <code>combined.pem</code>. It also explains Entra app registration setup and the difference between delegated and application permissions so you can choose the correct model.</p>
+
+      <div class="art-callout warning"><p><strong>Compatibility scope:</strong> this script is built for <strong>Windows PowerShell 5.1</strong> and <strong>PowerShell 7</strong> on <strong>Windows</strong>. The <code>New-SelfSignedCertificate</code> cmdlet is Windows-specific.</p></div>
+
+      <h2>Entra app registration basics</h2>
+      <p>Before running any script, create an app registration in Microsoft Entra admin center, note the <strong>Application (client) ID</strong> and <strong>Directory (tenant) ID</strong>, and upload the generated <code>.cer</code> file under <strong>Certificates &amp; secrets</strong>. Never upload the <code>.pfx</code> file.</p>
+
+      <h3>Delegated vs application API permissions</h3>
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Model</th><th>How it runs</th><th>Best for</th><th>Common PnP pattern</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Delegated</strong></td><td>Acts as signed-in user identity</td><td>Interactive admin tasks and testing</td><td><code>Connect-PnPOnline -Interactive -ClientId ...</code></td></tr>
+          <tr><td><strong>Application</strong></td><td>Acts as app identity (no user)</td><td>Scheduled jobs, runbooks, CI/CD</td><td><code>Connect-PnPOnline -CertificatePath ...</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <p>For unattended scripts, use <strong>application permissions</strong>. For one-off manual administration, delegated can be fine. Mixing them without design is a common root cause of "connected but access denied" problems.</p>
+
+      <h2>PowerShell 5 and 7 compatible script</h2>
+      <p>This version keeps your original intent but makes private-key PEM export safe across runtimes. The PFX and CER files always generate on both Windows PowerShell 5.1 and PowerShell 7. For <code>key.pem</code> and <code>combined.pem</code>, the script uses native .NET export on PowerShell 7, falls back to OpenSSL on Windows PowerShell 5.1, and simply warns (instead of failing) if neither path is available &mdash; because Entra only needs the <code>.cer</code> and PnP uses the <code>.pfx</code>.</p>
+
+      <div class="art-callout"><p><strong>Why the fallback exists:</strong> the managed methods <code>ExportPkcs8PrivateKey()</code> and <code>ExportRSAPrivateKey()</code> only exist on the .NET runtime used by PowerShell 7. Windows PowerShell 5.1 runs on .NET Framework, which cannot export the private key in managed code, so OpenSSL (or PowerShell 7) is required to produce PEM key files.</p></div>
+
+      <div class="code-label">PowerShell - create PFX/CER/PEM for Entra app registration</div>
+      <div class="code-block"><pre># ===== Generate PFX/CER and PEMs for Entra App Registration =====
+# Compatible with Windows PowerShell 5.1 and PowerShell 7 (Windows)
+
+# --- Hardcoded settings
+$OutDir      = "C:\Users\ASUS\Downloads\Cert\newCert"
+$SubjectCN   = "PnP-App-registration"
+$YearsValid  = 10
+$PfxPassword = "ChangeMeBeforeUse!"
+
+if ([string]::IsNullOrWhiteSpace($PfxPassword)) {
+    throw "Set a non-empty PFX password before running this script."
+}
+
+if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+    throw "This script uses New-SelfSignedCertificate, which requires Windows."
+}
+
+# --- Prep output
+if (-not (Test-Path $OutDir)) {
+    New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
+}
+
+$pfxPath     = Join-Path $OutDir "pnp-apponly.pfx"
+$cerPath     = Join-Path $OutDir "pnp-apponly.cer"
+$certPemPath = Join-Path $OutDir "cert.pem"
+$keyPemPath  = Join-Path $OutDir "key.pem"
+$combinedPem = Join-Path $OutDir "combined.pem"
+
+function To-PemBlock {
+    param(
+        [Parameter(Mandatory)][string]$Label,
+        [Parameter(Mandatory)][byte[]]$Bytes
+    )
+    $b64 = [Convert]::ToBase64String($Bytes, [System.Base64FormattingOptions]::InsertLineBreaks)
+    return "-----BEGIN $Label-----`n$b64`n-----END $Label-----`n"
+}
+
+function Get-PrivateKeyPem {
+    param([Parameter(Mandatory)]$Certificate)
+
+    $rsa = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPrivateKey($Certificate)
+    $ecdsa = $null
+    if (-not $rsa) {
+        $ecdsa = [System.Security.Cryptography.X509Certificates.ECDsaCertificateExtensions]::GetECDsaPrivateKey($Certificate)
+    }
+
+    if ($rsa) {
+        if ($rsa.GetType().GetMethod("ExportPkcs8PrivateKey")) {
+            return To-PemBlock -Label "PRIVATE KEY" -Bytes ($rsa.ExportPkcs8PrivateKey())
+        }
+        if ($rsa.GetType().GetMethod("ExportRSAPrivateKey")) {
+            return To-PemBlock -Label "RSA PRIVATE KEY" -Bytes ($rsa.ExportRSAPrivateKey())
+        }
+        return $null   # .NET Framework (Windows PowerShell 5.1): no managed key export
+    }
+
+    if ($ecdsa) {
+        if ($ecdsa.GetType().GetMethod("ExportPkcs8PrivateKey")) {
+            return To-PemBlock -Label "PRIVATE KEY" -Bytes ($ecdsa.ExportPkcs8PrivateKey())
+        }
+        if ($ecdsa.GetType().GetMethod("ExportECPrivateKey")) {
+            return To-PemBlock -Label "EC PRIVATE KEY" -Bytes ($ecdsa.ExportECPrivateKey())
+        }
+        return $null
+    }
+
+    return $null
+}
+
+# --- Create self-signed certificate (CurrentUser\My)
+$notAfter = (Get-Date).AddYears($YearsValid)
+$cert = New-SelfSignedCertificate `
+    -Subject "CN=$SubjectCN" `
+    -KeyAlgorithm RSA -KeyLength 3072 `
+    -KeyExportPolicy Exportable `
+    -KeyUsage DigitalSignature, KeyEncipherment `
+    -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" `
+    -CertStoreLocation "Cert:\CurrentUser\My" `
+    -NotAfter $notAfter `
+    -HashAlgorithm SHA256
+
+if (-not $cert) {
+    throw "Failed to create self-signed certificate."
+}
+Write-Host "Created cert. Thumbprint: $($cert.Thumbprint)" -ForegroundColor Green
+
+# --- Export PFX & CER
+$secPwd = ConvertTo-SecureString -String $PfxPassword -AsPlainText -Force
+Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $secPwd -Force | Out-Null
+Export-Certificate -Cert $cert -FilePath $cerPath -Force | Out-Null
+Write-Host "Exported PFX: $pfxPath" -ForegroundColor Cyan
+Write-Host "Exported CER: $cerPath" -ForegroundColor Cyan
+
+# --- Reopen PFX with private key (exportable) for PEM creation
+$pfxBytes = [IO.File]::ReadAllBytes($pfxPath)
+$x509 = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new(
+    $pfxBytes,
+    $PfxPassword,
+    [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable
+)
+
+# --- cert.pem (certificate)
+$derCert = $x509.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
+$certPem = To-PemBlock -Label "CERTIFICATE" -Bytes $derCert
+[IO.File]::WriteAllText($certPemPath, $certPem, [Text.Encoding]::ASCII)
+Write-Host "Exported cert.pem" -ForegroundColor Cyan
+
+# --- key.pem (private key)
+# Native managed export works on PowerShell 7+. Windows PowerShell 5.1
+# (.NET Framework) cannot export the key in managed code, so it falls back
+# to OpenSSL when available; otherwise key.pem is skipped (PFX/CER are all
+# Entra needs).
+$keyPem = Get-PrivateKeyPem -Certificate $x509
+
+if ($keyPem) {
+    [IO.File]::WriteAllText($keyPemPath, $keyPem, [Text.Encoding]::ASCII)
+}
+elseif (Get-Command openssl -ErrorAction SilentlyContinue) {
+    Write-Host "Using OpenSSL fallback for key.pem (PowerShell 5.1)..." -ForegroundColor Yellow
+    &amp; openssl pkcs12 -in $pfxPath -nocerts -nodes -out $keyPemPath -passin "pass:$PfxPassword" 2&gt;$null
+    if (-not (Test-Path $keyPemPath)) {
+        # OpenSSL 3.x often needs -legacy for a Windows-exported PFX
+        &amp; openssl pkcs12 -in $pfxPath -nocerts -nodes -legacy -out $keyPemPath -passin "pass:$PfxPassword" 2&gt;$null
+    }
+}
+
+if (Test-Path $keyPemPath) {
+    Write-Host "Exported key.pem" -ForegroundColor Cyan
+
+    # --- combined.pem (cert + key)
+    $keyPemText = Get-Content -Raw -Path $keyPemPath
+    [IO.File]::WriteAllText($combinedPem, ($certPem + $keyPemText), [Text.Encoding]::ASCII)
+    Write-Host "Exported combined.pem" -ForegroundColor Cyan
+}
+else {
+    Write-Warning "key.pem/combined.pem skipped. Run on PowerShell 7 or install OpenSSL to generate PEM private keys. PFX and CER are ready for Entra."
+}
+
+# --- Summary
+Write-Host "`n==== Summary ====" -ForegroundColor Yellow
+Write-Host ("PFX:      {0}" -f $pfxPath)
+Write-Host ("CER:      {0}" -f $cerPath)
+Write-Host ("cert.pem: {0}" -f $certPemPath)
+if (Test-Path $keyPemPath)  { Write-Host ("key.pem:  {0}" -f $keyPemPath) }
+if (Test-Path $combinedPem) { Write-Host ("combined: {0}" -f $combinedPem) }
+Write-Host ("Thumbprint: {0}" -f $cert.Thumbprint)
+Write-Host ("Subject:  {0}" -f $SubjectCN)
+Write-Host ("Valid to: {0:yyyy-MM-dd}" -f $notAfter)</pre></div>
+
+      <h2>How to use this certificate with Entra app registration</h2>
+      <ol>
+        <li>Run the script and keep <code>pnp-apponly.pfx</code> private.</li>
+        <li>Upload only <code>pnp-apponly.cer</code> to Entra app registration.</li>
+        <li>Grant required API permissions, then click <strong>Grant admin consent</strong>.</li>
+        <li>Use app-only authentication in PnP PowerShell.</li>
+      </ol>
+
+      <div class="code-label">PowerShell - app-only PnP connection with generated certificate</div>
+      <div class="code-block"><pre>$pfxPassword = ConvertTo-SecureString -String "ChangeMeBeforeUse!" -AsPlainText -Force
+
+Connect-PnPOnline `
+  -Url "https://contoso.sharepoint.com" `
+  -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+  -Tenant "contoso.onmicrosoft.com" `
+  -CertificatePath "C:\Users\ASUS\Downloads\Cert\newCert\pnp-apponly.pfx" `
+  -CertificatePassword $pfxPassword</pre></div>
+
+      <div class="art-callout tip"><p><strong>Security recommendation:</strong> avoid hardcoding certificate passwords in scripts. For production, load secrets from environment variables, Azure Key Vault, or your secure secret manager.</p></div>
+
+      <h2>Permission design checklist</h2>
+      <ul>
+        <li>Use delegated permissions for interactive admin tasks.</li>
+        <li>Use application permissions for unattended jobs.</li>
+        <li>Prefer least privilege over broad <code>*.FullControl.All</code> where possible.</li>
+        <li>Document which scripts use which app registration and certificate.</li>
+        <li>Set a certificate renewal reminder at least 60 days before expiry.</li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help hardening your PnP PowerShell authentication model?</h3>
+        <p>OceanCloud can help you standardize app registration, certificate rotation, and least-privilege API permissions for production automation.</p>
+        <a href="/contact" class="btn btn-primary">Book a Security Review</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-pnp-entra-app-registration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</span>
+            <span class="rc-read">15 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-pnp-site-migration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide</span>
+            <span class="rc-read">18 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-recycle-bin-restore-pnp-powershell" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Restore SharePoint Recycle Bin Items with PnP PowerShell</span>
+            <span class="rc-read">14 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/case-studies">Case Studies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/archive">News Archive</a></li>
+        <li><a href="/status">Service Status</a></li>
+        <li><a href="/message-center">Message Center</a></li>
+        <li><a href="/guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services">SharePoint Development</a></li>
+        <li><a href="/services">Teams Configuration</a></li>
+        <li><a href="/services">M365 Migration</a></li>
+        <li><a href="/services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/cookies">Cookie Policy</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=3"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>PowerShell Script: Create Self-Signed Certificate for Entra App Registration | OceanCloud</title>
+  <meta name="description" content="Create PFX, CER, and PEM files for Microsoft Entra app registration using a PowerShell script compatible with Windows PowerShell 5.1 and PowerShell 7." />
+  <meta name="keywords" content="PowerShell self-signed certificate, Entra app registration certificate, PnP PowerShell certificate script, delegated vs application permissions, New-SelfSignedCertificate" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="PowerShell Script: Create Self-Signed Certificate for Entra App Registration" />
+  <meta property="og:description" content="A production-ready script and runbook for generating PFX/CER/PEM certificate files for Entra app registrations, compatible with PowerShell 5.1 and 7." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt"   content="PowerShell certificate generation guide" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
+  <meta name="twitter:title"       content="PowerShell Script: Self-Signed Certificate for Entra App Registration" />
+  <meta name="twitter:description" content="Use one script for PowerShell 5.1 or 7 to generate certificate files for Entra app registration and PnP.PowerShell automation." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#article",
+        "headline": "PowerShell Script for Self-Signed Certificate Creation for Entra App Registration",
+        "url": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
+        },
+        "datePublished": "2026-06-12",
+        "dateModified": "2026-06-12",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "PowerShell 5.1 and PowerShell 7 compatible certificate generation script for Entra app registration, including PFX/CER/PEM outputs and delegated vs application permission guidance.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "PowerShell self-signed certificate",
+          "Entra app registration",
+          "PnP.PowerShell certificate auth",
+          "delegated permissions",
+          "application permissions"
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "PowerShell Certificate Script",
+            "item": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:840px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.12);color:#60a5fa;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p,.article-wrap li{color:var(--text-mid);line-height:1.85;}
+  .article-wrap ul,.article-wrap ol{padding-left:22px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#60a5fa;}
+  .art-callout{background:rgba(59,130,246,.07);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#bfdbfe;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-callout.tip{background:rgba(74,222,128,.07);border-left-color:#4ade80;}
+  .art-callout.tip p{color:#bbf7d0;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(59,130,246,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .art-cta-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(96,165,250,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#60a5fa;}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(59,130,246,.18) 0%,rgba(59,130,246,0) 70%);position:absolute;border-radius:50%;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>PowerShell Certificate Script</span></nav>
+      <h1>PowerShell Script: <span class="grad-text">Self-Signed Certificate</span> for Entra App Registration</h1>
+      <p>Use one script across Windows PowerShell 5.1 and PowerShell 7 to generate certificate files for Entra app registrations and PnP.PowerShell automation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">June 12, 2026</span>
+        <span class="art-read">12 min read</span>
+      </div>
+
+      <p class="article-intro">This guide gives you a practical script for generating self-signed certificate assets for Entra app registration: <code>.pfx</code>, <code>.cer</code>, and optional <code>.pem</code> outputs. It is based on your original script intent, but updated for real-world compatibility across Windows PowerShell 5.1 and PowerShell 7, with explicit branching for PEM export behavior.</p>
+
+      <div class="art-callout warning"><p><strong>Security note:</strong> treat the PFX like a password. Do not commit it to source control and do not store the PFX password in plain text in production scripts.</p></div>
+
+      <h2>When to use this script</h2>
+      <p>Use this when you are setting up an Entra app registration for unattended authentication, especially for <code>Connect-PnPOnline</code> app-only scenarios.</p>
+      <ul>
+        <li>Create a new certificate set for an app registration.</li>
+        <li>Renew an expiring certificate and keep overlap during cutover.</li>
+        <li>Prepare both Windows-friendly and Linux/container-friendly certificate file formats.</li>
+      </ul>
+
+      <h2>PowerShell 5.1 vs 7 compatibility model</h2>
+      <p>The certificate creation and PFX/CER export path works in both versions. PEM export differs by runtime capabilities:</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Task</th><th>PowerShell 5.1</th><th>PowerShell 7</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Create cert with <code>New-SelfSignedCertificate</code></td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Export <code>.pfx</code> and <code>.cer</code></td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Native PKCS#8 PEM export</td><td>No</td><td>Yes (modern runtime methods)</td></tr>
+            <tr><td>PEM export with OpenSSL fallback</td><td>Yes, if OpenSSL installed</td><td>Yes, if needed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Updated script (PS5/PS7 compatible)</h2>
+      <div class="code-label">PowerShell - generate PFX/CER and optional PEM for Entra app registration</div>
+      <div class="code-block"><pre># ===== Generate PFX/CER and optional PEM for Entra App Registration =====
+# Compatible with Windows PowerShell 5.1 and PowerShell 7+
+
+# --- Hardcoded settings
+$OutDir      = "C:\Users\ASUS\Downloads\Cert\newCert"
+$SubjectCN   = "PnP-App-registration"
+$YearsValid  = 10
+$PfxPassword = "ChangeThisBeforeUse!"
+
+# --- Prep output
+if (-not (Test-Path $OutDir)) {
+    New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
+}
+
+$pfxPath      = Join-Path $OutDir "pnp-apponly.pfx"
+$cerPath      = Join-Path $OutDir "pnp-apponly.cer"
+$certPemPath  = Join-Path $OutDir "cert.pem"
+$keyPemPath   = Join-Path $OutDir "key.pem"
+$combinedPath = Join-Path $OutDir "combined.pem"
+
+function To-PemBlock {
+    param(
+        [Parameter(Mandatory)] [string]$Label,
+        [Parameter(Mandatory)] [byte[]]$Bytes
+    )
+
+    $b64 = [Convert]::ToBase64String($Bytes, [System.Base64FormattingOptions]::InsertLineBreaks)
+    "-----BEGIN $Label-----`n$b64`n-----END $Label-----`n"
+}
+
+# --- Create self-signed certificate (CurrentUser\My)
+$notAfter = (Get-Date).AddYears($YearsValid)
+$cert = New-SelfSignedCertificate `
+    -Subject "CN=$SubjectCN" `
+    -KeyAlgorithm RSA `
+    -KeyLength 3072 `
+    -KeyExportPolicy Exportable `
+    -KeyUsage DigitalSignature, KeyEncipherment `
+    -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" `
+    -CertStoreLocation "Cert:\CurrentUser\My" `
+    -NotAfter $notAfter `
+    -HashAlgorithm SHA256
+
+if (-not $cert) {
+    throw "Failed to create self-signed certificate."
+}
+
+Write-Host "Created cert. Thumbprint: $($cert.Thumbprint)" -ForegroundColor Green
+
+# --- Export PFX + CER
+$secPwd = ConvertTo-SecureString -String $PfxPassword -AsPlainText -Force
+Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $secPwd -Force | Out-Null
+Export-Certificate   -Cert $cert -FilePath $cerPath -Force | Out-Null
+
+Write-Host "Exported PFX: $pfxPath" -ForegroundColor Cyan
+Write-Host "Exported CER: $cerPath" -ForegroundColor Cyan
+
+# --- Try PEM export path
+$pemExported = $false
+
+# Path A: Native PEM (PowerShell 7 / newer runtime)
+if ($PSVersionTable.PSVersion.Major -ge 7) {
+    try {
+        $x509 = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new(
+            $pfxPath,
+            $PfxPassword,
+            [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable
+        )
+
+        $derCert = $x509.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
+        $certPem = To-PemBlock -Label "CERTIFICATE" -Bytes $derCert
+        [System.IO.File]::WriteAllText($certPemPath, $certPem, [System.Text.Encoding]::ASCII)
+
+        $rsa = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPrivateKey($x509)
+        if (-not $rsa) {
+            throw "No RSA private key found on certificate."
+        }
+
+        $pkcs8 = $rsa.ExportPkcs8PrivateKey()
+        $keyPem = To-PemBlock -Label "PRIVATE KEY" -Bytes $pkcs8
+        [System.IO.File]::WriteAllText($keyPemPath, $keyPem, [System.Text.Encoding]::ASCII)
+
+        [System.IO.File]::WriteAllText($combinedPath, ($certPem + $keyPem), [System.Text.Encoding]::ASCII)
+        $pemExported = $true
+
+        Write-Host "Exported cert.pem, key.pem, combined.pem (native runtime)." -ForegroundColor Cyan
+    }
+    catch {
+        Write-Warning "Native PEM export failed: $($_.Exception.Message)"
+    }
+}
+
+# Path B: OpenSSL fallback for PS5.1 or native export failure
+if (-not $pemExported) {
+    $openssl = Get-Command openssl -ErrorAction SilentlyContinue
+    if ($openssl) {
+        & openssl pkcs12 -in $pfxPath -clcerts -nokeys -out $certPemPath -passin "pass:$PfxPassword" | Out-Null
+        & openssl pkcs12 -in $pfxPath -nocerts -nodes -out $keyPemPath -passin "pass:$PfxPassword" | Out-Null
+
+        if ((Test-Path $certPemPath) -and (Test-Path $keyPemPath)) {
+            $certPemText = Get-Content -Raw -Path $certPemPath
+            $keyPemText  = Get-Content -Raw -Path $keyPemPath
+            [System.IO.File]::WriteAllText($combinedPath, ($certPemText + "`n" + $keyPemText), [System.Text.Encoding]::ASCII)
+            $pemExported = $true
+            Write-Host "Exported PEM files using OpenSSL fallback." -ForegroundColor Cyan
+        }
+    }
+}
+
+if (-not $pemExported) {
+    Write-Warning "PEM files were not generated. PFX/CER are ready. Install OpenSSL or run on PowerShell 7 for native PEM export."
+}
+
+# --- Summary
+Write-Host "`n==== Summary ====" -ForegroundColor Yellow
+Write-Host ("PFX:       {0}" -f $pfxPath)
+Write-Host ("CER:       {0}" -f $cerPath)
+Write-Host ("cert.pem:  {0}" -f $certPemPath)
+Write-Host ("key.pem:   {0}" -f $keyPemPath)
+Write-Host ("combined:  {0}" -f $combinedPath)
+Write-Host ("Subject:   {0}" -f $SubjectCN)
+Write-Host ("Valid to:  {0:yyyy-MM-dd}" -f $notAfter)
+Write-Host ("Thumbprint:{0}" -f $cert.Thumbprint)
+      </pre></div>
+
+      <h2>Entra app registration steps</h2>
+      <ol>
+        <li>Create or open your app in Microsoft Entra admin center.</li>
+        <li>Go to <strong>Certificates &amp; secrets</strong> and open the <strong>Certificates</strong> tab.</li>
+        <li>Upload the <code>.cer</code> file only. Do not upload <code>.pfx</code>.</li>
+        <li>Copy Application (client) ID and Directory (tenant) ID for your script connection settings.</li>
+      </ol>
+
+      <div class="art-callout tip"><p><strong>Certificate rotation:</strong> upload the new certificate before the old one expires. Entra allows multiple active certificates so you can rotate with zero downtime.</p></div>
+
+      <h2>Delegated vs application API permissions</h2>
+      <p>This distinction is critical for PnP.PowerShell authentication behavior:</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Mode</th><th>How token works</th><th>Use case</th><th>Typical example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Delegated</strong></td>
+              <td>Acts as signed-in user + app scopes</td>
+              <td>Interactive admin tasks</td>
+              <td><code>Connect-PnPOnline -Interactive -ClientId ...</code></td>
+            </tr>
+            <tr>
+              <td><strong>Application</strong></td>
+              <td>Acts as app identity (no user)</td>
+              <td>Unattended jobs, schedulers, runbooks, pipelines</td>
+              <td><code>Connect-PnPOnline -CertificatePath ... -ClientId ... -Tenant ...</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>For unattended automation, use <strong>application permissions + certificate auth</strong>. Delegated permissions are ideal for troubleshooting and interactive operations, but not reliable for server-side scheduled execution.</p>
+
+      <h3>Permission planning guidance</h3>
+      <ul>
+        <li>Prefer least privilege: use only permissions your script actually needs.</li>
+        <li>For tenant-wide automation, validate admin consent process early.</li>
+        <li>If possible, use scoped site access patterns instead of broad full-control grants.</li>
+      </ul>
+
+      <h2>Validation command snippets</h2>
+      <div class="code-label">PowerShell - quick validation after certificate upload</div>
+      <div class="code-block"><pre># Interactive (delegated)
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId "<client-id>" -Interactive
+Get-PnPWeb
+Disconnect-PnPOnline
+
+# App-only (application)
+$pfxPassword = ConvertTo-SecureString "ChangeThisBeforeUse!" -AsPlainText -Force
+Connect-PnPOnline `
+  -Url "https://contoso.sharepoint.com" `
+  -ClientId "<client-id>" `
+  -Tenant "contoso.onmicrosoft.com" `
+  -CertificatePath "C:\Users\ASUS\Downloads\Cert\newCert\pnp-apponly.pfx" `
+  -CertificatePassword $pfxPassword
+Get-PnPWeb
+Disconnect-PnPOnline
+      </pre></div>
+
+      <div class="art-cta-box">
+        <h3>Need help hardening Entra app authentication for automation?</h3>
+        <p>OceanCloud can help you design secure certificate lifecycle, permission boundaries, and production-safe PnP.PowerShell runbooks.</p>
+        <a href="/contact" class="btn btn-primary">Book a Security and Automation Session</a>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-pnp-entra-app-registration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">PnP PowerShell: Complete Entra App Registration &amp; Certificate Guide</span>
+            <span class="rc-read">15 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-pnp-site-migration" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide</span>
+            <span class="rc-read">18 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-recycle-bin-restore-pnp-powershell" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">Restore SharePoint Recycle Bin Items with PnP PowerShell</span>
+            <span class="rc-read">14 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/case-studies">Case Studies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/archive">News Archive</a></li>
+        <li><a href="/status">Service Status</a></li>
+        <li><a href="/message-center">Message Center</a></li>
+        <li><a href="/guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services">SharePoint Development</a></li>
+        <li><a href="/services">Teams Configuration</a></li>
+        <li><a href="/services">M365 Migration</a></li>
+        <li><a href="/services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/cookies">Cookie Policy</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=3"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=5"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

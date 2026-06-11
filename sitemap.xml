@@ -182,7 +182,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -212,13 +212,13 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -230,7 +230,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -242,7 +242,13 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration</loc>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

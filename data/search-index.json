@@ -481,6 +481,19 @@
     "dateSort": "2026-06-10"
   },
   {
+    "id": "articles-guide-powershell-self-signed-certificate-entra-app-registration",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "admin",
+    "title": "PowerShell Script to Create Self-Signed Certificate for Entra App Registration",
+    "heading": "PowerShell Script to Create Self-Signed Certificate for Entra App Registration",
+    "excerpt": "Generate PFX, CER, and PEM files for Entra app registration with a PowerShell script compatible with Windows PowerShell 5.1 and PowerShell 7, plus delegated vs application permission guidance.",
+    "body": "PowerShell Script to Create Self-Signed Certificate for Entra App Registration | OceanCloud June 12, 2026 13 min read Practical guide for generating self-signed certificate assets used with Entra app registrations and PnP PowerShell automation: pfx, cer, cert.pem, key.pem, and combined.pem. Includes compatibility strategy for Windows PowerShell 5.1 and PowerShell 7, Entra app certificate upload steps, delegated vs application API permission model, and app-only Connect-PnPOnline patterns.",
+    "url": "articles/guide-powershell-self-signed-certificate-entra-app-registration",
+    "dateDisplay": "June 12, 2026",
+    "dateSort": "2026-06-12"
+  },
+  {
     "id": "articles-news-2026-06-microsoft-teams-multi-line-calling-on-teams-mobile",
     "type": "article",
     "tag": "Article",
