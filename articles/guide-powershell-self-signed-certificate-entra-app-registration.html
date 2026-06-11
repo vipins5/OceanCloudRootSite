@@ -366,6 +366,61 @@ Write-Host ("Thumbprint: {0}" -f $cert.Thumbprint)
 Write-Host ("Subject:  {0}" -f $SubjectCN)
 Write-Host ("Valid to: {0:yyyy-MM-dd}" -f $notAfter)</pre></div>
 
+      <h2>Install the certificate on the automation device</h2>
+      <p>If your runbook or scheduled task uses <code>-CertificateThumbprint</code>, the certificate must be installed in the certificate store of the account that runs the job. If you use <code>-CertificatePath</code>, you can keep the PFX as a file instead.</p>
+
+      <h3>Option A - keep PFX as a file (simple and common)</h3>
+      <ol>
+        <li>Store <code>pnp-apponly.pfx</code> in a protected folder on the automation machine.</li>
+        <li>Grant read access only to the service account running the script.</li>
+        <li>Use <code>Connect-PnPOnline -CertificatePath</code> with a secure password source.</li>
+      </ol>
+
+      <h3>Option B - import to Windows certificate store (thumbprint mode)</h3>
+      <div class="code-label">PowerShell - import PFX into CurrentUser\My (same account that runs automation)</div>
+      <div class="code-block"><pre>$pfxPath = "C:\Secure\Certs\pnp-apponly.pfx"
+$pfxPassword = ConvertTo-SecureString -String "ChangeMeBeforeUse!" -AsPlainText -Force
+
+Import-PfxCertificate `
+  -FilePath $pfxPath `
+  -CertStoreLocation "Cert:\CurrentUser\My" `
+  -Password $pfxPassword | Out-Null
+
+# Verify it exists
+Get-ChildItem "Cert:\CurrentUser\My" |
+  Where-Object Subject -like "*PnP-App-registration*" |
+  Select-Object Subject, Thumbprint, NotAfter</pre></div>
+
+      <p>For service or machine-wide jobs, import to <code>Cert:\LocalMachine\My</code> and ensure the runtime identity has permission to use the private key.</p>
+
+      <h2>How to use certificate info in your connection settings</h2>
+      <p>After app registration and certificate upload, you need four values for reliable app-only auth:</p>
+      <ul>
+        <li><strong>Tenant</strong>: your tenant domain (for example <code>contoso.onmicrosoft.com</code>) or tenant ID.</li>
+        <li><strong>ClientId</strong>: Application (client) ID from the Entra app overview page.</li>
+        <li><strong>Certificate</strong>: either <code>CertificatePath</code> + password, or <code>CertificateThumbprint</code>.</li>
+        <li><strong>Target URL</strong>: SharePoint tenant or site URL you are automating.</li>
+      </ul>
+
+      <div class="code-label">PowerShell - app-only with CertificatePath (PFX file)</div>
+      <div class="code-block"><pre>$pfxPassword = ConvertTo-SecureString -String "ChangeMeBeforeUse!" -AsPlainText -Force
+
+Connect-PnPOnline `
+  -Url "https://contoso.sharepoint.com" `
+  -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+  -Tenant "contoso.onmicrosoft.com" `
+  -CertificatePath "C:\Secure\Certs\pnp-apponly.pfx" `
+  -CertificatePassword $pfxPassword</pre></div>
+
+      <div class="code-label">PowerShell - app-only with CertificateThumbprint (store-installed cert)</div>
+      <div class="code-block"><pre>Connect-PnPOnline `
+  -Url "https://contoso.sharepoint.com" `
+  -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+  -Tenant "contoso.onmicrosoft.com" `
+  -Thumbprint "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"</pre></div>
+
+      <div class="art-callout tip"><p><strong>Operational tip:</strong> if scheduled automation fails with certificate errors, check that the cert is installed for the same identity running the job and that the thumbprint exactly matches the uploaded Entra certificate.</p></div>
+
       <h2>How to use this certificate with Entra app registration</h2>
       <ol>
         <li>Run the script and keep <code>pnp-apponly.pfx</code> private.</li>
