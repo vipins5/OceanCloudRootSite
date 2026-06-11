@@ -221,7 +221,7 @@
 # Compatible with Windows PowerShell 5.1 and PowerShell 7 (Windows)
 
 # --- Hardcoded settings
-$OutDir      = "C:\Users\ASUS\Downloads\Cert\newCert"
+$OutDir      = "C:\Secure\Certs"
 $SubjectCN   = "PnP-App-registration"
 $YearsValid  = 10
 $PfxPassword = "ChangeMeBeforeUse!"
@@ -367,7 +367,7 @@ Write-Host ("Subject:  {0}" -f $SubjectCN)
 Write-Host ("Valid to: {0:yyyy-MM-dd}" -f $notAfter)</pre></div>
 
       <h2>Install the certificate on the automation device</h2>
-      <p>If your runbook or scheduled task uses <code>-CertificateThumbprint</code>, the certificate must be installed in the certificate store of the account that runs the job. If you use <code>-CertificatePath</code>, you can keep the PFX as a file instead.</p>
+      <p>If your runbook or scheduled task uses <code>-Thumbprint</code>, the certificate must be installed in the certificate store of the account that runs the job. If you use <code>-CertificatePath</code>, you can keep the PFX as a file instead.</p>
 
       <h3>Option A - keep PFX as a file (simple and common)</h3>
       <ol>
@@ -407,7 +407,7 @@ $cert.Thumbprint</pre></div>
       <ul>
         <li><strong>Tenant</strong>: your tenant domain (for example <code>contoso.onmicrosoft.com</code>) or tenant ID.</li>
         <li><strong>ClientId</strong>: Application (client) ID from the Entra app overview page.</li>
-        <li><strong>Certificate</strong>: either <code>CertificatePath</code> + password, or <code>CertificateThumbprint</code>.</li>
+        <li><strong>Certificate</strong>: either <code>CertificatePath</code> + password, or <code>Thumbprint</code>.</li>
         <li><strong>Target URL</strong>: SharePoint tenant or site URL you are automating.</li>
       </ul>
 
@@ -421,7 +421,7 @@ Connect-PnPOnline `
   -CertificatePath "C:\Secure\Certs\pnp-apponly.pfx" `
   -CertificatePassword $pfxPassword</pre></div>
 
-      <div class="code-label">PowerShell - app-only with CertificateThumbprint (store-installed cert)</div>
+      <div class="code-label">PowerShell - app-only with Thumbprint (store-installed cert)</div>
       <div class="code-block"><pre>Connect-PnPOnline `
   -Url "https://contoso.sharepoint.com" `
   -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
@@ -445,7 +445,7 @@ Connect-PnPOnline `
   -Url "https://contoso.sharepoint.com" `
   -ClientId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
   -Tenant "contoso.onmicrosoft.com" `
-  -CertificatePath "C:\Users\ASUS\Downloads\Cert\newCert\pnp-apponly.pfx" `
+  -CertificatePath "C:\Secure\Certs\pnp-apponly.pfx" `
   -CertificatePassword $pfxPassword</pre></div>
 
       <div class="art-callout tip"><p><strong>Security recommendation:</strong> avoid hardcoding certificate passwords in scripts. For production, load secrets from environment variables, Azure Key Vault, or your secure secret manager.</p></div>
