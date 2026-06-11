@@ -192,8 +192,8 @@
       </ol>
 
       <figure style="margin:20px 0 24px;">
-        <img src="https://learn.microsoft.com/en-us/entra/identity-platform/media/howto-create-service-principal-portal/create-app.png" alt="Microsoft Entra app registration page from Microsoft Docs" loading="lazy" decoding="async" style="width:100%;max-width:860px;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:block;" />
-        <figcaption style="margin-top:8px;color:var(--text-dim);font-size:.82rem;">Microsoft Docs reference image (app registration entry point). After this page, go to your app &rarr; Certificates &amp; secrets &rarr; Certificates &rarr; Upload certificate.</figcaption>
+        <img src="https://learn.microsoft.com/en-us/azure/confidential-ledger/media/portal-05-app-reg-04-credentials.png" alt="Microsoft Entra App registrations Certificates and secrets pane showing where certificate credentials are managed" loading="lazy" decoding="async" style="width:100%;max-width:860px;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:block;" />
+        <figcaption style="margin-top:8px;color:var(--text-dim);font-size:.82rem;">Microsoft Docs screenshot of the App registrations credentials area. Use this blade to go to <strong>Certificates</strong>, then choose <strong>Upload certificate</strong> and add your <code>.cer</code> file.</figcaption>
       </figure>
 
       <div class="art-callout"><p><strong>Important:</strong> upload only the public <code>.cer</code> file to Entra. Keep the private <code>.pfx</code> file in a secure location and use it only from your automation runtime.</p></div>
@@ -377,6 +377,7 @@ Write-Host ("Valid to: {0:yyyy-MM-dd}" -f $notAfter)</pre></div>
       </ol>
 
       <h3>Option B - import to Windows certificate store (thumbprint mode)</h3>
+      <div class="art-callout warning"><p><strong>Mandatory for thumbprint mode:</strong> <code>-Thumbprint</code> works only when that certificate is installed in the local certificate store of the same Windows identity running the script (user account, service account, or task account).</p></div>
       <div class="code-label">PowerShell - import PFX into CurrentUser\My (same account that runs automation)</div>
       <div class="code-block"><pre>$pfxPath = "C:\Secure\Certs\pnp-apponly.pfx"
 $pfxPassword = ConvertTo-SecureString -String "ChangeMeBeforeUse!" -AsPlainText -Force
@@ -390,6 +391,14 @@ Import-PfxCertificate `
 Get-ChildItem "Cert:\CurrentUser\My" |
   Where-Object Subject -like "*PnP-App-registration*" |
   Select-Object Subject, Thumbprint, NotAfter</pre></div>
+
+      <div class="code-label">PowerShell - get thumbprint to use in Connect-PnPOnline</div>
+      <div class="code-block"><pre>$cert = Get-ChildItem "Cert:\CurrentUser\My" |
+  Where-Object Subject -like "*PnP-App-registration*" |
+  Sort-Object NotAfter -Descending |
+  Select-Object -First 1
+
+$cert.Thumbprint</pre></div>
 
       <p>For service or machine-wide jobs, import to <code>Cert:\LocalMachine\My</code> and ensure the runtime identity has permission to use the private key.</p>
 
