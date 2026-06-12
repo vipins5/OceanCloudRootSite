@@ -685,5 +685,77 @@
     "url": "articles/news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-",
     "dateDisplay": "October 29, 2025",
     "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-teams-improved-request-flows-for-apps-and-agents-b",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Improved request flows for apps and agents blocked by admins",
+    "heading": "Microsoft Teams: Improved request flows for apps and agents blocked by admins",
+    "excerpt": "We are improving how users request access to apps and agents blocked by admins in Teams by introducing a clear, guided, and end-to-end request experience. This work reduces end-user friction by driving clarity into the request process and notifying users when there's been an upda…",
+    "body": "Microsoft Teams: Improved request flows for apps and agents blocked by admins | OceanCloud June 10, 2026 3 min read We are improving how users request access to apps and agents blocked by admins in Teams by introducing a clear, guided, and end-to-end request experience. This work reduces end-user friction by driving clarity into the request process and notifying users when there's been an upda…",
+    "url": "articles/news-2026-06-microsoft-teams-improved-request-flows-for-apps-and-agents-b",
+    "dateDisplay": "June 10, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-teams-emoji-shortcuts-with-autocomplete-on-mobile",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Emoji shortcuts with autocomplete on mobile",
+    "heading": "Microsoft Teams: Emoji shortcuts with autocomplete on mobile",
+    "excerpt": "Teams brings desktop-style emoji shortcuts to mobile (iOS and Android), allowing you to insert emojis by typing colon-based commands like :smile:. Real-time autocomplete suggestions help you quickly find the right emoji as you type, while support for custom emojis enables more pe…",
+    "body": "Microsoft Teams: Emoji shortcuts with autocomplete on mobile | OceanCloud June 10, 2026 3 min read Teams brings desktop-style emoji shortcuts to mobile (iOS and Android), allowing you to insert emojis by typing colon-based commands like :smile:. Real-time autocomplete suggestions help you quickly find the right emoji as you type, while support for custom emojis enables more pe…",
+    "url": "articles/news-2026-06-microsoft-teams-emoji-shortcuts-with-autocomplete-on-mobile",
+    "dateDisplay": "June 10, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-teams-open-message-links-in-new-window",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Open message links in new window",
+    "heading": "Microsoft Teams: Open message links in new window",
+    "excerpt": "Teams now enables links within chat and channel messages to open in a new window, so you can compare information side by side without losing the context of your ongoing conversation. Access this capability through the More options menu or by using Ctrl/Cmd + click. GA date: July …",
+    "body": "Microsoft Teams: Open message links in new window | OceanCloud June 10, 2026 3 min read Teams now enables links within chat and channel messages to open in a new window, so you can compare information side by side without losing the context of your ongoing conversation. Access this capability through the More options menu or by using Ctrl/Cmd + click. GA date: July …",
+    "url": "articles/news-2026-06-microsoft-teams-open-message-links-in-new-window",
+    "dateDisplay": "June 10, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-06-microsoft-copilot-microsoft-365-work-iq-apis-payasyougo-usag",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Copilot (Microsoft 365): Work IQ APIs: Pay‑As‑You‑Go usage",
+    "heading": "Microsoft Copilot (Microsoft 365): Work IQ APIs: Pay‑As‑You‑Go usage",
+    "excerpt": "Enables metered, pay‑as‑you‑go access to Work IQ endpoints, allowing developers to invoke agents and capabilities without requiring pre‑assigned licenses, with usage billed based on the agents and models invoked per request. GA date: June CY2026",
+    "body": "Microsoft Copilot (Microsoft 365): Work IQ APIs: Pay‑As‑You‑Go usage | OceanCloud June 01, 2026 3 min read Enables metered, pay‑as‑you‑go access to Work IQ endpoints, allowing developers to invoke agents and capabilities without requiring pre‑assigned licenses, with usage billed based on the agents and models invoked per request. GA date: June CY2026",
+    "url": "articles/news-2026-06-microsoft-copilot-microsoft-365-work-iq-apis-payasyougo-usag",
+    "dateDisplay": "June 01, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-365-pay-as-you-go-storage-for-onedrive",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft 365: Pay-as-you-go storage for OneDrive",
+    "heading": "Microsoft 365: Pay-as-you-go storage for OneDrive",
+    "excerpt": "New pay-as-you-go, consumption-based meter for additional OneDrive storage. Control which OneDrive accounts can grow beyond their licensed storage limits and give selected users more space as needed. GA date: October CY2026 Preview date: July CY2026",
+    "body": "Microsoft 365: Pay-as-you-go storage for OneDrive | OceanCloud May 26, 2026 3 min read New pay-as-you-go, consumption-based meter for additional OneDrive storage. Control which OneDrive accounts can grow beyond their licensed storage limits and give selected users more space as needed. GA date: October CY2026 Preview date: July CY2026",
+    "url": "articles/news-2026-05-microsoft-365-pay-as-you-go-storage-for-onedrive",
+    "dateDisplay": "May 26, 2026",
+    "dateSort": ""
+  },
+  {
+    "id": "articles-news-2026-05-microsoft-teams-chat-panel-open-by-default-in-the-gallery-vi",
+    "type": "article",
+    "tag": "Article",
+    "title": "Microsoft Teams: Chat panel open by default in the gallery view on Teams Rooms on Android",
+    "heading": "Microsoft Teams: Chat panel open by default in the gallery view on Teams Rooms on Android",
+    "excerpt": "The chat panel will open by default in gallery view, allowing participants in Teams Room on Android to quickly see ongoing meeting chat when they join. Admins can configure this default device behavior, and users can close the panel in one tap during meetings. GA date: June CY202…",
+    "body": "Microsoft Teams: Chat panel open by default in the gallery view on Teams Rooms on Android | OceanCloud May 07, 2026 3 min read The chat panel will open by default in gallery view, allowing participants in Teams Room on Android to quickly see ongoing meeting chat when they join. Admins can configure this default device behavior, and users can close the panel in one tap during meetings. GA date: June CY202…",
+    "url": "articles/news-2026-05-microsoft-teams-chat-panel-open-by-default-in-the-gallery-vi",
+    "dateDisplay": "May 07, 2026",
+    "dateSort": ""
   }
 ]

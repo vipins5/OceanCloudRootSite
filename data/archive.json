@@ -1,6 +1,36 @@
 {
   "items": [
     {
+      "title": "Microsoft Teams: Improved request flows for apps and agents blocked by admins",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565424",
+      "date_friendly": "June 10, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-improved-request-flows-for-apps-and-agents-b"
+    },
+    {
+      "title": "Microsoft Teams: Emoji shortcuts with autocomplete on mobile",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565370",
+      "date_friendly": "June 10, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-emoji-shortcuts-with-autocomplete-on-mobile"
+    },
+    {
+      "title": "Microsoft Teams: Open message links in new window",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565220",
+      "date_friendly": "June 10, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-open-message-links-in-new-window"
+    },
+    {
       "title": "Microsoft Teams: Tenant-level dashboard for Interpreter",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565217",
       "date_friendly": "June 09, 2026",
@@ -121,6 +151,16 @@
       "article_slug": "news-2026-06-microsoft-teams-inline-search-in-compose-box"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Work IQ APIs: Pay‑As‑You‑Go usage",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559017",
+      "date_friendly": "June 01, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-copilot-microsoft-365-work-iq-apis-payasyougo-usag"
+    },
+    {
       "title": "Microsoft Copilot (Microsoft 365): Copilot suggested rename",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564909",
       "date_friendly": "May 29, 2026",
@@ -209,6 +249,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-teams-mandatory-pre-meeting-consent"
+    },
+    {
+      "title": "Microsoft 365: Pay-as-you-go storage for OneDrive",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562352",
+      "date_friendly": "May 26, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-365-pay-as-you-go-storage-for-onedrive"
     },
     {
       "title": "Microsoft Copilot (Microsoft 365): Chat History Filtering by Copilot Experience",
@@ -342,6 +392,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-teams-room-availability-signal-for-teams-events"
+    },
+    {
+      "title": "Microsoft Teams: Chat panel open by default in the gallery view on Teams Rooms on Android",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561604",
+      "date_friendly": "May 07, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-teams-chat-panel-open-by-default-in-the-gallery-vi"
     },
     {
       "title": "Microsoft Teams: Enhanced bookable desk experience with Teams panel-based desk dock devices",
@@ -589,5 +649,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-10"
+  "last_updated": "2026-06-12"
 }

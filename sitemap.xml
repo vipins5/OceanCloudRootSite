@@ -604,4 +604,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-improved-request-flows-for-apps-and-agents-b</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-emoji-shortcuts-with-autocomplete-on-mobile</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-open-message-links-in-new-window</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-copilot-microsoft-365-work-iq-apis-payasyougo-usag</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-365-pay-as-you-go-storage-for-onedrive</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-chat-panel-open-by-default-in-the-gallery-vi</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
