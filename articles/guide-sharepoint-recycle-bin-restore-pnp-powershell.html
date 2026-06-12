@@ -192,7 +192,7 @@
 
       <p class="article-intro">When a SharePoint folder is accidentally deleted, the first instinct is often to open the recycle bin and restore everything that looks related. That works for small sites. It gets risky in large libraries, migration projects, or document centers where thousands of recycle bin entries may share similar names. This guide shows how to restore SharePoint deleted files and folders with PnP PowerShell using precise filters for folder path, deleted date, and deleted-by user.</p>
       <figure class="article-image">
-        <img src="https://adoption.microsoft.com/wp-content/uploads/2025/05/preview-sharepoint.jpg" alt="Microsoft SharePoint product image from Microsoft Adoption" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://adoption.microsoft.com/wp-content/uploads/2025/05/preview-sharepoint.jpg" alt="Microsoft SharePoint product image from Microsoft Adoption" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1200" height="630" />
         <figcaption>Representative Microsoft SharePoint product image from Microsoft Adoption. <a href="https://adoption.microsoft.com/en-us/sharepoint/" target="_blank" rel="noopener noreferrer">Source: Microsoft Adoption</a>.</figcaption>
       </figure>
 
@@ -232,6 +232,11 @@
         <li>Confirm the site URL, folder paths, deleted date, and optional deleted-by email.</li>
         <li>Start with <code>$WhatIfMode = $true</code> and inspect the CSV log before restore.</li>
       </ul>
+
+      <figure class="article-image article-diagram">
+        <img src="/assets/guides/recycle-bin-restore-safety-flow.svg" alt="Safe SharePoint recycle bin restore workflow showing scope, what-if, validation, restore, and post-restore checks" loading="lazy" decoding="async" width="1200" height="620" />
+        <figcaption>Safety flow for controlled recycle bin restoration: scope first, validate in WhatIf mode, then restore and verify access.</figcaption>
+      </figure>
 
       <div class="art-callout"><p><strong>Folder path format:</strong> The folder paths should not start with a slash. Use values like <code>sites/Retail/Shared Documents/Folder1</code>. The script normalizes the paths and compares them against each recycle bin item's original directory.</p></div>
 
@@ -532,6 +537,11 @@ Write-Host "Log file       : $LogPath" -ForegroundColor Cyan</code></pre></div>
 
       <h2>Validation after restore</h2>
       <p>After a successful run, do not stop at the PowerShell summary. Open the restored library and validate that the expected files and folders are back, permissions are appropriate, and business users can open the restored content. For sensitive sites, also check sharing links and unique permissions, because restored content can bring back access patterns that existed before deletion.</p>
+
+      <figure class="article-image article-diagram">
+        <img src="/assets/guides/recycle-bin-post-restore-validation.svg" alt="Post-restore validation checklist for SharePoint content integrity, permissions, and audit records" loading="lazy" decoding="async" width="1200" height="620" />
+        <figcaption>Post-restore checks to confirm structure, file integrity, permissions, sharing links, and change records before closing the request.</figcaption>
+      </figure>
 
       <ul>
         <li>Compare the CSV log against the restored folder contents.</li>

@@ -348,6 +348,11 @@
       <h2>Step-by-step: configure Google federation in Entra External ID</h2>
       <p>The process has two sides: Google Developer configuration and Entra identity provider configuration. The order matters. Build the Google OAuth app first, then enter its values in Entra.</p>
 
+      <figure class="article-image article-diagram">
+        <img src="/assets/guides/entra-google-federation-flow.svg" alt="Two-part setup flow for Google OAuth in Google Cloud and identity provider setup in Entra External ID" loading="lazy" decoding="async" width="1200" height="640" />
+        <figcaption>Sequence map for Google federation: configure OAuth in Google Cloud first, then complete identity provider setup in Entra.</figcaption>
+      </figure>
+
       <h3>Part A: create and configure Google OAuth app</h3>
       <div class="portal-path">
         <span class="pp-icon">1</span>

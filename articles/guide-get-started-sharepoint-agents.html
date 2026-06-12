@@ -398,7 +398,7 @@
 
       <p>That makes the first rollout conversation less about clever prompts and more about SharePoint hygiene: content ownership, source quality, and permissions.</p>
       <figure class="article-image">
-        <img src="https://adoption.microsoft.com/wp-content/uploads/2025/05/preview-sharepoint.jpg" alt="Microsoft SharePoint product image from Microsoft Adoption" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        <img src="https://adoption.microsoft.com/wp-content/uploads/2025/05/preview-sharepoint.jpg" alt="Microsoft SharePoint product image from Microsoft Adoption" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="1200" height="630" />
         <figcaption>Representative Microsoft SharePoint product image from Microsoft Adoption. <a href="https://adoption.microsoft.com/en-us/sharepoint/" target="_blank" rel="noopener noreferrer">Source: Microsoft Adoption</a>.</figcaption>
       </figure>
 
@@ -482,6 +482,11 @@ Always cite the source document or page when possible.</pre></div>
 
       <h2>Sharing Agents in Teams and Copilot Chat</h2>
       <p>Custom-built agents can be shared beyond the SharePoint page, especially into Teams where people already discuss projects and support questions.</p>
+
+      <figure class="article-image article-diagram">
+        <img src="/assets/guides/sharepoint-agent-sharing-flow.svg" alt="Flow diagram for sharing a custom SharePoint agent into Teams and validating permission checks" loading="lazy" decoding="async" width="1200" height="620" />
+        <figcaption>Practical sharing sequence for custom SharePoint agents in Teams, including permission-aware response behavior.</figcaption>
+      </figure>
 
       <ul>
         <li><strong>Only custom-built agents can be shared:</strong> The ready-made site agent cannot be shared like a custom agent.</li>
@@ -677,6 +682,11 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
 
       <h2>Governance Checklist Before Rollout</h2>
       <p>Do this before you encourage everyone to create agents. It is much easier to set rules early than to clean up hundreds of unmanaged agents later.</p>
+
+      <figure class="article-image article-diagram">
+        <img src="/assets/guides/sharepoint-agent-governance-checklist.svg" alt="SharePoint agent governance checklist covering ownership, source controls, monitoring, and review cadence" loading="lazy" decoding="async" width="1200" height="700" />
+        <figcaption>Governance checklist you can align with your rollout plan before broad agent adoption.</figcaption>
+      </figure>
 
       <ul>
         <li><strong>Name ownership clearly:</strong> Every approved agent should have a named business owner and technical owner.</li>

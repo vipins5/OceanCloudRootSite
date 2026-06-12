@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Google Federation Setup in Entra External ID</title>
+  <desc id="desc">Two-part flow: configure Google OAuth app then configure Entra identity provider with client ID and secret.</desc>
+  <rect width="1200" height="640" fill="#f8f9ff"/>
+  <text x="600" y="64" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="34" fill="#2a3267">Google Federation Setup Sequence</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#1f2554">
+    <rect x="70" y="120" width="500" height="440" rx="20" fill="#ffffff" stroke="#bec6ff"/>
+    <text x="100" y="170" font-size="28">Part A - Google Cloud</text>
+    <text x="100" y="220">1) Create OAuth project</text>
+    <text x="100" y="260">2) Configure consent screen</text>
+    <text x="100" y="300">3) Create web app client ID</text>
+    <text x="100" y="340">4) Add Microsoft redirect URIs</text>
+    <text x="100" y="380">5) Save client ID and secret</text>
+
+    <rect x="630" y="120" width="500" height="440" rx="20" fill="#ffffff" stroke="#bec6ff"/>
+    <text x="660" y="170" font-size="28">Part B - Entra External ID</text>
+    <text x="660" y="220">1) Open All identity providers</text>
+    <text x="660" y="260">2) Select Google provider</text>
+    <text x="660" y="300">3) Paste client ID and secret</text>
+    <text x="660" y="340">4) Save and test invite redemption</text>
+    <text x="660" y="380">5) Validate Gmail sign-in path</text>
+  </g>
+
+  <path d="M570 300 L630 300" stroke="#5864cc" stroke-width="4" fill="none"/>
+  <polygon points="630,300 616,292 616,308" fill="#5864cc"/>
+
+  <text x="600" y="286" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#4451b6">Use the same OAuth values</text>
+</svg>

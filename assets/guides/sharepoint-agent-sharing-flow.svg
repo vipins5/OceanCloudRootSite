@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">SharePoint Agent Sharing Flow</title>
+  <desc id="desc">Flow showing how a custom SharePoint agent is shared into Teams and evaluated with permission checks.</desc>
+  <rect width="1200" height="620" fill="#f7f9ff"/>
+  <text x="600" y="64" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="34" fill="#25305f">SharePoint Agent Sharing Flow to Teams</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#1d2652" text-anchor="middle">
+    <rect x="60" y="170" width="220" height="120" rx="16" fill="#dde4ff" stroke="#9caef5"/>
+    <text x="170" y="220">Select custom</text><text x="170" y="248">SharePoint agent</text>
+
+    <rect x="320" y="170" width="220" height="120" rx="16" fill="#e3f6f0" stroke="#89d4ba"/>
+    <text x="430" y="220">Copy share</text><text x="430" y="248">link from menu</text>
+
+    <rect x="580" y="170" width="220" height="120" rx="16" fill="#fff5de" stroke="#e4be6d"/>
+    <text x="690" y="220">Post link in</text><text x="690" y="248">Teams chat/channel</text>
+
+    <rect x="840" y="170" width="300" height="120" rx="16" fill="#ffe8df" stroke="#eda086"/>
+    <text x="990" y="220">Agent answer request</text><text x="990" y="248">runs permission checks</text>
+  </g>
+
+  <g stroke="#4c5c98" stroke-width="4" fill="none">
+    <path d="M280 230 L320 230"/><path d="M540 230 L580 230"/><path d="M800 230 L840 230"/>
+  </g>
+  <g fill="#4c5c98">
+    <polygon points="320,230 308,222 308,238"/>
+    <polygon points="580,230 568,222 568,238"/>
+    <polygon points="840,230 828,222 828,238"/>
+  </g>
+
+  <rect x="80" y="360" width="1040" height="200" rx="16" fill="#ffffff" stroke="#cfd6f2"/>
+  <text x="120" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#25305f">Operational notes</text>
+  <text x="120" y="442" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#35427a">- Ready-made site agent is not shared the same way as custom agents</text>
+  <text x="120" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#35427a">- If chat participants lack source permissions, use review flow before posting</text>
+  <text x="120" y="506" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#35427a">- Guest/external participants can block agent response behavior in shared chats</text>
+</svg>

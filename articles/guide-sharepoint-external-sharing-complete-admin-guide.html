@@ -270,6 +270,11 @@
 
       <p>Administrators should review domain allow and deny lists in both places. If your organization collaborates only with named partners, consider allowing only approved partner domains. If you need broader collaboration, document who is allowed to invite guests and how those guests are reviewed. External sharing is not complete until guest identity governance is part of the process.</p>
 
+      <figure class="article-image article-diagram">
+        <img src="/assets/guides/guest-access-troubleshooting-flow.svg" alt="Guest access troubleshooting path showing site, tenant, Entra restriction, and link checks" loading="lazy" decoding="async" width="1200" height="650" />
+        <figcaption>Use this troubleshooting path when guest invitations redeem incorrectly or users cannot access shared files.</figcaption>
+      </figure>
+
       <h2>Recommended governance baseline</h2>
       <p>A good baseline balances security, usability, and support workload. Start by setting SharePoint tenant sharing to New and existing guests, unless your organization has a stricter compliance requirement. Set the default sharing link to Specific people. Require Anyone links to expire quickly, and do not allow edit permissions on anonymous links unless a business owner has approved that risk.</p>
 
@@ -346,6 +351,11 @@ Get-SPOSite -Limit All | Select-Object `
 
         <h2>Policy Model for Real Tenants</h2>
         <p>A policy only works if site owners can understand it. Avoid a twenty-page external sharing policy that no one reads. Instead, create a small number of site classifications and connect each one to a clear sharing rule. An <strong>Internal</strong> site allows employees only. A <strong>Controlled External</strong> site allows authenticated guests, but only with named owners and quarterly review. A <strong>Partner Workspace</strong> allows approved partner domains and has a project end date. A <strong>Public Asset</strong> site contains content approved for public distribution and may allow broader links under strict expiry rules.</p>
+
+        <figure class="article-image article-diagram">
+          <img src="/assets/guides/external-sharing-policy-matrix.svg" alt="External sharing policy matrix by site type, sharing level, default link, expiry, and review frequency" loading="lazy" decoding="async" width="1200" height="700" />
+          <figcaption>Simple policy matrix for mapping site classification to sharing defaults and review cadence.</figcaption>
+        </figure>
 
         <p>This model should be part of site provisioning. When a new SharePoint site is requested, the requester should identify the data sensitivity, external audience, business owner, expected end date, and whether Teams membership is required. If the site is connected to Teams, remember that adding a guest to the team normally gives that guest access to the connected SharePoint files as well. Sometimes that is correct; sometimes the guest should receive access only to a specific document library or file set.</p>
 

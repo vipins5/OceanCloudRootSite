@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">PnP Entra App Registration Map</title>
+  <desc id="desc">Step map for registering app, adding API permissions, uploading certificate, and verifying PnP connection.</desc>
+  <rect width="1200" height="680" fill="#f5fcff"/>
+  <text x="600" y="62" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="34" fill="#0c3b4a">PnP + Entra App Registration Step Map</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#103743" text-anchor="middle">
+    <rect x="80" y="130" width="200" height="120" rx="16" fill="#d7f1ff" stroke="#79c7eb"/>
+    <text x="180" y="180">Register</text><text x="180" y="210">App</text>
+
+    <rect x="320" y="130" width="200" height="120" rx="16" fill="#dff8f0" stroke="#7ad3b3"/>
+    <text x="420" y="180">Add API</text><text x="420" y="210">Permissions</text>
+
+    <rect x="560" y="130" width="200" height="120" rx="16" fill="#fff4dc" stroke="#e3bc68"/>
+    <text x="660" y="180">Grant Admin</text><text x="660" y="210">Consent</text>
+
+    <rect x="800" y="130" width="200" height="120" rx="16" fill="#ffe7dd" stroke="#f1a489"/>
+    <text x="900" y="180">Upload</text><text x="900" y="210">Certificate</text>
+
+    <rect x="1040" y="130" width="120" height="120" rx="16" fill="#e9e0ff" stroke="#b89ae8"/>
+    <text x="1100" y="180">Test</text><text x="1100" y="210">Connect</text>
+  </g>
+
+  <g stroke="#4b6f7c" stroke-width="4" fill="none">
+    <path d="M280 190 L320 190"/><path d="M520 190 L560 190"/><path d="M760 190 L800 190"/><path d="M1000 190 L1040 190"/>
+  </g>
+  <g fill="#4b6f7c">
+    <polygon points="320,190 308,182 308,198"/>
+    <polygon points="560,190 548,182 548,198"/>
+    <polygon points="800,190 788,182 788,198"/>
+    <polygon points="1040,190 1028,182 1028,198"/>
+  </g>
+
+  <rect x="80" y="300" width="1080" height="300" rx="16" fill="#ffffff" stroke="#cfe4ec"/>
+  <text x="120" y="346" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#103743">Verification hints</text>
+  <text x="120" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#2a5664">- Confirm client ID and tenant ID copied from app overview</text>
+  <text x="120" y="420" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#2a5664">- Ensure Sites permissions are Application type and consented</text>
+  <text x="120" y="454" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#2a5664">- Match uploaded certificate thumbprint to local certificate</text>
+  <text x="120" y="488" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#2a5664">- Run a read-only PnP command before production automation</text>
+</svg>
