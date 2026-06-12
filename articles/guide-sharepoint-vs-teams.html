@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
@@ -73,6 +73,52 @@
         "isPartOf": {
           "@id": "https://oceancloudconsults.com/#website"
         }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-vs-teams#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between SharePoint and Microsoft Teams?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint is a document management and intranet platform for storing, organising, and publishing content. Microsoft Teams is a chat-based collaboration hub for meetings, calls, and real-time teamwork. They are complementary, not competing — every Teams team is backed by a SharePoint site that stores its files behind the scenes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where are files shared in Microsoft Teams actually stored?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Files you share in a Teams channel are stored in the SharePoint site connected to that team, inside a document library folder named after the channel. Files shared in a private one-to-one or group chat are stored in the sender's OneDrive instead. This is why SharePoint governance directly affects Teams content."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use SharePoint or Teams for document storage?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use SharePoint as the system of record for documents — it provides metadata, versioning, retention, and a structured library experience. Use Teams as the day-to-day interface where people open and co-author those same files. In practice you store in SharePoint and access through Teams, because they share the same underlying library."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "When should I use SharePoint instead of Teams?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Choose SharePoint when you need a published intranet, company news, policy pages, structured document libraries, or content for a wide audience that isn't tied to a single team's chat. Choose Teams when the work is conversational and collaborative within a defined group. Many scenarios use both together."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I prevent SharePoint and Teams sprawl?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Establish a provisioning process so new teams and sites are created intentionally with an owner, naming convention, and expiry review, rather than ad hoc. Combine this with lifecycle policies that archive inactive workspaces. Governance up front is far cheaper than consolidating duplicated workspaces later."
+            }
+          }
+        ]
       },
       {
         "@type": "BreadcrumbList",
@@ -317,6 +363,75 @@
         <a href="/contact" class="btn-primary">Book a Free Consultation &#8594;</a>
       </div>
 
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between SharePoint and Microsoft Teams?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p><strong>SharePoint</strong> is a document management and intranet platform for storing, organising, and publishing content. <strong>Microsoft Teams</strong> is a chat-based collaboration hub for meetings, calls, and real-time teamwork.</p>
+              <p>They are complementary, not competing — every Teams team is backed by a SharePoint site that stores its files behind the scenes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Where are files shared in Microsoft Teams actually stored?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Files you share in a Teams <strong>channel</strong> are stored in the SharePoint site connected to that team, inside a document library folder named after the channel.</p>
+              <p>Files shared in a private one-to-one or group <strong>chat</strong> are stored in the sender's OneDrive instead. This is why SharePoint governance directly affects Teams content.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Should I use SharePoint or Teams for document storage?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use <strong>SharePoint</strong> as the system of record for documents — it provides metadata, versioning, retention, and a structured library experience. Use <strong>Teams</strong> as the day-to-day interface where people open and co-author those same files.</p>
+              <p>In practice you store in SharePoint and access through Teams, because they share the same underlying library.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            When should I use SharePoint instead of Teams?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Choose SharePoint when you need a published intranet, company news, policy pages, structured document libraries, or content for a wide audience that isn't tied to a single team's chat.</p>
+              <p>Choose Teams when the work is conversational and collaborative within a defined group. Many scenarios use both together.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I prevent SharePoint and Teams sprawl?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Establish a provisioning process so new teams and sites are created intentionally with an owner, naming convention, and expiry review, rather than ad hoc. Combine this with lifecycle policies that archive inactive workspaces.</p>
+              <p>Governance up front is far cheaper than consolidating duplicated workspaces later.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid"></div>
@@ -397,7 +512,7 @@
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
 <script src="../js/code.js?v=2"></script>
-<script src="../js/article.js?v=5"></script>
+<script src="../js/article.js?v=6"></script>
   <script src="../js/comments.js?v=7"></script>
 </body>
 </html>

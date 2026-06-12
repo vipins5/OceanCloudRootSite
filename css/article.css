@@ -364,3 +364,95 @@ body.guide-article .article-image.article-diagram figcaption {
 .related-card:hover .rc-title {
   color: #00b4d8;
 }
+
+/* ── In-article FAQ accordion ─────────────────────────── */
+.article-faq {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.article-faq .faq-heading {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 800;
+  margin: 0 0 18px;
+  color: var(--white);
+  letter-spacing: -.03em;
+}
+
+.article-faq .faq-item {
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+  overflow: hidden;
+}
+
+.article-faq .faq-item:last-child {
+  border-bottom: none;
+}
+
+.article-faq .faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 20px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  font-family: inherit;
+  color: var(--white);
+  font-size: .97rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -.01em;
+}
+
+.article-faq .faq-q:hover {
+  color: var(--accent);
+}
+
+.article-faq .faq-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-top: 2px;
+  transition: transform .25s;
+}
+
+.article-faq .faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+
+.article-faq .faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+}
+
+.article-faq .faq-item.open .faq-a {
+  max-height: 800px;
+}
+
+.article-faq .faq-a-inner {
+  padding: 0 0 20px;
+  color: var(--text-mid);
+  font-size: .91rem;
+  line-height: 1.85;
+}
+
+.article-faq .faq-a-inner p {
+  margin: 0 0 12px;
+}
+
+.article-faq .faq-a-inner p:last-child {
+  margin: 0;
+}
+
+.article-faq .faq-a-inner a {
+  color: var(--accent);
+}
+
+.article-faq .faq-a-inner strong {
+  color: var(--white);
+}

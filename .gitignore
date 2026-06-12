@@ -11,6 +11,9 @@ desktop.ini
 *.log
 *.tmp
 
+# Generated QA reports
+data/reports/
+
 # Dependencies and local secrets
 node_modules/
 .env

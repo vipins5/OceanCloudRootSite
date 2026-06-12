@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
@@ -84,6 +84,52 @@
         "isPartOf": {
           "@id": "https://oceancloudconsults.com/#website"
         }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What external sharing levels does SharePoint Online support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint Online offers four tenant-wide external sharing levels: Anyone (anonymous links), New and existing guests (authenticated guests), Existing guests only, and Only people in your organization. The tenant setting is the maximum allowed; each site can be configured to be equal to or more restrictive than the tenant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between tenant-level and site-level sharing settings?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The tenant-level setting in the SharePoint admin center sets the upper limit for the whole organisation. The site-level setting applies to an individual site and can only be the same or more restrictive than the tenant. This lets you keep most of the tenant locked down while allowing broader sharing on specific collaboration sites."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Entra B2B integration for SharePoint external sharing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Entra B2B integration routes SharePoint and OneDrive guest sharing through Microsoft Entra External ID instead of the legacy one-time passcode flow. Guests sign in with their own organisational or Microsoft account, so you get consistent identity, Conditional Access, and lifecycle management for external users across Microsoft 365."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I stop anonymous Anyone links in SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Set the tenant or site external sharing level to \"New and existing guests\" or lower so Anyone links can no longer be created, and change the default sharing link type to \"Specific people\". For existing exposure, audit and remove current anonymous links — this can be automated with PnP PowerShell across all sites and OneDrive accounts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I set an expiration date on external sharing links?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can require that Anyone links expire after a set number of days and restrict their permissions to view-only. You can also set guest access to expire automatically after a period of inactivity, prompting a re-review. These controls limit how long external access stays open without ongoing oversight."
+            }
+          }
+        ]
       },
       {
         "@type": "BreadcrumbList",
@@ -497,6 +543,75 @@ Write-Host "Unique permission review complete for $siteUrl" -ForegroundColor Gre
         <a href="/contact" class="btn btn-primary">Book a Free Call</a>
       </div>
 
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What external sharing levels does SharePoint Online support?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>SharePoint Online offers four tenant-wide external sharing levels: <strong>Anyone</strong> (anonymous links), <strong>New and existing guests</strong> (authenticated guests), <strong>Existing guests only</strong>, and <strong>Only people in your organization</strong>.</p>
+              <p>The tenant setting is the maximum allowed; each site can be configured to be equal to or more restrictive than the tenant.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between tenant-level and site-level sharing settings?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The <strong>tenant-level</strong> setting in the SharePoint admin center sets the upper limit for the whole organisation. The <strong>site-level</strong> setting applies to an individual site and can only be the same or more restrictive than the tenant.</p>
+              <p>This lets you keep most of the tenant locked down while allowing broader sharing on specific collaboration sites.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is Entra B2B integration for SharePoint external sharing?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Entra B2B integration routes SharePoint and OneDrive guest sharing through Microsoft Entra External ID instead of the legacy one-time passcode flow.</p>
+              <p>Guests sign in with their own organisational or Microsoft account, so you get consistent identity, Conditional Access, and lifecycle management for external users across Microsoft 365.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I stop anonymous Anyone links in SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Set the tenant or site external sharing level to "New and existing guests" or lower so Anyone links can no longer be created, and change the default sharing link type to "Specific people".</p>
+              <p>For existing exposure, audit and remove current anonymous links — this can be automated with PnP PowerShell across all sites and OneDrive accounts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I set an expiration date on external sharing links?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. You can require that Anyone links expire after a set number of days and restrict their permissions to view-only. You can also set guest access to expire automatically after a period of inactivity, prompting a re-review.</p>
+              <p>These controls limit how long external access stays open without ongoing oversight.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid"></div>
@@ -527,7 +642,7 @@ Write-Host "Unique permission review complete for $siteUrl" -ForegroundColor Gre
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
 <script src="../js/code.js?v=2"></script>
-<script src="../js/article.js?v=5"></script>
+<script src="../js/article.js?v=6"></script>
   <script src="../js/comments.js?v=7"></script>
 </body>
 </html>

@@ -328,6 +328,21 @@
   }
 
   /* ═══════════════════════════════════════════════════════
+     FAQ accordion (in-article)
+     ═══════════════════════════════════════════════════════ */
+  function initFAQ() {
+    document.querySelectorAll('.article-faq .faq-q').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.faq-item');
+        if (!item) return;
+        var isOpen = item.classList.contains('open');
+        item.classList.toggle('open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════
      Boot
      ═══════════════════════════════════════════════════════ */
   function init() {
@@ -336,6 +351,7 @@
     initTOC();
     initRelated();
     initBreadcrumb();
+    initFAQ();
   }
 
   if (document.readyState === 'loading') {

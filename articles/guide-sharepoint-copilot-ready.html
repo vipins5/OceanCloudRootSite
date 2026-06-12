@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
   <link rel="stylesheet" href="../css/code.css?v=1" />
-  <link rel="stylesheet" href="../css/article.css?v=7" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
@@ -91,6 +91,52 @@
         "isPartOf": {
           "@id": "https://oceancloudconsults.com/#website"
         }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does SharePoint oversharing matter for Microsoft 365 Copilot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Copilot can surface any content a user already has permission to open. If sites and files are overshared — for example shared with \"Everyone\" or broad groups — Copilot may expose sensitive information in its answers that the user could technically access but was never meant to see. Fixing oversharing before rollout is the single most important readiness step."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Restricted SharePoint Search and when should I use it?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Restricted SharePoint Search lets you limit Copilot and organisation-wide search to an approved list of up to 100 SharePoint sites while you clean up permissions elsewhere. It is a temporary safety control for the early phase of a Copilot rollout, not a permanent fix — the goal is to remediate oversharing and then widen access."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do sensitivity labels affect what Copilot can access?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Microsoft Purview sensitivity labels can encrypt content and define usage rights. Copilot honours those rights: if a label prevents a user from extracting or viewing content, Copilot won't surface it for that user either. Applying labels to sensitive content adds a durable layer of protection on top of permissions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What licences do I need for Microsoft 365 Copilot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft 365 Copilot is a per-user add-on that requires an eligible Microsoft 365 or Office 365 base licence. Confirm the current prerequisites and per-user pricing on Microsoft's licensing page before planning a rollout, as eligibility and entitlements are updated periodically."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to get SharePoint Copilot-ready?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For a mid-size tenant, a structured readiness pass — oversharing audit, Restricted SharePoint Search configuration, sensitivity label deployment, and search quality checks — typically takes around four weeks. The timeline depends mostly on how much existing oversharing and stale content needs remediation."
+            }
+          }
+        ]
       },
       {
         "@type": "BreadcrumbList",
@@ -471,6 +517,75 @@ Get-SPOTenantRestrictedSearchAllowedList</pre></div>
         <a href="/contact" class="btn btn-primary">Start Your Readiness Assessment</a>
       </div>
 
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why does SharePoint oversharing matter for Microsoft 365 Copilot?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Copilot can surface any content a user already has permission to open. If sites and files are overshared — for example shared with "Everyone" or broad groups — Copilot may expose sensitive information in its answers that the user could technically access but was never meant to see.</p>
+              <p>Fixing oversharing before rollout is the single most important readiness step.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is Restricted SharePoint Search and when should I use it?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Restricted SharePoint Search lets you limit Copilot and organisation-wide search to an approved list of up to 100 SharePoint sites while you clean up permissions elsewhere.</p>
+              <p>It is a temporary safety control for the early phase of a Copilot rollout, not a permanent fix — the goal is to remediate oversharing and then widen access.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do sensitivity labels affect what Copilot can access?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. Microsoft Purview sensitivity labels can encrypt content and define usage rights. Copilot honours those rights: if a label prevents a user from extracting or viewing content, Copilot won't surface it for that user either.</p>
+              <p>Applying labels to sensitive content adds a durable layer of protection on top of permissions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What licences do I need for Microsoft 365 Copilot?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft 365 Copilot is a per-user add-on that requires an eligible Microsoft 365 or Office 365 base licence.</p>
+              <p>Confirm the current prerequisites and per-user pricing on Microsoft's licensing page before planning a rollout, as eligibility and entitlements are updated periodically.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long does it take to get SharePoint Copilot-ready?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>For a mid-size tenant, a structured readiness pass — oversharing audit, Restricted SharePoint Search configuration, sensitivity label deployment, and search quality checks — typically takes around four weeks.</p>
+              <p>The timeline depends mostly on how much existing oversharing and stale content needs remediation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
@@ -546,7 +661,7 @@ Get-SPOTenantRestrictedSearchAllowedList</pre></div>
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
 <script src="../js/code.js?v=2"></script>
-<script src="../js/article.js?v=5"></script>
+<script src="../js/article.js?v=6"></script>
   <script src="../js/comments.js?v=7"></script>
 </body>
 </html>
