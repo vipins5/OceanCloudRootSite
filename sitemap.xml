@@ -8,19 +8,19 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/services</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://oceancloudconsults.com/about</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://oceancloudconsults.com/case-studies</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -50,7 +50,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/mc/index.html</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/guides</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -182,7 +182,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -212,13 +212,13 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -230,7 +230,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -242,7 +242,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -502,105 +502,105 @@
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-multi-line-calling-on-teams-mobile</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-sharepoint-agent-access-insights-heatmap-for-sharepoint-and-</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-365-admin-center-notifications-for-organizational-</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-purview-endpoint-data-loss-prevention-policy-sync-</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-04-sharepoint-create-word-excel-and-powerpoint-files-with-ai</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-purview-ediscovery-in-product-diagnostics-to-troub</loc>
-    <lastmod>2026-06-09</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-meeting-recap-app</loc>
-    <lastmod>2026-06-09</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-shared-delegate-mailbox-scheduling-for-event</loc>
-    <lastmod>2026-06-09</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-room-availability-signal-for-teams-events</loc>
-    <lastmod>2026-06-09</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-06-microsoft-teams-tenant-level-dashboard-for-interpreter</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-05-microsoft-teams-mandatory-pre-meeting-consent</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-04-microsoft-copilot-microsoft-365-now-smarter-with-visuals-cop</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-04-outlook-copilot-in-file-previewer-for-ios</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2026-01-microsoft-copilot-microsoft-365-microsoft-copilot-microsoft-</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://oceancloudconsults.com/articles/news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
