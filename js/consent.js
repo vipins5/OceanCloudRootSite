@@ -67,7 +67,11 @@
   function init() {
     var consent = getConsent();
 
-    if (consent === 'accepted') { loadGA(); loadAdsense(); return; }
+    // AdSense is loaded independently of cookie consent on allowed pages so
+    // that Google's review/verification crawler can detect the ad code.
+    loadAdsense();
+
+    if (consent === 'accepted') { loadGA(); return; }
 
     var banner = document.getElementById('oc-cookie-banner');
     if (!banner) return;
@@ -88,7 +92,6 @@
         setConsent('accepted');
         hideBanner();
         loadGA();
-        loadAdsense();
       });
     }
 
