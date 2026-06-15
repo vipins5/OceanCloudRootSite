@@ -171,7 +171,7 @@ def page_html(m: dict[str, Any]) -> str:
         <div><dt>Message ID</dt><dd>{esc(mcid)}</dd></div>
       </dl>
       <p>{esc(body or 'Open in Message Center to read the complete notification.')}</p>
-      <a class=\"btn\" href=\"{esc(app_url)}\">Open Full Notification</a>
+      <a class=\"btn\" rel=\"nofollow\" href=\"{esc(app_url)}\">Open Full Notification</a>
       <a class=\"btn btn-secondary\" href=\"{SITE}/message-center\">Browse Message Center</a>
       <p class=\"muted\">This page is an SEO landing page for discoverability of Message Center ID {esc(mcid)}.</p>
     </div>
