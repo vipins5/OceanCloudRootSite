@@ -10,4 +10,4 @@
 # 4. Remove the leading # from the google.com line
 # 5. Commit and push — Google re-crawls ads.txt within 24 hours
 #
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-9926554564611983, DIRECT, f08c47fec0942fa0
