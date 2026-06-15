@@ -20,7 +20,14 @@
 
   function shouldLoadAdsense() {
     var path = (location.pathname || '').replace(/\/+$/, '').toLowerCase();
-    if (path !== '/guides' && path !== '/guides.html' && path !== '/news' && path !== '/news.html') {
+    var allowedPath =
+      path === '/guides' || path === '/guides.html' ||
+      path === '/news' || path === '/news.html' ||
+      path === '/status' || path === '/status.html' ||
+      path === '/message-center' || path === '/message-center.html' ||
+      path.indexOf('/articles/guide-') === 0;
+
+    if (!allowedPath) {
       return false;
     }
     var robots = document.querySelector('meta[name="robots"]');
