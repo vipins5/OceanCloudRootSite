@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "title": "OneDrive: Collaborate on Markdown files with co-authoring and autosave",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565906",
+      "date_friendly": "June 12, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-onedrive-collaborate-on-markdown-files-with-co-authoring-and"
+    },
+    {
+      "title": "OneNote: Copilot Notebook in OneNote on Mac",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565863",
+      "date_friendly": "June 12, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-onenote-copilot-notebook-in-onenote-on-mac"
+    },
+    {
       "title": "Microsoft Teams: Improved request flows for apps and agents blocked by admins",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565424",
       "date_friendly": "June 10, 2026",
@@ -424,6 +444,16 @@
       "article_slug": "news-2026-05-outlook-copilot-settings-in-classic-outlook-for-windows"
     },
     {
+      "title": "Microsoft Purview: eDiscovery – Enhancement of Loop and Copilot Pages in Review and Export",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561492",
+      "date_friendly": "May 06, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-purview-ediscovery-enhancement-of-loop-and-copilot"
+    },
+    {
       "title": "Microsoft Teams: Proximity join support for presenters in Teams events from Teams Rooms on Windows and Android",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561550",
       "date_friendly": "May 05, 2026",
@@ -649,5 +679,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-12"
+  "last_updated": "2026-06-15"
 }
