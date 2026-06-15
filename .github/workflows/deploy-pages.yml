@@ -47,6 +47,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      - name: Checkout (for IndexNow submission)
+        uses: actions/checkout@v4
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Submit URLs to IndexNow
+        shell: pwsh
+        run: |
+          # Submit all indexed URLs from sitemaps to IndexNow (Bing/Google discovery)
+          $script = Join-Path $env:GITHUB_WORKSPACE "scripts/submit-indexnow.ps1"
+          & $script -UseSitemap
+        continue-on-error: true
