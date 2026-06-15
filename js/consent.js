@@ -19,6 +19,10 @@
   }
 
   function shouldLoadAdsense() {
+    var path = (location.pathname || '').replace(/\/+$/, '').toLowerCase();
+    if (path !== '/guides' && path !== '/guides.html' && path !== '/news' && path !== '/news.html') {
+      return false;
+    }
     var robots = document.querySelector('meta[name="robots"]');
     if (!robots) return true;
     var content = (robots.getAttribute('content') || '').toLowerCase();
