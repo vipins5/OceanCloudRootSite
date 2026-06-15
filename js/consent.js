@@ -2,6 +2,7 @@
   'use strict';
 
   var GA_ID       = 'G-2ZVXYXDHEZ';
+  var ADSENSE_ID  = 'ca-pub-9926554564611983';
   var CONSENT_KEY = 'oc_cookie_consent';
 
   function loadGA() {
@@ -15,6 +16,24 @@
     window.gtag = function () { dataLayer.push(arguments); };
     window.gtag('js', new Date());
     window.gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function shouldLoadAdsense() {
+    var robots = document.querySelector('meta[name="robots"]');
+    if (!robots) return true;
+    var content = (robots.getAttribute('content') || '').toLowerCase();
+    return content.indexOf('noindex') === -1;
+  }
+
+  function loadAdsense() {
+    if (window.__adsenseLoaded) return;
+    if (!shouldLoadAdsense()) return;
+    window.__adsenseLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADSENSE_ID;
+    s.crossOrigin = 'anonymous';
+    document.head.appendChild(s);
   }
 
   function hideBanner() {
@@ -37,7 +56,7 @@
   function init() {
     var consent = getConsent();
 
-    if (consent === 'accepted') { loadGA(); return; }
+    if (consent === 'accepted') { loadGA(); loadAdsense(); return; }
 
     var banner = document.getElementById('oc-cookie-banner');
     if (!banner) return;
@@ -58,6 +77,7 @@
         setConsent('accepted');
         hideBanner();
         loadGA();
+        loadAdsense();
       });
     }
 
