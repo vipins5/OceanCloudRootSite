@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://oceancloudconsults.com/mc/MC1072889.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/mc/MC1045221.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/mc/MC1152323.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://oceancloudconsults.com/mc/MC1191578.html</loc>
     <lastmod>2026-06-10</lastmod>
     <changefreq>daily</changefreq>
@@ -39,12 +57,6 @@
   <url>
     <loc>https://oceancloudconsults.com/mc/MC1059679.html</loc>
     <lastmod>2026-06-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oceancloudconsults.com/mc/MC1152323.html</loc>
-    <lastmod>2026-06-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -421,12 +433,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://oceancloudconsults.com/mc/MC1220751.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://oceancloudconsults.com/mc/MC1218421.html</loc>
     <lastmod>2026-01-16</lastmod>
     <changefreq>daily</changefreq>
@@ -529,12 +535,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://oceancloudconsults.com/mc/MC1072889.html</loc>
-    <lastmod>2025-10-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://oceancloudconsults.com/mc/MC1173930.html</loc>
     <lastmod>2025-10-16</lastmod>
     <changefreq>daily</changefreq>
@@ -597,6 +597,12 @@
   <url>
     <loc>https://oceancloudconsults.com/mc/MC1024387.html</loc>
     <lastmod>2025-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/mc/MC1220751.html</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
