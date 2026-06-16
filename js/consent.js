@@ -60,6 +60,19 @@
     try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
   }
 
+  function grantConsent() {
+    if (!window.gtag) {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+    }
+    window.gtag('consent', 'update', {
+      'analytics_storage': 'granted',
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted'
+    });
+  }
+
   function setConsent(value) {
     try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
   }
@@ -67,11 +80,31 @@
   function init() {
     var consent = getConsent();
 
+    // Initialize Google Consent Mode v2 with default 'denied' state
+    // This ensures compliance with GDPR/CCPA before consent is obtained
+    if (!window.dataLayer) {
+      window.dataLayer = [];
+    }
+    if (!window.gtag) {
+      window.gtag = function () { dataLayer.push(arguments); };
+    }
+    window.gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied'
+    });
+
     // AdSense is loaded independently of cookie consent on allowed pages so
     // that Google's review/verification crawler can detect the ad code.
     loadAdsense();
 
-    if (consent === 'accepted') { loadGA(); return; }
+    if (consent === 'accepted') { 
+      // Update consent to 'granted' after user acceptance
+      grantConsent();
+      loadGA(); 
+      return; 
+    }
 
     var banner = document.getElementById('oc-cookie-banner');
     if (!banner) return;
@@ -90,6 +123,7 @@
     if (btnAccept) {
       btnAccept.addEventListener('click', function () {
         setConsent('accepted');
+        grantConsent();
         hideBanner();
         loadGA();
       });

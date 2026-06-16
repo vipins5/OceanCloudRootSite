@@ -1115,6 +1115,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
         "@id": "{canonical}#article",
         "headline": {json_title},
         "url": "{canonical}",
+        "mainEntityOfPage": "{canonical}",
         "datePublished": "{pub_date}",
         "dateModified": "{pub_date}",
         "author": {{ "@id": "{SITE_BASE_URL}/#james-whitfield" }},

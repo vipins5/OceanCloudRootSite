@@ -1,6 +1,66 @@
 {
   "items": [
     {
+      "title": "Microsoft Copilot (Microsoft 365): People Skills- removal and deletion admin control",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565905",
+      "date_friendly": "June 15, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-copilot-microsoft-365-people-skills-removal-and-de"
+    },
+    {
+      "title": "Microsoft Teams: Personal message reminders for chat and channels",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565869",
+      "date_friendly": "June 15, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-personal-message-reminders-for-chat-and-chan"
+    },
+    {
+      "title": "Microsoft Purview: Endpoint Data Loss Prevention - Protect sensitive data over FTP and SFTP with Endpoint DLP",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565868",
+      "date_friendly": "June 15, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-endpoint-data-loss-prevention-protect-sens"
+    },
+    {
+      "title": "Microsoft Purview: Data Lifecycle Management - Retention capabilities based on files Last Accessed in OneDrive and SharePoint",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565866",
+      "date_friendly": "June 15, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-data-lifecycle-management-retention-capabi"
+    },
+    {
+      "title": "Microsoft Purview: Data Lifecycle Management - Azure PST Import",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565865",
+      "date_friendly": "June 15, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-data-lifecycle-management-azure-pst-import"
+    },
+    {
+      "title": "Microsoft Purview: eDiscovery - CMK (Customer managed key) for eDiscovery direct export",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565373",
+      "date_friendly": "June 15, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-ediscovery-cmk-customer-managed-key-for-ed"
+    },
+    {
       "title": "OneDrive: Collaborate on Markdown files with co-authoring and autosave",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565906",
       "date_friendly": "June 12, 2026",
@@ -679,5 +739,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-15"
+  "last_updated": "2026-06-16"
 }
