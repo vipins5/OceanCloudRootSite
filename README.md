@@ -6,7 +6,7 @@
 
 ## Overview
 
-OceanCloud is built as a **pure HTML / CSS / JavaScript** site — no frameworks, no build step, no dependencies. Every page loads instantly and works without a server. AI and search features are powered by third-party APIs called directly from the browser.
+OceanCloud is built as a **pure HTML / CSS / JavaScript** site — no frameworks, no build step, no runtime dependencies. Core AI and search features are integrated through external services and a Cloudflare Worker backend.
 
 **Live site:** [oceancloudconsults.com](https://oceancloudconsults.com)
 
@@ -18,12 +18,17 @@ OceanCloud is built as a **pure HTML / CSS / JavaScript** site — no frameworks
 |---|---|---|
 | `index.html` | Home | Hero, services overview, process, testimonials, CTA |
 | `services.html` | Services | Full breakdown of 6 service categories |
-| `about.html` | About | Story, team (6 members), values, certifications |
-| `case-studies.html` | Case Studies | 6 case studies with category filters |
+| `about.html` | About | Story, team, values, certifications |
+| `case-studies.html` | Case Studies | Case studies with category filters |
 | `contact.html` | Contact | Contact form, phone/email, WhatsApp |
-| `news.html` | News & Blog | Articles, blog posts, roadmap items |
-| `archive.html` | Archive | Older articles and posts |
+| `news.html` | News & Blog | News feed and updates |
+| `archive.html` | Archive | Historical news archive |
+| `guides.html` | Guides | Guide hub for implementation content |
+| `faq.html` | FAQ | Frequently asked questions |
 | `search.html` | Search | Three-mode search (Articles / Web / AI) |
+| `status.html` | Status | Service and operations status |
+| `message-center.html` | Message Center | Public status messages and communications |
+| `comments-admin.html` | Comments Admin | Internal moderation/admin page |
 | `privacy.html` | Privacy Policy | GDPR/CCPA privacy notice |
 | `terms.html` | Terms of Service | Terms and conditions |
 | `cookies.html` | Cookie Policy | Cookie usage policy |
@@ -34,42 +39,35 @@ OceanCloud is built as a **pure HTML / CSS / JavaScript** site — no frameworks
 ## Features
 
 ### AI Chatbot (OceanBot)
-Powered by **Groq + Llama 3.3 70B**. Appears on every page as a floating widget.
+Powered by **Groq + Llama 3.3 70B** with a Cloudflare Worker proxy.
 
-- Rule-based responses for common M365/SharePoint questions (instant, no API call)
-- Automatic AI fallback for anything not matched by a rule
-- Prefix bypass: start any message with `search`, `research`, or `find` to force AI
-- Conversation history (last 6 turns sent to AI for context)
-- Word-boundary keyword matching (prevents false rule triggers)
+- Rule-based responses for common M365/SharePoint questions
+- Automatic AI fallback
+- Prefix bypass: `search`, `research`, `find`
+- Conversation history context window
+- Word-boundary keyword matching
 
 **File:** `js/chat.js`
 
----
-
 ### Three-Mode Search
-A dedicated search page with three tabs:
 
 | Tab | How it works |
 |---|---|
-| **Articles** | Client-side index of 24 pages/posts. Keyword scoring + `<mark>` term highlighting. No API needed. |
-| **Web Search** | Google Custom Search Engine (CSE) — explicit rendering API, re-executes on each query without re-injecting the script. |
-| **AI** | Redirects to Perplexity AI with the current query pre-filled. |
+| **Articles** | Client-side index of guides, articles, and key pages; keyword scoring + `<mark>` highlighting |
+| **Web Search** | Google Programmable Search (CSE) with explicit render mode |
+| **AI** | Redirects to Perplexity with query prefill |
 
-URL parameter support: `/search?q=your+query` pre-fills and runs the search automatically.
+URL parameter support: `/search?q=your+query` pre-fills and runs automatically.
 
 **Files:** `search.html`, `js/search.js`
 
----
-
 ### Cookie Consent
-GDPR/CCPA compliant consent banner. Stores preference in `localStorage`. No tracking until consent is given.
+Consent banner with `localStorage` preference handling.
 
 **File:** `js/consent.js`
 
----
-
 ### Particle Background
-Subtle animated particle canvas on hero sections.
+Subtle animated hero canvas effect.
 
 **File:** `js/particles.js`
 
@@ -78,73 +76,37 @@ Subtle animated particle canvas on hero sections.
 ## Integrations
 
 ### Groq — Chatbot AI via Cloudflare Worker
+
 | Detail | Value |
 |---|---|
-| Provider | [Groq](https://console.groq.com) |
 | Model | `llama-3.3-70b-versatile` |
-| Public endpoint | `https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/chat` |
+| Endpoint | `https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/chat` |
 | Worker folder | `oceancloud-ai-proxy/` |
-| Secret binding | `GROQ_API_KEY` |
-| Free tier | 14,400 requests/day · 30 req/min · No credit card needed |
-
-The Groq key must stay in Cloudflare Worker Secrets and must not be added to frontend files.
-
-To update the key:
-```powershell
-cd oceancloud-ai-proxy
-npx wrangler secret put GROQ_API_KEY
-npm run deploy
-```
-
----
+| Secret | `GROQ_API_KEY` |
 
 ### Microsoft 365 Service Health via Cloudflare Worker
+
 | Detail | Value |
 |---|---|
-| Provider | [Microsoft Graph service communications API](https://learn.microsoft.com/graph/api/resources/service-communications-api-overview) |
-| Public endpoint | `https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/m365/service-health` |
-| Worker folder | `oceancloud-ai-proxy/` |
-| Required Graph application permission | `ServiceHealth.Read.All` with admin consent |
-| Secret bindings | `M365_HEALTH_TENANT_ID`, `M365_HEALTH_CLIENT_ID`, `M365_HEALTH_CLIENT_SECRET` |
+| Endpoint | `https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev/m365/service-health` |
+| Required Graph permission | `ServiceHealth.Read.All` (application) |
+| Secrets | `M365_HEALTH_TENANT_ID`, `M365_HEALTH_CLIENT_ID`, `M365_HEALTH_CLIENT_SECRET` |
 
-The service health dashboard uses tenant-scoped Microsoft Graph data. Region buttons filter active issue text when Microsoft mentions a region such as US, EMEA, APAC/APGC, India, UK, Canada, or Australia.
+### Google Programmable Search (Web tab)
 
-To connect a Microsoft Entra app:
-```powershell
-cd oceancloud-ai-proxy
-npx wrangler secret put M365_HEALTH_TENANT_ID
-npx wrangler secret put M365_HEALTH_CLIENT_ID
-npx wrangler secret put M365_HEALTH_CLIENT_SECRET
-npm run deploy
-```
-
----
-
-### Google Custom Search Engine — Web Search
 | Detail | Value |
 |---|---|
-| Provider | [Google Programmable Search](https://programmablesearchengine.google.com) |
 | CSE ID | `1245cccaad091448b` |
-| Rendering | Explicit API (`parsetags: 'explicit'`) |
+| Config file | `js/search.js` |
 
-To update the CSE ID, edit line 1 of `js/search.js`:
-```js
-var GOOGLE_CSE_ID = '1245cccaad091448b';
-```
-
----
-
-### Perplexity AI — AI Search Tab
-No API key needed. Queries are redirected to:
-```
-https://www.perplexity.ai/search?q=YOUR_QUERY
-```
+### Perplexity (AI tab)
+Redirect target: `https://www.perplexity.ai/search?q=YOUR_QUERY`
 
 ---
 
 ## File Structure
 
-```
+```text
 OceanCloud/
 ├── index.html
 ├── services.html
@@ -153,109 +115,94 @@ OceanCloud/
 ├── contact.html
 ├── news.html
 ├── archive.html
+├── guides.html
+├── faq.html
 ├── search.html
+├── status.html
+├── message-center.html
+├── comments-admin.html
 ├── privacy.html
 ├── terms.html
 ├── cookies.html
 ├── 404.html
 ├── coming-soon.html
 ├── sitemap.xml
+├── sitemap-index.xml
+├── sitemap-mc.xml
+├── feed.xml
+├── llms.txt
 ├── robots.txt
-├── CNAME                  ← GitHub Pages custom domain
-│
+├── CNAME
+├── articles/
+├── assets/
 ├── css/
-│   ├── style.css          ← Global styles, navbar, footer, design tokens
-│   ├── pages.css          ← Inner-page styles (hero, cards, sections)
-│   └── darkstar.css       ← Dark theme overrides
-│
-└── js/
-    ├── main.js            ← Scroll effects, nav, counters, mobile menu
-    ├── chat.js            ← OceanBot chatbot (Groq/Llama 3.3)
-    ├── search.js          ← Three-mode search engine
-    ├── particles.js       ← Hero particle animation
-    └── consent.js         ← Cookie consent banner
+│   ├── style.css
+│   ├── pages.css
+│   ├── article.css
+│   ├── code.css
+│   └── darkstar.css
+├── js/
+│   ├── main.js
+│   ├── chat.js
+│   ├── search.js
+│   ├── particles.js
+│   └── consent.js
+├── scripts/
+├── data/
+├── mc/
+└── oceancloud-ai-proxy/
 ```
-
----
-
-## Design System
-
-| Token | Value |
-|---|---|
-| `--ocean-dark` | `#071a2e` — page background |
-| `--ocean-blue` | `#0077b6` — primary blue |
-| `--ocean-bright` | `#00b4d8` — bright accent |
-| `--accent-teal` | `#06d6a0` — teal highlight |
-| Font | Inter (Google Fonts) |
-| Animations | IntersectionObserver `.reveal` / `.visible` classes |
-| Counters | `data-target` / `data-suffix` attributes |
 
 ---
 
 ## Deployment
 
-Hosted on **GitHub Pages** with a custom domain via `CNAME`.
+Hosted on GitHub Pages with custom domain via `CNAME`.
 
+```text
+Repository: github.com/vipins5/OceanCloudRootSite
+Branch:     main
+Domain:     oceancloudconsults.com
 ```
-Repository  →  github.com/vipins5/OceanCloudRootSite
-Branch      →  main
-Domain      →  oceancloudconsults.com
-```
 
-Every `git push` to `main` deploys automatically.
+Every push to `main` auto-deploys.
 
-### Local Guide / Article Publishing
-
-Manually authored guide and article changes are created locally. Before committing a manual publish, run:
+### Local Publishing Workflow
 
 ```powershell
 python scripts/publish-local.py
 ```
 
-This updates only `sitemap.xml` and `feed.xml` for your local content changes. It does not generate guide content, create branches, or open PRs. The scheduled maintenance and Microsoft 365 news workflows remain separate.
+Updates `sitemap.xml` and `feed.xml` based on local guide/article changes.
 
-### Local Pre-Push Guard
+### Google Indexing API Workflow (Optional)
 
-To enforce sanity checks before every push, this repo includes a managed git hook at `.githooks/pre-push`.
+```powershell
+python scripts/submit-urls-indexing-api.py
+```
 
-Enable it once per clone:
+Auto-discovers `articles/guide-*.html` and submits extensionless URLs for recrawl requests.
+
+### Local Pre-Push Hook
 
 ```powershell
 git config core.hooksPath .githooks
 ```
 
-The pre-push hook blocks pushes unless all checks pass:
+The pre-push hook runs:
 
 - `python scripts/check-links.py --strict`
 - `python scripts/content-qa-report.py`
 - `npm --prefix oceancloud-ai-proxy run -s test -- --run`
 - `npm --prefix oceancloud-ai-proxy run -s typecheck`
 
-### Secrets & Tokens
-
-Store local Cloudflare API tokens in `.secrets/cf-api-token.txt` (first line only).
-
-- `.secrets/` is git-ignored.
-- `scripts/set-cloudflare-html-redirect.ps1` is git-ignored.
-- Do not commit API tokens, `.env` files with secrets, or local secret helper files.
-
 ---
 
-## Cache Busting
+## Secrets & Safety
 
-JS files use `?v=N` query parameters on `<script>` tags to force browsers to load updated files after deploys.
-
-### Versions currently in use
-
-| File | Versions found in repo |
-|---|---|
-| `main.js` | `?v=8`, `?v=9`, `?v=10` |
-| `particles.js` | `?v=3`, `?v=6` |
-| `consent.js` | `?v=3` |
-| `chat.js` | `?v=7` |
-| `search.js` | `?v=2` |
-
-When updating a JS file, increment and align the version across all relevant templates/pages to avoid mixed cache states.
+- `.secrets/` is git-ignored.
+- Never commit API tokens, `.env`, or secret helper files.
+- Keep service-account key files such as `oceancloud-comments-*.json` local-only.
 
 ---
 
@@ -268,7 +215,6 @@ When updating a JS file, increment and align the version across all relevant tem
 | Team | 15 certified consultants |
 | Projects | 150+ delivered |
 | Satisfaction | 98% |
-| Certifications | MS-102, MS-203, SC-300, SC-400, PL-400, PL-600, AZ-104 and 40+ more |
 
 ---
 
