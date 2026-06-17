@@ -1,6 +1,16 @@
 {
   "items": [
     {
+      "title": "Microsoft Edge: Sign in to Edge with a Google account",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565860",
+      "date_friendly": "June 16, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-edge-sign-in-to-edge-with-a-google-account"
+    },
+    {
       "title": "Microsoft Copilot (Microsoft 365): People Skills- removal and deletion admin control",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565905",
       "date_friendly": "June 15, 2026",
@@ -119,6 +129,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-06-microsoft-teams-tenant-level-dashboard-for-interpreter"
+    },
+    {
+      "title": "Microsoft Teams: Queues app for Microsoft Teams in GCC High and DoD",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565218",
+      "date_friendly": "June 09, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-queues-app-for-microsoft-teams-in-gcc-high-a"
     },
     {
       "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
@@ -659,6 +679,16 @@
       "article_slug": "news-2026-04-microsoft-copilot-microsoft-365-now-smarter-with-visuals-cop"
     },
     {
+      "title": "Microsoft Purview: Insider Risk Management – Viewing AI interaction messages for anonymized users in IRM",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560599",
+      "date_friendly": "April 17, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-purview-insider-risk-management-viewing-ai-interac"
+    },
+    {
       "title": "Outlook: Copilot in File Previewer for iOS",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560340",
       "date_friendly": "April 14, 2026",
@@ -739,5 +769,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-16"
+  "last_updated": "2026-06-17"
 }
