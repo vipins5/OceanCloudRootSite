@@ -93,6 +93,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is Microsoft retiring the SharePoint classic calendar view?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The classic SharePoint calendar view relied on Silverlight and legacy JavaScript rendering that is no longer supported in modern browsers. Microsoft has been deprecating classic SharePoint experiences in favour of the modern, responsive interface. Classic calendar views do not display on mobile devices and are not compatible with Microsoft Teams-embedded SharePoint pages."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What replaces the classic SharePoint calendar view?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The modern Calendar view is the direct replacement \u2014 it provides the same monthly/weekly/daily views on any modern SharePoint list or library with a Date column. For advanced calendaring (overlaying multiple lists, multi-tenant views), Microsoft recommends integrating with Outlook Calendar or Microsoft Bookings via Power Automate."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will migrating to the modern calendar view lose existing calendar data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The migration only changes the view \u2014 the underlying list items (events) remain intact. The migration script creates a new Modern Calendar view on the same list without deleting the Classic view, so you can validate the modern view before decommissioning the old one."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I migrate all classic calendar views in my tenant at once?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, with PnP PowerShell you can enumerate all site collections, find lists using the Events base template (106), and apply the migration script to each one in a loop. Build in tenant throttling protection (pause between sites) and log successes and failures to a CSV for post-run review."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I roll back if the classic calendar migration causes issues?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Because the migration only adds a new view and does not modify list data, rollback is straightforward \u2014 delete the new modern view and restore the original Classic view as the default. Run Remove-PnPView targeting the newly created view name. Existing items are completely unaffected."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -651,6 +698,76 @@ Write-Host "Calendar view created."
         <h3>Need help modernizing SharePoint calendars at scale?</h3>
         <p>OceanCloud can help you standardize classic-to-modern view migrations across business units with validation scripts, governance controls, and low-risk rollout plans.</p>
         <a href="/contact" class="btn btn-primary">Book a SharePoint Modernization Session</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why is Microsoft retiring the SharePoint classic calendar view?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The classic SharePoint calendar view relied on Silverlight and legacy JavaScript rendering that is no longer supported in modern browsers.</p>
+              <p>Microsoft has been deprecating classic SharePoint experiences in favour of the modern, responsive interface. Classic calendar views do not display on mobile devices and are not compatible with Microsoft Teams-embedded SharePoint pages.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What replaces the classic SharePoint calendar view?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The modern Calendar view is the direct replacement — it provides the same monthly/weekly/daily views on any modern SharePoint list or library with a Date column.</p>
+              <p>For advanced calendaring (overlaying multiple lists, multi-tenant views), Microsoft recommends integrating with Outlook Calendar or Microsoft Bookings via Power Automate.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Will migrating to the modern calendar view lose existing calendar data?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No.</p>
+              <p>The migration only changes the view — the underlying list items (events) remain intact. The migration script creates a new Modern Calendar view on the same list without deleting the Classic view, so you can validate the modern view before decommissioning the old one.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I migrate all classic calendar views in my tenant at once?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes, with PnP PowerShell you can enumerate all site collections, find lists using the Events base template (106), and apply the migration script to each one in a loop.</p>
+              <p>Build in tenant throttling protection (pause between sites) and log successes and failures to a CSV for post-run review.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I roll back if the classic calendar migration causes issues?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Because the migration only adds a new view and does not modify list data, rollback is straightforward — delete the new modern view and restore the original Classic view as the default.</p>
+              <p>Run Remove-PnPView targeting the newly created view name. Existing items are completely unaffected.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

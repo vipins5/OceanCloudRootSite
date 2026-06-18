@@ -94,6 +94,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is SharePoint site provisioning automation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint site provisioning automation is a pipeline that creates new SharePoint sites on demand without requiring IT to manually build each one. Requestors fill out a form or submit a list item; an approval flow validates the request; then an automated process (Azure Logic App, PnP PowerShell runbook, or Power Automate) creates the site with the correct template, permissions, and metadata."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What components do I need to build automated SharePoint site provisioning?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The core components are: a SharePoint request list (intake form), a Power Automate approval flow (manager sign-off), an Azure Automation runbook with PnP PowerShell (site creation and configuration), and a status column in the request list (tracks pending/approved/created states). Optional additions include Azure Logic Apps as an orchestrator and a SharePoint site template (.pnp file) for consistent structure."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Power Automate create SharePoint site collections on its own?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Power Automate can trigger the site creation process and handle approvals, but creating a full site collection with custom templates, hub site association, and metadata configuration typically requires the PnP.PowerShell module or the SharePoint REST API via the 'Send an HTTP request to SharePoint' action. Simple modern team sites or communication sites can be created via the Graph API from Power Automate."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I ensure newly provisioned SharePoint sites follow a consistent structure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Create a reference site with the desired structure (columns, content types, libraries, pages), export it as a PnP template with Export-PnPSiteTemplate, then apply that template to every new site with Invoke-PnPSiteTemplate during provisioning. Hub site association, navigation links, and sensitivity labels can also be set programmatically in the same runbook."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What Azure permissions does the site provisioning runbook need?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Azure Automation account needs a Managed Identity or service principal with SharePoint admin permissions granted in Microsoft Entra. In the SharePoint admin center, add the managed identity as a SharePoint admin or grant it Sites.FullControl.All application permission via Microsoft Graph. No user credentials should be stored in the runbook \u2014 use the managed identity exclusively."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -1355,6 +1402,76 @@ Error</pre></div>
         <h3>Want this built for your organisation?</h3>
         <p>OceanCloud delivers production-ready SharePoint provisioning pipelines as part of our Power Platform and admin automation practice — including custom templates, governance policies, and lifecycle management.</p>
         <a href="/contact" class="btn-primary">Book a Free Discovery Call →</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is SharePoint site provisioning automation?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>SharePoint site provisioning automation is a pipeline that creates new SharePoint sites on demand without requiring IT to manually build each one.</p>
+              <p>Requestors fill out a form or submit a list item; an approval flow validates the request; then an automated process (Azure Logic App, PnP PowerShell runbook, or Power Automate) creates the site with the correct template, permissions, and metadata.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What components do I need to build automated SharePoint site provisioning?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The core components are: a SharePoint request list (intake form), a Power Automate approval flow (manager sign-off), an Azure Automation runbook with PnP PowerShell (site creation and configuration), and a status column in the request list (tracks pending/approved/created states).</p>
+              <p>Optional additions include Azure Logic Apps as an orchestrator and a SharePoint site template (.pnp file) for consistent structure.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can Power Automate create SharePoint site collections on its own?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Power Automate can trigger the site creation process and handle approvals, but creating a full site collection with custom templates, hub site association, and metadata configuration typically requires the PnP.PowerShell module or the SharePoint REST API via the 'Send an HTTP request to SharePoint' action.</p>
+              <p>Simple modern team sites or communication sites can be created via the Graph API from Power Automate.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I ensure newly provisioned SharePoint sites follow a consistent structure?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Create a reference site with the desired structure (columns, content types, libraries, pages), export it as a PnP template with Export-PnPSiteTemplate, then apply that template to every new site with Invoke-PnPSiteTemplate during provisioning.</p>
+              <p>Hub site association, navigation links, and sensitivity labels can also be set programmatically in the same runbook.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What Azure permissions does the site provisioning runbook need?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The Azure Automation account needs a Managed Identity or service principal with SharePoint admin permissions granted in Microsoft Entra.</p>
+              <p>In the SharePoint admin center, add the managed identity as a SharePoint admin or grant it Sites.FullControl.All application permission via Microsoft Graph. No user credentials should be stored in the runbook — use the managed identity exclusively.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

@@ -93,6 +93,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the Microsoft Graph API and how does it relate to SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft Graph is the single unified REST API for all Microsoft 365 services. For SharePoint, it exposes the /sites, /drives, /lists, and /pages endpoints, giving you programmatic access to site collections, document libraries, list data, and permissions from any platform or language."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I authenticate to Microsoft Graph for SharePoint access?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Register an application in Microsoft Entra ID and grant it the necessary Graph permissions (Sites.Read.All, Sites.ReadWrite.All, etc). Use the client credentials flow for background automation or the auth code flow for user-delegated access. Get an access token from the OAuth 2.0 token endpoint and pass it as a Bearer token in the Authorization header."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between delegated and application permissions in Microsoft Graph?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Delegated permissions act as the signed-in user \u2014 the API call can only access what the user can access. Application permissions act as the app itself with tenant-wide access, requiring admin consent. For automation scripts that run without a user, use application permissions. For apps that access data on behalf of users, use delegated permissions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use Microsoft Graph to read SharePoint list items?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Use GET /sites/{site-id}/lists/{list-id}/items with optional $select, $filter, and $expand parameters. To include column values, expand the fields property: /items?$expand=fields. For large lists, use $top and $skiptoken for server-side pagination."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Graph Explorer and how do I use it for SharePoint testing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Graph Explorer (developer.microsoft.com/en-us/graph/graph-explorer) is a browser-based tool for testing Microsoft Graph API calls without writing code. Sign in with your Microsoft 365 account, enter a Graph endpoint URL, and see the live JSON response. It also shows required permissions and includes sample queries for common SharePoint operations."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -411,6 +458,76 @@
         <h3>Need to integrate your systems with Microsoft 365?</h3>
         <p>OceanCloud designs and builds M365 integrations using Graph API, Power Automate, Logic Apps, and custom connectors — from Salesforce and ServiceNow to bespoke ERP systems. We handle the architecture, security, and ongoing monitoring.</p>
         <a href="/contact" class="btn btn-primary">Discuss Your Integration</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the Microsoft Graph API and how does it relate to SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft Graph is the single unified REST API for all Microsoft 365 services.</p>
+              <p>For SharePoint, it exposes the /sites, /drives, /lists, and /pages endpoints, giving you programmatic access to site collections, document libraries, list data, and permissions from any platform or language.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I authenticate to Microsoft Graph for SharePoint access?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Register an application in Microsoft Entra ID and grant it the necessary Graph permissions (Sites.Read.All, Sites.ReadWrite.All, etc).</p>
+              <p>Use the client credentials flow for background automation or the auth code flow for user-delegated access. Get an access token from the OAuth 2.0 token endpoint and pass it as a Bearer token in the Authorization header.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between delegated and application permissions in Microsoft Graph?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Delegated permissions act as the signed-in user — the API call can only access what the user can access. Application permissions act as the app itself with tenant-wide access, requiring admin consent.</p>
+              <p>For automation scripts that run without a user, use application permissions. For apps that access data on behalf of users, use delegated permissions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I use Microsoft Graph to read SharePoint list items?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. Use GET /sites/{site-id}/lists/{list-id}/items with optional $select, $filter, and $expand parameters.</p>
+              <p>To include column values, expand the fields property: /items?$expand=fields. For large lists, use $top and $skiptoken for server-side pagination.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is Graph Explorer and how do I use it for SharePoint testing?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Graph Explorer (developer.microsoft.com/en-us/graph/graph-explorer) is a browser-based tool for testing Microsoft Graph API calls without writing code.</p>
+              <p>Sign in with your Microsoft 365 account, enter a Graph endpoint URL, and see the live JSON response. It also shows required permissions and includes sample queries for common SharePoint operations.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

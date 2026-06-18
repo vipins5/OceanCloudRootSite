@@ -92,6 +92,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I build a SharePoint document approval workflow in Power Automate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Create a flow triggered by 'When a file is created or modified' on your SharePoint library. Add a 'Start and wait for an approval' action, configure the approver, subject, and item link. Then use a Condition to check if the outcome is 'Approve' or 'Reject', and update a Status column in SharePoint with the result."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I send approval requests in Microsoft Teams instead of email?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. In the 'Start and wait for an approval' action, set the approval type to 'Approve/Reject - First to respond' or 'Custom responses'. Use the Teams connector to post the approval card. Approvers receive an actionable card directly in Teams and can approve without leaving the app."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if an approver does not respond to a SharePoint approval request?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Without a timeout, the approval waits indefinitely. Add a 'Start and wait for an approval' action inside a 'Do until' loop with a timeout expression, or use the built-in 'Request options' to set an expiry duration. When the timeout fires, update the document status to 'Escalated' or 'Timed Out' and notify the approver's manager."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I update a SharePoint column after a document is approved or rejected?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "After the approval action returns, use a Condition to check the outcome value. In each branch, add an 'Update file properties' action targeting the same library item. Use the 'ID' from the trigger output to identify the correct item, and set your Status, Approval Date, or Approver Name columns accordingly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I track SharePoint approval history for compliance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Power Automate provides the full approval history (approver, response, date, comments) in the approval action outputs. Log this to a separate SharePoint list using a 'Create item' action, or use the built-in Microsoft 365 Compliance features to retain approval records in the audit log."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -418,6 +465,76 @@
         <h3>Need a custom SharePoint approval workflow?</h3>
         <p>OceanCloud builds production-ready SharePoint approval workflows with multi-approver support, delegation, escalation, and Power BI reporting on approval cycle times — typically delivered in 1–2 weeks.</p>
         <a href="/contact" class="btn btn-primary">Get a Free Workflow Review</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I build a SharePoint document approval workflow in Power Automate?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Create a flow triggered by 'When a file is created or modified' on your SharePoint library.</p>
+              <p>Add a 'Start and wait for an approval' action, configure the approver, subject, and item link. Then use a Condition to check if the outcome is 'Approve' or 'Reject', and update a Status column in SharePoint with the result.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I send approval requests in Microsoft Teams instead of email?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. In the 'Start and wait for an approval' action, set the approval type to 'Approve/Reject - First to respond' or 'Custom responses'.</p>
+              <p>Use the Teams connector to post the approval card. Approvers receive an actionable card directly in Teams and can approve without leaving the app.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What happens if an approver does not respond to a SharePoint approval request?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Without a timeout, the approval waits indefinitely.</p>
+              <p>Add a 'Start and wait for an approval' action inside a 'Do until' loop with a timeout expression, or use the built-in 'Request options' to set an expiry duration. When the timeout fires, update the document status to 'Escalated' or 'Timed Out' and notify the approver's manager.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I update a SharePoint column after a document is approved or rejected?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>After the approval action returns, use a Condition to check the outcome value.</p>
+              <p>In each branch, add an 'Update file properties' action targeting the same library item. Use the 'ID' from the trigger output to identify the correct item, and set your Status, Approval Date, or Approver Name columns accordingly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I track SharePoint approval history for compliance?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>Power Automate provides the full approval history (approver, response, date, comments) in the approval action outputs. Log this to a separate SharePoint list using a 'Create item' action, or use the built-in Microsoft 365 Compliance features to retain approval records in the audit log.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

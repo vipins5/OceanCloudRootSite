@@ -88,6 +88,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-pnp-site-migration#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What can PnP PowerShell migrate between SharePoint sites?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "PnP PowerShell can migrate site structure (content types, columns, views), document libraries with files and metadata, list items with column values, modern site pages, navigation, and site theme. It cannot migrate workflows, permissions inheritance, custom code, or large files over the tenant upload limit."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need admin rights to run a PnP PowerShell migration?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You need at minimum Site Collection Admin rights on both the source and destination sites. For cross-tenant migrations or bulk operations across many sites, a Global Admin or SharePoint Admin role with an app registration (client credentials) is more practical than interactive sign-in."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can PnP PowerShell migrate SharePoint files and their version history?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Invoke-PnPSiteTemplate approach migrates the latest version of files only. To preserve version history, use the built-in SharePoint Migration Manager or SPMT, which supports version history migration. PnP PowerShell's Copy-PnPFile cmdlet copies files but does not preserve version history."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I handle large file migrations with PnP PowerShell?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For files over 250 MB, use the chunked upload method with Set-PnPFileToLocal and Add-PnPFile with the -Chunked parameter. For bulk library migrations, batch files into groups and add error handling with try/catch blocks to log failures without stopping the entire run."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a PnP PowerShell SharePoint site migration take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A small site with under 1,000 files typically completes in under 30 minutes. A large site with 50,000+ files can take several hours depending on average file size and SharePoint throttling. Run migrations outside business hours and add retry logic to handle 429 throttling responses."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -893,6 +940,76 @@ Write-Host "Next: run validation script, then check page web parts manually."</p
         <h3>Need a hands-off SharePoint migration?</h3>
         <p>OceanCloud plans and executes site-to-site migrations for organisations of all sizes — from single-site restructures to full intranet consolidations. We handle the scripting, testing, cutover planning, and post-migration validation so your team experiences zero surprises.</p>
         <a href="/contact" class="btn btn-primary">Talk to a Migration Specialist</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What can PnP PowerShell migrate between SharePoint sites?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>PnP PowerShell can migrate site structure (content types, columns, views), document libraries with files and metadata, list items with column values, modern site pages, navigation, and site theme.</p>
+              <p>It cannot migrate workflows, permissions inheritance, custom code, or large files over the tenant upload limit.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do I need admin rights to run a PnP PowerShell migration?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>You need at minimum Site Collection Admin rights on both the source and destination sites.</p>
+              <p>For cross-tenant migrations or bulk operations across many sites, a Global Admin or SharePoint Admin role with an app registration (client credentials) is more practical than interactive sign-in.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can PnP PowerShell migrate SharePoint files and their version history?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The Invoke-PnPSiteTemplate approach migrates the latest version of files only.</p>
+              <p>To preserve version history, use the built-in SharePoint Migration Manager or SPMT, which supports version history migration. PnP PowerShell's Copy-PnPFile cmdlet copies files but does not preserve version history.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I handle large file migrations with PnP PowerShell?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>For files over 250 MB, use the chunked upload method with Set-PnPFileToLocal and Add-PnPFile with the -Chunked parameter.</p>
+              <p>For bulk library migrations, batch files into groups and add error handling with try/catch blocks to log failures without stopping the entire run.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long does a PnP PowerShell SharePoint site migration take?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>A small site with under 1,000 files typically completes in under 30 minutes.</p>
+              <p>A large site with 50,000+ files can take several hours depending on average file size and SharePoint throttling. Run migrations outside business hours and add retry logic to handle 429 throttling responses.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

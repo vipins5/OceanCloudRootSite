@@ -75,6 +75,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are the most useful Power Automate flows for SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The five highest-value flows are: document approval with email and Teams notifications, contract expiry reminders triggered by a date column, new employee onboarding triggered from an HR list, stale content alerts for libraries not updated in 90+ days, and multi-level escalation approvals for sensitive documents."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Power Automate read and update SharePoint list items?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The SharePoint connector includes 'Get items', 'Get item', 'Create item', 'Update item', and 'Delete item' actions. You can filter items using OData queries, update specific fields, and work with attachments \u2014 all without writing any code."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I trigger a Power Automate flow when a SharePoint file is uploaded?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the 'When a file is created (properties only)' trigger on your document library. This fires for new uploads and provides the file metadata. For files created in subfolders, enable the 'Include subfolders' option in the trigger settings."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my SharePoint approval flow sometimes not trigger?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Common causes: the flow is turned off, the trigger is on the wrong site or library, the triggering user is the flow owner (owner-triggered flows can sometimes self-suppress), or throttling from high list activity. Check the flow's run history in Power Automate for the exact error. Also verify the flow has permission to access the SharePoint site."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens to pending approvals if the Power Automate flow is edited?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Editing and saving a flow creates a new version. Approvals that started on the old version continue running on that version until they complete or time out. New triggers use the new version. Avoid editing flows with many in-flight approvals \u2014 instead, build a v2 flow and turn off the old one after in-flight runs complete."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -313,6 +360,75 @@
         <h3>Need Power Automate flows built for your SharePoint environment?</h3>
         <p>We design and build production-ready Power Automate workflows scoped to your specific processes — with error handling, testing, documentation, and knowledge transfer included. Start with a free 60-minute consultation.</p>
         <a href="/contact" class="btn-primary">Book a Free Consultation &#8594;</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What are the most useful Power Automate flows for SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The five highest-value flows are: document approval with email and Teams notifications, contract expiry reminders triggered by a date column, new employee onboarding triggered from an HR list, stale content alerts for libraries not updated in 90+ days, and multi-level escalation approvals for sensitive documents.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can Power Automate read and update SharePoint list items?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>The SharePoint connector includes 'Get items', 'Get item', 'Create item', 'Update item', and 'Delete item' actions. You can filter items using OData queries, update specific fields, and work with attachments — all without writing any code.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I trigger a Power Automate flow when a SharePoint file is uploaded?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the 'When a file is created (properties only)' trigger on your document library.</p>
+              <p>This fires for new uploads and provides the file metadata. For files created in subfolders, enable the 'Include subfolders' option in the trigger settings.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why does my SharePoint approval flow sometimes not trigger?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Common causes: the flow is turned off, the trigger is on the wrong site or library, the triggering user is the flow owner (owner-triggered flows can sometimes self-suppress), or throttling from high list activity.</p>
+              <p>Check the flow's run history in Power Automate for the exact error. Also verify the flow has permission to access the SharePoint site.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What happens to pending approvals if the Power Automate flow is edited?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Editing and saving a flow creates a new version. Approvals that started on the old version continue running on that version until they complete or time out.</p>
+              <p>New triggers use the new version. Avoid editing flows with many in-flight approvals — instead, build a v2 flow and turn off the old one after in-flight runs complete.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

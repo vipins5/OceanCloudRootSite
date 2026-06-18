@@ -75,6 +75,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does a Microsoft 365 migration take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A basic mailbox-only migration for a 50-user organisation can take 2\u20134 weeks. A full migration including SharePoint, OneDrive, Teams, and hybrid Exchange typically takes 8\u201316 weeks. Enterprise migrations above 1,000 users are usually 6\u201312 month programmes with phased cutover."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What data cannot be migrated to Microsoft 365 automatically?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint Designer workflow history, InfoPath forms, custom list views with complex XSL, SharePoint 2010/2013 custom solution packages (.wsp), and third-party app data stored in SharePoint's app catalog all require manual reconstruction rather than migration. Legacy calendar overlays and publishing page layouts also require rebuild."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to run a parallel environment during Microsoft 365 migration?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For email migrations, yes \u2014 a hybrid Exchange configuration lets you run on-premises and Exchange Online simultaneously with full mailflow. For SharePoint, parallel environments are optional but recommended for a validation window. For Teams, most organisations cut over by tenant with no parallel running period."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the most common Microsoft 365 migration mistake?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Migrating without first cleaning up the source environment. Migrating stale content, obsolete sites, outdated distribution lists, and expired licences increases project cost and creates a cluttered destination. A pre-migration clean-up of unused mailboxes, sites older than 2 years, and large personal drives typically saves 20\u201340% of migration effort."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which migration tool should I use for SharePoint Online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft's SharePoint Migration Tool (SPMT) is free and handles on-premises SharePoint and file share migrations. Mover (also free, bundled in M365 admin center) handles Google Workspace, Box, and Dropbox. For complex enterprise migrations, third-party tools like ShareGate, Sharegate, or AvePoint offer reporting, scheduling, and incremental sync features."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -316,6 +363,76 @@
         <h3>Planning an M365 migration?</h3>
         <p>We've delivered 150+ migrations ranging from 20-user SMBs to 2,000-user enterprises. Start with a free 60-minute scoping call — we'll assess your current environment and give you an honest timeline and cost estimate.</p>
         <a href="/contact" class="btn-primary">Book a Free Scoping Call &#8594;</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long does a Microsoft 365 migration take?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>A basic mailbox-only migration for a 50-user organisation can take 2–4 weeks.</p>
+              <p>A full migration including SharePoint, OneDrive, Teams, and hybrid Exchange typically takes 8–16 weeks. Enterprise migrations above 1,000 users are usually 6–12 month programmes with phased cutover.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What data cannot be migrated to Microsoft 365 automatically?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>SharePoint Designer workflow history, InfoPath forms, custom list views with complex XSL, SharePoint 2010/2013 custom solution packages (.wsp), and third-party app data stored in SharePoint's app catalog all require manual reconstruction rather than migration.</p>
+              <p>Legacy calendar overlays and publishing page layouts also require rebuild.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do I need to run a parallel environment during Microsoft 365 migration?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>For email migrations, yes — a hybrid Exchange configuration lets you run on-premises and Exchange Online simultaneously with full mailflow.</p>
+              <p>For SharePoint, parallel environments are optional but recommended for a validation window. For Teams, most organisations cut over by tenant with no parallel running period.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the most common Microsoft 365 migration mistake?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Migrating without first cleaning up the source environment.</p>
+              <p>Migrating stale content, obsolete sites, outdated distribution lists, and expired licences increases project cost and creates a cluttered destination. A pre-migration clean-up of unused mailboxes, sites older than 2 years, and large personal drives typically saves 20–40% of migration effort.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Which migration tool should I use for SharePoint Online?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft's SharePoint Migration Tool (SPMT) is free and handles on-premises SharePoint and file share migrations.</p>
+              <p>Mover (also free, bundled in M365 admin center) handles Google Workspace, Box, and Dropbox. For complex enterprise migrations, third-party tools like ShareGate, Sharegate, or AvePoint offer reporting, scheduling, and incremental sync features.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

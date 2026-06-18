@@ -92,6 +92,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between SharePoint triggers in Power Automate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "'When a file is created' fires only on new file creation. 'When a file is created or modified' fires on both create and update. 'When an item is created' and 'When an item is created or modified' work the same way but for list items. Use the narrowest trigger to avoid unnecessary flow runs and reduce throttling risk."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I filter SharePoint list items in Power Automate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use an OData filter query in the 'Get items' action. For example: Status eq 'Approved' filters to approved items only. You can combine filters with 'and' / 'or', filter by date with ge (greater than or equal), and reference column internal names. Always set a Top Count limit to avoid retrieving thousands of items unnecessarily."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the 'Send an HTTP request to SharePoint' action used for?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "This action calls the SharePoint REST API directly, giving you access to operations not exposed by the standard connector \u2014 such as managing permissions, working with site collections, updating content types, or reading term store data. It requires knowing the REST endpoint and passing correct Accept and Content-Type headers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my 'Get items' action only return 100 results?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The default Top Count is 100. Increase it up to 5000 in the action settings. For lists larger than 5000 items, use pagination: enable 'Pagination' in Settings and set the threshold. For very large lists, consider filtering server-side with OData queries first to reduce the result set before pagination."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I avoid throttling in SharePoint Power Automate flows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Throttling occurs when too many API calls hit SharePoint in a short window. Mitigation strategies: avoid loops that call SharePoint on every item (batch with Select columns instead), add a Delay action between iterations, use 'Get items' with OData filters rather than filtering client-side after retrieving all items, and schedule high-volume flows outside business hours."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -441,6 +488,76 @@
         <h3>Struggling with Power Automate performance or complexity?</h3>
         <p>OceanCloud's Power Platform team can review your existing flows, identify inefficiencies, and rebuild them with production-grade patterns — or design new flows from your requirements.</p>
         <a href="/contact" class="btn btn-primary">Book a Flow Review</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between SharePoint triggers in Power Automate?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>'When a file is created' fires only on new file creation. 'When a file is created or modified' fires on both create and update.</p>
+              <p>'When an item is created' and 'When an item is created or modified' work the same way but for list items. Use the narrowest trigger to avoid unnecessary flow runs and reduce throttling risk.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I filter SharePoint list items in Power Automate?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use an OData filter query in the 'Get items' action. For example: Status eq 'Approved' filters to approved items only.</p>
+              <p>You can combine filters with 'and' / 'or', filter by date with ge (greater than or equal), and reference column internal names. Always set a Top Count limit to avoid retrieving thousands of items unnecessarily.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the 'Send an HTTP request to SharePoint' action used for?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>This action calls the SharePoint REST API directly, giving you access to operations not exposed by the standard connector — such as managing permissions, working with site collections, updating content types, or reading term store data.</p>
+              <p>It requires knowing the REST endpoint and passing correct Accept and Content-Type headers.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why does my 'Get items' action only return 100 results?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The default Top Count is 100. Increase it up to 5000 in the action settings.</p>
+              <p>For lists larger than 5000 items, use pagination: enable 'Pagination' in Settings and set the threshold. For very large lists, consider filtering server-side with OData queries first to reduce the result set before pagination.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I avoid throttling in SharePoint Power Automate flows?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Throttling occurs when too many API calls hit SharePoint in a short window.</p>
+              <p>Mitigation strategies: avoid loops that call SharePoint on every item (batch with Select columns instead), add a Delay action between iterations, use 'Get items' with OData filters rather than filtering client-side after retrieving all items, and schedule high-volume flows outside business hours.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

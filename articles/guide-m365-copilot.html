@@ -92,6 +92,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Microsoft 365 Copilot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft 365 Copilot is an AI assistant embedded across Word, Excel, PowerPoint, Outlook, Teams, and other M365 apps. It uses large language models grounded in your Microsoft Graph data \u2014 emails, documents, meetings, and chats \u2014 to draft content, summarise information, and automate tasks inside the apps you already use."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does a Microsoft 365 Copilot licence cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft 365 Copilot is an add-on licence priced at $30 per user per month (as of 2026). It requires an eligible base plan such as Microsoft 365 Business Standard, Business Premium, E3, or E5."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What SharePoint governance is needed before deploying Copilot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Copilot surfaces content that users can access, so overly permissive SharePoint sites will expose sensitive data through Copilot responses. Before rollout you should audit site permissions, remove excessive Everyone/Everyone Except External Users sharing, label sensitive files with Microsoft Purview sensitivity labels, and clean up stale content."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I measure Microsoft 365 Copilot adoption?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the Microsoft Viva Insights Copilot Dashboard in the Microsoft 365 admin center. It shows active users per app, Copilot-assisted actions (summaries, drafts, chat), and week-over-week trends. You can also track adoption through the Microsoft 365 usage reports under Reports > Usage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the most common Microsoft 365 Copilot rollout mistakes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The most common mistakes are: deploying before fixing SharePoint permissions (Copilot will surface over-shared content), skipping end-user training (adoption stays low), expecting Copilot to work on unlicensed users, and not setting a success metric before launch. A phased rollout starting with a pilot group of 25\u201350 users is the recommended approach."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -368,6 +415,76 @@
         <h3>Planning a Microsoft 365 Copilot deployment?</h3>
         <p>We help organisations prepare their SharePoint environment, plan the Copilot rollout, train champions, and measure adoption. Start with a free 60-minute readiness assessment — we'll assess your current environment and tell you exactly what to fix before your first licence is assigned.</p>
         <a href="/contact" class="btn-primary">Book a Free Readiness Assessment &#8594;</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is Microsoft 365 Copilot?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft 365 Copilot is an AI assistant embedded across Word, Excel, PowerPoint, Outlook, Teams, and other M365 apps.</p>
+              <p>It uses large language models grounded in your Microsoft Graph data — emails, documents, meetings, and chats — to draft content, summarise information, and automate tasks inside the apps you already use.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How much does a Microsoft 365 Copilot licence cost?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft 365 Copilot is an add-on licence priced at $30 per user per month (as of 2026).</p>
+              <p>It requires an eligible base plan such as Microsoft 365 Business Standard, Business Premium, E3, or E5.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What SharePoint governance is needed before deploying Copilot?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Copilot surfaces content that users can access, so overly permissive SharePoint sites will expose sensitive data through Copilot responses.</p>
+              <p>Before rollout you should audit site permissions, remove excessive Everyone/Everyone Except External Users sharing, label sensitive files with Microsoft Purview sensitivity labels, and clean up stale content.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I measure Microsoft 365 Copilot adoption?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the Microsoft Viva Insights Copilot Dashboard in the Microsoft 365 admin center.</p>
+              <p>It shows active users per app, Copilot-assisted actions (summaries, drafts, chat), and week-over-week trends. You can also track adoption through the Microsoft 365 usage reports under Reports > Usage.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What are the most common Microsoft 365 Copilot rollout mistakes?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The most common mistakes are: deploying before fixing SharePoint permissions (Copilot will surface over-shared content), skipping end-user training (adoption stays low), expecting Copilot to work on unlicensed users, and not setting a success metric before launch.</p>
+              <p>A phased rollout starting with a pilot group of 25–50 users is the recommended approach.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

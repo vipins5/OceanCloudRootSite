@@ -92,6 +92,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the least privilege principle in SharePoint permissions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Least privilege means users receive only the minimum permission level needed to do their job. In SharePoint this means most users get Contribute or Read on their team sites, never Full Control. Site Owners should be kept to a small group, and permission changes should require documented justification."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use SharePoint groups or Microsoft 365 groups to manage permissions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For team sites connected to Microsoft Teams or Outlook, use Microsoft 365 group membership \u2014 changes in Teams membership automatically flow to SharePoint. For communication sites or standalone sites, use SharePoint groups (Owners, Members, Visitors). Avoid assigning permissions directly to individual accounts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I conduct a SharePoint permissions audit?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the SharePoint admin center's Active sites report to identify sites with external sharing enabled. Run the 'Check permissions' tool on individual sites for user-level inspection. For tenant-wide auditing, use PnP PowerShell's Get-PnPSiteCollectionAdmin and Get-PnPGroupMember cmdlets, or the Microsoft 365 Purview audit log for permission change history."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How often should I review SharePoint permissions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft recommends quarterly access reviews for sensitive sites and annually for standard sites. Use Microsoft Entra ID Access Reviews (included in Entra ID P2) to automate the review process \u2014 site owners are prompted to confirm or remove each member without IT intervention."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the risk of unique permissions on SharePoint folders and items?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Unique permissions on folders or items break inheritance and create a shadow permission model that is difficult to audit. They are invisible in the standard site permissions view. Over time, users leave the organisation but retain access to individual items. Best practice is to separate sensitive content into its own library or site rather than using item-level unique permissions."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -423,6 +470,76 @@ $items |
         <h3>Need a SharePoint permissions audit?</h3>
         <p>OceanCloud conducts SharePoint permissions audits using SharePoint Advanced Management, PnP PowerShell, and Microsoft Purview — delivering a risk-scored findings report with a prioritised remediation plan. Typical engagement: 2–3 weeks.</p>
         <a href="/contact" class="btn btn-primary">Request a Permissions Audit</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the least privilege principle in SharePoint permissions?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Least privilege means users receive only the minimum permission level needed to do their job.</p>
+              <p>In SharePoint this means most users get Contribute or Read on their team sites, never Full Control. Site Owners should be kept to a small group, and permission changes should require documented justification.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Should I use SharePoint groups or Microsoft 365 groups to manage permissions?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>For team sites connected to Microsoft Teams or Outlook, use Microsoft 365 group membership — changes in Teams membership automatically flow to SharePoint.</p>
+              <p>For communication sites or standalone sites, use SharePoint groups (Owners, Members, Visitors). Avoid assigning permissions directly to individual accounts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I conduct a SharePoint permissions audit?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the SharePoint admin center's Active sites report to identify sites with external sharing enabled.</p>
+              <p>Run the 'Check permissions' tool on individual sites for user-level inspection. For tenant-wide auditing, use PnP PowerShell's Get-PnPSiteCollectionAdmin and Get-PnPGroupMember cmdlets, or the Microsoft 365 Purview audit log for permission change history.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How often should I review SharePoint permissions?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft recommends quarterly access reviews for sensitive sites and annually for standard sites.</p>
+              <p>Use Microsoft Entra ID Access Reviews (included in Entra ID P2) to automate the review process — site owners are prompted to confirm or remove each member without IT intervention.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the risk of unique permissions on SharePoint folders and items?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Unique permissions on folders or items break inheritance and create a shadow permission model that is difficult to audit. They are invisible in the standard site permissions view.</p>
+              <p>Over time, users leave the organisation but retain access to individual items. Best practice is to separate sensitive content into its own library or site rather than using item-level unique permissions.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

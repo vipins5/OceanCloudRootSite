@@ -103,6 +103,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is SharePoint OTP retirement and what does it mean for external sharing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft retired the legacy SharePoint one-time passcode (OTP) experience in favour of Microsoft Entra B2B Direct Connect. External users who previously received a one-time email code to access SharePoint content must now authenticate through Entra B2B \u2014 typically using a Microsoft account, Google account, or their own Entra ID tenant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do existing external users lose access after the OTP retirement?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Users who were accessing SharePoint via OTP are prompted to complete Entra B2B redemption on their next login attempt. If they have a compatible identity (Microsoft account or their organisation's Entra tenant), they redeem seamlessly. Users with only personal email addresses may need Google federation or email one-time passcode configured in your tenant's Entra External Identities settings."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the EnableAzureB2BIntegration setting in SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "EnableAzureB2BIntegration is a SharePoint admin setting that controls whether SharePoint external sharing goes through Entra B2B invitation flows. When set to True, external invitations create Entra B2B guest accounts in your directory. Microsoft has been enabling this by default across tenants as part of the OTP retirement rollout."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I configure Google federation for Entra External ID?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In the Entra admin center, go to External Identities > All identity providers > Google. Create a Google OAuth app at console.developers.google.com, configure the authorised redirect URI to your Entra tenant's callback URL, then enter the Google Client ID and Client Secret in Entra. External users with Gmail addresses can then redeem invitations using their Google credentials."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the OTP retirement affect SharePoint Anonymous (Anyone) links?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Anonymous (Anyone) links are unaffected \u2014 they never required authentication to begin with. OTP retirement only affects authenticated external guest access where external users sign in to view content. Anonymous links bypass identity entirely and should be governed separately through your tenant sharing settings."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -660,6 +707,76 @@ If an external collaborator cannot access a shared file or site, contact
         <h3>Need help validating external sharing across multiple tenants?</h3>
         <p>OceanCloud can run a tenant-by-tenant B2B readiness review, configure identity providers, test redemption flows, and produce a support-ready operational runbook for your team.</p>
         <a href="/contact" class="btn-primary">Book a Free Discovery Call &#8594;</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is SharePoint OTP retirement and what does it mean for external sharing?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft retired the legacy SharePoint one-time passcode (OTP) experience in favour of Microsoft Entra B2B Direct Connect.</p>
+              <p>External users who previously received a one-time email code to access SharePoint content must now authenticate through Entra B2B — typically using a Microsoft account, Google account, or their own Entra ID tenant.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do existing external users lose access after the OTP retirement?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Users who were accessing SharePoint via OTP are prompted to complete Entra B2B redemption on their next login attempt.</p>
+              <p>If they have a compatible identity (Microsoft account or their organisation's Entra tenant), they redeem seamlessly. Users with only personal email addresses may need Google federation or email one-time passcode configured in your tenant's Entra External Identities settings.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the EnableAzureB2BIntegration setting in SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>EnableAzureB2BIntegration is a SharePoint admin setting that controls whether SharePoint external sharing goes through Entra B2B invitation flows.</p>
+              <p>When set to True, external invitations create Entra B2B guest accounts in your directory. Microsoft has been enabling this by default across tenants as part of the OTP retirement rollout.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I configure Google federation for Entra External ID?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>In the Entra admin center, go to External Identities > All identity providers > Google.</p>
+              <p>Create a Google OAuth app at console.developers.google.com, configure the authorised redirect URI to your Entra tenant's callback URL, then enter the Google Client ID and Client Secret in Entra. External users with Gmail addresses can then redeem invitations using their Google credentials.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does the OTP retirement affect SharePoint Anonymous (Anyone) links?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No. Anonymous (Anyone) links are unaffected — they never required authentication to begin with.</p>
+              <p>OTP retirement only affects authenticated external guest access where external users sign in to view content. Anonymous links bypass identity entirely and should be governed separately through your tenant sharing settings.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

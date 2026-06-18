@@ -93,6 +93,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-recycle-bin-restore-pnp-powershell#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does SharePoint keep deleted items in the Recycle Bin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint retains deleted items in the first-stage (site) Recycle Bin for 93 days. When the 93-day period expires or the Recycle Bin exceeds its storage quota, items move to the second-stage (site collection) Recycle Bin, where they remain for another 93 days before permanent deletion. Site collection admins can restore items from either stage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I restore SharePoint files deleted more than 93 days ago?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "After 93 days in the second-stage Recycle Bin, items are permanently deleted from SharePoint. Recovery at that point depends on whether your tenant has Microsoft 365 Backup enabled (a paid add-on) or whether files were archived to another storage destination. Standard SharePoint recycle bin recovery only covers the 93-day window."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does the PnP PowerShell SharePoint restore script do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The script queries the site collection Recycle Bin for items matching your specified criteria (file name pattern, deleted date range, deleted-by user), outputs a preview list for review, and then restores matching items back to their original library location. It handles both first-stage and second-stage bin items."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does restoring from the SharePoint Recycle Bin restore version history?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. When you restore an item from the SharePoint Recycle Bin, it returns with its full version history intact, as long as the item's version history was not explicitly purged before deletion. The restored item reappears at its original path with the same permissions it had before deletion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if the original folder no longer exists when restoring from the Recycle Bin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SharePoint will attempt to restore the item but fails if the parent folder was also deleted. First restore the parent folder from the Recycle Bin (it has its own entry), then restore the files within it. If the parent folder's Recycle Bin entry has also expired, restore files to the library root manually."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -557,6 +604,76 @@ Write-Host "Log file       : $LogPath" -ForegroundColor Cyan</code></pre></div>
         <h3>Need help recovering SharePoint content safely?</h3>
         <p>OceanCloud can help audit recycle bin contents, recover deleted SharePoint libraries, and build safer retention, backup, and governance processes for Microsoft 365.</p>
         <a href="/contact" class="btn-primary">Book a SharePoint Recovery Call &#8594;</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long does SharePoint keep deleted items in the Recycle Bin?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>SharePoint retains deleted items in the first-stage (site) Recycle Bin for 93 days.</p>
+              <p>When the 93-day period expires or the Recycle Bin exceeds its storage quota, items move to the second-stage (site collection) Recycle Bin, where they remain for another 93 days before permanent deletion. Site collection admins can restore items from either stage.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I restore SharePoint files deleted more than 93 days ago?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>After 93 days in the second-stage Recycle Bin, items are permanently deleted from SharePoint.</p>
+              <p>Recovery at that point depends on whether your tenant has Microsoft 365 Backup enabled (a paid add-on) or whether files were archived to another storage destination. Standard SharePoint recycle bin recovery only covers the 93-day window.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What does the PnP PowerShell SharePoint restore script do?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The script queries the site collection Recycle Bin for items matching your specified criteria (file name pattern, deleted date range, deleted-by user), outputs a preview list for review, and then restores matching items back to their original library location.</p>
+              <p>It handles both first-stage and second-stage bin items.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does restoring from the SharePoint Recycle Bin restore version history?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>When you restore an item from the SharePoint Recycle Bin, it returns with its full version history intact, as long as the item's version history was not explicitly purged before deletion. The restored item reappears at its original path with the same permissions it had before deletion.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What happens if the original folder no longer exists when restoring from the Recycle Bin?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>SharePoint will attempt to restore the item but fails if the parent folder was also deleted.</p>
+              <p>First restore the parent folder from the Recycle Bin (it has its own entry), then restore the files within it. If the parent folder's Recycle Bin entry has also expired, restore files to the library root manually.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

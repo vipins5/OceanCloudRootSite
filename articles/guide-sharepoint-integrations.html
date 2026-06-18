@@ -94,6 +94,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are the main ways to integrate SharePoint with other business systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The four main integration approaches are: Power Automate for no-code event-driven flows, Microsoft Graph API for programmatic read/write access, SharePoint webhooks for real-time change notifications to external systems, and embedded web parts or iFrames for surfacing external app content inside SharePoint pages."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can SharePoint integrate with Salesforce or Dynamics 365?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Power Automate has certified connectors for both Salesforce and Dynamics 365. You can sync records between SharePoint lists and CRM, trigger document creation in SharePoint from CRM events, or attach SharePoint documents to CRM records. Microsoft Dynamics 365 also has native SharePoint document management integration built in."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Microsoft Graph and why does it matter for SharePoint integrations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft Graph is the unified API endpoint for all Microsoft 365 services. For SharePoint, it exposes sites, lists, drives (document libraries), pages, permissions, and search. Any integration that needs to read or write SharePoint data programmatically \u2014 from a web app, Azure Function, or external system \u2014 goes through Graph."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do SharePoint integrations require an Azure subscription?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Not always. Power Automate integrations run entirely within Microsoft 365 with no Azure dependency. Microsoft Graph API calls can be made from any platform using app registrations in Microsoft Entra ID. Azure is only required for hosting custom code such as Azure Functions, Logic Apps, or Azure API Management."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I keep SharePoint data in sync with an external database?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use Power Automate with the 'When an item is created or modified' SharePoint trigger to push changes to an external system via an HTTP action or connector. For two-way sync, pair this with a scheduled flow (Recurrence trigger) that polls the external system and updates SharePoint. For high-volume scenarios, use Azure Logic Apps with retry policies and dead-letter queuing."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -384,6 +431,75 @@
         <h3>Need to connect SharePoint with your business systems?</h3>
         <p>OceanCloud designs and builds SharePoint integrations with Salesforce, ServiceNow, Dynamics 365, and any other system with an API — from simple Power Automate flows to enterprise Azure Logic Apps with full error handling and monitoring.</p>
         <a href="/contact" class="btn btn-primary">Discuss Your Integration</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What are the main ways to integrate SharePoint with other business systems?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The four main integration approaches are: Power Automate for no-code event-driven flows, Microsoft Graph API for programmatic read/write access, SharePoint webhooks for real-time change notifications to external systems, and embedded web parts or iFrames for surfacing external app content inside SharePoint pages.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can SharePoint integrate with Salesforce or Dynamics 365?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. Power Automate has certified connectors for both Salesforce and Dynamics 365.</p>
+              <p>You can sync records between SharePoint lists and CRM, trigger document creation in SharePoint from CRM events, or attach SharePoint documents to CRM records. Microsoft Dynamics 365 also has native SharePoint document management integration built in.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is Microsoft Graph and why does it matter for SharePoint integrations?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft Graph is the unified API endpoint for all Microsoft 365 services.</p>
+              <p>For SharePoint, it exposes sites, lists, drives (document libraries), pages, permissions, and search. Any integration that needs to read or write SharePoint data programmatically — from a web app, Azure Function, or external system — goes through Graph.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do SharePoint integrations require an Azure subscription?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Not always. Power Automate integrations run entirely within Microsoft 365 with no Azure dependency.</p>
+              <p>Microsoft Graph API calls can be made from any platform using app registrations in Microsoft Entra ID. Azure is only required for hosting custom code such as Azure Functions, Logic Apps, or Azure API Management.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I keep SharePoint data in sync with an external database?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use Power Automate with the 'When an item is created or modified' SharePoint trigger to push changes to an external system via an HTTP action or connector.</p>
+              <p>For two-way sync, pair this with a scheduled flow (Recurrence trigger) that polls the external system and updates SharePoint. For high-volume scenarios, use Azure Logic Apps with retry policies and dead-letter queuing.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

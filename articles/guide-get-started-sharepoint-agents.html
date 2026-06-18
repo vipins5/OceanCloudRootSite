@@ -185,6 +185,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a SharePoint agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A SharePoint agent is an AI assistant scoped to content in a specific SharePoint site or set of files. It uses Microsoft 365 Copilot to answer questions, summarise documents, and help users find information \u2014 all grounded in your tenant's SharePoint content and governed by your existing Microsoft 365 permissions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need Microsoft 365 Copilot to use SharePoint agents?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. SharePoint agents require a Microsoft 365 Copilot licence (currently $30/user/month as an add-on to eligible M365 plans). Without a Copilot licence, the agent creation interface is visible but the agents cannot run for unlicensed users."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a SharePoint agent and a Copilot Studio agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A SharePoint agent is a no-code declarative agent you create directly in SharePoint \u2014 it is scoped to specific sites, files, or lists and uses natural language to query that content. A Copilot Studio agent is a fully built chatbot with custom conversation flows, connectors, and multi-channel publishing. Start with a SharePoint agent for content Q&A; use Copilot Studio when you need business logic or external integrations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a SharePoint agent access content from multiple sites?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. When creating a SharePoint agent, you can add multiple SharePoint sites as knowledge sources. The agent queries across all configured sites when answering questions. Access is always governed by the signed-in user's permissions \u2014 the agent cannot surface content a user does not already have access to."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share a SharePoint agent with my team?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "From the SharePoint site where the agent was created, open the agent and use the Share option to share it to a Teams channel or copy a direct link. Team members with a Copilot licence can interact with the agent in Teams, in SharePoint, or in Microsoft 365 Copilot Chat. The agent inherits SharePoint site permissions for data access."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -750,6 +797,76 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
         <h3>Planning SharePoint agents for your tenant?</h3>
         <p>OceanCloud can help you design the agent strategy, clean the SharePoint sources, configure governance, build Copilot Studio actions, and launch the first production agents safely.</p>
         <a href="/contact" class="btn btn-primary">Book a Free Agent Readiness Call</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is a SharePoint agent?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>A SharePoint agent is an AI assistant scoped to content in a specific SharePoint site or set of files.</p>
+              <p>It uses Microsoft 365 Copilot to answer questions, summarise documents, and help users find information — all grounded in your tenant's SharePoint content and governed by your existing Microsoft 365 permissions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do I need Microsoft 365 Copilot to use SharePoint agents?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>SharePoint agents require a Microsoft 365 Copilot licence (currently $30/user/month as an add-on to eligible M365 plans). Without a Copilot licence, the agent creation interface is visible but the agents cannot run for unlicensed users.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between a SharePoint agent and a Copilot Studio agent?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>A SharePoint agent is a no-code declarative agent you create directly in SharePoint — it is scoped to specific sites, files, or lists and uses natural language to query that content.</p>
+              <p>A Copilot Studio agent is a fully built chatbot with custom conversation flows, connectors, and multi-channel publishing. Start with a SharePoint agent for content Q&A; use Copilot Studio when you need business logic or external integrations.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can a SharePoint agent access content from multiple sites?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. When creating a SharePoint agent, you can add multiple SharePoint sites as knowledge sources.</p>
+              <p>The agent queries across all configured sites when answering questions. Access is always governed by the signed-in user's permissions — the agent cannot surface content a user does not already have access to.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I share a SharePoint agent with my team?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>From the SharePoint site where the agent was created, open the agent and use the Share option to share it to a Teams channel or copy a direct link.</p>
+              <p>Team members with a Copilot licence can interact with the agent in Teams, in SharePoint, or in Microsoft 365 Copilot Chat. The agent inherits SharePoint site permissions for data access.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

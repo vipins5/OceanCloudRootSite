@@ -69,6 +69,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are anonymous (Anyone) links in SharePoint and why are they risky?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Anonymous links (also called Anyone links) give access to a SharePoint file or folder to anyone with the link \u2014 no sign-in required. Once shared, the link can be forwarded to anyone outside your organisation without any audit trail. If the link is posted publicly or forwarded to the wrong person, the content is exposed with no access controls."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I find all anonymous links across a SharePoint tenant?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the SharePoint admin center's Active sites > Sharing report for a high-level view, or use PnP PowerShell with Get-PnPListItem and Get-PnPFileSharingLink to enumerate sharing links across all site collections. The OceanCloud anonymous links script automates tenant-wide enumeration and exports results to CSV."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I remove anonymous links without affecting other share permissions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Removing an anonymous sharing link only revokes the Anyone link access \u2014 it does not remove permissions for users who were added directly (Specific People links) or Microsoft 365 group members. Use Revoke-PnPFileSharingLink with the specific link ID to target only anonymous links."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I prevent anonymous links from being created in SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In the SharePoint admin center, go to Policies > Sharing and set the external sharing level to 'New and existing guests' or lower. Set the default sharing link type to 'Specific people' rather than 'Anyone'. You can also set expiry dates on Anyone links at the tenant level under the 'Advanced settings for external sharing' section."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will disabling anonymous links break existing shared documents?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes \u2014 anyone who has an existing Anyone link will lose access when you disable or remove it. Before bulk removal, identify links that are actively used (check the SharePoint admin sharing activity report) and notify document owners. Give users 2\u20134 weeks notice and a process to reshare via Specific People links before revoking existing anonymous links."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -1220,6 +1267,76 @@ finally {
         <h3>Need a safe rollout plan for anonymous link remediation?</h3>
         <p>OceanCloud can help you run report-only baselines, design approval workflows, and execute controlled remediation across SharePoint and OneDrive.</p>
         <a href="/contact" class="btn btn-primary">Book a Governance Review</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What are anonymous (Anyone) links in SharePoint and why are they risky?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Anonymous links (also called Anyone links) give access to a SharePoint file or folder to anyone with the link — no sign-in required.</p>
+              <p>Once shared, the link can be forwarded to anyone outside your organisation without any audit trail. If the link is posted publicly or forwarded to the wrong person, the content is exposed with no access controls.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I find all anonymous links across a SharePoint tenant?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the SharePoint admin center's Active sites > Sharing report for a high-level view, or use PnP PowerShell with Get-PnPListItem and Get-PnPFileSharingLink to enumerate sharing links across all site collections.</p>
+              <p>The OceanCloud anonymous links script automates tenant-wide enumeration and exports results to CSV.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I remove anonymous links without affecting other share permissions?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>Removing an anonymous sharing link only revokes the Anyone link access — it does not remove permissions for users who were added directly (Specific People links) or Microsoft 365 group members. Use Revoke-PnPFileSharingLink with the specific link ID to target only anonymous links.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I prevent anonymous links from being created in SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>In the SharePoint admin center, go to Policies > Sharing and set the external sharing level to 'New and existing guests' or lower.</p>
+              <p>Set the default sharing link type to 'Specific people' rather than 'Anyone'. You can also set expiry dates on Anyone links at the tenant level under the 'Advanced settings for external sharing' section.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Will disabling anonymous links break existing shared documents?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes — anyone who has an existing Anyone link will lose access when you disable or remove it.</p>
+              <p>Before bulk removal, identify links that are actively used (check the SharePoint admin sharing activity report) and notify document owners. Give users 2–4 weeks notice and a process to reshare via Specific People links before revoking existing anonymous links.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

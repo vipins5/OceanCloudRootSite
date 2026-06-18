@@ -92,6 +92,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I require multiple people to approve a document in SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the 'Start and wait for an approval' action in Power Automate with type 'Approve/Reject - Everyone must approve'. Add all required approvers to the Assigned To field. The flow waits until every approver responds. If any approver rejects, the flow takes the rejection path immediately without waiting for remaining approvers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between sequential and parallel approvals in Power Automate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sequential approval sends requests one at a time \u2014 Approver 2 is notified only after Approver 1 approves. Parallel approval (Everyone must approve) notifies all approvers simultaneously and waits for all responses. Sequential is better for hierarchical sign-off chains; parallel is better when approvers are independent and you want faster completion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I route an approval to different people based on the document category?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use a Switch or nested Condition action after the trigger to read the Category column value, then set an approver variable for each case. Pass that variable into the 'Assigned To' field of the approval action. This way a single flow handles all categories without duplicating the approval logic."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I handle out-of-office approvers in a multi-step approval flow?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The cleanest approach is to use delegation: in Outlook, approvers set an auto-delegate when out of office. Power Automate approval requests sent to them are auto-forwarded. Alternatively, build a fallback into the flow: if no response after N days, reassign to the approver's manager using a 'Get manager' action from Microsoft 365 Users connector."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I build a compliance audit trail for multi-level approvals in SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. After each approval stage resolves, log the approver name, decision, timestamp, and comments to a dedicated SharePoint list. Combine this with SharePoint list versioning on the document library to create a full audit trail. For regulated industries, you can also route approval records to Microsoft Purview via a retention label."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -403,6 +450,76 @@
         <h3>Need a complex multi-approver workflow?</h3>
         <p>OceanCloud designs and builds multi-stage SharePoint approval workflows with conditional routing, escalation, delegation, and compliance audit trails — typically in 1–2 weeks.</p>
         <a href="/contact" class="btn btn-primary">Talk to a Workflow Specialist</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I require multiple people to approve a document in SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the 'Start and wait for an approval' action in Power Automate with type 'Approve/Reject - Everyone must approve'. Add all required approvers to the Assigned To field.</p>
+              <p>The flow waits until every approver responds. If any approver rejects, the flow takes the rejection path immediately without waiting for remaining approvers.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between sequential and parallel approvals in Power Automate?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Sequential approval sends requests one at a time — Approver 2 is notified only after Approver 1 approves.</p>
+              <p>Parallel approval (Everyone must approve) notifies all approvers simultaneously and waits for all responses. Sequential is better for hierarchical sign-off chains; parallel is better when approvers are independent and you want faster completion.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I route an approval to different people based on the document category?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use a Switch or nested Condition action after the trigger to read the Category column value, then set an approver variable for each case.</p>
+              <p>Pass that variable into the 'Assigned To' field of the approval action. This way a single flow handles all categories without duplicating the approval logic.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I handle out-of-office approvers in a multi-step approval flow?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The cleanest approach is to use delegation: in Outlook, approvers set an auto-delegate when out of office.</p>
+              <p>Power Automate approval requests sent to them are auto-forwarded. Alternatively, build a fallback into the flow: if no response after N days, reassign to the approver's manager using a 'Get manager' action from Microsoft 365 Users connector.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I build a compliance audit trail for multi-level approvals in SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. After each approval stage resolves, log the approver name, decision, timestamp, and comments to a dedicated SharePoint list.</p>
+              <p>Combine this with SharePoint list versioning on the document library to create a full audit trail. For regulated industries, you can also route approval records to Microsoft Purview via a retention label.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

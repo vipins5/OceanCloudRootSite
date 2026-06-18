@@ -92,6 +92,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-teams-automation#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What can Power Automate automate in Microsoft Teams?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Power Automate can post adaptive card messages to channels, create Planner tasks from meeting action items, send approval requests inside Teams, trigger welcome messages for new members, monitor keywords in conversations, and send weekly digest cards \u2014 all without any custom development."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do Teams automations require a premium Power Automate licence?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most Teams automations use standard connectors (Teams, Planner, SharePoint, Outlook) which are included in Microsoft 365 business licences. Premium connectors like HTTP requests or third-party SaaS integrations require a Power Automate Premium (formerly Per-User) plan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I send an adaptive card to a Teams channel from Power Automate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the 'Post adaptive card in a chat or channel' action in the Teams connector. You provide the team and channel, then paste in your adaptive card JSON. Use the Adaptive Cards designer at adaptivecards.io to build the card visually, then copy the JSON into Power Automate."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Teams automations respond to specific keywords in messages?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Use the 'When a new channel message is added' trigger, then add a Condition action that checks if the message body contains your keyword. Because Teams stores message content as HTML, use a 'contains' check on the body/content field, not an exact match."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the most reliable way to create Planner tasks from Teams meetings?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the 'When a Teams meeting ends' trigger (requires Teams Premium or Meeting Recording connector), then parse the meeting transcript or action items with an AI action, and create Planner tasks via the Planner connector. For simpler setups without Teams Premium, use a post-meeting form or an approval step that extracts actions manually."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -365,6 +412,75 @@
         <h3>Need a custom Teams automation?</h3>
         <p>OceanCloud can design and build Power Automate flows tailored to your Teams setup — from simple notifications to complex multi-step approval workflows with Adaptive Cards and SharePoint integration.</p>
         <a href="/contact" class="btn btn-primary">Discuss Your Automation Needs</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What can Power Automate automate in Microsoft Teams?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Power Automate can post adaptive card messages to channels, create Planner tasks from meeting action items, send approval requests inside Teams, trigger welcome messages for new members, monitor keywords in conversations, and send weekly digest cards — all without any custom development.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do Teams automations require a premium Power Automate licence?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Most Teams automations use standard connectors (Teams, Planner, SharePoint, Outlook) which are included in Microsoft 365 business licences.</p>
+              <p>Premium connectors like HTTP requests or third-party SaaS integrations require a Power Automate Premium (formerly Per-User) plan.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I send an adaptive card to a Teams channel from Power Automate?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the 'Post adaptive card in a chat or channel' action in the Teams connector.</p>
+              <p>You provide the team and channel, then paste in your adaptive card JSON. Use the Adaptive Cards designer at adaptivecards.io to build the card visually, then copy the JSON into Power Automate.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can Teams automations respond to specific keywords in messages?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>Use the 'When a new channel message is added' trigger, then add a Condition action that checks if the message body contains your keyword. Because Teams stores message content as HTML, use a 'contains' check on the body/content field, not an exact match.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the most reliable way to create Planner tasks from Teams meetings?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Use the 'When a Teams meeting ends' trigger (requires Teams Premium or Meeting Recording connector), then parse the meeting transcript or action items with an AI action, and create Planner tasks via the Planner connector.</p>
+              <p>For simpler setups without Teams Premium, use a post-meeting form or an approval step that extracts actions manually.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

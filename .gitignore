@@ -28,3 +28,6 @@ ACTION-ITEMS.md
 
 # Local Claude Code settings (may contain API keys in allowlist entries)
 .claude/settings.local.json
+
+# Google Cloud Service Account credentials
+oceancloud-comments-daead280e122.json

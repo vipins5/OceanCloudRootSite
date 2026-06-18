@@ -93,6 +93,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I use SharePoint as a database for Power Apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, SharePoint is the most common data source for Power Apps in Microsoft 365 environments. You connect via the SharePoint connector and work with list items directly. For simple data entry and viewing scenarios it works well, but it has delegation limits \u2014 queries that can't be processed server-side are limited to 500\u20132000 records client-side."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is delegation in Power Apps and why does it matter?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Delegation means the data source (SharePoint) processes a filter or sort query on the server, returning only matching records. Non-delegable functions (like Search() or most text functions) run client-side on a capped record set. If your list has more than 2000 items and you use non-delegable filters, users will see incomplete results without any warning."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between canvas apps and model-driven apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Canvas apps give you pixel-precise control over layout and connect to any data source. Model-driven apps are data-first: you define the data model and the app generates its UI automatically. Canvas apps suit custom interfaces; model-driven apps suit complex business data with relationships, business rules, and standard CRM-style views."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share a Power App with users in my organisation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "From the Power Apps portal, open the app and select Share. Enter names or groups. Users need at least a Microsoft 365 licence to run Power Apps that connect to standard connectors. For premium connectors, each user needs a Power Apps Premium (Per User) licence. Also share the underlying SharePoint list with appropriate permissions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Power Apps connect to data sources outside Microsoft 365?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Power Apps supports hundreds of connectors including SQL Server, Dataverse, Salesforce, ServiceNow, REST APIs via custom connectors, and on-premises data sources via the on-premises data gateway. Connectors marked 'Premium' require a Power Apps Premium licence."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -410,6 +457,76 @@
         <h3>Ready to build your first Power App?</h3>
         <p>OceanCloud can design, build, and deploy a canvas app on your existing SharePoint environment in 2–4 weeks — or train your team to build their own. Either way, we handle governance and ensure it scales.</p>
         <a href="/contact" class="btn btn-primary">Talk to a Power Apps Specialist</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I use SharePoint as a database for Power Apps?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes, SharePoint is the most common data source for Power Apps in Microsoft 365 environments.</p>
+              <p>You connect via the SharePoint connector and work with list items directly. For simple data entry and viewing scenarios it works well, but it has delegation limits — queries that can't be processed server-side are limited to 500–2000 records client-side.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is delegation in Power Apps and why does it matter?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Delegation means the data source (SharePoint) processes a filter or sort query on the server, returning only matching records.</p>
+              <p>Non-delegable functions (like Search() or most text functions) run client-side on a capped record set. If your list has more than 2000 items and you use non-delegable filters, users will see incomplete results without any warning.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between canvas apps and model-driven apps?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Canvas apps give you pixel-precise control over layout and connect to any data source.</p>
+              <p>Model-driven apps are data-first: you define the data model and the app generates its UI automatically. Canvas apps suit custom interfaces; model-driven apps suit complex business data with relationships, business rules, and standard CRM-style views.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I share a Power App with users in my organisation?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>From the Power Apps portal, open the app and select Share. Enter names or groups.</p>
+              <p>Users need at least a Microsoft 365 licence to run Power Apps that connect to standard connectors. For premium connectors, each user needs a Power Apps Premium (Per User) licence. Also share the underlying SharePoint list with appropriate permissions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can Power Apps connect to data sources outside Microsoft 365?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>Power Apps supports hundreds of connectors including SQL Server, Dataverse, Salesforce, ServiceNow, REST APIs via custom connectors, and on-premises data sources via the on-premises data gateway. Connectors marked 'Premium' require a Power Apps Premium licence.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

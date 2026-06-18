@@ -93,6 +93,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a SharePoint Copilot agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A SharePoint Copilot agent is an AI assistant scoped to your SharePoint content. It uses Microsoft 365 Copilot or Copilot Studio to answer questions, summarise documents, and automate tasks based on files, lists, and pages in your SharePoint environment \u2014 without exposing content outside your tenant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a Microsoft 365 Copilot licence to use SharePoint agents?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For out-of-the-box declarative agents inside Microsoft 365 Copilot, yes \u2014 each user needs an M365 Copilot licence. For custom agents built in Copilot Studio and published to a Teams channel or SharePoint site, you can use Copilot Studio capacity-based licensing (Copilot Credits) instead."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a declarative agent and a Copilot Studio agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A declarative agent is a no-code configuration that focuses an M365 Copilot user on specific SharePoint sites, files, or lists. A Copilot Studio agent is a fully built chatbot with conversation flows, custom connectors, and multi-channel publishing. Use declarative agents for quick, content-scoped Q&A and Copilot Studio agents when you need business logic, integrations, or multi-step workflows."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are Copilot Credits and how are they consumed?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Copilot Credits are the billing unit for Copilot Studio. Each agent message that invokes a generative AI action or connector call consumes credits. Simple conversational turns without generative AI do not consume credits. Credits are purchased as capacity packs and shared across all agents in your tenant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can SharePoint Copilot agents access content from other Microsoft 365 apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. A SharePoint-grounded agent can reference Teams chats, Outlook emails, OneDrive files, and other Microsoft Graph data if the underlying Copilot licence includes those connectors and the user has permission to access that content. Access is always governed by Microsoft 365 permissions \u2014 the agent never bypasses security."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -349,6 +396,76 @@
         <h3>Ready to build your first Copilot agent?</h3>
         <p>OceanCloud designs and deploys Copilot Studio agents grounded in SharePoint — from simple policy Q&amp;A bots to complex multi-action agents integrated with ServiceNow, Salesforce, and Dynamics 365. Typical delivery: 4–6 weeks.</p>
         <a href="/contact" class="btn btn-primary">Start Your Copilot Agent Project</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is a SharePoint Copilot agent?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>A SharePoint Copilot agent is an AI assistant scoped to your SharePoint content.</p>
+              <p>It uses Microsoft 365 Copilot or Copilot Studio to answer questions, summarise documents, and automate tasks based on files, lists, and pages in your SharePoint environment — without exposing content outside your tenant.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do I need a Microsoft 365 Copilot licence to use SharePoint agents?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>For out-of-the-box declarative agents inside Microsoft 365 Copilot, yes — each user needs an M365 Copilot licence.</p>
+              <p>For custom agents built in Copilot Studio and published to a Teams channel or SharePoint site, you can use Copilot Studio capacity-based licensing (Copilot Credits) instead.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the difference between a declarative agent and a Copilot Studio agent?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>A declarative agent is a no-code configuration that focuses an M365 Copilot user on specific SharePoint sites, files, or lists.</p>
+              <p>A Copilot Studio agent is a fully built chatbot with conversation flows, custom connectors, and multi-channel publishing. Use declarative agents for quick, content-scoped Q&A and Copilot Studio agents when you need business logic, integrations, or multi-step workflows.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What are Copilot Credits and how are they consumed?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Copilot Credits are the billing unit for Copilot Studio. Each agent message that invokes a generative AI action or connector call consumes credits.</p>
+              <p>Simple conversational turns without generative AI do not consume credits. Credits are purchased as capacity packs and shared across all agents in your tenant.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can SharePoint Copilot agents access content from other Microsoft 365 apps?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>A SharePoint-grounded agent can reference Teams chats, Outlook emails, OneDrive files, and other Microsoft Graph data if the underlying Copilot licence includes those connectors and the user has permission to access that content. Access is always governed by Microsoft 365 permissions — the agent never bypasses security.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">

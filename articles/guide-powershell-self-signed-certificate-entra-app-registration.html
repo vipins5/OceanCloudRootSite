@@ -77,6 +77,53 @@
         }
       },
       {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why use a certificate instead of a client secret for Entra app authentication?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Client secrets expire (maximum 24 months) and must be manually rotated \u2014 a missed rotation breaks all connected automations. Certificates can have longer validity, are bound to a specific device or key vault, and their private key never leaves the secure store. For production automation, certificates are the Microsoft-recommended approach."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use a self-signed certificate for production PowerShell automations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Self-signed certificates are acceptable for server-to-server authentication with Microsoft Entra ID because the trust relationship is established by uploading the certificate's public key to the app registration \u2014 not by a third-party CA chain. The certificate just needs to be valid (not expired) and its private key must be available to the script at runtime."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where should I store the certificate private key for automated scripts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The most secure options are: Azure Key Vault (access via managed identity, no credential in code), the Windows Certificate Store on the automation server (LocalMachine\\My), or a CI/CD secrets manager (GitHub Actions secrets, Azure DevOps secure files). Never store certificate PFX files or passwords in source code repositories."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long should a self-signed certificate be valid for Entra authentication?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft Entra ID accepts certificates valid for up to 3 years (some tenants allow longer). A 2-year validity is a common balance between rotation frequency and operational overhead. Set a calendar reminder 60 days before expiry to generate a new certificate, upload its public key to the app registration, and update the private key on all automation hosts before the old one expires."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What PowerShell permissions do I need to create a self-signed certificate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "On Windows, New-SelfSignedCertificate requires running PowerShell as Administrator when writing to the LocalMachine certificate store. Writing to the CurrentUser store does not require elevation. On Linux/macOS with PowerShell 7, use the openssl command-line tool instead, as New-SelfSignedCertificate is a Windows-only cmdlet."
+            }
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
@@ -849,6 +896,76 @@ Connect-PnPOnline `
         <h3>Need help hardening your PnP PowerShell authentication model?</h3>
         <p>OceanCloud can help you standardize app registration, certificate rotation, and least-privilege API permissions for production automation.</p>
         <a href="/contact" class="btn btn-primary">Book a Security Review</a>
+      </div>
+
+      
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why use a certificate instead of a client secret for Entra app authentication?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Client secrets expire (maximum 24 months) and must be manually rotated — a missed rotation breaks all connected automations.</p>
+              <p>Certificates can have longer validity, are bound to a specific device or key vault, and their private key never leaves the secure store. For production automation, certificates are the Microsoft-recommended approach.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I use a self-signed certificate for production PowerShell automations?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes.</p>
+              <p>Self-signed certificates are acceptable for server-to-server authentication with Microsoft Entra ID because the trust relationship is established by uploading the certificate's public key to the app registration — not by a third-party CA chain. The certificate just needs to be valid (not expired) and its private key must be available to the script at runtime.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Where should I store the certificate private key for automated scripts?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The most secure options are: Azure Key Vault (access via managed identity, no credential in code), the Windows Certificate Store on the automation server (LocalMachine\My), or a CI/CD secrets manager (GitHub Actions secrets, Azure DevOps secure files).</p>
+              <p>Never store certificate PFX files or passwords in source code repositories.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long should a self-signed certificate be valid for Entra authentication?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Microsoft Entra ID accepts certificates valid for up to 3 years (some tenants allow longer).</p>
+              <p>A 2-year validity is a common balance between rotation frequency and operational overhead. Set a calendar reminder 60 days before expiry to generate a new certificate, upload its public key to the app registration, and update the private key on all automation hosts before the old one expires.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What PowerShell permissions do I need to create a self-signed certificate?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>On Windows, New-SelfSignedCertificate requires running PowerShell as Administrator when writing to the LocalMachine certificate store.</p>
+              <p>Writing to the CurrentUser store does not require elevation. On Linux/macOS with PowerShell 7, use the openssl command-line tool instead, as New-SelfSignedCertificate is a Windows-only cmdlet.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="related-section">
