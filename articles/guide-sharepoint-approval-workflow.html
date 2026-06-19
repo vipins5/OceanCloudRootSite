@@ -139,6 +139,62 @@
       },
 
       {
+        "@type": "HowTo",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#howto",
+        "name": "How to Build a SharePoint Approval Workflow with Power Automate",
+        "description": "Configure a document approval flow triggered from SharePoint, route to approvers via email or Teams, update item status on approval or rejection, and handle timeouts.",
+        "tool": [
+          { "@type": "HowToTool", "name": "Microsoft Power Automate" },
+          { "@type": "HowToTool", "name": "SharePoint Online" },
+          { "@type": "HowToTool", "name": "Microsoft Teams" }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Create the SharePoint Status column",
+            "text": "Add a Choice column named 'Approval Status' to your document library with values: Pending, Approved, Rejected. This column will be updated by the flow."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Create a new automated cloud flow",
+            "text": "In Power Automate, create an automated flow using the trigger 'When a file is created or modified (properties only)' pointing to your SharePoint library."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Add the Start and wait for an approval action",
+            "text": "Add the 'Start and wait for an approval' action. Set type to Approve/Reject, assign the approver(s), write a meaningful title and include the file URL in the details."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Add a Condition to check the approval outcome",
+            "text": "After the approval action, add a Condition checking if Outcome equals 'Approve'. Branch into Yes (Approved) and No (Rejected) paths."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Update SharePoint item status in both branches",
+            "text": "In the Yes branch, use 'Update file properties' to set Approval Status to Approved. In the No branch, set it to Rejected. Include approver comments where relevant."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Send notification emails to the document author",
+            "text": "Add a 'Send an email (V2)' action in each branch to notify the original submitter of the approval outcome with the approver's comments."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Test the flow with a sample document",
+            "text": "Upload a test document to the library. Verify the approval request arrives, respond, and confirm the SharePoint item status updates correctly."
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {

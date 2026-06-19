@@ -137,6 +137,44 @@
     }
   }
 
+  /* ── Web Vitals reporting via GA4 ──────────────────────────
+     Sends CLS, INP, LCP, FCP, and TTFB as GA4 events once the
+     user has accepted analytics. Uses the web-vitals library
+     attribution build for diagnostic context.
+     ─────────────────────────────────────────────────────── */
+  function reportVital(metric) {
+    if (!window.gtag) return;
+    window.gtag('event', metric.name, {
+      value:          Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+      metric_id:      metric.id,
+      metric_value:   metric.value,
+      metric_delta:   metric.delta,
+      metric_rating:  metric.rating,
+      non_interaction: true
+    });
+  }
+
+  function loadWebVitals() {
+    if (window.__vitalsLoaded) return;
+    window.__vitalsLoaded = true;
+    var s = document.createElement('script');
+    s.type   = 'module';
+    s.textContent = [
+      "import{onCLS,onINP,onLCP,onFCP,onTTFB}from'https://unpkg.com/web-vitals@4/dist/web-vitals.attribution.js';",
+      "var r=window.__reportVital;",
+      "if(r){onCLS(r);onINP(r);onLCP(r);onFCP(r);onTTFB(r);}"
+    ].join('');
+    window.__reportVital = reportVital;
+    document.head.appendChild(s);
+  }
+
+  /* Hook into GA load so vitals only fire after consent */
+  var _origLoadGA = loadGA;
+  loadGA = function () {
+    _origLoadGA();
+    loadWebVitals();
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

@@ -122,6 +122,86 @@
       },
 
       {
+        "@type": "HowTo",
+        "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#howto",
+        "name": "How to Migrate to Microsoft 365 in 10 Steps",
+        "description": "A practical, field-tested process for moving your organisation to Microsoft 365 without data loss, downtime, or adoption failure.",
+        "totalTime": "P8W",
+        "estimatedCost": {
+          "@type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "0"
+        },
+        "tool": [
+          { "@type": "HowToTool", "name": "SharePoint Migration Tool (SPMT)" },
+          { "@type": "HowToTool", "name": "Microsoft 365 Admin Center" },
+          { "@type": "HowToTool", "name": "Microsoft Entra ID" }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Inventory your current environment",
+            "text": "Document total data volume, number of users and licences, active applications, integrations with third-party systems, and custom workflows."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Clean up before you migrate",
+            "text": "Delete stale content, duplicate files, and obsolete accounts. Most organisations reduce their data footprint by 20–40% before migration."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Design your Microsoft 365 architecture",
+            "text": "Map out the target state: Teams workspaces vs SharePoint communication sites, OneDrive for personal drives, hub site hierarchy, and naming conventions."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Configure your Microsoft 365 tenant",
+            "text": "Set up tenant-level sharing and security settings, deploy DLP policies via Purview, set retention labels, enable MFA, and configure conditional access policies."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Set up identity and access management",
+            "text": "Provision all users in Microsoft Entra ID with the right licences. Enable self-service password reset and MFA enforcement before content moves."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Run a pilot migration with a test group",
+            "text": "Select 10–30 representative users and migrate their content first to surface issues with permissions mapping, metadata, and sync behaviour."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Train your users before cutover",
+            "text": "Create role-based training paths for basic users, power users, and managers. Users trained before cutover adapt 3× faster than those trained reactively."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 8,
+            "name": "Execute the migration in waves",
+            "text": "Use Microsoft SPMT for file shares and SharePoint. Use built-in Exchange tools for email. Migrate department by department for more manageable rollouts."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 9,
+            "name": "Validate and reconcile",
+            "text": "Verify file counts, permissions, version history, and metadata against source. Run a validation checklist on a random 5% sample before decommissioning the source."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 10,
+            "name": "Decommission and establish governance",
+            "text": "Retire the source system, then immediately establish governance: site ownership registry, guest access review schedule, and a process for new Teams and SharePoint requests."
+          }
+        ]
+      },
+
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {
