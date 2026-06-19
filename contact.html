@@ -974,8 +974,6 @@
 <a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
 <script src="js/main.js?v=8"></script>
 <script src="js/chat.js?v=7"></script>
-<!-- EmailJS SDK — https://www.emailjs.com -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 /* ============================================================
@@ -1180,20 +1178,10 @@
     }
   }
 
-  /* ─── EmailJS config ─────────────────────────────────────────
-     1. Sign up free at https://www.emailjs.com
-     2. Create an Email Service (Gmail, Outlook, SMTP, etc.)
-     3. Create an Email Template — use these template variables:
-          {{from_name}}     {{from_email}}    {{from_company}}
-          {{service}}       {{org_size}}      {{message}}
-     4. Replace the three placeholder strings below with your
-        actual Public Key, Service ID, and Template ID.
-  ──────────────────────────────────────────────────────────── */
-  const EMAILJS_PUBLIC_KEY  = 'po2e_r9yJwQwg2kgs';
-  const EMAILJS_SERVICE_ID  = 'service_10wt1jp';
-  const EMAILJS_TEMPLATE_ID = 'template_waede2s';
-
-  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  /* ─── Backend Configuration ─── */
+  const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000'
+    : '/api';
 
   /* ─── Submit ─── */
   function submitForm() {
@@ -1209,6 +1197,41 @@
     const origText = sendBtn.innerHTML;
     sendBtn.innerHTML = 'Sending&hellip;';
     sendBtn.disabled = true;
+    // Call backend API
+    fetch(`${API_BASE_URL}/api/contact-submit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({
+        from_name: name,
+        from_email: email,
+        from_company: company,
+        service: service,
+        org_size: size,
+        message: message,
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          showSuccessScreen(name, email, company, service, size);
+        } else {
+          throw new Error(data.error || 'Submission failed');
+        }
+      })
+      .catch((err) => {
+        // ── Error: restore button, show inline error ──
+        sendBtn.innerHTML = origText;
+        sendBtn.disabled = false;
+        const hint = document.querySelector('#step-5 .conv-hint');
+        if (hint) {
+          hint.innerHTML = '<span style="color:#f87171;">&#9888; Send failed — please try again or email us directly.</span>';
+          setTimeout(() => { hint.textContent = 'No need to be precise — just tell us what's on your mind'; }, 5000);
+        }
+        console.error('Submission error:', err);
+      });
 
     const templateParams = {
       from_name:    name,
