@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power Automate Triggers & Actions Reference</title>
+  <style>
+    body { font-family: Segoe UI, sans-serif; max-width: 8.5in; margin: 0; padding: 0.5in; color: #333; line-height: 1.4; }
+    h1 { color: #0077b6; font-size: 18pt; margin: 0 0 8pt 0; }
+    h2 { color: #0077b6; font-size: 11pt; margin: 10pt 0 6pt 0; border-bottom: 2px solid #0077b6; }
+    .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12pt; }
+    .trigger, .action { background: #f5f5f5; padding: 8pt; margin: 6pt 0; border-left: 4pt solid #0077b6; }
+    .trigger strong { color: #0077b6; }
+    .action strong { color: #d32f2f; }
+    table { width: 100%; border-collapse: collapse; margin: 8pt 0; font-size: 9pt; }
+    td { padding: 4pt; border: 1px solid #ddd; }
+    .tip { background: #fff3cd; padding: 6pt; border-left: 4pt solid #ff9800; margin: 8pt 0; font-size: 9pt; }
+    @media print { body { padding: 0.25in; } }
+  </style>
+</head>
+<body>
+  <h1>⚡ Power Automate Triggers & Actions Reference</h1>
+  <p><strong>OceanCloud Consulting</strong> | Power Platform Guide | 2026</p>
+
+  <h2>Common Triggers (What Starts the Flow)</h2>
+  <div class="col-2">
+    <div>
+      <div class="trigger"><strong>When an item is created</strong> - SharePoint list item added</div>
+      <div class="trigger"><strong>When an item is modified</strong> - Item updated</div>
+      <div class="trigger"><strong>When a file is created</strong> - File uploaded to drive</div>
+      <div class="trigger"><strong>When an approval is completed</strong> - Approver responds</div>
+    </div>
+    <div>
+      <div class="trigger"><strong>When a new email arrives</strong> - Email received</div>
+      <div class="trigger"><strong>On new Teams message</strong> - Message posted to channel</div>
+      <div class="trigger"><strong>Schedule</strong> - Time-based (daily, weekly)</div>
+      <div class="trigger"><strong>Button</strong> - Manual trigger</div>
+    </div>
+  </div>
+
+  <h2>Common Actions (What the Flow Does)</h2>
+  <table>
+    <tr><td><strong>Send an email</strong></td><td>To, Subject, Body, Attachments</td></tr>
+    <tr><td><strong>Send approval request</strong></td><td>Assigned to, Title, Details, Options</td></tr>
+    <tr><td><strong>Create item/Update item</strong></td><td>Set list column values</td></tr>
+    <tr><td><strong>Post message to Teams</strong></td><td>Channel, Message, Adaptive Card</td></tr>
+    <tr><td><strong>Create event in calendar</strong></td><td>Date, Time, Attendees, Description</td></tr>
+    <tr><td><strong>Call HTTP webhook</strong></td><td>External API integration</td></tr>
+  </table>
+
+  <h2>Control Flow Actions</h2>
+  <table>
+    <tr><td><strong>Condition</strong></td><td>If/Then branching logic</td></tr>
+    <tr><td><strong>Switch</strong></td><td>Multi-branch routing</td></tr>
+    <tr><td><strong>For each</strong></td><td>Loop over array items</td></tr>
+    <tr><td><strong>Delay</strong></td><td>Pause before next action</td></tr>
+    <tr><td><strong>Terminate</strong></td><td>Stop flow execution</td></tr>
+  </table>
+
+  <div class="tip">
+    <strong>💡 Tips:</strong> Use Condition blocks to route logic. Always add "Configure run after" to handle failures. Test with real data before deploying to production.
+  </div>
+
+  <div class="tip">
+    <strong>📌 Reference:</strong> Learn.microsoft.com/en-us/connectors/connector-reference/
+  </div>
+
+  <p style="font-size: 8pt; color: #666; margin-top: 12pt; border-top: 1px solid #ddd; padding-top: 6pt;">
+    Part of "Power Automate & SharePoint Guide" | oceancloudconsults.com/guides | Need help? <a href="https://oceancloudconsults.com/contact">Book a consultation</a>
+  </p>
+</body>
+</html>

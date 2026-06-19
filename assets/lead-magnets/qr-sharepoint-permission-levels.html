@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SharePoint Permission Levels Quick Reference</title>
+  <style>
+    body { font-family: Segoe UI, sans-serif; max-width: 8.5in; margin: 0; padding: 0.5in; color: #333; line-height: 1.4; }
+    h1 { color: #0077b6; font-size: 18pt; margin: 0 0 8pt 0; }
+    h2 { color: #0077b6; font-size: 12pt; margin: 12pt 0 6pt 0; border-bottom: 2px solid #0077b6; padding-bottom: 4pt; }
+    table { width: 100%; border-collapse: collapse; margin: 8pt 0; font-size: 9pt; }
+    th, td { padding: 6pt; text-align: left; border: 1px solid #ddd; }
+    th { background: #e0f2f1; font-weight: bold; }
+    .level-group { margin: 12pt 0; }
+    .tip { background: #fff3cd; padding: 8pt; border-left: 4pt solid #ff9800; margin: 10pt 0; font-size: 9pt; }
+    .footer { margin-top: 12pt; font-size: 8pt; color: #666; border-top: 1px solid #ddd; padding-top: 6pt; }
+    @media print { body { padding: 0.25in; } }
+  </style>
+</head>
+<body>
+  <h1>📋 SharePoint Permission Levels Quick Reference</h1>
+  <p><strong>OceanCloud Consulting</strong> | SharePoint Permission Guide | 2026</p>
+
+  <h2>Permission Levels at a Glance</h2>
+  <table>
+    <thead><tr><th>Permission Level</th><th>Typical Role</th><th>Can Do</th><th>Cannot Do</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Owner</strong></td><td>Site Admin</td><td>Everything (full control)</td><td>Nothing - full control</td></tr>
+      <tr><td><strong>Member</strong></td><td>Content Editor</td><td>Add, edit, delete items/docs</td><td>Manage permissions, site structure</td></tr>
+      <tr><td><strong>Contributor</strong></td><td>Regular User</td><td>Add, edit own items</td><td>Delete items, manage library</td></tr>
+      <tr><td><strong>Reader</strong></td><td>Viewer</td><td>View items/docs only</td><td>Edit, add, delete anything</td></tr>
+      <tr><td><strong>Limited Access</strong></td><td>Minimal Guest</td><td>Access assigned item only</td><td>View other items or structure</td></tr>
+    </tbody>
+  </table>
+
+  <h2>SharePoint Groups (Pre-built)</h2>
+  <div class="level-group">
+    <strong>Site Owners</strong> = Full Control<br>
+    <strong>Site Members</strong> = Edit (Contribute)<br>
+    <strong>Site Visitors</strong> = Read (View Only)
+  </div>
+
+  <h2>Permission Inheritance Rules</h2>
+  <table>
+    <tr><td><strong>Default Behavior:</strong></td><td>All items inherit permissions from parent library/list</td></tr>
+    <tr><td><strong>Break Inheritance:</strong></td><td>Item/folder gets unique permissions (not linked to parent)</td></tr>
+    <tr><td><strong>Restore Inheritance:</strong></td><td>Item returns to parent's permissions (old unique perms deleted)</td></tr>
+  </table>
+
+  <h2>Anonymous & External Sharing</h2>
+  <table>
+    <tr><td><strong>Anonymous Link (Anyone)</strong></td><td>No sign-in needed; anyone with link can access</td></tr>
+    <tr><td><strong>People Link (Specific People)</strong></td><td>Requires Microsoft account or org account</td></tr>
+    <tr><td><strong>Guest Link (External)</strong></td><td>External users sign in with Microsoft account or identity provider</td></tr>
+  </table>
+
+  <div class="tip">
+    <strong>💡 Tip:</strong> Review permissions quarterly. Many organizations have excessive sharing due to cascading inheritance. Use "Manage Direct Permissions" in SharePoint admin to audit and clean up.
+  </div>
+
+  <div class="tip">
+    <strong>⚠️ Common Mistake:</strong> Breaking inheritance on individual items (vs library-wide). Instead, use library settings or create sub-folders with different permissions to reduce complexity.
+  </div>
+
+  <div class="footer">
+    This quick reference is part of "SharePoint Permissions Guide for IT Admins" | oceancloudconsults.com/guides<br>
+    Need help implementing these? <a href="https://oceancloudconsults.com/contact">Book a consultation</a>
+  </div>
+</body>
+</html>
