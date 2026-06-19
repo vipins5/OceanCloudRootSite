@@ -2,3 +2,5 @@ requests>=2.31.0
 feedparser>=6.0.10
 openai>=1.30.0
 Pillow>=10.0.0
+google-auth>=2.37.0
+google-api-python-client>=2.157.0
