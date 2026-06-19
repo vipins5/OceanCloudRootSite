@@ -34,9 +34,17 @@ def check_steps_checklist(content: str) -> bool:
     return has_ordered_list and has_h2_h3
 
 def check_internal_links(content: str) -> bool:
-    """Check for at least 2 internal guide links."""
-    internal_links = re.findall(r'<a[^>]*href="[/.]?/?articles/guide-', content)
-    return len(internal_links) >= 2
+    """Check for at least 2 internal guide links (various formats)."""
+    # Look for links with different href patterns
+    patterns = [
+        r'href=["\'](?:/articles/)?guide-[a-z-]+(?:\.html)?["\']',  # /articles/guide-* or guide-*
+        r'href=["\']#guide-',  # anchor links
+    ]
+    matches = set()
+    for pattern in patterns:
+        found = re.findall(pattern, content)
+        matches.update(found)
+    return len(matches) >= 2
 
 def check_contextual_cta(content: str) -> bool:
     """Check for contextual service CTA (in-article call-to-action)."""
