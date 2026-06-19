@@ -289,6 +289,53 @@
       </figure>
 
       <h2>Canvas Apps vs Model-Driven Apps: Which One Do You Need?</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Start with your SharePoint list</strong>
+            <p>Go to your SharePoint site and create or identify the list you want to use as your app's data source. Make sure column names are clear and column types are set correctly (text, choice, person, date, lookup, etc.). Poor column setup here leads to bad app performance later.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Open Power Apps and create a new canvas app</strong>
+            <p>Go to powerapps.microsoft.com > Create > Canvas app from blank. Give it a name and choose phone or tablet layout based on your primary users. Power Apps launches in edit mode.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Connect to your SharePoint list</strong>
+            <p>Click 'Data' (left sidebar) > 'Add data' > search for SharePoint > select your site > select your list. Power Apps now has read/write access to your list columns.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Build your form using controls</strong>
+            <p>Drag text input, choice dropdown, date picker, and other controls onto your screen. For each control, set its 'Default' property to point to list columns (e.g., TextInput1.Default = ThisItem.Title). Build the form layout that suits your task.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Add buttons for Save, New, and Delete</strong>
+            <p>Insert buttons with OnSelect formulas: Save = Patch(ListName, ThisItem, {updated fields}); New = NewForm(FormName); Delete = Remove(ListName, ThisItem). Test each action thoroughly before sharing.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Share your app with users</strong>
+            <p>Publish the app. Go to Share > enter user names or groups. Each user needs a Power Apps licence (included in Microsoft 365). Test the app as an end user before full rollout.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>Power Apps comes in two fundamentally different types. Choosing the wrong one is the most common Power Apps mistake. Here's the clear comparison:</p>
 
       <div class="art-table-wrap">

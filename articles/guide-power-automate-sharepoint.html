@@ -260,6 +260,53 @@
       </figure>
 
       <h2>Before You Start: Power Automate Basics for SharePoint</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Create a new cloud flow</strong>
+            <p>Go to powerautomate.microsoft.com > Create > Automated cloud flow > select a trigger (SharePoint trigger like 'When an item is created' or 'When an item is modified'). Name your flow.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Configure your SharePoint trigger</strong>
+            <p>Select your SharePoint site and list. Set any filtering conditions (e.g., 'Only trigger for items where Status = Pending'). Configure trigger frequency if needed. Click Create.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Add actions to process the item</strong>
+            <p>Add actions like 'Get file properties', 'Update item', 'Send email', 'Create event in calendar', or 'Post to Teams'. Each action pulls data from the trigger using dynamic content tokens like @{triggerOutputs()['body/ID']}.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Configure conditional logic (if needed)</strong>
+            <p>Add 'Condition' actions to branch logic: if Status = Approved, send approval email; if Status = Rejected, move item to archive. Use comparison operators (is equal to, contains, greater than).</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Add error handling</strong>
+            <p>Add 'Configure run after' to the final action to catch failures. Set it to run if the previous action 'has failed' or 'has timed out'. Log errors to a Teams channel or email for visibility.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Test and monitor</strong>
+            <p>Save and test the flow by manually creating a SharePoint item. Monitor the flow run history in Power Automate to confirm all steps executed. Adjust actions and conditions based on real results.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>Power Automate flows have three parts: a <strong>trigger</strong> (what starts the flow), <strong>conditions</strong> (optional logic), and <strong>actions</strong> (what happens). SharePoint triggers include "When an item is created," "When a file is created," "When a file is modified," and a recurrence trigger for scheduled flows.</p>
       <p>All five flows below require a Microsoft 365 business licence that includes Power Automate (Business Basic, Standard, Premium, or any Enterprise plan). Build and test in the Power Automate maker portal at <em>make.powerautomate.com</em>. Always test with a sample item before turning on flows that send emails or modify data.</p>
 

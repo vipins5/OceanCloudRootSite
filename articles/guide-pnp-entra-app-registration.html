@@ -366,6 +366,46 @@
       </figure>
 
       <h2>Which Connection Method Should You Use?</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Register an Azure AD application</strong>
+            <p>Go to portal.azure.com > Azure Active Directory > App registrations. Click 'New registration', give it a name (e.g., 'PnP-Script-Admin'), select 'Accounts in this organizational directory only', and click Register. Note the Application ID (client ID) — you'll need this for authentication.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Configure API permissions</strong>
+            <p>In your app registration, go to 'API permissions' > 'Add a permission'. Select 'Microsoft Graph' > 'Application permissions'. Search for and add: 'Sites.FullControl.All', 'Files.ReadWrite.All', 'User.Read.All'. Click 'Grant admin consent' so users don't see consent prompts.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Create a client secret</strong>
+            <p>Go to 'Certificates & secrets' > 'Client secrets' > 'New client secret'. Set expiry (90 days or 12 months) and click Add. Copy the Value immediately — you won't see it again. Store it securely (never commit to git).</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Create an Azure Key Vault (optional but recommended)</strong>
+            <p>In Azure Portal, create an Azure Key Vault to store secrets. Add your client secret as a key vault secret. Update your PnP scripts to retrieve secrets from Key Vault instead of hardcoding them.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Test authentication in your PnP PowerShell script</strong>
+            <p>Use Connect-PnPOnline -Url [site-url] -ClientId [app-id] -ClientSecret [secret]. Verify connection succeeds. Once working, wrap it in try-catch to handle token expiry and re-authentication gracefully.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>PnP PowerShell supports three authentication methods. Choose based on your use case:</p>
 
       <div class="conn-grid">

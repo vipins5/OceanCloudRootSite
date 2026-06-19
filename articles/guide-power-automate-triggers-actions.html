@@ -286,6 +286,53 @@
       </figure>
 
       <h2>SharePoint Triggers: The Complete Reference</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Navigate to Power Automate and create a new flow</strong>
+            <p>Go to powerautomate.microsoft.com > Create > select flow type (Cloud flow or Desktop flow). For this guide, we focus on Cloud flows with SharePoint triggers.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Choose and configure your trigger</strong>
+            <p>Select a trigger from 'SharePoint' or 'Microsoft 365' category (e.g., 'When an item is created', 'When an approval is completed', 'When a new email arrives'). Set any required parameters like site and list.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Add your first action</strong>
+            <p>In the flow designer, click '+ New step'. Search for and select an action (e.g., 'Send email', 'Create reminder', 'Post message'). Map trigger outputs to action inputs using dynamic content buttons.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Add parallel actions (optional)</strong>
+            <p>Click '+ Add a parallel branch' to run multiple actions simultaneously. Useful for sending emails AND creating calendar events when a trigger fires.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Set up conditions to control flow</strong>
+            <p>Add 'Condition' blocks to check if values meet criteria. For example: if email subject contains 'URGENT', escalate to manager; otherwise, route to standard process. Use all available operators and functions.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Configure error handling and notifications</strong>
+            <p>Add 'On failure' handlers to catch errors. Log to SharePoint list or send alert to admin Teams channel. Test the flow with various inputs to ensure robustness.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>Triggers determine when a flow starts. The SharePoint connector offers two categories: list/library triggers (respond to item or file changes) and site triggers (respond to page or structural changes).</p>
 
       <div class="art-table-wrap">

@@ -287,6 +287,53 @@
       </figure>
 
       <h2>What You Need Before You Start</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Identify automation opportunities in Teams</strong>
+            <p>Audit: channel message workflows, meeting scheduling, bot integrations, file management. Prioritise high-frequency, repetitive tasks (notifications, approvals, data entry).</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Create a Teams bot or use connectors</strong>
+            <p>Option 1: Use Power Virtual Agent for chatbot flows. Option 2: Use connectors (Slack-like automation). Build flow triggered by Teams message or mention. Route messages to appropriate handlers.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Set up adaptive cards for interactive experiences</strong>
+            <p>Design adaptive card templates in Power Automate: approval cards, form cards, data display cards. Send cards to Teams channels when events trigger (e.g., 'New help desk ticket approved').</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Implement notification routing</strong>
+            <p>Create flows that route notifications to Teams channels based on priority/category: 'Urgent' → @channel mention; 'Info' → no mention. Aggregate notifications to reduce noise.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Build Teams-to-backend connectors</strong>
+            <p>Connect Teams messages/approvals to backend systems: approve in Teams → update SharePoint list → trigger invoice process. Use HTTP connectors or Dataverse for data sync.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Test bot and connector with pilot users</strong>
+            <p>Launch bot/automation to test team. Gather feedback on card design, messaging clarity, workflow logic. Iterate before org-wide rollout to prevent user frustration.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>All five automations in this guide are built with Power Automate (make.powerautomate.com). They require:</p>
       <div class="prereq-grid">
         <div class="prereq-item"><strong>Licence</strong>Microsoft 365 Business Standard, Premium, or any E plan — Power Automate is included</div>

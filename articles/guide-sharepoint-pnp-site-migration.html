@@ -318,6 +318,53 @@
       </figure>
 
       <h2>What PnP PowerShell Can (and Cannot) Migrate</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Export source site with PnP PowerShell</strong>
+            <p>Use PnP command: Get-PnPProvisioningTemplate -Out 'template.xml' to export site structure, lists, and content. Add flags like -IncludeContentTypes, -IncludeTermGroups as needed. Export takes time for large sites.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Review and customize the template</strong>
+            <p>Open template.xml in editor. Remove unwanted list items (often data bloat). Customize column mappings, security groups, branding. Remove hardcoded GUIDs if template will be reused across tenants.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Prepare target environment</strong>
+            <p>Create target site collection in destination tenant. Pre-create required Azure AD groups. Assign permissions to ensure PnP has rights to apply template (admin or site owner).</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Apply template to target site with PnP</strong>
+            <p>Run: Apply-PnPProvisioningTemplate -Path 'template.xml' against target site. Verify all lists, content types, columns created successfully. Check permissions applied correctly.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Migrate content and permissions</strong>
+            <p>Use PnP Copy-PnPFile or Invoke-PnPSiteTransfer to move files and list items. Map source users to target tenant identities. Verify nobody has lost access post-migration.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Validate and test</strong>
+            <p>Smoke test: access lists, download files, run workflows, check formulas. Compare source vs target side-by-side for missing content. Get sign-off from business owner.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>Before writing a single line of PowerShell, align expectations. PnP covers the majority of routine content migrations but some artifacts require supplementary tools.</p>
 
       <div class="scope-grid">

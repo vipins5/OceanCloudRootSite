@@ -295,6 +295,53 @@
       <a href="https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-workflows" target="_blank" rel="noopener noreferrer" class="ms-ref">&#128196; Modernize SharePoint workflows — learn.microsoft.com</a>
 
       <h2>Step 1: Inventory Your Existing Workflows</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Audit existing SharePoint 2013 workflows</strong>
+            <p>List all active workflows in your farms. Document: trigger conditions, actions, approval paths, external connections. Identify which workflows are still business-critical vs deprecated.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Categorize workflows by complexity</strong>
+            <p>Simple (linear, 1-2 steps): migrate first. Medium (branching, 5-10 steps): requires testing. Complex (nested loops, external API calls, state machines): evaluate retiring or rewriting.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Rebuild simple workflows in Power Automate</strong>
+            <p>Create new cloud flows matching old logic. Use 'When an item is created/modified' trigger + conditions + actions. Test thoroughly: edge cases, error paths, notifications.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Handle external connections and approvals</strong>
+            <p>For workflows connecting to external APIs: use HTTP connector or custom connectors in Power Automate. For approvals: use Approval actions with person fields and multi-stage routing.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Run workflows in parallel during transition</strong>
+            <p>For 2-4 weeks, run both old (2013 workflows) and new (Power Automate) versions for same trigger. Compare results. Once confident new works, disable old.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Decommission old workflows and clean up</strong>
+            <p>Once migration complete and tested, disable SharePoint 2013 workflows. Document new flow ownership and maintenance contact. Archive old workflow definitions for audit.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <p>Before you can migrate workflows, you need a complete picture of what exists across your tenant. Most organisations underestimate this — they know about their 5 "important" workflows but have forgotten the 40 others built over the years.</p>
 
       <h3>Automated inventory using PowerShell</h3>

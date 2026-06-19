@@ -239,6 +239,53 @@
       <p>When those layers are planned together, SharePoint becomes a secure collaboration workspace. When they are not, a tenant can quietly accumulate anonymous links, orphaned guest accounts, over-permissioned project sites, and content that Microsoft 365 Copilot can surface to users who technically have access but should not. This guide explains how SharePoint external sharing works, how to choose the right settings, and how to validate the configuration with PowerShell.</p>
 
       <h2>Admin checklist</h2>
+
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Review your current external sharing settings</strong>
+            <p>Go to SharePoint admin center > Sharing settings. Review current policy: unrestricted, specific domains only, or existing external users. Document baseline for compliance/audit.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Enable anonymous links for specific scenarios</strong>
+            <p>If business need exists, enable 'Anyone' links for low-risk content only. Set expiry (7-30 days typical). Always require password if business data is involved. Monitor usage via audit logs.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Configure permitted domains for guests</strong>
+            <p>If restricting to specific partners, go to Sharing > Limit external sharing by domain > add trusted partner domains to allowlist. External users outside allowlist cannot access.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Set up a guest review process</strong>
+            <p>For highly regulated content: use Power Automate to notify admins when guests are added. Create a checklist for security review: confirm identity, verify business need, set access expiry dates.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Apply sensitivity labels to external-shared content</strong>
+            <p>Go to Sensitivity labels in SharePoint > assign 'Confidential' label to content shared externally. Labels restrict downstream sharing, enforce watermarks, and trigger notifications.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Monitor external sharing activity</strong>
+            <p>Set up audit logging for external user access. Review monthly: which guests accessed what content, duration, and whether access should be revoked. Remove guests who no longer need access.</p>
+          </div>
+        </li>
+      </ol>
+
+
       <ul>
         <li>Decide which site types may allow guests and which must remain internal-only.</li>
         <li>Set tenant sharing to the least permissive level that still supports business collaboration.</li>

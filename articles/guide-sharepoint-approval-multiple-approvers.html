@@ -294,6 +294,53 @@
 
       <h2>The Four Multi-Approver Patterns</h2>
 
+      <ol class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Set up your SharePoint list with approval columns</strong>
+            <p>Create a list with: Title, Requestor (person), Amount (number), Approval Status (choice: Pending/Approved/Rejected), Primary Approver (person), Secondary Approver (person). Test the column setup before building the flow.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Create a Power Automate flow triggered by new items</strong>
+            <p>Go to powerautomate.microsoft.com > Automate > Cloud flow > Automated. Trigger: 'When an item is created' in your list. Name: 'Multi-Approver Workflow'.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Send to primary approver for initial review</strong>
+            <p>Add action 'Send an approval request'. Set 'Assigned to' to the Primary Approver person field, include the request details, and wait for response. Capture approval response.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Route to secondary approver if amount exceeds threshold</strong>
+            <p>Add Condition: if Amount > [threshold], send approval request to Secondary Approver; otherwise, skip. Both approvers must approve before marking complete.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Update list status based on approvals</strong>
+            <p>Add 'Update item' action to set Approval Status = 'Approved' if both approved, or 'Rejected' if either declines. Include rejection reason if provided.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">6</div>
+          <div class="art-step-body">
+            <strong>Notify requestor of outcome</strong>
+            <p>Add 'Send an email' action to the requestor with outcome. Include approval chain summary, final status, and next steps (e.g., 'Your request has been approved and will be processed').</p>
+          </div>
+        </li>
+      </ol>
+
+
+
       <div class="art-table-wrap">
         <table class="art-table">
           <thead>
