@@ -223,12 +223,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://oceancloudconsults.com/mc/MC1186374.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://oceancloudconsults.com/mc/MC1189000.html</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
@@ -243,12 +237,6 @@
   <url>
     <loc>https://oceancloudconsults.com/mc/MC1148545.html</loc>
     <lastmod>2026-05-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oceancloudconsults.com/mc/MC1129718.html</loc>
-    <lastmod>2026-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -433,6 +421,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://oceancloudconsults.com/mc/MC1220762.html</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/mc/MC1220751.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://oceancloudconsults.com/mc/MC1218421.html</loc>
     <lastmod>2026-01-16</lastmod>
     <changefreq>daily</changefreq>
@@ -597,12 +597,6 @@
   <url>
     <loc>https://oceancloudconsults.com/mc/MC1024387.html</loc>
     <lastmod>2025-03-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oceancloudconsults.com/mc/MC1220751.html</loc>
-    <lastmod>2026-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
