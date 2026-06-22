@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "title": "Microsoft Viva: Create and customize PBI reports",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566317",
+      "date_friendly": "June 19, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-viva-create-and-customize-pbi-reports"
+    },
+    {
+      "title": "Microsoft Viva: Copilot Analytics - Insights in Cowork and WorkIQ spend and usage",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566302",
+      "date_friendly": "June 19, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-viva-copilot-analytics-insights-in-cowork-and-work"
+    },
+    {
       "title": "Microsoft Purview: Data Lifecycle Management - Adaptive Protection integration with Data Lifecycle Management",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566324",
       "date_friendly": "June 18, 2026",
@@ -779,6 +799,26 @@
       "article_slug": "news-2026-04-microsoft-teams-facilitator-detects-and-answers-questions"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Create Excel spreadsheets from Copilot Notebooks",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559480",
+      "date_friendly": "March 30, 2026",
+      "month_sort": "2026-03",
+      "month_label": "March 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-03-microsoft-copilot-microsoft-365-create-excel-spreadsheets-fr"
+    },
+    {
+      "title": "Microsoft Teams: Enhanced cross-platform join via SIP for Teams Rooms on Android",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558539",
+      "date_friendly": "March 27, 2026",
+      "month_sort": "2026-03",
+      "month_label": "March 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-03-microsoft-teams-enhanced-cross-platform-join-via-sip-for-tea"
+    },
+    {
       "title": "Microsoft Copilot (Microsoft 365): Mind Maps in Copilot Notebooks",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559029",
       "date_friendly": "March 24, 2026",
@@ -829,5 +869,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-19"
+  "last_updated": "2026-06-22"
 }
