@@ -1,5 +1,23 @@
 [
   {
+    "url": "https://oceancloudconsults.com/articles/guide-computer-using-agents-rpa-automation",
+    "status": 200,
+    "response": {
+      "urlNotificationMetadata": {
+        "url": "https://oceancloudconsults.com/articles/guide-computer-using-agents-rpa-automation"
+      }
+    }
+  },
+  {
+    "url": "https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows",
+    "status": 200,
+    "response": {
+      "urlNotificationMetadata": {
+        "url": "https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows"
+      }
+    }
+  },
+  {
     "url": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents",
     "status": 200,
     "response": {
@@ -77,6 +95,15 @@
     "response": {
       "urlNotificationMetadata": {
         "url": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
+      }
+    }
+  },
+  {
+    "url": "https://oceancloudconsults.com/articles/guide-scout-adoption-governance",
+    "status": 200,
+    "response": {
+      "urlNotificationMetadata": {
+        "url": "https://oceancloudconsults.com/articles/guide-scout-adoption-governance"
       }
     }
   },
@@ -248,6 +275,24 @@
     "response": {
       "urlNotificationMetadata": {
         "url": "https://oceancloudconsults.com/articles/guide-teams-automation"
+      }
+    }
+  },
+  {
+    "url": "https://oceancloudconsults.com/articles/guide-teams-phone-agents-custom-voice",
+    "status": 200,
+    "response": {
+      "urlNotificationMetadata": {
+        "url": "https://oceancloudconsults.com/articles/guide-teams-phone-agents-custom-voice"
+      }
+    }
+  },
+  {
+    "url": "https://oceancloudconsults.com/articles/guide-work-iq-apis-organization-insights",
+    "status": 200,
+    "response": {
+      "urlNotificationMetadata": {
+        "url": "https://oceancloudconsults.com/articles/guide-work-iq-apis-organization-insights"
       }
     }
   }

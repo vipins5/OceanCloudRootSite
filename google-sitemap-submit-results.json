@@ -1,0 +1,26 @@
+[
+  {
+    "property": "sc-domain:oceancloudconsults.com",
+    "sitemap": "https://oceancloudconsults.com/sitemap-index.xml",
+    "status": 204,
+    "response": ""
+  },
+  {
+    "property": "sc-domain:oceancloudconsults.com",
+    "sitemap": "https://oceancloudconsults.com/sitemap.xml",
+    "status": 204,
+    "response": ""
+  },
+  {
+    "property": "sc-domain:oceancloudconsults.com",
+    "sitemap": "https://oceancloudconsults.com/sitemap-guides.xml",
+    "status": 204,
+    "response": ""
+  },
+  {
+    "property": "sc-domain:oceancloudconsults.com",
+    "sitemap": "https://oceancloudconsults.com/sitemap-mc.xml",
+    "status": 204,
+    "response": ""
+  }
+]
