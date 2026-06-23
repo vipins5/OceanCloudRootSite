@@ -11,7 +11,7 @@
 		<copyright>Copyright 2026 OceanCloud LLC</copyright>
 		<managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
 		<webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
-		<lastBuildDate>Fri, 05 Jun 2026 00:30:00 +0000</lastBuildDate>
+		<lastBuildDate>Tue, 23 Jun 2026 00:00:00 +0000</lastBuildDate>
 		<ttl>1440</ttl>
 		<image>
 			<url>https://oceancloudconsults.com/assets/og-home.jpg</url>
@@ -185,6 +185,61 @@
 		</item>
 
 		<!-- ═══ Evergreen guides & tutorials ═══ -->
+
+		<item>
+			<title>Implementing Copilot Cowork for Multi-Team Workflows</title>
+			<link>https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows</guid>
+			<pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[Practical Copilot Cowork rollout guidance for multi-team work, approvals, ownership, reviewer lists, scheduled prompts, and billing guardrails.]]></description>
+		</item>
+
+		<item>
+			<title>Microsoft Scout Adoption and Governance Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-scout-adoption-governance</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-scout-adoption-governance</guid>
+			<pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[Controlled Microsoft Scout Frontier preview rollout guidance for admin access, Intune deployment, permissions, support, monitoring, and policy language.]]></description>
+		</item>
+
+		<item>
+			<title>Work IQ APIs and Organization Insights Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-work-iq-apis-organization-insights</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-work-iq-apis-organization-insights</guid>
+			<pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Copilot</category>
+			<description><![CDATA[Work IQ API planning for Microsoft 365 agents, A2A, MCP, REST access, privacy review, aggregate insights, and Copilot Credits.]]></description>
+		</item>
+
+		<item>
+			<title>Teams Phone Agents and Custom Voice AI Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-teams-phone-agents-custom-voice</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-teams-phone-agents-custom-voice</guid>
+			<pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Teams</category>
+			<description><![CDATA[Voice-agent planning for Teams Phone extensibility, Copilot Studio, Azure Communication Services, Dynamics 365 Contact Center, and Azure AI Speech.]]></description>
+		</item>
+
+		<item>
+			<title>Computer-Using Agents and RPA Automation Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-computer-using-agents-rpa-automation</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-computer-using-agents-rpa-automation</guid>
+			<pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Power Platform</category>
+			<description><![CDATA[Copilot Studio computer-use guidance for managed machines, credentials, supervision, desktop automation, web workflows, and RPA guardrails.]]></description>
+		</item>
 
 		<item>
 			<title>PowerShell Script to Create Self-Signed Certificate for Entra App Registration</title>

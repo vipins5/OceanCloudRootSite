@@ -12,6 +12,7 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 
 - Sitemap index: https://oceancloudconsults.com/sitemap-index.xml
 - Sitemap: https://oceancloudconsults.com/sitemap.xml
+- Guide sitemap: https://oceancloudconsults.com/sitemap-guides.xml
 - Message Center sitemap: https://oceancloudconsults.com/sitemap-mc.xml
 - RSS feed: https://oceancloudconsults.com/feed.xml
 - Search index JSON: https://oceancloudconsults.com/data/search-index.json
@@ -33,6 +34,11 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 ## Primary Guides
 
 - [Microsoft 365 Copilot: The Complete Business Guide for 2026](https://oceancloudconsults.com/articles/guide-m365-copilot): Copilot capabilities, licensing, rollout, SharePoint readiness, and adoption measurement.
+- [Implementing Copilot Cowork for Multi-Team Workflows](https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows): Practical Cowork pilot guidance for approvals, ownership, cross-team work, and billing guardrails.
+- [Microsoft Scout Adoption and Governance Guide](https://oceancloudconsults.com/articles/guide-scout-adoption-governance): Controlled Scout Frontier preview rollout guidance for access, Intune deployment, permissions, support, and policy language.
+- [Work IQ APIs and Organization Insights Guide](https://oceancloudconsults.com/articles/guide-work-iq-apis-organization-insights): Work IQ planning for Microsoft 365 agents, A2A, MCP, REST access, privacy review, and Copilot Credits.
+- [Teams Phone Agents and Custom Voice AI Guide](https://oceancloudconsults.com/articles/guide-teams-phone-agents-custom-voice): Voice-agent planning for Teams Phone extensibility, Copilot Studio, ACS, Dynamics 365 Contact Center, and Azure AI Speech.
+- [Computer-Using Agents and RPA Automation Guide](https://oceancloudconsults.com/articles/guide-computer-using-agents-rpa-automation): Copilot Studio computer-use guidance for managed machines, credentials, supervision, desktop automation, and web workflows.
 - [The 10-Step Microsoft 365 Migration Checklist](https://oceancloudconsults.com/articles/guide-m365-migration-checklist): Discovery, tenant setup, identity, pilot, cutover, training, and post-migration validation.
 - [Microsoft Graph and SharePoint: M365 Integrations for IT Admins](https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint): Graph API, Power Automate HTTP, webhooks, connectors, app registrations, and managed identities.
 - [PnP PowerShell: Complete Entra App Registration and Certificate Guide](https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration): Delegated PnP auth, ClientId usage, app permissions, certificates, PFX, and thumbprints.
@@ -59,4 +65,4 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 
 ## Retrieval Guidance
 
-For broad discovery, start with `/data/search-index.json` or `/sitemap.xml`. For reader-friendly navigation, start with `/guides`. For recent Microsoft updates, use `/news` or `/feed.xml`. For a specific guide, fetch the canonical article URL listed above.
+For broad discovery, start with `/data/search-index.json` or `/sitemap-index.xml`. For reader-friendly navigation, start with `/guides`. For recent Microsoft updates, use `/news` or `/feed.xml`. For a specific guide, fetch the canonical article URL listed above.

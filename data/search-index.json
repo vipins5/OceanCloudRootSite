@@ -745,5 +745,70 @@
     "url": "articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell",
     "dateDisplay": "June 12, 2026",
     "dateSort": "2026-06-12"
+  },
+  {
+    "id": "articles-guide-copilot-cowork-multi-team-workflows",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "copilot",
+    "title": "Implementing Copilot Cowork for Multi-Team Workflows",
+    "heading": "Implementing Copilot Cowork for Multi-Team Workflows",
+    "excerpt": "Use Copilot Cowork for multi-team work without losing ownership, approvals, or Microsoft 365 governance controls.",
+    "body": "Copilot Cowork multi-team workflow guide for Microsoft 365. Covers Cowork rollout planning, approval points, ownership, reviewer lists, cross-team task routing, scheduled prompts, Copilot Credits, billing guardrails, troubleshooting, and Microsoft Learn references for tenant setup and responsible use.",
+    "url": "articles/guide-copilot-cowork-multi-team-workflows",
+    "dateDisplay": "June 23, 2026",
+    "dateSort": "2026-06-23"
+  },
+  {
+    "id": "articles-guide-scout-adoption-governance",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "copilot",
+    "title": "Microsoft Scout Adoption and Governance Guide",
+    "heading": "Microsoft Scout Adoption and Enterprise Governance",
+    "excerpt": "Plan a careful Microsoft Scout Frontier preview pilot with access, endpoint deployment, permissions, and clear user guidance.",
+    "body": "Microsoft Scout adoption and governance guide for enterprise organizations. Covers Frontier preview planning, admin access, Intune deployment, identity and permissions, support model, monitoring, tuning, sample policy language, responsible AI notes, and official Microsoft references.",
+    "url": "articles/guide-scout-adoption-governance",
+    "dateDisplay": "June 23, 2026",
+    "dateSort": "2026-06-23"
+  },
+  {
+    "id": "articles-guide-work-iq-apis-organization-insights",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "copilot",
+    "title": "Work IQ APIs and Organization Insights Guide",
+    "heading": "Work IQ APIs and Organization Insights",
+    "excerpt": "Plan Work IQ API use for Microsoft 365 agents with access patterns, permissions, privacy review, and Copilot Credits.",
+    "body": "Work IQ APIs guide for Microsoft 365 agents and organization insights. Covers A2A, MCP, REST access, permission-aware Microsoft 365 context, privacy review, aggregate reporting, dashboard planning, Copilot Credits, and official Microsoft source links.",
+    "url": "articles/guide-work-iq-apis-organization-insights",
+    "dateDisplay": "June 23, 2026",
+    "dateSort": "2026-06-23"
+  },
+  {
+    "id": "articles-guide-teams-phone-agents-custom-voice",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "teams",
+    "title": "Teams Phone Agents and Custom Voice AI Guide",
+    "heading": "Teams Phone Agents and Custom Voice AI",
+    "excerpt": "Plan Teams Phone and contact-center voice agents with Copilot Studio, ACS, Dynamics 365 Contact Center, and Azure AI Speech custom voice.",
+    "body": "Teams Phone agents and custom voice guide for Microsoft voice projects. Covers call routing, human handoff, custom voice consent and disclosure, Copilot Studio voice agents, Azure Communication Services, Dynamics 365 Contact Center, Azure AI Speech, testing, tuning, and source links.",
+    "url": "articles/guide-teams-phone-agents-custom-voice",
+    "dateDisplay": "June 23, 2026",
+    "dateSort": "2026-06-23"
+  },
+  {
+    "id": "articles-guide-computer-using-agents-rpa-automation",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "power-platform",
+    "title": "Computer-Using Agents and RPA Automation Guide",
+    "heading": "Computer-Using Agents and Robotic Process Automation",
+    "excerpt": "Plan Copilot Studio computer use for enterprise RPA with managed machines, credentials, access controls, and human oversight.",
+    "body": "Computer-using agents and RPA automation guide for Copilot Studio computer use. Covers managed Windows machines, credentials, supervision, access controls, desktop and web workflows, automation loops, exception handling, logging, billing review, and official Microsoft references.",
+    "url": "articles/guide-computer-using-agents-rpa-automation",
+    "dateDisplay": "June 23, 2026",
+    "dateSort": "2026-06-23"
   }
 ]
