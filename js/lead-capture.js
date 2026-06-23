@@ -7,7 +7,7 @@ const LeadCapture = {
   // Configuration
   apiBaseUrl: window.location.hostname === 'localhost' 
     ? 'http://localhost:5000' 
-    : `https://${window.location.hostname}/api`,
+    : '',
   
   /**
    * Submit lead magnet form

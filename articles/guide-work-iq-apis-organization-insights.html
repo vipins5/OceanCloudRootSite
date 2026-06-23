@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work IQ APIs and Organization Insights Guide | OceanCloud</title>
+    <meta name="description" content="Understand organizational work patterns with Work IQ APIs. Enterprise analytics for productivity, collaboration patterns, and workplace insights with Microsoft 365.">
+    <meta name="keywords" content="Work IQ APIs, Microsoft 365 analytics, organization insights, workplace productivity, collaboration analytics">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://oceancloud.com/articles/guide-work-iq-apis-organization-insights.html">
+    <meta property="og:title" content="Work IQ APIs and Organization Insights Guide">
+    <meta property="og:description" content="Understand organizational work patterns with Work IQ APIs. Enterprise analytics for productivity, collaboration patterns, and workplace insights.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oceancloud.com/articles/guide-work-iq-apis-organization-insights.html">
+    <meta property="og:image" content="https://oceancloud.com/assets/og-work-iq.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Work IQ APIs and Organization Insights Guide">
+    <meta name="twitter:description" content="Enterprise analytics for understanding organizational work patterns and collaboration insights.">
+    <meta name="twitter:image" content="https://oceancloud.com/assets/og-work-iq.jpg">
+    <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+    <script src="../js/consent.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/main.js"></script>
+    <script src="../js/chat.js"></script>
+    <script src="../js/particles.js"></script>
+    <script src="../js/weather.js"></script>
+    <script src="../js/article.js"></script>
+    <script src="../js/comments.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Work IQ APIs and Organization Insights</h1>
+        <p class="subtitle">Enterprise Analytics for Understanding Workplace Collaboration Patterns</p>
+    </header>
+
+    <nav class="breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../guides.html">Guides</a> / Work IQ APIs
+    </nav>
+
+    <main class="guide-content">
+        <section class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#what-are-work-iq-apis">What Are Work IQ APIs?</a></li>
+                <li><a href="#business-value">Business Value and Use Cases</a></li>
+                <li><a href="#capabilities">Core Capabilities</a></li>
+                <li><a href="#architecture">Integration Architecture</a></li>
+                <li><a href="#implementation">Getting Started with Work IQ APIs</a></li>
+                <li><a href="#reporting">Building Insights Dashboards</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </section>
+
+        <section id="what-are-work-iq-apis">
+            <h2>What Are Work IQ APIs?</h2>
+            <p>Work IQ APIs provide programmatic access to organizational collaboration and productivity insights from Microsoft 365. These APIs give enterprise administrators and developers visibility into how teams communicate, collaborate, and work together across the organization.</p>
+            <p><strong>Key differentiator:</strong> Work IQ APIs don't track individual behavior — they aggregate patterns at the team and department level, enabling organizational insights while maintaining privacy.</p>
+        </section>
+
+        <section id="business-value">
+            <h2>Business Value and Use Cases</h2>
+            <div class="use-case-cards">
+                <div class="use-case">
+                    <h3>📊 Workforce Analytics</h3>
+                    <p>Understand collaboration patterns, communication frequency, and cross-team interactions. Identify silos, bottlenecks, and high-collaboration teams. Measure remote work trends and hybrid flexibility.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🎯 Organization Health Monitoring</h3>
+                    <p>Track organizational health metrics: collaboration health scores, team engagement levels, communication quality, and knowledge sharing patterns. Detect organizational stress or disconnection early.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🤝 Cross-Functional Alignment</h3>
+                    <p>Measure inter-departmental collaboration. Identify which departments collaborate most effectively. Support merger integration by monitoring cultural alignment and team integration.</p>
+                </div>
+                <div class="use-case">
+                    <h3>💡 Innovation and Productivity Insights</h3>
+                    <p>Correlate collaboration patterns with project outcomes. Understand what communication patterns correlate with successful projects. Identify high-productivity team structures.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🔄 Change Management</h3>
+                    <p>Measure adoption of new tools and processes. Track communication pattern changes during organizational transitions. Quantify impact of restructures and team formations.</p>
+                </div>
+                <div class="use-case">
+                    <h3>📈 Capacity Planning</h3>
+                    <p>Understand workload distribution across teams. Identify bottleneck roles and overloaded departments. Plan hiring and resource allocation based on collaboration demand.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="capabilities">
+            <h2>Core Capabilities</h2>
+            <h3>Collaboration Metrics API</h3>
+            <ul>
+                <li><strong>Inter-team interaction frequency:</strong> How often teams communicate with each other</li>
+                <li><strong>Communication channels:</strong> Email, Teams chat, meetings — relative usage patterns</li>
+                <li><strong>Response time analytics:</strong> Average time-to-response by department and role</li>
+                <li><strong>Meeting patterns:</strong> Meeting frequency, attendee diversity, meeting efficiency scores</li>
+                <li><strong>Network density:</strong> How interconnected teams are (collaboration graph analysis)</li>
+            </ul>
+
+            <h3>Productivity Insights API</h3>
+            <ul>
+                <li><strong>After-hours work patterns:</strong> Trend analysis for off-hours activity (anonymized)</li>
+                <li><strong>Focus time analysis:</strong> Time spent in uninterrupted work vs. meeting time</li>
+                <li><strong>Meeting load by role:</strong> Which roles are over-burdened with meetings</li>
+                <li><strong>Collaboration vs. individual work:</strong> Balance across teams and departments</li>
+                <li><strong>Communication effectiveness:</strong> Meeting-to-outcome ratios, decision-velocity metrics</li>
+            </ul>
+
+            <h3>Organization Network API</h3>
+            <ul>
+                <li><strong>Organization structure visualization:</strong> Collaboration-based org chart (vs. formal hierarchy)</li>
+                <li><strong>Influencer identification:</strong> Who are key connectors across teams?</li>
+                <li><strong>Silos detection:</strong> Which departments collaborate least with others</li>
+                <li><strong>Cross-functional collaboration scoring:</strong> Health of cross-team initiatives</li>
+                <li><strong>New hire integration tracking:</strong> How quickly new employees integrate into collaboration networks</li>
+            </ul>
+        </section>
+
+        <section id="architecture">
+            <h2>Integration Architecture</h2>
+            <p>Work IQ APIs integrate with existing Microsoft 365 data:</p>
+            <pre><code>
+Microsoft 365 Data Sources (Teams, Outlook, SharePoint)
+            ↓
+Work IQ Aggregation Engine (Privacy-preserving)
+            ↓
+Work IQ APIs (REST endpoints)
+            ↓
+Your Analytics Platform (Power BI, Tableau, Databox, etc.)
+            ↓
+Executive Dashboards & Insights
+            </code></pre>
+
+            <h3>Data Privacy & Compliance</h3>
+            <ul>
+                <li><strong>Individual privacy:</strong> APIs never return individual-level data — only aggregated team/department metrics</li>
+                <li><strong>Opt-out controls:</strong> Users can opt-out of collaboration analytics collection</li>
+                <li><strong>Compliance-ready:</strong> Designed for GDPR, HIPAA, FedRAMP, SOC2 compliance</li>
+                <li><strong>No content access:</strong> APIs only access metadata (who communicated with whom, how often) — never message content</li>
+                <li><strong>Audit logging:</strong> All Work IQ API access is logged for compliance audits</li>
+            </ul>
+        </section>
+
+        <section id="implementation">
+            <h2>Getting Started with Work IQ APIs</h2>
+            <h3>Step 1: Prerequisites & Permissions</h3>
+            <ul>
+                <li>Microsoft 365 E5 or equivalent license (required for advanced analytics APIs)</li>
+                <li>Global Administrator or Reports Reader role</li>
+                <li>Work IQ APIs enabled in your tenant (enabled by default for E5 customers)</li>
+                <li>Third-party app access allowed in your organization</li>
+            </ul>
+
+            <h3>Step 2: Register Your Application</h3>
+            <ol>
+                <li>Go to Azure AD App Registrations</li>
+                <li>Create new app registration</li>
+                <li>Add API permission: Microsoft Graph → Reports.Read.All (or InsightsWorkIQ.Read.All)</li>
+                <li>Generate client secret or certificate</li>
+                <li>Grant admin consent</li>
+            </ol>
+
+            <h3>Step 3: Authenticate with Microsoft Graph</h3>
+            <pre><code>
+// OAuth 2.0 Client Credentials Flow
+POST https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+
+grant_type=client_credentials
+&client_id={your_app_id}
+&client_secret={your_secret}
+&scope=https://graph.microsoft.com/.default
+            </code></pre>
+
+            <h3>Step 4: Call Work IQ Endpoints</h3>
+            <pre><code>
+// Get organization collaboration insights
+GET https://graph.microsoft.com/beta/insights/organization/collaborationMetrics
+
+// Get team productivity metrics
+GET https://graph.microsoft.com/beta/insights/teams/{team-id}/productivity
+
+// Get department network analysis
+GET https://graph.microsoft.com/beta/insights/organization/networkAnalysis
+            </code></pre>
+        </section>
+
+        <section id="reporting">
+            <h2>Building Insights Dashboards</h2>
+            <p>Common dashboard approaches:</p>
+            <ul>
+                <li><strong>Executive Dashboard:</strong> Organization health scorecard, collaboration trends, top insights</li>
+                <li><strong>Department View:</strong> Department collaboration metrics, peer comparison, trends</li>
+                <li><strong>Manager Portal:</strong> Team collaboration health, meeting effectiveness, workload balance</li>
+                <li><strong>HR Insights:</strong> Remote work patterns, engagement trends, retention risk signals</li>
+                <li><strong>Change Management:</strong> Adoption metrics for new tools/processes, change readiness</li>
+                <li><strong>Custom Analytics:</strong> Correlate collaboration patterns with business outcomes (retention, productivity, revenue)</li>
+            </ul>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Start with ethical guidelines:</strong> Publish communication about organizational analytics before implementation</li>
+                <li><strong>Ensure transparency:</strong> Employees should understand what metrics are collected and why</li>
+                <li><strong>Respect privacy:</strong> Never use APIs to monitor individuals — only analyze aggregate patterns</li>
+                <li><strong>Act on insights:</strong> Use insights to improve culture, not punish low collaboration</li>
+                <li><strong>Provide context:</strong> Explain what metrics mean (e.g., high meetings ≠ low productivity)</li>
+                <li><strong>Include stakeholders:</strong> HR, Legal, and Employee representatives in planning</li>
+                <li><strong>Limit access:</strong> Only authorized users should have access to organizational insights</li>
+                <li><strong>Cache appropriately:</strong> APIs have rate limits — cache results, update daily rather than per-request</li>
+            </ul>
+        </section>
+
+        <section id="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>Will Work IQ APIs monitor individual employees?</h3>
+                <p>No. APIs only provide aggregated team and department level insights. Individual monitoring is not possible or recommended with these APIs. Privacy is built-in.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What's the pricing model?</h3>
+                <p>Work IQ APIs are included with Microsoft 365 E5 licenses at no additional cost. Lower license tiers don't have access.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How often is data updated?</h3>
+                <p>Most metrics are updated daily (non-real-time). Some near-real-time metrics available through premium endpoints.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I export historical data?</h3>
+                <p>APIs provide rolling 90-day historical data by default. Custom data retention can be configured for compliance.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do I ensure GDPR compliance?</h3>
+                <p>Work IQ APIs are GDPR-compliant by design (aggregate-only, no personal data). Still recommend documented legal basis and privacy statement.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I integrate with Power BI?</h3>
+                <p>Yes — Power BI has native Work IQ connector, or you can build custom connectors using the REST APIs.</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Learn More About Organization Insights</h2>
+            <p>Download our Work IQ analytics strategy guide and learn how to implement organizational insights responsibly.</p>
+            <a href="https://oceancloud.com/assets/lead-magnets/landing-work-iq-insights.html" class="cta-button">Get Organization Insights Playbook</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 OceanCloud. All rights reserved.</p>
+    </footer>
+</body>
+</html>

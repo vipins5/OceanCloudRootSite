@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer-Using Agents and Robotic Process Automation Guide | OceanCloud</title>
+    <meta name="description" content="Build Computer-Using Agents (AI that controls your computer) for enterprise automation. Deploy robotic process automation with multimodal AI to automate complex workflows without code.">
+    <meta name="keywords" content="Computer-Using Agents, RPA, robotic process automation, AI automation, Copilot Studio agents, workflow automation">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://oceancloud.com/articles/guide-computer-using-agents-rpa-automation.html">
+    <meta property="og:title" content="Computer-Using Agents and RPA Guide">
+    <meta property="og:description" content="Build Computer-Using Agents for enterprise RPA. Deploy AI agents that control your computer for complex workflow automation without code.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oceancloud.com/articles/guide-computer-using-agents-rpa-automation.html">
+    <meta property="og:image" content="https://oceancloud.com/assets/og-computer-agents.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Computer-Using Agents and RPA Guide">
+    <meta name="twitter:description" content="AI agents that control your computer for end-to-end workflow automation without APIs or custom code.">
+    <meta name="twitter:image" content="https://oceancloud.com/assets/og-computer-agents.jpg">
+    <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+    <script src="../js/consent.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/main.js"></script>
+    <script src="../js/chat.js"></script>
+    <script src="../js/particles.js"></script>
+    <script src="../js/weather.js"></script>
+    <script src="../js/article.js"></script>
+    <script src="../js/comments.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Computer-Using Agents and Robotic Process Automation</h1>
+        <p class="subtitle">Deploy AI Agents That Control Your Computer for End-to-End Automation</p>
+    </header>
+
+    <nav class="breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../guides.html">Guides</a> / Computer-Using Agents
+    </nav>
+
+    <main class="guide-content">
+        <section class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#what-are-cua">What Are Computer-Using Agents?</a></li>
+                <li><a href="#vs-traditional-rpa">vs. Traditional RPA (Key Differences)</a></li>
+                <li><a href="#capabilities">Agent Capabilities</a></li>
+                <li><a href="#use-cases">Real-World Use Cases</a></li>
+                <li><a href="#implementation">Implementation Approach</a></li>
+                <li><a href="#architecture">Technical Architecture</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </section>
+
+        <section id="what-are-cua">
+            <h2>What Are Computer-Using Agents?</h2>
+            <p>Computer-Using Agents (CUAs) are AI-powered bots that can see your screen and control your mouse and keyboard. Unlike traditional APIs or integrations, CUAs work with ANY application — web, desktop, legacy, cloud — without requiring custom connectors.</p>
+            <p><strong>Key innovation:</strong> Multimodal AI (vision + language) allows agents to understand UI context and make intelligent decisions about what to click, type, or navigate.</p>
+        </section>
+
+        <section id="vs-traditional-rpa">
+            <h2>vs. Traditional RPA: Key Differences</h2>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Traditional RPA</th>
+                    <th>Computer-Using Agents</th>
+                </tr>
+                <tr>
+                    <td><strong>Adaptation</strong></td>
+                    <td>Breaks if UI changes; needs code updates</td>
+                    <td>Adapts to UI changes automatically; vision-based</td>
+                </tr>
+                <tr>
+                    <td><strong>Setup Time</strong></td>
+                    <td>Weeks of development per process</td>
+                    <td>Hours to days (record → train → deploy)</td>
+                </tr>
+                <tr>
+                    <td><strong>App Support</strong></td>
+                    <td>Only apps with available APIs/connectors</td>
+                    <td>Any app (legacy, web, desktop, cloud)</td>
+                </tr>
+                <tr>
+                    <td><strong>Decision Making</strong></td>
+                    <td>Rule-based (if/then logic)</td>
+                    <td>AI-driven (understands context, makes smart decisions)</td>
+                </tr>
+                <tr>
+                    <td><strong>Error Handling</strong></td>
+                    <td>Requires explicit error handlers</td>
+                    <td>Agents reason through issues, retry intelligently</td>
+                </tr>
+                <tr>
+                    <td><strong>Skill Transfer</strong></td>
+                    <td>Requires RPA developer expertise</td>
+                    <td>Business users can create agents with AI guidance</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="capabilities">
+            <h2>Agent Capabilities</h2>
+            <ul>
+                <li><strong>Screen vision:</strong> Sees and understands any UI (buttons, forms, tables, charts)</li>
+                <li><strong>Click automation:</strong> Intelligently clicks UI elements based on context</li>
+                <li><strong>Text input:</strong> Types data, fills forms, searches</li>
+                <li><strong>Data extraction:</strong> Reads tables, forms, reports; outputs structured data</li>
+                <li><strong>Conditional logic:</strong> Adapts behavior based on what's visible on screen</li>
+                <li><strong>Multi-step workflows:</strong> Handles complex processes spanning multiple applications</li>
+                <li><strong>Error recovery:</strong> Detects errors, retries, escalates if needed</li>
+                <li><strong>Documentation:</strong> Automatically generates workflow documentation as processes run</li>
+                <li><strong>Scheduling:</strong> Run on schedule, on-demand, or triggered by events</li>
+                <li><strong>Integration:</strong> Pass data between systems via APIs, databases, cloud storage</li>
+            </ul>
+        </section>
+
+        <section id="use-cases">
+            <h2>Real-World Use Cases</h2>
+            <h3>1. Data Entry & Form Filling</h3>
+            <p><strong>Process:</strong> Intake form → extract data → fill into CRM → verify in system<br>
+            <strong>Impact:</strong> 85% faster; eliminates manual data entry errors; 24/7 availability<br>
+            <strong>ROI:</strong> $300K+ annually (for team of 5 FTEs)</p>
+
+            <h3>2. Legacy System Integration</h3>
+            <p><strong>Process:</strong> Pull data from old mainframe system → transform → load into modern cloud app<br>
+            <strong>Challenge:</strong> No APIs available on legacy system<br>
+            <strong>Solution:</strong> CUA reads legacy terminal interface, navigates screens, extracts data, loads to cloud<br>
+            <strong>Result:</strong> Accelerates cloud migration without rewriting legacy system</p>
+
+            <h3>3. Finance & Accounting Automation</h3>
+            <p><strong>Process:</strong> Invoice received → extract line items → match to PO → approve/reject → post to GL<br>
+            <strong>Current state:</strong> Requires 3 FTEs for validation and data entry<br>
+            <strong>Automated:</strong> Agent handles 80% of cases; humans review exceptions<br>
+            <strong>Impact:</strong> Invoice processing time: 5 days → 2 hours; 60% cost reduction</p>
+
+            <h3>4. Customer Service Workflows</h3>
+            <p><strong>Process:</strong> Support ticket received → look up customer in CRM → check history → apply solution → document resolution<br>
+            <strong>Agent intelligence:</strong> Understands when to escalate vs. resolve autonomously<br>
+            <strong>Result:</strong> First-contact resolution rate increases 35%; average resolution time cut in half</p>
+
+            <h3>5. HR & Benefits Administration</h3>
+            <p><strong>Process:</strong> New hire onboarding → provision accounts → set up benefits → send welcome documentation<br>
+            <strong>Traditional:</strong> 3-5 days, multiple systems, manual coordination<br>
+            <strong>Automated:</strong> Completed in 30 minutes; all systems updated simultaneously<br>
+            <strong>Result:</strong> New hires productive on day 1; 90% time savings</p>
+
+            <h3>6. Compliance & Audit Automation</h3>
+            <p><strong>Process:</strong> Monthly compliance check → audit all systems → generate report → flag exceptions<br>
+            <strong>Agent benefit:</strong> Runs nightly, catches issues before auditors see them<br>
+            <strong>Result:</strong> Proactive compliance; reduced audit findings; audit cost reduced 40%</p>
+        </section>
+
+        <section id="implementation">
+            <h2>Implementation Approach</h2>
+            <h3>Phase 1: Process Assessment</h3>
+            <ul>
+                <li>Identify automation candidates (high-volume, repetitive, rule-based)</li>
+                <li>Map current process: inputs, steps, decisions, outputs</li>
+                <li>Estimate effort: complexity, systems involved, exception handling</li>
+                <li>Calculate ROI: time savings × labor cost + accuracy improvements</li>
+            </ul>
+
+            <h3>Phase 2: Agent Design & Training</h3>
+            <ol>
+                <li>Open Copilot Studio → Create new Computer-Using Agent</li>
+                <li>Record process walkthrough (agent learns by watching)</li>
+                <li>Agent observes you: opening apps, clicking, typing, decision points</li>
+                <li>Refine agent logic: teach edge cases and exception handling</li>
+                <li>Configure input/output: what data triggers the agent, where results go</li>
+            </ol>
+
+            <h3>Phase 3: Testing & Refinement</h3>
+            <ul>
+                <li>Test with sample data: happy path, edge cases, error scenarios</li>
+                <li>Agent learns from feedback: "this was correct" / "this was wrong"</li>
+                <li>Refine error handling: teach agent how to recover from common failures</li>
+                <li>Performance optimization: agent learns faster paths, fewer retries</li>
+            </ul>
+
+            <h3>Phase 4: Pilot & Production</h3>
+            <ul>
+                <li>Pilot with small volume (10% of daily work)</li>
+                <li>Monitor accuracy, speed, escalation rate</li>
+                <li>Gather feedback from process owners</li>
+                <li>Scale to full volume once confidence is high</li>
+                <li>Establish ongoing monitoring & refinement</li>
+            </ul>
+        </section>
+
+        <section id="architecture">
+            <h2>Technical Architecture</h2>
+            <pre><code>
+Event Trigger (Schedule, API call, email, etc.)
+            ↓
+Copilot Studio Agent
+   ├─ Vision Module: Reads current screen
+   ├─ Understanding: Interprets UI, identifies elements
+   ├─ Decision Engine: Determines next action
+   ├─ Action Executor: Clicks, types, navigates
+   └─ Error Handler: Detects/recovers from failures
+            ↓
+Application 1 (Desktop/Web/Legacy)
+Application 2 (Cloud SaaS)
+Application 3 (Database)
+            ↓
+Data Output
+   ├─ Results logged in audit trail
+   ├─ Data stored in cloud database
+   ├─ Results sent via API/email
+   └─ Dashboard updated
+            </code></pre>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Start with high-volume processes:</strong> Greater ROI on agent development investment</li>
+                <li><strong>Focus on stable workflows:</strong> Avoid processes that change frequently</li>
+                <li><strong>Build in human oversight:</strong> Agent escalates exceptions to humans; don't assume 100% accuracy</li>
+                <li><strong>Document everything:</strong> Agent auto-generates logs; use for compliance, troubleshooting, training</li>
+                <li><strong>Plan for scale:</strong> One agent instance vs. multiple concurrent agents depending on volume</li>
+                <li><strong>Monitor continuously:</strong> Accuracy, speed, failure rate; refine agent weekly</li>
+                <li><strong>Version control:</strong> Keep history of agent versions; easy rollback if needed</li>
+                <li><strong>Security:</strong> Agents authenticate with service accounts; credentials encrypted; audit all actions</li>
+                <li><strong>Data privacy:</strong> Agents don't store personal data; comply with GDPR, HIPAA as needed</li>
+                <li><strong>Change management:</strong> When app UI changes, agent adapts; test before full rollout</li>
+            </ul>
+        </section>
+
+        <section id="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>What if the application UI changes?</h3>
+                <p>Agent adapts automatically using vision-based approach. No code updates needed. Agent re-learns new UI layout and continues working.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can agents work across multiple applications?</h3>
+                <p>Yes — a single agent can open App A, extract data, switch to App B, paste data, run query in App C, all in one workflow.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What's the accuracy rate?</h3>
+                <p>Typical accuracy is 95-99% after proper training. Edge cases and exceptions should still be reviewed by humans.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does the computer need to be running?</h3>
+                <p>Agent runs on Azure-hosted virtual machine. Your local computer doesn't need to be on. Scalable across many concurrent instances.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How long does it take to build an agent?</h3>
+                <p>Simple processes: 2-4 hours. Complex multi-system workflows: 1-2 weeks. Much faster than traditional RPA (weeks to months).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What about security and compliance?</h3>
+                <p>Agents run with encrypted service account credentials. All actions logged for audit trails. Compliant with SOC2, HIPAA, GDPR, FedRAMP.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can agents make judgment calls?</h3>
+                <p>Yes — agent can be trained on decision rules. If confidence is low, agent escalates to human for review rather than guessing.</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Automate Your Workflows?</h2>
+            <p>Download our RPA and Computer-Using Agent implementation guide with case studies and ROI calculator.</p>
+            <a href="https://oceancloud.com/assets/lead-magnets/landing-computer-agents.html" class="cta-button">Get RPA Implementation Guide</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 OceanCloud. All rights reserved.</p>
+    </footer>
+</body>
+</html>

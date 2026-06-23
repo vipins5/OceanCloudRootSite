@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import logging
+from dotenv import load_dotenv
 
 # Configure logging
 logging.basicConfig(
@@ -20,6 +21,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+
+# Load environment variables from .env when present
+load_dotenv()
 
 # ════════════════════════════════════════════════════════════
 # CONFIGURATION

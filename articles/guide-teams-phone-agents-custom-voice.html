@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams Phone Agents and Custom Voice Guide | OceanCloud</title>
+    <meta name="description" content="Build AI-powered phone agents in Microsoft Teams with custom voice capabilities. Deploy Copilot Studio agents for customer service, support, and automated calling workflows.">
+    <meta name="keywords" content="Teams phone agents, Copilot Studio, custom voice agents, AI customer service, Microsoft Teams calling">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://oceancloud.com/articles/guide-teams-phone-agents-custom-voice.html">
+    <meta property="og:title" content="Teams Phone Agents and Custom Voice Guide">
+    <meta property="og:description" content="Build AI-powered phone agents in Microsoft Teams with custom voice. Deploy Copilot Studio agents for customer service automation.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oceancloud.com/articles/guide-teams-phone-agents-custom-voice.html">
+    <meta property="og:image" content="https://oceancloud.com/assets/og-teams-phone.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Teams Phone Agents and Custom Voice Guide">
+    <meta name="twitter:description" content="AI-powered phone agents in Teams with custom voice for customer service automation.">
+    <meta name="twitter:image" content="https://oceancloud.com/assets/og-teams-phone.jpg">
+    <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+    <script src="../js/consent.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/main.js"></script>
+    <script src="../js/chat.js"></script>
+    <script src="../js/particles.js"></script>
+    <script src="../js/weather.js"></script>
+    <script src="../js/article.js"></script>
+    <script src="../js/comments.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Teams Phone Agents and Custom Voice AI</h1>
+        <p class="subtitle">Deploy AI-Powered Phone Agents with Custom Voice for Customer Service</p>
+    </header>
+
+    <nav class="breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../guides.html">Guides</a> / Teams Phone Agents
+    </nav>
+
+    <main class="guide-content">
+        <section class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#what-are-teams-phone-agents">What Are Teams Phone Agents?</a></li>
+                <li><a href="#use-cases">Real-World Use Cases</a></li>
+                <li><a href="#capabilities">Voice Agent Capabilities</a></li>
+                <li><a href="#custom-voice">Custom Voice Technology</a></li>
+                <li><a href="#architecture">Integration Architecture</a></li>
+                <li><a href="#deployment">Deployment Guide</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </section>
+
+        <section id="what-are-teams-phone-agents">
+            <h2>What Are Teams Phone Agents?</h2>
+            <p>Teams Phone Agents are AI-powered virtual agents built in Copilot Studio that can answer customer calls, handle support requests, and route calls intelligently within your organization. They use natural language understanding and Text-to-Speech with optional custom voice.</p>
+            <p><strong>Key capability:</strong> First phone call handled by AI agent → customer-relevant transfer to human agent → closed-loop automation.</p>
+        </section>
+
+        <section id="use-cases">
+            <h2>Real-World Use Cases</h2>
+            <h3>1. Customer Support Automation</h3>
+            <p><strong>Scenario:</strong> Help desk fielding support calls<br>
+            <strong>Agent flow:</strong> Customer calls → AI agent asks about issue category → agent provides FAQ or troubleshooting → escalates complex issues to human agent<br>
+            <strong>Result:</strong> 60-70% of calls handled without human intervention; average handle time reduced by 50%</p>
+
+            <h3>2. Appointment Scheduling</h3>
+            <p><strong>Scenario:</strong> Healthcare clinic or salon fielding appointment calls<br>
+            <strong>Agent flow:</strong> Caller → AI asks appointment type and availability → checks Calendar API → confirms or offers alternatives → sends confirmation via SMS<br>
+            <strong>Result:</strong> Eliminates manual appointment entry; 24/7 scheduling without staff</p>
+
+            <h3>3. Interactive Voice Response (IVR) Modernization</h3>
+            <p><strong>Scenario:</strong> Banks, insurance companies with legacy IVR systems<br>
+            <strong>Agent flow:</strong> Natural language understood (not touchtone menus) → account lookup via API → balance inquiries, payment setup, fraud alerts<br>
+            <strong>Result:</strong> Customer satisfaction increases 40%; reduces training time for employees</p>
+
+            <h3>4. Lead Qualification</h3>
+            <p><strong>Scenario:</strong> Sales teams qualifying inbound leads<br>
+            <strong>Agent flow:</strong> Prospect calls → AI qualifies fit, budget, timeline → logs in CRM → transfers to appropriate sales rep<br>
+            <strong>Result:</strong> Sales team only talks to qualified leads; no time wasted on cold calls</p>
+
+            <h3>5. Internal Helpdesk Triage</h3>
+            <p><strong>Scenario:</strong> Internal IT support<br>
+            <strong>Agent flow:</strong> Employee calls IT → agent troubleshoots common issues → creates tickets for complex problems → routes to specialist<br>
+            <strong>Result:</strong> Reduces IT support queue by 40%; employee satisfaction improves</p>
+        </section>
+
+        <section id="capabilities">
+            <h2>Voice Agent Capabilities</h2>
+            <ul>
+                <li><strong>Natural language understanding:</strong> Understands conversational speech (not menu-driven)</li>
+                <li><strong>Multi-turn conversations:</strong> Maintains context across multiple turns</li>
+                <li><strong>Knowledge integration:</strong> Can access FAQ databases, wikis, and knowledge bases</li>
+                <li><strong>API integration:</strong> Looks up customer account, CRM data, inventory via APIs</li>
+                <li><strong>Call routing:</strong> Intelligently transfers to human agent with context</li>
+                <li><strong>Custom prompts:</strong> Industry-specific language and greetings</li>
+                <li><strong>Sentiment analysis:</strong> Detects customer frustration, escalates automatically if needed</li>
+                <li><strong>Recording & compliance:</strong> Automatic call recording, transcription, audit logging</li>
+                <li><strong>Custom voice:</strong> Use your organization's branded voice instead of generic TTS</li>
+            </ul>
+        </section>
+
+        <section id="custom-voice">
+            <h2>Custom Voice Technology</h2>
+            <p>Custom voice (neural TTS) allows your agent to speak with a consistent, branded voice. Options:</p>
+            
+            <h3>Pre-built Neural Voices</h3>
+            <p>Microsoft provides 100+ high-quality neural voices in multiple languages. No setup required — choose and deploy.</p>
+
+            <h3>Custom Neural Voice (Premium)</h3>
+            <p>Record or synthesize a unique voice for your brand:</p>
+            <ol>
+                <li><strong>Voice talent selection:</strong> Choose professional voice actor (can be actual employee or hired talent)</li>
+                <li><strong>Recording sessions:</strong> Record 200+ phonetically-balanced sentences (~30-40 minutes total)</li>
+                <li><strong>Voice model training:</strong> Microsoft trains custom TTS model (48-72 hours)</li>
+                <li><strong>Deployment:</strong> Use custom voice in your agent with no code changes</li>
+                <li><strong>Fine-tuning:</strong> Adjust pronunciation, emphasis, speaking rate per sentence</li>
+            </ol>
+
+            <h3>Cost & Licensing</h3>
+            <ul>
+                <li><strong>Pre-built neural voices:</strong> Included with Teams Phone licensing</li>
+                <li><strong>Custom neural voice:</strong> $4,000-6,000 one-time setup + $10-25/month per voice</li>
+                <li><strong>Call minutes:</strong> $0.001-0.015 per minute (usage-based)</li>
+            </ul>
+        </section>
+
+        <section id="architecture">
+            <h2>Integration Architecture</h2>
+            <pre><code>
+Inbound Call (PSTN or Teams)
+            ↓
+Teams Phone System
+            ↓
+Copilot Studio Voice Agent
+   ├─ Speech-to-Text (Azure Cognitive Services)
+   ├─ Natural Language Understanding (Azure Language)
+   ├─ Agent Logic & Context Management
+   ├─ API Connectors (CRM, Calendar, Knowledge Base)
+   └─ Text-to-Speech (Custom or Pre-built Voice)
+            ↓
+Human Transfer (if needed)
+            ↓
+CRM Logging & Compliance Recording
+            </code></pre>
+        </section>
+
+        <section id="deployment">
+            <h2>Deployment Guide</h2>
+            <h3>Phase 1: Copilot Studio Agent Design</h3>
+            <ol>
+                <li>Open Copilot Studio (copilot.cloud.microsoft)</li>
+                <li>Create new agent → Select "Phone Agent" template</li>
+                <li>Define conversation flows (welcome, questions, routing, escalation)</li>
+                <li>Add API connections (CRM, KB, Calendar)</li>
+                <li>Configure custom voice or select pre-built neural voice</li>
+                <li>Test in Copilot Studio interface</li>
+            </ol>
+
+            <h3>Phase 2: Teams Phone Configuration</h3>
+            <ol>
+                <li>Assign phone number (using Teams Phone Standard or Premium)</li>
+                <li>Create call routing policy → Route inbound calls to agent</li>
+                <li>Configure hold music and on-hold messages</li>
+                <li>Set transfer destinations (departments, queues, individual users)</li>
+                <li>Enable call recording and compliance</li>
+            </ol>
+
+            <h3>Phase 3: Testing & Optimization</h3>
+            <ol>
+                <li>Place test calls, verify agent understanding</li>
+                <li>Test knowledge base integration</li>
+                <li>Test API lookups (CRM, calendar, inventory)</li>
+                <li>Simulate escalation scenarios</li>
+                <li>Review conversation logs, refine agent prompts</li>
+                <li>Optimize voice clarity and speaking rate</li>
+            </ol>
+
+            <h3>Phase 4: Pilot & Rollout</h3>
+            <ol>
+                <li>Pilot with sample of customers (internal calls first)</li>
+                <li>Monitor handle time, customer satisfaction, escalation rates</li>
+                <li>Gather feedback, refine workflows</li>
+                <li>Train team on escalation handoff process</li>
+                <li>Launch to production, monitor 24/7</li>
+            </ol>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Start narrow:</strong> Begin with high-volume, low-complexity calls (FAQ, account balance)</li>
+                <li><strong>Humanize escalation:</strong> When transferring to human, provide context so agent doesn't repeat customer's info</li>
+                <li><strong>Use conversational language:</strong> Avoid robotic tone — use contractions, natural phrasing</li>
+                <li><strong>Monitor sentiment:</strong> If customer is frustrated, escalate early rather than letting agent keep trying</li>
+                <li><strong>Provide opt-out:</strong> Always give customers option to speak to human agent immediately</li>
+                <li><strong>Regular retraining:</strong> Review logs weekly, update agent knowledge base, refine conversations</li>
+                <li><strong>Custom voice for brand consistency:</strong> If budget allows, custom voice increases perceived professionalism</li>
+                <li><strong>Compliance & recording:</strong> Ensure all calls recorded, compliant with state/regional laws</li>
+                <li><strong>Analytics dashboard:</strong> Track agent performance: resolution rate, escalation %, customer satisfaction</li>
+            </ul>
+        </section>
+
+        <section id="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>Will customers know they're talking to an AI?</h3>
+                <p>Depends on your choice. You can disclose upfront ("Thanks for calling, you're speaking with our AI assistant") or let them discover. Transparency is recommended.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What about accent and pronunciation?</h3>
+                <p>Pre-built neural voices have multiple accent options. Custom voice can be tailored to specific accent or dialect.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does this require Teams Phone Premium?</h3>
+                <p>Teams Phone Standard includes voice agents. Premium adds additional features like advanced routing and analytics.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can the agent handle multiple languages?</h3>
+                <p>Yes — agents can detect language, respond in customer's language, or transfer to multilingual human agent.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What about accessibility (hearing impaired)?</h3>
+                <p>Agents can be configured with real-time captioning, TTY support, and relay service integration.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How does handoff to human agent work?</h3>
+                <p>Agent logs conversation context (what was discussed, where customer got stuck) → transfers to queue → human agent sees full context in side panel</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Deploy Phone Agents?</h2>
+            <p>Download our phone agent deployment playbook and learn from real case studies.</p>
+            <a href="https://oceancloud.com/assets/lead-magnets/landing-teams-phone-agents.html" class="cta-button">Get Phone Agent Playbook</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 OceanCloud. All rights reserved.</p>
+    </footer>
+</body>
+</html>
