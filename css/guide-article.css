@@ -346,15 +346,6 @@
   text-decoration: none;
 }
 
-.guide-article-page > footer {
-  padding: 34px 20px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-2);
-  color: var(--text-dim);
-  font-size: .85rem;
-  text-align: center;
-}
-
 @media (min-width: 1280px) {
   .guide-article-page > header h1 {
     font-size: clamp(2.2rem, 2.65vw, 3.15rem);
