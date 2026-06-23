@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Microsoft Scout enterprise boundary diagram</title>
+  <desc id="desc">A diagram showing Microsoft Scout between the user desktop, Microsoft 365 data, local apps, Entra identity, Intune deployment, and audit controls.</desc>
+  <rect width="920" height="360" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Scout enterprise boundary model</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Govern Scout like an endpoint AI application with identity, deployment, data, and audit controls.</text>
+    <rect x="320" y="116" width="280" height="128" rx="18" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="3"/>
+    <text x="460" y="166" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Microsoft Scout</text>
+    <text x="460" y="194" text-anchor="middle" font-size="13" fill="#475569">desktop AI app</text>
+    <g fill="#ffffff" stroke="#94a3b8" stroke-width="1.5">
+      <rect x="58" y="116" width="158" height="72" rx="12"/>
+      <rect x="58" y="224" width="158" height="72" rx="12"/>
+      <rect x="704" y="72" width="158" height="72" rx="12"/>
+      <rect x="704" y="164" width="158" height="72" rx="12"/>
+      <rect x="704" y="256" width="158" height="72" rx="12"/>
+    </g>
+    <g fill="#0f172a" font-size="14" font-weight="700" text-anchor="middle">
+      <text x="137" y="146">User desktop</text><text x="137" y="167" font-size="12" font-weight="500">Windows or macOS</text>
+      <text x="137" y="254">Local apps</text><text x="137" y="275" font-size="12" font-weight="500">files and browser</text>
+      <text x="783" y="102">Entra ID</text><text x="783" y="123" font-size="12" font-weight="500">auth and access</text>
+      <text x="783" y="194">Intune</text><text x="783" y="215" font-size="12" font-weight="500">managed rollout</text>
+      <text x="783" y="286">Audit</text><text x="783" y="307" font-size="12" font-weight="500">review evidence</text>
+    </g>
+    <g stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M216 152 H320"/><path d="M216 260 C270 260 272 214 320 214"/>
+      <path d="M600 152 C648 104 660 108 704 108"/><path d="M600 180 H704"/><path d="M600 214 C648 300 660 292 704 292"/>
+    </g>
+    <g fill="#0284c7"><path d="M314 146l10 6-10 6z"/><path d="M314 208l10 6-10 6z"/><path d="M698 102l10 6-10 6z"/><path d="M698 174l10 6-10 6z"/><path d="M698 286l10 6-10 6z"/></g>
+  </g>
+</svg>

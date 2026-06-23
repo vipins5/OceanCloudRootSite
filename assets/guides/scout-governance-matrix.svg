@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+  <title id="title">Microsoft Scout governance matrix</title>
+  <desc id="desc">A matrix mapping Scout governance areas to identity, data, endpoint, audit, and responsible AI controls.</desc>
+  <rect width="920" height="390" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Scout governance control matrix</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Use policy gates before expanding Scout from pilot groups to enterprise-wide availability.</text>
+    <g fill="#e0f2fe"><rect x="44" y="112" width="832" height="42" rx="8"/></g>
+    <g fill="#0f172a" font-size="13" font-weight="700">
+      <text x="72" y="139">Control area</text><text x="250" y="139">Required policy</text><text x="475" y="139">Owner</text><text x="650" y="139">Evidence</text>
+    </g>
+    <g fill="#ffffff" stroke="#cbd5e1" stroke-width="1">
+      <rect x="44" y="164" width="832" height="42"/><rect x="44" y="206" width="832" height="42"/><rect x="44" y="248" width="832" height="42"/><rect x="44" y="290" width="832" height="42"/>
+    </g>
+    <g fill="#334155" font-size="13">
+      <text x="72" y="190">Identity</text><text x="250" y="190">MFA and Conditional Access</text><text x="475" y="190">Security</text><text x="650" y="190">Entra policy export</text>
+      <text x="72" y="232">Data access</text><text x="250" y="232">Least privilege and labels</text><text x="475" y="232">Compliance</text><text x="650" y="232">Purview review</text>
+      <text x="72" y="274">Endpoint</text><text x="250" y="274">Managed device deployment</text><text x="475" y="274">Endpoint team</text><text x="650" y="274">Intune assignment</text>
+      <text x="72" y="316">AI oversight</text><text x="250" y="316">Human review and audit</text><text x="475" y="316">Governance board</text><text x="650" y="316">Monthly report</text>
+    </g>
+  </g>
+</svg>

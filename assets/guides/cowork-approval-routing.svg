@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Copilot Cowork approval routing diagram</title>
+  <desc id="desc">A multi-team workflow showing intake, finance review, HR planning, IT review, aggregated approval, and kickoff scheduling.</desc>
+  <rect width="920" height="360" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Copilot Cowork multi-team approval routing</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Sequential and parallel tasks stay visible while Cowork coordinates actions across Microsoft 365.</text>
+    <g fill="#ffffff" stroke="#94a3b8" stroke-width="1.5">
+      <rect x="44" y="132" width="128" height="76" rx="12"/>
+      <rect x="224" y="104" width="132" height="76" rx="12"/>
+      <rect x="224" y="216" width="132" height="76" rx="12"/>
+      <rect x="408" y="132" width="132" height="76" rx="12"/>
+      <rect x="592" y="132" width="132" height="76" rx="12"/>
+      <rect x="776" y="132" width="104" height="76" rx="12"/>
+    </g>
+    <g fill="#0f172a" font-size="15" font-weight="700" text-anchor="middle">
+      <text x="108" y="164">SharePoint</text><text x="108" y="185" font-size="12" font-weight="500">proposal intake</text>
+      <text x="290" y="136">Finance</text><text x="290" y="157" font-size="12" font-weight="500">budget review</text>
+      <text x="290" y="248">IT</text><text x="290" y="269" font-size="12" font-weight="500">technical review</text>
+      <text x="474" y="164">HR</text><text x="474" y="185" font-size="12" font-weight="500">resource plan</text>
+      <text x="658" y="164">Cowork</text><text x="658" y="185" font-size="12" font-weight="500">aggregate status</text>
+      <text x="828" y="164">Teams</text><text x="828" y="185" font-size="12" font-weight="500">kickoff</text>
+    </g>
+    <g stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M172 160 H224"/><path d="M172 180 C194 224 204 254 224 254"/>
+      <path d="M356 142 C384 142 384 170 408 170"/><path d="M356 254 C384 254 384 170 408 170"/>
+      <path d="M540 170 H592"/><path d="M724 170 H776"/>
+    </g>
+    <g fill="#0284c7">
+      <path d="M218 154l10 6-10 6z"/><path d="M218 248l10 6-10 6z"/><path d="M402 164l10 6-10 6z"/><path d="M586 164l10 6-10 6z"/><path d="M770 164l10 6-10 6z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Microsoft Scout adoption KPI dashboard</title>
+  <desc id="desc">A dashboard showing Scout adoption rate, weekly active users, satisfaction, support tickets, and compliance events.</desc>
+  <rect width="920" height="360" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Scout adoption KPI dashboard</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Track usage, trust, support load, and governance events during phased rollout.</text>
+    <g fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5">
+      <rect x="44" y="116" width="190" height="90" rx="14"/><rect x="260" y="116" width="190" height="90" rx="14"/><rect x="476" y="116" width="190" height="90" rx="14"/><rect x="692" y="116" width="184" height="90" rx="14"/>
+      <rect x="44" y="238" width="832" height="76" rx="14"/>
+    </g>
+    <g fill="#0f172a" text-anchor="middle"><text x="139" y="151" font-size="28" font-weight="700">42%</text><text x="355" y="151" font-size="28" font-weight="700">1,280</text><text x="571" y="151" font-size="28" font-weight="700">61</text><text x="784" y="151" font-size="28" font-weight="700">3</text></g>
+    <g fill="#475569" text-anchor="middle" font-size="13"><text x="139" y="176">weekly adoption</text><text x="355" y="176">active users</text><text x="571" y="176">NPS</text><text x="784" y="176">policy events</text></g>
+    <polyline points="88,286 184,276 280,282 376,260 472,268 568,248 664,252 760,232 832,238" fill="none" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="72" y="266" font-size="13" font-weight="700" fill="#0f172a">Pilot trend</text>
+  </g>
+</svg>

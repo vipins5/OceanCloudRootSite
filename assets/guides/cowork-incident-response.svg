@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" role="img" aria-labelledby="title desc">
+  <title id="title">Copilot Cowork incident response coordination diagram</title>
+  <desc id="desc">A security incident workflow showing alert intake, security triage, operations remediation, communications updates, and executive briefings.</desc>
+  <rect width="920" height="340" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Incident response coordination</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Cowork keeps parallel team actions synchronized from alert to final executive update.</text>
+    <g fill="#ffffff" stroke="#94a3b8" stroke-width="1.5">
+      <rect x="54" y="136" width="116" height="72" rx="12"/>
+      <rect x="230" y="92" width="136" height="72" rx="12"/>
+      <rect x="230" y="214" width="136" height="72" rx="12"/>
+      <rect x="426" y="92" width="136" height="72" rx="12"/>
+      <rect x="426" y="214" width="136" height="72" rx="12"/>
+      <rect x="634" y="136" width="122" height="72" rx="12"/>
+    </g>
+    <g fill="#0f172a" font-size="15" font-weight="700" text-anchor="middle">
+      <text x="112" y="166">Alert</text><text x="112" y="187" font-size="12" font-weight="500">signal received</text>
+      <text x="298" y="122">Security</text><text x="298" y="143" font-size="12" font-weight="500">triage</text>
+      <text x="298" y="244">Operations</text><text x="298" y="265" font-size="12" font-weight="500">remediate</text>
+      <text x="494" y="122">Comms</text><text x="494" y="143" font-size="12" font-weight="500">status draft</text>
+      <text x="494" y="244">Executives</text><text x="494" y="265" font-size="12" font-weight="500">briefings</text>
+      <text x="695" y="166">Resolution</text><text x="695" y="187" font-size="12" font-weight="500">closeout</text>
+    </g>
+    <g stroke="#dc2626" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M170 172 C200 118 204 128 230 128"/><path d="M170 172 C200 244 204 250 230 250"/>
+      <path d="M366 128 H426"/><path d="M366 250 H426"/>
+      <path d="M562 128 C598 128 600 172 634 172"/><path d="M562 250 C598 250 600 172 634 172"/>
+    </g>
+    <g fill="#dc2626">
+      <path d="M224 122l10 6-10 6z"/><path d="M224 244l10 6-10 6z"/><path d="M420 122l10 6-10 6z"/><path d="M420 244l10 6-10 6z"/><path d="M628 166l10 6-10 6z"/>
+    </g>
+  </g>
+</svg>

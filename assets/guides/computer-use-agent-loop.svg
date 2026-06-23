@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Computer-Using Agent automation loop</title>
+  <desc id="desc">A computer-use automation loop showing screen observation, reasoning, action, validation, audit logging, and human escalation.</desc>
+  <rect width="920" height="360" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Computer-Using Agent automation loop</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Use a guarded loop so screen actions are observable, reversible, and audited.</text>
+    <circle cx="460" cy="192" r="104" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="3"/>
+    <text x="460" y="184" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">Agent</text>
+    <text x="460" y="209" text-anchor="middle" font-size="13" fill="#475569">vision + reasoning</text>
+    <g fill="#ffffff" stroke="#94a3b8" stroke-width="1.5">
+      <rect x="60" y="144" width="150" height="72" rx="12"/><rect x="270" y="42" width="150" height="72" rx="12"/><rect x="500" y="42" width="150" height="72" rx="12"/><rect x="710" y="144" width="150" height="72" rx="12"/><rect x="500" y="274" width="150" height="54" rx="12"/><rect x="270" y="274" width="150" height="54" rx="12"/>
+    </g>
+    <g fill="#0f172a" font-size="14" font-weight="700" text-anchor="middle">
+      <text x="135" y="174">Observe UI</text><text x="135" y="195" font-size="12" font-weight="500">screenshot state</text>
+      <text x="345" y="72">Plan action</text><text x="345" y="93" font-size="12" font-weight="500">rules + context</text>
+      <text x="575" y="72">Click/type</text><text x="575" y="93" font-size="12" font-weight="500">controlled action</text>
+      <text x="785" y="174">Validate</text><text x="785" y="195" font-size="12" font-weight="500">result check</text>
+      <text x="575" y="305">Audit log</text><text x="345" y="305">Escalate</text>
+    </g>
+    <g stroke="#0ea5e9" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M210 180 C250 148 282 118 320 114"/><path d="M420 78 H500"/><path d="M650 78 C706 92 730 120 746 144"/><path d="M710 180 H564"/><path d="M500 296 H420"/><path d="M344 274 C268 250 222 220 210 180"/></g>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" role="img" aria-labelledby="title desc">
+  <title id="title">Teams Phone agent call flow</title>
+  <desc id="desc">A Teams Phone agent call flow showing caller, Teams Phone, AI agent, knowledge source, human queue, and CRM update.</desc>
+  <rect width="920" height="340" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Teams Phone agent call flow</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Design voice agents with clear routing, knowledge grounding, and human handoff.</text>
+    <g fill="#ffffff" stroke="#94a3b8" stroke-width="1.5">
+      <rect x="50" y="142" width="112" height="72" rx="12"/><rect x="220" y="142" width="132" height="72" rx="12"/><rect x="410" y="142" width="132" height="72" rx="12"/><rect x="600" y="92" width="132" height="72" rx="12"/><rect x="600" y="222" width="132" height="72" rx="12"/><rect x="790" y="142" width="90" height="72" rx="12"/>
+    </g>
+    <g fill="#0f172a" font-size="15" font-weight="700" text-anchor="middle">
+      <text x="106" y="172">Caller</text><text x="106" y="193" font-size="12" font-weight="500">voice input</text>
+      <text x="286" y="172">Teams Phone</text><text x="286" y="193" font-size="12" font-weight="500">routing</text>
+      <text x="476" y="172">AI agent</text><text x="476" y="193" font-size="12" font-weight="500">Copilot Studio</text>
+      <text x="666" y="122">Knowledge</text><text x="666" y="143" font-size="12" font-weight="500">answers</text>
+      <text x="666" y="252">Human queue</text><text x="666" y="273" font-size="12" font-weight="500">handoff</text>
+      <text x="835" y="172">CRM</text><text x="835" y="193" font-size="12" font-weight="500">log</text>
+    </g>
+    <g stroke="#2563eb" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M162 178 H220"/><path d="M352 178 H410"/><path d="M542 178 C574 128 580 128 600 128"/><path d="M542 178 C574 258 580 258 600 258"/><path d="M732 128 C760 128 760 178 790 178"/><path d="M732 258 C760 258 760 178 790 178"/></g>
+    <g fill="#2563eb"><path d="M214 172l10 6-10 6z"/><path d="M404 172l10 6-10 6z"/><path d="M594 122l10 6-10 6z"/><path d="M594 252l10 6-10 6z"/><path d="M784 172l10 6-10 6z"/></g>
+  </g>
+</svg>

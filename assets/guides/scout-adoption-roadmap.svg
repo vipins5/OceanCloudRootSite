@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" role="img" aria-labelledby="title desc">
+  <title id="title">Microsoft Scout adoption roadmap</title>
+  <desc id="desc">A four phase Scout adoption roadmap from assessment to pilot, expansion, and optimization.</desc>
+  <rect width="920" height="340" rx="18" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="40" y="48" font-size="25" font-weight="700" fill="#0f172a">Scout adoption roadmap</text>
+    <text x="40" y="78" font-size="14" fill="#475569">Governed rollout from Frontier preview readiness through full operating model.</text>
+    <line x1="92" y1="186" x2="828" y2="186" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round"/>
+    <g fill="#ffffff" stroke="#94a3b8" stroke-width="1.5">
+      <rect x="60" y="126" width="150" height="120" rx="14"/>
+      <rect x="260" y="126" width="150" height="120" rx="14"/>
+      <rect x="460" y="126" width="150" height="120" rx="14"/>
+      <rect x="660" y="126" width="150" height="120" rx="14"/>
+    </g>
+    <g text-anchor="middle">
+      <g fill="#0ea5e9" font-size="13" font-weight="700"><text x="135" y="154">WEEKS 1-4</text><text x="335" y="154">WEEKS 5-12</text><text x="535" y="154">WEEKS 13-24</text><text x="735" y="154">WEEK 25+</text></g>
+      <g fill="#0f172a" font-size="16" font-weight="700"><text x="135" y="185">Assess</text><text x="335" y="185">Pilot</text><text x="535" y="185">Expand</text><text x="735" y="185">Optimize</text></g>
+      <g fill="#475569" font-size="12"><text x="135" y="211">readiness</text><text x="135" y="228">policies</text><text x="335" y="211">50-100 users</text><text x="335" y="228">feedback loop</text><text x="535" y="211">waves</text><text x="535" y="228">champions</text><text x="735" y="211">metrics</text><text x="735" y="228">controls</text></g>
+    </g>
+  </g>
+</svg>
