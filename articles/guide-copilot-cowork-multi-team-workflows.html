@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../css/darkstar.css?v=3">
     <link rel="stylesheet" href="../css/code.css?v=1">
     <link rel="stylesheet" href="../css/article.css?v=8">
-    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-tocfix">
+    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-msrefs">
 </head>
 <body class="guide-article-page guide-article">
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -77,9 +77,9 @@
             <h2>What is Copilot Cowork?</h2>
             <p>Copilot Cowork is Microsoft's execution layer for Microsoft 365, enabling teams to delegate tasks, coordinate workflows, and maintain control over multi-step processes through conversational AI. As the fastest-growing feature in Microsoft's Frontier program with the highest user satisfaction rates, Cowork represents a fundamental shift in how teams collaborate on complex projects.</p>
             <p>Unlike traditional task management tools, Cowork operates as an agentic AI that understands context, manages dependencies, and coordinates actions across teams and applications in real-time.</p>
-            <figure style="margin: 20px 0; text-align: center;">
-                <img src="https://learn.microsoft.com/en-us/microsoft-365/media/copilot-cowork-dashboard.png" alt="Copilot Cowork dashboard showing delegated tasks and workflow status" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
-                <figcaption style="margin-top: 10px; font-size: 14px; color: #666;">Copilot Cowork Dashboard: Real-time task coordination and workflow visualization</figcaption>
+            <figure class="official-ms-image">
+                <img src="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/media/cowork-overview-interface.png" alt="Microsoft 365 Copilot Cowork interface from Microsoft Learn" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                <figcaption>Microsoft Learn shows Cowork as a task-execution experience where users describe work in natural language and Cowork carries out actions across Microsoft 365.</figcaption>
             </figure>
         </section>
 
@@ -129,10 +129,9 @@
                 <li>Configure user access policies (all users or specific groups)</li>
                 <li>Review data residency and compliance settings</li>
             </ol>
-            <figure style="margin: 20px 0; text-align: center;">
-                <img src="https://learn.microsoft.com/en-us/microsoft-365/media/admin-center-copilot-cowork.png" alt="Microsoft 365 admin center with Copilot Cowork settings highlighted" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
-                <figcaption style="margin-top: 10px; font-size: 14px; color: #666;">Admin Center: Enable Copilot Cowork for your organization</figcaption>
-            </figure>
+            <div class="official-ms-inline">
+                <strong>Microsoft source:</strong> Confirm tenant availability, onboarding, and user enablement steps in <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/get-started" target="_blank" rel="noopener noreferrer">Get started with Copilot Cowork</a> and review the <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/cowork-faq" target="_blank" rel="noopener noreferrer">Copilot Cowork FAQ</a> before rollout.
+            </div>
             <h3>Step 2: Configure Teams and SharePoint Integration</h3>
             <ol>
                 <li>Create dedicated Teams channels for workflow coordination</li>
@@ -272,6 +271,18 @@
                 <dt>How much does Copilot Cowork cost?</dt>
                 <dd>Included with Microsoft 365 Copilot licenses. Check with your account team for enterprise pricing.</dd>
             </dl>
+        </section>
+
+        <section class="official-ms-refs">
+            <h2>Official Microsoft references</h2>
+            <p class="source-note">Implementation guidance in this guide is mapped to Microsoft Learn documentation for Copilot Cowork, Responsible AI, and usage-based billing.</p>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/" target="_blank" rel="noopener noreferrer">Copilot Cowork overview</a> — Microsoft states that Cowork can send emails, schedule meetings, create documents, post in Teams, and manage calendar tasks across Microsoft 365.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/get-started" target="_blank" rel="noopener noreferrer">Get started with Copilot Cowork</a> — useful for first-run user enablement, prompt patterns, and onboarding steps.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/cowork-faq" target="_blank" rel="noopener noreferrer">Copilot Cowork common questions</a> — clarifies the difference between Copilot Chat and Cowork for multi-step execution.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/responsible-ai/copilot-cowork-application-card" target="_blank" rel="noopener noreferrer">Responsible AI application card for Cowork</a> — baseline for governance, human oversight, and deployment controls.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener noreferrer">Usage-based billing and Copilot Credits</a> — Microsoft billing guidance for Cowork and Work IQ API consumption.</li>
+            </ul>
         </section>
 
         <section class="cta-section">

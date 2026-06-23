@@ -228,6 +228,49 @@ body.guide-article-page #back-top {
   line-height: 1.6;
 }
 
+.guide-content .official-ms-refs {
+  margin: 56px 0 0;
+  padding: 28px;
+  border: 1px solid rgba(0,180,216,.22);
+  border-radius: 16px;
+  background: rgba(0,180,216,.055);
+}
+
+.guide-content .official-ms-refs h2 {
+  margin-top: 0;
+}
+
+.guide-content .official-ms-refs p {
+  margin-bottom: 18px;
+}
+
+.guide-content .official-ms-refs ul {
+  margin-bottom: 0;
+}
+
+.guide-content .official-ms-refs li {
+  margin-bottom: 10px;
+}
+
+.guide-content .official-ms-refs a {
+  font-weight: 700;
+}
+
+.guide-content .official-ms-refs .source-note {
+  color: var(--text-dim);
+  font-size: .86rem;
+}
+
+.guide-content .official-ms-inline {
+  margin: 20px 0 26px;
+  padding: 16px 18px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  background: rgba(0,180,216,.06);
+  color: var(--text-mid);
+  line-height: 1.75;
+}
+
 .guide-content .faq-item {
   padding: 20px 0;
   border: 0;
@@ -314,5 +357,9 @@ body.guide-article-page #back-top {
 
   .guide-content .cta-section {
     padding: 28px 22px;
+  }
+
+  .guide-content .official-ms-refs {
+    padding: 22px 18px;
   }
 }

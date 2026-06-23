@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../css/darkstar.css?v=3">
     <link rel="stylesheet" href="../css/code.css?v=1">
     <link rel="stylesheet" href="../css/article.css?v=8">
-    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-tocfix">
+    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-msrefs">
 </head>
 <body class="guide-article-page guide-article">
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -71,9 +71,9 @@
             <h2>What is Microsoft Scout?</h2>
             <p>Microsoft Scout is an always-on personal AI agent integrated across Microsoft 365 applications, designed to keep work grounded in your daily flow. Scout understands your work context, anticipates needs, and takes proactive actions within your approved applications—all while remaining transparent about its activities.</p>
             <p>Unlike task-specific AI features, Scout provides continuous assistance across Outlook, Teams, SharePoint, Word, Excel, and PowerPoint, learning from your work patterns to deliver increasingly personalized support.</p>
-            <figure style="margin: 20px 0; text-align: center;">
-                <img src="https://learn.microsoft.com/en-us/microsoft-365/media/scout-agent-interface.png" alt="Microsoft Scout personal AI agent integrated in Microsoft 365 apps" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
-                <figcaption style="margin-top: 10px; font-size: 14px; color: #666;">Scout: Your always-on personal agent across Outlook, Teams, and Microsoft 365 apps</figcaption>
+            <figure class="official-ms-image">
+                <img src="https://learn.microsoft.com/en-us/media/open-graph-image.png" alt="Microsoft Learn documentation visual for Microsoft Scout references" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                <figcaption>Microsoft Scout is documented by Microsoft Learn as Frontier prerelease functionality; governance plans should track the official Scout overview, FAQ, admin access, and Responsible AI guidance.</figcaption>
             </figure>
         </section>
 
@@ -125,10 +125,9 @@
                 <li><strong>Feedback Loops:</strong> Weekly pulse surveys and bi-weekly feedback sessions</li>
                 <li><strong>Incident Tracking:</strong> Document and resolve any issues immediately</li>
             </ul>
-            <figure style="margin: 20px 0; text-align: center;">
-                <img src="https://learn.microsoft.com/en-us/microsoft-365/media/scout-pilot-deployment.png" alt="Pilot deployment dashboard showing Scout adoption metrics and user feedback" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
-                <figcaption style="margin-top: 10px; font-size: 14px; color: #666;">Pilot Dashboard: Real-time adoption metrics, feedback collection, and issue tracking</figcaption>
-            </figure>
+            <div class="official-ms-inline">
+                <strong>Microsoft source:</strong> Treat Scout rollout as prerelease governance work. Validate preview access with the <a href="https://learn.microsoft.com/en-us/microsoft-scout/admin-access-overview" target="_blank" rel="noopener noreferrer">Scout admin access overview</a> and manage endpoint deployment with <a href="https://learn.microsoft.com/en-us/microsoft-scout/admin-intune-setup" target="_blank" rel="noopener noreferrer">Set up Microsoft Scout with Intune</a>.
+            </div>
 
             <h3>Phase 3: Expansion (Weeks 13-24)</h3>
             <ul>
@@ -319,6 +318,18 @@
                 <dt>How does Scout handle multi-tenant scenarios?</dt>
                 <dd>Scout only operates within your licensed tenant. It cannot access content from other organizations or shared multi-tenant environments.</dd>
             </dl>
+        </section>
+
+        <section class="official-ms-refs">
+            <h2>Official Microsoft references</h2>
+            <p class="source-note">Microsoft labels Scout documentation as prerelease/Frontier content, so adoption plans should include preview eligibility, admin access, and change-review gates.</p>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-scout/overview" target="_blank" rel="noopener noreferrer">Microsoft Scout overview</a> — official description of Scout as a desktop AI application for Windows and macOS that takes action across files, shell, browser, and Microsoft 365 data.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-scout/faq" target="_blank" rel="noopener noreferrer">Microsoft Scout common questions</a> — covers security boundaries, authentication, and expected enterprise behavior.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-scout/admin-access-overview" target="_blank" rel="noopener noreferrer">Admin access overview for Microsoft Scout</a> — reference for tenant-level access planning and Frontier preview constraints.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-scout/admin-intune-setup" target="_blank" rel="noopener noreferrer">Set up Microsoft Scout with Intune</a> — official endpoint management path for controlled deployment.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-scout/microsoft-scout-responsible-ai-overview" target="_blank" rel="noopener noreferrer">Responsible AI overview for Microsoft Scout</a> and <a href="https://learn.microsoft.com/en-us/microsoft-scout/microsoft-scout-responsible-ai-faq" target="_blank" rel="noopener noreferrer">Responsible AI FAQ</a> — Microsoft safeguards and limitations for governance reviews.</li>
+            </ul>
         </section>
 
         <section class="cta-section">

@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="../css/darkstar.css?v=3">
     <link rel="stylesheet" href="../css/code.css?v=1">
     <link rel="stylesheet" href="../css/article.css?v=8">
-    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-tocfix">
+    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-msrefs">
 </head>
 <body class="guide-article-page guide-article">
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -73,6 +73,10 @@
             <h2>What Are Teams Phone Agents?</h2>
             <p>Teams Phone Agents are AI-powered virtual agents built in Copilot Studio that can answer customer calls, handle support requests, and route calls intelligently within your organization. They use natural language understanding and Text-to-Speech with optional custom voice.</p>
             <p><strong>Key capability:</strong> First phone call handled by AI agent → customer-relevant transfer to human agent → closed-loop automation.</p>
+            <figure class="official-ms-image">
+                <img src="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/media/text-to-speech/monitoring-metrics.png" alt="Azure AI Speech text to speech monitoring metrics from Microsoft Learn" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                <figcaption>Microsoft Learn documents Azure AI Speech text-to-speech, neural voices, custom voice options, and monitoring considerations that matter when voice agents become customer-facing.</figcaption>
+            </figure>
         </section>
 
         <section id="use-cases">
@@ -251,6 +255,18 @@ CRM Logging & Compliance Recording
                 <h3>How does handoff to human agent work?</h3>
                 <p>Agent logs conversation context (what was discussed, where customer got stuck) → transfers to queue → human agent sees full context in side panel</p>
             </div>
+        </section>
+
+        <section class="official-ms-refs">
+            <h2>Official Microsoft references</h2>
+            <p class="source-note">Teams voice-agent projects should use Microsoft sources for calling extensibility, Copilot Studio voice-agent availability, and voice synthesis governance.</p>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noopener noreferrer">What's new in Microsoft Copilot Studio</a> — Microsoft release notes include real-time voice agent capabilities and preview/GA status.</li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/tpe/teams-phone-extensibility-quickstart" target="_blank" rel="noopener noreferrer">Teams Phone System extensibility quickstart</a> — official Azure Communication Services guidance for Teams Phone extensibility and calling-bot registration.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoftteams/platform/bots/calls-and-meetings/calls-meetings-bots-overview" target="_blank" rel="noopener noreferrer">Bots for Teams calls and online meetings</a> — Microsoft Teams platform guidance for bots using calls, meetings, and Microsoft Graph calling APIs.</li>
+                <li><a href="https://learn.microsoft.com/en-us/dynamics365/contact-center/" target="_blank" rel="noopener noreferrer">Dynamics 365 Contact Center documentation</a> — source for contact center AI-agent and voice-channel integration planning.</li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/text-to-speech" target="_blank" rel="noopener noreferrer">Azure AI Speech text-to-speech overview</a> — official guidance for neural voices, custom voices, SSML, and voice output design.</li>
+            </ul>
         </section>
 
         <section class="cta-section">

@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="../css/darkstar.css?v=3">
     <link rel="stylesheet" href="../css/code.css?v=1">
     <link rel="stylesheet" href="../css/article.css?v=8">
-    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-tocfix">
+    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-msrefs">
 </head>
 <body class="guide-article-page guide-article">
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -73,6 +73,10 @@
             <h2>What Are Work IQ APIs?</h2>
             <p>Work IQ APIs provide programmatic access to organizational collaboration and productivity insights from Microsoft 365. These APIs give enterprise administrators and developers visibility into how teams communicate, collaborate, and work together across the organization.</p>
             <p><strong>Key differentiator:</strong> Work IQ APIs don't track individual behavior — they aggregate patterns at the team and department level, enabling organizational insights while maintaining privacy.</p>
+            <figure class="official-ms-image">
+                <img src="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/assets/diagrams/work-iq-api.png" alt="Microsoft Work IQ API diagram from Microsoft Learn" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                <figcaption>Microsoft Learn positions Work IQ as a workplace intelligence layer for agents, with API endpoints that include A2A, a remote MCP server, and REST access.</figcaption>
+            </figure>
         </section>
 
         <section id="business-value">
@@ -262,6 +266,18 @@ GET https://graph.microsoft.com/beta/insights/organization/networkAnalysis
                 <h3>Can I integrate with Power BI?</h3>
                 <p>Yes — Power BI has native Work IQ connector, or you can build custom connectors using the REST APIs.</p>
             </div>
+        </section>
+
+        <section class="official-ms-refs">
+            <h2>Official Microsoft references</h2>
+            <p class="source-note">Use these Microsoft Learn pages to validate architecture, endpoint options, and consumption billing before building Work IQ-backed agents.</p>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/work-iq/" target="_blank" rel="noopener noreferrer">Work IQ overview</a> — official description of Work IQ as a workplace intelligence layer for organizational data, context, and tools.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-iq/" target="_blank" rel="noopener noreferrer">Microsoft IQ documentation</a> — hub for Work IQ, Fabric IQ, Foundry IQ, and related intelligence-layer documentation.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-apis-overview" target="_blank" rel="noopener noreferrer">Microsoft 365 Copilot APIs overview</a> — context for extending Copilot capabilities in custom apps and custom-engine agents.</li>
+                <li><a href="https://learn.microsoft.com/en-us/graph/" target="_blank" rel="noopener noreferrer">Microsoft Graph documentation</a> — companion source for Microsoft 365 data and intelligence integrations.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener noreferrer">Usage-based billing and Copilot Credits</a> — official billing model for Work IQ API and Cowork consumption.</li>
+            </ul>
         </section>
 
         <section class="cta-section">

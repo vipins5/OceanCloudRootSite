@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="../css/darkstar.css?v=3">
     <link rel="stylesheet" href="../css/code.css?v=1">
     <link rel="stylesheet" href="../css/article.css?v=8">
-    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-tocfix">
+    <link rel="stylesheet" href="/css/guide-article.css?v=20260623-msrefs">
 </head>
 <body class="guide-article-page guide-article">
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -73,6 +73,10 @@
             <h2>What Are Computer-Using Agents?</h2>
             <p>Computer-Using Agents (CUAs) are AI-powered bots that can see your screen and control your mouse and keyboard. Unlike traditional APIs or integrations, CUAs work with ANY application — web, desktop, legacy, cloud — without requiring custom connectors.</p>
             <p><strong>Key innovation:</strong> Multimodal AI (vision + language) allows agents to understand UI context and make intelligent decisions about what to click, type, or navigate.</p>
+            <figure class="official-ms-image">
+                <img src="https://learn.microsoft.com/en-us/media/open-graph-image.png" alt="Microsoft Learn documentation visual for Copilot Studio computer use references" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                <figcaption>Microsoft Learn documents Copilot Studio computer use as a tool powered by Computer-Using Agents, combining vision and reasoning to interact with graphical user interfaces.</figcaption>
+            </figure>
         </section>
 
         <section id="vs-traditional-rpa">
@@ -282,6 +286,18 @@ Data Output
                 <h3>Can agents make judgment calls?</h3>
                 <p>Yes — agent can be trained on decision rules. If confidence is low, agent escalates to human for review rather than guessing.</p>
             </div>
+        </section>
+
+        <section class="official-ms-refs">
+            <h2>Official Microsoft references</h2>
+            <p class="source-note">The implementation plan in this guide should be validated against Microsoft Copilot Studio computer-use documentation, governance guidance, and training material.</p>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/computer-use" target="_blank" rel="noopener noreferrer">Automate web and desktop apps with computer use</a> — official Copilot Studio documentation for computer use and Computer-Using Agents.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/agent-tools" target="_blank" rel="noopener noreferrer">Use agent tools to extend, automate, and enhance your agents</a> — Microsoft guidance comparing prompts, MCP, and computer use tools.</li>
+                <li><a href="https://learn.microsoft.com/en-us/training/modules/automate-desktop-web-tasks-computer-use-copilot-studio/" target="_blank" rel="noopener noreferrer">Automate desktop and web tasks with computer use in Copilot Studio</a> — official Learn module covering tool configuration, credentials, access controls, monitoring, activity maps, and Dataverse logging.</li>
+                <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noopener noreferrer">What's new in Copilot Studio</a> — source for release status and recent computer-use feature updates.</li>
+                <li><a href="https://learn.microsoft.com/en-us/power-platform/release-plan/2024wave2/microsoft-copilot-studio/service-runtime-governance" target="_blank" rel="noopener noreferrer">Copilot Studio service, runtime, and governance</a> — reference for high-scale, secure agent runtime planning.</li>
+            </ul>
         </section>
 
         <section class="cta-section">
