@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Scout Adoption Resources</title>
+    <script src="../../js/consent.js"></script>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .landing-page { max-width: 600px; margin: 40px auto; padding: 20px; }
+        .form-section { background: #f5f5f5; padding: 30px; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #0078d4; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #005a9e; }
+        .benefit { margin: 10px 0; padding: 10px; background: white; border-left: 4px solid #107c10; }
+    </style>
+</head>
+<body>
+    <div class="landing-page">
+        <h1>Microsoft Scout Adoption & Governance</h1>
+        <p>Download our comprehensive adoption checklist and security policy template designed for enterprise deployments.</p>
+
+        <div style="margin: 20px 0;">
+            <h3>Exclusive Resources:</h3>
+            <div class="benefit">✓ 4-Phase adoption roadmap</div>
+            <div class="benefit">✓ Security and compliance checklist</div>
+            <div class="benefit">✓ Policy template (editable)</div>
+            <div class="benefit">✓ Governance framework documentation</div>
+            <div class="benefit">✓ Training materials outline</div>
+            <div class="benefit">✓ KPI tracking spreadsheet</div>
+            <div class="benefit">✓ Bonus: Audit logging setup guide</div>
+        </div>
+
+        <div class="form-section">
+            <form id="leadForm">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Work Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company Name *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Job Title *</label>
+                    <input type="text" id="role" name="role" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" name="department">
+                        <option value="">Select...</option>
+                        <option value="IT">IT / IT Security</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Business">Business Transformation</option>
+                        <option value="Compliance">Compliance / Legal</option>
+                        <option value="HR">HR / People Operations</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="users">Expected Scout Users</label>
+                    <input type="number" id="users" name="users" placeholder="e.g., 5000">
+                </div>
+
+                <div class="form-group">
+                    <label for="phase">Current Phase</label>
+                    <select id="phase" name="phase">
+                        <option value="">Select...</option>
+                        <option value="Planning">Planning</option>
+                        <option value="Pilot">Running Pilot</option>
+                        <option value="Expansion">Expansion</option>
+                        <option value="Production">Full Production</option>
+                    </select>
+                </div>
+
+                <button type="submit">Get Resources Now</button>
+            </form>
+
+            <p style="font-size: 12px; margin-top: 15px; color: #666;">
+                By submitting, you'll receive adoption resources and governance templates plus optional updates from our team.
+            </p>
+        </div>
+
+        <p style="text-align: center; margin-top: 30px; font-size: 14px; color: #666;">
+            Need help with Scout deployment? <a href="../../contact.html">Contact us</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Placeholder for form submission logic
+            alert('Thank you! Your adoption resources will be sent to ' + document.getElementById('email').value);
+        });
+    </script>
+</body>
+</html>
