@@ -1,0 +1,70 @@
+[
+  {
+    "sitemap": "https://oceancloudconsults.com/sitemap-index.xml",
+    "status": 200,
+    "path": "https://oceancloudconsults.com/sitemap-index.xml",
+    "lastSubmitted": "2026-06-23T15:56:27.593Z",
+    "isPending": false,
+    "isSitemapsIndex": true,
+    "lastDownloaded": "2026-06-23T15:56:28.597Z",
+    "warnings": "0",
+    "errors": "0"
+  },
+  {
+    "sitemap": "https://oceancloudconsults.com/sitemap.xml",
+    "status": 200,
+    "path": "https://oceancloudconsults.com/sitemap.xml",
+    "lastSubmitted": "2026-06-23T15:56:28.326Z",
+    "isPending": false,
+    "isSitemapsIndex": false,
+    "type": "sitemap",
+    "lastDownloaded": "2026-06-23T15:56:29.117Z",
+    "warnings": "0",
+    "errors": "0",
+    "contents": [
+      {
+        "type": "web",
+        "submitted": "43",
+        "indexed": "0"
+      }
+    ]
+  },
+  {
+    "sitemap": "https://oceancloudconsults.com/sitemap-guides.xml",
+    "status": 200,
+    "path": "https://oceancloudconsults.com/sitemap-guides.xml",
+    "lastSubmitted": "2026-06-23T15:56:29.014Z",
+    "isPending": false,
+    "isSitemapsIndex": false,
+    "type": "sitemap",
+    "lastDownloaded": "2026-06-23T15:56:29.690Z",
+    "warnings": "0",
+    "errors": "0",
+    "contents": [
+      {
+        "type": "web",
+        "submitted": "34",
+        "indexed": "0"
+      }
+    ]
+  },
+  {
+    "sitemap": "https://oceancloudconsults.com/sitemap-mc.xml",
+    "status": 200,
+    "path": "https://oceancloudconsults.com/sitemap-mc.xml",
+    "lastSubmitted": "2026-06-23T15:56:29.868Z",
+    "isPending": false,
+    "isSitemapsIndex": false,
+    "type": "sitemap",
+    "lastDownloaded": "2026-06-23T15:56:30.675Z",
+    "warnings": "0",
+    "errors": "0",
+    "contents": [
+      {
+        "type": "web",
+        "submitted": "101",
+        "indexed": "0"
+      }
+    ]
+  }
+]
