@@ -1,55 +1,85 @@
-/* Lightweight guide article layout for newly created guide pages. */
+/* OceanCloud lightweight guide compatibility layer.
+   Makes simple guide HTML match the established article visual system. */
+
 .guide-article-page {
-  background:
-    radial-gradient(ellipse 55% 34% at 50% 0%, rgba(0,119,182,.18), transparent 70%),
-    var(--bg);
+  background: var(--bg);
 }
 
 .guide-article-page > header {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 112px 32px 42px;
-  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 148px 0 88px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.guide-article-page > header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 10% 50%, rgba(0,119,182,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 42% 44% at 90% 18%, rgba(0,180,216,.08) 0%, transparent 56%);
+  pointer-events: none;
+}
+
+.guide-article-page > header h1,
+.guide-article-page > header .subtitle {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 64px, 860px);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .guide-article-page > header h1 {
-  max-width: 12ch;
-  margin: 0 auto 18px;
+  margin-top: 0;
+  margin-bottom: 16px;
   color: var(--white);
-  font-size: clamp(2.35rem, 5vw, 4.5rem);
+  font-size: clamp(2.05rem, 2.85vw, 3.25rem);
   font-weight: 900;
-  line-height: 1.03;
-  letter-spacing: -.03em;
+  line-height: 1.12;
+  letter-spacing: -.026em;
+  text-wrap: balance;
 }
 
 .guide-article-page > header .subtitle {
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 640px;
   color: var(--text-mid);
-  font-size: clamp(1rem, 1.8vw, 1.25rem);
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.75;
 }
 
 .guide-article-page > .breadcrumb {
-  max-width: 980px;
-  margin: 0 auto 28px;
-  padding: 0 32px;
+  width: min(100% - 64px, 800px);
+  margin: 60px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   color: var(--text-dim);
+  font-size: .78rem;
   line-height: 1.5;
 }
 
 .guide-article-page > .breadcrumb a {
   color: var(--accent);
+  transition: opacity .3s;
+}
+
+.guide-article-page > .breadcrumb a:hover {
+  opacity: .75;
+  text-decoration: none;
 }
 
 .guide-content {
-  width: min(100% - 40px, 920px);
-  margin: 0 auto 88px;
-  padding: 44px clamp(22px, 4vw, 54px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: rgba(13,18,32,.78);
-  box-shadow: 0 24px 80px rgba(0,0,0,.28);
+  width: min(100% - 64px, 800px);
+  margin: 24px auto 100px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .guide-content section {
@@ -57,26 +87,26 @@
 }
 
 .guide-content section + section {
-  margin-top: 54px;
-  padding-top: 46px;
-  border-top: 1px solid var(--border);
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .guide-content h2 {
-  margin-bottom: 18px;
+  margin: 48px 0 14px;
   color: var(--white);
-  font-size: clamp(1.65rem, 3vw, 2.45rem);
-  font-weight: 850;
-  line-height: 1.16;
-  letter-spacing: -.02em;
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.03em;
 }
 
 .guide-content h3 {
-  margin: 28px 0 10px;
-  color: var(--white);
-  font-size: clamp(1.05rem, 2vw, 1.28rem);
-  font-weight: 750;
-  line-height: 1.35;
+  margin: 30px 0 10px;
+  color: #c8daea;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .guide-content p {
@@ -91,7 +121,7 @@
 }
 
 .guide-content a {
-  color: var(--accent);
+  color: #00b4d8;
 }
 
 .guide-content a:hover {
@@ -100,9 +130,10 @@
 
 .guide-content ul,
 .guide-content ol {
-  margin: 14px 0 22px;
-  padding-left: 24px;
+  margin: 0 0 18px;
+  padding-left: 22px;
   color: var(--text-mid);
+  line-height: 1.85;
 }
 
 .guide-content ul { list-style: disc; }
@@ -110,30 +141,31 @@
 
 .guide-content li {
   display: list-item;
-  margin-bottom: 10px;
-  line-height: 1.75;
+  margin-bottom: 7px;
 }
 
 .guide-content .toc {
-  margin-bottom: 28px;
-  padding: 24px;
-  border: 1px solid rgba(0,180,216,.16);
-  border-radius: 12px;
-  background: rgba(0,180,216,.06);
+  margin: 0 0 34px;
+  padding: 0 0 24px;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  border-radius: 0;
+  background: transparent;
 }
 
 .guide-content .toc h2 {
-  margin-bottom: 12px;
-  font-size: 1.05rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--accent);
+  margin: 0 0 16px;
+  color: var(--white);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  text-transform: none;
 }
 
 .guide-content .toc ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 8px 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 6px 18px;
   margin: 0;
   padding-left: 0;
   list-style: none;
@@ -146,10 +178,10 @@
 
 .guide-content .toc a {
   display: block;
-  padding: 7px 0;
+  padding: 3px 0;
   color: var(--text-mid);
-  font-size: .93rem;
-  line-height: 1.45;
+  font-size: .9rem;
+  line-height: 1.55;
 }
 
 .guide-content .toc a:hover {
@@ -160,57 +192,56 @@
 .guide-content .use-case-cards,
 .guide-content .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 16px;
-  margin-top: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  margin: 24px 0 18px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,.07);
 }
 
 .guide-content .use-case,
-.guide-content .benefit-card,
-.guide-content .faq-item {
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255,255,255,.035);
+.guide-content .benefit-card {
+  padding: 20px 22px;
+  border: 0;
+  border-radius: 0;
+  background: rgba(13,18,32,.96);
 }
 
 .guide-content .use-case h3,
-.guide-content .benefit-card h3,
-.guide-content .faq-item h3 {
+.guide-content .benefit-card h3 {
   margin-top: 0;
+  color: var(--white);
 }
 
 .guide-content .use-case p,
-.guide-content .benefit-card p,
-.guide-content .faq-item p {
+.guide-content .benefit-card p {
   margin-bottom: 0;
+  font-size: .92rem;
 }
 
 .guide-content table {
-  display: block;
   width: 100%;
   margin: 24px 0;
-  overflow-x: auto;
   border-collapse: collapse;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255,255,255,.025);
-}
-
-.guide-content th,
-.guide-content td {
-  min-width: 190px;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-mid);
-  text-align: left;
-  vertical-align: top;
+  font-size: .87rem;
 }
 
 .guide-content th {
-  color: var(--white);
-  background: rgba(0,180,216,.08);
-  font-weight: 750;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0,180,216,.25);
+  background: rgba(0,180,216,.12);
+  color: var(--accent);
+  font-weight: 700;
+  text-align: left;
+}
+
+.guide-content td {
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  color: var(--text-mid);
+  vertical-align: top;
 }
 
 .guide-content tr:last-child td {
@@ -219,13 +250,13 @@
 
 .guide-content pre {
   margin: 24px 0;
-  padding: 20px;
+  padding: 18px 20px;
   overflow-x: auto;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255,255,255,.08);
   border-radius: 12px;
-  background: #050913;
+  background: rgba(5,9,19,.96);
   color: #d8e9ff;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .guide-content code {
@@ -236,42 +267,74 @@
 .guide-content figure {
   margin: 28px 0 !important;
   padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
 }
 
 .guide-content figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
+  border-radius: 10px;
 }
 
 .guide-content figure figcaption {
+  margin-top: 10px !important;
   color: var(--text-dim) !important;
+  font-size: .78rem !important;
+  line-height: 1.6;
+}
+
+.guide-content .faq-item {
+  padding: 20px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  border-radius: 0;
+  background: transparent;
+}
+
+.guide-content .faq-item h3 {
+  margin-top: 0;
+  color: var(--white);
+}
+
+.guide-content .faq-item p {
+  margin-bottom: 0;
 }
 
 .guide-content .cta-section {
-  margin-top: 64px;
-  padding: 34px;
+  margin-top: 56px;
+  padding: 36px;
+  border: 1px solid rgba(0,180,216,.2);
+  border-radius: 16px;
+  background: rgba(0,180,216,.07);
   text-align: center;
-  border: 1px solid rgba(0,180,216,.22);
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(0,180,216,.12), rgba(6,214,160,.05));
 }
 
 .guide-content .cta-section h2 {
-  margin-bottom: 12px;
+  margin: 0 0 10px;
+  color: var(--white);
+  font-size: 1.2rem;
+}
+
+.guide-content .cta-section p {
+  margin: 0 0 22px;
 }
 
 .guide-content .cta-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
-  padding: 13px 24px;
+  padding: 14px 28px;
+  border: none;
   border-radius: var(--radius);
   background: var(--accent);
   color: var(--bg);
-  font-weight: 800;
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
   text-decoration: none;
   transition: background var(--t), transform var(--t), box-shadow var(--t);
 }
@@ -279,46 +342,67 @@
 .guide-content .cta-button:hover {
   background: #00cef5;
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0,180,216,.28);
+  box-shadow: 0 12px 32px rgba(0,180,216,.3);
   text-decoration: none;
 }
 
 .guide-article-page > footer {
   padding: 34px 20px;
   border-top: 1px solid var(--border);
-  color: var(--text-dim);
-  text-align: center;
   background: var(--bg-2);
+  color: var(--text-dim);
+  font-size: .85rem;
+  text-align: center;
+}
+
+@media (min-width: 1280px) {
+  .guide-article-page > header h1 {
+    font-size: clamp(2.2rem, 2.65vw, 3.15rem);
+  }
 }
 
 @media (max-width: 720px) {
   .guide-article-page > header {
-    padding: 84px 20px 32px;
+    padding: 132px 0 72px;
+  }
+
+  .guide-article-page > header h1,
+  .guide-article-page > header .subtitle,
+  .guide-article-page > .breadcrumb,
+  .guide-content {
+    width: min(100% - 40px, 800px);
+  }
+
+  .guide-article-page > header h1 {
+    font-size: clamp(2.1rem, 10vw, 3.15rem);
+    line-height: 1.08;
   }
 
   .guide-article-page > .breadcrumb {
-    padding: 0 20px;
+    margin-top: 42px;
   }
 
   .guide-content {
-    width: min(100% - 24px, 920px);
-    padding: 26px 18px;
-    margin-bottom: 56px;
+    margin-bottom: 72px;
   }
 
-  .guide-content section + section {
-    margin-top: 38px;
-    padding-top: 34px;
+  .guide-content .toc ul,
+  .guide-content .use-case-cards,
+  .guide-content .benefits-grid {
+    grid-template-columns: 1fr;
   }
 
-  .guide-content .toc,
-  .guide-content .cta-section {
-    padding: 20px 16px;
+  .guide-content table {
+    display: block;
+    overflow-x: auto;
   }
 
   .guide-content th,
   .guide-content td {
-    min-width: 160px;
-    padding: 12px;
+    min-width: 170px;
+  }
+
+  .guide-content .cta-section {
+    padding: 28px 22px;
   }
 }
