@@ -5,73 +5,6 @@
   background: var(--bg);
 }
 
-.guide-article-page > header {
-  position: relative;
-  overflow: hidden;
-  padding: 148px 0 88px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-}
-
-.guide-article-page > header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 80% at 10% 50%, rgba(0,119,182,.12) 0%, transparent 60%),
-    radial-gradient(ellipse 42% 44% at 90% 18%, rgba(0,180,216,.08) 0%, transparent 56%);
-  pointer-events: none;
-}
-
-.guide-article-page > header h1,
-.guide-article-page > header .subtitle {
-  position: relative;
-  z-index: 1;
-  width: min(100% - 64px, 860px);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.guide-article-page > header h1 {
-  margin-top: 0;
-  margin-bottom: 16px;
-  color: var(--white);
-  font-size: clamp(2.05rem, 2.85vw, 3.25rem);
-  font-weight: 900;
-  line-height: 1.12;
-  letter-spacing: -.026em;
-  text-wrap: balance;
-}
-
-.guide-article-page > header .subtitle {
-  max-width: 640px;
-  color: var(--text-mid);
-  font-size: 1rem;
-  line-height: 1.75;
-}
-
-.guide-article-page > .breadcrumb {
-  width: min(100% - 64px, 800px);
-  margin: 60px auto 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  color: var(--text-dim);
-  font-size: .78rem;
-  line-height: 1.5;
-}
-
-.guide-article-page > .breadcrumb a {
-  color: var(--accent);
-  transition: opacity .3s;
-}
-
-.guide-article-page > .breadcrumb a:hover {
-  opacity: .75;
-  text-decoration: none;
-}
-
 .guide-content {
   width: min(100% - 64px, 800px);
   margin: 24px auto 100px;
@@ -187,6 +120,14 @@
 .guide-content .toc a:hover {
   color: var(--accent);
   text-decoration: none;
+}
+
+body.guide-article-page #toc-sidebar {
+  z-index: 120;
+}
+
+body.guide-article-page #back-top {
+  z-index: 9500;
 }
 
 .guide-content .use-case-cards,
@@ -346,31 +287,9 @@
   text-decoration: none;
 }
 
-@media (min-width: 1280px) {
-  .guide-article-page > header h1 {
-    font-size: clamp(2.2rem, 2.65vw, 3.15rem);
-  }
-}
-
 @media (max-width: 720px) {
-  .guide-article-page > header {
-    padding: 132px 0 72px;
-  }
-
-  .guide-article-page > header h1,
-  .guide-article-page > header .subtitle,
-  .guide-article-page > .breadcrumb,
   .guide-content {
     width: min(100% - 40px, 800px);
-  }
-
-  .guide-article-page > header h1 {
-    font-size: clamp(2.1rem, 10vw, 3.15rem);
-    line-height: 1.08;
-  }
-
-  .guide-article-page > .breadcrumb {
-    margin-top: 42px;
   }
 
   .guide-content {

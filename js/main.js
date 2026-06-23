@@ -67,14 +67,20 @@ document.addEventListener('DOMContentLoaded', () => {
 const navbar  = document.getElementById('navbar');
 const backTop = document.getElementById('back-top') || document.getElementById('back-to-top');
 
-window.addEventListener('scroll', () => {
+function updateScrollChrome() {
   const y = window.scrollY;
   if (navbar) navbar.classList.toggle('scrolled', y > 60);
   if (backTop) backTop.classList.toggle('show', y > 400);
-}, { passive: true });
+}
 
-if (backTop && backTop.tagName === 'BUTTON') {
-  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+window.addEventListener('scroll', updateScrollChrome, { passive: true });
+updateScrollChrome();
+
+if (backTop) {
+  backTop.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
 
 /* ─── Mobile hamburger ─── */

@@ -151,11 +151,18 @@
      2. Table of contents + scroll-spy
      ═══════════════════════════════════════════════════════ */
   function initTOC() {
-    var wrap = document.querySelector('.article-wrap');
+    var wrap = document.querySelector('.article-wrap') || document.querySelector('.guide-content');
     if (!wrap) return;
-    var headings = Array.from(wrap.querySelectorAll('h2'));
+    var isGuideContent = wrap.classList.contains('guide-content');
+    function isTocHeading(h) {
+      return isGuideContent && (h.closest('.toc') || h.closest('.cta-section'));
+    }
+
+    var headings = Array.from(wrap.querySelectorAll('h2')).filter(function (h) { return !isTocHeading(h); });
     /* Fall back to h2+h3 for articles whose sections are marked with h3 */
-    if (headings.length < 3) headings = Array.from(wrap.querySelectorAll('h2, h3'));
+    if (headings.length < 3) {
+      headings = Array.from(wrap.querySelectorAll('h2, h3')).filter(function (h) { return !isTocHeading(h); });
+    }
     if (headings.length < 3) return;
 
     /* Assign IDs to headings that lack them */
@@ -209,7 +216,8 @@
 
     /* ── Mobile toggle + list (injected before article-meta) ── */
     var meta = wrap.querySelector('.article-meta');
-    if (meta) {
+    var mobileInsertBefore = meta;
+    if (mobileInsertBefore) {
       var toggle = document.createElement('button');
       toggle.id = 'toc-toggle';
       toggle.setAttribute('aria-expanded', 'false');
@@ -239,8 +247,7 @@
         toggle.classList.toggle('open', !isOpen);
         toggle.setAttribute('aria-expanded', String(!isOpen));
       });
-
-      wrap.insertBefore(mobileDiv, meta);
+      wrap.insertBefore(mobileDiv, mobileInsertBefore);
       wrap.insertBefore(toggle, mobileDiv);
     }
 
