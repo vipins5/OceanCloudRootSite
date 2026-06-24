@@ -35,10 +35,23 @@ ARCHIVE_JSON = ROOT / "data" / "archive.json"
 BASE_URL = "https://oceancloudconsults.com"
 # XML namespace for sitemap URL set parsing/writing.
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
+ROBOTS_RE = re.compile(
+    r"<meta\s+[^>]*name=[\"']robots[\"'][^>]*content=[\"']([^\"']*)[\"'][^>]*>",
+    re.IGNORECASE,
+)
 
 
 def repo_path(path: str) -> Path:
     return (ROOT / path).resolve()
+
+
+def is_noindex_page(file: Path) -> bool:
+    try:
+        text = file.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return False
+    match = ROBOTS_RE.search(text)
+    return bool(match and "noindex" in match.group(1).lower())
 
 
 def file_to_url(file: Path) -> str | None:
@@ -52,6 +65,8 @@ def file_to_url(file: Path) -> str | None:
     if rel == "404.html":
         return None
     if rel.startswith("articles/news-"):
+        return None
+    if is_noindex_page(file):
         return None
     if rel == "index.html":
         return f"{BASE_URL}/"
@@ -123,6 +138,11 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
             root.remove(url_el)
             changed_count += 1
             print(f"  [remove] {loc}")
+            continue
+        if is_noindex_page(file):
+            root.remove(url_el)
+            changed_count += 1
+            print(f"  [remove noindex] {loc}")
             continue
         if file.resolve() in changed:
             lastmod_el = url_el.find(f"{{{SITEMAP_NS}}}lastmod")

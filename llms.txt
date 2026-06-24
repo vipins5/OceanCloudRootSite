@@ -13,7 +13,6 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 - Sitemap index: https://oceancloudconsults.com/sitemap-index.xml
 - Sitemap: https://oceancloudconsults.com/sitemap.xml
 - Guide sitemap: https://oceancloudconsults.com/sitemap-guides.xml
-- Message Center sitemap: https://oceancloudconsults.com/sitemap-mc.xml
 - RSS feed: https://oceancloudconsults.com/feed.xml
 - Search index JSON: https://oceancloudconsults.com/data/search-index.json
 - Guides hub: https://oceancloudconsults.com/guides

@@ -1494,13 +1494,13 @@ def card_html(item: dict, commentary: str) -> str:
           {f'<span class="nc-date">{escape(date_str)}</span>' if date_str else ''}
         </div>
         <h3 class="nc-title">
-          <a href="{escape(local_url)}">
+          <a href="{escape(local_url)}" rel="nofollow">
             {escape(item['title'])}
           </a>
         </h3>
         <p class="nc-body">{escape(commentary)}</p>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <a class="nc-link" href="{escape(local_url)}">Read article &#8599;</a>
+          <a class="nc-link" href="{escape(local_url)}" rel="nofollow">Read article &#8599;</a>
           <a class="nc-link" href="{escape(ms_url)}" target="_blank" rel="noopener noreferrer" style="opacity:.6;font-size:.75rem;">Microsoft &#8599;</a>
         </div>
       </article>"""
@@ -1594,7 +1594,7 @@ def build_archive_block(archive: list[dict]) -> str:
             short      = source_tag_label(it)
             art_slug   = it.get("article_slug", "")
             link_url   = f"/articles/{art_slug}" if art_slug else it["url"]
-            link_attrs = "" if art_slug else ' target="_blank" rel="noopener noreferrer"'
+            link_attrs = ' rel="nofollow"' if art_slug else ' target="_blank" rel="noopener noreferrer"'
             rows += (
                 f'        <li class="am-item">\n'
                 f'          <span class="nc-tag {escape(it["css_tag"])}">{short}</span>\n'

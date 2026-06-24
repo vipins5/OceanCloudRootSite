@@ -30,9 +30,9 @@ DEFAULT_CREDENTIALS = "oceancloud-comments-daead280e122.json"
 DEFAULT_SITE_URL = "https://oceancloudconsults.com/"
 DEFAULT_OUTPUT = "data/reports/gsc-dashboard-report.json"
 DEFAULT_SITEMAPS = [
+    "https://oceancloudconsults.com/sitemap-index.xml",
     "https://oceancloudconsults.com/sitemap.xml",
     "https://oceancloudconsults.com/sitemap-guides.xml",
-    "https://oceancloudconsults.com/sitemap-mc.xml",
 ]
 SCOPES = ["https://www.googleapis.com/auth/webmasters"]
 

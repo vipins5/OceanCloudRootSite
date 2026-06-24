@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 """
-Generate crawlable Message Center SEO pages for MC IDs.
+Generate noindex Message Center helper pages for MC IDs.
 
 Outputs:
 - mc/<MCID>.html            (one page per message)
 - mc/index.html             (listing page)
-- sitemap-mc.xml            (sitemap for MC pages)
+- sitemap-mc.xml            (empty compatibility sitemap)
 
-This improves discoverability when users search Google for specific MC IDs.
+The pages support direct MC ID lookup from OceanCloud, but stay out of
+Google's index so automated Microsoft notification content does not dilute
+the site's original editorial footprint.
 """
 
 from __future__ import annotations
 
-import datetime as dt
 import html
 import json
 import pathlib
@@ -131,7 +132,7 @@ def page_html(m: dict[str, Any]) -> str:
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>{esc(mcid)} | {esc(title)} | OceanCloud Message Center</title>
   <meta name=\"description\" content=\"{esc(desc)}\" />
-  <meta name=\"robots\" content=\"index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1\" />
+    <meta name=\"robots\" content=\"noindex, follow, noarchive\" />
   <link rel=\"canonical\" href=\"{esc(url)}\" />
   <meta property=\"og:type\" content=\"article\" />
   <meta property=\"og:title\" content=\"{esc(mcid)} | {esc(title)}\" />
@@ -173,7 +174,7 @@ def page_html(m: dict[str, Any]) -> str:
       <p>{esc(body or 'Open in Message Center to read the complete notification.')}</p>
       <a class=\"btn\" rel=\"nofollow\" href=\"{esc(app_url)}\">Open Full Notification</a>
       <a class=\"btn btn-secondary\" href=\"{SITE}/message-center\">Browse Message Center</a>
-      <p class=\"muted\">This page is an SEO landing page for discoverability of Message Center ID {esc(mcid)}.</p>
+    <p class=\"muted\">This utility page supports direct lookup of Message Center ID {esc(mcid)}.</p>
     </div>
   </main>
     <script src=\"/js/consent.js\"></script>
@@ -187,7 +188,7 @@ def write_index(messages: list[dict[str, Any]]) -> None:
     for m in messages:
         mcid = str(m.get("id", "")).upper()
         title = strip_tags(str(m.get("title", "Message Center notification")))
-        items.append(f'<li><a href="/mc/{esc(mcid)}.html">{esc(mcid)}</a> - {esc(title)}</li>')
+        items.append(f'<li><a rel="nofollow" href="/mc/{esc(mcid)}.html">{esc(mcid)}</a> - {esc(title)}</li>')
     html_doc = f"""<!DOCTYPE html>
 <html lang=\"en\">
 <head>
@@ -195,7 +196,7 @@ def write_index(messages: list[dict[str, Any]]) -> None:
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>Microsoft 365 Message Center IDs | OceanCloud</title>
   <meta name=\"description\" content=\"Index of Microsoft 365 Message Center IDs tracked by OceanCloud.\" />
-  <meta name=\"robots\" content=\"index,follow\" />
+    <meta name=\"robots\" content=\"noindex, follow, noarchive\" />
   <link rel=\"canonical\" href=\"{SITE}/mc/index.html\" />
   <style>
     body {{ margin:0; background:#070d17; color:#d6e3f5; font-family:Inter,Segoe UI,Arial,sans-serif; }}
@@ -210,7 +211,7 @@ def write_index(messages: list[dict[str, Any]]) -> None:
   <main>
     <div class=\"card\">
       <h1>Microsoft 365 Message Center IDs</h1>
-      <p>Direct landing pages for crawl/index support.</p>
+    <p>Direct lookup pages for OceanCloud Message Center support.</p>
       <ul>{''.join(items)}</ul>
       <p><a href=\"/message-center\">Open live Message Center</a></p>
     </div>
@@ -223,25 +224,9 @@ def write_index(messages: list[dict[str, Any]]) -> None:
 
 
 def write_sitemap(messages: list[dict[str, Any]]) -> None:
-    rows = []
-    today = dt.date.today().isoformat()
-    for m in messages:
-        mcid = str(m.get("id", "")).upper()
-        mod_raw = str(m.get("lastModifiedDateTime") or "")
-        lastmod = mod_raw[:10] if re.fullmatch(r"\d{4}-\d{2}-\d{2}.*", mod_raw) else today
-        rows.append(
-            f"  <url>\n"
-            f"    <loc>{SITE}/mc/{mcid}.html</loc>\n"
-            f"    <lastmod>{lastmod}</lastmod>\n"
-            f"    <changefreq>daily</changefreq>\n"
-            f"    <priority>0.7</priority>\n"
-            f"  </url>"
-        )
-
     sitemap = (
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
-        f"{chr(10).join(rows)}\n"
         "</urlset>\n"
     )
     SITEMAP_PATH.write_text(sitemap, encoding="utf-8")
@@ -283,8 +268,8 @@ def main() -> int:
     write_index(messages)
     write_sitemap(messages)
 
-    print(f"Generated {len(messages)} MC SEO pages in {MC_DIR}")
-    print(f"Generated sitemap: {SITEMAP_PATH}")
+    print(f"Generated {len(messages)} noindex MC utility pages in {MC_DIR}")
+    print(f"Generated empty compatibility sitemap: {SITEMAP_PATH}")
     return 0
 
 

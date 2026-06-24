@@ -72,42 +72,6 @@
     "dateSort": ""
   },
   {
-    "id": "archive",
-    "type": "news",
-    "tag": "News",
-    "title": "Microsoft 365 News Archive",
-    "heading": "News Archive",
-    "excerpt": "Full archive of Microsoft SharePoint and M365 news updates curated by OceanCloud. Browse every update by month and year.",
-    "body": "Microsoft 365 News Archive | OceanCloud Skip to content News Archive Every Microsoft 365 and SharePoint update we have covered, organised by month. All links go directly to Microsoft's official sources. Historical Updates Browse by Month A searchable record of Microsoft's M365 evolution — curated weekly by OceanCloud's certified consultants since May 2026. ← Back to latest news May 2026 7 items M365 Microsoft Teams: Interpreter agent support in Teams Rooms on Android May 20, 2026 M365 Microsoft Purview: Information Protection – Auto-labeling Simulation Evaluation May 20, 2026 M365 Microsoft Teams: Support human interpreter listening mode in Microsoft Teams Rooms on Windows May 18, 2026 M365 Microsoft Teams: Searchable keyboard shortcuts from the dialog in Teams May 15, 2026 M365 Microsoft Purview: Data Lifecycle Management - DLM Meter Change May 15, 2026 M365 Microsoft Teams: Preloaded video for Teams Events and Meetings May 14, 2026 Blog Proven intranet framework - Involv Intranet - SharePoint Partner Showcase May 13, 2026 April 2026 5 items Blog Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management April 30, 2026 Blog SharePoint Showcase: AI-Forward Content Creation & Curation for the Modern Intranet April 30, 2026 Blog Solutions for document-centric business processes - Portal Systems - SharePoint Partner Showcase April 29, 2026 Blog Building a modern digital workplace on Microsoft 365 - WebVine - SharePoint Partner Showcase April 27, 2026 Blog AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act April 21, 2026 Archive updated: May 21, 2026 at 18:34 UTC · 12 total items Concerned about a specific update? Our consultants can assess how any Microsoft 365 change affects your environment and plan the right response. Book a Free Call → ⇧ 🍪 We use cookies Google Analytics helps us improve this site. No personal data is sold or shared. Cookie policy Decline Accept",
-    "url": "archive",
-    "dateDisplay": "",
-    "dateSort": ""
-  },
-  {
-    "id": "status",
-    "type": "page",
-    "tag": "Operations",
-    "title": "Microsoft 365 Service Health Status",
-    "heading": "Microsoft 365 Service Health",
-    "excerpt": "Live Microsoft 365 service health dashboard with active incidents, advisories, tenant health, and regional filtering powered by Microsoft Graph.",
-    "body": "Microsoft 365 Service Health Status OceanCloud live operations Microsoft 365 service health active incidents outages advisories tenant health regional filtering Microsoft Graph Exchange Online SharePoint Online Teams Defender Entra status dashboard service degradation auto refresh.",
-    "url": "status",
-    "dateDisplay": "",
-    "dateSort": ""
-  },
-  {
-    "id": "message-center",
-    "type": "page",
-    "tag": "Operations",
-    "title": "Microsoft 365 Message Center",
-    "heading": "Microsoft 365 Message Center",
-    "excerpt": "Microsoft 365 tenant communications dashboard for planned changes, feature updates, action-required notices, services, tags, and Message Center search.",
-    "body": "Microsoft 365 Message Center OceanCloud tenant communications planned changes feature updates action required advisories Microsoft Graph service messages inbox archive tags services search auto refresh admin notifications roadmap updates.",
-    "url": "message-center",
-    "dateDisplay": "",
-    "dateSort": ""
-  },
-  {
     "id": "guides",
     "type": "page",
     "tag": "Page",
