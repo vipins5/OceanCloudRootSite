@@ -1,6 +1,56 @@
 {
   "items": [
     {
+      "title": "OneDrive: Find your group sites faster with the new My Sites tab in OneDrive for iOS",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566531",
+      "date_friendly": "June 23, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-onedrive-find-your-group-sites-faster-with-the-new-my-sites"
+    },
+    {
+      "title": "Microsoft Purview: View only Role management enhancements",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566529",
+      "date_friendly": "June 23, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-view-only-role-management-enhancements"
+    },
+    {
+      "title": "Microsoft Viva: Insights for GitHub Copilot spend and usage",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566470",
+      "date_friendly": "June 23, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-viva-insights-for-github-copilot-spend-and-usage"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Updated Copilot Answers",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562354",
+      "date_friendly": "June 23, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-copilot-microsoft-365-updated-copilot-answers"
+    },
+    {
+      "title": "Microsoft Teams: Block all identified external bots automatically from joining your meetings",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566201",
+      "date_friendly": "June 22, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-block-all-identified-external-bots-automatic"
+    },
+    {
       "title": "Microsoft Viva: Create and customize PBI reports",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566317",
       "date_friendly": "June 19, 2026",
@@ -219,6 +269,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-06-microsoft-teams-queues-app-for-microsoft-teams-in-gcc-high-a"
+    },
+    {
+      "title": "Microsoft Teams: Granular channel notification controls",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565132",
+      "date_friendly": "June 09, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-granular-channel-notification-controls"
     },
     {
       "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
@@ -869,5 +929,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-22"
+  "last_updated": "2026-06-24"
 }
