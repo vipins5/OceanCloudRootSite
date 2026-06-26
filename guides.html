@@ -79,7 +79,7 @@
             }
           ]
         }
-      },,
+      },
       {
         "@type": "Organization",
         "@id": "https://oceancloudconsults.com/#organization",
@@ -149,6 +149,12 @@
   .guides-header .section-label{justify-content:center;}
   .guides-header h2{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;letter-spacing:-.04em;line-height:1.1;margin:12px 0 16px;}
   .guides-header p{color:var(--text-mid);font-size:1rem;max-width:520px;margin:0 auto;line-height:1.75;}
+  .guides-quick{margin:0 auto 34px;max-width:980px;padding:18px 22px;border-radius:14px;border:1px solid rgba(120,160,220,.2);background:rgba(11,19,34,.55);}
+  .guides-quick h3{margin:0 0 12px;font-size:1rem;font-weight:800;letter-spacing:-.01em;color:var(--white);}
+  .guides-quick ul{margin:0;padding-left:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;}
+  .guides-quick li{color:var(--text-mid);line-height:1.6;font-size:.9rem;}
+  .guides-quick a{color:var(--accent);text-decoration:none;}
+  .guides-quick a:hover{opacity:.8;text-decoration:underline;}
   .guides-filters{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
   .gf-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-right:4px;}
   .gf-btn{padding:7px 18px;border-radius:50px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid rgba(120,160,220,.18);background:transparent;color:var(--text-mid);font-family:inherit;transition:background .2s,border-color .2s,color .2s;}
@@ -196,7 +202,7 @@
   .guides-count a{color:var(--text-mid);}
   .guides-count a:hover{color:var(--accent);}
   @media(max-width:900px){.guides-grid{grid-template-columns:repeat(2,1fr);}}
-  @media(max-width:580px){.guides-grid{grid-template-columns:1fr;}}
+  @media(max-width:580px){.guides-grid{grid-template-columns:1fr;}.guides-quick ul{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -253,6 +259,18 @@
       <h2>Practical guides from <span class="grad-text">real consultants</span></h2>
       <p>Everything we've learned from 150+ SharePoint and Microsoft 365 deployments, distilled into actionable guides you can apply today.</p>
     </div>
+
+    <aside class="guides-quick" aria-label="Most searched guides">
+      <h3>Most searched guides this month</h3>
+      <ul>
+        <li><a href="articles/guide-sharepoint-intranet">SharePoint intranet planning, launch, and governance guide</a></li>
+        <li><a href="articles/guide-sharepoint-external-sharing-complete-admin-guide">SharePoint external sharing secure setup checklist</a></li>
+        <li><a href="articles/guide-sharepoint-copilot-ready">SharePoint Copilot readiness checklist for 2026</a></li>
+        <li><a href="articles/guide-sharepoint-copilot-agents">SharePoint Copilot agent setup, licensing, and cost</a></li>
+        <li><a href="articles/guide-get-started-sharepoint-agents">Agents in SharePoint setup, limits, and troubleshooting</a></li>
+        <li><a href="articles/guide-sharepoint-automation-ideas">10 SharePoint automation workflows in Power Automate</a></li>
+      </ul>
+    </aside>
 
     <div class="guides-filters">
       <span class="gf-label">Topic:</span>
