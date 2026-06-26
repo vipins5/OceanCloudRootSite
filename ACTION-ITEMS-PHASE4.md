@@ -58,11 +58,13 @@
 ### Tier 2: Medium Priority (Day 2-3)
 
 #### 4. **Set Up CTR Monitoring Baseline** ⏱️ ~40 min
-- [ ] Capture Google Search Console data for all 30 guides
+- [x] Capture Google Search Console data for all guide pages
   - Current CTR, impressions, position by guide
-- [ ] Create baseline spreadsheet before new guides gain traffic
-- [ ] Schedule Day 7, Day 14, Day 21 checkpoints
+- [x] Create baseline spreadsheet before new guides gain traffic
+- [x] Schedule Day 7, Day 14, Day 21 checkpoints
 - **Impact:** Measure impact of new content on overall CTR
+- **Status:** Baseline captured 2026-06-26
+- **Files:** `data/reports/gsc-guide-baseline-20260626.csv`, `data/reports/gsc-guide-baseline-summary-20260626.json`, `data/reports/gsc-guide-checkpoints.json`
 
 #### 5. **Create Social Media Preview Cards** ⏱️ ~30 min
 - [ ] Design open graph images for both new guides
@@ -104,7 +106,7 @@
 - [x] Both guides added to sitemaps and navigation
 - [ ] Both guides indexed in Google Search Console (watch for 24-48 hour indexing)
 - [ ] Email sequences live and first emails sent (needs CRM integration)
-- [ ] CTR baseline captured (30 guides) — PENDING Day 0 execution
+- [x] CTR baseline captured (all current guide pages)
 
 **By Day 14 (2026-07-07):**
 - [ ] New guides getting organic search impressions
