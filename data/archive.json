@@ -1,6 +1,36 @@
 {
   "items": [
     {
+      "title": "Business Applications Built for Microsoft 365 – Cubic Logics – SharePoint Partner Showcase",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/business-applications-built-for-microsoft-365-cubic-logics/ba-p/4530898",
+      "date_friendly": "June 25, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-06-business-applications-built-for-microsoft-365-cubic-logics-s"
+    },
+    {
+      "title": "Microsoft Purview: Data Loss Prevention - Endpoint DLP now detects sensitivity labels on files inside archives",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566617",
+      "date_friendly": "June 25, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-data-loss-prevention-endpoint-dlp-now-dete"
+    },
+    {
+      "title": "Microsoft Purview: Data Lifecycle Management - Ensure regulatory compliance by deleting inactive OneDrives and mailboxes for departing employees",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566527",
+      "date_friendly": "June 25, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-data-lifecycle-management-ensure-regulator"
+    },
+    {
       "title": "OneDrive: Find your group sites faster with the new My Sites tab in OneDrive for iOS",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566531",
       "date_friendly": "June 23, 2026",
@@ -49,6 +79,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-06-microsoft-teams-block-all-identified-external-bots-automatic"
+    },
+    {
+      "title": "A new SharePoint Look and Feel: What’s Changing and Why It Matters",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/a-new-sharepoint-look-and-feel-what-s-changing-and-why-it/ba-p/4529776",
+      "date_friendly": "June 22, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-06-a-new-sharepoint-look-and-feel-whats-changing-and-why-it-mat"
     },
     {
       "title": "Microsoft Viva: Create and customize PBI reports",
@@ -279,6 +319,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-06-microsoft-teams-granular-channel-notification-controls"
+    },
+    {
+      "title": "Microsoft Teams: Assistant field visibility in Organization view",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565221",
+      "date_friendly": "June 09, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-assistant-field-visibility-in-organization-v"
     },
     {
       "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
@@ -760,6 +810,16 @@
       "article_slug": "news-2026-04-microsoft-teams-unblock-users-to-send-message-while-file-is-"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Copilot improved long files navigation using document structure, enabling more accurate answers and clearer citations.",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559614",
+      "date_friendly": "April 24, 2026",
+      "month_sort": "2026-04",
+      "month_label": "April 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-04-microsoft-copilot-microsoft-365-copilot-improved-long-files"
+    },
+    {
       "title": "AI Skills Are Now in Public Preview: Teaching AI in SharePoint What to Know and How to Act",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/ai-skills-are-now-in-public-preview-teaching-ai-in-sharepoint/ba-p/4512532",
       "date_friendly": "April 21, 2026",
@@ -929,5 +989,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-24"
+  "last_updated": "2026-06-26"
 }
