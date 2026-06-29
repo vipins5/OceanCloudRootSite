@@ -120,6 +120,13 @@ def strip_html(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+def normalize_microsoft_text(text: str) -> str:
+    """Fix known source-feed typos before rendering local news pages."""
+    if not text:
+        return text
+    return text.replace("Microsoft 356 Copilot", "Microsoft 365 Copilot")
+
+
 def friendly_date(raw: str) -> str:
     if not raw:
         return ""
@@ -1392,11 +1399,13 @@ def fetch_blog() -> list[dict]:
             print(f"  [warn] bozo_exception: {getattr(feed, 'bozo_exception', '')}", file=sys.stderr)
         posts = []
         for entry in feed.entries[:MAX_BLOG]:
+            title = normalize_microsoft_text(entry.get("title", "Untitled"))
+            summary = normalize_microsoft_text(strip_html(entry.get("summary", "")))[:800]
             posts.append({
-                "title":   entry.get("title", "Untitled"),
+                "title":   title,
                 "url":     entry.get("link", "#"),
                 "date":    entry.get("published", ""),
-                "summary": strip_html(entry.get("summary", ""))[:800],
+                "summary": summary,
                 "source":  "SharePoint Blog",
                 "css_tag": "tag-blog",
             })
@@ -1423,11 +1432,13 @@ def fetch_roadmap() -> list[dict]:
                 matched += 1
             else:
                 continue
+            title = normalize_microsoft_text(entry.get("title", "Untitled"))
+            summary = normalize_microsoft_text(strip_html(entry.get("summary", "")))[:800]
             items.append({
-                "title":   entry.get("title", "Untitled"),
+                "title":   title,
                 "url":     entry.get("link", "https://www.microsoft.com/en-us/microsoft-365/roadmap"),
                 "date":    entry.get("published", ""),
-                "summary": strip_html(entry.get("summary", ""))[:800],
+                "summary": summary,
                 "source":  "M365 Roadmap",
                 "css_tag": "tag-roadmap",
             })

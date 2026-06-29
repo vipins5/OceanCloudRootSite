@@ -11,7 +11,7 @@
 		<copyright>Copyright 2026 OceanCloud LLC</copyright>
 		<managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
 		<webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
-		<lastBuildDate>Mon, 29 Jun 2026 17:43:20 +0000</lastBuildDate>
+		<lastBuildDate>Mon, 29 Jun 2026 18:05:04 +0000</lastBuildDate>
 		<ttl>1440</ttl>
 		<image>
 			<url>https://oceancloudconsults.com/assets/og-home.jpg</url>
@@ -242,7 +242,7 @@
 		</item>
 
 		<item>
-			<title>PowerShell Script to Create Self-Signed Certificate for Entra App Registration</title>
+			<title>Fix ExportPkcs8PrivateKey in PowerShell 5.1</title>
 			<link>https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration</guid>
 			<pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate>
@@ -264,7 +264,7 @@
 		</item>
 
 		<item>
-			<title>Automate SharePoint Site Provisioning End to End: Logic Apps, Azure Automation &amp; Self-Service Recovery</title>
+			<title>SharePoint Provisioning Automation: Forms, Approvals, PnP</title>
 			<link>https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation</guid>
 			<pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>
@@ -275,7 +275,7 @@
 		</item>
 
 		<item>
-			<title>Agents in SharePoint Guide: Custom Copilot Agents</title>
+			<title>Copilot Agent for SharePoint: Setup, Limits, PAYG</title>
 			<link>https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</guid>
 			<pubDate>Thu, 28 May 2026 00:00:00 +0000</pubDate>
@@ -385,7 +385,7 @@
 		</item>
 
 		<item>
-			<title>SharePoint Copilot Agents: Licensing, Limits &amp; Use Cases</title>
+			<title>Copilot Agents for SharePoint: Setup, Licensing, Cost</title>
 			<link>https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-copilot-agents</guid>
 			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
@@ -429,7 +429,7 @@
 		</item>
 
 		<item>
-			<title>SharePoint Approval Workflows with Multiple Approvers: Sequential vs Parallel</title>
+			<title>Power Automate Approval Multiple Approvers</title>
 			<link>https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-approval-multiple-approvers</guid>
 			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
@@ -451,7 +451,7 @@
 		</item>
 
 		<item>
-			<title>Power Automate SharePoint Triggers and Actions Explained</title>
+			<title>Power Automate SharePoint Triggers: Filters, HTTP, Actions</title>
 			<link>https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions</guid>
 			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
@@ -473,7 +473,7 @@
 		</item>
 
 		<item>
-			<title>Build Custom Business Apps with Power Apps and SharePoint</title>
+			<title>Power Apps SharePoint List Canvas App Guide</title>
 			<link>https://oceancloudconsults.com/articles/guide-power-apps-sharepoint</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-power-apps-sharepoint</guid>
 			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>
