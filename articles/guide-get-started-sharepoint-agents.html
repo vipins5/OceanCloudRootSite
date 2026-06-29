@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>Agents in SharePoint: Setup, Limits, Troubleshooting | OceanCloud</title>
-  <meta name="description" content="Get started with Agents in SharePoint: setup, source limits, PAYG billing, Copilot Studio publishing, and troubleshooting steps." />
+  <title>Copilot Agent for SharePoint: Setup, Limits, PAYG | OceanCloud</title>
+  <meta name="description" content="Create a Copilot agent for SharePoint, compare SharePoint agents with Copilot Studio agents, understand source limits, PAYG billing, sharing, and troubleshooting." />
   <meta name="keywords" content="agents in SharePoint, SharePoint agents, SharePoint agent limits, SharePoint agent troubleshooting, custom Copilot agents, custom Copilot agents SharePoint, Microsoft 365 Copilot agents, Copilot Studio SharePoint, SharePoint agent PowerShell, Agent Insights, Agent Access Insights" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -16,8 +16,8 @@
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
-  <meta property="og:title"       content="Agents in SharePoint: Setup, Limits, Troubleshooting" />
-  <meta property="og:description" content="Practical guide to Agents in SharePoint: setup, PAYG billing, source limits, Copilot Studio publishing, and troubleshooting." />
+  <meta property="og:title"       content="Copilot Agent for SharePoint: Setup, Limits, PAYG" />
+  <meta property="og:description" content="Create a Copilot agent for SharePoint, compare SharePoint agents with Copilot Studio agents, and plan PAYG billing, source limits, and sharing." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
   <meta property="og:image:alt"   content="SharePoint agents and Copilot planning graphic" />
@@ -26,8 +26,8 @@
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@oceancloud_x" />
-  <meta name="twitter:title"       content="Agents in SharePoint: Setup, Limits, Troubleshooting | OceanCloud" />
-  <meta name="twitter:description" content="Practical guide to Agents in SharePoint: setup, PAYG billing, source limits, Copilot Studio publishing, and troubleshooting." />
+  <meta name="twitter:title"       content="Copilot Agent for SharePoint: Setup, Limits, PAYG | OceanCloud" />
+  <meta name="twitter:description" content="Create a Copilot agent for SharePoint, compare agent types, and plan PAYG billing, source limits, sharing, and troubleshooting." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-services.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,21 +50,21 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents#article",
-        "headline": "Agents in SharePoint: Setup, Limits, Troubleshooting",
+        "headline": "Copilot Agent for SharePoint: Setup, Limits, PAYG",
         "url": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents"
         },
         "datePublished": "2026-05-28",
-        "dateModified": "2026-06-04",
+        "dateModified": "2026-06-29",
         "author": {
           "@id": "https://oceancloudconsults.com/#james-whitfield"
         },
         "publisher": {
           "@id": "https://oceancloudconsults.com/#organization"
         },
-        "description": "Get started with Agents in SharePoint: setup, source limits, PAYG billing, Copilot Studio publishing, Agent Insights, and troubleshooting.",
+        "description": "Create a Copilot agent for SharePoint, compare SharePoint agents with Copilot Studio agents, and plan source limits, PAYG billing, Agent Insights, and troubleshooting.",
         "image": "https://oceancloudconsults.com/assets/og-services.jpg",
         "keywords": [
           "agents in SharePoint",
@@ -195,6 +195,14 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "A SharePoint agent is an AI assistant scoped to content in a specific SharePoint site or set of files. It uses Microsoft 365 Copilot to answer questions, summarise documents, and help users find information \u2014 all grounded in your tenant's SharePoint content and governed by your existing Microsoft 365 permissions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is a Copilot agent for SharePoint the same as a SharePoint agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In everyday admin conversations, yes: a Copilot agent for SharePoint usually means a SharePoint agent grounded in SharePoint content. The important distinction is build path. A no-code SharePoint agent is created directly from SharePoint content, while a Copilot Studio agent can add custom topics, actions, connectors, and publishing options."
             }
           },
           {
@@ -369,7 +377,7 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>SharePoint Agents</span></nav>
-      <h1>Agents in SharePoint: <span class="grad-text">Setup, Limits, and Troubleshooting</span></h1>
+      <h1>Copilot Agent for SharePoint: <span class="grad-text">Setup, Limits, and PAYG</span></h1>
       <p>A practical guide to SharePoint agents, Copilot Studio agents, licensing, PAYG costs, SharePoint agent limits, governance, Microsoft screenshots, PowerShell checks, and SharePoint agent troubleshooting before rollout.</p>
     </div>
   </div>
@@ -393,7 +401,7 @@
         <li>Use the troubleshooting section when answers miss content, licensing blocks access, agent approval stalls, or PowerShell reports fail.</li>
       </ul>
 
-      <p class="article-intro">If you are evaluating Agents in SharePoint, start with the operational basics: where agents run, what content sources are allowed, what limits apply, and how PAYG billing works in production. SharePoint agents help users ask natural-language questions over approved content, but rollout quality depends on source design, governance, and troubleshooting readiness. This guide gives you the step-by-step setup path and the failure checks admins need most.</p>
+      <p class="article-intro">If you are evaluating a Copilot agent for SharePoint, start with the operational basics: where SharePoint agents run, what content sources are allowed, what limits apply, and how PAYG billing works in production. SharePoint agents help users ask natural-language questions over approved content, but rollout quality depends on source design, governance, and troubleshooting readiness. This guide gives you the step-by-step setup path and the failure checks admins need most.</p>
 
       <div class="art-callout info">
         <p><strong>Short version:</strong> Use a no-code SharePoint agent when you want fast Q&amp;A over a site, library, list, folder, or selected files. Use a Copilot Studio agent when you need actions, workflows, external systems, advanced topics, or a more controlled enterprise rollout.</p>
@@ -813,6 +821,19 @@ Get-SPORestrictedContentDiscoverabilityReport -Action Download -ReportId "000000
             <div class="faq-a-inner">
               <p>A SharePoint agent is an AI assistant scoped to content in a specific SharePoint site or set of files.</p>
               <p>It uses Microsoft 365 Copilot to answer questions, summarise documents, and help users find information — all grounded in your tenant's SharePoint content and governed by your existing Microsoft 365 permissions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Is a Copilot agent for SharePoint the same as a SharePoint agent?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>In everyday admin conversations, yes: a Copilot agent for SharePoint usually means a SharePoint agent grounded in SharePoint content.</p>
+              <p>The important distinction is build path. A no-code SharePoint agent is created directly from SharePoint content, while a Copilot Studio agent can add custom topics, actions, connectors, and publishing options.</p>
             </div>
           </div>
         </div>

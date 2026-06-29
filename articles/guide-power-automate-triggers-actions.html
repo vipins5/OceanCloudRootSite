@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>Power Automate SharePoint Triggers &amp; Actions Guide | OceanCloud</title>
-  <meta name="description" content="Master every SharePoint trigger and action in Power Automate — OData filter queries, file operations, and HTTP REST patterns with copy-paste examples included." />
+  <title>Power Automate SharePoint Triggers: Filters, HTTP | OceanCloud</title>
+  <meta name="description" content="Power Automate SharePoint triggers and actions explained: OData filter queries, Get items limits, file actions, Data Operations, HTTP REST, and tracked properties." />
   <meta name="keywords" content="power automate sharepoint triggers, sharepoint connector power automate, get items filter query, create file power automate, power automate sharepoint actions" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -16,16 +16,16 @@
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
-  <meta property="og:title"       content="Power Automate SharePoint Triggers and Actions Guide" />
-  <meta property="og:description" content="Master every SharePoint trigger and action in Power Automate — OData filter queries, file operations, and HTTP REST patterns with copy-paste examples." />
+  <meta property="og:title"       content="Power Automate SharePoint Triggers: Filters, HTTP, Actions" />
+  <meta property="og:description" content="SharePoint triggers and actions explained: OData filters, Get items limits, file actions, Data Operations, HTTP REST, and tracked properties." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="Power Automate SharePoint actions list screenshot" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@oceancloud_x" />
-  <meta name="twitter:title"       content="Power Automate SharePoint Triggers and Actions Guide | OceanCloud" />
-  <meta name="twitter:description" content="Master every SharePoint trigger and action in Power Automate — OData filter queries, file operations, and HTTP REST patterns with copy-paste examples." />
+  <meta name="twitter:title"       content="Power Automate SharePoint Triggers: Filters, HTTP | OceanCloud" />
+  <meta name="twitter:description" content="SharePoint triggers and actions explained: OData filters, Get items limits, file actions, Data Operations, HTTP REST, and tracked properties." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,27 +48,29 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions#article",
-        "headline": "Power Automate SharePoint Triggers and Actions Guide",
+        "headline": "Power Automate SharePoint Triggers: Filters, HTTP, Actions",
         "url": "https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://oceancloudconsults.com/articles/guide-power-automate-triggers-actions"
         },
         "datePublished": "2026-05-23",
-        "dateModified": "2026-06-26",
+        "dateModified": "2026-06-29",
         "author": {
           "@id": "https://oceancloudconsults.com/#james-whitfield"
         },
         "publisher": {
           "@id": "https://oceancloudconsults.com/#organization"
         },
-        "description": "Every SharePoint trigger and action in Power Automate — when to use each, OData filter queries, file vs list operations, and the HTTP request action.",
+        "description": "Every SharePoint trigger and action in Power Automate, including OData filter queries, Get items limits, file actions, Data Operations, HTTP REST patterns, and tracked properties.",
         "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
         "keywords": [
           "Power Automate SharePoint triggers",
           "SharePoint connector",
           "get items filter query",
-          "create file Power Automate"
+          "create file Power Automate",
+          "Power Automate Data Operations",
+          "Power Automate tracked properties"
         ],
         "citation": [
           {
@@ -102,6 +104,14 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "'When a file is created' fires only on new file creation. 'When a file is created or modified' fires on both create and update. 'When an item is created' and 'When an item is created or modified' work the same way but for list items. Use the narrowest trigger to avoid unnecessary flow runs and reduce throttling risk."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are Power Automate actions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Power Automate actions are the steps that run after a trigger starts the flow. SharePoint actions create, update, read, copy, or delete SharePoint items and files. Data Operations actions reshape data inside the flow, and HTTP actions call REST endpoints when the connector does not expose the operation directly."
             }
           },
           {
@@ -263,7 +273,7 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Power Automate Triggers &amp; Actions</span></nav>
-      <h1>Power Automate SharePoint: <span class="grad-text">Triggers &amp; Actions</span> Explained</h1>
+      <h1>Power Automate SharePoint: <span class="grad-text">Triggers, Filters, HTTP, and Actions</span></h1>
       <p>Every SharePoint trigger, every action, OData filter query syntax, and the advanced HTTP request action — the complete connector reference for flow builders.</p>
     </div>
   </div>
@@ -279,7 +289,7 @@
         <span class="art-read">10 min read</span>
       </div>
 
-      <p class="article-intro">The SharePoint connector in Power Automate is the most widely used connector in the platform — and the most frequently misused. Choosing the wrong trigger causes double-fires and infinite loops. Using "Get items" without a filter query loads thousands of records unnecessarily. The "Send an HTTP request to SharePoint" action unlocks capabilities no other action provides. This guide covers every trigger and action with the context you need to use each one correctly.</p>
+      <p class="article-intro">The SharePoint connector in Power Automate is the most widely used connector in the platform — and the most frequently misused. Choosing the wrong trigger causes double-fires and infinite loops. Using "Get items" without a filter query loads thousands of records unnecessarily. The "Send an HTTP request to SharePoint" action unlocks capabilities no other action provides. This guide covers SharePoint triggers, actions, OData filters, Data Operations, tracked properties, and HTTP patterns with the context you need to use each one correctly.</p>
 
       <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/power-automate/media/overview-sharepoint/sharepoint-triggers.png" alt="Power Automate SharePoint triggers screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="402" height="602" />
@@ -557,6 +567,19 @@
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
+            What are Power Automate actions?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Power Automate actions are the steps that run after a trigger starts the flow.</p>
+              <p>SharePoint actions create, update, read, copy, or delete SharePoint items and files. Data Operations actions reshape data inside the flow, and HTTP actions call REST endpoints when the connector does not expose the operation directly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
             How do I filter SharePoint list items in Power Automate?
             <span class="faq-icon" aria-hidden="true">+</span>
           </button>
@@ -621,10 +644,10 @@
             <span class="rc-title">How to Build a SharePoint Approval Workflow</span>
             <span class="rc-read">10 min read &rarr;</span>
           </a>
-          <a href="guide-sharepoint-workflow-migration" class="related-card">
-            <span class="rc-topic">Power Platform</span>
-            <span class="rc-title">Replace Legacy SharePoint Workflows with Power Automate</span>
-            <span class="rc-read">9 min read &rarr;</span>
+          <a href="guide-sharepoint-site-provisioning-automation" class="related-card">
+            <span class="rc-topic">Admin &amp; Automation</span>
+            <span class="rc-title">SharePoint Provisioning Automation: Forms, Approvals, PnP</span>
+            <span class="rc-read">14 min read &rarr;</span>
           </a>
         </div>
       </div>

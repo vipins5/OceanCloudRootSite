@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>PowerShell Self-Signed Certificate for Entra App | OceanCloud</title>
-  <meta name="description" content="Create a self-signed certificate for Microsoft Entra app registration with a copy-paste PowerShell script — export PFX, CER, and PEM files for PnP app-only authentication." />
-  <meta name="keywords" content="PowerShell self signed certificate script, Entra app registration certificate, PnP PowerShell certificate authentication, delegated vs application permissions, Export-PfxCertificate, cert.pem key.pem" />
+  <title>Fix ExportPkcs8PrivateKey in PowerShell 5.1 | OceanCloud</title>
+  <meta name="description" content="Fix ExportPkcs8PrivateKey errors in Windows PowerShell 5.1. Generate Entra app PFX/CER files, use the OpenSSL fallback, and connect PnP PowerShell safely." />
+  <meta name="keywords" content="ExportPkcs8PrivateKey PowerShell 5.1, PowerShell self signed certificate script, Entra app registration certificate, PnP PowerShell certificate authentication, Export-PfxCertificate, cert.pem key.pem" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
   <meta name="author" content="OceanCloud" />
@@ -16,8 +16,8 @@
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="OceanCloud" />
-  <meta property="og:title" content="PowerShell Self-Signed Certificate for Entra App Registration" />
-  <meta property="og:description" content="Copy-paste PowerShell script to create a self-signed certificate for Entra app registration — export PFX, CER, cert.pem, key.pem, and combined.pem for PnP app-only auth." />
+  <meta property="og:title" content="Fix ExportPkcs8PrivateKey in PowerShell 5.1" />
+  <meta property="og:description" content="Generate Entra app PFX/CER files and avoid ExportPkcs8PrivateKey failures in Windows PowerShell 5.1 with a safe OpenSSL fallback." />
   <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration" />
   <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt" content="PowerShell script for Entra app registration certificate" />
@@ -25,8 +25,8 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@oceancloud_x" />
-  <meta name="twitter:title" content="PowerShell Self-Signed Certificate for Entra App | OceanCloud" />
-  <meta name="twitter:description" content="Copy-paste PowerShell script for Entra app certificates with PowerShell 5.1 and 7 support, plus delegated vs application API permission guidance." />
+  <meta name="twitter:title" content="Fix ExportPkcs8PrivateKey in PowerShell 5.1 | OceanCloud" />
+  <meta name="twitter:description" content="Generate Entra app certificates and avoid ExportPkcs8PrivateKey failures in Windows PowerShell 5.1 with an OpenSSL fallback." />
   <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,23 +49,24 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#article",
-        "headline": "PowerShell Script to Create Self-Signed Certificate for Entra App Registration",
+        "headline": "Fix ExportPkcs8PrivateKey in PowerShell 5.1 for Entra App Certificates",
         "url": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
         },
         "datePublished": "2026-06-12",
-        "dateModified": "2026-06-26",
+        "dateModified": "2026-06-29",
         "author": {
           "@id": "https://oceancloudconsults.com/#james-whitfield"
         },
         "publisher": {
           "@id": "https://oceancloudconsults.com/#organization"
         },
-        "description": "Step-by-step guide and script to generate self-signed certificates for Entra app registrations and use them with PnP PowerShell app-only authentication.",
+        "description": "Step-by-step guide and script to generate Entra app certificates, avoid ExportPkcs8PrivateKey failures in Windows PowerShell 5.1, and connect with PnP PowerShell app-only authentication.",
         "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
         "keywords": [
+          "ExportPkcs8PrivateKey PowerShell 5.1",
           "PowerShell self-signed certificate",
           "Entra app registration",
           "PnP PowerShell",
@@ -87,6 +88,14 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Client secrets expire (maximum 24 months) and must be manually rotated \u2014 a missed rotation breaks all connected automations. Certificates can have longer validity, are bound to a specific device or key vault, and their private key never leaves the secure store. For production automation, certificates are the Microsoft-recommended approach."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does ExportPkcs8PrivateKey fail in Windows PowerShell 5.1?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ExportPkcs8PrivateKey is available on the newer .NET runtime used by PowerShell 7, but Windows PowerShell 5.1 runs on .NET Framework and cannot export the private key that way. Use PowerShell 7 for native PEM export, or keep the PFX/CER output and use OpenSSL as the fallback for key.pem."
             }
           },
           {
@@ -592,8 +601,8 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Self-Signed Certificate Script</span></nav>
-      <h1>PowerShell Script to Create <span class="grad-text">Self-Signed Certificate</span> for Entra App Registration</h1>
-      <p>Create PFX, CER, cert.pem, key.pem, and combined.pem for PnP PowerShell app-only authentication with Windows PowerShell 5.1 and PowerShell 7 compatibility.</p>
+      <h1>Fix <span class="grad-text">ExportPkcs8PrivateKey</span> in PowerShell 5.1 for Entra App Certificates</h1>
+      <p>Create PFX, CER, cert.pem, key.pem, and combined.pem for PnP PowerShell app-only authentication, with a safe fallback when Windows PowerShell 5.1 cannot export PEM private keys.</p>
     </div>
   </div>
 </section>
@@ -607,7 +616,7 @@
         <span class="art-read">13 min read</span>
       </div>
 
-      <p class="article-intro">If your automation uses <code>Connect-PnPOnline</code> with Entra app registration, certificate-based authentication is usually the most stable option. This guide gives you a practical script that generates all common certificate outputs used in real projects: <code>.pfx</code>, <code>.cer</code>, <code>cert.pem</code>, <code>key.pem</code>, and <code>combined.pem</code>. It also explains Entra app registration setup and the difference between delegated and application permissions so you can choose the correct model.</p>
+      <p class="article-intro">If your automation uses <code>Connect-PnPOnline</code> with Entra app registration, certificate-based authentication is usually the most stable option. This guide gives you a practical script that generates all common certificate outputs used in real projects: <code>.pfx</code>, <code>.cer</code>, <code>cert.pem</code>, <code>key.pem</code>, and <code>combined.pem</code>. It also explains why <code>ExportPkcs8PrivateKey()</code> fails in Windows PowerShell 5.1 and how to avoid that failure without breaking certificate creation.</p>
 
       <div class="art-callout warning"><p><strong>Compatibility scope:</strong> this script is built for <strong>Windows PowerShell 5.1</strong> and <strong>PowerShell 7</strong> on <strong>Windows</strong>. The <code>New-SelfSignedCertificate</code> cmdlet is Windows-specific.</p></div>
 
@@ -912,6 +921,19 @@ Connect-PnPOnline `
             <div class="faq-a-inner">
               <p>Client secrets expire (maximum 24 months) and must be manually rotated — a missed rotation breaks all connected automations.</p>
               <p>Certificates can have longer validity, are bound to a specific device or key vault, and their private key never leaves the secure store. For production automation, certificates are the Microsoft-recommended approach.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why does ExportPkcs8PrivateKey fail in Windows PowerShell 5.1?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p><code>ExportPkcs8PrivateKey()</code> is available on the newer .NET runtime used by PowerShell 7, but Windows PowerShell 5.1 runs on .NET Framework.</p>
+              <p>Use PowerShell 7 when you need native PEM private-key export. If you must stay on Windows PowerShell 5.1, generate the PFX and CER normally, then let the script use OpenSSL as the fallback for <code>key.pem</code>.</p>
             </div>
           </div>
         </div>
