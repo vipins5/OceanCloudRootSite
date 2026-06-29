@@ -1,6 +1,46 @@
 {
   "items": [
     {
+      "title": "Microsoft Edge: Upgraded Copilot new tab page",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566703",
+      "date_friendly": "June 26, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-edge-upgraded-copilot-new-tab-page"
+    },
+    {
+      "title": "Microsoft Viva: Discussion Post Previews",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566699",
+      "date_friendly": "June 26, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-viva-discussion-post-previews"
+    },
+    {
+      "title": "SharePoint: Neutral-themed SharePoint UI in Page Editing and Property Panes",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566698",
+      "date_friendly": "June 26, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-sharepoint-neutral-themed-sharepoint-ui-in-page-editing-and"
+    },
+    {
+      "title": "Microsoft Purview: Data Loss Prevention - Data Loss Prevention to safeguard sensitive information from external web search in Microsoft 356 Copilot and Copilot Chat",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870",
+      "date_friendly": "June 26, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-purview-data-loss-prevention-data-loss-prevention"
+    },
+    {
       "title": "Business Applications Built for Microsoft 365 – Cubic Logics – SharePoint Partner Showcase",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/business-applications-built-for-microsoft-365-cubic-logics/ba-p/4530898",
       "date_friendly": "June 25, 2026",
@@ -644,6 +684,16 @@
       "article_slug": "news-2026-05-microsoft-teams-interpreter-simultaneous-mode-enhancements"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Copilot in PowerPoint for Government clouds",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561322",
+      "date_friendly": "May 13, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-copilot-in-powerpoint-for-go"
+    },
+    {
       "title": "Microsoft Edge: Intune MAM Protected Downloads",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561551",
       "date_friendly": "May 12, 2026",
@@ -989,5 +1039,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-26"
+  "last_updated": "2026-06-29"
 }
