@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>Power Apps with SharePoint: Step-by-Step Guide | OceanCloud</title>
-  <meta name="description" content="Build Power Apps on SharePoint lists step by step — canvas vs model-driven apps, delegation limits, and publishing — with practical examples you can copy today." />
-  <meta name="keywords" content="Power Apps SharePoint, no-code business apps, canvas app SharePoint, Power Apps tutorial, SharePoint list app, Power Apps delegation, build app SharePoint" />
+  <title>Power Apps SharePoint List Canvas App Guide | OceanCloud</title>
+  <meta name="description" content="Create a Power Apps canvas app from a SharePoint list with examples, delegation limits, forms, galleries, permissions, and publishing to Teams or mobile." />
+  <meta name="keywords" content="Power Apps SharePoint list, create canvas app SharePoint list, SharePoint Power Apps examples, Power Apps tutorial, SharePoint list app, Power Apps delegation" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
   <meta name="author" content="OceanCloud" />
@@ -16,16 +16,16 @@
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
-  <meta property="og:title"       content="Power Apps with SharePoint: Step-by-Step Guide" />
-  <meta property="og:description" content="Build Power Apps on SharePoint lists step by step — canvas vs model-driven apps, delegation limits, and publishing, with practical examples you can copy." />
+  <meta property="og:title"       content="Power Apps SharePoint List Canvas App Guide" />
+  <meta property="og:description" content="Create a Power Apps canvas app from a SharePoint list with examples, delegation limits, forms, galleries, permissions, and publishing options." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-power-apps-sharepoint" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="Power Apps SharePoint connection screen showing a SharePoint site selection" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@oceancloud_x" />
-  <meta name="twitter:title"       content="Power Apps with SharePoint: Step-by-Step Guide | OceanCloud" />
-  <meta name="twitter:description" content="Build Power Apps on SharePoint lists step by step — canvas vs model-driven, delegation limits, and publishing, with practical examples you can copy." />
+  <meta name="twitter:title"       content="Power Apps SharePoint List Canvas App Guide | OceanCloud" />
+  <meta name="twitter:description" content="Create a Power Apps canvas app from a SharePoint list with examples, delegation limits, forms, galleries, permissions, and publishing." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,25 +48,27 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint#article",
-        "headline": "Power Apps and SharePoint Guide: Build No-Code Business Apps",
+        "headline": "Power Apps SharePoint List Canvas App Guide",
         "url": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint"
         },
         "datePublished": "2026-05-23",
-        "dateModified": "2026-06-26",
+        "dateModified": "2026-06-29",
         "author": {
           "@id": "https://oceancloudconsults.com/#james-whitfield"
         },
         "publisher": {
           "@id": "https://oceancloudconsults.com/#organization"
         },
-        "description": "Step-by-step Power Apps and SharePoint guide covering canvas vs model-driven apps, delegation limits, and publishing to Teams and mobile.",
+        "description": "Step-by-step guide to create a Power Apps canvas app from a SharePoint list, with examples, delegation limits, forms, galleries, permissions, and publishing to Teams and mobile.",
         "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
         "keywords": [
           "Power Apps",
+          "Power Apps SharePoint list",
           "SharePoint Power Apps",
+          "create canvas app SharePoint list",
           "no-code apps",
           "canvas app",
           "Power Platform"
@@ -103,6 +105,14 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Yes, SharePoint is the most common data source for Power Apps in Microsoft 365 environments. You connect via the SharePoint connector and work with list items directly. For simple data entry and viewing scenarios it works well, but it has delegation limits \u2014 queries that can't be processed server-side are limited to 500\u20132000 records client-side."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I create a canvas app from a SharePoint list?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In Power Apps, choose Create, select Start from data, connect to SharePoint, choose the SharePoint site, and pick the list. Power Apps generates a canvas app with browse, detail, and edit screens. Review the generated forms, rename controls, set delegation-safe filters, and test list permissions before publishing."
             }
           },
           {
@@ -266,7 +276,7 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Power Apps &amp; SharePoint</span></nav>
-      <h1>Build Custom Business Apps <span class="grad-text">with Power Apps and SharePoint</span></h1>
+      <h1>Power Apps <span class="grad-text">SharePoint List Canvas App</span> Guide</h1>
       <p>Real-world examples, the canvas vs model-driven choice, delegation limits you must know, and how to publish your app to Teams, SharePoint, and mobile — no code required.</p>
     </div>
   </div>
@@ -282,7 +292,7 @@
         <span class="art-read">10 min read</span>
       </div>
 
-      <p class="article-intro">Most organisations already have SharePoint lists holding business data — asset registers, helpdesk tickets, purchase requests, employee records. The problem is that SharePoint's default list view is built for information managers, not the frontline staff who need to submit and update that data. Microsoft Power Apps solves this by letting you build custom, mobile-friendly interfaces on top of your existing SharePoint data — without writing any code. This guide shows you exactly how to do it.</p>
+      <p class="article-intro">Most organisations already have SharePoint lists holding business data — asset registers, helpdesk tickets, purchase requests, employee records. The problem is that SharePoint's default list view is built for information managers, not the frontline staff who need to submit and update that data. Microsoft Power Apps solves this by letting you create a canvas app from a SharePoint list, with mobile-friendly forms and galleries on top of your existing data — without writing traditional code.</p>
 
       <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/media/connection-sharepoint-online/select-sp-site.png" alt="Power Apps SharePoint connection screen showing a SharePoint site selection" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="473" height="543" />
@@ -520,6 +530,19 @@
             <div class="faq-a-inner">
               <p>Yes, SharePoint is the most common data source for Power Apps in Microsoft 365 environments.</p>
               <p>You connect via the SharePoint connector and work with list items directly. For simple data entry and viewing scenarios it works well, but it has delegation limits — queries that can't be processed server-side are limited to 500–2000 records client-side.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I create a canvas app from a SharePoint list?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>In Power Apps, choose <strong>Create</strong>, select <strong>Start from data</strong>, connect to SharePoint, choose the SharePoint site, and pick the list.</p>
+              <p>Power Apps generates a canvas app with browse, detail, and edit screens. Review the generated forms, rename controls, set delegation-safe filters, and test list permissions before publishing.</p>
             </div>
           </div>
         </div>
