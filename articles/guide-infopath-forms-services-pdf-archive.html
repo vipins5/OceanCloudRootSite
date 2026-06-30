@@ -27,6 +27,12 @@
   <meta name="twitter:title"       content="InfoPath Forms Services Deadline: Render XML Forms to PDF | OceanCloud" />
   <meta name="twitter:description" content="InfoPath publishing is already blocked. On July 14, 2026 the entire service is removed from SharePoint Online — no rendering, no submissions, no fallback. Render XML to PDF now." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="article:published_time" content="2026-07-01T00:00:00+00:00" />
+  <meta property="article:modified_time"  content="2026-07-01T00:00:00+00:00" />
+  <meta property="article:section"        content="Guides" />
+  <meta property="article:tag"            content="InfoPath" />
+  <meta property="article:tag"            content="SharePoint Online" />
+  <meta property="article:tag"            content="Microsoft 365" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -109,42 +115,42 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What is the July 14, 2026 InfoPath deadline?",
+            "name": "What exactly should be done before July 14, 2026?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Microsoft is removing InfoPath Forms Services from SharePoint Online in two phases. Phase 1 (already in effect as of May 18, 2026): publishing new or updated InfoPath forms is blocked for all tenants. Phase 2 (July 14, 2026): the entire InfoPath Forms Services is permanently removed — forms will not open, render in browser, or accept submissions. XML files remain in SharePoint libraries but are not renderable. There is no extension option and no automatic fallback."
+              "text": "Publishing was already blocked by Microsoft on May 18, 2026 — no new or updated forms can be deployed. Before July 14, you need to: render every in-scope historical InfoPath XML form to PDF while the browser rendering service is still live; store the PDFs in a governed SharePoint document library with metadata; export and preserve XSN templates; redirect any active form intake to a modern replacement; and validate that every record has a clear status. After July 14, the rendering service is gone and no catch-up rendering is possible in SharePoint Online."
             }
           },
           {
             "@type": "Question",
-            "name": "Why should historical InfoPath XML files be rendered to PDF?",
+            "name": "Can we keep only the PDFs and delete the XML files?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The XML file contains the submitted data, but the InfoPath template controls the human-readable view, formatting, repeating sections, validation context, and many attachments. A PDF gives records teams, auditors, and business users a durable view of what the form looked like when opened."
+              "text": "Usually no. Keep the original XML and XSN template unless your records, legal, and compliance owners approve deletion under a documented retention policy. The PDF is the readable copy; the XML is the original data source."
             }
           },
           {
             "@type": "Question",
-            "name": "Should we keep the original XML files after creating PDFs?",
+            "name": "Does Power Apps automatically import InfoPath forms?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Keep the original XML, the related XSN form template, the rendered PDF, a metadata manifest, and validation evidence. The PDF is the readable record; the XML and template are the source record."
+              "text": "No. Treat Power Apps as a redesign platform, not a direct InfoPath converter. Simple list forms can often be rebuilt quickly. Complex forms with code, repeating tables, data connections, and multiple views need business analysis and redesign."
             }
           },
           {
             "@type": "Question",
-            "name": "What should replace active InfoPath forms?",
+            "name": "What if some XML forms fail to render?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Use Power Apps for structured SharePoint list forms and richer business apps, Microsoft Forms for simple survey-style intake, and Power Automate for routing, approvals, reminders, and integration logic."
+              "text": "Put them in a Needs Review queue with the source URL, template name, error, and owner. Common causes include missing templates, broken data connections, permission issues, deleted lookup data, or old custom code."
             }
           },
           {
             "@type": "Question",
-            "name": "Is there a Microsoft one-click migration from InfoPath to Power Apps?",
+            "name": "Should the archive library have retention labels?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Microsoft guidance points organizations toward modern replacements such as Power Apps, Microsoft Forms, Power Automate, and SharePoint lists/libraries. Complex InfoPath forms usually need to be redesigned rather than automatically converted."
+              "text": "Yes, if the records are subject to a retention policy. Apply Microsoft Purview retention labels or library-level governance that matches the business process and legal requirement."
             }
           }
         ]
@@ -303,7 +309,7 @@
         <span class="art-read">14 min read</span>
       </div>
 
-      <p class="article-intro">InfoPath is not just another retired Office client. In many SharePoint tenants, InfoPath still controls how old HR requests, finance approvals, safety checks, legal intakes, and regulated business records are displayed. Publishing new forms has already been blocked by Microsoft since May 18, 2026. The remaining window is 13 days. The urgent work is preservation: create a readable PDF copy of every historical XML form while the browser rendering service is still available. After July 14, there is no fallback — the service is gone from SharePoint Online entirely.</p>
+      <p class="article-intro">InfoPath is not just another retired Office client. In many SharePoint tenants, InfoPath still controls how old HR requests, finance approvals, safety checks, legal intakes, and regulated business records are displayed. Publishing new forms has already been blocked by Microsoft since May 18, 2026. The preservation window closes on July 14, 2026. The urgent work is preservation: create a readable PDF copy of every historical XML form while the browser rendering service is still available. After July 14, there is no fallback — the service is gone from SharePoint Online entirely.</p>
 
       <figure class="article-image">
         <img src="../assets/guides/infopath-pdf-archive-timeline.svg" alt="InfoPath XML to PDF archive timeline" loading="lazy" decoding="async" width="1200" height="520" />
