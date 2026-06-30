@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0077b6" />
 
   <title>InfoPath Forms Services Deadline: Render XML Forms to PDF | OceanCloud</title>
-  <meta name="description" content="InfoPath Forms Services is permanently removed from SharePoint Online on July 14, 2026. Publishing has been blocked since May 18. Render historical XML forms to PDF now — no extensions available." />
+  <meta name="description" content="InfoPath Forms Services permanently removed from SharePoint Online July 14, 2026. Publishing blocked since May 18. Render XML forms to PDF before the deadline." />
   <meta name="keywords" content="InfoPath Forms Services retirement, InfoPath July 14 2026, InfoPath removed SharePoint Online, InfoPath XML to PDF, SharePoint form library archive, InfoPath migration Power Apps" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -494,7 +494,7 @@ Add-PnPField -List $libraryTitle -DisplayName "ConversionStatus" -InternalName "
       <h3>Download and convert script</h3>
       <p>This script handles the complete archive run in one pass on a Windows machine: it connects to SharePoint Online, downloads every XML form submission and the XSN template to the desktop, then converts each XML to PDF. Set the three variables in the configuration block at the top and run from Windows PowerShell 5.1 or PowerShell 7.</p>
             <div class="art-callout warning">
-        <p><strong>Windows recommended for PDF conversion.</strong> Authentication requires an <strong>Entra ID app registration</strong> with Sites.Read.All permission. Three methods are tried in order: (1) ClientId + certificate thumbprint in the Windows certificate store, (2) ClientId + PFX file, (3) ClientId + Interactive browser sign-in. PDF rendering uses <code>msedge.exe --headless</code> (pre-installed on Windows 10 and 11). InfoPath COM is available as a fallback if Edge or the XSLT path is unavailable.</p>
+        <p><strong>Windows recommended for PDF conversion.</strong> Authentication requires an <a href="/articles/guide-powershell-self-signed-certificate-entra-app-registration"><strong>Entra ID app registration</strong></a> with Sites.Read.All permission. Three methods are tried in order: (1) ClientId + certificate thumbprint in the Windows certificate store, (2) ClientId + PFX file, (3) ClientId + Interactive browser sign-in. PDF rendering uses <code>msedge.exe --headless</code> (pre-installed on Windows 10 and 11). InfoPath COM is available as a fallback if Edge or the XSLT path is unavailable.</p>
       </div>
       <div class="code-label">PowerShell — Download-InfoPathForms-WithPdf.ps1</div>
       <div class="code-block"><pre>&lt;#
@@ -1365,9 +1365,9 @@ Write-Log "====================================================="
       <h2>Step 6: Replace Active InfoPath Forms</h2>
       <p>Archiving solves historical readability. It does not replace active business processes. Use the simplest modern tool that fits the process:</p>
       <ul>
-        <li><strong>Power Apps:</strong> best for SharePoint list forms, conditional screens, richer validation, role-based behavior, and mobile-friendly business apps.</li>
+        <li><strong><a href="/articles/guide-power-apps-sharepoint">Power Apps</a>:</strong> best for SharePoint list forms, conditional screens, richer validation, role-based behavior, and mobile-friendly business apps.</li>
         <li><strong>Microsoft Forms:</strong> best for simple intake, surveys, questionnaires, and lightweight collection where the form does not need SharePoint-style app logic.</li>
-        <li><strong>Power Automate:</strong> best for routing, approvals, notifications, reminders, integration, and audit logging.</li>
+        <li><strong><a href="/articles/guide-power-automate-sharepoint">Power Automate</a>:</strong> best for routing, approvals, notifications, reminders, integration, and audit logging.</li>
         <li><strong>SharePoint lists and libraries:</strong> still the right storage layer for many structured business processes after the form front end is modernized.</li>
       </ul>
 
