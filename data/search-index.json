@@ -685,6 +685,19 @@
     "dateSort": "2026-06-10"
   },
   {
+    "id": "articles-guide-infopath-forms-services-pdf-archive",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "admin",
+    "title": "InfoPath Deadline: Render XML Forms to PDF",
+    "heading": "InfoPath Forms Services Deadline: Render XML Forms to PDF",
+    "excerpt": "Before July 14, 2026, inventory InfoPath form libraries, render every historical XML form to PDF, store PDFs in SharePoint, and validate records.",
+    "body": "InfoPath Forms Services Deadline: Render XML Forms to PDF | OceanCloud July 1, 2026 14 min read Practical retirement runbook for InfoPath Forms Services in Microsoft 365. Covers official Microsoft timeline details, form library inventory, Microsoft 365 Assessment tool, PnP PowerShell discovery, PDF archive library metadata, rendering historical XML forms to PDF before July 14 2026, validation counts, records retention, and modern replacements with Power Apps, Microsoft Forms, Power Automate, and SharePoint.",
+    "url": "articles/guide-infopath-forms-services-pdf-archive",
+    "dateDisplay": "July 1, 2026",
+    "dateSort": "2026-07-01"
+  },
+  {
     "id": "articles-guide-powershell-self-signed-certificate-entra-app-registration",
     "type": "guide",
     "tag": "Guide",
