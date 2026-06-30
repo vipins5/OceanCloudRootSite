@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/guides</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -231,6 +231,12 @@
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell</loc>
     <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

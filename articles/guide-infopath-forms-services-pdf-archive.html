@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>InfoPath Forms Services Deadline: Render XML Forms to PDF | OceanCloud</title>
+  <meta name="description" content="Prepare for the July 14, 2026 InfoPath Forms Services deadline by rendering every historical XML form to PDF and storing the PDFs in SharePoint." />
+  <meta name="keywords" content="InfoPath Forms Services retirement, InfoPath July 14 2026, InfoPath XML to PDF, SharePoint form library archive, InfoPath migration Power Apps" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="InfoPath Forms Services Deadline: Render XML Forms to PDF" />
+  <meta property="og:description" content="A practical July 2026 runbook: inventory InfoPath form libraries, render historical XML forms to PDF, store the PDFs in SharePoint, and rebuild active forms." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt"   content="InfoPath XML forms archived as PDFs before the July 2026 deadline" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
+  <meta name="twitter:title"       content="InfoPath Forms Services Deadline: Render XML Forms to PDF | OceanCloud" />
+  <meta name="twitter:description" content="Before July 14, 2026, render historical InfoPath XML forms to PDF and store them in a governed SharePoint library." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive#article",
+        "headline": "InfoPath Forms Services Deadline: Render XML Forms to PDF Before July 14, 2026",
+        "url": "https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive"
+        },
+        "datePublished": "2026-07-01",
+        "dateModified": "2026-07-01",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "A practical runbook for the InfoPath Forms Services retirement: inventory form libraries, freeze InfoPath publishing, render every historical XML form to PDF before July 14, 2026, store PDFs in SharePoint, and rebuild active forms with Power Apps, Microsoft Forms, or Power Automate.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "InfoPath Forms Services retirement",
+          "InfoPath XML to PDF",
+          "InfoPath July 14 2026",
+          "SharePoint form library archive",
+          "Power Apps InfoPath replacement"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://techcommunity.microsoft.com/blog/spblog/support-update-for-infopath-forms-services-in-microsoft-365/3858190",
+            "name": "Support update for InfoPath Forms Services in Microsoft 365"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/lifecycle/products/infopath-2013",
+            "name": "InfoPath 2013 lifecycle"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/sharepoint-list-integration-overview",
+            "name": "Integrate SharePoint Online into Power Apps overview"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-scanner-reports-infopath",
+            "name": "SharePoint Modernization scanner reports: InfoPath reports"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/en-us/infopath/introduction-to-infopath-forms-services",
+            "name": "Introduction to InfoPath Forms Services"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the July 14, 2026 InfoPath deadline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft has announced the retirement of InfoPath Forms Services in Microsoft 365. The key operational deadline is July 14, 2026, when the browser service reaches retirement. Organizations should render historical XML form submissions to PDF before that date while the original browser rendering experience is still available."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why should historical InfoPath XML files be rendered to PDF?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The XML file contains the submitted data, but the InfoPath template controls the human-readable view, formatting, repeating sections, validation context, and many attachments. A PDF gives records teams, auditors, and business users a durable view of what the form looked like when opened."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should we keep the original XML files after creating PDFs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Keep the original XML, the related XSN form template, the rendered PDF, a metadata manifest, and validation evidence. The PDF is the readable record; the XML and template are the source record."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What should replace active InfoPath forms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use Power Apps for structured SharePoint list forms and richer business apps, Microsoft Forms for simple survey-style intake, and Power Automate for routing, approvals, reminders, and integration logic."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a Microsoft one-click migration from InfoPath to Power Apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Microsoft guidance points organizations toward modern replacements such as Power Apps, Microsoft Forms, Power Automate, and SharePoint lists/libraries. Complex InfoPath forms usually need to be redesigned rather than automatically converted."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "InfoPath PDF Archive Guide",
+            "item": "https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:840px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(251,146,60,.12);color:#fb923c;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.62rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.86;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.86;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .article-image{margin:30px 0;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);}
+  .article-image img{width:100%;height:auto;border-radius:10px;display:block;}
+  .article-image figcaption{margin-top:11px;color:var(--text-dim);font-size:.82rem;line-height:1.7;}
+  .art-callout{background:rgba(59,130,246,.08);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#cce2ff;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.08);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#ffd8b5;}
+  .art-callout.danger{background:rgba(239,68,68,.08);border-left-color:#f87171;}
+  .art-callout.danger p{color:#fecaca;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(251,146,60,.12);color:#fdba74;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(251,146,60,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .art-steps{counter-reset:steps;list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{counter-increment:steps;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(251,146,60,.16);color:#fdba74;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .guide-final-cta{padding:72px 0;border-top:1px solid rgba(255,255,255,.08);background:rgba(4,12,22,.45);}
+  .guide-final-cta.reveal{opacity:1;transform:none;}
+  .guide-final-cta .cta-box{max-width:980px;margin:0 auto;padding:34px 38px;border:1px solid rgba(34,211,238,.18);border-radius:16px;background:linear-gradient(135deg,rgba(8,28,46,.94),rgba(5,18,33,.94));display:grid;grid-template-columns:52px 1fr;gap:22px;align-items:center;box-shadow:0 22px 60px rgba(0,0,0,.24);}
+  .guide-final-cta .cta-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(34,211,238,.14);color:#67e8f9;font-size:1.45rem;}
+  .guide-final-cta h3{margin:0 0 8px;color:var(--white);font-size:clamp(1.1rem,2vw,1.35rem);line-height:1.35;}
+  .guide-final-cta p{margin:0 0 20px;color:#b9ccec;line-height:1.7;max-width:760px;}
+  .guide-final-cta .btn-primary{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:9px;}
+  .guide-lead-magnet{padding:34px 0;background:rgba(4,12,22,.62);border-top:1px solid rgba(255,255,255,.08);}
+  .guide-lead-magnet .container{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+  .lm-content{display:flex;align-items:center;gap:16px;min-width:0;}
+  .lm-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(34,211,238,.12);color:#67e8f9;font-size:1.25rem;flex:0 0 auto;}
+  .lm-text h3{margin:0 0 5px;color:var(--white);font-size:1.05rem;line-height:1.35;}
+  .lm-text p{margin:0;color:var(--text-mid);line-height:1.6;}
+  .guide-lead-magnet .btn-secondary{flex:0 0 auto;white-space:nowrap;}
+  .site-footer .footer-bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  @media(max-width:680px){
+    .guide-final-cta{padding:52px 0;}
+    .guide-final-cta .cta-box{grid-template-columns:1fr;padding:28px 22px;text-align:left;}
+    .guide-lead-magnet .container{align-items:flex-start;flex-direction:column;padding-right:78px;}
+    .guide-lead-magnet .btn-secondary{width:auto;justify-content:center;}
+  }
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":42,"color":"251,146,60","maxDist":105,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:280px;height:280px;bottom:-50px;left:8%;"></div>
+  <div class="orb orb-green" style="width:360px;height:360px;top:-90px;right:-80px;background:radial-gradient(circle,rgba(251,146,60,.18) 0%,rgba(251,146,60,0) 70%);"></div>
+  <div class="container">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>InfoPath PDF Archive</span></nav>
+      <h1>InfoPath Forms Services Deadline: <span class="grad-text">Render XML Forms to PDF</span></h1>
+      <p>Before July 14, 2026, render every historical InfoPath XML form to PDF and store those PDFs in a governed SharePoint document library.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">Admin &amp; Automation</span>
+        <span class="art-date">July 1, 2026</span>
+        <span class="art-read">14 min read</span>
+      </div>
+
+      <p class="article-intro">InfoPath is not just another retired Office client. In many SharePoint tenants, InfoPath still controls how old HR requests, finance approvals, safety checks, legal intakes, and regulated business records are displayed. The urgent work is not only migration. It is preservation: create a readable PDF copy of every historical XML form while the browser rendering service is still available.</p>
+
+      <figure class="article-image">
+        <img src="../assets/guides/infopath-pdf-archive-timeline.svg" alt="InfoPath XML to PDF archive timeline" loading="lazy" decoding="async" width="1200" height="520" />
+        <figcaption>Archive pattern for InfoPath retirement: inventory form libraries, render submitted XML records to PDF, validate counts and metadata, then store PDFs in a SharePoint records library.</figcaption>
+      </figure>
+
+      <div class="art-callout danger">
+        <p><strong>Deadline:</strong> Treat July 14, 2026 as the last safe date for browser-rendering historical InfoPath XML forms in SharePoint Online. Finish PDF rendering, metadata capture, and validation before that date.</p>
+      </div>
+
+      <h2>Official Microsoft Details to Know</h2>
+      <p>Microsoft has been clear that InfoPath is an older technology and that organizations should move to modern alternatives. The public retirement story has three parts:</p>
+      <ul>
+        <li><strong>InfoPath Forms Services in Microsoft 365 is retiring.</strong> Microsoft announced through the SharePoint Blog that InfoPath Forms Services support in Microsoft 365 would continue only until the Office 2016 support date of July 14, 2026.</li>
+        <li><strong>InfoPath 2013 reaches end of support on July 14, 2026.</strong> The Microsoft Lifecycle page lists InfoPath 2013 support ending on that date.</li>
+        <li><strong>Message Center updates add operational deadlines.</strong> Tenant admins should review the official Microsoft 365 admin center Message Center posts for their tenant, including InfoPath Forms Services retirement updates. Recent Message Center communications describe a May 18, 2026 publishing block for new or updated InfoPath forms and full retirement on July 14, 2026.</li>
+      </ul>
+      <p>The practical interpretation is simple: if a submitted XML file must remain readable for audit, legal, finance, HR, or customer service reasons, render it to PDF before the service disappears.</p>
+
+      <div class="art-callout warning">
+        <p><strong>Do not rely on XML alone.</strong> XML is the data. The XSN template, rules, views, formatting, repeating sections, and attachment handling are what make the form understandable to a human reader.</p>
+      </div>
+
+      <h2>What You Need to Preserve</h2>
+      <p>A good archive does not throw away the original source. It keeps the readable copy and the technical source together.</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Item</th><th>Why it matters</th><th>Where to store it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Rendered PDF</strong></td><td>The durable, human-readable record for business users, auditors, and records managers.</td><td>New SharePoint document library, usually one per site or business process.</td></tr>
+            <tr><td><strong>Original XML</strong></td><td>The submitted data file and source evidence.</td><td>Keep in the original library or copy to a protected archive location.</td></tr>
+            <tr><td><strong>XSN template</strong></td><td>The view and rules that make the XML understandable.</td><td>Archive library folder named by form template and version.</td></tr>
+            <tr><td><strong>Attachments</strong></td><td>InfoPath attachments may be stored inside XML or referenced by the form process.</td><td>Extract or preserve according to your records policy.</td></tr>
+            <tr><td><strong>Manifest CSV</strong></td><td>Maps each PDF back to source site, library, XML file, template, submitter, date, hash, and conversion status.</td><td>Same records library, restricted to owners and records admins.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step 1: Inventory Every InfoPath Form Library</h2>
+      <p>Start with discovery. You need to know which sites have form libraries, which libraries contain XML submissions, and which templates are still active.</p>
+      <ol class="art-steps">
+        <li>
+          <span class="art-step-num">1</span>
+          <div class="art-step-body">
+            <strong>Run the Microsoft 365 Assessment tool</strong>
+            <p>Use Microsoft's assessment tooling to find InfoPath usage at tenant scale. Treat its output as the starting inventory, then confirm high-risk sites manually.</p>
+          </div>
+        </li>
+        <li>
+          <span class="art-step-num">2</span>
+          <div class="art-step-body">
+            <strong>Ask business owners to confirm retention need</strong>
+            <p>Some libraries are abandoned and can follow normal retention cleanup. Others are legal records and must be preserved.</p>
+          </div>
+        </li>
+        <li>
+          <span class="art-step-num">3</span>
+          <div class="art-step-body">
+            <strong>Classify forms by risk</strong>
+            <p>Prioritize regulated records, approval histories, employee files, finance submissions, customer commitments, and forms with attachments.</p>
+          </div>
+        </li>
+      </ol>
+
+      <h3>PowerShell starter inventory</h3>
+      <p>This PnP PowerShell snippet gives admins a lightweight way to find likely InfoPath form libraries. Run it in a pilot first, then expand across the tenant.</p>
+      <div class="code-label">PowerShell 7 - find form libraries</div>
+      <div class="code-block"><pre>$adminUrl = "https://contoso-admin.sharepoint.com"
+$clientId = "00000000-0000-0000-0000-000000000000"
+
+Connect-PnPOnline -Url $adminUrl -Interactive -ClientId $clientId
+
+$sites = Get-PnPTenantSite -Limit All |
+  Where-Object { $_.Template -notlike "SPSPERS*" }
+
+$inventory = foreach ($site in $sites) {
+  Write-Host "Checking $($site.Url)" -ForegroundColor Cyan
+  Connect-PnPOnline -Url $site.Url -Interactive -ClientId $clientId
+
+  Get-PnPList -Includes RootFolder,ItemCount,BaseTemplate,Hidden |
+    Where-Object {
+      -not $_.Hidden -and (
+        $_.BaseTemplate -eq 115 -or
+        $_.RootFolder.ServerRelativeUrl -match "/Forms$" -or
+        $_.Title -match "form|infopath"
+      )
+    } |
+    ForEach-Object {
+      [pscustomobject]@{
+        SiteUrl   = $site.Url
+        ListTitle = $_.Title
+        ItemCount = $_.ItemCount
+        ListUrl   = $_.RootFolder.ServerRelativeUrl
+        Template  = $_.BaseTemplate
+      }
+    }
+}
+
+$inventory |
+  Sort-Object SiteUrl, ListTitle |
+  Export-Csv .\infopath-form-library-inventory.csv -NoTypeInformation</pre></div>
+
+      <h2>Step 2: Create the PDF Archive Library</h2>
+      <p>Create a dedicated library before conversion begins. Do not drop PDFs back into the old form library without structure. You want a clean records destination with columns that make search, audit, and validation easy.</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Column</th><th>Type</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>OriginalFormUrl</strong></td><td>Hyperlink or single line text</td><td>Points to the source XML record.</td></tr>
+            <tr><td><strong>OriginalFileName</strong></td><td>Single line text</td><td>Preserves the old XML file name.</td></tr>
+            <tr><td><strong>FormTemplate</strong></td><td>Single line text</td><td>Names the XSN or business process.</td></tr>
+            <tr><td><strong>SubmittedBy</strong></td><td>Person or single line text</td><td>Captures the original submitter when available.</td></tr>
+            <tr><td><strong>SubmittedDate</strong></td><td>Date and time</td><td>Supports retention and records lookup.</td></tr>
+            <tr><td><strong>RenderedOn</strong></td><td>Date and time</td><td>Shows when the PDF was created.</td></tr>
+            <tr><td><strong>SourceXmlHash</strong></td><td>Single line text</td><td>Provides evidence that the archive points to a specific source file.</td></tr>
+            <tr><td><strong>ConversionStatus</strong></td><td>Choice</td><td>Values such as Rendered, Failed, Needs Review, Not Required.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-label">PowerShell 7 - create archive library columns</div>
+      <div class="code-block"><pre>$siteUrl = "https://contoso.sharepoint.com/sites/records"
+$libraryTitle = "InfoPath PDF Archive"
+$clientId = "00000000-0000-0000-0000-000000000000"
+
+Connect-PnPOnline -Url $siteUrl -Interactive -ClientId $clientId
+
+New-PnPList -Title $libraryTitle -Template DocumentLibrary -OnQuickLaunch:$true
+
+Add-PnPField -List $libraryTitle -DisplayName "OriginalFormUrl" -InternalName "OriginalFormUrl" -Type URL
+Add-PnPField -List $libraryTitle -DisplayName "OriginalFileName" -InternalName "OriginalFileName" -Type Text
+Add-PnPField -List $libraryTitle -DisplayName "FormTemplate" -InternalName "FormTemplate" -Type Text
+Add-PnPField -List $libraryTitle -DisplayName "SubmittedBy" -InternalName "SubmittedBy" -Type Text
+Add-PnPField -List $libraryTitle -DisplayName "SubmittedDate" -InternalName "SubmittedDate" -Type DateTime
+Add-PnPField -List $libraryTitle -DisplayName "RenderedOn" -InternalName "RenderedOn" -Type DateTime
+Add-PnPField -List $libraryTitle -DisplayName "SourceXmlHash" -InternalName "SourceXmlHash" -Type Text
+Add-PnPField -List $libraryTitle -DisplayName "ConversionStatus" -InternalName "ConversionStatus" -Type Choice -Choices "Rendered","Failed","Needs Review","Not Required"</pre></div>
+
+      <h2>Step 3: Freeze InfoPath Publishing</h2>
+      <p>By this stage of retirement, the safest operating model is a freeze. Stop form template edits, stop new InfoPath development, and route change requests to the replacement program.</p>
+      <ul>
+        <li><strong>Freeze XSN changes:</strong> no design updates unless required to recover records before the deadline.</li>
+        <li><strong>Export every template:</strong> store XSN files with template name, site, library, version, owner, and archive date.</li>
+        <li><strong>Stop new intake:</strong> redirect active business processes to the replacement form or a temporary controlled intake method.</li>
+        <li><strong>Capture ownership:</strong> each form library needs a business owner who signs off on archive completeness.</li>
+      </ul>
+
+      <h2>Step 4: Render Every Historical XML Form to PDF</h2>
+      <p>This is the main work. Open each submitted XML form using the same view users would normally see, render it to PDF, and upload the PDF to the archive library with metadata.</p>
+      <p>There is no universal one-click Microsoft conversion that turns every InfoPath XML file into a perfect PDF across every custom template. Some tenants can automate parts of the job with browser automation, print-to-PDF, or approved third-party records tools. Others need a supervised batch process because old templates include code, custom views, attachments, or data connections.</p>
+
+      <div class="art-callout">
+        <p><strong>Recommended control:</strong> convert in batches by library, validate each batch count, and keep failed XML records in a Needs Review queue until a human confirms the reason.</p>
+      </div>
+
+      <h3>Conversion checklist</h3>
+      <ul>
+        <li>Open the form as a user with permission to see all required data.</li>
+        <li>Select the correct view if the template has multiple views.</li>
+        <li>Check repeating sections, totals, conditional sections, and attachment areas.</li>
+        <li>Export or print the rendered form to PDF with a stable file name.</li>
+        <li>Upload the PDF to the archive library.</li>
+        <li>Write source URL, original XML file name, rendered date, template name, submitter, and conversion status.</li>
+        <li>Record failures and retest before July 14, 2026.</li>
+      </ul>
+
+      <h2>Step 5: Validate Counts, Metadata, and Search</h2>
+      <p>Do not declare success because "the script finished." Records migration needs evidence.</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Validation</th><th>Pass condition</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Count match</strong></td><td>Every in-scope XML file has a PDF, or a documented Not Required / Failed status.</td></tr>
+            <tr><td><strong>Metadata match</strong></td><td>PDF library columns map back to source URL, original file name, submitted date, and template.</td></tr>
+            <tr><td><strong>Open test</strong></td><td>Sample PDFs open in browser and download correctly.</td></tr>
+            <tr><td><strong>Search test</strong></td><td>Records team can find PDFs by business key, submitter, date, and process name.</td></tr>
+            <tr><td><strong>Retention test</strong></td><td>Labels and library permissions align with your Microsoft Purview or records policy.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step 6: Replace Active InfoPath Forms</h2>
+      <p>Archiving solves historical readability. It does not replace active business processes. Use the simplest modern tool that fits the process:</p>
+      <ul>
+        <li><strong>Power Apps:</strong> best for SharePoint list forms, conditional screens, richer validation, role-based behavior, and mobile-friendly business apps.</li>
+        <li><strong>Microsoft Forms:</strong> best for simple intake, surveys, questionnaires, and lightweight collection where the form does not need SharePoint-style app logic.</li>
+        <li><strong>Power Automate:</strong> best for routing, approvals, notifications, reminders, integration, and audit logging.</li>
+        <li><strong>SharePoint lists and libraries:</strong> still the right storage layer for many structured business processes after the form front end is modernized.</li>
+      </ul>
+
+      <h2>Migration Priority Matrix</h2>
+      <p>If time is short, start with forms that are both high-risk and hard to reconstruct after retirement.</p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Priority</th><th>Examples</th><th>Action before July 14, 2026</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Critical</strong></td><td>HR case files, legal requests, safety incidents, finance approvals, regulated customer records.</td><td>Render all XML to PDF, validate, lock archive permissions, assign owner sign-off.</td></tr>
+            <tr><td><strong>High</strong></td><td>Forms with attachments, code-behind, repeating sections, custom views, or old data connections.</td><td>Convert early and maintain a manual review queue.</td></tr>
+            <tr><td><strong>Medium</strong></td><td>Department intake forms with low compliance risk but useful history.</td><td>Batch convert and validate by sample plus count reconciliation.</td></tr>
+            <tr><td><strong>Low</strong></td><td>Abandoned test forms, duplicate libraries, empty form libraries.</td><td>Confirm with owner, then follow normal retention cleanup.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Official Sources</h2>
+      <p>Use these Microsoft sources when preparing the internal change note or records plan:</p>
+      <ul>
+        <li><a href="https://techcommunity.microsoft.com/blog/spblog/support-update-for-infopath-forms-services-in-microsoft-365/3858190" target="_blank" rel="noopener noreferrer">Microsoft SharePoint Blog: Support update for InfoPath Forms Services in Microsoft 365</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/lifecycle/products/infopath-2013" target="_blank" rel="noopener noreferrer">Microsoft Lifecycle: InfoPath 2013</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-scanner-reports-infopath" target="_blank" rel="noopener noreferrer">Microsoft Learn: SharePoint Modernization scanner reports - InfoPath reports</a></li>
+        <li><a href="https://pnp.github.io/pnpassessment/infopath/readme.html" target="_blank" rel="noopener noreferrer">Microsoft 365 Assessment Tool: InfoPath Forms Services Assessment</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/sharepoint-list-integration-overview" target="_blank" rel="noopener noreferrer">Microsoft Learn: Integrate SharePoint Online into Power Apps overview</a></li>
+        <li><a href="https://support.microsoft.com/en-us/infopath/introduction-to-infopath-forms-services" target="_blank" rel="noopener noreferrer">Microsoft Support: Introduction to InfoPath Forms Services</a></li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help with the InfoPath archive run?</h3>
+        <p>OceanCloud can inventory your InfoPath footprint, build the PDF archive library, convert historical form records, validate counts, and rebuild active forms with Power Apps and Power Automate.</p>
+        <a href="/contact" class="btn btn-primary">Start Your InfoPath Retirement Plan</a>
+      </div>
+
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What exactly should be done before July 14, 2026?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Render every in-scope historical InfoPath XML form to PDF, store the PDFs in a SharePoint document library, preserve the original XML and XSN templates, and validate that every record has a clear status.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can we keep only the PDFs and delete the XML files?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Usually no. Keep the original XML and XSN template unless your records, legal, and compliance owners approve deletion under a documented retention policy. The PDF is the readable copy; the XML is the original data source.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does Power Apps automatically import InfoPath forms?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No. Treat Power Apps as a redesign platform, not a direct InfoPath converter. Simple list forms can often be rebuilt quickly. Complex forms with code, repeating tables, data connections, and multiple views need business analysis and redesign.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What if some XML forms fail to render?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Put them in a Needs Review queue with the source URL, template name, error, and owner. Common causes include missing templates, broken data connections, permission issues, deleted lookup data, or old custom code.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Should the archive library have retention labels?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes, if the records are subject to a retention policy. Apply Microsoft Purview retention labels or library-level governance that matches the business process and legal requirement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-workflow-migration" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">How to Replace Legacy SharePoint Workflows with Power Automate</span>
+            <span class="rc-read">9 min read &rarr;</span>
+          </a>
+          <a href="guide-power-apps-sharepoint" class="related-card">
+            <span class="rc-topic">Power Platform</span>
+            <span class="rc-title">Power Apps SharePoint List Canvas App Guide</span>
+            <span class="rc-read">10 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-pnp-site-migration" class="related-card">
+            <span class="rc-topic">Admin</span>
+            <span class="rc-title">Migrate SharePoint Online Sites with PnP PowerShell</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="guide-final-cta">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-icon">&#128172;</div>
+      <div class="cta-content">
+        <h3>Ready to transform your SharePoint and Microsoft 365 environment?</h3>
+        <p>OceanCloud specialises in SharePoint consulting, M365 migration, Power Platform solutions, and enterprise governance. Let's discuss how we can help.</p>
+        <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="guide-lead-magnet">
+  <div class="container">
+    <div class="lm-content">
+      <div class="lm-icon">&#128229;</div>
+      <div class="lm-text">
+        <h3>Get This Free Resource</h3>
+        <p>Step-by-step SharePoint migration and modernization checklist.</p>
+      </div>
+    </div>
+    <a href="/assets/lead-magnets/landing-migration-checklist.html" class="btn-secondary">Download Checklist &rarr;</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/case-studies">Case Studies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/archive">News Archive</a></li>
+        <li><a href="/status">Service Status</a></li>
+        <li><a href="/message-center">Message Center</a></li>
+        <li><a href="/guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services">SharePoint Development</a></li>
+        <li><a href="/services">Teams Configuration</a></li>
+        <li><a href="/services">M365 Migration</a></li>
+        <li><a href="/services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/cookies">Cookie Policy</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <div class="fb-left">
+        <span class="fb-copy">&copy; 2026 OceanCloud Consultants. All rights reserved.</span>
+      </div>
+      <div class="status-pill"><span class="status-dot-anim"></span>Accepting new engagements</div>
+      <div class="fb-right"><a href="/privacy">Privacy</a><span class="fb-sep">&middot;</span><a href="/terms">Terms</a><span class="fb-sep">&middot;</span><a href="/cookies">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=5"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=6"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>
