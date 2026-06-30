@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="../css/style.css?v=3" />
   <link rel="stylesheet" href="../css/pages.css?v=12" />
   <link rel="stylesheet" href="../css/darkstar.css?v=3" />
-  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/code.css?v=2" />
   <link rel="stylesheet" href="../css/article.css?v=8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
@@ -497,7 +497,7 @@ Add-PnPField -List $libraryTitle -DisplayName "ConversionStatus" -InternalName "
         <p><strong>Windows recommended for PDF conversion.</strong> Authentication requires an <a href="/articles/guide-powershell-self-signed-certificate-entra-app-registration"><strong>Entra ID app registration</strong></a> with Sites.Read.All permission. Three methods are tried in order: (1) ClientId + certificate thumbprint in the Windows certificate store, (2) ClientId + PFX file, (3) ClientId + Interactive browser sign-in. PDF rendering uses <code>msedge.exe --headless</code> (pre-installed on Windows 10 and 11). InfoPath COM is available as a fallback if Edge or the XSLT path is unavailable.</p>
       </div>
       <div class="code-label">PowerShell — Download-InfoPathForms-WithPdf.ps1</div>
-      <div class="code-block"><pre>&lt;#
+      <div class="code-block" data-collapsible="true"><pre>&lt;#
 .SYNOPSIS
     Downloads all InfoPath XML form submissions from SharePoint Online and
     converts each to a PDF using the form's own XSLT view and Edge headless.
@@ -1576,7 +1576,7 @@ Write-Log "====================================================="
 <script src="../js/particles.js?v=6"></script>
 <script src="../js/weather.js?v=6"></script>
 <script src="../js/share.js?v=1"></script>
-<script src="../js/code.js?v=2"></script>
+<script src="../js/code.js?v=3"></script>
 <script src="../js/article.js?v=6"></script>
 <script src="../js/comments.js?v=7"></script>
 </body>

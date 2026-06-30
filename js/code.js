@@ -249,8 +249,10 @@
   /* ═══════════════════════════════════════════════════════════
      SVG icons
      ═══════════════════════════════════════════════════════════ */
-  var ICON_COPY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  var ICON_COPY  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
   var ICON_CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  var ICON_EXPAND   = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+  var ICON_COLLAPSE = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
 
   /* ═══════════════════════════════════════════════════════════
      Copy to clipboard
@@ -325,6 +327,34 @@
       badge.textContent = LANG_NAMES[lang] || lang;
 
       header.appendChild(badge);
+
+      /* Collapse / expand toggle — only for blocks with data-collapsible="true" */
+      if (block.dataset.collapsible === 'true') {
+        block.classList.add('is-collapsible', 'is-collapsed');
+
+        var colBtn = document.createElement('button');
+        colBtn.className = 'collapse-btn';
+        colBtn.setAttribute('aria-expanded', 'false');
+        colBtn.setAttribute('aria-label', 'Expand code block');
+        colBtn.innerHTML = ICON_EXPAND + ' Expand';
+
+        colBtn.addEventListener('click', function () {
+          var nowCollapsed = block.classList.toggle('is-collapsed');
+          if (nowCollapsed) {
+            colBtn.innerHTML = ICON_EXPAND + ' Expand';
+            colBtn.setAttribute('aria-expanded', 'false');
+            colBtn.setAttribute('aria-label', 'Expand code block');
+            block.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            colBtn.innerHTML = ICON_COLLAPSE + ' Collapse';
+            colBtn.setAttribute('aria-expanded', 'true');
+            colBtn.setAttribute('aria-label', 'Collapse code block');
+          }
+        });
+
+        header.appendChild(colBtn);
+      }
+
       header.appendChild(btn);
 
       /* Insert header as first child of the code block */
