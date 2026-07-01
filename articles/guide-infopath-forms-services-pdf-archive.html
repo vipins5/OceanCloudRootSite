@@ -152,6 +152,22 @@
               "@type": "Answer",
               "text": "Yes, if the records are subject to a retention policy. Apply Microsoft Purview retention labels or library-level governance that matches the business process and legal requirement."
             }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens to file attachments stored inside InfoPath XML forms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "InfoPath stores file attachments as base64-encoded binary data inside the XML file — they are not separate SharePoint files. The rendered PDF shows the form view but does not extract the attachment payload. If your archived forms contain inline attachments, you need a separate extraction step: identify the attachment XML nodes, decode the base64 content using [Convert]::FromBase64String() in PowerShell, and save the extracted files alongside the PDF in the archive library."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this retirement affect InfoPath on SharePoint Server on-premises?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The July 14, 2026 retirement applies to SharePoint Online only. SharePoint Server 2019 and SharePoint Server Subscription Edition continue to include InfoPath Forms Services for as long as those server versions are supported. InfoPath 2013 desktop client extended support also ends July 14, 2026, meaning no further security patches regardless of deployment. On-premises organizations should plan a migration to Power Apps on their own timeline."
+            }
           }
         ]
       },
@@ -306,7 +322,7 @@
       <div class="article-meta">
         <span class="art-tag">Admin &amp; Automation</span>
         <span class="art-date">July 1, 2026</span>
-        <span class="art-read">14 min read</span>
+        <span class="art-read">16 min read</span>
       </div>
 
       <p class="article-intro">InfoPath is not just another retired Office client. In many SharePoint tenants, InfoPath still controls how old HR requests, finance approvals, safety checks, legal intakes, and regulated business records are displayed. Publishing new forms has already been blocked by Microsoft since May 18, 2026. The preservation window closes on July 14, 2026. The urgent work is preservation: create a readable PDF copy of every historical XML form while the browser rendering service is still available. After July 14, there is no fallback — the service is gone from SharePoint Online entirely.</p>
@@ -397,7 +413,7 @@ $clientId = "00000000-0000-0000-0000-000000000000"
 
 Connect-PnPOnline -Url $adminUrl -Interactive -ClientId $clientId
 
-$sites = Get-PnPTenantSite -Limit All |
+$sites = Get-PnPTenantSite |
   Where-Object { $_.Template -notlike "SPSPERS*" }
 
 $inventory = foreach ($site in $sites) {
@@ -497,8 +513,12 @@ Add-PnPField -List $libraryTitle -DisplayName "ConversionStatus" -InternalName "
         <li>Record failures and retest before July 14, 2026.</li>
       </ul>
 
+      <div class="art-callout warning">
+        <p><strong>InfoPath XML inline attachments are not extracted by PDF conversion.</strong> InfoPath stores file attachments as base64-encoded binary data inside the XML — not as separate SharePoint files. The XSLT-to-HTML rendering path and the InfoPath COM print path both render the form view, but neither extracts the embedded attachment payload. If your form libraries contain HR files, safety incident reports, contract approvals, or other records with user-uploaded attachments, you need a separate extraction step after PDF rendering: parse the relevant <code>&lt;xd:xdFileAttachment&gt;</code> nodes (or equivalent custom attachment fields), decode the base64 data with <code>[Convert]::FromBase64String()</code>, and save the extracted files alongside the PDF in the archive library. Add an <strong>AttachmentStatus</strong> column (Extracted / None / Pending) to the archive library to track this per record.</p>
+      </div>
+
       <h3>Download and convert script</h3>
-      <p>This script handles the complete archive run in one pass on a Windows machine: it connects to SharePoint Online, downloads every XML form submission and the XSN template to the desktop, then converts each XML to PDF. Set the three variables in the configuration block at the top and run from Windows PowerShell 5.1 or PowerShell 7.</p>
+      <p>This script handles the complete archive run in one pass on a Windows machine: it connects to SharePoint Online, downloads every XML form submission and the XSN template to the desktop, then converts each XML to PDF. Set the configuration variables at the top and run from Windows PowerShell 5.1 or PowerShell 7. If the run is interrupted, set <code>$ResumeFromFolder</code> to the existing output folder name and re-run — XML files already on disk are skipped automatically.</p>
             <div class="art-callout warning">
         <p><strong>Windows recommended for PDF conversion.</strong> Authentication requires an <a href="/articles/guide-powershell-self-signed-certificate-entra-app-registration"><strong>Entra ID app registration</strong></a> with Sites.Read.All permission. Three methods are tried in order: (1) ClientId + certificate thumbprint in the Windows certificate store, (2) ClientId + PFX file, (3) ClientId + Interactive browser sign-in. PDF rendering uses <code>msedge.exe --headless</code> (pre-installed on Windows 10 and 11). InfoPath COM is available as a fallback if Edge or the XSLT path is unavailable.</p>
       </div>
@@ -1377,6 +1397,10 @@ Write-Log "  Resume cmd    : Set `$ResumeFromFolder = '$DesktopFolder'"
 Write-Log "====================================================="
 </pre></div>
 
+      <div class="art-callout">
+        <p><strong>Resuming an interrupted run:</strong> If the script stops mid-run — network drop, throttling, machine restart — set <code>$ResumeFromFolder</code> to the folder name printed in the final summary (for example <code>"InfoPath_Archive_20260701_142300"</code>) and re-run. XML files already on disk are skipped (<code>$ResumeMode = $true</code>), and existing PDFs are skipped when <code>$SkipExistingPdfs = $true</code>. The metadata CSV and log are appended, not overwritten. There is no need to restart from scratch for a partially completed run.</p>
+      </div>
+
       <h2>Step 5: Validate Counts, Metadata, and Search</h2>
       <p>Do not declare success because "the script finished." Records migration needs evidence.</p>
       <div class="art-table-wrap">
@@ -1495,6 +1519,30 @@ Write-Log "====================================================="
           <div class="faq-a" role="region">
             <div class="faq-a-inner">
               <p>Yes, if the records are subject to a retention policy. Apply Microsoft Purview retention labels or library-level governance that matches the business process and legal requirement.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What happens to file attachments stored inside InfoPath XML forms?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>InfoPath stores file attachments as base64-encoded binary data inside the XML file itself — they are not separate SharePoint files. The rendered PDF shows the form view but does not extract the attachment payload. If your archived forms contain inline attachments, you need a separate extraction step after PDF rendering: identify the attachment XML nodes (typically <code>&lt;xd:xdFileAttachment&gt;</code> or equivalent custom fields), decode the base64 content using <code>[Convert]::FromBase64String()</code> in PowerShell, and save the extracted files alongside the PDF in the archive library. Add an <strong>AttachmentStatus</strong> column (Extracted / None / Pending) to the archive library to track this per record.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does this retirement affect InfoPath on SharePoint Server on-premises?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No. The July 14, 2026 retirement applies to SharePoint Online only. SharePoint Server 2019 and SharePoint Server Subscription Edition continue to include InfoPath Forms Services for as long as those server versions are supported. If your organization runs InfoPath form libraries on an on-premises SharePoint Server and has not moved those libraries to SharePoint Online, this deadline does not directly apply to those forms. However, InfoPath 2013 desktop client extended support also ends July 14, 2026 regardless of deployment — no further security patches will be issued for the client application after that date. On-premises organizations should still plan a migration to Power Apps or another modern platform on their own timeline.</p>
             </div>
           </div>
         </div>
