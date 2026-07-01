@@ -870,29 +870,48 @@ function Convert-XmlToHtml {
 
 function Convert-HtmlToPdfEdge {
     # Prints an HTML file to PDF using Microsoft Edge in headless mode.
-    # BUG FIX 1: Use [System.Uri] to percent-encode spaces and special characters
-    #            in the file path -- bare string replace leaves spaces unencoded
-    #            and Edge headless silently fails on file:// URIs with spaces.
-    # BUG FIX 2: Wrap $PdfPath in escaped quotes inside the argument string so
-    #            paths with spaces are correctly passed to Edge's argument parser.
+    # [System.Uri] percent-encodes spaces/special chars in the file URI.
+    # Quoted $PdfPath embeds literal " so Edge sees --print-to-pdf="path with spaces".
+    #
+    # REGRESSION: Edge 141+ (Oct 2025) broke --headless=new --print-to-pdf -- Edge
+    # exits 0 but writes no file. Workaround: add --user-data-dir to force a fresh
+    # profile (confirmed fix on MS Q&amp;A). --headless=old is tried as a second variant
+    # for older Edge builds where --user-data-dir alone may not help.
+    # See: https://learn.microsoft.com/en-us/answers/questions/5579903/
     param([string]$HtmlPath, [string]$PdfPath, [string]$EdgeExe)
+    $tempProfile = $null
     try {
-        # [System.Uri] correctly percent-encodes spaces and other reserved chars.
-        $fileUri = [System.Uri]::new([System.IO.Path]::GetFullPath($HtmlPath)).AbsoluteUri
+        $fileUri    = [System.Uri]::new([System.IO.Path]::GetFullPath($HtmlPath)).AbsoluteUri
+        $tempProfile = Join-Path $env:TEMP "EdgeHeadlessProfile_$PID"
 
-        # Build the command line as a single string. The backtick-escaped quotes
-        # embed literal " characters so Edge sees --print-to-pdf="path with spaces".
-        $argLine = "--headless=new --disable-gpu --no-pdf-header-footer " +
-                   "--disable-extensions --run-all-compositor-stages-before-draw " +
-                   "--print-to-pdf=`"$PdfPath`" `"$fileUri`""
+        $commonFlags = "--disable-gpu --no-pdf-header-footer --disable-extensions " +
+                       "--run-all-compositor-stages-before-draw " +
+                       "--print-to-pdf=`"$PdfPath`" `"$fileUri`""
 
-        $proc = Start-Process -FilePath $EdgeExe -ArgumentList $argLine `
-                    -Wait -PassThru -WindowStyle Hidden -ErrorAction Stop
-        Start-Sleep -Milliseconds 400    # allow OS to flush the file
-        return ($proc.ExitCode -eq 0) -and
-               (Test-Path -LiteralPath $PdfPath) -and
-               ((Get-Item -LiteralPath $PdfPath).Length -gt 512)
+        # Variant 1: headless=new + user-data-dir  (fixes Edge 141+ regression)
+        # Variant 2: headless=old                  (legacy mode; fallback for older builds)
+        $variants = @(
+            "--headless=new --user-data-dir=`"$tempProfile`" $commonFlags",
+            "--headless=old $commonFlags"
+        )
+
+        foreach ($argLine in $variants) {
+            if (Test-Path -LiteralPath $PdfPath) { Remove-Item $PdfPath -Force -ErrorAction SilentlyContinue }
+            $proc = Start-Process -FilePath $EdgeExe -ArgumentList $argLine `
+                        -Wait -PassThru -WindowStyle Hidden -ErrorAction Stop
+            Start-Sleep -Milliseconds 400
+            if (($proc.ExitCode -eq 0) -and (Test-Path -LiteralPath $PdfPath) -and
+                ((Get-Item -LiteralPath $PdfPath).Length -gt 512)) {
+                return $true
+            }
+        }
+        return $false
     } catch { return $false }
+    finally {
+        if ($tempProfile -and (Test-Path $tempProfile)) {
+            Remove-Item $tempProfile -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
 }
 
 function Convert-InfoPathXmlToPdfCom {
