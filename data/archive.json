@@ -81,7 +81,7 @@
       "article_slug": "news-2026-06-sharepoint-neutral-themed-sharepoint-ui-in-page-editing-and"
     },
     {
-      "title": "Microsoft Purview: Data Loss Prevention - Data Loss Prevention to safeguard sensitive information from external web search in Microsoft 365 Copilot and Copilot Chat",
+      "title": "Purview DLP: Safeguard Copilot Web Search",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870",
       "date_friendly": "June 26, 2026",
       "month_sort": "2026-06",
@@ -101,7 +101,7 @@
       "article_slug": "news-2026-06-business-applications-built-for-microsoft-365-cubic-logics-s"
     },
     {
-      "title": "Microsoft Purview: Data Loss Prevention - Endpoint DLP now detects sensitivity labels on files inside archives",
+      "title": "Purview Endpoint DLP Detects Labels in Archives",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566617",
       "date_friendly": "June 25, 2026",
       "month_sort": "2026-06",
@@ -111,7 +111,7 @@
       "article_slug": "news-2026-06-microsoft-purview-data-loss-prevention-endpoint-dlp-now-dete"
     },
     {
-      "title": "Microsoft Purview: Data Lifecycle Management - Ensure regulatory compliance by deleting inactive OneDrives and mailboxes for departing employees",
+      "title": "Purview DLM: Delete Inactive OneDrives and Mailboxes",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566527",
       "date_friendly": "June 25, 2026",
       "month_sort": "2026-06",
@@ -201,7 +201,7 @@
       "article_slug": "news-2026-06-microsoft-viva-copilot-analytics-insights-in-cowork-and-work"
     },
     {
-      "title": "Microsoft Purview: Data Lifecycle Management - Adaptive Protection integration with Data Lifecycle Management",
+      "title": "Purview DLM: Adaptive Protection Integration",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566324",
       "date_friendly": "June 18, 2026",
       "month_sort": "2026-06",
@@ -291,7 +291,7 @@
       "article_slug": "news-2026-06-microsoft-teams-personal-message-reminders-for-chat-and-chan"
     },
     {
-      "title": "Microsoft Purview: Endpoint Data Loss Prevention - Protect sensitive data over FTP and SFTP with Endpoint DLP",
+      "title": "Purview Endpoint DLP: Protect FTP and SFTP Transfers",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565868",
       "date_friendly": "June 15, 2026",
       "month_sort": "2026-06",
@@ -301,7 +301,7 @@
       "article_slug": "news-2026-06-microsoft-purview-endpoint-data-loss-prevention-protect-sens"
     },
     {
-      "title": "Microsoft Purview: Data Lifecycle Management - Retention capabilities based on files Last Accessed in OneDrive and SharePoint",
+      "title": "Purview DLM: Retention Based on Last Accessed Files",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565866",
       "date_friendly": "June 15, 2026",
       "month_sort": "2026-06",
@@ -930,7 +930,7 @@
       "article_slug": "news-2026-04-microsoft-teams-unblock-users-to-send-message-while-file-is-"
     },
     {
-      "title": "Microsoft Copilot (Microsoft 365): Copilot improved long files navigation using document structure, enabling more accurate answers and clearer citations.",
+      "title": "Microsoft 365 Copilot: Better Long File Navigation",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559614",
       "date_friendly": "April 24, 2026",
       "month_sort": "2026-04",
@@ -989,7 +989,7 @@
       "article_slug": "news-2026-04-microsoft-teams-report-external-users-for-security-concerns-"
     },
     {
-      "title": "Microsoft Copilot (Microsoft 365): Now smarter with visuals: Copilot Chat leverages embedded images for richer, more accurate answers.",
+      "title": "Microsoft 365 Copilot Chat: Smarter Answers with Images",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560540",
       "date_friendly": "April 17, 2026",
       "month_sort": "2026-04",
@@ -1089,7 +1089,7 @@
       "article_slug": "news-2026-02-microsoft-purview-insider-risk-management-ability-to-create-"
     },
     {
-      "title": "Microsoft Copilot (Microsoft 365): Microsoft Copilot (Microsoft 365): Open Word, Excel, and PowerPoint Files in Copilot Chat",
+      "title": "Microsoft 365 Copilot: Open Office Files in Copilot Chat",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=548641",
       "date_friendly": "January 30, 2026",
       "month_sort": "2026-01",

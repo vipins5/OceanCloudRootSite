@@ -11,7 +11,7 @@
 		<copyright>Copyright 2026 OceanCloud LLC</copyright>
 		<managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
 		<webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
-		<lastBuildDate>Tue, 30 Jun 2026 19:16:30 +0000</lastBuildDate>
+		<lastBuildDate>Wed, 01 Jul 2026 14:49:10 +0000</lastBuildDate>
 		<ttl>1440</ttl>
 		<image>
 			<url>https://oceancloudconsults.com/assets/og-home.jpg</url>
@@ -20,7 +20,7 @@
 		</image>
 
 		<item>
-			<title>InfoPath Forms Services Deadline: Render XML Forms to PDF</title>
+			<title>InfoPath Retirement: Render XML Forms to PDF</title>
 			<link>https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive</guid>
 			<pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
@@ -473,7 +473,7 @@
 		</item>
 
 		<item>
-			<title>How to Replace Legacy SharePoint Workflows with Power Automate</title>
+			<title>Replace Legacy SharePoint Workflows with Power Automate</title>
 			<link>https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration</guid>
 			<pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate>

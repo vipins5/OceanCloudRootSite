@@ -127,6 +127,28 @@ def normalize_microsoft_text(text: str) -> str:
     return text.replace("Microsoft 356 Copilot", "Microsoft 365 Copilot")
 
 
+def local_news_title(title: str, limit: int = 95) -> str:
+    """Shorten verbose Microsoft feed titles for local cards and metadata."""
+    clean = normalize_microsoft_text(re.sub(r"\s+", " ", title)).strip()
+    replacements = [
+        ("Microsoft Copilot (Microsoft 365): Microsoft Copilot (Microsoft 365):", "Microsoft 365 Copilot:"),
+        ("Microsoft Copilot (Microsoft 365):", "Microsoft 365 Copilot:"),
+        ("Microsoft Purview: Data Loss Prevention - Data Loss Prevention to safeguard sensitive information from external web search in Microsoft 365 Copilot and Copilot Chat", "Purview DLP: Safeguard Copilot Web Search"),
+        ("Microsoft Purview: Data Loss Prevention -", "Purview DLP:"),
+        ("Microsoft Purview: Endpoint Data Loss Prevention -", "Purview Endpoint DLP:"),
+        ("Microsoft Purview: Data Lifecycle Management -", "Purview DLM:"),
+    ]
+    for old, new in replacements:
+        clean = clean.replace(old, new)
+    clean = re.sub(r"\s+", " ", clean).strip(" -")
+    if len(clean) <= limit:
+        return clean
+    cut = clean.rfind(" ", 0, limit)
+    if cut < 60:
+        cut = limit
+    return clean[:cut].rstrip(" ,;:-") + "..."
+
+
 def friendly_date(raw: str) -> str:
     if not raw:
         return ""
@@ -197,10 +219,13 @@ def slugify(title: str) -> str:
 
 
 def seo_description(text: str, limit: int = 170) -> str:
-    """Return a complete, social-card-safe description without mid-word cuts."""
+    """Return a complete, social-card-safe description without awkward cuts."""
     clean = re.sub(r"\s+", " ", strip_html(text)).strip()
     if len(clean) <= limit:
         return clean
+    sentence_end = max(clean.rfind(".", 0, limit), clean.rfind("!", 0, limit), clean.rfind("?", 0, limit))
+    if sentence_end >= 90:
+        return clean[: sentence_end + 1].strip()
     cut = clean.rfind(" ", 0, limit)
     if cut < 90:
         cut = limit
@@ -1024,7 +1049,8 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
     """Build a complete HTML article page for a news item."""
     date_str   = friendly_date(item["date"])
     pub_date   = iso_date(item["date"])
-    title      = item["title"]
+    source_title = item["title"]
+    title      = local_news_title(source_title)
     ms_url     = item["url"]
     is_roadmap = item["css_tag"] == "tag-roadmap"
     tag_label  = source_tag_label(item)
@@ -1495,6 +1521,7 @@ def card_html(item: dict, commentary: str) -> str:
     )
     local_url   = item.get("_article_url", item["url"])
     ms_url      = item["url"]
+    title       = local_news_title(item["title"])
     return f"""\
       <article class="news-card glass" data-source="{source_slug}" data-topic="{topic_slug}">
         <div class="nc-image-wrap">
@@ -1506,7 +1533,7 @@ def card_html(item: dict, commentary: str) -> str:
         </div>
         <h3 class="nc-title">
           <a href="{escape(local_url)}" rel="nofollow">
-            {escape(item['title'])}
+            {escape(title)}
           </a>
         </h3>
         <p class="nc-body">{escape(commentary)}</p>
@@ -1606,11 +1633,12 @@ def build_archive_block(archive: list[dict]) -> str:
             art_slug   = it.get("article_slug", "")
             link_url   = f"/articles/{art_slug}" if art_slug else it["url"]
             link_attrs = ' rel="nofollow"' if art_slug else ' target="_blank" rel="noopener noreferrer"'
+            title      = local_news_title(it["title"])
             rows += (
                 f'        <li class="am-item">\n'
                 f'          <span class="nc-tag {escape(it["css_tag"])}">{short}</span>\n'
                 f'          <a href="{escape(link_url)}"{link_attrs}>'
-                f'{escape(it["title"])}</a>\n'
+                f'{escape(title)}</a>\n'
                 f'          <span class="am-date">{escape(it["date_friendly"])}</span>\n'
                 f'        </li>\n'
             )
