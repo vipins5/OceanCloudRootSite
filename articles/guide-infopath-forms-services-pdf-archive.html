@@ -926,7 +926,10 @@ function Convert-InfoPathXmlToPdfCom {
         $wsh = New-Object -ComObject WScript.Shell
         $activated = $wsh.AppActivate("Save Print Output As")
         if (-not $activated) { Start-Sleep -Milliseconds 800 }  # extra wait if dialog slow
-        $wsh.SendKeys($PdfPath)
+        # Escape SendKeys special chars: + ^ % ~ ( ) { } are keyboard-shortcut triggers.
+        # Wrapping each in {} makes SendKeys type it literally, e.g. {+} sends a + sign.
+        $escapedPath = $PdfPath -replace '([+^%~(){}])', '{$1}'
+        $wsh.SendKeys($escapedPath)
         Start-Sleep -Milliseconds 400
         $wsh.SendKeys("{ENTER}")
         Start-Sleep -Milliseconds 2500
