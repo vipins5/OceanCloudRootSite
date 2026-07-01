@@ -1,6 +1,56 @@
 {
   "items": [
     {
+      "title": "Lessons From Building AI Skills in the Real World with Copilot in SharePoint",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/lessons-from-building-ai-skills-in-the-real-world-with-copilot/ba-p/4529563",
+      "date_friendly": "June 30, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-06-lessons-from-building-ai-skills-in-the-real-world-with-copil"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Insights: Copilot Analytics - Cowork adoption and impact",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567005",
+      "date_friendly": "June 30, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-copilot-microsoft-365-insights-copilot-analytics-c"
+    },
+    {
+      "title": "OneNote: Suggested Artifact Creation in Copilot Notebooks",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566870",
+      "date_friendly": "June 30, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-onenote-suggested-artifact-creation-in-copilot-notebooks"
+    },
+    {
+      "title": "Microsoft Teams: Front-of-room view control for Town Hall\nand Webinar in Teams Rooms on Android",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562534",
+      "date_friendly": "June 30, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-front-of-room-view-control-for-town-hall-and"
+    },
+    {
+      "title": "Microsoft Teams: IntelliFrame people labels in Teams Rooms on Windows",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566700",
+      "date_friendly": "June 29, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-intelliframe-people-labels-in-teams-rooms-on"
+    },
+    {
       "title": "Microsoft Edge: Upgraded Copilot new tab page",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566703",
       "date_friendly": "June 26, 2026",
@@ -371,6 +421,16 @@
       "article_slug": "news-2026-06-microsoft-teams-assistant-field-visibility-in-organization-v"
     },
     {
+      "title": "Microsoft Teams: Automatic recording and transcription for Teams Call Queues",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565215",
+      "date_friendly": "June 09, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-automatic-recording-and-transcription-for-te"
+    },
+    {
       "title": "Microsoft Purview: eDiscovery - In-product diagnostics to troubleshoot common challenges",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222",
       "date_friendly": "June 05, 2026",
@@ -654,6 +714,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-teams-shared-delegate-mailbox-scheduling-for-event"
+    },
+    {
+      "title": "Universal Print: Badge API",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561921",
+      "date_friendly": "May 15, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-universal-print-badge-api"
     },
     {
       "title": "Microsoft Teams: Preloaded video for Teams Events and Meetings",
@@ -1039,5 +1109,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-06-29"
+  "last_updated": "2026-07-01"
 }
