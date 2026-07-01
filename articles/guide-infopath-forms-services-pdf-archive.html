@@ -510,7 +510,7 @@ Add-PnPField -List $libraryTitle -DisplayName "ConversionStatus" -InternalName "
 
 .DESCRIPTION
     DOWNLOAD PHASE
-    - PnP.PowerShell 2.12.0 with certificate or interactive authentication.
+    - PnP.PowerShell (latest) with certificate or interactive authentication.
     - Pages through all items including subfolders (handles &gt;5,000-item libraries).
     - Batched downloads, exponential-backoff retries, resumable runs.
     - Downloads .xsn template(s) from /Forms.
@@ -539,7 +539,7 @@ Add-PnPField -List $libraryTitle -DisplayName "ConversionStatus" -InternalName "
 
 .PREREQUISITES
     Windows PowerShell 5.1 (recommended) or PowerShell 7.x on Windows.
-    PnP.PowerShell 2.12.0 -- auto-installed if missing.
+    PnP.PowerShell (latest) -- auto-installed if missing.
     Entra ID app registration with Sites.Read.All (or equivalent) permission.
     PDF primary  : Microsoft Edge (Chromium) -- pre-installed on Windows 10/11.
     PDF fallback : Microsoft InfoPath Filler 2013.
@@ -614,7 +614,6 @@ try {
 } catch { }
 
 # ---- Resolve output folder -------------------------------------------------
-$pinnedVersion = "2.12.0"
 if ([string]::IsNullOrWhiteSpace($ResumeFromFolder)) {
     $DesktopFolder = "InfoPath_Archive_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
 } else {
@@ -643,26 +642,24 @@ if (-not [string]::IsNullOrWhiteSpace($ResumeFromFolder)) {
     Write-Log "RESUME MODE: $OutputPath"
 }
 
-# ---- PnP.PowerShell v2.x check ---------------------------------------------
+# ---- PnP.PowerShell check --------------------------------------------------
 $installed = Get-Module -ListAvailable -Name PnP.PowerShell |
-             Where-Object { $_.Version.Major -eq 2 } |
              Sort-Object Version -Descending | Select-Object -First 1
 
 if (-not $installed) {
-    Write-Host "PnP.PowerShell v2.x not found. Installing v$pinnedVersion ..." -ForegroundColor Yellow
+    Write-Host "PnP.PowerShell not found. Installing latest from PSGallery ..." -ForegroundColor Yellow
     try {
-        Install-Module -Name PnP.PowerShell -RequiredVersion $pinnedVersion `
+        Install-Module -Name PnP.PowerShell `
             -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
     } catch {
         Write-Error "Install failed: $($_.Exception.Message)"
-        Write-Error "Manual install: Install-Module PnP.PowerShell -RequiredVersion $pinnedVersion -Scope CurrentUser"
+        Write-Error "Manual install: Install-Module PnP.PowerShell -Scope CurrentUser"
         exit 1
     }
     $installed = Get-Module -ListAvailable -Name PnP.PowerShell |
-                 Where-Object { $_.Version.Major -eq 2 } |
                  Sort-Object Version -Descending | Select-Object -First 1
 }
-if (-not $installed) { Write-Error "PnP.PowerShell v2.x is still unavailable. Aborting."; exit 1 }
+if (-not $installed) { Write-Error "PnP.PowerShell is still unavailable. Aborting."; exit 1 }
 
 Remove-Module PnP.PowerShell -ErrorAction SilentlyContinue
 Import-Module PnP.PowerShell -RequiredVersion $installed.Version -ErrorAction Stop
@@ -733,8 +730,9 @@ function Connect-SharePoint {
                             -Interactive `
                             -ErrorAction Stop
                     } else {
-                        # No ClientId configured -- last-resort legacy browser auth (Windows only)
-                        Write-Log "Auth: No ClientId set. Using -UseWebLogin as last resort (Windows only)." "WARN"
+                        # No ClientId -- last resort. -UseWebLogin is deprecated in newer PnP
+                        # versions; set $ClientId and use Interactive for reliable auth.
+                        Write-Log "Auth: No ClientId set. Attempting -UseWebLogin (deprecated; set ClientId for reliability)." "WARN"
                         Connect-PnPOnline -Url $Url -UseWebLogin -ErrorAction Stop
                     }
                 }
@@ -902,7 +900,7 @@ function Convert-InfoPathXmlToPdfCom {
     # Uses WScript.Shell SendKeys to dismiss the Save As dialog that
     # Microsoft Print to PDF raises -- fragile by nature; test on your environment.
     param([string]$XmlPath, [string]$PdfPath)
-    $ip = $null; $doc = $null; $originalPrinter = $null
+    $ip = $null; $doc = $null; $wsh = $null; $originalPrinter = $null
     try {
         $originalPrinter = (Get-WmiObject Win32_Printer -Filter "Default=$true" `
                             -ErrorAction SilentlyContinue).Name
@@ -924,7 +922,7 @@ function Convert-InfoPathXmlToPdfCom {
         # Handle the Save Print Output As dialog via SendKeys.
         # BUG FIX: $doc.Close() is called only in finally, not in the try body,
         # so the finally block always has a valid reference to release.
-        $wsh       = New-Object -ComObject WScript.Shell
+        $wsh = New-Object -ComObject WScript.Shell
         $activated = $wsh.AppActivate("Save Print Output As")
         if (-not $activated) { Start-Sleep -Milliseconds 800 }  # extra wait if dialog slow
         $wsh.SendKeys($PdfPath)
@@ -947,6 +945,7 @@ function Convert-InfoPathXmlToPdfCom {
             try { $doc.Close($false) } catch {}
             try { [System.Runtime.InteropServices.Marshal]::ReleaseComObject($doc) | Out-Null } catch {}
         }
+        if ($wsh) { try { [System.Runtime.InteropServices.Marshal]::ReleaseComObject($wsh) | Out-Null } catch {} }
         if ($ip)  {
             try { $ip.Quit() } catch {}
             [System.Runtime.InteropServices.Marshal]::ReleaseComObject($ip) | Out-Null
