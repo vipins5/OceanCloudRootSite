@@ -902,15 +902,16 @@ function Convert-InfoPathXmlToPdfCom {
     param([string]$XmlPath, [string]$PdfPath)
     $ip = $null; $doc = $null; $wsh = $null; $originalPrinter = $null
     try {
-        $originalPrinter = (Get-WmiObject Win32_Printer -Filter "Default=$true" `
+        # Get-CimInstance works on both PS 5.1 and PS 7 (Get-WmiObject removed in PS 7).
+        $originalPrinter = (Get-CimInstance Win32_Printer -Filter "Default=$true" `
                             -ErrorAction SilentlyContinue).Name
-        $pdfPrinter = Get-WmiObject Win32_Printer `
+        $pdfPrinter = Get-CimInstance Win32_Printer `
                         -Filter "Name='Microsoft Print to PDF'" -ErrorAction SilentlyContinue
         if (-not $pdfPrinter) {
             Write-Log "Microsoft Print to PDF printer not found on this machine." "WARN"
             return $false
         }
-        $pdfPrinter.SetDefaultPrinter() | Out-Null
+        Invoke-CimMethod -InputObject $pdfPrinter -MethodName "SetDefaultPrinter" | Out-Null
 
         $ip  = New-Object -ComObject InfoPath.Application
         $doc = $ip.XDocuments.Open($XmlPath)
@@ -936,9 +937,9 @@ function Convert-InfoPathXmlToPdfCom {
     finally {
         # Restore original default printer regardless of outcome.
         if ($originalPrinter) {
-            $restore = Get-WmiObject Win32_Printer `
+            $restore = Get-CimInstance Win32_Printer `
                          -Filter "Name='$originalPrinter'" -ErrorAction SilentlyContinue
-            if ($restore) { $restore.SetDefaultPrinter() | Out-Null }
+            if ($restore) { Invoke-CimMethod -InputObject $restore -MethodName "SetDefaultPrinter" | Out-Null }
         }
         # BUG FIX: close doc here (single authoritative close) to avoid double-close.
         if ($doc) {
@@ -1259,10 +1260,10 @@ if (-not $ConvertToPdf) {
     Write-Progress -Activity "Converting to PDF" -Completed
     Write-Log "PDF phase done. Success:$pdfSuccess  Skipped:$pdfSkipped  Failed:$pdfFailed"
 
-    # Remove extracted XSN working directory
-    if ($xsnExtractDir -and (Test-Path $xsnExtractDir)) {
-        Remove-Item $xsnExtractDir -Recurse -Force -ErrorAction SilentlyContinue
-        Write-Log "Removed extracted XSN working directory."
+    # Remove extracted XSN working directory (use root so partial-extraction remnants are also cleaned)
+    if (Test-Path $XsnExtractRoot) {
+        Remove-Item $XsnExtractRoot -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Log "Removed XSN extraction working directory."
     }
 }
 
