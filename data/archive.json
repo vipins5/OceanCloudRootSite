@@ -1,6 +1,16 @@
 {
   "items": [
     {
+      "title": "Microsoft Copilot Studio: Block the use of maker-provided credentials for authentication",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566997",
+      "date_friendly": "July 02, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-copilot-studio-block-the-use-of-maker-provided-cre"
+    },
+    {
       "title": "Lessons From Building AI Skills in the Real World with Copilot in SharePoint",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/lessons-from-building-ai-skills-in-the-real-world-with-copilot/ba-p/4529563",
       "date_friendly": "June 30, 2026",
@@ -259,6 +269,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-06-onedrive-refreshed-file-browsing-and-filtering-experience-in"
+    },
+    {
+      "title": "Microsoft Teams: Enhanced IntelliFrame with AI data channel for intelligent cameras",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564969",
+      "date_friendly": "June 17, 2026",
+      "month_sort": "2026-06",
+      "month_label": "June 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-06-microsoft-teams-enhanced-intelliframe-with-ai-data-channel-f"
     },
     {
       "title": "Microsoft Edge: Sign in to Edge with a Google account",
@@ -726,6 +746,16 @@
       "article_slug": "news-2026-05-universal-print-badge-api"
     },
     {
+      "title": "Microsoft Copilot (Microsoft 365): Get actionable suggestions from Copilot in your Copilot Page",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562351",
+      "date_friendly": "May 15, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-get-actionable-suggestions-f"
+    },
+    {
       "title": "Microsoft Teams: Preloaded video for Teams Events and Meetings",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562340",
       "date_friendly": "May 14, 2026",
@@ -852,6 +882,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-05-microsoft-teams-proximity-join-support-for-presenters-in-tea"
+    },
+    {
+      "title": "Microsoft Edge: Improved website compatibility with site troubleshooting controls",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561486",
+      "date_friendly": "May 04, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-edge-improved-website-compatibility-with-site-trou"
     },
     {
       "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Document Management",
@@ -1109,5 +1149,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-01"
+  "last_updated": "2026-07-03"
 }
