@@ -104,7 +104,7 @@ def page_html(m: dict[str, Any]) -> str:
     if len(body) > 700:
         body = body[:700].rstrip() + "..."
     desc = f"{mcid}: {title}. Service: {service}. Latest Microsoft 365 Message Center notification surfaced by OceanCloud."
-    url = f"{SITE}/mc/{mcid}.html"
+    url = f"{SITE}/mc/{mcid}"
     app_url = f"{SITE}/message-center?id={mcid}"
 
     json_ld = {
@@ -188,7 +188,7 @@ def write_index(messages: list[dict[str, Any]]) -> None:
     for m in messages:
         mcid = str(m.get("id", "")).upper()
         title = strip_tags(str(m.get("title", "Message Center notification")))
-        items.append(f'<li><a rel="nofollow" href="/mc/{esc(mcid)}.html">{esc(mcid)}</a> - {esc(title)}</li>')
+        items.append(f'<li><a rel="nofollow" href="/mc/{esc(mcid)}">{esc(mcid)}</a> - {esc(title)}</li>')
     html_doc = f"""<!DOCTYPE html>
 <html lang=\"en\">
 <head>
@@ -197,7 +197,7 @@ def write_index(messages: list[dict[str, Any]]) -> None:
   <title>Microsoft 365 Message Center IDs | OceanCloud</title>
   <meta name=\"description\" content=\"Index of Microsoft 365 Message Center IDs tracked by OceanCloud.\" />
     <meta name=\"robots\" content=\"noindex, follow, noarchive\" />
-  <link rel=\"canonical\" href=\"{SITE}/mc/index.html\" />
+  <link rel=\"canonical\" href=\"{SITE}/mc/index\" />
   <style>
     body {{ margin:0; background:#070d17; color:#d6e3f5; font-family:Inter,Segoe UI,Arial,sans-serif; }}
     main {{ max-width:880px; margin:48px auto; padding:0 18px; }}
