@@ -11,6 +11,16 @@
       "article_slug": "news-2026-07-microsoft-copilot-studio-block-the-use-of-maker-provided-cre"
     },
     {
+      "title": "SharePoint Showcase: How Microsoft uses Copilot in SharePoint, and how you can get started",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-how-microsoft-uses-copilot-in-sharepoint-and/ba-p/4533156",
+      "date_friendly": "July 02, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-sharepoint-showcase-how-microsoft-uses-copilot-in-sharepoint"
+    },
+    {
       "title": "Lessons From Building AI Skills in the Real World with Copilot in SharePoint",
       "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/lessons-from-building-ai-skills-in-the-real-world-with-copilot/ba-p/4529563",
       "date_friendly": "June 30, 2026",
@@ -1149,5 +1159,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-03"
+  "last_updated": "2026-07-06"
 }
