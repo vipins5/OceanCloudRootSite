@@ -83,6 +83,13 @@ Disallow: /coming-soon.html
 Disallow: /comments-admin.html
 Allow: /
 
+User-agent: Mediapartners-Google
+Disallow: /coming-soon.html
+Disallow: /comments-admin.html
+Disallow: /mc/
+Disallow: /articles/news-
+Allow: /
+
 Sitemap: https://oceancloudconsults.com/sitemap-index.xml
 Sitemap: https://oceancloudconsults.com/sitemap.xml
 Sitemap: https://oceancloudconsults.com/sitemap-guides.xml
