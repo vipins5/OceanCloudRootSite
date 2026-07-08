@@ -1,6 +1,46 @@
 {
   "items": [
     {
+      "title": "Microsoft Teams: Enhanced delegated calling with delegate call access restrictions and join notifications",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567306",
+      "date_friendly": "July 07, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-enhanced-delegated-calling-with-delegate-cal"
+    },
+    {
+      "title": "Microsoft Purview: Data Loss Prevention - User Based Aggregation of DLP Alerts",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567010",
+      "date_friendly": "July 07, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-purview-data-loss-prevention-user-based-aggregatio"
+    },
+    {
+      "title": "Planner: Capabilities in Microsoft Cowork",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567315",
+      "date_friendly": "July 07, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-planner-capabilities-in-microsoft-cowork"
+    },
+    {
+      "title": "Microsoft Purview: Data Lifecycle Management - Graph API Support for Archive Mailboxes",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567313",
+      "date_friendly": "July 07, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-purview-data-lifecycle-management-graph-api-suppor"
+    },
+    {
       "title": "Microsoft Copilot Studio: Block the use of maker-provided credentials for authentication",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566997",
       "date_friendly": "July 02, 2026",
@@ -671,6 +711,16 @@
       "article_slug": "news-2026-05-microsoft-teams-mandatory-pre-meeting-consent"
     },
     {
+      "title": "Microsoft 365 app: New Copilot Notebooks design in the Microsoft 365 Copilot App",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562662",
+      "date_friendly": "May 27, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-365-app-new-copilot-notebooks-design-in-the-micros"
+    },
+    {
       "title": "Microsoft 365: Pay-as-you-go storage for OneDrive",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562352",
       "date_friendly": "May 26, 2026",
@@ -1159,5 +1209,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-06"
+  "last_updated": "2026-07-08"
 }
