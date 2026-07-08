@@ -329,6 +329,133 @@
     background: rgba(0,180,216,.045);
   }
 
+  /* ===== GUIDE FINAL CTA + LEAD MAGNET (shared across all guide articles) ===== */
+  .guide-final-cta {
+    padding: 64px 0;
+  }
+
+  .guide-final-cta .cta-box {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(59,130,246,.08);
+    border: 1px solid rgba(59,130,246,.2);
+  }
+
+  .guide-final-cta .cta-icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-radius: 50%;
+    background: rgba(0,180,216,.14);
+  }
+
+  .guide-final-cta .cta-content h3 {
+    margin: 0 0 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -.02em;
+  }
+
+  .guide-final-cta .cta-content p {
+    margin: 0 0 20px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  .guide-final-cta .cta-content .btn-primary {
+    margin: 0;
+  }
+
+  .guide-lead-magnet {
+    padding: 0 0 56px;
+  }
+
+  .guide-lead-magnet .container {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 26px 32px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  .guide-lead-magnet .lm-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .guide-lead-magnet .lm-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .guide-lead-magnet .lm-text h3 {
+    margin: 0 0 4px;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .guide-lead-magnet .lm-text p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: .88rem;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #00b4d8;
+    font-weight: 700;
+    font-size: .88rem;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,180,216,.35);
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background var(--t), border-color var(--t), transform var(--t);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(0,180,216,.1);
+    border-color: rgba(0,180,216,.6);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .guide-final-cta .cta-box {
+      flex-direction: column;
+      text-align: center;
+      padding: 32px 24px;
+    }
+    .guide-lead-magnet .container {
+      flex-direction: column;
+      text-align: center;
+    }
+    .guide-lead-magnet .lm-content {
+      flex-direction: column;
+    }
+  }
+
   #back-to-top {
     position: fixed;
     right: 24px;
