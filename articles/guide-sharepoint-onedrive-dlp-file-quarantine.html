@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>DLP File Quarantine for SharePoint & OneDrive Guide | OceanCloud</title>
+  <meta name="description" content="Set up Microsoft Purview DLP file quarantine for SharePoint and OneDrive: quarantine site setup, tombstone messages, policy steps, simulation mode, and restore limitations." />
+  <meta name="keywords" content="DLP file quarantine SharePoint OneDrive, Microsoft Purview quarantine action, move file to quarantine location, DLP tombstone file, Purview DLP policy SharePoint" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="DLP File Quarantine for SharePoint and OneDrive Guide" />
+  <meta property="og:description" content="How Purview DLP file quarantine works, the setup order that trips people up, policy steps, simulation mode, and why restore is manual only." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt"   content="Flow diagram of what happens when a DLP policy quarantines a file in SharePoint or OneDrive" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
+  <meta name="twitter:title"       content="DLP File Quarantine for SharePoint and OneDrive Guide | OceanCloud" />
+  <meta name="twitter:description" content="Set up quarantine settings, build the DLP policy, run simulation mode first, and plan for manual-only restores." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine#article",
+        "headline": "DLP File Quarantine for SharePoint and OneDrive Guide",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine"
+        },
+        "datePublished": "2026-07-08",
+        "dateModified": "2026-07-08",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "A practical setup guide for Microsoft Purview DLP file quarantine in SharePoint and OneDrive: quarantine site prerequisites, DLP settings, policy creation steps, simulation mode, and manual restore limitations.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "DLP file quarantine",
+          "Microsoft Purview",
+          "SharePoint OneDrive DLP",
+          "quarantine action DLP policy",
+          "tombstone file DLP"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-learn",
+            "name": "Learn about DLP file quarantine for SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/dlp-create-policy-spo-odb-quarantine",
+            "name": "Create a DLP policy to quarantine files in SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-get-started",
+            "name": "Get started with DLP file quarantine for SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/dlp-learn-about-dlp",
+            "name": "Learn about data loss prevention"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does the DLP quarantine action actually do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "When a file in SharePoint or OneDrive matches a DLP policy rule with the quarantine action, the file is removed from its original location, moved to an admin-defined quarantine site, and replaced at the original location with a tombstone text file containing an admin-configured message and the file's relative path."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can the quarantine location be a OneDrive account?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The quarantine destination must be a SharePoint site within your tenant. You can use any SharePoint site template, but it should be a dedicated site restricted to the administrators who manage quarantine operations, not a site with active business content."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why can't I select the quarantine action when creating a DLP policy?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The quarantine action only becomes selectable after you configure quarantine settings first: in the Microsoft Purview portal, go to Data Loss Prevention, then Settings, then File quarantine, and set the quarantine folder path and replacement file (tombstone) message. Until that configuration is saved, the policy wizard will prompt you to complete it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I restore a quarantined file?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Restore is manual only; there is no restore action inside the Microsoft Purview portal. An administrator locates the file in the quarantine site, identifies the original path from audit logs, moves the file back, and deletes the tombstone file. Original sharing permissions and links are not retained, only the latest file version comes back, and the same DLP rule will not re-quarantine that restored file."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I turn on quarantine immediately or test it first?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Test it first. Simulation mode is supported for the quarantine action, so you can run the policy without actually moving files, then review matches in Activity Explorer and the DLP alerts dashboard before switching it to enforce and quarantine live content."
+            }
+          }
+        ]
+      },
+
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "DLP File Quarantine Guide",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine"
+          }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:860px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.16);color:#7cb6ff;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.64rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:28px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.86;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.86;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .article-image{margin:30px 0;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);}
+  .article-image img{width:100%;height:auto;border-radius:10px;display:block;}
+  .article-image figcaption{margin-top:11px;color:var(--text-dim);font-size:.82rem;line-height:1.7;}
+  .art-callout{background:rgba(59,130,246,.08);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#cce2ff;font-size:.92rem;}
+  .art-callout.warn{background:rgba(251,146,60,.08);border-left-color:#fb923c;}
+  .art-callout.warn p{color:#ffd8b5;}
+  .art-callout.ok{background:rgba(74,222,128,.08);border-left-color:#4ade80;}
+  .art-callout.ok p{color:#c9f7d8;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(59,130,246,.14);color:#9fd1ff;font-weight:700;padding:11px 14px;text-align:left;border-bottom:1px solid rgba(96,165,250,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .portal-path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 16px;margin:14px 0;font-size:.8rem;}
+  .portal-path .pp-step{color:#7cb6ff;font-weight:600;}
+  .portal-path .pp-sep{color:rgba(255,255,255,.25);margin:0 2px;}
+  .portal-path .pp-icon{font-size:1rem;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#60a5fa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:34px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .quick-points-source{display:none;}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>DLP File Quarantine</span></nav>
+      <h1>DLP File Quarantine: <span class="grad-text">SharePoint &amp; OneDrive Setup Guide</span></h1>
+      <p>How the Purview quarantine action works, the setup order that trips people up, and why restores are manual only.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint &amp; Security</span>
+        <span class="art-date">July 8, 2026</span>
+        <span class="art-read">15 min read</span>
+      </div>
+
+      <ul class="quick-points-source">
+        <li>Quarantine moves a matching file to an admin-defined SharePoint site and leaves a tombstone file behind.</li>
+        <li>You must configure the quarantine site and DLP settings before the quarantine action is even selectable.</li>
+        <li>The quarantine destination must be a SharePoint site — a OneDrive account cannot be the target.</li>
+        <li>Simulation mode is supported for quarantine, so you can test impact before enforcing it live.</li>
+        <li>Restore is manual only; there is no restore button in the Purview portal.</li>
+        <li>Original sharing permissions and links are not retained through the quarantine and restore cycle.</li>
+      </ul>
+
+      <p class="article-intro">Microsoft Purview Data Loss Prevention has added a new action for SharePoint and OneDrive locations: <strong>Block everyone and move file to quarantine location</strong>. It sounds like a simple upgrade to the existing "restrict access" actions, but the setup sequence and the restore limitations are strict enough that skipping ahead in the wizard just won't let you proceed — and getting the restore process wrong can mean a business-critical file sitting inert with its sharing links broken.</p>
+
+      <p>This guide walks through exactly what the quarantine action does, the order you have to configure things in, how to build and test the policy safely, and the operational gaps — like manual-only restore — that you need a plan for before you turn this on for real content.</p>
+
+      <figure class="article-image">
+        <img src="/assets/guides/dlp-quarantine-flow.svg" alt="Flow diagram of what happens when a DLP policy quarantines a file in SharePoint or OneDrive, from upload to tombstone file to manual restore" loading="lazy" decoding="async" width="900" height="1120" />
+        <figcaption>What happens end to end when a file matches a DLP policy configured with the quarantine action.</figcaption>
+      </figure>
+
+      <h2>One-minute summary in plain English</h2>
+      <p>When a file uploaded or edited in a monitored SharePoint site or OneDrive account matches your DLP rule conditions — sensitive info types, sensitivity labels, or both — the quarantine action removes the file from its original location, moves it to a SharePoint site you designate as the quarantine destination, and drops a plain-text <strong>tombstone file</strong> in its place carrying your configured message and the file's original relative path. A DLP alert fires with the file owner, original path, and quarantine location so your compliance team can triage immediately.</p>
+
+      <div class="art-callout">
+        <p><strong>Key clarification:</strong> quarantine is not the same as "block access" or "restrict to owner." The file physically leaves its original location. Recovery is a deliberate admin action, not a policy toggle.</p>
+      </div>
+
+      <h2>Setup order: what has to happen before you can even pick the action</h2>
+      <p>The Purview policy wizard will not let you select the quarantine action until two prerequisites are in place. Trying to skip ahead just prompts you back to finish them first.</p>
+
+      <figure class="article-image">
+        <img src="/assets/guides/dlp-quarantine-setup-sequence.svg" alt="Three-step setup sequence for DLP file quarantine: create the quarantine site, configure DLP settings, then build the policy" loading="lazy" decoding="async" width="1200" height="640" />
+        <figcaption>The quarantine action stays greyed out in the policy wizard until the site and DLP settings steps are both saved.</figcaption>
+      </figure>
+
+      <h3>Step 1: create a dedicated quarantine site</h3>
+      <ul>
+        <li>The destination <strong>must be a SharePoint site</strong> — any template works, but a OneDrive account cannot be the target.</li>
+        <li>Restrict access to the administrators who manage quarantine operations only; do not share it with information workers.</li>
+        <li>Do not reuse a site with active business content — create one dedicated purely to quarantine.</li>
+        <li>If your organization runs on-demand classification scans, exclude the quarantine site from them to avoid unnecessary reprocessing.</li>
+      </ul>
+
+      <h3>Step 2: configure quarantine settings in Purview</h3>
+      <div class="portal-path">
+        <span class="pp-icon">1</span>
+        <span class="pp-step">Microsoft Purview portal</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Data Loss Prevention</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Settings</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">File quarantine</span>
+      </div>
+      <ol>
+        <li>Under <strong>Quarantine folder path</strong>, select the SharePoint site you created from the list. The list is auto-populated from your tenant's sites — you cannot manually type a path.</li>
+        <li>Under <strong>Replacement file message</strong>, write the tombstone text that will appear in place of every quarantined file, for example: <em>"This file was moved to a secure quarantine location because it matched a data loss prevention policy. Contact compliance@yourcompany.com for assistance."</em></li>
+        <li>Save the settings.</li>
+      </ol>
+
+      <div class="art-callout warn">
+        <p><strong>Common trap:</strong> if you just created the quarantine site, it can take time before it appears in the site picker. Don't assume the feature is broken — wait and check back.</p>
+      </div>
+
+      <h2>Building the DLP policy</h2>
+      <p>Once the site and settings are in place, the quarantine action becomes available inside a custom advanced DLP rule.</p>
+
+      <div class="portal-path">
+        <span class="pp-icon">2</span>
+        <span class="pp-step">Purview portal</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Data loss prevention</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Policies</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Create policy</span>
+      </div>
+
+      <ol>
+        <li>Choose <strong>Enterprise applications &amp; devices</strong> &gt; <strong>Custom</strong> category &gt; <strong>Custom policy</strong>.</li>
+        <li>Accept the <strong>Full directory</strong> default under admin units unless you need a narrower scope.</li>
+        <li>Choose locations: select only <strong>SharePoint sites</strong> and <strong>OneDrive accounts</strong>.</li>
+        <li>On policy settings, choose <strong>Create or customize advanced DLP rules</strong>.</li>
+        <li>Create a rule, name it, and add conditions: <strong>Content contains</strong> &gt; <strong>Sensitive info types</strong> (for example, credit card number, bank account number).</li>
+        <li>Optionally add a grouped condition with the Boolean set to <strong>AND</strong>: <strong>Content contains</strong> &gt; <strong>Sensitivity labels</strong>, and select your relevant label (for example, <em>Highly Confidential</em>).</li>
+        <li>Under actions, choose <strong>Restrict access or encrypt the content in Microsoft 365 locations</strong> &gt; <strong>Block everyone and move file to quarantine location</strong>.</li>
+        <li>Turn on user notifications (policy tips) if you want end users informed at the point of match.</li>
+        <li>Under incident reports, set severity to <strong>High</strong> and turn on <strong>Send an alert to admins when a rule match occurs</strong>, with alerts firing every time.</li>
+        <li>Save the rule, review it, and continue.</li>
+      </ol>
+
+      <div class="art-callout ok">
+        <p><strong>Test before you enforce:</strong> on the final step, choose <strong>Run the policy in simulation mode</strong>. Simulation mode is fully supported for the quarantine action — review matches in Activity Explorer and the DLP alerts dashboard before switching the policy to enforce and actually move files.</p>
+      </div>
+
+      <h2>Two behaviors that catch admins off guard</h2>
+      <p>Quarantine is deliberately the most restrictive DLP action available for SharePoint and OneDrive — it removes access from everyone, including the file owner, not just external or unauthorized users. Two side effects of that design are easy to miss when you're planning a rollout.</p>
+      <ul>
+        <li><strong>Existing files are not retroactively evaluated.</strong> The quarantine action only applies to files created or modified <em>after</em> the policy is turned on. A backlog of already-existing sensitive files sitting in scope will not suddenly get quarantined the moment you enable the policy — this is intentional, so a broadly scoped policy can't instantly sweep up a large volume of files that would then need a difficult, manual restore.</li>
+        <li><strong>File name collisions during quarantine.</strong> If a file is quarantined and a new file with the same name is later uploaded to the same original location, the new file is quarantined too — and if a file with that name already exists at the quarantine destination, it overwrites the previously quarantined copy. Treat repeated uploads under the same file name as a scenario worth testing before go-live.</li>
+      </ul>
+
+      <h2>Validating the policy after go-live</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Scenario</th><th>Expected result</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>A matching file is uploaded to a SharePoint site in scope</td>
+              <td>File is moved to the quarantine site; a tombstone file appears at the original location; a DLP alert is generated</td>
+            </tr>
+            <tr>
+              <td>Check the tombstone file at the original location</td>
+              <td>Displays your configured message and the relative path of the quarantined file</td>
+            </tr>
+            <tr>
+              <td>Review the DLP alert</td>
+              <td>Shows file owner, original file path, and quarantine file location</td>
+            </tr>
+            <tr>
+              <td>Review Activity Explorer</td>
+              <td>A DLP rule match event appears with quarantine file location details</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>The part everyone underestimates: restoring a quarantined file</h2>
+      <p>There is <strong>no restore action inside the Microsoft Purview portal</strong>. Restore is entirely manual, and Microsoft documents it as four concrete steps an administrator has to perform:</p>
+      <ol>
+        <li>Locate the quarantined file in the quarantine site.</li>
+        <li>Identify the original file path by using audit logs.</li>
+        <li>Move the file from the quarantine site back to the original location — the quarantine site admin must have access to that original location.</li>
+        <li>Delete the tombstone file from the original location.</li>
+      </ol>
+
+      <div class="art-callout warn">
+        <p><strong>Critical limitations:</strong> original sharing permissions and links are not retained through the restore, so recipients typically need to be re-shared. Only the latest file version is restored — earlier version history is not preserved through the cycle. And by design, the same DLP rule will not re-quarantine that restored file again, even if it's modified or the rule changes later, which prevents a restore-then-requarantine loop (other DLP rules still apply normally).</p>
+      </div>
+
+      <h3>Build a restore runbook before you go live</h3>
+      <ul>
+        <li>Define who is authorized to approve and perform a restore (do not leave this to whoever happens to see the alert first).</li>
+        <li>Document how to pull the original file path from audit logs and the DLP alert, since the tombstone file only shows the relative path, not the full quarantine location.</li>
+        <li>Set an expectation for file owners: "your file is safe, but re-sharing takes a manual step and only the latest version comes back" — this avoids repeat tickets.</li>
+        <li>Track restore requests somewhere auditable; quarantine events are exactly the kind of activity compliance teams get asked about later.</li>
+      </ul>
+
+      <h2>Licensing and scope</h2>
+      <p>DLP file quarantine for SharePoint and OneDrive requires an E5-level Microsoft 365 or Purview compliance license. Confirm licensing coverage across the users and sites you intend to scope before building policies, since a policy that targets locations outside your licensed population will not enforce as expected.</p>
+
+      <h2>Troubleshooting playbook</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Symptom</th><th>Likely cause</th><th>Quick remediation</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Quarantine action is greyed out in the policy wizard</td>
+              <td>Quarantine folder path or replacement message not yet configured</td>
+              <td>Go to DLP Settings &gt; File quarantine and complete both fields, then return to the wizard</td>
+            </tr>
+            <tr>
+              <td>New quarantine site doesn't appear in the folder path picker</td>
+              <td>Site was just created and hasn't propagated to the picker yet</td>
+              <td>Wait and check back; avoid recreating the site as a workaround</td>
+            </tr>
+            <tr>
+              <td>File owner says the file just "disappeared"</td>
+              <td>Quarantine action executed as designed — tombstone file may have been overlooked</td>
+              <td>Check the original location for the tombstone text file, which lists the relative path and admin message</td>
+            </tr>
+            <tr>
+              <td>Restored file's sharing links no longer work</td>
+              <td>Sharing permissions and links are not retained through quarantine/restore</td>
+              <td>Re-share the file to the intended recipients after restoring; this is expected behavior, not a bug</td>
+            </tr>
+            <tr>
+              <td>Policy matched far more files than expected on go-live</td>
+              <td>Policy was enforced live without a simulation-mode test pass first</td>
+              <td>Pull the policy back to simulation mode, review Activity Explorer matches, then tune conditions before re-enforcing</td>
+            </tr>
+            <tr>
+              <td>Existing sensitive files weren't quarantined after enabling the policy</td>
+              <td>Quarantine only evaluates files created or modified after the policy was turned on</td>
+              <td>Expected behavior, not a bug — plan a separate remediation pass for pre-existing files if needed</td>
+            </tr>
+            <tr>
+              <td>A newly uploaded file with the same name also got quarantined</td>
+              <td>Known file-name-collision limitation — a same-named file overwrites the previously quarantined copy</td>
+              <td>Treat repeated uploads under one file name as a scenario to test; rename before re-upload if the earlier copy still matters</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Direct answers to common admin questions</h2>
+
+      <h3>1) Can I point quarantine at an existing, active SharePoint site?</h3>
+      <p>Technically the picker may allow it, but Microsoft's guidance is explicit: use a dedicated site, not one with active business content. Mixing quarantine with live collaboration content increases the chance a restricted-access site becomes a support and audit headache.</p>
+
+      <h3>2) Does quarantine work the same way for OneDrive as for SharePoint?</h3>
+      <p>The trigger and workflow are the same — a file in either location can be moved into quarantine — but the destination is always a SharePoint site. You cannot designate a OneDrive account as the quarantine target.</p>
+
+      <h3>3) Is this feature fully GA or still rolling out?</h3>
+      <p>Microsoft's official walkthrough documentation for creating a quarantine policy is currently marked as a preview scenario, while the underlying action itself has been reported broadly available in tenants since early July 2026. Treat it as newly available: verify it appears in your own tenant's policy wizard before promising it to stakeholders on a specific date.</p>
+
+      <h2>Simple explanation for business stakeholders</h2>
+      <div class="art-callout">
+        <p>"We can now configure automatic removal of files that clearly violate our data protection rules — for example, files containing sensitive financial data shared somewhere they shouldn't be. Instead of just blocking access, the file itself is moved to a secure, admin-only location, and the person who owned it sees a note explaining what happened and who to contact. Getting the file back is a manual step our compliance team controls."</p>
+      </div>
+
+      <h2>Mistakes to avoid</h2>
+      <ul>
+        <li><strong>Skipping simulation mode:</strong> quarantine physically moves files — test the blast radius before enforcing live.</li>
+        <li><strong>Using an active collaboration site as the quarantine destination:</strong> creates a second access-control problem on top of the first.</li>
+        <li><strong>Assuming restore is automatic:</strong> it is not; build the manual runbook before you need it under pressure.</li>
+        <li><strong>Forgetting sharing links break on restore:</strong> tell file owners this upfront so it's not a surprise.</li>
+        <li><strong>Typing a path instead of selecting from the site list:</strong> the field only accepts sites already discovered by the picker.</li>
+        <li><strong>Expecting a backlog of old files to get swept up automatically:</strong> quarantine only evaluates files created or modified after the policy is enabled.</li>
+      </ul>
+
+      <h2>Final checklist before you enforce quarantine live</h2>
+      <ol>
+        <li>Create a dedicated, access-restricted SharePoint site for quarantine.</li>
+        <li>Configure the quarantine folder path and tombstone message in DLP Settings.</li>
+        <li>Build the policy with sensitive info type and/or sensitivity label conditions.</li>
+        <li>Run the policy in simulation mode and review Activity Explorer and alerts.</li>
+        <li>Document a manual restore runbook, including the sharing-link caveat.</li>
+        <li>Confirm E5 licensing covers the users and sites in scope, then switch the policy to enforce.</li>
+      </ol>
+
+      <p>Complete these six steps and quarantine becomes a controlled, auditable safety net instead of a surprise disappearing act for end users.</p>
+
+      <h2>Reference links</h2>
+      <ul>
+        <li><a href="https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-learn" target="_blank" rel="noopener noreferrer">Microsoft Learn: Learn about DLP file quarantine for SharePoint and OneDrive</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/purview/dlp-create-policy-spo-odb-quarantine" target="_blank" rel="noopener noreferrer">Microsoft Learn: Create a DLP policy to quarantine files in SharePoint and OneDrive</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-get-started" target="_blank" rel="noopener noreferrer">Microsoft Learn: Get started with DLP file quarantine</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/purview/dlp-learn-about-dlp" target="_blank" rel="noopener noreferrer">Microsoft Learn: Learn about data loss prevention</a></li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help designing DLP policies that won't disrupt the business?</h3>
+        <p>OceanCloud can build and pilot your quarantine policy in simulation mode, set up a restore runbook, and validate scope against your E5 licensing before anything goes live.</p>
+        <a href="/contact" class="btn-primary">Book a Free Discovery Call &#8594;</a>
+      </div>
+
+
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What does the DLP quarantine action actually do?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>When a file in SharePoint or OneDrive matches a DLP policy rule with the quarantine action, the file is removed from its original location, moved to an admin-defined quarantine site.</p>
+              <p>The original location is replaced with a tombstone text file containing an admin-configured message and the file's relative path.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can the quarantine location be a OneDrive account?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No. The quarantine destination must be a SharePoint site within your tenant.</p>
+              <p>You can use any SharePoint site template, but it should be a dedicated site restricted to the administrators who manage quarantine operations, not a site with active business content.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why can't I select the quarantine action when creating a DLP policy?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>The quarantine action only becomes selectable after you configure quarantine settings first: in the Microsoft Purview portal, go to Data Loss Prevention, then Settings, then File quarantine, and set the quarantine folder path and replacement file message.</p>
+              <p>Until that configuration is saved, the policy wizard will prompt you to complete it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I restore a quarantined file?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Restore is manual only; there is no restore action inside the Microsoft Purview portal.</p>
+              <p>An administrator locates the file in the quarantine site, identifies the original path from audit logs, moves the file back, and deletes the tombstone file. Original sharing permissions and links are not retained, only the latest file version comes back, and the same DLP rule won't re-quarantine that restored file.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Should I turn on quarantine immediately or test it first?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Test it first. Simulation mode is supported for the quarantine action, so you can run the policy without actually moving files.</p>
+              <p>Review matches in Activity Explorer and the DLP alerts dashboard before switching the policy to enforce and quarantine live content.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related guides</p>
+        <div class="related-grid">
+          <!-- populated by article.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+      <section class="guide-final-cta reveal">
+        <div class="cta-box">
+          <div class="cta-icon">💬</div>
+          <div class="cta-content">
+            <h3>Ready to transform your SharePoint and Microsoft 365 environment?</h3>
+            <p>OceanCloud specialises in SharePoint consulting, M365 migration, Power Platform solutions, and enterprise governance. Let's discuss how we can help.</p>
+            <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation ➜</a>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="guide-lead-magnet">
+        <div class="container">
+          <div class="lm-content">
+            <div class="lm-icon">📥</div>
+            <div class="lm-text">
+              <h3>Get This Free Resource</h3>
+              <p>DLP quarantine rollout checklist and restore runbook template.</p>
+            </div>
+          </div>
+          <a href="/assets/lead-magnets/landing-dlp-quarantine-checklist.html" class="btn-secondary">Download Checklist →</a>
+        </div>
+      </section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/guides">All Guides</a></li>
+          <li><a href="guide-sharepoint-permissions">SharePoint Permissions</a></li>
+          <li><a href="guide-sharepoint-approval-workflow">Approval Workflows</a></li>
+          <li><a href="guide-m365-migration-checklist">Migration Checklist</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services">SharePoint Consulting</a></li>
+          <li><a href="/services">M365 Migration</a></li>
+          <li><a href="/services">Power Platform</a></li>
+          <li><a href="/services">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/cookies">Cookie Policy</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</p></div></div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=10"></script>
+<script src="../js/consent.js?v=5"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=4"></script>
+<script src="../js/article.js?v=6"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

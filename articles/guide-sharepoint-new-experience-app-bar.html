@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>New SharePoint Experience (App Bar Redesign) Guide | OceanCloud</title>
+  <meta name="description" content="MC1240699 explained: what the new SharePoint app bar changes (Discover, Publish, Build), the rollout timeline, and how to prepare before the opt-out window closes." />
+  <meta name="keywords" content="MC1240699, new SharePoint experience, SharePoint app bar redesign, SharePoint Discover Publish Build, SharePoint start page 2026" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar" />
+
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:title"       content="New SharePoint Experience (App Bar Redesign) Guide" />
+  <meta property="og:description" content="What MC1240699 changes, why the classic-experience toggle disappears after preview, and a readiness plan for admins and site owners." />
+  <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar" />
+  <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt"   content="Map of the redesigned SharePoint app bar showing Discover, Publish, and Build" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@oceancloud_x" />
+  <meta name="twitter:title"       content="New SharePoint Experience (App Bar Redesign) Guide | OceanCloud" />
+  <meta name="twitter:description" content="MC1240699 in plain English: what changes, what to test, and how to prepare before standard release removes the opt-out." />
+  <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar#article",
+        "headline": "New SharePoint Experience (App Bar Redesign) Guide",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar"
+        },
+        "datePublished": "2026-07-08",
+        "dateModified": "2026-07-08",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "A practical guide to Microsoft 365 Message Center MC1240699: the redesigned SharePoint app bar (Discover, Publish, Build), neutral app theming, the rollout timeline, and an admin readiness plan.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "MC1240699",
+          "New SharePoint experience",
+          "SharePoint app bar",
+          "SharePoint Discover Publish Build",
+          "SharePoint 2026 rollout"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/enable-new-sharepoint-experience",
+            "name": "New SharePoint experience - SharePoint in Microsoft 365"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/office/e568387f-bfef-41cf-8dc0-e1fdc5c08c73",
+            "name": "About the SharePoint app bar"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/office/0b6cfbb0-5523-41d9-bc89-4f719f05fd51",
+            "name": "Discover in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/office/11d2b61d-7c25-4d7d-94cf-0abe66fb2936",
+            "name": "Publish in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://support.microsoft.com/office/cb17406a-59ea-488a-beb5-f8160af3ecb5",
+            "name": "Build in SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/viva/connections/sharepoint-app-bar",
+            "name": "Global navigation in the SharePoint app bar"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is MC1240699 and what does it change in SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MC1240699 introduces a redesigned SharePoint app bar and start page. The classic start page is replaced by a Discover experience, and the app bar gains two new destinations, Publish and Build, alongside a neutral visual theme applied across SharePoint surfaces including SPFx web part placeholders."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can we still opt out of the new SharePoint experience?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Only during the preview phase, and Microsoft's own documentation confirms public preview concluded on May 4, 2026. The app bar's toggle back to the classic experience was available only during that preview window. Once a tenant reaches standard release, there is no admin or user setting left to restore the old app bar."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens to custom SPFx web parts and branding?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Neutral app theming applies a consistent, neutral palette across SharePoint UI surfaces, including SPFx placeholders, to keep content and branding visually forward. Custom web parts that hard-coded colors matching the old chrome, or branding that depended on specific background tones, should be visually reviewed before rollout reaches your tenant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the new experience affect permissions or content?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. This is a navigation, start-page, and visual theming change. It does not alter site permissions, content, sharing settings, or site structure. Followed Sites is renamed Favorite Sites, and Saved for Later for pages and news is renamed Favorites, but the underlying data is preserved."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What should we do before our tenant reaches standard release?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Enable the preview in a test tenant or pilot group first, screenshot the new Discover, Publish, and Build destinations for a help-desk runbook, visually audit key SPFx web parts and Home site branding, and confirm whether global navigation is configured on your Home site so it appears correctly in the new app bar."
+            }
+          }
+        ]
+      },
+
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "New SharePoint Experience Guide",
+            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar"
+          }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oceancloudconsults.com/#james-whitfield",
+        "name": "James Whitfield",
+        "jobTitle": "Chief Executive Officer",
+        "url": "https://oceancloudconsults.com/about#team",
+        "worksFor": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:860px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(59,130,246,.16);color:#7cb6ff;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.64rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:28px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.86;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.86;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .article-image{margin:30px 0;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);}
+  .article-image img{width:100%;height:auto;border-radius:10px;display:block;}
+  .article-image figcaption{margin-top:11px;color:var(--text-dim);font-size:.82rem;line-height:1.7;}
+  .art-callout{background:rgba(59,130,246,.08);border-left:3px solid #60a5fa;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#cce2ff;font-size:.92rem;}
+  .art-callout.warn{background:rgba(251,146,60,.08);border-left-color:#fb923c;}
+  .art-callout.warn p{color:#ffd8b5;}
+  .art-callout.ok{background:rgba(74,222,128,.08);border-left-color:#4ade80;}
+  .art-callout.ok p{color:#c9f7d8;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(59,130,246,.14);color:#9fd1ff;font-weight:700;padding:11px 14px;text-align:left;border-bottom:1px solid rgba(96,165,250,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:20px 22px;margin:20px 0;overflow-x:auto;}
+  .code-block pre{margin:0;font-family:'Courier New',Courier,monospace;font-size:.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .portal-path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 16px;margin:14px 0;font-size:.8rem;}
+  .portal-path .pp-step{color:#7cb6ff;font-weight:600;}
+  .portal-path .pp-sep{color:rgba(255,255,255,.25);margin:0 2px;}
+  .portal-path .pp-icon{font-size:1rem;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#60a5fa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:34px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .related-card:hover .rc-title{color:#00b4d8;}
+  .quick-points-source{display:none;}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"59,130,246","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>New SharePoint Experience</span></nav>
+      <h1>New SharePoint Experience: <span class="grad-text">App Bar Redesign Guide</span></h1>
+      <p>What MC1240699 changes, why the opt-out window is closing, and how to prepare your tenant and helpdesk.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint</span>
+        <span class="art-date">July 8, 2026</span>
+        <span class="art-read">16 min read</span>
+      </div>
+
+      <ul class="quick-points-source">
+        <li>MC1240699 replaces the SharePoint start page with Discover and adds Publish and Build to the app bar.</li>
+        <li>Public preview concluded May 4, 2026 — standard release is rolling out tenant by tenant through mid-2026.</li>
+        <li>The classic-experience toggle only ever existed during preview; standard release removes it entirely.</li>
+        <li>Neutral app theming changes background colors across SharePoint surfaces, including SPFx web part placeholders.</li>
+        <li>Followed Sites becomes Favorite Sites; Saved for Later becomes Favorites — the underlying data is unaffected.</li>
+        <li>Permissions, content, and sharing settings are untouched by this change.</li>
+      </ul>
+
+      <p class="article-intro">Microsoft 365 Message Center notification <strong>MC1240699</strong> is the reason SharePoint tenants are quietly starting to look different this year. Unlike most SharePoint changes, this one is not a feature toggle buried in the admin center — it is a redesign of the primary navigation every user sees the moment they open SharePoint. The classic start page and left-hand app bar are being replaced with a new <strong>Discover, Publish, and Build</strong> structure, and the visual theme underneath every page is shifting to a neutral palette.</p>
+
+      <p>What makes this genuinely time-sensitive is one specific detail confirmed in Microsoft's own documentation: the option to switch back to the classic app bar <strong>existed only during the public preview</strong>, and that preview concluded on May 4, 2026. If your tenant has not yet reached standard release, you still have a short window to pilot the change, screenshot the new experience for your help desk, and catch anything that looks broken in custom branding. Once standard release reaches your tenant, that window closes.</p>
+
+      <figure class="article-image">
+        <img src="/assets/guides/sharepoint-new-experience-rollout-timeline.svg" alt="Timeline of the MC1240699 new SharePoint experience rollout from public preview to standard release" loading="lazy" decoding="async" width="1400" height="820" />
+        <figcaption>Rollout timeline for MC1240699: public preview, the May 4, 2026 preview close, and standard release reaching tenants through mid-2026.</figcaption>
+      </figure>
+
+      <h2>One-minute summary in plain English</h2>
+      <p>SharePoint's navigation is being simplified around three jobs: finding things, publishing things, and building things. Instead of a general-purpose start page and a left-hand bar that tried to do everything, the new app bar routes each job to its own destination. Microsoft's stated goal is a "consistent, neutral palette" across SharePoint surfaces that pushes customer branding and content forward rather than competing with chrome and iconography for attention.</p>
+      <p>This is a UI and navigation change, not a permissions or content change. No site, list, library, or sharing setting is touched. What does change is what people click to get around, what your screenshots in training material look like, and — for anyone with custom SPFx web parts — how those web parts sit inside a lighter, more neutral surface.</p>
+
+      <div class="art-callout">
+        <p><strong>Key clarification:</strong> "New SharePoint experience" describes navigation, the start page, and visual theming. It is not a rename of SharePoint, a migration, or a change to how permissions or sharing work.</p>
+      </div>
+
+      <h2>What the redesigned app bar actually contains</h2>
+      <p>The three new destinations map cleanly onto three different user intents, and understanding that split is the fastest way to explain the change to end users.</p>
+
+      <figure class="article-image">
+        <img src="/assets/guides/sharepoint-new-experience-app-bar-map.svg" alt="Map of the redesigned SharePoint app bar showing the Discover, Publish, and Build destinations plus global navigation and neutral theming" loading="lazy" decoding="async" width="1200" height="900" />
+        <figcaption>The redesigned app bar: Discover replaces the start page, Publish and Build are new destinations, and neutral theming applies underneath all three.</figcaption>
+      </figure>
+
+      <h3>Discover — replaces the classic start page</h3>
+      <ul>
+        <li>Refreshed experience for finding sites, content, and news relevant to the signed-in user.</li>
+        <li><strong>Followed Sites</strong> is renamed <strong>Favorite Sites</strong> — the sites themselves and the follow relationship are preserved, only the label changes.</li>
+      </ul>
+
+      <h3>Publish — new destination</h3>
+      <ul>
+        <li>Brings together pages, news, and campaign-style communications in one place.</li>
+        <li><strong>Saved for Later</strong> for pages and news posts is renamed <strong>Favorites</strong>.</li>
+      </ul>
+
+      <h3>Build — new destination</h3>
+      <ul>
+        <li>A single surface for makers to create and manage sites, lists, libraries, and AI-powered agents.</li>
+        <li>Consolidates entry points that used to be scattered across the classic start page and site contents menus.</li>
+      </ul>
+
+      <h3>Global navigation and neutral theming</h3>
+      <p>If your organization has configured global navigation on its Home site, the new app bar shows your logo and name at the top — this behavior is unchanged from the Viva Connections app bar model, just carried into the redesigned bar. Underneath all three destinations, <strong>neutral app theming</strong> applies a consistent, muted palette across SharePoint UI surfaces, <em>including SPFx placeholders</em>, so that your content and branding read more clearly against a quieter backdrop.</p>
+
+      <h2>Rollout chronology</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Phase</th><th>What happened</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Early 2026</strong></td>
+              <td>Microsoft opened public preview for the new SharePoint experience; admins could enable it per tenant.</td>
+              <td>Individual users could toggle back to the classic app bar during this window — your only chance to preview without commitment.</td>
+            </tr>
+            <tr>
+              <td><strong>May 4, 2026</strong></td>
+              <td>Public preview concluded, per Microsoft's own documentation.</td>
+              <td>The classic-experience toggle stopped being offered as new tenants move through rollout.</td>
+            </tr>
+            <tr>
+              <td><strong>June-July 2026</strong></td>
+              <td>Standard release carries the new experience to tenants that had not already enabled preview.</td>
+              <td>This is a Microsoft-driven, tenant-by-tenant rollout — you cannot indefinitely defer it by ignoring the admin setting.</td>
+            </tr>
+            <tr>
+              <td><strong>Post-rollout</strong></td>
+              <td>New app bar is the only experience available; no admin or user setting restores the classic bar.</td>
+              <td>Any readiness work (branding audit, help-desk training, communication) needs to land before your tenant reaches this point.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-callout warn">
+        <p><strong>Practical advice:</strong> do not treat "we haven't enabled it yet" as a long-term strategy. Standard release does not require you to opt in — it is Microsoft's default rollout path once preview closes for a given tenant wave.</p>
+      </div>
+
+      <h2>How to check and pilot the setting today</h2>
+      <p>If your tenant has not yet moved to standard release, you can still control the timing and run a pilot.</p>
+
+      <div class="portal-path">
+        <span class="pp-icon">1</span>
+        <span class="pp-step">SharePoint admin center</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">Settings</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">SharePoint</span>
+        <span class="pp-sep">&gt;</span>
+        <span class="pp-step">New SharePoint Experience</span>
+      </div>
+
+      <ol>
+        <li>Open the setting above and review whether your tenant already shows it as active, pending, or available to enable.</li>
+        <li>If it is still available to enable and preview has not concluded for your tenant wave, turn it on for a pilot group first rather than your whole organization.</li>
+        <li>Walk through Discover, Publish, and Build yourself and capture screenshots for a help-desk one-pager.</li>
+        <li>Open your two or three most heavily branded Home sites and pages to check how they render under neutral theming.</li>
+      </ol>
+
+      <div class="art-callout ok">
+        <p><strong>Governance tip:</strong> if the setting is no longer available to toggle at all, your tenant has already moved to standard release — skip straight to the post-rollout checklist below.</p>
+      </div>
+
+      <h2>What to visually audit before rollout reaches you</h2>
+      <p>Because neutral theming changes background and surface colors rather than site content, the risk is cosmetic, not structural — but cosmetic problems on a heavily branded intranet still generate tickets.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Area</th><th>What to check</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Custom SPFx web parts</td>
+              <td>Any web part with hard-coded background colors designed to match the old chrome</td>
+              <td>Neutral theming changes the surface underneath; hard-coded assumptions can clash</td>
+            </tr>
+            <tr>
+              <td>Home site global navigation</td>
+              <td>Whether logo and name are configured and render correctly at the top of the new app bar</td>
+              <td>This is carried forward from the existing Viva Connections app bar model — worth confirming, not assuming</td>
+            </tr>
+            <tr>
+              <td>Training material and screenshots</td>
+              <td>Any onboarding docs referencing "Followed Sites" or the classic start page</td>
+              <td>Labels change to Favorite Sites and Favorites; old screenshots will look wrong to new hires</td>
+            </tr>
+            <tr>
+              <td>Help-desk scripts</td>
+              <td>Whether support scripts describe navigation by old menu names</td>
+              <td>First-line support gets the "where did X go" tickets — give them the new map in advance</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Operational plan you can use immediately</h2>
+      <p>This is a Microsoft-driven rollout, so your job is readiness and communication rather than a migration project.</p>
+
+      <h3>Stage 1: pilot and audit (if preview is still available)</h3>
+      <ul>
+        <li>Enable preview for a pilot group of power users and site owners.</li>
+        <li>Screenshot Discover, Publish, and Build for help-desk reference.</li>
+        <li>Visually check top Home sites and heavily customized SPFx web parts under neutral theming.</li>
+      </ul>
+
+      <h3>Stage 2: communication before standard release</h3>
+      <ul>
+        <li>Send a short, non-technical notice to all users describing what will look different and when.</li>
+        <li>Update onboarding material and internal documentation that references old navigation labels.</li>
+        <li>Brief the help desk on the Discover / Publish / Build split and the Favorite Sites / Favorites renames.</li>
+      </ul>
+
+      <h3>Stage 3: post-rollout monitoring</h3>
+      <ul>
+        <li>Track "where did X go" ticket volume for the first two weeks after rollout.</li>
+        <li>Fix any SPFx web parts that visually clash with neutral theming.</li>
+        <li>Confirm global navigation branding still renders as expected once the change is live for everyone.</li>
+      </ul>
+
+      <h2>Troubleshooting playbook</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Symptom</th><th>Likely cause</th><th>Quick remediation</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>User asks "where did Followed Sites go?"</td>
+              <td>Rename to Favorite Sites, same underlying list</td>
+              <td>Point them to Discover &gt; Favorite Sites; the sites they followed are still there</td>
+            </tr>
+            <tr>
+              <td>Custom web part background looks wrong or clashes</td>
+              <td>Hard-coded colors designed for the old chrome, now sitting on a neutral surface</td>
+              <td>Update the web part's styling to work with a neutral background, or remove hard-coded fills</td>
+            </tr>
+            <tr>
+              <td>Logo missing from the top of the app bar</td>
+              <td>Global navigation not configured on the Home site</td>
+              <td>Configure global navigation branding on your Home site per Microsoft's guidance</td>
+            </tr>
+            <tr>
+              <td>User still sees the classic app bar after rollout date</td>
+              <td>Phased rollout — tenants and even user sessions can update at slightly different times</td>
+              <td>Confirm via the admin center setting; if it shows active, ask the user to refresh or sign out and back in</td>
+            </tr>
+            <tr>
+              <td>Team asks to switch back to the old bar</td>
+              <td>Assumes the preview-era toggle still exists</td>
+              <td>Explain the toggle was preview-only and is not available post standard release</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Direct answers to common admin questions</h2>
+
+      <h3>1) Do we need to do anything, or does Microsoft just roll this out?</h3>
+      <p>Microsoft drives the rollout itself through standard release. Your actions are optional readiness work — piloting, auditing branding, and communicating — not a required migration step. If you do nothing, the new experience still arrives.</p>
+
+      <h3>2) Will this break any of our automation or scripts?</h3>
+      <p>No. This change is limited to navigation, the start page, and visual theming. It does not touch SharePoint's underlying APIs, PnP PowerShell operations, Power Automate flows, or Graph calls against sites, lists, or libraries.</p>
+
+      <h3>3) What about multi-tenant consulting environments?</h3>
+      <p>Track each client tenant's rollout phase separately using the admin center setting. Tenants that enabled preview early may already be past the toggle-back window; tenants that never opted in will hit standard release on Microsoft's timeline regardless of your involvement.</p>
+
+      <h2>Simple explanation for business stakeholders</h2>
+      <div class="art-callout">
+        <p>"Microsoft is redesigning how SharePoint's navigation looks and feels — not what's stored in it. Menus are reorganized around finding, publishing, and building content, and the overall look becomes cleaner and more neutral so our own branding stands out more. No files, permissions, or sites are affected."</p>
+      </div>
+
+      <h2>Communication template you can send internally</h2>
+      <div class="code-block" data-lang="text">
+        <div class="code-label">Internal change notice template</div>
+<pre>Subject: SharePoint navigation is getting a refresh
+
+Microsoft is rolling out a redesigned SharePoint navigation bar (MC1240699).
+
+What changes:
+- The start page becomes "Discover" for finding sites, content, and news.
+- Two new areas appear: "Publish" (pages and news) and "Build" (creating sites,
+  lists, and libraries).
+- The overall look becomes cleaner with a neutral color theme.
+
+What does NOT change:
+- Your files, permissions, and site content are untouched.
+- "Followed Sites" is now called "Favorite Sites" - the same sites are there.
+
+Support:
+If anything looks broken or you can't find something you used to see,
+contact &lt;support mailbox&gt; with a screenshot.</pre>
+      </div>
+
+      <h2>Mistakes to avoid during this rollout</h2>
+      <ul>
+        <li><strong>Assuming you can defer indefinitely:</strong> standard release does not require an opt-in action from you.</li>
+        <li><strong>Skipping the branding audit:</strong> neutral theming is subtle until it clashes with a hard-coded custom web part.</li>
+        <li><strong>Waiting until go-live to write help-desk material:</strong> the preview window is the cheapest time to capture screenshots.</li>
+        <li><strong>Telling users they can toggle back:</strong> that option existed for preview only and will confuse people if promised after the fact.</li>
+        <li><strong>Treating this as a permissions or migration project:</strong> it is a navigation and theming change only.</li>
+      </ul>
+
+      <h2>Final checklist before standard release reaches you</h2>
+      <ol>
+        <li>Check the SharePoint admin center setting to see your tenant's current rollout status.</li>
+        <li>If preview is still available, pilot it with a small group and capture screenshots.</li>
+        <li>Visually audit top Home sites and custom SPFx web parts under neutral theming.</li>
+        <li>Update onboarding docs and help-desk scripts to reflect Discover, Publish, Build, and the Favorites rename.</li>
+        <li>Send a short internal notice before rollout, not after.</li>
+        <li>Monitor ticket volume for two weeks post-rollout and fix cosmetic issues as they surface.</li>
+      </ol>
+
+      <p>Complete these six items and this becomes a smooth cosmetic update instead of a wave of "where did it go" tickets.</p>
+
+      <h2>Reference links</h2>
+      <ul>
+        <li><a href="https://learn.microsoft.com/en-us/sharepoint/enable-new-sharepoint-experience" target="_blank" rel="noopener noreferrer">Microsoft Learn: New SharePoint experience</a></li>
+        <li><a href="https://support.microsoft.com/office/e568387f-bfef-41cf-8dc0-e1fdc5c08c73" target="_blank" rel="noopener noreferrer">Microsoft Support: About the SharePoint app bar</a></li>
+        <li><a href="https://support.microsoft.com/office/0b6cfbb0-5523-41d9-bc89-4f719f05fd51" target="_blank" rel="noopener noreferrer">Microsoft Support: Discover in SharePoint</a></li>
+        <li><a href="https://support.microsoft.com/office/11d2b61d-7c25-4d7d-94cf-0abe66fb2936" target="_blank" rel="noopener noreferrer">Microsoft Support: Publish in SharePoint</a></li>
+        <li><a href="https://support.microsoft.com/office/cb17406a-59ea-488a-beb5-f8160af3ecb5" target="_blank" rel="noopener noreferrer">Microsoft Support: Build in SharePoint</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/viva/connections/sharepoint-app-bar" target="_blank" rel="noopener noreferrer">Microsoft Learn: Global navigation in the SharePoint app bar</a></li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help auditing branding before rollout hits your tenant?</h3>
+        <p>OceanCloud can pilot the new experience, audit your SPFx web parts and Home site branding against neutral theming, and produce a help-desk ready rollout runbook.</p>
+        <a href="/contact" class="btn-primary">Book a Free Discovery Call &#8594;</a>
+      </div>
+
+
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is MC1240699 and what does it change in SharePoint?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>MC1240699 introduces a redesigned SharePoint app bar and start page.</p>
+              <p>The classic start page is replaced by a Discover experience, and the app bar gains two new destinations, Publish and Build, alongside a neutral visual theme applied across SharePoint surfaces including SPFx web part placeholders.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can we still opt out of the new SharePoint experience?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Only during the preview phase, and Microsoft's own documentation confirms public preview concluded on May 4, 2026.</p>
+              <p>The app bar's toggle back to the classic experience was available only during that preview window. Once a tenant reaches standard release, there is no admin or user setting left to restore the old app bar.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What happens to custom SPFx web parts and branding?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Neutral app theming applies a consistent, neutral palette across SharePoint UI surfaces, including SPFx placeholders, to keep content and branding visually forward.</p>
+              <p>Custom web parts that hard-coded colors matching the old chrome, or branding that depended on specific background tones, should be visually reviewed before rollout reaches your tenant.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does the new experience affect permissions or content?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No. This is a navigation, start-page, and visual theming change. It does not alter site permissions, content, sharing settings, or site structure.</p>
+              <p>Followed Sites is renamed Favorite Sites, and Saved for Later for pages and news is renamed Favorites, but the underlying data is preserved.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What should we do before our tenant reaches standard release?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Enable the preview in a test tenant or pilot group first, screenshot the new Discover, Publish, and Build destinations for a help-desk runbook.</p>
+              <p>Also visually audit key SPFx web parts and Home site branding, and confirm whether global navigation is configured on your Home site so it appears correctly in the new app bar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related guides</p>
+        <div class="related-grid">
+          <!-- populated by article.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+      <section class="guide-final-cta reveal">
+        <div class="cta-box">
+          <div class="cta-icon">💬</div>
+          <div class="cta-content">
+            <h3>Ready to transform your SharePoint and Microsoft 365 environment?</h3>
+            <p>OceanCloud specialises in SharePoint consulting, M365 migration, Power Platform solutions, and enterprise governance. Let's discuss how we can help.</p>
+            <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation ➜</a>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="guide-lead-magnet">
+        <div class="container">
+          <div class="lm-content">
+            <div class="lm-icon">📥</div>
+            <div class="lm-text">
+              <h3>Get This Free Resource</h3>
+              <p>New SharePoint experience rollout checklist and help-desk one-pager.</p>
+            </div>
+          </div>
+          <a href="/assets/lead-magnets/landing-sharepoint-new-experience-checklist.html" class="btn-secondary">Download Checklist →</a>
+        </div>
+      </section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/guides">All Guides</a></li>
+          <li><a href="guide-sharepoint-permissions">SharePoint Permissions</a></li>
+          <li><a href="guide-sharepoint-approval-workflow">Approval Workflows</a></li>
+          <li><a href="guide-m365-migration-checklist">Migration Checklist</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services">SharePoint Consulting</a></li>
+          <li><a href="/services">M365 Migration</a></li>
+          <li><a href="/services">Power Platform</a></li>
+          <li><a href="/services">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/cookies">Cookie Policy</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud LLC &mdash; All rights reserved.</p></div></div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=10"></script>
+<script src="../js/consent.js?v=5"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=4"></script>
+<script src="../js/article.js?v=6"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dqsdesc">
+  <title id="dqsdesc">Setup sequence for DLP file quarantine: site, settings, then policy</title>
+  <defs>
+    <linearGradient id="dqsbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071425"/>
+      <stop offset="100%" stop-color="#0c1f37"/>
+    </linearGradient>
+    <marker id="dqsar" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0,10 4,0 8" fill="#7bc6e8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="640" fill="url(#dqsbg)"/>
+  <circle cx="1100" cy="90" r="160" fill="#00b4d8" opacity="0.09"/>
+  <circle cx="100" cy="560" r="180" fill="#4ade80" opacity="0.06"/>
+  <text x="600" y="62" text-anchor="middle" fill="#e8f6ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="36" font-weight="800">Quarantine Setup Sequence</text>
+  <text x="600" y="94" text-anchor="middle" fill="#a8cfdf" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="19">Order matters — the policy wizard won't let you skip ahead</text>
+
+  <rect x="60" y="150" width="330" height="330" rx="16" fill="#0f2a40" stroke="#00b4d8" stroke-width="2"/>
+  <circle cx="120" cy="210" r="24" fill="rgba(0,180,216,0.18)"/>
+  <text x="120" y="218" text-anchor="middle" fill="#00b4d8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="800">1</text>
+  <text x="160" y="218" fill="#dff3ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="23" font-weight="700">Create the site</text>
+  <text x="90" y="264" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">Dedicate a SharePoint</text>
+  <text x="90" y="288" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">site to quarantine only —</text>
+  <text x="90" y="312" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">never a OneDrive.</text>
+  <text x="90" y="356" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">Restrict access to the</text>
+  <text x="90" y="380" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">compliance team only.</text>
+  <text x="90" y="424" fill="#8ce1ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16">Exclude it from on-demand</text>
+  <text x="90" y="446" fill="#8ce1ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16">classification scans.</text>
+
+  <line x1="390" y1="315" x2="450" y2="315" stroke="#7bc6e8" stroke-width="3" marker-end="url(#dqsar)"/>
+
+  <rect x="450" y="150" width="330" height="330" rx="16" fill="#0f2a40" stroke="#60a5fa" stroke-width="2"/>
+  <circle cx="510" cy="210" r="24" fill="rgba(96,165,250,0.18)"/>
+  <text x="510" y="218" text-anchor="middle" fill="#60a5fa" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="800">2</text>
+  <text x="550" y="218" fill="#dff3ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="23" font-weight="700">Configure DLP settings</text>
+  <text x="480" y="264" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">Purview &gt; Data loss</text>
+  <text x="480" y="288" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">prevention &gt; Settings &gt;</text>
+  <text x="480" y="312" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">File quarantine.</text>
+  <text x="480" y="356" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">Pick the quarantine folder</text>
+  <text x="480" y="380" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">path and write the</text>
+  <text x="480" y="404" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">tombstone message.</text>
+  <text x="480" y="446" fill="#a8c8ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16">New sites can take time to</text>
+  <text x="480" y="468" fill="#a8c8ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16">appear in the site picker.</text>
+
+  <line x1="780" y1="315" x2="840" y2="315" stroke="#7bc6e8" stroke-width="3" marker-end="url(#dqsar)"/>
+
+  <rect x="840" y="150" width="300" height="330" rx="16" fill="#0f2a40" stroke="#4ade80" stroke-width="2"/>
+  <circle cx="895" cy="210" r="24" fill="rgba(74,222,128,0.18)"/>
+  <text x="895" y="218" text-anchor="middle" fill="#4ade80" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="800">3</text>
+  <text x="930" y="218" fill="#dff3ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="23" font-weight="700">Build the policy</text>
+  <text x="868" y="264" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">Custom policy, scoped to</text>
+  <text x="868" y="288" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">SharePoint sites and</text>
+  <text x="868" y="312" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">OneDrive accounts.</text>
+  <text x="868" y="356" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">Action: Block everyone</text>
+  <text x="868" y="380" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">and move file to</text>
+  <text x="868" y="404" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">quarantine location.</text>
+  <text x="868" y="446" fill="#baf7d1" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16">Run in simulation mode</text>
+  <text x="868" y="468" fill="#baf7d1" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16">before you turn it on live.</text>
+
+  <rect x="60" y="520" width="1080" height="90" rx="12" fill="#0d2138" stroke="#2d5370" stroke-width="2"/>
+  <text x="600" y="556" text-anchor="middle" fill="#dbefff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20" font-weight="700">You can't select the quarantine action until step 2 is saved</text>
+  <text x="600" y="586" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">The policy wizard checks for a configured folder path and tombstone message first.</text>
+</svg>

@@ -33,6 +33,8 @@
     { topic:'copilot',        tag:'Copilot',              url:'guide-get-started-sharepoint-agents',               title:'Agents in SharePoint Guide: Custom Copilot Agents',                              read:'20 min read' },
     { topic:'admin',          tag:'Admin & Automation',   url:'guide-sharepoint-site-provisioning-automation',     title:'Automate SharePoint Site Provisioning End to End: Logic Apps, Azure Automation & Self-Service Recovery', read:'14 min read' },
     { topic:'sharepoint',     tag:'SharePoint',           url:'guide-sharepoint-otp-retirement-entra-b2b',         title:'SharePoint OTP Retirement: Simple Entra B2B Guide',                               read:'21 min read' },
+    { topic:'sharepoint',     tag:'SharePoint',           url:'guide-sharepoint-new-experience-app-bar',           title:'New SharePoint Experience: App Bar Redesign Guide',                               read:'16 min read' },
+    { topic:'sharepoint',     tag:'SharePoint & Security', url:'guide-sharepoint-onedrive-dlp-file-quarantine',    title:'DLP File Quarantine: SharePoint & OneDrive Setup Guide',                          read:'15 min read' },
     // END:GUIDES-ARRAY
   ];
 

@@ -223,6 +223,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>

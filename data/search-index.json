@@ -787,5 +787,31 @@
     "url": "articles/guide-computer-using-agents-rpa-automation",
     "dateDisplay": "June 23, 2026",
     "dateSort": "2026-06-23"
+  },
+  {
+    "id": "articles-guide-sharepoint-new-experience-app-bar",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "sharepoint",
+    "title": "New SharePoint Experience: App Bar Redesign Guide",
+    "heading": "New SharePoint Experience: App Bar Redesign Guide",
+    "excerpt": "MC1240699 explained: the Discover, Publish, and Build app bar redesign, why the classic-experience toggle disappears after preview, and a readiness plan before standard release.",
+    "body": "New SharePoint Experience: App Bar Redesign Guide | OceanCloud July 8, 2026 16 min read Microsoft 365 Message Center notification MC1240699 replaces the SharePoint start page with Discover and adds two new app bar destinations, Publish and Build, plus a neutral visual theme applied across SharePoint surfaces including SPFx web part placeholders. Public preview concluded May 4, 2026 and the classic-experience toggle was available only during preview, so once a tenant reaches standard release there is no way back. This guide covers the rollout timeline, what to visually audit before rollout reaches you, a readiness plan, and a troubleshooting playbook for helpdesk teams.",
+    "url": "articles/guide-sharepoint-new-experience-app-bar",
+    "dateDisplay": "July 8, 2026",
+    "dateSort": "2026-07-08"
+  },
+  {
+    "id": "articles-guide-sharepoint-onedrive-dlp-file-quarantine",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "sharepoint",
+    "title": "DLP File Quarantine: SharePoint & OneDrive Setup Guide",
+    "heading": "DLP File Quarantine: SharePoint & OneDrive Setup Guide",
+    "excerpt": "How the Purview DLP quarantine action works: quarantine site setup, tombstone messages, policy build steps, simulation mode, and why restores are manual only.",
+    "body": "DLP File Quarantine: SharePoint and OneDrive Setup Guide | OceanCloud July 8, 2026 15 min read Microsoft Purview Data Loss Prevention added a quarantine action for SharePoint and OneDrive: Block everyone and move file to quarantine location. This guide covers the required setup order (dedicated quarantine SharePoint site, then DLP file quarantine settings with folder path and tombstone message), building the policy with sensitive info type and sensitivity label conditions, running simulation mode before enforcing, validating with Activity Explorer and DLP alerts, and the manual-only restore process since original sharing permissions and links are not retained through the quarantine and restore cycle.",
+    "url": "articles/guide-sharepoint-onedrive-dlp-file-quarantine",
+    "dateDisplay": "July 8, 2026",
+    "dateSort": "2026-07-08"
   }
 ]

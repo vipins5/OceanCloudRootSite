@@ -1,0 +1,62 @@
+<svg width="1400" height="820" viewBox="0 0 1400 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="netdesc">
+  <title id="netdesc">MC1240699 new SharePoint experience rollout timeline</title>
+  <defs>
+    <linearGradient id="netbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071425"/>
+      <stop offset="100%" stop-color="#0c1f37"/>
+    </linearGradient>
+    <linearGradient id="netline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00b4d8"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <filter id="netglow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1400" height="820" fill="url(#netbg)"/>
+  <circle cx="1280" cy="110" r="200" fill="#00b4d8" opacity="0.10"/>
+  <circle cx="180" cy="720" r="240" fill="#4ade80" opacity="0.07"/>
+  <text x="700" y="90" text-anchor="middle" fill="#e5f4ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="46" font-weight="800">New SharePoint Experience Rollout</text>
+  <text x="700" y="136" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24">MC1240699: Discover, Publish and Build app bar reaches every tenant</text>
+  <line x1="120" y1="400" x2="1280" y2="400" stroke="url(#netline)" stroke-width="7" stroke-linecap="round"/>
+  <g filter="url(#netglow)">
+    <circle cx="180" cy="400" r="18" fill="#00b4d8"/>
+    <circle cx="520" cy="400" r="18" fill="#00b4d8"/>
+    <circle cx="860" cy="400" r="18" fill="#f59e0b"/>
+    <circle cx="1200" cy="400" r="18" fill="#4ade80"/>
+  </g>
+  <g font-family="Inter,Segoe UI,Arial,sans-serif">
+    <rect x="90" y="230" width="180" height="58" rx="10" fill="#00b4d8" opacity="0.18"/>
+    <text x="180" y="268" text-anchor="middle" fill="#84e7ff" font-size="23" font-weight="700">Early 2026</text>
+    <text x="180" y="488" text-anchor="middle" fill="#dbefff" font-size="27" font-weight="700">Public Preview</text>
+    <text x="180" y="522" text-anchor="middle" fill="#9ec6de" font-size="18">Admins opt in per tenant.</text>
+    <text x="180" y="546" text-anchor="middle" fill="#9ec6de" font-size="18">Users can toggle back to</text>
+    <text x="180" y="570" text-anchor="middle" fill="#9ec6de" font-size="18">the classic app bar.</text>
+
+    <rect x="430" y="230" width="180" height="58" rx="10" fill="#00b4d8" opacity="0.18"/>
+    <text x="520" y="268" text-anchor="middle" fill="#84e7ff" font-size="23" font-weight="700">May 4, 2026</text>
+    <text x="520" y="488" text-anchor="middle" fill="#dbefff" font-size="27" font-weight="700">Preview Concludes</text>
+    <text x="520" y="522" text-anchor="middle" fill="#9ec6de" font-size="18">Microsoft confirms the</text>
+    <text x="520" y="546" text-anchor="middle" fill="#9ec6de" font-size="18">preview period is done and</text>
+    <text x="520" y="570" text-anchor="middle" fill="#9ec6de" font-size="18">standard release begins.</text>
+
+    <rect x="776" y="230" width="168" height="58" rx="10" fill="#f59e0b" opacity="0.20"/>
+    <text x="860" y="268" text-anchor="middle" fill="#ffd08a" font-size="23" font-weight="700">Jun-Jul 2026</text>
+    <text x="860" y="488" text-anchor="middle" fill="#dbefff" font-size="27" font-weight="700">Standard Release</text>
+    <text x="860" y="522" text-anchor="middle" fill="#9ec6de" font-size="18">New app bar applies to</text>
+    <text x="860" y="546" text-anchor="middle" fill="#9ec6de" font-size="18">all users automatically,</text>
+    <text x="860" y="570" text-anchor="middle" fill="#9ec6de" font-size="18">tenant by tenant.</text>
+
+    <rect x="1092" y="230" width="216" height="58" rx="10" fill="#4ade80" opacity="0.20"/>
+    <text x="1200" y="268" text-anchor="middle" fill="#baf7d1" font-size="23" font-weight="700">Post-rollout</text>
+    <text x="1200" y="488" text-anchor="middle" fill="#dbefff" font-size="27" font-weight="700">No Opt-Out</text>
+    <text x="1200" y="522" text-anchor="middle" fill="#9ec6de" font-size="18">The classic-experience</text>
+    <text x="1200" y="546" text-anchor="middle" fill="#9ec6de" font-size="18">toggle was only ever</text>
+    <text x="1200" y="570" text-anchor="middle" fill="#9ec6de" font-size="18">available during preview.</text>
+  </g>
+  <rect x="100" y="628" width="1200" height="138" rx="14" fill="#0d2138" stroke="#2d5370" stroke-width="2"/>
+  <text x="700" y="682" text-anchor="middle" fill="#dbefff" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" font-weight="700">Why this is time-sensitive</text>
+  <text x="700" y="718" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20">Once a tenant reaches standard release, users can no longer switch back to the classic</text>
+  <text x="700" y="748" text-anchor="middle" fill="#9ec6de" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20">app bar — helpdesk and user communication needs to land before that point, not after.</text>
+</svg>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow, noarchive" />
+  <title>DLP Quarantine Rollout Checklist - OceanCloud</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Segoe UI, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+    .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; }
+    .hero h1 { font-size: 42px; margin-bottom: 20px; }
+    .hero p { font-size: 18px; opacity: 0.95; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .content h2 { color: #0077b6; font-size: 28px; margin-bottom: 20px; }
+    .content p { color: #666; margin-bottom: 16px; }
+    .value-props { list-style: none; margin: 30px 0; }
+    .value-props li { padding: 12px 0; padding-left: 32px; position: relative; }
+    .value-props li:before { content: "✓"; position: absolute; left: 0; color: #4CAF50; font-weight: bold; }
+    .form-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .form-box h3 { color: #0077b6; font-size: 24px; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 500; }
+    .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; }
+    .btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0077b6 0%, #0096d6 100%); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+  </style>
+  <script src="../../js/consent.js"></script>
+</head>
+<body>
+  <div class="hero">
+    <h1>DLP Quarantine Rollout Checklist</h1>
+    <p>Setup sequence, policy config, and restore runbook template</p>
+  </div>
+
+  <div class="container">
+    <div class="content">
+      <h2>What You'll Get</h2>
+      <ul class="value-props">
+            <li>Quarantine site and DLP settings setup order</li>
+            <li>Policy build steps with simulation-mode checklist</li>
+            <li>Manual restore runbook template</li>
+            <li>Licensing scope verification checklist</li>
+      </ul>
+      <p><strong>Format:</strong> PDF Checklist</p>
+    </div>
+
+    <div class="form-box">
+      <h3>Download Now</h3>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" required placeholder="Your Name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" placeholder="Optional">
+        </div>
+        <button type="submit" class="btn">📥 Download Checklist</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert('Thank you! Check your email for the resource and next steps.');
+    }
+  </script>
+</body>
+</html>
