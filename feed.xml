@@ -11,13 +11,35 @@
 		<copyright>Copyright 2026 OceanCloud LLC</copyright>
 		<managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
 		<webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
-		<lastBuildDate>Wed, 01 Jul 2026 14:49:10 +0000</lastBuildDate>
+		<lastBuildDate>Wed, 08 Jul 2026 16:47:00 +0000</lastBuildDate>
 		<ttl>1440</ttl>
 		<image>
 			<url>https://oceancloudconsults.com/assets/og-home.jpg</url>
 			<title>OceanCloud - Microsoft 365 &amp; SharePoint News</title>
 			<link>https://oceancloudconsults.com/news</link>
 		</image>
+
+		<item>
+			<title>New SharePoint Experience: App Bar Redesign Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar</guid>
+			<pubDate>Wed, 08 Jul 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint</category>
+			<description><![CDATA[MC1240699 explained: the Discover, Publish, and Build app bar redesign, why the classic-experience toggle disappears after preview, and a readiness plan before standard release.]]></description>
+		</item>
+
+		<item>
+			<title>DLP File Quarantine: SharePoint &amp; OneDrive Setup Guide</title>
+			<link>https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine</guid>
+			<pubDate>Wed, 08 Jul 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint &amp; Security</category>
+			<description><![CDATA[How the Purview DLP quarantine action works: quarantine site setup, tombstone messages, policy build steps, simulation mode, and why restores are manual only.]]></description>
+		</item>
 
 		<item>
 			<title>InfoPath Retirement: Render XML Forms to PDF</title>
