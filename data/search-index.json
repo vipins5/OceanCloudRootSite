@@ -516,18 +516,6 @@
     "dateSort": ""
   },
   {
-    "id": "articles-guide-sharepoint-copilot-agents",
-    "type": "guide",
-    "tag": "Guide",
-    "title": "Copilot Agents for SharePoint: Setup, Licensing, Cost",
-    "heading": "Copilot Agents for SharePoint: Setup, Licensing, and Cost",
-    "excerpt": "Set up Copilot agents for SharePoint with Microsoft 365 Copilot or Copilot Studio, then compare licensing, Copilot Credits, costs, permissions, limits, and use cases.",
-    "body": "Copilot Agents for SharePoint: Setup, Licensing, Cost | OceanCloud. Set up Copilot agents for SharePoint with Microsoft 365 Copilot or Copilot Studio. Compare no-code SharePoint agents and custom Copilot Studio agents, SharePoint knowledge sources, licensing, Copilot Credits, pay-as-you-go billing, costs, permissions, HR policy Q&A, IT self-service, and procurement lookup use cases.",
-    "url": "articles/guide-sharepoint-copilot-agents",
-    "dateDisplay": "May 23, 2026",
-    "dateSort": ""
-  },
-  {
     "id": "articles-guide-sharepoint-integrations",
     "type": "guide",
     "tag": "Guide",
