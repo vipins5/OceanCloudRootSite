@@ -1,6 +1,76 @@
 {
   "items": [
     {
+      "title": "OneDrive: PDF annotation for sensitivity-label protected PDFs in the OneDrive apps (iOS and Android)",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566697",
+      "date_friendly": "July 09, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-onedrive-pdf-annotation-for-sensitivity-label-protected-pdfs"
+    },
+    {
+      "title": "Microsoft Purview: Insider Risk Management - DS Triage Agent for IRM available in Defender",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567472",
+      "date_friendly": "July 09, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-purview-insider-risk-management-ds-triage-agent-fo"
+    },
+    {
+      "title": "OneDrive: Exclude specific folders from syncing",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567470",
+      "date_friendly": "July 09, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-onedrive-exclude-specific-folders-from-syncing"
+    },
+    {
+      "title": "SharePoint: Create new workflows with Copilot in SharePoint",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567009",
+      "date_friendly": "July 09, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-sharepoint-create-new-workflows-with-copilot-in-sharepoint"
+    },
+    {
+      "title": "Microsoft 365 app: New Copilot Notebooks design in the Microsoft 365 Copilot App (Android)",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566704",
+      "date_friendly": "July 09, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-365-app-new-copilot-notebooks-design-in-the-micros"
+    },
+    {
+      "title": "Thumbnail view for PDFs is available in OneDrive and SharePoint on the web",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566696",
+      "date_friendly": "July 09, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-thumbnail-view-for-pdfs-is-available-in-onedrive-and-sharepo"
+    },
+    {
+      "title": "Streamlining business processes with Microsoft 365 - ShareCloud - SharePoint Partner Spotlight",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/streamlining-business-processes-with-microsoft-365-sharecloud/ba-p/4533560",
+      "date_friendly": "July 08, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-streamlining-business-processes-with-microsoft-365-shareclou"
+    },
+    {
       "title": "Microsoft Teams: Enhanced delegated calling with delegate call access restrictions and join notifications",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567306",
       "date_friendly": "July 07, 2026",
@@ -1209,5 +1279,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-08"
+  "last_updated": "2026-07-10"
 }
