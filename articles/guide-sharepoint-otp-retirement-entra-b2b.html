@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>SharePoint OTP Retirement to Entra B2B Guide | OceanCloud</title>
-  <meta name="description" content="Understand SharePoint OTP retirement (MC1243549), Entra B2B migration, Google IdP setup for Gmail users, and rollout planning." />
+  <title>MC1243549: SharePoint OTP Retirement &amp; Entra B2B | OceanCloud</title>
+  <meta name="description" content="MC1243549 explained: SharePoint OTP retirement, Entra B2B rollout dates, Gmail sign-in paths, admin checks, and external access testing." />
   <meta name="keywords" content="MC 1243549, SharePoint OTP retirement, Entra B2B SharePoint OneDrive, Google federation Entra External ID, external sharing authentication Microsoft 365" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -16,16 +16,16 @@
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
-  <meta property="og:title"       content="SharePoint OTP Retirement and Entra B2B Transition Guide" />
-  <meta property="og:description" content="Simple breakdown of Microsoft 365 Message Center MC 1243549, migration timeline, identity behavior, Gmail handling, and a practical admin checklist." />
+  <meta property="og:title"       content="MC1243549: SharePoint OTP Retirement &amp; Entra B2B" />
+  <meta property="og:description" content="SharePoint OTP retirement, Entra B2B rollout dates, Gmail sign-in paths, admin checks, and external access testing." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="Timeline and authentication flow for SharePoint OTP retirement" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@oceancloud_x" />
-  <meta name="twitter:title"       content="SharePoint OTP Retirement and Entra B2B Transition Guide | OceanCloud" />
-  <meta name="twitter:description" content="Understand MC 1243549 in plain English: what is changing, what is not, and how to prepare external sharing for Gmail users." />
+  <meta name="twitter:title"       content="MC1243549: SharePoint OTP Retirement &amp; Entra B2B" />
+  <meta name="twitter:description" content="What MC1243549 changes, the rollout dates, Gmail sign-in paths, and the checks SharePoint admins should run." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,21 +48,21 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b#article",
-        "headline": "SharePoint OTP Retirement and Entra B2B Transition Guide",
+        "headline": "MC1243549: SharePoint OTP Retirement and Entra B2B",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-otp-retirement-entra-b2b"
         },
         "datePublished": "2026-06-10",
-        "dateModified": "2026-06-10",
+        "dateModified": "2026-07-13",
         "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+          "@id": "https://oceancloudconsults.com/#organization"
         },
         "publisher": {
           "@id": "https://oceancloudconsults.com/#organization"
         },
-        "description": "A practical, plain-English guide to Microsoft 365 Message Center MC 1243549: retirement of legacy SharePoint One-Time Passcode authentication, Entra B2B transition, Google identity provider setup, and external access testing.",
+        "description": "MC1243549 explained: SharePoint OTP retirement, Entra B2B rollout dates, Gmail sign-in paths, admin checks, and external access testing.",
         "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
         "keywords": [
           "MC 1243549",
@@ -174,14 +174,10 @@
         ]
       },
       {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+        "@type": "Organization",
+        "@id": "https://oceancloudconsults.com/#organization",
+        "name": "OceanCloud",
+        "url": "https://oceancloudconsults.com/"
       },
       {
         "@type": "WebSite",
@@ -281,8 +277,8 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>SharePoint OTP Retirement</span></nav>
-      <h1>SharePoint OTP Retirement: <span class="grad-text">Simple Entra B2B Guide</span></h1>
-      <p>What MC 1243549 means, what is changing, what is not changing, and exactly how to prepare your tenant.</p>
+      <h1>MC1243549: <span class="grad-text">SharePoint OTP Retirement &amp; Entra B2B</span></h1>
+      <p>Rollout dates, sign-in changes, Gmail identity paths, and the checks administrators should complete.</p>
     </div>
   </div>
 </section>
@@ -293,8 +289,9 @@
 
       <div class="article-meta">
         <span class="art-tag">SharePoint &amp; Security</span>
-        <span class="art-date">June 10, 2026</span>
+        <span class="art-date">Updated July 13, 2026</span>
         <span class="art-read">21 min read</span>
+        <span class="art-read">Technical review: <a href="/about#team">OceanCloud</a></span>
       </div>
 
       <ul class="quick-points-source">
@@ -306,9 +303,11 @@
         <li>Run pilot testing before August 31, 2026 to prevent external access disruption.</li>
       </ul>
 
-      <p class="article-intro">Microsoft 365 Message Center notification <strong>MC 1243549</strong> has made one topic suddenly urgent for SharePoint and OneDrive administrators: external user sign-in behavior is changing. Many teams read the headline and assume one thing only: "OTP is being removed." That is incomplete, and in some cases misleading. What Microsoft is retiring is the <strong>legacy SharePoint Online One-Time Passcode (OTP) experience</strong>. What remains available is <strong>Microsoft Entra B2B email one-time passcode</strong>, which can still appear as a fallback in the Entra B2B invitation redemption flow when no supported identity provider matches the invited user.</p>
+      <p class="article-intro"><strong>MC1243549 retires the legacy SharePoint Online OTP experience and moves external sharing authentication to Microsoft Entra B2B.</strong> It does not remove every email passcode scenario: Entra B2B email one-time passcode can remain available as a fallback when no other supported identity matches the invited user. Administrators should validate rollout timing, invitation redemption, Gmail identity routing, and access to previously shared content.</p>
 
-      <p>This guide explains the change in plain language, with practical examples and no jargon-heavy assumptions. If you are the person who gets escalation tickets that begin with "External user cannot open the file we shared," this article is for you. If you are a solution architect preparing governance standards for multiple tenants, this article is also for you. The goal is simple: help you understand exactly what changed, what action is needed, and how to prevent avoidable disruption as we move through 2026.</p>
+      <div class="art-callout">
+        <p><strong>Source and review note:</strong> This guide was rechecked on July 13, 2026 against Microsoft Learn documentation for SharePoint and OneDrive Entra B2B integration, invitation redemption, email OTP, and Google federation. Tenant behavior can vary during phased rollout, so test with representative guest identities before changing production policy.</p>
+      </div>
 
       <figure class="article-image">
         <img src="/assets/news/sharepoint-otp-retirement-timeline.svg" alt="Timeline of SharePoint OTP retirement and Entra B2B transition milestones" loading="lazy" decoding="async" width="1400" height="820" />
@@ -790,18 +789,6 @@ If an external collaborator cannot access a shared file or site, contact
     </div>
   </div>
 </section>
-      <section class="guide-final-cta reveal">
-        <div class="cta-box">
-          <div class="cta-icon">💬</div>
-          <div class="cta-content">
-            <h3>Ready to transform your SharePoint and Microsoft 365 environment?</h3>
-            <p>OceanCloud specialises in SharePoint consulting, M365 migration, Power Platform solutions, and enterprise governance. Let's discuss how we can help.</p>
-            <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation ➜</a>
-          </div>
-        </div>
-      </section>
-
-
       <section class="guide-lead-magnet">
         <div class="container">
           <div class="lm-content">

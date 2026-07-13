@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>SharePoint External Sharing Guide (2026) | OceanCloud</title>
-  <meta name="description" content="Secure SharePoint external sharing with tenant and site controls, Entra B2B settings, link policies, and PowerShell audit checks." />
+  <title>EnableAzureB2BIntegration: SharePoint Sharing | OceanCloud</title>
+  <meta name="description" content="Configure SharePoint external sharing and EnableAzureB2BIntegration with tenant, site, link, Entra B2B, and PowerShell audit checks." />
   <meta name="keywords" content="SharePoint external sharing, SharePoint guest access, Microsoft Entra B2B, SharePoint PowerShell external sharing" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -16,16 +16,16 @@
 
   <meta property="og:type"        content="article" />
   <meta property="og:site_name"   content="OceanCloud" />
-  <meta property="og:title"       content="SharePoint External Sharing Guide: Secure Setup" />
-  <meta property="og:description" content="Secure SharePoint external sharing with tenant and site controls, Entra B2B settings, link policies, and PowerShell checks." />
+  <meta property="og:title"       content="EnableAzureB2BIntegration: SharePoint External Sharing" />
+  <meta property="og:description" content="Configure tenant, site, link, and Entra B2B controls, then verify SharePoint external sharing with PowerShell." />
   <meta property="og:url"         content="https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide" />
   <meta property="og:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt"   content="SharePoint admin center external sharing settings screenshot" />
   <meta property="og:locale"      content="en_US" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@oceancloud_x" />
-  <meta name="twitter:title"       content="SharePoint External Sharing Guide: Secure Setup | OceanCloud" />
-  <meta name="twitter:description" content="Secure SharePoint external sharing with tenant and site controls, Entra B2B settings, link policies, and PowerShell checks." />
+  <meta name="twitter:title"       content="EnableAzureB2BIntegration: SharePoint External Sharing" />
+  <meta name="twitter:description" content="How the setting and Entra B2B rollout affect SharePoint external sharing, plus tenant, site, link, and audit checks." />
   <meta name="twitter:image"       content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,21 +48,21 @@
       {
         "@type": "Article",
         "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#article",
-        "headline": "SharePoint External Sharing Guide: Secure Setup",
+        "headline": "EnableAzureB2BIntegration: SharePoint External Sharing",
         "url": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
         },
         "datePublished": "2026-05-25",
-        "dateModified": "2026-06-04",
+        "dateModified": "2026-07-13",
         "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+          "@id": "https://oceancloudconsults.com/#organization"
         },
         "publisher": {
           "@id": "https://oceancloudconsults.com/#organization"
         },
-        "description": "Secure SharePoint external sharing with tenant and site controls, Entra B2B settings, link policies, and PowerShell audit checks.",
+        "description": "Configure SharePoint external sharing and EnableAzureB2BIntegration with tenant, site, link, Entra B2B, and PowerShell audit checks.",
         "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
         "citation": [
           {
@@ -156,14 +156,10 @@
         ]
       },
       {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+        "@type": "Organization",
+        "@id": "https://oceancloudconsults.com/#organization",
+        "name": "OceanCloud",
+        "url": "https://oceancloudconsults.com/"
       },
       {
         "@type": "WebSite",
@@ -215,8 +211,8 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>External Sharing</span></nav>
-      <h1>SharePoint External Sharing: <span class="grad-text">Secure Setup Guide</span></h1>
-      <p>Tenant settings, site controls, guest links, Microsoft Entra B2B, and PowerShell checks for safer collaboration.</p>
+      <h1>EnableAzureB2BIntegration: <span class="grad-text">SharePoint External Sharing</span></h1>
+      <p>What the setting controls now, how Entra B2B changes guest access, and how to verify secure sharing.</p>
     </div>
   </div>
 </section>
@@ -226,11 +222,16 @@
     <div class="article-wrap">
       <div class="article-meta">
         <span class="art-tag">SharePoint</span>
-        <span class="art-date">May 25, 2026</span>
+        <span class="art-date">Updated July 13, 2026</span>
         <span class="art-read">15 min read</span>
+        <span class="art-read">Technical review: <a href="/about#team">OceanCloud</a></span>
       </div>
 
-      <p class="article-intro">If you are searching for secure SharePoint external sharing setup, the critical point is this: settings exist at multiple layers and must be aligned together. External collaboration can reduce email sprawl and speed project delivery, but weak defaults quickly create anonymous links, stale guest access, and overexposed content. This guide gives you a practical admin sequence across tenant controls, site controls, Entra B2B settings, link governance, and PowerShell validation.</p>
+      <p class="article-intro"><strong>EnableAzureB2BIntegration connects SharePoint and OneDrive external sharing to Microsoft Entra B2B invitation management.</strong> Starting with Microsoft’s 2026 rollout, the integration is enabled across tenants and the legacy setting no longer controls behavior after migration. Secure external sharing still depends on aligning tenant limits, site limits, default link types, guest policies, and existing permissions.</p>
+
+      <div class="art-callout">
+        <p><strong>Source and review note:</strong> This guide was rechecked on July 13, 2026 against Microsoft Learn guidance for SharePoint external sharing and Entra B2B integration. Confirm the current rollout state in your tenant before relying on legacy <code>EnableAzureB2BIntegration</code> behavior.</p>
+      </div>
 
       <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/sharepoint/sharepointonline/media/externalsharing.png" alt="SharePoint admin center external sharing settings screenshot" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="520" height="402" />
@@ -671,18 +672,6 @@ Write-Host "Unique permission review complete for $siteUrl" -ForegroundColor Gre
     </div>
   </div>
 </section>
-      <section class="guide-final-cta reveal">
-        <div class="cta-box">
-          <div class="cta-icon">💬</div>
-          <div class="cta-content">
-            <h3>Ready to transform your SharePoint and Microsoft 365 environment?</h3>
-            <p>OceanCloud specialises in SharePoint consulting, M365 migration, Power Platform solutions, and enterprise governance. Let's discuss how we can help.</p>
-            <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation ➜</a>
-          </div>
-        </div>
-      </section>
-
-
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">

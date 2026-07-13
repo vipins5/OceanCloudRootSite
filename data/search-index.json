@@ -423,13 +423,13 @@
     "id": "articles-guide-power-apps-sharepoint",
     "type": "guide",
     "tag": "Guide",
-    "title": "Power Apps SharePoint List Canvas App Guide",
-    "heading": "Power Apps SharePoint List Canvas App Guide",
-    "excerpt": "Create a Power Apps canvas app from a SharePoint list with examples, generated forms, galleries, delegation limits, permissions, and publishing to Teams or mobile.",
+    "title": "Build a Power Apps Canvas App from a SharePoint List",
+    "heading": "Build a Power Apps Canvas App from a SharePoint List",
+    "excerpt": "Connect a SharePoint list, build forms and galleries, validate delegable filters, set permissions, and publish the canvas app to Teams, SharePoint, or mobile.",
     "body": "Power Apps SharePoint List Canvas App Guide | OceanCloud. Create a Power Apps canvas app from a SharePoint list with practical examples, generated forms, galleries, permissions, delegation limits, and publishing to Teams, SharePoint, or mobile. Covers SharePoint list data sources, canvas apps vs model-driven apps, asset tracking, IT helpdesk, expenses, user access, and Power Apps governance.",
     "url": "articles/guide-power-apps-sharepoint",
-    "dateDisplay": "May 23, 2026",
-    "dateSort": ""
+    "dateDisplay": "Updated July 13, 2026",
+    "dateSort": "2026-07-13"
   },
   {
     "id": "articles-guide-teams-automation",
@@ -495,13 +495,13 @@
     "id": "articles-guide-power-automate-triggers-actions",
     "type": "guide",
     "tag": "Guide",
-    "title": "Power Automate SharePoint Triggers: Filters, HTTP, Actions",
-    "heading": "Power Automate SharePoint: Triggers, Filters, HTTP, and Actions",
-    "excerpt": "Power Automate SharePoint triggers and actions explained with OData filter queries, Get items limits, file actions, Data Operations, tracked properties, and HTTP REST patterns.",
+    "title": "Power Automate SharePoint Triggers: OData and HTTP",
+    "heading": "Power Automate SharePoint Triggers: OData, HTTP, and Actions",
+    "excerpt": "Choose the right SharePoint trigger, prevent loops, filter Get items with OData, handle pagination, and use HTTP REST only when connector actions are insufficient.",
     "body": "Power Automate SharePoint Triggers: Filters, HTTP, Actions | OceanCloud Skip to content Power Automate SharePoint: Triggers, Filters, HTTP, and Actions. SharePoint triggers, OData filter queries, Get items limits, file actions, Data Operations, tracked properties, and Send an HTTP request to SharePoint patterns for production flows. The guide explains when item is created, when file is created or modified, Get items filter query syntax, Select columns, pagination, create file, update item, file content actions, Data Operations actions, tracked properties, and HTTP REST examples.",
     "url": "articles/guide-power-automate-triggers-actions",
-    "dateDisplay": "May 23, 2026",
-    "dateSort": ""
+    "dateDisplay": "Updated July 13, 2026",
+    "dateSort": "2026-07-13"
   },
   {
     "id": "articles-guide-sharepoint-workflow-migration",
@@ -591,13 +591,13 @@
     "id": "articles-guide-sharepoint-pnp-site-migration",
     "type": "guide",
     "tag": "Guide",
-    "title": "Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide",
-    "heading": "Migrate SharePoint Online Sites with PnP PowerShell",
-    "excerpt": "Migrate SharePoint Online sites with PnP PowerShell: libraries, lists, pages, permissions, copy-paste scripts, validation, and safe error handling.",
+    "title": "Migrate SharePoint Sites with PnP PowerShell",
+    "heading": "Migrate SharePoint Sites with PnP PowerShell",
+    "excerpt": "Migrate SharePoint sites with PnP PowerShell using controlled patterns for libraries, lists, pages, permissions, validation, and safe error handling.",
     "body": "Migrate SharePoint Online Sites with PnP PowerShell: End-to-End Guide | OceanCloud Skip to content Migrate SharePoint Online Sites with PnP PowerShell A complete end-to-end PowerShell guide — inventory, migrate libraries, lists, pages, and permissions, then validate every item made it across. Admin & Automation May 23, 2026 18 min read Moving content between SharePoint Online sites is one of the most common — and most underestimated — admin tasks. Whether you are consolidating sites, restructuring an intranet, or splitting a department site into dedicated sub-sites, PnP PowerShell gives you fine-grained control over exactly what moves and how. This guide covers the complete workflow: connecting to both sites, inventorying the source, migrating document libraries, list items, modern pages, and permissions, then running a validation pass to confirm everything landed correctly. What PnP PowerShell Can and Cannot Migrate Before writing a single line of PowerShell, align expectations. PnP covers the majority of routine content migrations but some artifacts require supplementary tools. Supported: Document libraries and files. Custom list items and field values. Modern site pages with caveats. Site columns and content types. SharePoint groups and members. Role assignments and permission levels. Navigation nodes. Site template structure export. Managed metadata field values. Requires additional tools: Version history use SPMT. Power Automate flows. Power Apps embedded in pages. InfoPath forms. Classic SharePoint Designer workflows. Recycle bin contents. OneNote notebooks use OneDrive. Cross-tenant migrations use SPMT or Mover. Files over 250 GB. Same-tenant vs cross-tenant: This guide covers same-tenant site-to-site migration. For cross-tenant migrations use SPMT or Microsoft Cross-Tenant Migration tooling. Prerequisites You need PowerShell 7, the PnP.PowerShell module, and an Entra app registration with the right permissions. PowerShell 7.4 or later. PnP.PowerShell 2.x or later. Entra app permissions Sites.FullControl.All Application on Microsoft Graph. SharePoint Admin role required at tenant level. Access to both sites as Site Collection Administrator on source and destination. Step 1 Connect to Both Sites You need two live connections one to the source site and one to the destination. PnP PowerShell lets you switch between connections using the -Connection parameter which keeps your code explicit about which site each cmdlet targets. Store connections in clearly named variables $src and $dst and always pass -Connection explicitly. Without it PnP uses the most recently established connection a common source of accidental writes to the wrong site. Use Connect-PnPOnline with -ClientId and -CertificatePath or -Thumbprint and -Tenant for non-interactive authentication. Use -ReturnConnection to capture the connection object. Step 2 Inventory the Source Site Before migrating anything produce a complete inventory of the source site. This CSV becomes your migration manifest and your post-migration validation baseline. Use Get-PnPList to get all non-hidden document libraries and generic lists. Use Get-PnPListItem with -PageSize 500 to avoid throttling. Export to CSV with Export-Csv. Large libraries: If a library has more than 5000 items Get-PnPListItem will hit the list view threshold. Use -PageSize 500 combined with -Fields and consider batching by folder. Step 3 Export the Site Template Structure The site template captures columns content types list schemas navigation and regional settings everything except actual content. Apply it to the destination site first so structure exists before you copy data. Use Get-PnPSiteTemplate with -Handlers ContentTypes Fields Lists Navigation and Invoke-PnPSiteTemplate to apply. Review the XML before applying and remove ListInstance nodes for lists that already exist at destination. Step 4 Migrate Document Libraries and Files Copy-PnPFile is the fastest way to move files within the same tenant. It calls the SharePoint server-side copy API so nothing transfers through your local machine. For large libraries combine with folder enumeration and progress tracking using Get-PnPFolderItem. Use -SkipSourceFolderName to copy contents of folder not the folder itself. Step 5 Migrate Custom List Items and Metadata For custom lists read items from source and create at destination. PnP PowerShell maps field values via a hashtable matching source field internal names to destination field internal names. Use Get-PnPListItem with -Fields to specify only the columns you need. Use Add-PnPListItem with -Values hashtable. Lookup columns cannot be copied as-is because they reference item IDs in source list. Step 6 Migrate Modern Site Pages Modern pages present the biggest challenge. Page text images and layout migrate cleanly. Web part configurations Highlighted Content Quick Links News web parts with specific filters often need manual reconfiguration after copy because data references source site URL. Use Get-PnPSiteTemplate with -Handlers PageContents and Invoke-PnPSiteTemplate per page. After migration check News Highlighted Content and Quick Links web parts which still point to source site URL. Step 7 Migrate Permissions Permissions are migrated in two stages: recreate SharePoint groups at destination then add original members to each group. Item-level unique permissions require a separate pass. Use Get-PnPSiteGroup Get-PnPGroupMember New-PnPGroup Add-PnPGroupMember and Set-PnPWebPermission. Use Get-PnPWeb with -Includes RoleAssignments and Invoke-PnPQuery to load role assignments. Step 8 Post-Migration Validation Never declare a migration complete without a validation pass. Compare item counts between source and destination for every list and library and flag any discrepancy. Export validation results to CSV and review all mismatches before cutover.",
     "url": "articles/guide-sharepoint-pnp-site-migration",
-    "dateDisplay": "May 23, 2026",
-    "dateSort": ""
+    "dateDisplay": "Updated July 13, 2026",
+    "dateSort": "2026-07-13"
   },
   {
     "id": "articles-guide-sharepoint-recycle-bin-restore-pnp-powershell",
@@ -627,13 +627,13 @@
     "id": "articles-guide-sharepoint-external-sharing-complete-admin-guide",
     "type": "guide",
     "tag": "Guide",
-    "title": "SharePoint External Sharing: Complete Admin Guide",
-    "heading": "SharePoint External Sharing: Complete Admin Guide",
-    "excerpt": "Secure SharePoint external sharing with tenant and site controls, Entra B2B settings, link policies, and PowerShell audit checks.",
+    "title": "EnableAzureB2BIntegration: SharePoint External Sharing",
+    "heading": "EnableAzureB2BIntegration: SharePoint External Sharing",
+    "excerpt": "Understand the current EnableAzureB2BIntegration behavior, align tenant and site controls, govern links and guests, and verify SharePoint sharing with PowerShell.",
     "body": "SharePoint External Sharing: Complete Admin Guide | OceanCloud Skip to content OC Ocean Cloud 01 Home 02 Services 03 About 04 Work 05 News 06 Guides Get In Touch Home / Guides / External Sharing SharePoint External Sharing: Complete Admin Guide Tenant settings, site controls, guest links, Microsoft Entra B2B, and PowerShell checks for safer collaboration. SharePoint May 25, 2026 15 min read SharePoint external sharing is one of the most useful and most misunderstood collaboration features in Microsoft 365. It allows employees to work with clients, vendors, contractors, auditors, and partners without emailing document copies or creating unmanaged file stores. The challenge is that external sharing is controlled by several layers at once: organization settings, site settings, link defaults, Microsoft Entra B2B rules, guest lifecycle policies, and the permissions already present in the site. When those layers are planned together, SharePoint becomes a secure collaboration workspace. When they are not, a tenant can quietly accumulate anonymous links, orphaned guest accounts, over-permissioned project sites, and content that Microsoft 365 Copilot can surface to users who technically have access but should not. This guide explains how SharePoint external sharing works, how to choose the right settings, and how to validate the configuration with PowerShell. Admin checklist Decide which site types may allow guests and which must remain internal-only. Set tenant sharing to the least permissive level that still supports business collaboration. Use Specific people as the default sharing link for business content. Review Microsoft Entra B2B guest rules, domain restrictions, and invitation settings. Audit unique permissions before enabling broad external collaboration or Copilot. Remove stale guests and reset accidental permission breaks when projects close. What SharePoint external sharing actually controls External sharing controls whether people outside your organization can access SharePoint sites, files, folders, lists, and list items. It is not a single switch; it is a stack of controls that must agree with each other. Tenant sharing setting: Defines the most permissive external sharing level available anywhere in SharePoint. Site sharing setting: Defines whether one site can use that tenant capability or must be more restrictive. Link type: Controls whether access is anonymous, organization-wide, or limited to specific named people. Permission inheritance: Determines whether libraries, folders, and files follow the site permissions or have unique exceptions. Entra guest policy: Controls who can be invited, which domains are allowed, and whether additional identity controls apply. The most restrictive setting wins. If the tenant allows guest sharing but a site is internal-only, users cannot invite guests to that site. If the tenant blocks Anyone links, a site owner cannot make an anonymous link work from that site. OneDrive follows the same concepts, but it can only be as permissive as SharePoint or more restrictive. Key principle: Allow external collaboration where the business needs it, but make it deliberate. Sensitive internal sites should be internal-only, while client and partner sites should be designed for external access from the start. The four external sharing levels Microsoft gives administrators four main sharing levels. The correct setting depends on the sensitivity of the content and the maturity of your guest management process. Avoid choosing the most permissive setting just because it reduces support tickets. The better pattern is to enable business collaboration while making the secure option the easiest option for users. Sharing level What it allows Recommended use Anyone Links can work for anyone who has the link, without sign-in. Use rarely. If allowed, require expiration and view-only permissions. New and existing guests Users can invite new guests, who must authenticate or verify identity. Best baseline for co",
     "url": "articles/guide-sharepoint-external-sharing-complete-admin-guide",
-    "dateDisplay": "May 25, 2026",
-    "dateSort": ""
+    "dateDisplay": "Updated July 13, 2026",
+    "dateSort": "2026-07-13"
   },
   {
     "id": "articles-guide-get-started-sharepoint-agents",
@@ -664,13 +664,13 @@
     "type": "guide",
     "tag": "Guide",
     "topic": "sharepoint",
-    "title": "SharePoint OTP Retirement: Simple Entra B2B Guide",
-    "heading": "SharePoint OTP Retirement: Simple Entra B2B Guide",
-    "excerpt": "Plain-English guide to MC 1243549: legacy SharePoint OTP retirement, Entra B2B invitation redemption, Google identity provider setup, and fallback OTP behavior.",
+    "title": "MC1243549: SharePoint OTP Retirement and Entra B2B",
+    "heading": "MC1243549: SharePoint OTP Retirement and Entra B2B",
+    "excerpt": "MC1243549 explained: SharePoint OTP retirement, Entra B2B rollout dates, Gmail sign-in paths, admin checks, and external access testing.",
     "body": "SharePoint OTP Retirement: Simple Entra B2B Guide | OceanCloud June 10, 2026 21 min read Microsoft 365 Message Center notification MC 1243549 retires the legacy SharePoint OTP authentication experience and transitions external sharing sign-in to Microsoft Entra B2B invitation redemption. This guide explains the timeline, what changes in July and by August 31, 2026, why OTP can still appear as Entra B2B email OTP fallback, and how to configure Google as an identity provider for gmail.com and googlemail.com users. It also covers custom Google Workspace domain caveats, testing strategy, PowerShell checks, and operational rollout guidance for service desk and site owners.",
     "url": "articles/guide-sharepoint-otp-retirement-entra-b2b",
-    "dateDisplay": "June 10, 2026",
-    "dateSort": "2026-06-10"
+    "dateDisplay": "Updated July 13, 2026",
+    "dateSort": "2026-07-13"
   },
   {
     "id": "articles-guide-infopath-forms-services-pdf-archive",
