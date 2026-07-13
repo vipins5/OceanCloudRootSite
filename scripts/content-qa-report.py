@@ -35,6 +35,8 @@ REPORT = ROOT / "data" / "reports" / "content-qa-report.md"
 # XML files that must parse successfully (hard-fail checks).
 XML_FILES = [
     ROOT / "sitemap.xml",
+    ROOT / "sitemap-index.xml",
+    ROOT / "sitemap-guides.xml",
     ROOT / "feed.xml",
 ]
 
@@ -182,6 +184,21 @@ def check_sitemap_noindex(sitemap_file: Path) -> list[str]:
     return errors
 
 
+def check_jsonld(files: list[Path]) -> list[str]:
+    """Return parse errors for every JSON-LD block embedded in HTML."""
+    errors: list[str] = []
+    for file_path in files:
+        content = file_path.read_text(encoding="utf-8", errors="ignore")
+        for index, match in enumerate(JSON_LD_RE.finditer(content), start=1):
+            try:
+                # Script contents are raw text in HTML; character references must
+                # not be decoded before JSON parsing.
+                json.loads(match.group(1).strip())
+            except json.JSONDecodeError as exc:
+                errors.append(f"Invalid JSON-LD block {index} in {rel(file_path)}: {exc}")
+    return errors
+
+
 def extract_meta_content(content: str, attr_name: str, attr_value: str) -> str | None:
     key = re.escape(attr_value)
     before_content = re.search(
@@ -223,15 +240,16 @@ def flatten_jsonld(node: object) -> list[dict[str, object]]:
     return items
 
 
-def scan_article_jsonld(file_path: Path, content: str) -> list[str]:
+def scan_article_jsonld(file_path: Path, content: str) -> tuple[list[str], list[str]]:
+    missing_schema: list[str] = []
     missing_main_entity: list[str] = []
     if not rel(file_path).startswith("articles/"):
-        return missing_main_entity
+        return missing_schema, missing_main_entity
 
     article_nodes: list[dict[str, object]] = []
     for match in JSON_LD_RE.finditer(content):
         try:
-            data = json.loads(unescape(match.group(1)).strip())
+            data = json.loads(match.group(1).strip())
         except json.JSONDecodeError:
             continue
         for node in flatten_jsonld(data):
@@ -240,9 +258,11 @@ def scan_article_jsonld(file_path: Path, content: str) -> list[str]:
             if any(str(item).lower() in ARTICLE_TYPES for item in node_types):
                 article_nodes.append(node)
 
-    if article_nodes and any("mainEntityOfPage" not in node for node in article_nodes):
+    if not article_nodes:
+        missing_schema.append(rel(file_path))
+    elif any("mainEntityOfPage" not in node for node in article_nodes):
         missing_main_entity.append(rel(file_path))
-    return missing_main_entity
+    return missing_schema, missing_main_entity
 
 
 def scan_metadata(html_files: list[Path]) -> dict[str, list[str]]:
@@ -253,6 +273,7 @@ def scan_metadata(html_files: list[Path]) -> dict[str, list[str]]:
     long_description: list[str] = []
     missing_og: list[str] = []
     missing_twitter: list[str] = []
+    missing_article_schema: list[str] = []
     missing_article_main_entity: list[str] = []
 
     for file_path in html_files:
@@ -262,9 +283,11 @@ def scan_metadata(html_files: list[Path]) -> dict[str, list[str]]:
             missing_title.append(r)
         robots_match = ROBOTS_RE.search(content)
         robots = robots_match.group(1).lower() if robots_match else ""
-        missing_article_main_entity.extend(scan_article_jsonld(file_path, content))
         if "noindex" in robots:
             continue
+        article_schema, article_main_entity = scan_article_jsonld(file_path, content)
+        missing_article_schema.extend(article_schema)
+        missing_article_main_entity.extend(article_main_entity)
         title_match = TITLE_TEXT_RE.search(content)
         title = title_match.group(1) if title_match else ""
         if title_match and normalized_len(title) > MAX_TITLE_CHARS:
@@ -292,6 +315,7 @@ def scan_metadata(html_files: list[Path]) -> dict[str, list[str]]:
         "long_description": long_description,
         "og": missing_og,
         "twitter": missing_twitter,
+        "article_schema": missing_article_schema,
         "article_main_entity": missing_article_main_entity,
     }
 
@@ -417,6 +441,12 @@ def build_report(
 
     lines.extend([
         "",
+        f"Indexable article pages missing Article JSON-LD: {len(metadata['article_schema'])}",
+    ])
+    lines.extend(format_samples(metadata["article_schema"]))
+
+    lines.extend([
+        "",
         f"Article JSON-LD missing mainEntityOfPage: {len(metadata['article_main_entity'])}",
     ])
     lines.extend(format_samples(metadata["article_main_entity"]))
@@ -442,7 +472,9 @@ def main() -> int:
 
     xml_errors = check_xml(XML_FILES)
     xml_errors.extend(check_sitemap_noindex(ROOT / "sitemap.xml"))
+    xml_errors.extend(check_sitemap_noindex(ROOT / "sitemap-guides.xml"))
     json_errors = check_json(JSON_FILES)
+    json_errors.extend(check_jsonld(html_files))
     metadata = scan_metadata(html_files)
     search_index = scan_search_index(ROOT / "data" / "search-index.json")
 
