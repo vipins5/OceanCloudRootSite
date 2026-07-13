@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "title": "Microsoft Teams: Modernized Gallery view in Teams Rooms on Android",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567468",
+      "date_friendly": "July 10, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-modernized-gallery-view-in-teams-rooms-on-an"
+    },
+    {
+      "title": "Microsoft Copilot Studio: Enable express mode for flows invoked by an agent or app",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566999",
+      "date_friendly": "July 10, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-copilot-studio-enable-express-mode-for-flows-invok"
+    },
+    {
       "title": "OneDrive: PDF annotation for sensitivity-label protected PDFs in the OneDrive apps (iOS and Android)",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566697",
       "date_friendly": "July 09, 2026",
@@ -69,6 +89,36 @@
       "source": "SharePoint Blog",
       "css_tag": "tag-blog",
       "article_slug": "news-2026-07-streamlining-business-processes-with-microsoft-365-shareclou"
+    },
+    {
+      "title": "Microsoft Teams: Specify who has control of production tools in Teams meetings and events",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567305",
+      "date_friendly": "July 08, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-specify-who-has-control-of-production-tools"
+    },
+    {
+      "title": "Microsoft Teams: Ability for IT admins to customize the user notification messages for recording and transcription in calls",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567302",
+      "date_friendly": "July 08, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-ability-for-it-admins-to-customize-the-user"
+    },
+    {
+      "title": "Microsoft Teams: New controls for quick views in the chat list",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567301",
+      "date_friendly": "July 08, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-new-controls-for-quick-views-in-the-chat-lis"
     },
     {
       "title": "Microsoft Teams: Enhanced delegated calling with delegate call access restrictions and join notifications",
@@ -1279,5 +1329,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-10"
+  "last_updated": "2026-07-13"
 }
