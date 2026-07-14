@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Copilot Studio SharePoint Integration Guide 2026 | OceanCloud</title>
+  <meta name="description" content="Copilot Studio SharePoint integration guide: add SharePoint knowledge sources and lists, configure authentication, publish agents, and understand limits." />
+  <meta name="keywords" content="Copilot Studio SharePoint integration, add SharePoint as a knowledge source, Copilot Studio SharePoint knowledge source, publish Copilot Studio agent to SharePoint, Copilot Studio SharePoint list limits, Copilot Studio SharePoint authentication" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+  <meta name="author" content="OceanCloud" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="OceanCloud" />
+  <meta property="og:title" content="Copilot Studio SharePoint Integration Guide 2026" />
+  <meta property="og:description" content="Add SharePoint knowledge sources and lists to Copilot Studio, configure authentication, publish agents, and plan around current limits." />
+  <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration" />
+  <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt" content="Copilot Studio and SharePoint Online integration architecture" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@oceancloud_x" />
+  <meta name="twitter:title" content="Copilot Studio SharePoint Integration Guide 2026 | OceanCloud" />
+  <meta name="twitter:description" content="Connect Copilot Studio to SharePoint knowledge sources, configure authentication, publish agents, and avoid current limits." />
+  <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#article",
+        "headline": "Copilot Studio SharePoint Integration Guide 2026",
+        "url": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration"
+        },
+        "datePublished": "2026-07-14",
+        "dateModified": "2026-07-15",
+        "author": { "@id": "https://oceancloudconsults.com/#james-whitfield" },
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "description": "Copilot Studio SharePoint integration guide: add SharePoint knowledge sources and lists, configure authentication, publish agents, and understand limits.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "Copilot Studio SharePoint integration",
+          "add SharePoint as a knowledge source",
+          "Copilot Studio SharePoint knowledge source",
+          "publish Copilot Studio agent to SharePoint",
+          "Copilot Studio SharePoint list limits",
+          "tenant graph grounding",
+          "SharePoint semantic search",
+          "SharePoint metadata filters"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new",
+            "name": "What's new in Copilot Studio"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint",
+            "name": "Add SharePoint as a knowledge source"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas",
+            "name": "Copilot Studio quotas and limits"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint",
+            "name": "Publish an agent to SharePoint"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience",
+            "name": "Choose between Agent Builder and Copilot Studio"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery",
+            "name": "Restricted Content Discovery for SharePoint"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does Copilot Studio connect to SharePoint Online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Add SharePoint from the Copilot Studio knowledge page, then provide a SharePoint site or list URL. With Microsoft authentication, retrieval runs on behalf of the signed-in user and only returns content that user can read."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the current Copilot Studio SharePoint retrieval features?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Current Copilot Studio documentation supports tenant graph grounding with semantic search and SharePoint metadata filters based on title, author, modified by, and modified date. Microsoft introduced the retrieval improvements in its November 2025 release notes and continues to document them in 2026."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does a Copilot Studio agent bypass SharePoint permissions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. When Microsoft authentication is used, SharePoint retrieval is performed in the user's context. The user needs at least Read access, and inaccessible content should not be returned. Existing oversharing can still become easier to discover, so permissions must be reviewed before rollout."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Copilot Studio use SharePoint lists?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. SharePoint lists can be added as real-time knowledge sources. Current limits include retrieval from the first 2,048 rows, no reasoning over list attachments, and practical list-count limits that should be verified in the tenant UI."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a Copilot Studio agent be published inside SharePoint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Publish the agent, open Channels, choose SharePoint, select the target site, and deploy. The maker needs Write access to that site, and the agent continues to use Copilot Studio billing and capacity."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Copilot Studio and SharePoint Integration", "item": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:840px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(168,85,247,.12);color:#c084fc;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;scroll-margin-top:90px;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;scroll-margin-top:90px;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(168,85,247,.07);border-left:3px solid #c084fc;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#d4b8f0;font-size:.92rem;}
+  .art-callout.info{background:rgba(0,180,216,.07);border-left-color:#00b4d8;}
+  .art-callout.info p{color:#a8d8ea;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;border:1px solid rgba(255,255,255,.06);border-radius:10px;}
+  .art-table{width:100%;min-width:640px;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(168,85,247,.12);color:#c084fc;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(168,85,247,.25);}
+  .art-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .code-label{font-size:.72rem;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em;margin:22px 0 8px;}
+  .source-list{display:grid;gap:10px;margin:24px 0;}
+  .source-list a{display:block;padding:13px 16px;border:1px solid rgba(255,255,255,.07);border-radius:10px;text-decoration:none;color:#c8daea;background:rgba(255,255,255,.025);}
+  .source-list a:hover{border-color:rgba(0,180,216,.35);color:#00b4d8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#a78bfa;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  @media(max-width:760px){
+    .article-section{padding:40px 0 72px;}
+    .art-table{min-width:580px;}
+    .art-callout{padding:14px 16px;}
+  }
+  </style>
+</head>
+
+<body class="guide-article">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo" aria-label="OceanCloud home"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"168,85,247","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-purple" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-cyan" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Copilot + SharePoint</span></nav>
+      <h1>Copilot Studio SharePoint Integration: <span class="grad-text">Setup Guide 2026</span></h1>
+      <p>Build a secure, useful SharePoint-grounded agent with the latest semantic retrieval improvements, realistic platform limits, and a rollout plan that IT can support.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">Copilot &amp; SharePoint</span>
+        <span class="art-date">Updated Jul 15, 2026</span>
+        <span class="art-read">15 min read</span>
+      </div>
+
+        <div class="art-callout info">
+          <p><strong>Executive summary:</strong> SharePoint Online is most valuable to Copilot when it is treated as a governed knowledge layer, not a folder dump. Start with one business question, one well-owned site, Microsoft authentication, and a small test group. Add actions only after retrieval quality and permissions are proven.</p>
+        </div>
+
+        <p class="article-intro">A successful <strong>Copilot Studio SharePoint integration</strong> connects an agent to governed SharePoint knowledge sources, authenticates each user correctly, and returns useful answers with citations. This guide shows how to add SharePoint as a knowledge source, connect SharePoint lists, configure authentication, publish a Copilot Studio agent to SharePoint, and test the result safely.</p>
+
+        <h2 id="latest">Current Copilot Studio SharePoint Integration Features</h2>
+        <p>Microsoft introduced two important retrieval improvements in its November 2025 Copilot Studio release notes. Its updated 2026 SharePoint knowledge documentation continues to support these capabilities and now explains how makers can configure source filters.</p>
+        <ul>
+          <li><strong>Tenant graph grounding with semantic search:</strong> Microsoft says the updated retrieval path can collect more relevant context with greater precision. This should improve answer quality for questions that do not repeat the exact wording used in a document.</li>
+          <li><strong>Metadata-aware retrieval:</strong> filename, owner, and modified date can help Copilot choose fresher and more relevant SharePoint documents.</li>
+          <li><strong>A trade-off remains:</strong> Microsoft warns that some queries can take slightly longer because the retrieval path is more complex.</li>
+          <li><strong>User context still governs access:</strong> published generative-answer calls are made on behalf of the person chatting with the agent when Microsoft authentication is configured.</li>
+        </ul>
+        <div class="art-callout">
+          <p><strong>Do not confuse retrieval filters with a reporting engine.</strong> Metadata helps the agent rank useful documents, but Microsoft's limits still say agents cannot reliably answer inventory-style questions such as “list every file where column X equals Y” or count all files in a folder. Use Microsoft Graph, SharePoint Search, or Power Automate for deterministic reporting.</p>
+        </div>
+        <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: What's new in Copilot Studio — Microsoft Learn</a>
+
+        <h2 id="architecture">Choose the Right SharePoint–Copilot Integration</h2>
+        <p>“Integrate Copilot with SharePoint” can mean three different things. Choose the smallest option that meets the business need.</p>
+        <div class="art-table-wrap">
+          <table class="art-table">
+            <thead><tr><th>Option</th><th>Best for</th><th>What it adds</th><th>Watch-outs</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Microsoft 365 Copilot</strong></td><td>Personal work across Microsoft 365</td><td>Reasoning over permitted work content through Microsoft Graph</td><td>Broad prompts can produce broad results; SharePoint hygiene matters</td></tr>
+              <tr><td><strong>SharePoint agent</strong></td><td>Fast Q&amp;A over a site, library, folder, list, or selected files</td><td>No-code scoped knowledge experience created from SharePoint</td><td>Less process logic and fewer external integrations</td></tr>
+              <tr><td><strong>Copilot Studio agent</strong></td><td>Knowledge plus actions, workflows, external systems, or controlled publishing</td><td>Instructions, topics, tools, Power Automate, connectors, environments, telemetry</td><td>Capacity, lifecycle, authentication, and support need planning</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A good pattern is to validate the content experience with a simple SharePoint agent first. Move to Copilot Studio when users need the agent to create a ticket, update a list, start an approval, call an API, or follow a controlled multistep process.</p>
+        <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Choose between Agent Builder and Copilot Studio — Microsoft Learn</a>
+
+        <h2 id="prepare">Prepare SharePoint Before Connecting Copilot</h2>
+        <p>Retrieval quality cannot repair unclear ownership, duplicate policies, or accidental permissions. Use this pre-flight checklist on the target site.</p>
+        <ol>
+          <li><strong>Name an accountable content owner.</strong> The owner approves the source scope and resolves conflicting answers.</li>
+          <li><strong>Remove obsolete and duplicate material.</strong> Archive old policies instead of leaving two “final” versions searchable.</li>
+          <li><strong>Review visitors, members, guests, and sharing links.</strong> Copilot respects existing access; it can also make already-accessible information much easier to find.</li>
+          <li><strong>Use useful metadata.</strong> Accurate titles, owners, content types, business area, region, status, and review dates make the latest retrieval improvements more valuable.</li>
+          <li><strong>Prefer readable source files.</strong> Use clear headings, direct language, text-based PDFs, and one subject per document. OCR scanned files before relying on them.</li>
+          <li><strong>Define expected refusals.</strong> Write down questions the agent should not answer from this source, such as personal HR cases or unpublished financial results.</li>
+        </ol>
+
+        <h3>PowerShell permission and content spot-check</h3>
+        <p>This PnP PowerShell sample does not “certify” a site, but it gives the rollout owner a quick view of lists, document volume, and files with unique permissions.</p>
+        <div class="code-label">PowerShell 7.4+ — SharePoint knowledge-source pre-flight</div>
+        <div class="code-block"><pre><code># Run in PowerShell 7.4 or later.
+# Install-Module PnP.PowerShell -Scope CurrentUser
+$siteUrl = "https://contoso.sharepoint.com/sites/HRKnowledge"
+$clientId = "00000000-0000-0000-0000-000000000000"
+
+# Option A: delegated interactive sign-in.
+Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Interactive
+
+# Option B: certificate-based app-only sign-in.
+# Comment out Option A, then provide your tenant and certificate thumbprint.
+# The app registration must have the required SharePoint permissions.
+# $tenant = "contoso.onmicrosoft.com"
+# $thumbprint = "0123456789ABCDEF0123456789ABCDEF01234567"
+# Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Tenant $tenant -Thumbprint $thumbprint
+
+# Review visible lists and libraries before selecting knowledge sources.
+Get-PnPList | Where-Object Hidden -eq $false |
+    Select-Object Title, BaseType, ItemCount, EnableVersioning |
+    Sort-Object BaseType, Title
+
+# Find documents using unique permissions. Review these deliberately;
+# unique permissions are not automatically wrong, but they need an owner.
+$items = Get-PnPListItem -List "Documents" -PageSize 500 `
+    -Fields "FileLeafRef", "FileRef", "Modified", "Editor"
+
+$uniquePermissionItems = foreach ($item in $items) {
+    $hasUniquePermissions = Get-PnPProperty `
+        -ClientObject $item `
+        -Property HasUniqueRoleAssignments
+
+    if ($hasUniquePermissions) {
+        $editor = $item["Editor"]
+        [pscustomobject]@{
+            Name     = $item["FileLeafRef"]
+            Path     = $item["FileRef"]
+            Modified = $item["Modified"]
+            Editor   = if ($null -ne $editor) { $editor.Email } else { $null }
+        }
+    }
+}
+
+$uniquePermissionItems | Format-Table -AutoSize
+
+Disconnect-PnPOnline</code></pre></div>
+        <div class="art-callout info">
+          <p><strong>Choose one authentication path:</strong> use <code>-ClientId -Interactive</code> for a delegated administrator session, or use <code>-ClientId -Tenant -Thumbprint</code> for unattended app-only execution. For app-only access, install the certificate in the Windows certificate store and grant the app only the SharePoint permissions the audit requires.</p>
+        </div>
+        <a href="https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Connect-PnPOnline authentication — PnP PowerShell</a><br />
+        <a href="https://pnp.github.io/powershell/cmdlets/Get-PnPProperty.html" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Load CSOM properties with Get-PnPProperty — PnP PowerShell</a>
+        <p><strong>Large-library caution:</strong> the unique-permission loop loads a CSOM property for each item. Use it first on a small library or constrained pilot scope, and plan a batched audit for large environments to reduce runtime and throttling risk.</p>
+        <p>Also test the site as a normal visitor—not only as a site owner or global administrator. An admin-only test hides the permission problems real users will encounter.</p>
+
+        <h2 id="connect">Connect Copilot Studio to SharePoint Online</h2>
+        <ol>
+          <li>Open the agent in <strong>Copilot Studio</strong>.</li>
+          <li>Open <strong>Knowledge</strong>, choose <strong>Add knowledge</strong>, and select the full <strong>SharePoint</strong> option.</li>
+          <li>Enter or browse to the approved SharePoint site or list. Start with the narrowest source that can answer the defined use case.</li>
+          <li>Give every source a clear name and description. This helps makers understand why it exists and reduces accidental duplication.</li>
+          <li>Use <strong>Authenticate with Microsoft</strong> for internal Microsoft 365 scenarios.</li>
+          <li>Add agent instructions that state the audience, approved scope, citation expectations, and what to do when the answer is missing.</li>
+          <li>Test with accounts that represent different permission levels before publishing.</li>
+        </ol>
+        <div class="art-callout warning">
+          <p><strong>Select the correct SharePoint option.</strong> Copilot Studio can show one option for fully integrated SharePoint knowledge and another in the file-upload area for synchronized individual files or folders. They have different behavior. For live, permission-aware site or list grounding, use the integrated SharePoint knowledge source.</p>
+        </div>
+
+        <h3>A practical instruction block</h3>
+        <div class="code-label">Agent instructions — grounded HR policy example</div>
+        <div class="code-block"><pre><code>You support employees with approved HR policy information.
+
+- Answer only from the configured SharePoint knowledge sources.
+- Cite the policy title and link used for every policy answer.
+- Prefer documents marked Current and use the most recent modified date.
+- If sources conflict, explain the conflict and direct the user to HR.
+- Do not infer personal eligibility, legal advice, or confidential case outcomes.
+- If the answer is not present, say so clearly; do not invent a policy.</code></pre></div>
+        <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Add SharePoint as a knowledge source — Microsoft Learn</a>
+
+        <h2 id="semantic">Use SharePoint Semantic Search and Metadata Filters Carefully</h2>
+        <p>Tenant graph grounding with semantic search is most useful when users describe an idea differently from the document. For example, an employee may ask about “working abroad for two weeks” while the policy uses “temporary overseas remote work.” Semantic retrieval can connect the concepts more effectively than exact keyword matching.</p>
+        <ul>
+          <li><strong>Enable it where supported:</strong> Microsoft's limits page recommends a Microsoft 365 Copilot licence in the same tenant as the agent and tenant graph grounding for better SharePoint results and larger-file support.</li>
+          <li><strong>Keep metadata honest:</strong> an outdated Modified date, generic file owner, or misleading filename can steer retrieval in the wrong direction.</li>
+          <li><strong>Test latency as well as accuracy:</strong> better context can cost a little more response time.</li>
+          <li><strong>Do not rely on metadata alone:</strong> the document body still needs an explicit answer. Metadata should improve selection, not replace content.</li>
+        </ul>
+        <p><strong>Configure SharePoint metadata filters:</strong> edit the SharePoint knowledge source, open <strong>Advanced settings</strong>, and create conditions based on <strong>Title</strong>, <strong>Author</strong>, <strong>Modified by</strong>, or <strong>Modified on</strong>. Values can be static, supplied through a variable, or taken from a system variable. When a filtered source must be authoritative, Microsoft recommends turning off web search and general-knowledge fallbacks so an unmatched query returns no response instead of an unrelated answer.</p>
+
+        <h3>Recommended metadata for governed knowledge libraries</h3>
+        <div class="art-table-wrap">
+          <table class="art-table">
+            <thead><tr><th>Column</th><th>Purpose</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Knowledge status</strong></td><td>Separates approved material from drafts</td><td>Current / Draft / Retired</td></tr>
+              <tr><td><strong>Business owner</strong></td><td>Identifies who resolves conflicting answers</td><td>HR Operations</td></tr>
+              <tr><td><strong>Region</strong></td><td>Reduces cross-country policy confusion</td><td>India / UK / Global</td></tr>
+              <tr><td><strong>Effective date</strong></td><td>Shows when guidance became valid</td><td>2026-07-01</td></tr>
+              <tr><td><strong>Review date</strong></td><td>Drives a content-maintenance workflow</td><td>2026-10-01</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="lists">Copilot Studio SharePoint List Limits and Live Knowledge</h2>
+        <p>Lists are useful for structured information that changes frequently: office locations, service catalogues, approved suppliers, policy contacts, or known incidents. Microsoft says the list connection is real time and authenticates users with their SharePoint credentials.</p>
+        <ul>
+          <li>Only the <strong>first 2,048 rows</strong> are returned for SharePoint list queries.</li>
+          <li>List <strong>attachments are not indexed</strong> for answers.</li>
+          <li>Document libraries are not supported as lists; add them as SharePoint document knowledge instead.</li>
+          <li>Lists with more than 12 lookup columns in the default view are not supported unless the view is reduced.</li>
+          <li>Lists containing more than <strong>35,000 rows</strong> can reduce answer quality and increase latency.</li>
+          <li>The quotas page documents a maximum of <strong>120,000 rows across all configured SharePoint lists</strong>.</li>
+          <li>Microsoft's current pages are not perfectly aligned on list count: one recommends selecting and using up to 10 for best results, while the quotas page describes support up to 15. Design around 10 or fewer and verify the current limit in your tenant.</li>
+        </ul>
+        <div class="art-callout warning">
+          <p><strong>Use an action for exact transactions.</strong> If the user must retrieve one definitive record, create or update an item, or run a filtered business query, use a Power Automate flow or connector tool. Generative knowledge is better for explanation and discovery than guaranteed CRUD operations.</p>
+        </div>
+        <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Copilot Studio quotas and limits — Microsoft Learn</a>
+
+        <h2 id="publish">Publish the Copilot Studio Agent to SharePoint</h2>
+        <ol>
+          <li>Complete testing and <strong>publish</strong> the agent in Copilot Studio.</li>
+          <li>Open <strong>Channels</strong> and select the <strong>SharePoint</strong> tile.</li>
+          <li>Select or enter the target SharePoint site.</li>
+          <li>Choose <strong>Deploy</strong>, confirm, and wait for the success message.</li>
+          <li>Open the site as a pilot user and validate the real SharePoint experience.</li>
+        </ol>
+        <p>The deploying maker needs <strong>Write access</strong> to the target SharePoint site. Publishing in SharePoint does not change the commercial model: Microsoft states that the agent still follows Copilot Studio billing policies and consumes Copilot Studio capacity.</p>
+        <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Publish an agent to SharePoint — Microsoft Learn</a>
+
+        <h2 id="security">Security and Governance That Actually Matter</h2>
+        <ul>
+          <li><strong>User-context authentication:</strong> keep Microsoft authentication enabled so retrieval is evaluated for the person asking the question.</li>
+          <li><strong>Minimum Read access:</strong> users need at least Read permission to a source. A correctly configured agent should not return content the user cannot access.</li>
+          <li><strong>Oversharing:</strong> permission-aware does not mean permission-correct. Repair broad groups, anonymous links, and legacy access before launch.</li>
+          <li><strong>Sensitivity labels:</strong> the integrated SharePoint option supports sensitivity labels, but password-protected content cannot be surfaced.</li>
+          <li><strong>Guests:</strong> Microsoft says generative answers from SharePoint are unavailable to guest users in SSO-enabled apps.</li>
+          <li><strong>Restricted SharePoint Search:</strong> Microsoft's Copilot Studio documentation says SharePoint grounding is blocked when Restricted SharePoint Search is enabled. Check this early instead of debugging prompts.</li>
+          <li><strong>Restricted Content Discovery:</strong> use it as a temporary site-level discovery control while sensitive sites are reviewed; it is not a replacement for permission cleanup.</li>
+          <li><strong>Lifecycle:</strong> assign an owner, environment, review date, support contact, cost centre, and retirement path to every production agent.</li>
+        </ul>
+        <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Restricted Content Discovery — Microsoft Learn</a>
+
+        <h2 id="test">A Production-Ready Testing Plan</h2>
+        <p>Do not approve an agent because five happy-path prompts worked for its owner. Use a small, repeatable evaluation set.</p>
+        <div class="art-table-wrap">
+          <table class="art-table">
+            <thead><tr><th>Test group</th><th>What to ask</th><th>Pass condition</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Known answers</strong></td><td>20 common questions with approved answers</td><td>Correct answer, useful citation, current source</td></tr>
+              <tr><td><strong>Paraphrases</strong></td><td>Same intent using different wording</td><td>Semantic retrieval finds the same policy</td></tr>
+              <tr><td><strong>Permission boundaries</strong></td><td>Questions whose sources one test user cannot access</td><td>No protected content or revealing citation appears</td></tr>
+              <tr><td><strong>Conflicting content</strong></td><td>Questions covered by an old and new document</td><td>Agent uses approved/current source or flags conflict</td></tr>
+              <tr><td><strong>Missing answers</strong></td><td>Plausible questions absent from SharePoint</td><td>Agent admits the gap and follows escalation guidance</td></tr>
+              <tr><td><strong>Actions</strong></td><td>Create/update flows with invalid and valid inputs</td><td>Confirmation, validation, audit trail, safe failure</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Capture answer correctness, citation correctness, access-control result, response time, and unresolved content gap. Fix source content before compensating with increasingly complicated instructions.</p>
+
+        <h2 id="troubleshoot">Troubleshooting Copilot Studio–SharePoint Integration</h2>
+        <div class="art-table-wrap">
+          <table class="art-table">
+            <thead><tr><th>Symptom</th><th>Likely cause</th><th>What to check</th></tr></thead>
+            <tbody>
+              <tr><td>No SharePoint answers</td><td>Authentication, Read access, or Restricted SharePoint Search</td><td>Use Microsoft authentication, test the source as the user, and check tenant search restrictions</td></tr>
+              <tr><td>Owner gets answers but pilot user does not</td><td>Permission difference</td><td>Compare direct site/list access; do not test only as administrator</td></tr>
+              <tr><td>Outdated answer wins</td><td>Duplicate files or weak status metadata</td><td>Archive obsolete content and apply Current/Retired metadata</td></tr>
+              <tr><td>List results are incomplete</td><td>2,048-row retrieval limit, attachment content, or lookup-column limits</td><td>Narrow the list or use an action/API for deterministic queries</td></tr>
+              <tr><td>Agent cannot deploy to the site</td><td>Not published or maker lacks Write access</td><td>Publish first, verify site role, then check Copilot Studio capacity</td></tr>
+              <tr><td>Answers improved but became slower</td><td>Semantic retrieval adds processing</td><td>Measure latency across representative prompts before changing the design</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Recommended 30-Day Rollout</h2>
+        <ol>
+          <li><strong>Days 1–5 — define:</strong> choose one use case, owner, audience, success measure, and approved SharePoint scope.</li>
+          <li><strong>Days 6–10 — clean:</strong> remove duplicates, review access, add metadata, and create the evaluation questions.</li>
+          <li><strong>Days 11–15 — build:</strong> connect the site, configure Microsoft authentication, add instructions, and enable the supported retrieval features.</li>
+          <li><strong>Days 16–22 — test:</strong> run the evaluation with owners, visitors, restricted users, and realistic failure prompts.</li>
+          <li><strong>Days 23–27 — pilot:</strong> publish to one SharePoint site for a small user group; monitor cost, latency, unanswered questions, and citations.</li>
+          <li><strong>Days 28–30 — decide:</strong> fix content gaps, document support ownership, and either expand, hold, or retire the agent.</li>
+        </ol>
+
+        <h2 id="faq">Frequently Asked Questions</h2>
+        <div class="article-faq">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How does Copilot Studio connect to SharePoint Online?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a" role="region"><div class="faq-a-inner"><p>Add the integrated SharePoint option from the agent's Knowledge page, then provide a site or list. With Microsoft authentication, retrieval runs in the signed-in user's context and requires at least Read access.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What are the current Copilot Studio SharePoint retrieval features?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a" role="region"><div class="faq-a-inner"><p>Current Microsoft documentation supports tenant graph grounding with semantic search and SharePoint metadata filters based on title, author, modified by, and modified date. Microsoft introduced the retrieval improvements in its November 2025 release notes and continues to document them in 2026.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Does Copilot bypass SharePoint permissions?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a" role="region"><div class="faq-a-inner"><p>No. Correctly configured Microsoft authentication evaluates access for the person chatting. However, Copilot can make information a user already has access to easier to discover, which is why oversharing reviews are essential.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Can Copilot Studio use SharePoint lists?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a" role="region"><div class="faq-a-inner"><p>Yes. Lists are live knowledge sources, but current limitations include the first 2,048 rows for queries, no reasoning over attachments, and list-count and lookup-column constraints. Use a flow or connector action when an exact transaction is required.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Can I publish a Copilot Studio agent inside SharePoint?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a" role="region"><div class="faq-a-inner"><p>Yes. Publish the agent, open Channels, choose SharePoint, select the site, and deploy. The maker needs Write access, and usage continues to follow Copilot Studio billing and capacity.</p></div></div>
+          </div>
+        </div>
+
+        <h2>Official Microsoft Sources</h2>
+        <div class="source-list">
+          <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noopener noreferrer">What's new in Copilot Studio</a>
+          <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint" target="_blank" rel="noopener noreferrer">Add SharePoint as a knowledge source</a>
+          <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas" target="_blank" rel="noopener noreferrer">Copilot Studio quotas and limits</a>
+          <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint" target="_blank" rel="noopener noreferrer">Publish an agent to SharePoint</a>
+          <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience" target="_blank" rel="noopener noreferrer">Choose between Agent Builder and Copilot Studio</a>
+          <a href="https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery" target="_blank" rel="noopener noreferrer">Restricted Content Discovery</a>
+        </div>
+
+        <div class="related-section">
+          <p class="related-label">Related Guides</p>
+          <div class="related-grid">
+            <a href="guide-get-started-sharepoint-agents" class="related-card"><span class="rc-topic">SharePoint Agents</span><span class="rc-title">Copilot Agent for SharePoint: Setup, Limits, and PAYG</span><span class="rc-read">15 min read &rarr;</span></a>
+            <a href="guide-sharepoint-copilot-ready" class="related-card"><span class="rc-topic">Governance</span><span class="rc-title">How to Prepare SharePoint for Microsoft 365 Copilot</span><span class="rc-read">12 min read &rarr;</span></a>
+            <a href="guide-m365-copilot" class="related-card"><span class="rc-topic">Microsoft 365</span><span class="rc-title">Microsoft 365 Copilot: Business Guide for 2026</span><span class="rc-read">16 min read &rarr;</span></a>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+  <section class="guide-final-cta reveal">
+    <div class="cta-box">
+      <div class="cta-icon">💬</div>
+      <div class="cta-content">
+        <h3>Need a secure Copilot and SharePoint rollout?</h3>
+        <p>OceanCloud helps teams clean up SharePoint, design grounded agents, connect workflows, and establish Microsoft 365 governance that works in production.</p>
+        <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation ➜</a>
+      </div>
+    </div>
+  </section>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div><p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="/about">About Us</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/news">News</a></li><li><a href="/archive">News Archive</a></li><li><a href="/status">Service Status</a></li><li><a href="/message-center">Message Center</a></li><li><a href="/guides">Guides &amp; Tips</a></li><li><a href="../faq">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="/services">SharePoint Development</a></li><li><a href="/services">Teams Configuration</a></li><li><a href="/services">M365 Migration</a></li><li><a href="/services">Power Platform</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li><li><a href="/cookies">Cookie Policy</a></li><li><a href="/contact">Contact Us</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=5"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=3"></script>
+<script src="../js/article.js?v=6"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>
