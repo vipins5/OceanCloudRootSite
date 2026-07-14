@@ -49,7 +49,7 @@ function Get-UrlsFromSitemap {
   $xml = [xml](Get-Content -Raw -LiteralPath $Path)
   $urls = @()
 
-  if ($xml.urlset -and $xml.urlset.url) {
+  if ($xml.PSObject.Properties['urlset'] -and $xml.urlset.PSObject.Properties['url']) {
     foreach ($loc in $xml.urlset.url.loc) {
       $value = [string]$loc
       if (-not [string]::IsNullOrWhiteSpace($value)) {
@@ -59,7 +59,7 @@ function Get-UrlsFromSitemap {
     return $urls
   }
 
-  if ($xml.sitemapindex -and $xml.sitemapindex.sitemap) {
+  if ($xml.PSObject.Properties['sitemapindex'] -and $xml.sitemapindex.PSObject.Properties['sitemap']) {
     $baseDir = Split-Path -Parent $resolvedPath
     foreach ($s in $xml.sitemapindex.sitemap) {
       $loc = ([string]$s.loc).Trim()
