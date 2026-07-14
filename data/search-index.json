@@ -648,6 +648,19 @@
     "dateSort": "2026-05-29"
   },
   {
+    "id": "articles-guide-copilot-studio-sharepoint-integration",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "copilot",
+    "title": "Copilot Studio SharePoint Integration Guide 2026",
+    "heading": "Copilot Studio SharePoint Integration: Setup Guide 2026",
+    "excerpt": "Add SharePoint knowledge sources and lists to Copilot Studio, configure authentication, publish agents, and avoid current SharePoint limits.",
+    "body": "Copilot Studio SharePoint integration setup guide for 2026. Learn how to add SharePoint as a knowledge source, connect SharePoint lists, configure Microsoft authentication, use tenant graph grounding with semantic search, apply SharePoint metadata filters, and publish a Copilot Studio agent to SharePoint. Covers the 2,048-row query limit, 35,000-row list guidance, 120,000-row total limit, attachments, Restricted SharePoint Search, Restricted Content Discovery, Copilot Studio billing, PnP PowerShell checks, citations, troubleshooting, and deterministic actions with Power Automate.",
+    "url": "articles/guide-copilot-studio-sharepoint-integration",
+    "dateDisplay": "July 14, 2026",
+    "dateSort": "2026-07-14"
+  },
+  {
     "tag": "Guide",
     "topic": "admin",
     "dateSort": "2026-06-02",

@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/guides</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -200,7 +200,7 @@
   </url>
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-get-started-sharepoint-agents</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -243,6 +243,12 @@
   <url>
     <loc>https://oceancloudconsults.com/articles/guide-infopath-forms-services-pdf-archive</loc>
     <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

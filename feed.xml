@@ -11,13 +11,24 @@
 		<copyright>Copyright 2026 OceanCloud LLC</copyright>
 		<managingEditor>oceancloudconsults@gmail.com (OceanCloud)</managingEditor>
 		<webMaster>oceancloudconsults@gmail.com (OceanCloud)</webMaster>
-		<lastBuildDate>Wed, 08 Jul 2026 16:47:00 +0000</lastBuildDate>
+		<lastBuildDate>Tue, 14 Jul 2026 19:39:54 +0000</lastBuildDate>
 		<ttl>1440</ttl>
 		<image>
 			<url>https://oceancloudconsults.com/assets/og-home.jpg</url>
 			<title>OceanCloud - Microsoft 365 &amp; SharePoint News</title>
 			<link>https://oceancloudconsults.com/news</link>
 		</image>
+
+		<item>
+			<title>Copilot Studio SharePoint Integration Guide 2026</title>
+			<link>https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration</guid>
+			<pubDate>Tue, 14 Jul 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>Microsoft 365 Copilot</category>
+			<description><![CDATA[Add SharePoint knowledge sources and lists to Copilot Studio, configure authentication and metadata filters, publish agents to SharePoint, and avoid current limits.]]></description>
+		</item>
 
 		<item>
 			<title>New SharePoint Experience: App Bar Redesign Guide</title>
