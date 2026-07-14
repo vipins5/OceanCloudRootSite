@@ -252,6 +252,11 @@
 
   .ci-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
 
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+
   .ci-item {
     display: flex;
     gap: 14px;
@@ -274,7 +279,7 @@
     flex-shrink: 0;
   }
 
-  .ci-item h4 { font-size: .83rem; font-weight: 700; color: #111827; margin-bottom: 2px; }
+  .ci-item h3 { font-size: .83rem; font-weight: 700; color: #111827; margin-bottom: 2px; }
   .ci-item p  { font-size: .82rem; color: #4b5563; }
   .ci-item a  { color: var(--ocean-blue); font-weight: 600; }
 
@@ -285,7 +290,7 @@
     padding: 20px;
   }
 
-  .oh-block h4 { font-size: .85rem; font-weight: 700; color: #111827; margin-bottom: 12px; }
+  .oh-block h3 { font-size: .85rem; font-weight: 700; color: #111827; margin-bottom: 12px; }
 
   .oh-row {
     display: flex;
@@ -780,25 +785,26 @@
         conversation about what you're trying to achieve and how we can help.
       </p>
 
+      <h2 class="sr-only">Contact Details</h2>
       <div class="ci-list">
         <div class="ci-item">
           <div class="ci-icon">&#128231;</div>
           <div>
-            <h4>Email</h4>
+            <h3>Email</h3>
             <p><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></p>
           </div>
         </div>
         <div class="ci-item">
           <div class="ci-icon">&#128222;</div>
           <div>
-            <h4>Phone</h4>
+            <h3>Phone</h3>
             <p><a href="tel:+14698094053">+1 (469) 809-4053</a></p>
           </div>
         </div>
         <div class="ci-item" style="background:linear-gradient(135deg,rgba(37,211,102,.06),rgba(37,211,102,.02));border-color:rgba(37,211,102,.2);">
           <div class="ci-icon" style="background:linear-gradient(135deg,rgba(37,211,102,.2),rgba(37,211,102,.1));">&#128172;</div>
           <div>
-            <h4 style="color:#128c7e;">WhatsApp</h4>
+            <h3 style="color:#128c7e;">WhatsApp</h3>
             <p><a href="https://wa.me/19176753126" target="_blank" rel="noopener" style="color:#128c7e;font-weight:700;">+1 (917) 675-3126</a></p>
             <p style="font-size:.75rem;color:var(--gray-400);margin-top:2px;">Tap to chat instantly</p>
           </div>
@@ -806,7 +812,7 @@
         <div class="ci-item">
           <div class="ci-icon">&#127759;</div>
           <div>
-            <h4>Location</h4>
+            <h3>Location</h3>
             <p>Dallas, TX · United States</p>
             <p style="font-size:.75rem;color:#6b7280;margin-top:2px;">Serving clients nationwide</p>
           </div>
@@ -814,14 +820,14 @@
       </div>
 
       <div class="oh-block">
-        <h4>&#128336; &nbsp;Office Hours <small style="font-weight:500;color:var(--gray-400);">(EST)</small></h4>
+        <h3>&#128336; &nbsp;Office Hours <small style="font-weight:500;color:var(--gray-400);">(EST)</small></h3>
         <div class="oh-row"><span class="day">Mon – Thu</span><span>9:00 AM – 5:30 PM</span></div>
         <div class="oh-row"><span class="day">Friday</span><span>9:00 AM – 4:00 PM</span></div>
         <div class="oh-row"><span class="day">Weekend</span><span>Closed</span></div>
       </div>
 
       <div class="map-block">
-        <h4 class="map-label">&#128205; &nbsp;Our Location</h4>
+        <h3 class="map-label">&#128205; &nbsp;Our Location</h3>
         <iframe
           src="https://www.google.com/maps?q=Dallas%2C%20TX%2C%20USA&output=embed"
           width="100%"
