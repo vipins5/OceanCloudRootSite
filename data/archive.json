@@ -1,6 +1,66 @@
 {
   "items": [
     {
+      "title": "SharePoint: Enterprise store plugins in Copilot in SharePoint",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567669",
+      "date_friendly": "July 14, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-sharepoint-enterprise-store-plugins-in-copilot-in-sharepoint"
+    },
+    {
+      "title": "SharePoint: Personal Skills in Copilot in SharePoint",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567668",
+      "date_friendly": "July 14, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-sharepoint-personal-skills-in-copilot-in-sharepoint"
+    },
+    {
+      "title": "Microsoft Viva: Copilot Analytics - Agent 365 Dashboard in Insights",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567667",
+      "date_friendly": "July 14, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-viva-copilot-analytics-agent-365-dashboard-in-insi"
+    },
+    {
+      "title": "Microsoft Teams: PowerPoint Live Light theme support",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567469",
+      "date_friendly": "July 14, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-powerpoint-live-light-theme-support"
+    },
+    {
+      "title": "Microsoft Teams: Expand presenter visibility in 'Manage what attendees see' for Teams events",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567467",
+      "date_friendly": "July 14, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-expand-presenter-visibility-in-manage-what-a"
+    },
+    {
+      "title": "Microsoft Teams: Teams events attendance and engagement report policy",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567466",
+      "date_friendly": "July 14, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-teams-events-attendance-and-engagement-repor"
+    },
+    {
       "title": "Microsoft Teams: Modernized Gallery view in Teams Rooms on Android",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567468",
       "date_friendly": "July 10, 2026",
@@ -1329,5 +1389,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-13"
+  "last_updated": "2026-07-15"
 }
