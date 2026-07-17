@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "title": "Microsoft Teams: Explicit recording consent for PSTN participants now available in GCC High and DoD",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567304",
+      "date_friendly": "July 16, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-explicit-recording-consent-for-pstn-particip"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Session and Response Sharing in M365 Copilot",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562353",
+      "date_friendly": "July 16, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-copilot-microsoft-365-session-and-response-sharing"
+    },
+    {
       "title": "SharePoint: Enterprise store plugins in Copilot in SharePoint",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567669",
       "date_friendly": "July 14, 2026",
@@ -239,6 +259,16 @@
       "source": "SharePoint Blog",
       "css_tag": "tag-blog",
       "article_slug": "news-2026-07-sharepoint-showcase-how-microsoft-uses-copilot-in-sharepoint"
+    },
+    {
+      "title": "OneDrive: Block screen capture for sensitivity-labeled PDFs in the OneDrive and SharePoint web viewer",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566695",
+      "date_friendly": "July 01, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-onedrive-block-screen-capture-for-sensitivity-labeled-pdfs-i"
     },
     {
       "title": "Lessons From Building AI Skills in the Real World with Copilot in SharePoint",
@@ -1389,5 +1419,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-15"
+  "last_updated": "2026-07-17"
 }
