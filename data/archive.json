@@ -1,6 +1,46 @@
 {
   "items": [
     {
+      "title": "Microsoft Viva: Copilot Analytics - Agent 365 dashboard for managers",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567893",
+      "date_friendly": "July 17, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-viva-copilot-analytics-agent-365-dashboard-for-man"
+    },
+    {
+      "title": "Microsoft Purview: Information Protection - Auto-labeling scale increase for SharePoint and OneDrive",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567890",
+      "date_friendly": "July 17, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-purview-information-protection-auto-labeling-scale"
+    },
+    {
+      "title": "Microsoft Teams: External phone call routing (GCC High, DoD)",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567884",
+      "date_friendly": "July 17, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-teams-external-phone-call-routing-gcc-high-dod"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Use Agent 365 agents within Microsoft 365 Copilot Chat and Declarative Agents",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567670",
+      "date_friendly": "July 17, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-copilot-microsoft-365-use-agent-365-agents-within"
+    },
+    {
       "title": "Microsoft Teams: Explicit recording consent for PSTN participants now available in GCC High and DoD",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567304",
       "date_friendly": "July 16, 2026",
@@ -19,6 +59,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-07-microsoft-copilot-microsoft-365-session-and-response-sharing"
+    },
+    {
+      "title": "What’s New in Copilot in SharePoint: July 2026",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/what-s-new-in-copilot-in-sharepoint-july-2026/ba-p/4535420",
+      "date_friendly": "July 16, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-whats-new-in-copilot-in-sharepoint-july-2026"
     },
     {
       "title": "SharePoint: Enterprise store plugins in Copilot in SharePoint",
@@ -1419,5 +1469,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-17"
+  "last_updated": "2026-07-20"
 }
