@@ -1,12 +1,16 @@
 name: Update Microsoft 365 News
 
-# Runs Mon / Wed / Fri at 08:00 UTC, or trigger manually.
+# Runs Monday at 08:00 UTC, or trigger manually.
 # AI rewrite engine: ChatGPT/OpenAI first, Gemini fallback.
+# Throttled from 3x/week -> 1x/week on 2026-07-20: the site is a 2-month-old
+# domain and Search Console showed 45/47 tracked pages either uncrawled or
+# "Crawled - currently not indexed", with crawl activity frozen since
+# mid-June. Publishing new templated news pages 3x/week was adding to a
+# thin-content footprint while Google wasn't indexing existing content, so
+# this cuts new-page velocity ~3x while trust builds.
 on:
   schedule:
     - cron: '0 8 * * 1'   # Monday
-    - cron: '0 8 * * 3'   # Wednesday
-    - cron: '0 8 * * 5'   # Friday
   workflow_dispatch:
 
 concurrency:

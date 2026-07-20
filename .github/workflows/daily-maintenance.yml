@@ -1,10 +1,16 @@
-name: Daily Site Maintenance
+name: Weekly Site Maintenance
 
-# Runs every day at 07:00 UTC (before the weekly news run at 08:00 Mon)
+# Runs weekly on Monday at 07:00 UTC (before the weekly news run at 08:00 Mon).
+# Throttled from daily -> weekly on 2026-07-20: the site is a 2-month-old
+# domain and Search Console showed 45/47 tracked pages either uncrawled or
+# "Crawled - currently not indexed", with crawl activity frozen since mid-June.
+# Publishing a new batch of Message Center pages every day was adding to a
+# thin/templated-content footprint while Google wasn't even indexing the
+# existing content, so this cuts new-page velocity ~7x while trust builds.
 # Also triggerable manually from the Actions tab.
 on:
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '0 7 * * 1'
   workflow_dispatch:
 
 concurrency:
