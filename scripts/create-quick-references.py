@@ -19,6 +19,7 @@ QUICK_REFERENCES = {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow, noarchive" />
   <title>SharePoint Permission Levels Quick Reference</title>
   <style>
     body { font-family: Segoe UI, sans-serif; max-width: 8.5in; margin: 0; padding: 0.5in; color: #333; line-height: 1.4; }
@@ -32,10 +33,11 @@ QUICK_REFERENCES = {
     .footer { margin-top: 12pt; font-size: 8pt; color: #666; border-top: 1px solid #ddd; padding-top: 6pt; }
     @media print { body { padding: 0.25in; } }
   </style>
+  <script src="../../js/consent.js"></script>
 </head>
 <body>
   <h1>📋 SharePoint Permission Levels Quick Reference</h1>
-  <p><strong>OceanCloud Consulting</strong> | SharePoint Permission Guide | 2026</p>
+  <p><strong>OceanCloud Consultants</strong> | SharePoint Permission Guide | 2026</p>
 
   <h2>Permission Levels at a Glance</h2>
   <table>
@@ -94,6 +96,7 @@ QUICK_REFERENCES = {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow, noarchive" />
   <title>Power Automate Triggers & Actions Reference</title>
   <style>
     body { font-family: Segoe UI, sans-serif; max-width: 8.5in; margin: 0; padding: 0.5in; color: #333; line-height: 1.4; }
@@ -108,10 +111,11 @@ QUICK_REFERENCES = {
     .tip { background: #fff3cd; padding: 6pt; border-left: 4pt solid #ff9800; margin: 8pt 0; font-size: 9pt; }
     @media print { body { padding: 0.25in; } }
   </style>
+  <script src="../../js/consent.js"></script>
 </head>
 <body>
   <h1>⚡ Power Automate Triggers & Actions Reference</h1>
-  <p><strong>OceanCloud Consulting</strong> | Power Platform Guide | 2026</p>
+  <p><strong>OceanCloud Consultants</strong> | Power Platform Guide | 2026</p>
 
   <h2>Common Triggers (What Starts the Flow)</h2>
   <div class="col-2">
@@ -171,6 +175,7 @@ QUICK_REFERENCES = {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow, noarchive" />
   <title>M365 Migration Quick Checklist</title>
   <style>
     body { font-family: Segoe UI, sans-serif; max-width: 8.5in; margin: 0; padding: 0.5in; color: #333; }
@@ -182,10 +187,11 @@ QUICK_REFERENCES = {
     .phase-title { font-weight: bold; color: #0077b6; font-size: 10pt; }
     @media print { body { padding: 0.25in; } .checkbox input { accent-color: #0077b6; } }
   </style>
+  <script src="../../js/consent.js"></script>
 </head>
 <body>
   <h1>✅ M365 Migration Quick Checklist</h1>
-  <p><strong>OceanCloud Consulting</strong> | Complete Phase-by-Phase Plan | 2026</p>
+  <p><strong>OceanCloud Consultants</strong> | Complete Phase-by-Phase Plan | 2026</p>
 
   <div class="phase">
     <div class="phase-title">📋 PHASE 1: PLAN & ASSESS (Weeks 1-2)</div>
@@ -252,7 +258,7 @@ def create_quick_references():
     for ref_id, ref_data in QUICK_REFERENCES.items():
         filepath = ASSETS / ref_data["filename"]
         filepath.write_text(ref_data["html"], encoding='utf-8')
-        print(f"✅ {ref_data['title']}")
+        print(f"[ok] {ref_data['title']}")
         print(f"   Saved to: {filepath}")
         created += 1
     

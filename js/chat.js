@@ -16,17 +16,17 @@
     },
     {
       keywords: ['price', 'cost', 'pricing', 'quote', 'how much', 'fee', 'charge', 'budget', 'rate'],
-      text: 'Our engagements are <strong>fixed-price</strong> — no hourly billing surprises.\n\n• Assessment: from <strong>$1,500</strong>\n• SharePoint intranet: from <strong>$7,500</strong>\n• M365 migration: from <strong>$18/user</strong> (min. $3,500)\n• Power Platform app: from <strong>$4,500</strong>\n• Advisory retainer: from <strong>$2,200/month</strong>\n• Security uplift: from <strong>$4,000</strong>\n\nAll scoped individually — book a free discovery call and you\'ll have a written estimate within 24 hours.',
+      text: 'Our engagements are <strong>fixed-price</strong> — no hourly billing surprises.\n\n• Assessment: from <strong>$1,500</strong>\n• SharePoint intranet: from <strong>$7,500</strong>\n• M365 migration: from <strong>$18/user</strong> (min. $3,500)\n• Power Platform app: from <strong>$4,500</strong>\n• Advisory retainer: from <strong>$2,200/month</strong>\n• Security uplift: from <strong>$4,000</strong>\n\nAll pricing is indicative and confirmed in a written estimate after discovery.',
       chips: ['Book a free call', "What's included?", 'How long does it take?']
     },
     {
       keywords: ['sharepoint', 'intranet', 'spfx', 'hub site', 'modern sites', 'sp online'],
-      text: 'We design, build, and modernise <strong>SharePoint Online intranets</strong> — from information architecture and governance to SPFx web parts and custom branding.\n\n• Small org (up to 200 users): from <strong>$7,500</strong>\n• Mid-size (200–500 users): from <strong>$20,000</strong>\n• Enterprise (500+ users): from <strong>$55,000</strong>\n\nMost intranet projects take 8–12 weeks. We\'ve delivered 150+ projects with a 98% satisfaction rate.',
+      text: 'We design, build, and modernise <strong>SharePoint Online intranets</strong> — from information architecture and governance to SPFx web parts and custom branding.\n\n• Small org (up to 200 users): from <strong>$7,500</strong>\n• Mid-size (200–500 users): from <strong>$20,000</strong>\n• Enterprise (500+ users): from <strong>$55,000</strong>\n\nA typical intranet project takes 8–12 weeks, with the final scope and timeline confirmed after discovery.',
       chips: ['SharePoint pricing', 'See case studies', 'How long does it take?']
     },
     {
       keywords: ['migration', 'migrate', 'move', 'transfer', 'tenant', 'on-prem', 'on premises', 'exchange', 'hybrid'],
-      text: 'We specialise in <strong>M365 migrations</strong>:\n\n• On-premises SharePoint → SharePoint Online\n• Tenant-to-tenant migrations\n• Exchange → Exchange Online\n• File shares → OneDrive\n\nPricing from <strong>$18–$30/user</strong> (min. $3,500). We use SPMT, Sharegate, and AvePoint tooling for zero-downtime, zero data loss cutover.',
+      text: 'We specialise in <strong>M365 migrations</strong>:\n\n• On-premises SharePoint → SharePoint Online\n• Tenant-to-tenant migrations\n• Exchange → Exchange Online\n• File shares → OneDrive\n\nPricing starts at <strong>$18–$30/user</strong> (min. $3,500). Each plan includes pilot testing, validation, a cutover window, and a documented rollback approach appropriate to the workload.',
       chips: ['Migration pricing', 'How long does it take?', 'Book a discovery call']
     },
     {
@@ -81,7 +81,7 @@
     },
     {
       keywords: ['free', 'free call', 'discovery call', 'consultation', 'free consultation', '60 minute', '60-minute'],
-      text: 'Our <strong>free 60-minute discovery call</strong> includes:\n\n• Current environment review\n• Goals & challenges discussion\n• Rough timeline & cost estimate\n• Written proposal within 48 hours\n\nNo obligation, no sales pressure. Just a genuine conversation.',
+      text: 'Our <strong>free 60-minute discovery call</strong> includes:\n\n• Current environment review\n• Goals & challenges discussion\n• Rough timeline & cost estimate\n• Agreed next steps for a written proposal\n\nNo obligation, no sales pressure. Just a genuine conversation.',
       chips: ['Book now', 'Contact us']
     },
     {
