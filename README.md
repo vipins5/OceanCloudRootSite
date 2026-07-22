@@ -92,6 +92,23 @@ Subtle animated hero canvas effect.
 | Required Graph permission | `ServiceHealth.Read.All` (application) |
 | Secrets | `M365_HEALTH_TENANT_ID`, `M365_HEALTH_CLIENT_ID`, `M365_HEALTH_CLIENT_SECRET` |
 
+### Consultation Requests via Cloudflare Worker
+
+The contact page submits once to `POST /contact`, validates Cloudflare
+Turnstile on the server, stores the request in D1, and optionally sends a
+SendGrid notification. New requests are available alongside comment moderation
+in `comments-admin.html`.
+
+Required deployment steps:
+
+```powershell
+cd oceancloud-ai-proxy
+npx wrangler d1 migrations apply oceancloud-comments --remote
+npx wrangler secret put SENDGRID_API_KEY
+npx wrangler secret put SENDGRID_FROM_EMAIL
+npx wrangler secret put CONTACT_NOTIFICATION_EMAIL
+```
+
 ### Google Programmable Search (Web tab)
 
 | Detail | Value |
@@ -175,13 +192,12 @@ python scripts/publish-local.py
 
 Updates `sitemap.xml` and `feed.xml` based on local guide/article changes.
 
-### Google Indexing API Workflow (Optional)
+### Google Recrawl Workflow
 
-```powershell
-python scripts/submit-urls-indexing-api.py
-```
-
-Auto-discovers `articles/guide-*.html` and submits extensionless URLs for recrawl requests.
+Use the submitted XML sitemaps for site-wide discovery. For a small number of
+materially updated pages, request indexing through Search Console URL
+Inspection. The Google Indexing API is intentionally not used because these
+pages are neither job postings nor livestream events.
 
 ### Local Pre-Push Hook
 

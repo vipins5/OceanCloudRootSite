@@ -21,7 +21,6 @@ node_modules/
 .dev.vars
 .dev.vars.*
 .secrets/
-scripts/set-cloudflare-html-redirect.ps1
 
 # Action items (internal only)
 ACTION-ITEMS.md

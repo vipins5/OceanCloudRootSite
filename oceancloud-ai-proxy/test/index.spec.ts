@@ -55,6 +55,60 @@ describe("OceanCloud AI proxy", () => {
 		expect(await response.json()).toEqual({ error: "Missing message" });
 	});
 
+	it("validates required contact fields before storing a submission", async () => {
+		const response = await worker.fetch(
+			request("/contact", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ name: "A", email: "not-an-email" }),
+			}),
+			{ ...env, COMMENTS_DB: {} as D1Database },
+		);
+
+		expect(response.status).toBe(400);
+		expect(await response.json()).toEqual({ error: "Please complete every required field" });
+	});
+
+	it("stores verified contact submissions once", async () => {
+		const run = vi.fn().mockResolvedValue({ meta: { last_row_id: 42 } });
+		const bind = vi.fn().mockReturnValue({ run });
+		const prepare = vi.fn().mockReturnValue({ bind });
+		vi.stubGlobal("fetch", vi.fn().mockResolvedValue(
+			new Response(JSON.stringify({ success: true }), {
+				status: 200,
+				headers: { "Content-Type": "application/json" },
+			}),
+		));
+
+		const response = await worker.fetch(
+			request("/contact", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					name: "Taylor Smith",
+					email: "taylor@example.com",
+					company: "Example Co",
+					service: "SharePoint Consulting",
+					orgSize: "100-500",
+					message: "We need help planning a SharePoint migration.",
+					turnstileToken: "verified-token",
+				}),
+			}),
+			{
+				...env,
+				COMMENTS_DB: { prepare } as unknown as D1Database,
+				TURNSTILE_SECRET_KEY: "test-secret",
+			},
+		);
+
+		expect(response.status).toBe(201);
+		expect(await response.json()).toEqual({ success: true, reference: "OC-000042", notificationSent: false });
+		expect(prepare).toHaveBeenCalledOnce();
+		expect(run).toHaveBeenCalledOnce();
+
+		vi.unstubAllGlobals();
+	});
+
 	it("proxies successful Groq responses", async () => {
 		vi.stubGlobal(
 			"fetch",
