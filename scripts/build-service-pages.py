@@ -14,7 +14,7 @@ SERVICES = [
     {
         "slug": "sharepoint-consulting",
         "title": "SharePoint Consulting Services | OceanCloud",
-        "description": "SharePoint consulting for intranets, governance, permissions, SPFx and migration. Fixed-price delivery from certified Microsoft specialists in the US.",
+        "description": "SharePoint consulting for intranets, governance, permissions, SPFx and migration. Review our public technical work and fixed-price delivery approach.",
         "kicker": "SharePoint consulting",
         "h1": "Build a SharePoint environment <span>people can trust.</span>",
         "intro": "Plan, repair, govern, and extend SharePoint Online with a delivery team that connects technical architecture to measurable adoption.",
@@ -129,6 +129,7 @@ def render(service: dict) -> str:
 <section class="service-section alt" id="deliverables"><div class="container"><div class="service-section-head"><span class="section-label">Scope</span><h2>What we can deliver.</h2><p>The final scope is shaped around your current environment and priorities—not a generic package.</p></div><div class="service-card-grid">{deliverables}</div></div></section>
 <section class="service-section"><div class="container"><div class="service-section-head"><span class="section-label">Delivery model</span><h2>From discovery to adoption.</h2></div><div class="service-process">{process}</div></div></section>
 <section class="service-section alt"><div class="container"><div class="service-section-head"><span class="section-label">Related guidance</span><h2>Prepare before the first call.</h2></div><div class="service-hero-actions">{guides}</div></div></section>
+<section class="service-section"><div class="container"><div class="service-section-head"><span class="section-label">Evidence before engagement</span><h2>Inspect how we work.</h2><p>Review public implementation history, source-backed guidance, and live service transparency before discussing a scope.</p></div><div class="service-card-grid"><article class="service-card"><h3>Public implementation history</h3><p>This website's source and change history are available for technical review.</p><a href="https://github.com/vipins5/OceanCloudRootSite" target="_blank" rel="noopener noreferrer">Open GitHub ↗</a></article><article class="service-card"><h3>Source-backed guidance</h3><p>Our guides link to Microsoft Learn, PnP PowerShell, and other primary technical references.</p><a href="/guides">Review guides →</a></article><article class="service-card"><h3>Operational transparency</h3><p>Review the live Microsoft 365 service-status experience and our documented delivery approach.</p><a href="/status">View status →</a></article></div></div></section>
 <section class="service-section"><div class="container service-faq"><div class="service-section-head"><span class="section-label">FAQ</span><h2>Common questions.</h2></div>{faqs}</div></section>
 <section class="service-cta"><div class="container"><h2>Get a clear next step.</h2><p>Book a free 60-minute consultation. We will discuss the current environment, desired outcome, risks, and a realistic delivery approach.</p><a class="btn-primary" href="/contact?service={esc(service['query_service'])}">Book your free consultation →</a></div></section></main>
 <footer><div class="container"><div class="footer-grid"><div class="footer-brand"><div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div><p>Microsoft 365 and SharePoint consulting focused on secure, usable, maintainable outcomes.</p></div><div class="footer-col"><h4>Services</h4><ul><li><a href="/sharepoint-consulting">SharePoint Consulting</a></li><li><a href="/microsoft-365-migration">M365 Migration</a></li><li><a href="/microsoft-365-copilot-readiness">Copilot Readiness</a></li><li><a href="/power-platform-consulting">Power Platform</a></li><li><a href="/sharepoint-intranet-development">Intranet Development</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="/about">About</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/guides">Guides</a></li><li><a href="/contact">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li><li><a href="tel:+14698094053">+1 (469) 809-4053</a></li></ul></div></div><div class="footer-bottom"><div class="footer-bottom-inner"><span class="fb-copy">&copy; 2026 OceanCloud LLC</span><div class="fb-right"><a href="/privacy">Privacy</a><span class="fb-sep">·</span><a href="/terms">Terms</a></div></div></div></div></footer>
@@ -143,15 +144,9 @@ def update_search_index() -> None:
     entries = json.loads(path.read_text(encoding="utf-8"))
     for entry in entries:
         if entry.get("id") == "home":
-            entry["body"] = (entry.get("body", "")
-                .replace("0+ Projects delivered 0% Satisfaction rate 0 Experience", "150+ Projects delivered 98% Satisfaction rate 12 yrs Experience")
-                .replace("0+ Projects delivered across SharePoint, M365 & Power Platform 0% Client satisfaction rate", "150+ Projects delivered across SharePoint, M365 & Power Platform 98% Client satisfaction rate")
-                .replace("0+ Microsoft certifications held collectively by our team 0 Years", "40+ Microsoft certifications held collectively by our team 12 Years"))
+            entry["body"] = "SharePoint and Microsoft 365 consulting. Public implementation history, source-backed guides, live service transparency, and documented delivery controls."
         if entry.get("id") == "about":
-            entry["body"] = entry.get("body", "").replace(
-                "0+ Projects Delivered 0% Client Satisfaction 0 Years Experience 0+ MS Certifications",
-                "150+ Projects Delivered 98% Client Satisfaction 12 Years Experience 40+ MS Certifications",
-            )
+            entry["body"] = "OceanCloud trust and delivery approach. Public GitHub history, Microsoft Learn source trails, live service transparency, and clear scope and acceptance criteria."
     ids = {f"service-{service['slug']}" for service in SERVICES}
     entries = [entry for entry in entries if entry.get("id") not in ids]
     new_entries = []

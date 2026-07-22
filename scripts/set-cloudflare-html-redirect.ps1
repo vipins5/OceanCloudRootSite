@@ -21,7 +21,8 @@ param(
 	[string[]]$ExcludedHtmlPaths = @(
 		"404.html",
 		"coming-soon.html",
-		"comments-admin.html"
+		"comments-admin.html",
+		"articles/guide-sharepoint-copilot-agents.html"
 	)
 )
 
