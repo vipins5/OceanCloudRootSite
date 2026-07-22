@@ -43,147 +43,136 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration#article",
-        "headline": "Replace Legacy SharePoint Workflows with Power Automate",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration#article",
+      "headline": "Replace Legacy SharePoint Workflows with Power Automate",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "SharePoint Designer workflow retirement, inventory, feature mapping, and migration to Power Automate — a complete guide for every organisation size.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint workflow migration",
+        "SharePoint workflow retirement",
+        "SharePoint Designer Power Automate",
+        "legacy workflow migration"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration"
+          "url": "https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-workflows",
+          "name": "Modernize SharePoint workflows"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-07-01",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview",
+          "name": "Use SharePoint with Power Automate"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "SharePoint Designer workflow retirement, inventory, feature mapping, and migration to Power Automate — a complete guide for every organisation size.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint workflow migration",
-          "SharePoint workflow retirement",
-          "SharePoint Designer Power Automate",
-          "legacy workflow migration"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/transform/modernize-workflows",
-            "name": "Modernize SharePoint workflows"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-automate/sharepoint-overview",
-            "name": "Use SharePoint with Power Automate"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepointmigration/spmt-workflow-overview",
-            "name": "Migrate SharePoint Server workflows to Power Automate"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepointmigration/spmt-workflow-overview",
+          "name": "Migrate SharePoint Server workflows to Power Automate"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "When does Microsoft retire SharePoint Designer workflows?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SharePoint 2010 workflow platform was retired in November 2020 for new tenants and is in maintenance mode for existing ones. SharePoint 2013 workflows are still running but Microsoft has signalled end of investment \u2014 they are not available in new SharePoint sites. Power Automate is the supported replacement for both."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I automatically migrate SharePoint Designer workflows to Power Automate?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "There is no fully automated one-click migration tool. Microsoft's Power Automate migration tool (in preview) can detect and propose migration paths for some 2013 workflows, but complex custom actions, InfoPath forms, and custom code behind workflows require manual reconstruction in Power Automate."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What features in SharePoint Designer workflows have no direct Power Automate equivalent?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "InfoPath form integration, impersonation steps that run as a different user, workflow status column with custom states, and complex looping with indexed variables have no direct equivalent. Impersonation is replaced by service accounts or managed identities. InfoPath forms are replaced by Power Apps."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How long does a SharePoint workflow migration project typically take?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A simple approval or notification workflow can be rebuilt in Power Automate in a few hours. A complex multi-stage workflow with custom actions, lookups, and form integration may take several days including testing. Full tenant migrations with hundreds of workflows are typically scoped as 4\u201312 week projects depending on volume and complexity."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Should I migrate all SharePoint Designer workflows at once?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No \u2014 a phased approach works best. Inventory all workflows, classify them by complexity and business impact, and start with simple high-use workflows to build team familiarity with Power Automate. Decommission old workflows immediately after the new flow is validated in production."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Workflow Migration",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When does Microsoft retire SharePoint Designer workflows?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SharePoint 2010 workflow platform was retired in November 2020 for new tenants and is in maintenance mode for existing ones. SharePoint 2013 workflows are still running but Microsoft has signalled end of investment — they are not available in new SharePoint sites. Power Automate is the supported replacement for both."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I automatically migrate SharePoint Designer workflows to Power Automate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no fully automated one-click migration tool. Microsoft's Power Automate migration tool (in preview) can detect and propose migration paths for some 2013 workflows, but complex custom actions, InfoPath forms, and custom code behind workflows require manual reconstruction in Power Automate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What features in SharePoint Designer workflows have no direct Power Automate equivalent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "InfoPath form integration, impersonation steps that run as a different user, workflow status column with custom states, and complex looping with indexed variables have no direct equivalent. Impersonation is replaced by service accounts or managed identities. InfoPath forms are replaced by Power Apps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a SharePoint workflow migration project typically take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A simple approval or notification workflow can be rebuilt in Power Automate in a few hours. A complex multi-stage workflow with custom actions, lookups, and form integration may take several days including testing. Full tenant migrations with hundreds of workflows are typically scoped as 4–12 week projects depending on volume and complexity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I migrate all SharePoint Designer workflows at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No — a phased approach works best. Inventory all workflows, classify them by complexity and business impact, and start with simple high-use workflows to build team familiarity with Power Automate. Decommission old workflows immediately after the new flow is validated in production."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Workflow Migration",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-workflow-migration"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -280,6 +269,8 @@
         <span class="art-tag">Power Platform</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">9 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">SharePoint Designer workflows — the click-to-configure automation tool that millions of organisations used from SharePoint 2007 through SharePoint Online — have been retired by Microsoft. The SharePoint 2010 workflow platform reached end-of-life in November 2020 and was disabled in SharePoint Online. The SharePoint 2013 workflow platform followed in April 2026. If your organisation still depends on SharePoint Designer workflows or Nintex on SharePoint Online, you need a migration plan. This guide gives you one.</p>
@@ -511,7 +502,7 @@ $workflowInventory |
         <a href="/contact" class="btn btn-primary">Start Your Workflow Migration</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -627,6 +618,7 @@ $workflowInventory |
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

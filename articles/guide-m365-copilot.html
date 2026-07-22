@@ -43,147 +43,136 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot#article",
-        "headline": "Microsoft 365 Copilot: The Complete Business Guide for 2026",
-        "url": "https://oceancloudconsults.com/articles/guide-m365-copilot",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot#article",
+      "headline": "Microsoft 365 Copilot: The Complete Business Guide for 2026",
+      "url": "https://oceancloudconsults.com/articles/guide-m365-copilot",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Everything your organisation needs before deploying Microsoft 365 Copilot — licensing, app capabilities, SharePoint readiness, rollout steps, and adoption measurement.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Microsoft 365 Copilot",
+        "M365 Copilot",
+        "Copilot for Microsoft 365",
+        "AI workplace"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot"
+          "url": "https://adoption.microsoft.com/en-us/copilot/",
+          "name": "Microsoft 365 Copilot Adoption Hub"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://www.microsoft.com/en-us/microsoft-365/roadmap",
+          "name": "Microsoft 365 Roadmap"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Everything your organisation needs before deploying Microsoft 365 Copilot — licensing, app capabilities, SharePoint readiness, rollout steps, and adoption measurement.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Microsoft 365 Copilot",
-          "M365 Copilot",
-          "Copilot for Microsoft 365",
-          "AI workplace"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://adoption.microsoft.com/en-us/copilot/",
-            "name": "Microsoft 365 Copilot Adoption Hub"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://www.microsoft.com/en-us/microsoft-365/roadmap",
-            "name": "Microsoft 365 Roadmap"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/viva/insights/",
-            "name": "Microsoft Viva Insights"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/viva/insights/",
+          "name": "Microsoft Viva Insights"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is Microsoft 365 Copilot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft 365 Copilot is an AI assistant embedded across Word, Excel, PowerPoint, Outlook, Teams, and other M365 apps. It uses large language models grounded in your Microsoft Graph data \u2014 emails, documents, meetings, and chats \u2014 to draft content, summarise information, and automate tasks inside the apps you already use."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How much does a Microsoft 365 Copilot licence cost?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft 365 Copilot is an add-on licence priced at $30 per user per month (as of 2026). It requires an eligible base plan such as Microsoft 365 Business Standard, Business Premium, E3, or E5."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What SharePoint governance is needed before deploying Copilot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Copilot surfaces content that users can access, so overly permissive SharePoint sites will expose sensitive data through Copilot responses. Before rollout you should audit site permissions, remove excessive Everyone/Everyone Except External Users sharing, label sensitive files with Microsoft Purview sensitivity labels, and clean up stale content."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I measure Microsoft 365 Copilot adoption?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use the Microsoft Viva Insights Copilot Dashboard in the Microsoft 365 admin center. It shows active users per app, Copilot-assisted actions (summaries, drafts, chat), and week-over-week trends. You can also track adoption through the Microsoft 365 usage reports under Reports > Usage."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What are the most common Microsoft 365 Copilot rollout mistakes?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The most common mistakes are: deploying before fixing SharePoint permissions (Copilot will surface over-shared content), skipping end-user training (adoption stays low), expecting Copilot to work on unlicensed users, and not setting a success metric before launch. A phased rollout starting with a pilot group of 25\u201350 users is the recommended approach."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Microsoft 365 Copilot Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-m365-copilot"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-m365-copilot#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Microsoft 365 Copilot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft 365 Copilot is an AI assistant embedded across Word, Excel, PowerPoint, Outlook, Teams, and other M365 apps. It uses large language models grounded in your Microsoft Graph data — emails, documents, meetings, and chats — to draft content, summarise information, and automate tasks inside the apps you already use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does a Microsoft 365 Copilot licence cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft 365 Copilot is an add-on licence priced at $30 per user per month (as of 2026). It requires an eligible base plan such as Microsoft 365 Business Standard, Business Premium, E3, or E5."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What SharePoint governance is needed before deploying Copilot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copilot surfaces content that users can access, so overly permissive SharePoint sites will expose sensitive data through Copilot responses. Before rollout you should audit site permissions, remove excessive Everyone/Everyone Except External Users sharing, label sensitive files with Microsoft Purview sensitivity labels, and clean up stale content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I measure Microsoft 365 Copilot adoption?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the Microsoft Viva Insights Copilot Dashboard in the Microsoft 365 admin center. It shows active users per app, Copilot-assisted actions (summaries, drafts, chat), and week-over-week trends. You can also track adoption through the Microsoft 365 usage reports under Reports > Usage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the most common Microsoft 365 Copilot rollout mistakes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most common mistakes are: deploying before fixing SharePoint permissions (Copilot will surface over-shared content), skipping end-user training (adoption stays low), expecting Copilot to work on unlicensed users, and not setting a success metric before launch. A phased rollout starting with a pilot group of 25–50 users is the recommended approach."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Microsoft 365 Copilot Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-m365-copilot"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -278,6 +267,8 @@
         <span class="art-tag">Copilot</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">10 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">Microsoft 365 Copilot is the most significant change to Office productivity since the ribbon. Powered by GPT-4 class large language models and grounded in your organisation's own Microsoft 365 data, it can summarise a month of email in 30 seconds, draft a presentation from a Word document, and tell you what was decided in last week's meeting you missed. But deploying it without preparation creates real risk — and leaves most of its value unrealised. This guide covers everything your organisation needs to know before, during, and after a Copilot rollout.</p>
@@ -418,7 +409,7 @@
         <a href="/contact" class="btn-primary">Book a Free Readiness Assessment &#8594;</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -530,7 +521,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
@@ -546,6 +537,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
           <li><a href="/case-studies">Case Studies</a></li>
           <li><a href="/news">News &amp; Updates</a></li>
           <li><a href="/guides">Guides &amp; Tips</a></li>

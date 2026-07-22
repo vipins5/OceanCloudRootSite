@@ -43,130 +43,119 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint#article",
-        "headline": "5 Power Automate Flows Every SharePoint Admin Should Build This Week",
-        "url": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint"
-        },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
-        },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Five practical Power Automate workflows for SharePoint — document approvals, contract expiry reminders, employee onboarding, stale content alerts, and multi-level escalation.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Power Automate",
-          "SharePoint automation",
-          "SharePoint workflows",
-          "Microsoft 365 automation"
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
-        }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint#article",
+      "headline": "5 Power Automate Flows Every SharePoint Admin Should Build This Week",
+      "url": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What are the most useful Power Automate flows for SharePoint?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The five highest-value flows are: document approval with email and Teams notifications, contract expiry reminders triggered by a date column, new employee onboarding triggered from an HR list, stale content alerts for libraries not updated in 90+ days, and multi-level escalation approvals for sensitive documents."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can Power Automate read and update SharePoint list items?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. The SharePoint connector includes 'Get items', 'Get item', 'Create item', 'Update item', and 'Delete item' actions. You can filter items using OData queries, update specific fields, and work with attachments \u2014 all without writing any code."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I trigger a Power Automate flow when a SharePoint file is uploaded?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use the 'When a file is created (properties only)' trigger on your document library. This fires for new uploads and provides the file metadata. For files created in subfolders, enable the 'Include subfolders' option in the trigger settings."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why does my SharePoint approval flow sometimes not trigger?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Common causes: the flow is turned off, the trigger is on the wrong site or library, the triggering user is the flow owner (owner-triggered flows can sometimes self-suppress), or throttling from high list activity. Check the flow's run history in Power Automate for the exact error. Also verify the flow has permission to access the SharePoint site."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What happens to pending approvals if the Power Automate flow is edited?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Editing and saving a flow creates a new version. Approvals that started on the old version continue running on that version until they complete or time out. New triggers use the new version. Avoid editing flows with many in-flight approvals \u2014 instead, build a v2 flow and turn off the old one after in-flight runs complete."
-            }
-          }
-        ]
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Power Automate SharePoint Flows",
-            "item": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint"
-          }
-        ]
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      "description": "Five practical Power Automate workflows for SharePoint — document approvals, contract expiry reminders, employee onboarding, stale content alerts, and multi-level escalation.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Power Automate",
+        "SharePoint automation",
+        "SharePoint workflows",
+        "Microsoft 365 automation"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the most useful Power Automate flows for SharePoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The five highest-value flows are: document approval with email and Teams notifications, contract expiry reminders triggered by a date column, new employee onboarding triggered from an HR list, stale content alerts for libraries not updated in 90+ days, and multi-level escalation approvals for sensitive documents."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Power Automate read and update SharePoint list items?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The SharePoint connector includes 'Get items', 'Get item', 'Create item', 'Update item', and 'Delete item' actions. You can filter items using OData queries, update specific fields, and work with attachments — all without writing any code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I trigger a Power Automate flow when a SharePoint file is uploaded?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the 'When a file is created (properties only)' trigger on your document library. This fires for new uploads and provides the file metadata. For files created in subfolders, enable the 'Include subfolders' option in the trigger settings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does my SharePoint approval flow sometimes not trigger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Common causes: the flow is turned off, the trigger is on the wrong site or library, the triggering user is the flow owner (owner-triggered flows can sometimes self-suppress), or throttling from high list activity. Check the flow's run history in Power Automate for the exact error. Also verify the flow has permission to access the SharePoint site."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to pending approvals if the Power Automate flow is edited?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Editing and saving a flow creates a new version. Approvals that started on the old version continue running on that version until they complete or time out. New triggers use the new version. Avoid editing flows with many in-flight approvals — instead, build a v2 flow and turn off the old one after in-flight runs complete."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Power Automate SharePoint Flows",
+          "item": "https://oceancloudconsults.com/articles/guide-power-automate-sharepoint"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -251,6 +240,8 @@
         <span class="art-tag">Power Platform</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">8 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">Power Automate and SharePoint together form one of the most underutilised combinations in Microsoft 365. Organisations pay for Power Automate as part of their M365 licence but leave it untouched while staff manually chase approvals by email, forget to review expiring contracts, and spend hours on onboarding tasks that could be automated in an afternoon. These five flows fix the most common manual bottlenecks in SharePoint-heavy environments.</p>
@@ -410,7 +401,7 @@
         <a href="/contact" class="btn-primary">Book a Free Consultation &#8594;</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -521,7 +512,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
@@ -537,6 +528,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
           <li><a href="/case-studies">Case Studies</a></li>
           <li><a href="/news">News &amp; Updates</a></li>
           <li><a href="/guides">Guides &amp; Tips</a></li>

@@ -43,193 +43,190 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet#article",
-        "headline": "SharePoint Intranet Guide: Plan, Launch, Govern",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet"
-        },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
-        },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Plan a SharePoint intranet employees use, with hub architecture, navigation, governance ownership, and launch rollout steps.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint intranet",
-          "intranet best practices",
-          "hub sites",
-          "SharePoint navigation",
-          "SharePoint governance"
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
-        }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet#article",
+      "headline": "SharePoint Intranet Guide: Plan, Launch, Govern",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is a SharePoint hub site and why does it matter for an intranet?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A hub site connects related SharePoint sites together, sharing common navigation, branding, and a rolled-up news and search experience. Hubs are the backbone of a modern intranet because they let you organise content by department or function without nesting sites, and you can re-associate sites to a different hub as the organisation changes."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How long does it take to build a SharePoint intranet?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A focused intranet for a small organisation can launch in 4–6 weeks. Mid-size rollouts with custom branding, multiple departmental sites, and governance typically run 8–14 weeks. The biggest variables are content migration, the number of departments involved, and how much stakeholder review each page needs."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Should I use communication sites or team sites for my intranet?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use communication sites for the published, one-to-many parts of the intranet — homepage, news, HR, and policy pages — where a small group authors content for a wide audience. Use team sites for collaboration within a department or project. A typical intranet combines a communication-site homepage and hub with team sites underneath."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I make a SharePoint intranet work well on mobile?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Modern SharePoint pages are responsive by default and render in the SharePoint and Viva Connections mobile apps. To get the best result, keep page layouts simple, lead with the most important content, use clear section headings, and test news and navigation in the mobile app before launch. Viva Connections adds a tailored mobile dashboard for frontline and on-the-go staff."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I keep intranet content from becoming outdated?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Put a content lifecycle in place before launch: assign each page or section an owner, set review dates, and schedule periodic checks for stale policies, superseded forms, and broken links. Governance and ownership are what keep an intranet useful a year after go-live — not the initial build."
-            }
-          }
-        ]
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "HowTo",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet#howto",
-        "name": "How to Build a Modern SharePoint Intranet",
-        "description": "Eight steps to build a SharePoint Online intranet that employees actually use — from architecture to governance.",
-        "tool": [
-          { "@type": "HowToTool", "name": "SharePoint Online" },
-          { "@type": "HowToTool", "name": "Microsoft 365 Admin Center" },
-          { "@type": "HowToTool", "name": "Viva Connections" }
-        ],
-        "step": [
-          {
-            "@type": "HowToStep",
-            "position": 1,
-            "name": "Plan your information architecture",
-            "text": "Map a flat site hierarchy: one root hub site, department-level communication sites, and team sites. Aim for no more than two levels below the hub."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 2,
-            "name": "Design navigation intentionally",
-            "text": "Configure global navigation via Viva Connections and hub navigation to create a consistent, cross-site menu. Use audience targeting to show relevant links by department or role."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 3,
-            "name": "Create the hub site and apply branding",
-            "text": "Register the root site as a hub in the SharePoint admin center. Apply a branded theme (logo, colours, fonts) and configure the header and footer for consistent identity."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 4,
-            "name": "Build the homepage and key landing pages",
-            "text": "Use modern SharePoint pages with a News web part, Quick Links, Hero, and People web parts. Keep the homepage focused on finding things, not showcasing everything."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 5,
-            "name": "Configure site-wide search",
-            "text": "Enable Microsoft Search across the hub. Create bookmarks and promoted results for top queries. Ensure content owners populate page metadata for better search relevance."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 6,
-            "name": "Optimise for mobile",
-            "text": "Test all pages in the SharePoint mobile app. Use the SharePoint app bar for consistent mobile navigation. Avoid horizontal tables and fixed-width layouts."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 7,
-            "name": "Drive adoption before launch",
-            "text": "Identify champions in each department. Run preview sessions and gather feedback. Publish a launch communication with a clear value message — what's in it for them."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 8,
-            "name": "Establish governance and lifecycle management",
-            "text": "Assign page owners, set review dates, and schedule periodic checks for stale content. Governance is what keeps the intranet useful a year after launch — not the initial build."
-          }
-        ]
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Intranet Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      "description": "Plan a SharePoint intranet employees use, with hub architecture, navigation, governance ownership, and launch rollout steps.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint intranet",
+        "intranet best practices",
+        "hub sites",
+        "SharePoint navigation",
+        "SharePoint governance"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a SharePoint hub site and why does it matter for an intranet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A hub site connects related SharePoint sites together, sharing common navigation, branding, and a rolled-up news and search experience. Hubs are the backbone of a modern intranet because they let you organise content by department or function without nesting sites, and you can re-associate sites to a different hub as the organisation changes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to build a SharePoint intranet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A focused intranet for a small organisation can launch in 4–6 weeks. Mid-size rollouts with custom branding, multiple departmental sites, and governance typically run 8–14 weeks. The biggest variables are content migration, the number of departments involved, and how much stakeholder review each page needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use communication sites or team sites for my intranet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use communication sites for the published, one-to-many parts of the intranet — homepage, news, HR, and policy pages — where a small group authors content for a wide audience. Use team sites for collaboration within a department or project. A typical intranet combines a communication-site homepage and hub with team sites underneath."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I make a SharePoint intranet work well on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Modern SharePoint pages are responsive by default and render in the SharePoint and Viva Connections mobile apps. To get the best result, keep page layouts simple, lead with the most important content, use clear section headings, and test news and navigation in the mobile app before launch. Viva Connections adds a tailored mobile dashboard for frontline and on-the-go staff."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I keep intranet content from becoming outdated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Put a content lifecycle in place before launch: assign each page or section an owner, set review dates, and schedule periodic checks for stale policies, superseded forms, and broken links. Governance and ownership are what keep an intranet useful a year after go-live — not the initial build."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet#howto",
+      "name": "How to Build a Modern SharePoint Intranet",
+      "description": "Eight steps to build a SharePoint Online intranet that employees actually use — from architecture to governance.",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "SharePoint Online"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "Microsoft 365 Admin Center"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "Viva Connections"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Plan your information architecture",
+          "text": "Map a flat site hierarchy: one root hub site, department-level communication sites, and team sites. Aim for no more than two levels below the hub."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Design navigation intentionally",
+          "text": "Configure global navigation via Viva Connections and hub navigation to create a consistent, cross-site menu. Use audience targeting to show relevant links by department or role."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Create the hub site and apply branding",
+          "text": "Register the root site as a hub in the SharePoint admin center. Apply a branded theme (logo, colours, fonts) and configure the header and footer for consistent identity."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Build the homepage and key landing pages",
+          "text": "Use modern SharePoint pages with a News web part, Quick Links, Hero, and People web parts. Keep the homepage focused on finding things, not showcasing everything."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Configure site-wide search",
+          "text": "Enable Microsoft Search across the hub. Create bookmarks and promoted results for top queries. Ensure content owners populate page metadata for better search relevance."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Optimise for mobile",
+          "text": "Test all pages in the SharePoint mobile app. Use the SharePoint app bar for consistent mobile navigation. Avoid horizontal tables and fixed-width layouts."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Drive adoption before launch",
+          "text": "Identify champions in each department. Run preview sessions and gather feedback. Publish a launch communication with a clear value message — what's in it for them."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 8,
+          "name": "Establish governance and lifecycle management",
+          "text": "Assign page owners, set review dates, and schedule periodic checks for stale content. Governance is what keeps the intranet useful a year after launch — not the initial build."
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Intranet Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-intranet"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -313,6 +310,8 @@
         <span class="art-tag">SharePoint</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">9 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">Most teams searching for a SharePoint intranet guide are not blocked by technology; they are blocked by adoption, ownership, and governance. We have audited many environments where the intranet existed but staff still emailed policy files, managers still asked IT for links, and content quickly became stale. A successful intranet needs solid architecture, intentional page design, and a governance model that keeps content useful after launch. This guide walks through all three in implementation order.</p>
@@ -550,7 +549,12 @@
         </div>
       </div>
 
-      <div class="related-section">
+
+      <div class="art-callout" data-recovery-path="true">
+        <p><strong>Implementation path:</strong> Apply the planning framework with user research, publishing ownership, measurable findability, and adoption criteria. <a href="/sharepoint-intranet-development">SharePoint intranet development &rarr;</a></p>
+      </div>
+
+<div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
           <a href="/articles/guide-get-started-sharepoint-agents" class="related-card">Get Started Sharepoint Agents</a>
@@ -592,7 +596,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
@@ -608,6 +612,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
           <li><a href="/case-studies">Case Studies</a></li>
           <li><a href="/news">News &amp; Updates</a></li>
           <li><a href="/guides">Guides &amp; Tips</a></li>

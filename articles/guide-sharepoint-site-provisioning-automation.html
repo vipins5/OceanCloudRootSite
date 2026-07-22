@@ -43,157 +43,146 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation#article",
-        "headline": "SharePoint Provisioning Automation: Requests, Approval, PnP",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation#article",
+      "headline": "SharePoint Provisioning Automation: Requests, Approval, PnP",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation"
+      },
+      "datePublished": "2026-06-02",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Step-by-step SharePoint provisioning automation for business requests using a SharePoint request form, approvals, Logic Apps orchestration, and PnP PowerShell templates.",
+      "image": "https://oceancloudconsults.com/assets/og-services.jpg",
+      "keywords": [
+        "SharePoint provisioning automation",
+        "Azure Logic Apps",
+        "Azure Automation",
+        "PnP PowerShell",
+        "Power Automate approval",
+        "SharePoint self-service"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation"
+          "url": "https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview",
+          "name": "Azure Logic Apps overview"
         },
-        "datePublished": "2026-06-02",
-        "dateModified": "2026-06-29",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/azure/automation/overview",
+          "name": "Azure Automation overview"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Step-by-step SharePoint provisioning automation for business requests using a SharePoint request form, approvals, Logic Apps orchestration, and PnP PowerShell templates.",
-        "image": "https://oceancloudconsults.com/assets/og-services.jpg",
-        "keywords": [
-          "SharePoint provisioning automation",
-          "Azure Logic Apps",
-          "Azure Automation",
-          "PnP PowerShell",
-          "Power Automate approval",
-          "SharePoint self-service"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview",
-            "name": "Azure Logic Apps overview"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/azure/automation/overview",
-            "name": "Azure Automation overview"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://pnp.github.io/powershell/cmdlets/New-PnPSite.html",
-            "name": "New-PnPSite cmdlet reference"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://pnp.github.io/powershell/cmdlets/New-PnPSite.html",
+          "name": "New-PnPSite cmdlet reference"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is SharePoint site provisioning automation?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SharePoint site provisioning automation is a pipeline that creates new SharePoint sites on demand without requiring IT to manually build each one. Requestors fill out a form or submit a list item; an approval flow validates the request; then an automated process (Azure Logic App, PnP PowerShell runbook, or Power Automate) creates the site with the correct template, permissions, and metadata."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I manage business requests in SharePoint before provisioning a site?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use a SharePoint request list as the intake queue. Capture requester, business owner, department, site purpose, template type, sensitivity, expiry date, and approval status. Power Automate can route approval before the Logic App or runbook creates the site, and the same list becomes the audit trail for every provisioning decision."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What components do I need to build automated SharePoint site provisioning?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The core components are: a SharePoint request list (intake form), a Power Automate approval flow (manager sign-off), an Azure Automation runbook with PnP PowerShell (site creation and configuration), and a status column in the request list (tracks pending/approved/created states). Optional additions include Azure Logic Apps as an orchestrator and a SharePoint site template (.pnp file) for consistent structure."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can Power Automate create SharePoint site collections on its own?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Power Automate can trigger the site creation process and handle approvals, but creating a full site collection with custom templates, hub site association, and metadata configuration typically requires the PnP.PowerShell module or the SharePoint REST API via the 'Send an HTTP request to SharePoint' action. Simple modern team sites or communication sites can be created via the Graph API from Power Automate."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I ensure newly provisioned SharePoint sites follow a consistent structure?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Create a reference site with the desired structure (columns, content types, libraries, pages), export it as a PnP template with Export-PnPSiteTemplate, then apply that template to every new site with Invoke-PnPSiteTemplate during provisioning. Hub site association, navigation links, and sensitivity labels can also be set programmatically in the same runbook."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What Azure permissions does the site provisioning runbook need?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The Azure Automation account needs a Managed Identity or service principal with SharePoint admin permissions granted in Microsoft Entra. In the SharePoint admin center, add the managed identity as a SharePoint admin or grant it Sites.FullControl.All application permission via Microsoft Graph. No user credentials should be stored in the runbook \u2014 use the managed identity exclusively."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Site Provisioning Automation",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is SharePoint site provisioning automation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SharePoint site provisioning automation is a pipeline that creates new SharePoint sites on demand without requiring IT to manually build each one. Requestors fill out a form or submit a list item; an approval flow validates the request; then an automated process (Azure Logic App, PnP PowerShell runbook, or Power Automate) creates the site with the correct template, permissions, and metadata."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I manage business requests in SharePoint before provisioning a site?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a SharePoint request list as the intake queue. Capture requester, business owner, department, site purpose, template type, sensitivity, expiry date, and approval status. Power Automate can route approval before the Logic App or runbook creates the site, and the same list becomes the audit trail for every provisioning decision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What components do I need to build automated SharePoint site provisioning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The core components are: a SharePoint request list (intake form), a Power Automate approval flow (manager sign-off), an Azure Automation runbook with PnP PowerShell (site creation and configuration), and a status column in the request list (tracks pending/approved/created states). Optional additions include Azure Logic Apps as an orchestrator and a SharePoint site template (.pnp file) for consistent structure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Power Automate create SharePoint site collections on its own?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Power Automate can trigger the site creation process and handle approvals, but creating a full site collection with custom templates, hub site association, and metadata configuration typically requires the PnP.PowerShell module or the SharePoint REST API via the 'Send an HTTP request to SharePoint' action. Simple modern team sites or communication sites can be created via the Graph API from Power Automate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I ensure newly provisioned SharePoint sites follow a consistent structure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Create a reference site with the desired structure (columns, content types, libraries, pages), export it as a PnP template with Export-PnPSiteTemplate, then apply that template to every new site with Invoke-PnPSiteTemplate during provisioning. Hub site association, navigation links, and sensitivity labels can also be set programmatically in the same runbook."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What Azure permissions does the site provisioning runbook need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Azure Automation account needs a Managed Identity or service principal with SharePoint admin permissions granted in Microsoft Entra. In the SharePoint admin center, add the managed identity as a SharePoint admin or grant it Sites.FullControl.All application permission via Microsoft Graph. No user credentials should be stored in the runbook — use the managed identity exclusively."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Site Provisioning Automation",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-site-provisioning-automation"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -350,6 +339,8 @@
         <span class="art-tag">Admin &amp; Automation</span>
         <span class="art-date">June 2, 2026</span>
         <span class="art-read">14 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">Every SharePoint admin knows the pain: someone requests a new site, a ticket is raised, IT gets to it three days later, the site is created manually without a standard structure, and the requester gets a URL in a chat message. This guide replaces that entire process with SharePoint provisioning automation for business requests: a self-service pipeline that provisions a properly structured site in under five minutes with manager approval, audit logging, error recovery, and email notifications built in from the start.</p>
@@ -1413,7 +1404,7 @@ Error</pre></div>
         <a href="/contact" class="btn-primary">Book a Free Discovery Call →</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -1536,7 +1527,7 @@ Error</pre></div>
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Guides</h4>

@@ -44,140 +44,129 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#article",
-        "headline": "Fix ExportPkcs8PrivateKey in PowerShell 5.1 for Entra App Certificates",
-        "url": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
-        },
-        "datePublished": "2026-06-12",
-        "dateModified": "2026-07-07",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
-        },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Step-by-step guide and script to generate Entra app certificates, avoid ExportPkcs8PrivateKey failures in Windows PowerShell 5.1, and connect with PnP PowerShell app-only authentication.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "ExportPkcs8PrivateKey PowerShell 5.1",
-          "PowerShell self-signed certificate",
-          "Entra app registration",
-          "PnP PowerShell",
-          "delegated permissions",
-          "application permissions"
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
-        }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#article",
+      "headline": "Fix ExportPkcs8PrivateKey in PowerShell 5.1 for Entra App Certificates",
+      "url": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Why use a certificate instead of a client secret for Entra app authentication?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Client secrets expire (maximum 24 months) and must be manually rotated \u2014 a missed rotation breaks all connected automations. Certificates can have longer validity, are bound to a specific device or key vault, and their private key never leaves the secure store. For production automation, certificates are the Microsoft-recommended approach."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why does ExportPkcs8PrivateKey fail in Windows PowerShell 5.1?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ExportPkcs8PrivateKey is available on the newer .NET runtime used by PowerShell 7, but Windows PowerShell 5.1 runs on .NET Framework and cannot export the private key that way. Use PowerShell 7 for native PEM export, or keep the PFX/CER output and use OpenSSL as the fallback for key.pem."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use a self-signed certificate for production PowerShell automations?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Self-signed certificates are acceptable for server-to-server authentication with Microsoft Entra ID because the trust relationship is established by uploading the certificate's public key to the app registration \u2014 not by a third-party CA chain. The certificate just needs to be valid (not expired) and its private key must be available to the script at runtime."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Where should I store the certificate private key for automated scripts?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The most secure options are: Azure Key Vault (access via managed identity, no credential in code), the Windows Certificate Store on the automation server (LocalMachine\\My), or a CI/CD secrets manager (GitHub Actions secrets, Azure DevOps secure files). Never store certificate PFX files or passwords in source code repositories."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How long should a self-signed certificate be valid for Entra authentication?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft Entra ID accepts certificates valid for up to 3 years (some tenants allow longer). A 2-year validity is a common balance between rotation frequency and operational overhead. Set a calendar reminder 60 days before expiry to generate a new certificate, upload its public key to the app registration, and update the private key on all automation hosts before the old one expires."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What PowerShell permissions do I need to create a self-signed certificate?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "On Windows, New-SelfSignedCertificate requires running PowerShell as Administrator when writing to the LocalMachine certificate store. Writing to the CurrentUser store does not require elevation. On Linux/macOS with PowerShell 7, use the openssl command-line tool instead, as New-SelfSignedCertificate is a Windows-only cmdlet."
-            }
-          }
-        ]
+      "datePublished": "2026-06-12",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "PowerShell Certificate for Entra App",
-            "item": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
-          }
-        ]
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      "description": "Step-by-step guide and script to generate Entra app certificates, avoid ExportPkcs8PrivateKey failures in Windows PowerShell 5.1, and connect with PnP PowerShell app-only authentication.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "ExportPkcs8PrivateKey PowerShell 5.1",
+        "PowerShell self-signed certificate",
+        "Entra app registration",
+        "PnP PowerShell",
+        "delegated permissions",
+        "application permissions"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use a certificate instead of a client secret for Entra app authentication?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Client secrets expire (maximum 24 months) and must be manually rotated — a missed rotation breaks all connected automations. Certificates can have longer validity, are bound to a specific device or key vault, and their private key never leaves the secure store. For production automation, certificates are the Microsoft-recommended approach."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does ExportPkcs8PrivateKey fail in Windows PowerShell 5.1?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ExportPkcs8PrivateKey is available on the newer .NET runtime used by PowerShell 7, but Windows PowerShell 5.1 runs on .NET Framework and cannot export the private key that way. Use PowerShell 7 for native PEM export, or keep the PFX/CER output and use OpenSSL as the fallback for key.pem."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a self-signed certificate for production PowerShell automations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Self-signed certificates are acceptable for server-to-server authentication with Microsoft Entra ID because the trust relationship is established by uploading the certificate's public key to the app registration — not by a third-party CA chain. The certificate just needs to be valid (not expired) and its private key must be available to the script at runtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I store the certificate private key for automated scripts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most secure options are: Azure Key Vault (access via managed identity, no credential in code), the Windows Certificate Store on the automation server (LocalMachine\\My), or a CI/CD secrets manager (GitHub Actions secrets, Azure DevOps secure files). Never store certificate PFX files or passwords in source code repositories."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long should a self-signed certificate be valid for Entra authentication?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft Entra ID accepts certificates valid for up to 3 years (some tenants allow longer). A 2-year validity is a common balance between rotation frequency and operational overhead. Set a calendar reminder 60 days before expiry to generate a new certificate, upload its public key to the app registration, and update the private key on all automation hosts before the old one expires."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What PowerShell permissions do I need to create a self-signed certificate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On Windows, New-SelfSignedCertificate requires running PowerShell as Administrator when writing to the LocalMachine certificate store. Writing to the CurrentUser store does not require elevation. On Linux/macOS with PowerShell 7, use the openssl command-line tool instead, as New-SelfSignedCertificate is a Windows-only cmdlet."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "PowerShell Certificate for Entra App",
+          "item": "https://oceancloudconsults.com/articles/guide-powershell-self-signed-certificate-entra-app-registration"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -614,6 +603,8 @@
         <span class="art-tag">Admin &amp; Automation</span>
         <span class="art-date">June 12, 2026</span>
         <span class="art-read">13 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">If your automation uses <code>Connect-PnPOnline</code> with Entra app registration, certificate-based authentication is usually the most stable option. This guide gives you a practical script that generates all common certificate outputs used in real projects: <code>.pfx</code>, <code>.cer</code>, <code>cert.pem</code>, <code>key.pem</code>, and <code>combined.pem</code>. It also explains why <code>ExportPkcs8PrivateKey()</code> fails in Windows PowerShell 5.1 and how to avoid that failure without breaking certificate creation.</p>
@@ -908,7 +899,7 @@ Connect-PnPOnline `
         <a href="/contact" class="btn btn-primary">Book a Security Review</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -991,7 +982,12 @@ Connect-PnPOnline `
         </div>
       </div>
 
-      <div class="related-section">
+
+      <div class="art-callout" data-recovery-path="true">
+        <p><strong>Implementation path:</strong> Use certificate authentication with least privilege, documented ownership, expiry monitoring, and a tested rotation procedure. <a href="/sharepoint-consulting">SharePoint automation support &rarr;</a></p>
+      </div>
+
+<div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
           <a href="guide-pnp-entra-app-registration" class="related-card">
@@ -1037,6 +1033,7 @@ Connect-PnPOnline `
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

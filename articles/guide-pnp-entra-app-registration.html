@@ -43,148 +43,137 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration#article",
-        "headline": "PnP PowerShell: Complete Entra App Registration & Certificate Guide",
-        "url": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration#article",
+      "headline": "PnP PowerShell: Complete Entra App Registration & Certificate Guide",
+      "url": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "End-to-end guide: install PowerShell 7.4+, install PnP.PowerShell, register an Entra app, create a self-signed certificate, upload the public key, and connect with Interactive, CertificatePath, or Thumbprint.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "PnP PowerShell",
+        "Entra app registration",
+        "Connect-PnPOnline certificate",
+        "PnP thumbprint",
+        "SharePoint PowerShell automation"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration"
+          "url": "https://pnp.github.io/powershell/",
+          "name": "PnP PowerShell documentation"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
+          "name": "Register an application — Microsoft Entra"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "End-to-end guide: install PowerShell 7.4+, install PnP.PowerShell, register an Entra app, create a self-signed certificate, upload the public key, and connect with Interactive, CertificatePath, or Thumbprint.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "PnP PowerShell",
-          "Entra app registration",
-          "Connect-PnPOnline certificate",
-          "PnP thumbprint",
-          "SharePoint PowerShell automation"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://pnp.github.io/powershell/",
-            "name": "PnP PowerShell documentation"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
-            "name": "Register an application — Microsoft Entra"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows",
-            "name": "Install PowerShell on Windows"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows",
+          "name": "Install PowerShell on Windows"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is PnP PowerShell and why does it need an Entra app registration?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "PnP PowerShell is the community-maintained PowerShell module for SharePoint and Microsoft 365 administration. App registration (client credentials with a certificate) allows PnP to authenticate as an application rather than as an interactive user \u2014 essential for scheduled scripts, automation pipelines, and CI/CD workflows that cannot prompt for a password."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What permissions does a PnP PowerShell app registration need?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For SharePoint-only operations: Sites.FullControl.All (application permission). For tenant-level operations (creating site collections, managing users): SharePoint > Have full control of all site collections. For Exchange Online operations: Exchange.ManageAsApp plus appropriate Exchange role assignment. Always follow least privilege \u2014 grant only what the script actually uses."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why use a certificate instead of a client secret for PnP authentication?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Client secrets expire (maximum 2 years) and must be manually rotated. Certificates can have longer validity periods and are bound to the device or key vault where they're stored, making them harder to exfiltrate. For production automation, certificates stored in Azure Key Vault or the Windows Certificate Store are significantly more secure than secrets stored in environment variables."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I connect PnP PowerShell using a certificate?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use Connect-PnPOnline -Url https://tenant.sharepoint.com -ClientId 'your-app-id' -Tenant 'tenant.onmicrosoft.com' -CertificateBase64Encoded 'base64string' -CertificatePassword (ConvertTo-SecureString 'pwd' -AsPlainText -Force). In CI/CD pipelines, store the certificate and password as secrets and load them at runtime."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Which admin role do I need to register an app in Microsoft Entra ID?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The Application Administrator role is sufficient for registering apps and granting non-admin API permissions. To grant application permissions that require admin consent (such as Sites.FullControl.All), you need the Global Administrator or Cloud Application Administrator role to click 'Grant admin consent' in the Entra portal."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "PnP Entra App Registration",
-            "item": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is PnP PowerShell and why does it need an Entra app registration?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PnP PowerShell is the community-maintained PowerShell module for SharePoint and Microsoft 365 administration. App registration (client credentials with a certificate) allows PnP to authenticate as an application rather than as an interactive user — essential for scheduled scripts, automation pipelines, and CI/CD workflows that cannot prompt for a password."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What permissions does a PnP PowerShell app registration need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For SharePoint-only operations: Sites.FullControl.All (application permission). For tenant-level operations (creating site collections, managing users): SharePoint > Have full control of all site collections. For Exchange Online operations: Exchange.ManageAsApp plus appropriate Exchange role assignment. Always follow least privilege — grant only what the script actually uses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why use a certificate instead of a client secret for PnP authentication?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Client secrets expire (maximum 2 years) and must be manually rotated. Certificates can have longer validity periods and are bound to the device or key vault where they're stored, making them harder to exfiltrate. For production automation, certificates stored in Azure Key Vault or the Windows Certificate Store are significantly more secure than secrets stored in environment variables."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I connect PnP PowerShell using a certificate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use Connect-PnPOnline -Url https://tenant.sharepoint.com -ClientId 'your-app-id' -Tenant 'tenant.onmicrosoft.com' -CertificateBase64Encoded 'base64string' -CertificatePassword (ConvertTo-SecureString 'pwd' -AsPlainText -Force). In CI/CD pipelines, store the certificate and password as secrets and load them at runtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which admin role do I need to register an app in Microsoft Entra ID?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Application Administrator role is sufficient for registering apps and granting non-admin API permissions. To grant application permissions that require admin consent (such as Sites.FullControl.All), you need the Global Administrator or Cloud Application Administrator role to click 'Grant admin consent' in the Entra portal."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "PnP Entra App Registration",
+          "item": "https://oceancloudconsults.com/articles/guide-pnp-entra-app-registration"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -357,6 +346,8 @@
         <span class="art-tag">Admin &amp; Automation</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">15 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">PnP PowerShell is the most widely used open-source PowerShell module for managing SharePoint Online and Microsoft 365. To use it reliably in automated scripts, scheduled tasks, or Azure DevOps pipelines, you need an Entra app registration (formerly Azure AD app) and a certificate-based connection. This guide walks you through the complete setup from zero — including PowerShell 7 installation, module setup, roles, app registration in the Entra portal, self-signed certificate creation, and all three connection methods.</p>
@@ -1016,7 +1007,7 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
         <a href="/contact" class="btn btn-primary">Talk to a SharePoint Automation Expert</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -1132,6 +1123,7 @@ New-PnPSite -Type TeamSite -Title "Project Alpha" -Alias "project-alpha"</pre></
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

@@ -43,148 +43,137 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#article",
-        "headline": "Switch SharePoint Classic Calendar to Modern View with PnP PowerShell",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#article",
+      "headline": "Switch SharePoint Classic Calendar to Modern View with PnP PowerShell",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view"
+      },
+      "datePublished": "2026-05-27",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Switch classic calendar list views to modern-friendly SharePoint list views using PnP PowerShell with pre-checks for PowerShell version, module version, permissions, list schema, and post-change verification.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint calendar modern view",
+        "PnP PowerShell",
+        "SharePoint list view migration",
+        "classic to modern",
+        "PowerShell pre-checks"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view"
+          "url": "https://pnp.github.io/powershell/",
+          "name": "PnP PowerShell documentation"
         },
-        "datePublished": "2026-05-27",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting",
+          "name": "SharePoint view and formatting guidance"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Switch classic calendar list views to modern-friendly SharePoint list views using PnP PowerShell with pre-checks for PowerShell version, module version, permissions, list schema, and post-change verification.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint calendar modern view",
-          "PnP PowerShell",
-          "SharePoint list view migration",
-          "classic to modern",
-          "PowerShell pre-checks"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://pnp.github.io/powershell/",
-            "name": "PnP PowerShell documentation"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/view-formatting",
-            "name": "SharePoint view and formatting guidance"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints",
-            "name": "SharePoint REST API operations"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints",
+          "name": "SharePoint REST API operations"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Why is Microsoft retiring the SharePoint classic calendar view?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The classic SharePoint calendar view relied on Silverlight and legacy JavaScript rendering that is no longer supported in modern browsers. Microsoft has been deprecating classic SharePoint experiences in favour of the modern, responsive interface. Classic calendar views do not display on mobile devices and are not compatible with Microsoft Teams-embedded SharePoint pages."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What replaces the classic SharePoint calendar view?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The modern Calendar view is the direct replacement \u2014 it provides the same monthly/weekly/daily views on any modern SharePoint list or library with a Date column. For advanced calendaring (overlaying multiple lists, multi-tenant views), Microsoft recommends integrating with Outlook Calendar or Microsoft Bookings via Power Automate."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Will migrating to the modern calendar view lose existing calendar data?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. The migration only changes the view \u2014 the underlying list items (events) remain intact. The migration script creates a new Modern Calendar view on the same list without deleting the Classic view, so you can validate the modern view before decommissioning the old one."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I migrate all classic calendar views in my tenant at once?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, with PnP PowerShell you can enumerate all site collections, find lists using the Events base template (106), and apply the migration script to each one in a loop. Build in tenant throttling protection (pause between sites) and log successes and failures to a CSV for post-run review."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I roll back if the classic calendar migration causes issues?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Because the migration only adds a new view and does not modify list data, rollback is straightforward \u2014 delete the new modern view and restore the original Classic view as the default. Run Remove-PnPView targeting the newly created view name. Existing items are completely unaffected."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Classic Calendar to Modern View",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is Microsoft retiring the SharePoint classic calendar view?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The classic SharePoint calendar view relied on Silverlight and legacy JavaScript rendering that is no longer supported in modern browsers. Microsoft has been deprecating classic SharePoint experiences in favour of the modern, responsive interface. Classic calendar views do not display on mobile devices and are not compatible with Microsoft Teams-embedded SharePoint pages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What replaces the classic SharePoint calendar view?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The modern Calendar view is the direct replacement — it provides the same monthly/weekly/daily views on any modern SharePoint list or library with a Date column. For advanced calendaring (overlaying multiple lists, multi-tenant views), Microsoft recommends integrating with Outlook Calendar or Microsoft Bookings via Power Automate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will migrating to the modern calendar view lose existing calendar data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The migration only changes the view — the underlying list items (events) remain intact. The migration script creates a new Modern Calendar view on the same list without deleting the Classic view, so you can validate the modern view before decommissioning the old one."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I migrate all classic calendar views in my tenant at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, with PnP PowerShell you can enumerate all site collections, find lists using the Events base template (106), and apply the migration script to each one in a loop. Build in tenant throttling protection (pause between sites) and log successes and failures to a CSV for post-run review."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I roll back if the classic calendar migration causes issues?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the migration only adds a new view and does not modify list data, rollback is straightforward — delete the new modern view and restore the original Classic view as the default. Run Remove-PnPView targeting the newly created view name. Existing items are completely unaffected."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Classic Calendar to Modern View",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-classic-calendar-to-modern-view"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -236,6 +225,8 @@
         <span class="art-tag">Admin &amp; Automation</span>
         <span class="art-date">May 27, 2026</span>
         <span class="art-read">16 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">A lot of SharePoint teams still run important scheduling workflows on classic calendar lists. The list itself may be stable, but the user experience is usually not: classic rendering behaves differently across browsers, responsive behavior is weak, and long-term support confidence is lower than modern list experiences. If your objective is to preserve calendar data while giving users a cleaner modern view, you do not need to rebuild everything from scratch. In many cases you can add a modern-friendly list view and set it as default, while retaining the original view for fallback.</p>
@@ -701,7 +692,7 @@ Write-Host "Calendar view created."
         <a href="/contact" class="btn btn-primary">Book a SharePoint Modernization Session</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -817,6 +808,7 @@ Write-Host "Calendar view created."
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

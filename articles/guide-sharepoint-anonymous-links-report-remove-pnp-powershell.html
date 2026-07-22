@@ -43,104 +43,103 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell#article",
-        "headline": "Report and Remove Anonymous Sharing Links with PnP PowerShell",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell"
-        },
-        "datePublished": "2026-06-12",
-        "dateModified": "2026-06-12",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
-        },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "How to safely report and optionally remove Anyone links in SharePoint Online and OneDrive with PnP PowerShell.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
-        }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell#article",
+      "headline": "Report and Remove Anonymous Sharing Links with PnP PowerShell",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What are anonymous (Anyone) links in SharePoint and why are they risky?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Anonymous links (also called Anyone links) give access to a SharePoint file or folder to anyone with the link \u2014 no sign-in required. Once shared, the link can be forwarded to anyone outside your organisation without any audit trail. If the link is posted publicly or forwarded to the wrong person, the content is exposed with no access controls."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I find all anonymous links across a SharePoint tenant?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use the SharePoint admin center's Active sites > Sharing report for a high-level view, or use PnP PowerShell with Get-PnPListItem and Get-PnPFileSharingLink to enumerate sharing links across all site collections. The OceanCloud anonymous links script automates tenant-wide enumeration and exports results to CSV."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I remove anonymous links without affecting other share permissions?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Removing an anonymous sharing link only revokes the Anyone link access \u2014 it does not remove permissions for users who were added directly (Specific People links) or Microsoft 365 group members. Use Revoke-PnPFileSharingLink with the specific link ID to target only anonymous links."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I prevent anonymous links from being created in SharePoint?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "In the SharePoint admin center, go to Policies > Sharing and set the external sharing level to 'New and existing guests' or lower. Set the default sharing link type to 'Specific people' rather than 'Anyone'. You can also set expiry dates on Anyone links at the tenant level under the 'Advanced settings for external sharing' section."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Will disabling anonymous links break existing shared documents?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes \u2014 anyone who has an existing Anyone link will lose access when you disable or remove it. Before bulk removal, identify links that are actively used (check the SharePoint admin sharing activity report) and notify document owners. Give users 2\u20134 weeks notice and a process to reshare via Specific People links before revoking existing anonymous links."
-            }
-          }
-        ]
+      "datePublished": "2026-06-12",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Anonymous Links Report and Remove",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell"
-          }
-        ]
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "How to safely report and optionally remove Anyone links in SharePoint Online and OneDrive with PnP PowerShell.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are anonymous (Anyone) links in SharePoint and why are they risky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anonymous links (also called Anyone links) give access to a SharePoint file or folder to anyone with the link — no sign-in required. Once shared, the link can be forwarded to anyone outside your organisation without any audit trail. If the link is posted publicly or forwarded to the wrong person, the content is exposed with no access controls."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find all anonymous links across a SharePoint tenant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the SharePoint admin center's Active sites > Sharing report for a high-level view, or use PnP PowerShell with Get-PnPListItem and Get-PnPFileSharingLink to enumerate sharing links across all site collections. The OceanCloud anonymous links script automates tenant-wide enumeration and exports results to CSV."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I remove anonymous links without affecting other share permissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Removing an anonymous sharing link only revokes the Anyone link access — it does not remove permissions for users who were added directly (Specific People links) or Microsoft 365 group members. Use Revoke-PnPFileSharingLink with the specific link ID to target only anonymous links."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent anonymous links from being created in SharePoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the SharePoint admin center, go to Policies > Sharing and set the external sharing level to 'New and existing guests' or lower. Set the default sharing link type to 'Specific people' rather than 'Anyone'. You can also set expiry dates on Anyone links at the tenant level under the 'Advanced settings for external sharing' section."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will disabling anonymous links break existing shared documents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — anyone who has an existing Anyone link will lose access when you disable or remove it. Before bulk removal, identify links that are actively used (check the SharePoint admin sharing activity report) and notify document owners. Give users 2–4 weeks notice and a process to reshare via Specific People links before revoking existing anonymous links."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Anonymous Links Report and Remove",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-anonymous-links-report-remove-pnp-powershell"
+        }
+      ]
+    }
+  ]
+}
   </script>
 
   <style>
@@ -262,6 +261,8 @@
         <span class="art-tag">Admin &amp; Automation</span>
         <span class="art-date">June 12, 2026</span>
         <span class="art-read">12 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">This guide walks you through running <code>AnonymousLinks_Report_And_Remove.ps1</code> safely in production. You will start in report-only mode, validate results, and only then enable removal if needed.</p>
@@ -358,7 +359,7 @@ $WhatIfRemoval = $false        # Preview only in Remove mode</pre></div>
 
       <div class="art-callout warning"><p><strong>Scope reminder:</strong> according to script notes and PnP behavior, removal cmdlets target file/folder sharing links. List-item link removal is not covered by these commands.</p></div>
 
-      
+
 
 
             <h2 id="full-script">Complete script (full copy)</h2>
@@ -1245,7 +1246,7 @@ finally {
 </pre></div>
     </details>
 
-    
+
 <h2>Understanding output actions</h2>
       <div class="art-table-wrap"><table class="art-table">
         <thead><tr><th>Action</th><th>Meaning</th></tr></thead>
@@ -1270,7 +1271,7 @@ finally {
         <a href="/contact" class="btn btn-primary">Book a Governance Review</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -1386,6 +1387,7 @@ finally {
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

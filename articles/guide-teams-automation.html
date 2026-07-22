@@ -43,147 +43,136 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-teams-automation#article",
-        "headline": "5 Microsoft Teams Automations That Save Hours Every Week",
-        "url": "https://oceancloudconsults.com/articles/guide-teams-automation",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-teams-automation#article",
+      "headline": "5 Microsoft Teams Automations That Save Hours Every Week",
+      "url": "https://oceancloudconsults.com/articles/guide-teams-automation",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-teams-automation"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Five Power Automate flows integrated with Microsoft Teams — meeting action items, Adaptive Card approvals, new member welcome, keyword monitoring, weekly digest.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Microsoft Teams automation",
+        "Power Automate Teams",
+        "Adaptive Cards Teams",
+        "Teams workflows"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-teams-automation"
+          "url": "https://adaptivecards.io",
+          "name": "Adaptive Cards — adaptivecards.io"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-automate/create-adaptive-cards",
+          "name": "Create Adaptive Cards in Power Automate"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Five Power Automate flows integrated with Microsoft Teams — meeting action items, Adaptive Card approvals, new member welcome, keyword monitoring, weekly digest.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Microsoft Teams automation",
-          "Power Automate Teams",
-          "Adaptive Cards Teams",
-          "Teams workflows"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://adaptivecards.io",
-            "name": "Adaptive Cards — adaptivecards.io"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-automate/create-adaptive-cards",
-            "name": "Create Adaptive Cards in Power Automate"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference",
-            "name": "Microsoft Teams cards reference"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference",
+          "name": "Microsoft Teams cards reference"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-teams-automation#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What can Power Automate automate in Microsoft Teams?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Power Automate can post adaptive card messages to channels, create Planner tasks from meeting action items, send approval requests inside Teams, trigger welcome messages for new members, monitor keywords in conversations, and send weekly digest cards \u2014 all without any custom development."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do Teams automations require a premium Power Automate licence?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Most Teams automations use standard connectors (Teams, Planner, SharePoint, Outlook) which are included in Microsoft 365 business licences. Premium connectors like HTTP requests or third-party SaaS integrations require a Power Automate Premium (formerly Per-User) plan."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I send an adaptive card to a Teams channel from Power Automate?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use the 'Post adaptive card in a chat or channel' action in the Teams connector. You provide the team and channel, then paste in your adaptive card JSON. Use the Adaptive Cards designer at adaptivecards.io to build the card visually, then copy the JSON into Power Automate."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can Teams automations respond to specific keywords in messages?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Use the 'When a new channel message is added' trigger, then add a Condition action that checks if the message body contains your keyword. Because Teams stores message content as HTML, use a 'contains' check on the body/content field, not an exact match."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the most reliable way to create Planner tasks from Teams meetings?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use the 'When a Teams meeting ends' trigger (requires Teams Premium or Meeting Recording connector), then parse the meeting transcript or action items with an AI action, and create Planner tasks via the Planner connector. For simpler setups without Teams Premium, use a post-meeting form or an approval step that extracts actions manually."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Teams Automation Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-teams-automation"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-teams-automation#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What can Power Automate automate in Microsoft Teams?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Power Automate can post adaptive card messages to channels, create Planner tasks from meeting action items, send approval requests inside Teams, trigger welcome messages for new members, monitor keywords in conversations, and send weekly digest cards — all without any custom development."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do Teams automations require a premium Power Automate licence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most Teams automations use standard connectors (Teams, Planner, SharePoint, Outlook) which are included in Microsoft 365 business licences. Premium connectors like HTTP requests or third-party SaaS integrations require a Power Automate Premium (formerly Per-User) plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I send an adaptive card to a Teams channel from Power Automate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the 'Post adaptive card in a chat or channel' action in the Teams connector. You provide the team and channel, then paste in your adaptive card JSON. Use the Adaptive Cards designer at adaptivecards.io to build the card visually, then copy the JSON into Power Automate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Teams automations respond to specific keywords in messages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Use the 'When a new channel message is added' trigger, then add a Condition action that checks if the message body contains your keyword. Because Teams stores message content as HTML, use a 'contains' check on the body/content field, not an exact match."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the most reliable way to create Planner tasks from Teams meetings?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the 'When a Teams meeting ends' trigger (requires Teams Premium or Meeting Recording connector), then parse the meeting transcript or action items with an AI action, and create Planner tasks via the Planner connector. For simpler setups without Teams Premium, use a post-meeting form or an approval step that extracts actions manually."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Teams Automation Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-teams-automation"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -278,6 +267,8 @@
         <span class="art-tag">Teams</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">9 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">Microsoft Teams is where most M365 organisations do their daily work. But Teams alone is a passive communication tool — it records what happened, not what needs to happen next. Power Automate bridges that gap, turning Teams conversations, messages, and meetings into structured actions without requiring anyone to copy things between systems. Here are five automations that have the highest impact-to-effort ratio for most teams, with step-by-step implementation guidance.</p>
@@ -462,7 +453,7 @@
         <a href="/contact" class="btn btn-primary">Discuss Your Automation Needs</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -577,6 +568,7 @@
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

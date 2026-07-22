@@ -43,163 +43,152 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar#article",
-        "headline": "New SharePoint Experience (App Bar Redesign) Guide",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar#article",
+      "headline": "New SharePoint Experience (App Bar Redesign) Guide",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar"
+      },
+      "datePublished": "2026-07-08",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "A practical guide to Microsoft 365 Message Center MC1240699: the redesigned SharePoint app bar (Discover, Publish, Build), neutral app theming, the rollout timeline, and an admin readiness plan.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "MC1240699",
+        "New SharePoint experience",
+        "SharePoint app bar",
+        "SharePoint Discover Publish Build",
+        "SharePoint 2026 rollout"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar"
+          "url": "https://learn.microsoft.com/en-us/sharepoint/enable-new-sharepoint-experience",
+          "name": "New SharePoint experience - SharePoint in Microsoft 365"
         },
-        "datePublished": "2026-07-08",
-        "dateModified": "2026-07-08",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://support.microsoft.com/office/e568387f-bfef-41cf-8dc0-e1fdc5c08c73",
+          "name": "About the SharePoint app bar"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
+        {
+          "@type": "WebPage",
+          "url": "https://support.microsoft.com/office/0b6cfbb0-5523-41d9-bc89-4f719f05fd51",
+          "name": "Discover in SharePoint"
         },
-        "description": "A practical guide to Microsoft 365 Message Center MC1240699: the redesigned SharePoint app bar (Discover, Publish, Build), neutral app theming, the rollout timeline, and an admin readiness plan.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "MC1240699",
-          "New SharePoint experience",
-          "SharePoint app bar",
-          "SharePoint Discover Publish Build",
-          "SharePoint 2026 rollout"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/enable-new-sharepoint-experience",
-            "name": "New SharePoint experience - SharePoint in Microsoft 365"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://support.microsoft.com/office/e568387f-bfef-41cf-8dc0-e1fdc5c08c73",
-            "name": "About the SharePoint app bar"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://support.microsoft.com/office/0b6cfbb0-5523-41d9-bc89-4f719f05fd51",
-            "name": "Discover in SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://support.microsoft.com/office/11d2b61d-7c25-4d7d-94cf-0abe66fb2936",
-            "name": "Publish in SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://support.microsoft.com/office/cb17406a-59ea-488a-beb5-f8160af3ecb5",
-            "name": "Build in SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/viva/connections/sharepoint-app-bar",
-            "name": "Global navigation in the SharePoint app bar"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://support.microsoft.com/office/11d2b61d-7c25-4d7d-94cf-0abe66fb2936",
+          "name": "Publish in SharePoint"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://support.microsoft.com/office/cb17406a-59ea-488a-beb5-f8160af3ecb5",
+          "name": "Build in SharePoint"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/viva/connections/sharepoint-app-bar",
+          "name": "Global navigation in the SharePoint app bar"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is MC1240699 and what does it change in SharePoint?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "MC1240699 introduces a redesigned SharePoint app bar and start page. The classic start page is replaced by a Discover experience, and the app bar gains two new destinations, Publish and Build, alongside a neutral visual theme applied across SharePoint surfaces including SPFx web part placeholders."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can we still opt out of the new SharePoint experience?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Only during the preview phase, and Microsoft's own documentation confirms public preview concluded on May 4, 2026. The app bar's toggle back to the classic experience was available only during that preview window. Once a tenant reaches standard release, there is no admin or user setting left to restore the old app bar."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What happens to custom SPFx web parts and branding?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Neutral app theming applies a consistent, neutral palette across SharePoint UI surfaces, including SPFx placeholders, to keep content and branding visually forward. Custom web parts that hard-coded colors matching the old chrome, or branding that depended on specific background tones, should be visually reviewed before rollout reaches your tenant."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does the new experience affect permissions or content?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. This is a navigation, start-page, and visual theming change. It does not alter site permissions, content, sharing settings, or site structure. Followed Sites is renamed Favorite Sites, and Saved for Later for pages and news is renamed Favorites, but the underlying data is preserved."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What should we do before our tenant reaches standard release?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Enable the preview in a test tenant or pilot group first, screenshot the new Discover, Publish, and Build destinations for a help-desk runbook, visually audit key SPFx web parts and Home site branding, and confirm whether global navigation is configured on your Home site so it appears correctly in the new app bar."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "New SharePoint Experience Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar"
-          }
-        ]
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is MC1240699 and what does it change in SharePoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MC1240699 introduces a redesigned SharePoint app bar and start page. The classic start page is replaced by a Discover experience, and the app bar gains two new destinations, Publish and Build, alongside a neutral visual theme applied across SharePoint surfaces including SPFx web part placeholders."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can we still opt out of the new SharePoint experience?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only during the preview phase, and Microsoft's own documentation confirms public preview concluded on May 4, 2026. The app bar's toggle back to the classic experience was available only during that preview window. Once a tenant reaches standard release, there is no admin or user setting left to restore the old app bar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to custom SPFx web parts and branding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Neutral app theming applies a consistent, neutral palette across SharePoint UI surfaces, including SPFx placeholders, to keep content and branding visually forward. Custom web parts that hard-coded colors matching the old chrome, or branding that depended on specific background tones, should be visually reviewed before rollout reaches your tenant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the new experience affect permissions or content?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. This is a navigation, start-page, and visual theming change. It does not alter site permissions, content, sharing settings, or site structure. Followed Sites is renamed Favorite Sites, and Saved for Later for pages and news is renamed Favorites, but the underlying data is preserved."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should we do before our tenant reaches standard release?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enable the preview in a test tenant or pilot group first, screenshot the new Discover, Publish, and Build destinations for a help-desk runbook, visually audit key SPFx web parts and Home site branding, and confirm whether global navigation is configured on your Home site so it appears correctly in the new app bar."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "New SharePoint Experience Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-new-experience-app-bar"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -300,6 +289,8 @@
         <span class="art-tag">SharePoint</span>
         <span class="art-date">July 8, 2026</span>
         <span class="art-read">16 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <ul class="quick-points-source">
@@ -689,7 +680,7 @@ contact &lt;support mailbox&gt; with a screenshot.</pre>
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Guides</h4>

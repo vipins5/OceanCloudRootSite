@@ -43,149 +43,138 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations#article",
-        "headline": "SharePoint Integration Guide: Teams, Power BI, Salesforce, ServiceNow and Dynamics 365",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations#article",
+      "headline": "SharePoint Integration Guide: Teams, Power BI, Salesforce, ServiceNow and Dynamics 365",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Learn SharePoint integration patterns for Teams, Power BI, Salesforce, ServiceNow, and Dynamics 365 with connector and architecture choices.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint integration",
+        "SharePoint Teams integration",
+        "SharePoint Power BI",
+        "SharePoint Salesforce",
+        "SharePoint ServiceNow",
+        "SharePoint Dynamics 365"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations"
+          "url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
+          "name": "Teams-connected sites in SharePoint"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-embed-report-spo",
+          "name": "Embed a Power BI report in SharePoint"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Learn SharePoint integration patterns for Teams, Power BI, Salesforce, ServiceNow, and Dynamics 365 with connector and architecture choices.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint integration",
-          "SharePoint Teams integration",
-          "SharePoint Power BI",
-          "SharePoint Salesforce",
-          "SharePoint ServiceNow",
-          "SharePoint Dynamics 365"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/teams-connected-sites",
-            "name": "Teams-connected sites in SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-embed-report-spo",
-            "name": "Embed a Power BI report in SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-platform/admin/set-up-sharepoint-integration",
-            "name": "Set up SharePoint integration for customer engagement apps"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-platform/admin/set-up-sharepoint-integration",
+          "name": "Set up SharePoint integration for customer engagement apps"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What are the main ways to integrate SharePoint with other business systems?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The four main integration approaches are: Power Automate for no-code event-driven flows, Microsoft Graph API for programmatic read/write access, SharePoint webhooks for real-time change notifications to external systems, and embedded web parts or iFrames for surfacing external app content inside SharePoint pages."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can SharePoint integrate with Salesforce or Dynamics 365?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Power Automate has certified connectors for both Salesforce and Dynamics 365. You can sync records between SharePoint lists and CRM, trigger document creation in SharePoint from CRM events, or attach SharePoint documents to CRM records. Microsoft Dynamics 365 also has native SharePoint document management integration built in."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Microsoft Graph and why does it matter for SharePoint integrations?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft Graph is the unified API endpoint for all Microsoft 365 services. For SharePoint, it exposes sites, lists, drives (document libraries), pages, permissions, and search. Any integration that needs to read or write SharePoint data programmatically \u2014 from a web app, Azure Function, or external system \u2014 goes through Graph."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do SharePoint integrations require an Azure subscription?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Not always. Power Automate integrations run entirely within Microsoft 365 with no Azure dependency. Microsoft Graph API calls can be made from any platform using app registrations in Microsoft Entra ID. Azure is only required for hosting custom code such as Azure Functions, Logic Apps, or Azure API Management."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I keep SharePoint data in sync with an external database?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use Power Automate with the 'When an item is created or modified' SharePoint trigger to push changes to an external system via an HTTP action or connector. For two-way sync, pair this with a scheduled flow (Recurrence trigger) that polls the external system and updates SharePoint. For high-volume scenarios, use Azure Logic Apps with retry policies and dead-letter queuing."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Integrations Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the main ways to integrate SharePoint with other business systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The four main integration approaches are: Power Automate for no-code event-driven flows, Microsoft Graph API for programmatic read/write access, SharePoint webhooks for real-time change notifications to external systems, and embedded web parts or iFrames for surfacing external app content inside SharePoint pages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can SharePoint integrate with Salesforce or Dynamics 365?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Power Automate has certified connectors for both Salesforce and Dynamics 365. You can sync records between SharePoint lists and CRM, trigger document creation in SharePoint from CRM events, or attach SharePoint documents to CRM records. Microsoft Dynamics 365 also has native SharePoint document management integration built in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Microsoft Graph and why does it matter for SharePoint integrations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft Graph is the unified API endpoint for all Microsoft 365 services. For SharePoint, it exposes sites, lists, drives (document libraries), pages, permissions, and search. Any integration that needs to read or write SharePoint data programmatically — from a web app, Azure Function, or external system — goes through Graph."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do SharePoint integrations require an Azure subscription?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not always. Power Automate integrations run entirely within Microsoft 365 with no Azure dependency. Microsoft Graph API calls can be made from any platform using app registrations in Microsoft Entra ID. Azure is only required for hosting custom code such as Azure Functions, Logic Apps, or Azure API Management."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I keep SharePoint data in sync with an external database?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use Power Automate with the 'When an item is created or modified' SharePoint trigger to push changes to an external system via an HTTP action or connector. For two-way sync, pair this with a scheduled flow (Recurrence trigger) that polls the external system and updates SharePoint. For high-volume scenarios, use Azure Logic Apps with retry policies and dead-letter queuing."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Integrations Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-integrations"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -278,6 +267,8 @@
         <span class="art-tag">Integration</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">11 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">SharePoint works best not as a standalone document management system, but as the connective tissue between the tools your organisation runs on. Its native integrations with Microsoft Teams and Power BI are deep and built-in. Its integrations with Salesforce, ServiceNow, and Dynamics 365 are powerful but require planning. This guide covers all five — what each integration does, how to implement it, and the gotchas to avoid.</p>
@@ -434,7 +425,7 @@
         <a href="/contact" class="btn btn-primary">Discuss Your Integration</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -549,6 +540,7 @@
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>
