@@ -43,203 +43,200 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#article",
-        "headline": "How to Build a SharePoint Approval Workflow with Power Automate",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#article",
+      "headline": "How to Build a SharePoint Approval Workflow with Power Automate",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint approval workflow",
+        "Power Automate approval",
+        "SharePoint document approval",
+        "Power Automate SharePoint"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow"
+          "url": "https://learn.microsoft.com/en-us/power-automate/approve-reject-requests",
+          "name": "Manage approval requests in Power Automate"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-automate/create-approval-response-options",
+          "name": "Create custom approval response options"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Configure the approval action, handle approve/reject responses, send notifications, and automatically update SharePoint item status — a complete build guide.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint approval workflow",
-          "Power Automate approval",
-          "SharePoint document approval",
-          "Power Automate SharePoint"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-automate/approve-reject-requests",
-            "name": "Manage approval requests in Power Automate"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-automate/create-approval-response-options",
-            "name": "Create custom approval response options"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-automate/modern-approvals",
-            "name": "Create and test an approval workflow"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-automate/modern-approvals",
+          "name": "Create and test an approval workflow"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How do I build a SharePoint document approval workflow in Power Automate?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Create a flow triggered by 'When a file is created or modified' on your SharePoint library. Add a 'Start and wait for an approval' action, configure the approver, subject, and item link. Then use a Condition to check if the outcome is 'Approve' or 'Reject', and update a Status column in SharePoint with the result."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I send approval requests in Microsoft Teams instead of email?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. In the 'Start and wait for an approval' action, set the approval type to 'Approve/Reject - First to respond' or 'Custom responses'. Use the Teams connector to post the approval card. Approvers receive an actionable card directly in Teams and can approve without leaving the app."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What happens if an approver does not respond to a SharePoint approval request?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Without a timeout, the approval waits indefinitely. Add a 'Start and wait for an approval' action inside a 'Do until' loop with a timeout expression, or use the built-in 'Request options' to set an expiry duration. When the timeout fires, update the document status to 'Escalated' or 'Timed Out' and notify the approver's manager."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I update a SharePoint column after a document is approved or rejected?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "After the approval action returns, use a Condition to check the outcome value. In each branch, add an 'Update file properties' action targeting the same library item. Use the 'ID' from the trigger output to identify the correct item, and set your Status, Approval Date, or Approver Name columns accordingly."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I track SharePoint approval history for compliance?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Power Automate provides the full approval history (approver, response, date, comments) in the approval action outputs. Log this to a separate SharePoint list using a 'Create item' action, or use the built-in Microsoft 365 Compliance features to retain approval records in the audit log."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "HowTo",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#howto",
-        "name": "How to Build a SharePoint Approval Workflow with Power Automate",
-        "description": "Configure a document approval flow triggered from SharePoint, route to approvers via email or Teams, update item status on approval or rejection, and handle timeouts.",
-        "tool": [
-          { "@type": "HowToTool", "name": "Microsoft Power Automate" },
-          { "@type": "HowToTool", "name": "SharePoint Online" },
-          { "@type": "HowToTool", "name": "Microsoft Teams" }
-        ],
-        "step": [
-          {
-            "@type": "HowToStep",
-            "position": 1,
-            "name": "Create the SharePoint Status column",
-            "text": "Add a Choice column named 'Approval Status' to your document library with values: Pending, Approved, Rejected. This column will be updated by the flow."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 2,
-            "name": "Create a new automated cloud flow",
-            "text": "In Power Automate, create an automated flow using the trigger 'When a file is created or modified (properties only)' pointing to your SharePoint library."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 3,
-            "name": "Add the Start and wait for an approval action",
-            "text": "Add the 'Start and wait for an approval' action. Set type to Approve/Reject, assign the approver(s), write a meaningful title and include the file URL in the details."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 4,
-            "name": "Add a Condition to check the approval outcome",
-            "text": "After the approval action, add a Condition checking if Outcome equals 'Approve'. Branch into Yes (Approved) and No (Rejected) paths."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 5,
-            "name": "Update SharePoint item status in both branches",
-            "text": "In the Yes branch, use 'Update file properties' to set Approval Status to Approved. In the No branch, set it to Rejected. Include approver comments where relevant."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 6,
-            "name": "Send notification emails to the document author",
-            "text": "Add a 'Send an email (V2)' action in each branch to notify the original submitter of the approval outcome with the approver's comments."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 7,
-            "name": "Test the flow with a sample document",
-            "text": "Upload a test document to the library. Verify the approval request arrives, respond, and confirm the SharePoint item status updates correctly."
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Approval Workflow Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I build a SharePoint document approval workflow in Power Automate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Create a flow triggered by 'When a file is created or modified' on your SharePoint library. Add a 'Start and wait for an approval' action, configure the approver, subject, and item link. Then use a Condition to check if the outcome is 'Approve' or 'Reject', and update a Status column in SharePoint with the result."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I send approval requests in Microsoft Teams instead of email?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. In the 'Start and wait for an approval' action, set the approval type to 'Approve/Reject - First to respond' or 'Custom responses'. Use the Teams connector to post the approval card. Approvers receive an actionable card directly in Teams and can approve without leaving the app."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if an approver does not respond to a SharePoint approval request?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Without a timeout, the approval waits indefinitely. Add a 'Start and wait for an approval' action inside a 'Do until' loop with a timeout expression, or use the built-in 'Request options' to set an expiry duration. When the timeout fires, update the document status to 'Escalated' or 'Timed Out' and notify the approver's manager."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I update a SharePoint column after a document is approved or rejected?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "After the approval action returns, use a Condition to check the outcome value. In each branch, add an 'Update file properties' action targeting the same library item. Use the 'ID' from the trigger output to identify the correct item, and set your Status, Approval Date, or Approver Name columns accordingly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I track SharePoint approval history for compliance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Power Automate provides the full approval history (approver, response, date, comments) in the approval action outputs. Log this to a separate SharePoint list using a 'Create item' action, or use the built-in Microsoft 365 Compliance features to retain approval records in the audit log."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow#howto",
+      "name": "How to Build a SharePoint Approval Workflow with Power Automate",
+      "description": "Configure a document approval flow triggered from SharePoint, route to approvers via email or Teams, update item status on approval or rejection, and handle timeouts.",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Microsoft Power Automate"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "SharePoint Online"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "Microsoft Teams"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Create the SharePoint Status column",
+          "text": "Add a Choice column named 'Approval Status' to your document library with values: Pending, Approved, Rejected. This column will be updated by the flow."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Create a new automated cloud flow",
+          "text": "In Power Automate, create an automated flow using the trigger 'When a file is created or modified (properties only)' pointing to your SharePoint library."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Add the Start and wait for an approval action",
+          "text": "Add the 'Start and wait for an approval' action. Set type to Approve/Reject, assign the approver(s), write a meaningful title and include the file URL in the details."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Add a Condition to check the approval outcome",
+          "text": "After the approval action, add a Condition checking if Outcome equals 'Approve'. Branch into Yes (Approved) and No (Rejected) paths."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Update SharePoint item status in both branches",
+          "text": "In the Yes branch, use 'Update file properties' to set Approval Status to Approved. In the No branch, set it to Rejected. Include approver comments where relevant."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Send notification emails to the document author",
+          "text": "Add a 'Send an email (V2)' action in each branch to notify the original submitter of the approval outcome with the approver's comments."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Test the flow with a sample document",
+          "text": "Upload a test document to the library. Verify the approval request arrives, respond, and confirm the SharePoint item status updates correctly."
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Approval Workflow Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-approval-workflow"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -343,6 +340,8 @@
         <span class="art-tag">Power Platform</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">10 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">SharePoint approval workflows are one of the most requested Power Automate builds — and one of the most commonly built incorrectly. Developers skip the status column, forget the rejection branch, or build flows that break when the approver is out of office. This guide builds a complete, production-ready SharePoint document approval workflow from scratch, covering every step from list setup through edge-case handling.</p>
@@ -524,7 +523,7 @@
         <a href="/contact" class="btn btn-primary">Get a Free Workflow Review</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -640,6 +639,7 @@
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

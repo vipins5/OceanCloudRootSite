@@ -43,210 +43,207 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#article",
-        "headline": "The 10-Step Microsoft 365 Migration Checklist for a Smooth Transition",
-        "url": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist"
-        },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
-        },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "A practical 10-step checklist for a smooth Microsoft 365 migration covering discovery, architecture, identity, pilot, cutover, and post-migration validation.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Microsoft 365 migration",
-          "M365 migration checklist",
-          "SharePoint migration",
-          "Office 365 migration"
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
-        }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#article",
+      "headline": "The 10-Step Microsoft 365 Migration Checklist for a Smooth Transition",
+      "url": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How long does a Microsoft 365 migration take?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A basic mailbox-only migration for a 50-user organisation can take 2\u20134 weeks. A full migration including SharePoint, OneDrive, Teams, and hybrid Exchange typically takes 8\u201316 weeks. Enterprise migrations above 1,000 users are usually 6\u201312 month programmes with phased cutover."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What data cannot be migrated to Microsoft 365 automatically?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SharePoint Designer workflow history, InfoPath forms, custom list views with complex XSL, SharePoint 2010/2013 custom solution packages (.wsp), and third-party app data stored in SharePoint's app catalog all require manual reconstruction rather than migration. Legacy calendar overlays and publishing page layouts also require rebuild."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do I need to run a parallel environment during Microsoft 365 migration?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For email migrations, yes \u2014 a hybrid Exchange configuration lets you run on-premises and Exchange Online simultaneously with full mailflow. For SharePoint, parallel environments are optional but recommended for a validation window. For Teams, most organisations cut over by tenant with no parallel running period."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the most common Microsoft 365 migration mistake?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Migrating without first cleaning up the source environment. Migrating stale content, obsolete sites, outdated distribution lists, and expired licences increases project cost and creates a cluttered destination. A pre-migration clean-up of unused mailboxes, sites older than 2 years, and large personal drives typically saves 20\u201340% of migration effort."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Which migration tool should I use for SharePoint Online?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft's SharePoint Migration Tool (SPMT) is free and handles on-premises SharePoint and file share migrations. Mover (also free, bundled in M365 admin center) handles Google Workspace, Box, and Dropbox. For complex enterprise migrations, third-party tools like ShareGate, Sharegate, or AvePoint offer reporting, scheduling, and incremental sync features."
-            }
-          }
-        ]
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "HowTo",
-        "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#howto",
-        "name": "How to Migrate to Microsoft 365 in 10 Steps",
-        "description": "A practical, field-tested process for moving your organisation to Microsoft 365 without data loss, downtime, or adoption failure.",
-        "totalTime": "P8W",
-        "estimatedCost": {
-          "@type": "MonetaryAmount",
-          "currency": "USD",
-          "value": "0"
-        },
-        "tool": [
-          { "@type": "HowToTool", "name": "SharePoint Migration Tool (SPMT)" },
-          { "@type": "HowToTool", "name": "Microsoft 365 Admin Center" },
-          { "@type": "HowToTool", "name": "Microsoft Entra ID" }
-        ],
-        "step": [
-          {
-            "@type": "HowToStep",
-            "position": 1,
-            "name": "Inventory your current environment",
-            "text": "Document total data volume, number of users and licences, active applications, integrations with third-party systems, and custom workflows."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 2,
-            "name": "Clean up before you migrate",
-            "text": "Delete stale content, duplicate files, and obsolete accounts. Most organisations reduce their data footprint by 20–40% before migration."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 3,
-            "name": "Design your Microsoft 365 architecture",
-            "text": "Map out the target state: Teams workspaces vs SharePoint communication sites, OneDrive for personal drives, hub site hierarchy, and naming conventions."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 4,
-            "name": "Configure your Microsoft 365 tenant",
-            "text": "Set up tenant-level sharing and security settings, deploy DLP policies via Purview, set retention labels, enable MFA, and configure conditional access policies."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 5,
-            "name": "Set up identity and access management",
-            "text": "Provision all users in Microsoft Entra ID with the right licences. Enable self-service password reset and MFA enforcement before content moves."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 6,
-            "name": "Run a pilot migration with a test group",
-            "text": "Select 10–30 representative users and migrate their content first to surface issues with permissions mapping, metadata, and sync behaviour."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 7,
-            "name": "Train your users before cutover",
-            "text": "Create role-based training paths for basic users, power users, and managers. Users trained before cutover adapt 3× faster than those trained reactively."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 8,
-            "name": "Execute the migration in waves",
-            "text": "Use Microsoft SPMT for file shares and SharePoint. Use built-in Exchange tools for email. Migrate department by department for more manageable rollouts."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 9,
-            "name": "Validate and reconcile",
-            "text": "Verify file counts, permissions, version history, and metadata against source. Run a validation checklist on a random 5% sample before decommissioning the source."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 10,
-            "name": "Decommission and establish governance",
-            "text": "Retire the source system, then immediately establish governance: site ownership registry, guest access review schedule, and a process for new Teams and SharePoint requests."
-          }
-        ]
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
       },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "M365 Migration Checklist",
-            "item": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      "description": "A practical 10-step checklist for a smooth Microsoft 365 migration covering discovery, architecture, identity, pilot, cutover, and post-migration validation.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Microsoft 365 migration",
+        "M365 migration checklist",
+        "SharePoint migration",
+        "Office 365 migration"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long does a Microsoft 365 migration take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A basic mailbox-only migration for a 50-user organisation can take 2–4 weeks. A full migration including SharePoint, OneDrive, Teams, and hybrid Exchange typically takes 8–16 weeks. Enterprise migrations above 1,000 users are usually 6–12 month programmes with phased cutover."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What data cannot be migrated to Microsoft 365 automatically?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SharePoint Designer workflow history, InfoPath forms, custom list views with complex XSL, SharePoint 2010/2013 custom solution packages (.wsp), and third-party app data stored in SharePoint's app catalog all require manual reconstruction rather than migration. Legacy calendar overlays and publishing page layouts also require rebuild."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to run a parallel environment during Microsoft 365 migration?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For email migrations, yes — a hybrid Exchange configuration lets you run on-premises and Exchange Online simultaneously with full mailflow. For SharePoint, parallel environments are optional but recommended for a validation window. For Teams, most organisations cut over by tenant with no parallel running period."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the most common Microsoft 365 migration mistake?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Migrating without first cleaning up the source environment. Migrating stale content, obsolete sites, outdated distribution lists, and expired licences increases project cost and creates a cluttered destination. A pre-migration clean-up of unused mailboxes, sites older than 2 years, and large personal drives typically saves 20–40% of migration effort."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which migration tool should I use for SharePoint Online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft's SharePoint Migration Tool (SPMT) is free and handles on-premises SharePoint and file share migrations. Mover (also free, bundled in M365 admin center) handles Google Workspace, Box, and Dropbox. For complex enterprise migrations, third-party tools like ShareGate, Sharegate, or AvePoint offer reporting, scheduling, and incremental sync features."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist#howto",
+      "name": "How to Migrate to Microsoft 365 in 10 Steps",
+      "description": "A practical, field-tested process for moving your organisation to Microsoft 365 without data loss, downtime, or adoption failure.",
+      "totalTime": "P8W",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": "0"
+      },
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "SharePoint Migration Tool (SPMT)"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "Microsoft 365 Admin Center"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "Microsoft Entra ID"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Inventory your current environment",
+          "text": "Document total data volume, number of users and licences, active applications, integrations with third-party systems, and custom workflows."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Clean up before you migrate",
+          "text": "Delete stale content, duplicate files, and obsolete accounts. Most organisations reduce their data footprint by 20–40% before migration."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Design your Microsoft 365 architecture",
+          "text": "Map out the target state: Teams workspaces vs SharePoint communication sites, OneDrive for personal drives, hub site hierarchy, and naming conventions."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Configure your Microsoft 365 tenant",
+          "text": "Set up tenant-level sharing and security settings, deploy DLP policies via Purview, set retention labels, enable MFA, and configure conditional access policies."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Set up identity and access management",
+          "text": "Provision all users in Microsoft Entra ID with the right licences. Enable self-service password reset and MFA enforcement before content moves."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Run a pilot migration with a test group",
+          "text": "Select 10–30 representative users and migrate their content first to surface issues with permissions mapping, metadata, and sync behaviour."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Train your users before cutover",
+          "text": "Create role-based training paths for basic users, power users, and managers. Users trained before cutover adapt 3× faster than those trained reactively."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 8,
+          "name": "Execute the migration in waves",
+          "text": "Use Microsoft SPMT for file shares and SharePoint. Use built-in Exchange tools for email. Migrate department by department for more manageable rollouts."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 9,
+          "name": "Validate and reconcile",
+          "text": "Verify file counts, permissions, version history, and metadata against source. Run a validation checklist on a random 5% sample before decommissioning the source."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 10,
+          "name": "Decommission and establish governance",
+          "text": "Retire the source system, then immediately establish governance: site ownership registry, guest access review schedule, and a process for new Teams and SharePoint requests."
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "M365 Migration Checklist",
+          "item": "https://oceancloudconsults.com/articles/guide-m365-migration-checklist"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -330,9 +327,11 @@
         <span class="art-tag">Migration</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">7 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
-      <p class="article-intro">A Microsoft 365 migration is not a file copy. Organisations that treat it like one end up with the same disorganised content they had before — now in the cloud, still unsearchable, with permissions nobody understands and users who resent the change. The ones that get it right treat migration as a transformation project. This checklist is built from 150+ migrations we've delivered over 12 years.</p>
+      <p class="article-intro">A Microsoft 365 migration is not a file copy. Organisations that treat it like one can reproduce the same disorganised content in the cloud, with unclear permissions and poor findability. A safer migration treats discovery, information architecture, governance, validation, and adoption as one programme.</p>
 
       <figure class="article-image">
         <img src="https://learn.microsoft.com/en-us/sharepointmigration/media/mm-flow-3box.png" alt="Microsoft migration manager diagram showing migration agents setup" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="854" height="272" />
@@ -442,11 +441,11 @@
 
       <div class="art-cta-box">
         <h3>Planning an M365 migration?</h3>
-        <p>We've delivered 150+ migrations ranging from 20-user SMBs to 2,000-user enterprises. Start with a free 60-minute scoping call — we'll assess your current environment and give you an honest timeline and cost estimate.</p>
+        <p>Start with a free 60-minute scoping call. We will review the information you provide about the source environment, workloads, risks, and constraints, then outline a proposed assessment path and written estimate.</p>
         <a href="/contact" class="btn-primary">Book a Free Scoping Call &#8594;</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -516,7 +515,12 @@
         </div>
       </div>
 
-      <div class="related-section">
+
+      <div class="art-callout" data-recovery-path="true">
+        <p><strong>Implementation path:</strong> Translate the checklist into workload waves, acceptance criteria, rollback decisions, and post-cutover evidence. <a href="/microsoft-365-migration">Microsoft 365 migration services &rarr;</a></p>
+      </div>
+
+<div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
           <a href="/articles/guide-sharepoint-pnp-site-migration" class="related-card">Sharepoint Pnp Site Migration</a>
@@ -558,7 +562,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
@@ -574,6 +578,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
           <li><a href="/case-studies">Case Studies</a></li>
           <li><a href="/news">News &amp; Updates</a></li>
           <li><a href="/guides">Guides &amp; Tips</a></li>

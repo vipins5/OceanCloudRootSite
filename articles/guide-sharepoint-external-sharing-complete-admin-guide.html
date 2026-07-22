@@ -43,136 +43,136 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#article",
-        "headline": "EnableAzureB2BIntegration: SharePoint External Sharing",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#article",
+      "headline": "EnableAzureB2BIntegration: SharePoint External Sharing",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
+      },
+      "datePublished": "2026-05-25",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Configure SharePoint external sharing and EnableAzureB2BIntegration with tenant, site, link, Entra B2B, and PowerShell audit checks.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
+          "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview",
+          "name": "Overview of external sharing in SharePoint and OneDrive"
         },
-        "datePublished": "2026-05-25",
-        "dateModified": "2026-07-13",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#organization"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off",
+          "name": "Manage sharing settings for SharePoint and OneDrive"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Configure SharePoint external sharing and EnableAzureB2BIntegration with tenant, site, link, Entra B2B, and PowerShell audit checks.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview",
-            "name": "Overview of external sharing in SharePoint and OneDrive"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off",
-            "name": "Manage sharing settings for SharePoint and OneDrive"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration",
-            "name": "SharePoint and OneDrive integration with Microsoft Entra B2B"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration",
+          "name": "SharePoint and OneDrive integration with Microsoft Entra B2B"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What external sharing levels does SharePoint Online support?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SharePoint Online offers four tenant-wide external sharing levels: Anyone (anonymous links), New and existing guests (authenticated guests), Existing guests only, and Only people in your organization. The tenant setting is the maximum allowed; each site can be configured to be equal to or more restrictive than the tenant."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between tenant-level and site-level sharing settings?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The tenant-level setting in the SharePoint admin center sets the upper limit for the whole organisation. The site-level setting applies to an individual site and can only be the same or more restrictive than the tenant. This lets you keep most of the tenant locked down while allowing broader sharing on specific collaboration sites."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Entra B2B integration for SharePoint external sharing?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Entra B2B integration routes SharePoint and OneDrive guest sharing through Microsoft Entra External ID instead of the legacy one-time passcode flow. Guests sign in with their own organisational or Microsoft account, so you get consistent identity, Conditional Access, and lifecycle management for external users across Microsoft 365."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I stop anonymous Anyone links in SharePoint?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Set the tenant or site external sharing level to \"New and existing guests\" or lower so Anyone links can no longer be created, and change the default sharing link type to \"Specific people\". For existing exposure, audit and remove current anonymous links — this can be automated with PnP PowerShell across all sites and OneDrive accounts."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I set an expiration date on external sharing links?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. You can require that Anyone links expire after a set number of days and restrict their permissions to view-only. You can also set guest access to expire automatically after a period of inactivity, prompting a re-review. These controls limit how long external access stays open without ongoing oversight."
-            }
-          }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint External Sharing",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
-          }
-        ]
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://oceancloudconsults.com/#organization",
-        "name": "OceanCloud",
-        "url": "https://oceancloudconsults.com/"
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What external sharing levels does SharePoint Online support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SharePoint Online offers four tenant-wide external sharing levels: Anyone (anonymous links), New and existing guests (authenticated guests), Existing guests only, and Only people in your organization. The tenant setting is the maximum allowed; each site can be configured to be equal to or more restrictive than the tenant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between tenant-level and site-level sharing settings?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tenant-level setting in the SharePoint admin center sets the upper limit for the whole organisation. The site-level setting applies to an individual site and can only be the same or more restrictive than the tenant. This lets you keep most of the tenant locked down while allowing broader sharing on specific collaboration sites."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Entra B2B integration for SharePoint external sharing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Entra B2B integration routes SharePoint and OneDrive guest sharing through Microsoft Entra External ID instead of the legacy one-time passcode flow. Guests sign in with their own organisational or Microsoft account, so you get consistent identity, Conditional Access, and lifecycle management for external users across Microsoft 365."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I stop anonymous Anyone links in SharePoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Set the tenant or site external sharing level to \"New and existing guests\" or lower so Anyone links can no longer be created, and change the default sharing link type to \"Specific people\". For existing exposure, audit and remove current anonymous links — this can be automated with PnP PowerShell across all sites and OneDrive accounts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I set an expiration date on external sharing links?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can require that Anyone links expire after a set number of days and restrict their permissions to view-only. You can also set guest access to expire automatically after a period of inactivity, prompting a re-review. These controls limit how long external access stays open without ongoing oversight."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint External Sharing",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-external-sharing-complete-admin-guide"
+        }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://oceancloudconsults.com/#organization",
+      "name": "OceanCloud",
+      "url": "https://oceancloudconsults.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -224,7 +224,7 @@
         <span class="art-tag">SharePoint</span>
         <span class="art-date">Updated July 13, 2026</span>
         <span class="art-read">15 min read</span>
-        <span class="art-read">Technical review: <a href="/about#team">OceanCloud</a></span>
+        <span class="art-read">Technical review: <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro"><strong>EnableAzureB2BIntegration connects SharePoint and OneDrive external sharing to Microsoft Entra B2B invitation management.</strong> Starting with Microsoft’s 2026 rollout, the integration is enabled across tenants and the legacy setting no longer controls behavior after migration. Secure external sharing still depends on aligning tenant limits, site limits, default link types, guest policies, and existing permissions.</p>
@@ -661,7 +661,12 @@ Write-Host "Unique permission review complete for $siteUrl" -ForegroundColor Gre
         </div>
       </div>
 
-      <div class="related-section">
+
+      <div class="art-callout" data-recovery-path="true">
+        <p><strong>Implementation path:</strong> Connect the tenant settings in this guide to named owners, exception handling, and a recurring access-review process. <a href="/sharepoint-consulting">SharePoint governance support &rarr;</a></p>
+      </div>
+
+<div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
           <a href="/articles/guide-get-started-sharepoint-agents" class="related-card">Get Started Sharepoint Agents</a>
@@ -678,7 +683,8 @@ Write-Host "Unique permission review complete for $siteUrl" -ForegroundColor Gre
       <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
       <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
     </div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="/about">About Us</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/news">News</a></li><li><a href="/archive">News Archive</a></li><li><a href="/guides">Guides &amp; Tips</a></li><li><a href="../faq">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/news">News</a></li><li><a href="/archive">News Archive</a></li><li><a href="/guides">Guides &amp; Tips</a></li><li><a href="../faq">FAQ</a></li></ul></div>
     <div class="footer-col"><h4>Services</h4><ul><li><a href="/services">SharePoint Development</a></li><li><a href="/services">Teams Configuration</a></li><li><a href="/services">M365 Migration</a></li><li><a href="/services">Power Platform</a></li></ul></div>
     <div class="footer-col"><h4>Legal</h4><ul><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li><li><a href="/cookies">Cookie Policy</a></li><li><a href="/contact">Contact Us</a></li></ul></div>
   </div>

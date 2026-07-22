@@ -1,12 +1,8 @@
 name: Weekly Site Maintenance
 
-# Runs weekly on Monday at 07:00 UTC (before the weekly news run at 08:00 Mon).
-# Throttled from daily -> weekly on 2026-07-20: the site is a 2-month-old
-# domain and Search Console showed 45/47 tracked pages either uncrawled or
-# "Crawled - currently not indexed", with crawl activity frozen since mid-June.
-# Publishing a new batch of Message Center pages every day was adding to a
-# thin/templated-content footprint while Google wasn't even indexing the
-# existing content, so this cuts new-page velocity ~7x while trust builds.
+# Runs weekly on Monday at 07:00 UTC.
+# Message Center page generation is intentionally paused while Google
+# reassesses the site's smaller, curated set of canonical pages.
 # Also triggerable manually from the Actions tab.
 on:
   schedule:
@@ -39,16 +35,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ── 3a. Regenerate Message Center SEO pages + sitemap-mc.xml ────────────
-      - name: Build Message Center SEO pages
-        run: |
-          echo "=== Message Center SEO pages ==="
-          # Pulls the latest MC feed (plus seeded/historical IDs) from the
-          # public worker proxy and regenerates mc/*.html + sitemap-mc.xml.
-          # No secrets required — uses the public Message Center endpoint.
-          python scripts/build-mc-seo-pages.py || echo "⚠ MC SEO build skipped (endpoint unavailable)"
-
-      # ── 3b. Update sitemap.xml lastmod dates from git history ───────────────
+      # ── 3. Update sitemap.xml lastmod dates from git history ────────────────
       - name: Update sitemap lastmod dates
         run: |
           echo "=== Sitemap update ==="
@@ -95,18 +82,18 @@ jobs:
           print(f"\n{ok}/{total} files clean,  {bad} with issues.")
           PYEOF
 
-      # ── 6. Commit sitemap + MC pages if they changed ────────────────────────
+      # ── 6. Commit sitemap changes if they changed ───────────────────────────
       - name: Commit sitemap changes
         run: |
           git config user.name  "OceanCloud Maintenance Bot"
           git config user.email "bot@oceancloudconsults.com"
-          git add sitemap.xml sitemap-mc.xml mc/
+          git add sitemap.xml
           if git diff --cached --quiet; then
-            echo "Sitemap and MC pages already up to date — nothing to commit."
+            echo "Sitemap already up to date — nothing to commit."
           else
-            git commit -m "chore: update sitemap + MC pages $(date -u +%Y-%m-%d)"
+            git commit -m "chore: update sitemap dates $(date -u +%Y-%m-%d)"
             git push
-            echo "✓ Sitemap and MC pages committed and pushed."
+            echo "✓ Sitemap changes committed and pushed."
           fi
 
       # ── 7. Print a job summary ───────────────────────────────────────────────
@@ -117,7 +104,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Message Center SEO pages | ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| Message Center page generation | ⏸ paused for search recovery |" >> $GITHUB_STEP_SUMMARY
           echo "| Sitemap lastmod update | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| Internal link check | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| HTML validation | ✅ |" >> $GITHUB_STEP_SUMMARY

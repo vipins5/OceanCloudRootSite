@@ -6,7 +6,7 @@
     "title": "SharePoint Consulting & Microsoft 365 Migration",
     "heading": "SharePoint & Microsoft 365 Consulting that delivers.",
     "excerpt": "SharePoint consulting, Microsoft 365 migration, Power Platform, and Copilot readiness across the US. Review public technical work and book a free consultation.",
-    "body": "SharePoint and Microsoft 365 consulting. Public implementation history, 36 source-backed technical guides, live service transparency, clear scope, risks, ownership, and acceptance criteria.",
+    "body": "SharePoint and Microsoft 365 consulting. Public implementation history, source-backed guides, live service transparency, and documented delivery controls.",
     "url": "/",
     "dateDisplay": "",
     "dateSort": ""
@@ -90,7 +90,7 @@
     "title": "Expert SharePoint & Microsoft 365 Consultants",
     "heading": "Your Certified SharePoint & Microsoft 365 Consulting Partner",
     "excerpt": "Review OceanCloud's public technical work, source-backed guidance, and documented Microsoft 365 delivery approach.",
-    "body": "OceanCloud trust and delivery approach. Public GitHub implementation history, Microsoft Learn source trails, live service transparency, and documented engagement controls.",
+    "body": "OceanCloud trust and delivery approach. Public GitHub history, Microsoft Learn source trails, live service transparency, and clear scope and acceptance criteria.",
     "url": "about",
     "dateDisplay": "",
     "dateSort": ""
@@ -874,5 +874,17 @@
     "url": "articles/guide-sharepoint-onedrive-dlp-file-quarantine",
     "dateDisplay": "July 8, 2026",
     "dateSort": "2026-07-08"
+  },
+  {
+    "id": "editorial-policy",
+    "type": "page",
+    "tag": "Company",
+    "title": "Editorial Policy and Technical Review",
+    "heading": "Accountable technical publishing",
+    "excerpt": "How OceanCloud sources, reviews, updates, and corrects Microsoft 365 and SharePoint guidance.",
+    "body": "Primary sources practical scope original value automation disclosure corrections public change history.",
+    "url": "editorial-policy",
+    "dateDisplay": "",
+    "dateSort": ""
   }
 ]

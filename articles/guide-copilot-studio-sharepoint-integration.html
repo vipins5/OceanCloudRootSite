@@ -44,125 +44,146 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#article",
-        "headline": "Copilot Studio SharePoint Integration Guide 2026",
-        "url": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#article",
+      "headline": "Copilot Studio SharePoint Integration Guide 2026",
+      "url": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration"
+      },
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Copilot Studio SharePoint integration guide: add SharePoint knowledge sources and lists, configure authentication, publish agents, and understand limits.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Copilot Studio SharePoint integration",
+        "add SharePoint as a knowledge source",
+        "Copilot Studio SharePoint knowledge source",
+        "publish Copilot Studio agent to SharePoint",
+        "Copilot Studio SharePoint list limits",
+        "tenant graph grounding",
+        "SharePoint semantic search",
+        "SharePoint metadata filters"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration"
+          "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new",
+          "name": "What's new in Copilot Studio"
         },
-        "datePublished": "2026-07-14",
-        "dateModified": "2026-07-15",
-        "author": { "@id": "https://oceancloudconsults.com/#james-whitfield" },
-        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
-        "description": "Copilot Studio SharePoint integration guide: add SharePoint knowledge sources and lists, configure authentication, publish agents, and understand limits.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Copilot Studio SharePoint integration",
-          "add SharePoint as a knowledge source",
-          "Copilot Studio SharePoint knowledge source",
-          "publish Copilot Studio agent to SharePoint",
-          "Copilot Studio SharePoint list limits",
-          "tenant graph grounding",
-          "SharePoint semantic search",
-          "SharePoint metadata filters"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new",
-            "name": "What's new in Copilot Studio"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint",
-            "name": "Add SharePoint as a knowledge source"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas",
-            "name": "Copilot Studio quotas and limits"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint",
-            "name": "Publish an agent to SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience",
-            "name": "Choose between Agent Builder and Copilot Studio"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery",
-            "name": "Restricted Content Discovery for SharePoint"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How does Copilot Studio connect to SharePoint Online?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Add SharePoint from the Copilot Studio knowledge page, then provide a SharePoint site or list URL. With Microsoft authentication, retrieval runs on behalf of the signed-in user and only returns content that user can read."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What are the current Copilot Studio SharePoint retrieval features?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Current Copilot Studio documentation supports tenant graph grounding with semantic search and SharePoint metadata filters based on title, author, modified by, and modified date. Microsoft introduced the retrieval improvements in its November 2025 release notes and continues to document them in 2026."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does a Copilot Studio agent bypass SharePoint permissions?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. When Microsoft authentication is used, SharePoint retrieval is performed in the user's context. The user needs at least Read access, and inaccessible content should not be returned. Existing oversharing can still become easier to discover, so permissions must be reviewed before rollout."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can Copilot Studio use SharePoint lists?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. SharePoint lists can be added as real-time knowledge sources. Current limits include retrieval from the first 2,048 rows, no reasoning over list attachments, and practical list-count limits that should be verified in the tenant UI."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can a Copilot Studio agent be published inside SharePoint?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Publish the agent, open Channels, choose SharePoint, select the target site, and deploy. The maker needs Write access to that site, and the agent continues to use Copilot Studio billing and capacity."
-            }
-          }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
-          { "@type": "ListItem", "position": 3, "name": "Copilot Studio and SharePoint Integration", "item": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration" }
-        ]
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint",
+          "name": "Add SharePoint as a knowledge source"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas",
+          "name": "Copilot Studio quotas and limits"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-sharepoint",
+          "name": "Publish an agent to SharePoint"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience",
+          "name": "Choose between Agent Builder and Copilot Studio"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery",
+          "name": "Restricted Content Discovery for SharePoint"
+        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does Copilot Studio connect to SharePoint Online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Add SharePoint from the Copilot Studio knowledge page, then provide a SharePoint site or list URL. With Microsoft authentication, retrieval runs on behalf of the signed-in user and only returns content that user can read."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the current Copilot Studio SharePoint retrieval features?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Current Copilot Studio documentation supports tenant graph grounding with semantic search and SharePoint metadata filters based on title, author, modified by, and modified date. Microsoft introduced the retrieval improvements in its November 2025 release notes and continues to document them in 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a Copilot Studio agent bypass SharePoint permissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. When Microsoft authentication is used, SharePoint retrieval is performed in the user's context. The user needs at least Read access, and inaccessible content should not be returned. Existing oversharing can still become easier to discover, so permissions must be reviewed before rollout."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Copilot Studio use SharePoint lists?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SharePoint lists can be added as real-time knowledge sources. Current limits include retrieval from the first 2,048 rows, no reasoning over list attachments, and practical list-count limits that should be verified in the tenant UI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a Copilot Studio agent be published inside SharePoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Publish the agent, open Channels, choose SharePoint, select the target site, and deploy. The maker needs Write access to that site, and the agent continues to use Copilot Studio billing and capacity."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Copilot Studio and SharePoint Integration",
+          "item": "https://oceancloudconsults.com/articles/guide-copilot-studio-sharepoint-integration"
+        }
+      ]
+    }
+  ]
+}
   </script>
 
   <style>
@@ -249,6 +270,8 @@
         <span class="art-tag">Copilot &amp; SharePoint</span>
         <span class="art-date">Updated Jul 15, 2026</span>
         <span class="art-read">15 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
         <div class="art-callout info">
@@ -542,7 +565,8 @@ Disconnect-PnPOnline</code></pre></div>
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand"><div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div><p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p></div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="/about">About Us</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/news">News</a></li><li><a href="/archive">News Archive</a></li><li><a href="/status">Service Status</a></li><li><a href="/message-center">Message Center</a></li><li><a href="/guides">Guides &amp; Tips</a></li><li><a href="../faq">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/news">News</a></li><li><a href="/archive">News Archive</a></li><li><a href="/status">Service Status</a></li><li><a href="/message-center">Message Center</a></li><li><a href="/guides">Guides &amp; Tips</a></li><li><a href="../faq">FAQ</a></li></ul></div>
     <div class="footer-col"><h4>Services</h4><ul><li><a href="/services">SharePoint Development</a></li><li><a href="/services">Teams Configuration</a></li><li><a href="/services">M365 Migration</a></li><li><a href="/services">Power Platform</a></li></ul></div>
     <div class="footer-col"><h4>Legal</h4><ul><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li><li><a href="/cookies">Cookie Policy</a></li><li><a href="/contact">Contact Us</a></li></ul></div>
   </div>

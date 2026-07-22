@@ -43,153 +43,142 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine#article",
-        "headline": "DLP File Quarantine for SharePoint and OneDrive Guide",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine#article",
+      "headline": "DLP File Quarantine for SharePoint and OneDrive Guide",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine"
+      },
+      "datePublished": "2026-07-08",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "A practical setup guide for Microsoft Purview DLP file quarantine in SharePoint and OneDrive: quarantine site prerequisites, DLP settings, policy creation steps, simulation mode, and manual restore limitations.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "DLP file quarantine",
+        "Microsoft Purview",
+        "SharePoint OneDrive DLP",
+        "quarantine action DLP policy",
+        "tombstone file DLP"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine"
+          "url": "https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-learn",
+          "name": "Learn about DLP file quarantine for SharePoint and OneDrive"
         },
-        "datePublished": "2026-07-08",
-        "dateModified": "2026-07-08",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/purview/dlp-create-policy-spo-odb-quarantine",
+          "name": "Create a DLP policy to quarantine files in SharePoint and OneDrive"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-get-started",
+          "name": "Get started with DLP file quarantine for SharePoint and OneDrive"
         },
-        "description": "A practical setup guide for Microsoft Purview DLP file quarantine in SharePoint and OneDrive: quarantine site prerequisites, DLP settings, policy creation steps, simulation mode, and manual restore limitations.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "DLP file quarantine",
-          "Microsoft Purview",
-          "SharePoint OneDrive DLP",
-          "quarantine action DLP policy",
-          "tombstone file DLP"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-learn",
-            "name": "Learn about DLP file quarantine for SharePoint and OneDrive"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/purview/dlp-create-policy-spo-odb-quarantine",
-            "name": "Create a DLP policy to quarantine files in SharePoint and OneDrive"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/purview/dlp-spo-odb-quarantine-get-started",
-            "name": "Get started with DLP file quarantine for SharePoint and OneDrive"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/purview/dlp-learn-about-dlp",
-            "name": "Learn about data loss prevention"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/purview/dlp-learn-about-dlp",
+          "name": "Learn about data loss prevention"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What does the DLP quarantine action actually do?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "When a file in SharePoint or OneDrive matches a DLP policy rule with the quarantine action, the file is removed from its original location, moved to an admin-defined quarantine site, and replaced at the original location with a tombstone text file containing an admin-configured message and the file's relative path."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can the quarantine location be a OneDrive account?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. The quarantine destination must be a SharePoint site within your tenant. You can use any SharePoint site template, but it should be a dedicated site restricted to the administrators who manage quarantine operations, not a site with active business content."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why can't I select the quarantine action when creating a DLP policy?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The quarantine action only becomes selectable after you configure quarantine settings first: in the Microsoft Purview portal, go to Data Loss Prevention, then Settings, then File quarantine, and set the quarantine folder path and replacement file (tombstone) message. Until that configuration is saved, the policy wizard will prompt you to complete it."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I restore a quarantined file?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Restore is manual only; there is no restore action inside the Microsoft Purview portal. An administrator locates the file in the quarantine site, identifies the original path from audit logs, moves the file back, and deletes the tombstone file. Original sharing permissions and links are not retained, only the latest file version comes back, and the same DLP rule will not re-quarantine that restored file."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Should I turn on quarantine immediately or test it first?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Test it first. Simulation mode is supported for the quarantine action, so you can run the policy without actually moving files, then review matches in Activity Explorer and the DLP alerts dashboard before switching it to enforce and quarantine live content."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "DLP File Quarantine Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine"
-          }
-        ]
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does the DLP quarantine action actually do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When a file in SharePoint or OneDrive matches a DLP policy rule with the quarantine action, the file is removed from its original location, moved to an admin-defined quarantine site, and replaced at the original location with a tombstone text file containing an admin-configured message and the file's relative path."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can the quarantine location be a OneDrive account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The quarantine destination must be a SharePoint site within your tenant. You can use any SharePoint site template, but it should be a dedicated site restricted to the administrators who manage quarantine operations, not a site with active business content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why can't I select the quarantine action when creating a DLP policy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The quarantine action only becomes selectable after you configure quarantine settings first: in the Microsoft Purview portal, go to Data Loss Prevention, then Settings, then File quarantine, and set the quarantine folder path and replacement file (tombstone) message. Until that configuration is saved, the policy wizard will prompt you to complete it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I restore a quarantined file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Restore is manual only; there is no restore action inside the Microsoft Purview portal. An administrator locates the file in the quarantine site, identifies the original path from audit logs, moves the file back, and deletes the tombstone file. Original sharing permissions and links are not retained, only the latest file version comes back, and the same DLP rule will not re-quarantine that restored file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I turn on quarantine immediately or test it first?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Test it first. Simulation mode is supported for the quarantine action, so you can run the policy without actually moving files, then review matches in Activity Explorer and the DLP alerts dashboard before switching it to enforce and quarantine live content."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DLP File Quarantine Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-dlp-file-quarantine"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -290,6 +279,8 @@
         <span class="art-tag">SharePoint &amp; Security</span>
         <span class="art-date">July 8, 2026</span>
         <span class="art-read">15 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <ul class="quick-points-source">
@@ -647,7 +638,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
-        <p>Microsoft Solutions Partner specialising in SharePoint, M365, Power Platform, and workplace transformation across the United States.</p>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
       </div>
       <div class="footer-col">
         <h4>Guides</h4>

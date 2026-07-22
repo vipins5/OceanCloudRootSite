@@ -43,154 +43,153 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint#article",
-        "headline": "Build a Power Apps Canvas App from a SharePoint List",
-        "url": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint#article",
+      "headline": "Build a Power Apps Canvas App from a SharePoint List",
+      "url": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Build a Power Apps canvas app from a SharePoint list with forms, galleries, filters, delegation checks, permissions, and publishing steps.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Power Apps",
+        "Power Apps SharePoint list",
+        "SharePoint Power Apps",
+        "create canvas app SharePoint list",
+        "no-code apps",
+        "canvas app",
+        "Power Platform"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint"
+          "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online",
+          "name": "Use SharePoint Online with Power Apps"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-07-13",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#organization"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/delegation-overview",
+          "name": "Understand delegation in Power Apps"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Build a Power Apps canvas app from a SharePoint list with forms, galleries, filters, delegation checks, permissions, and publishing steps.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Power Apps",
-          "Power Apps SharePoint list",
-          "SharePoint Power Apps",
-          "create canvas app SharePoint list",
-          "no-code apps",
-          "canvas app",
-          "Power Platform"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/connection-sharepoint-online",
-            "name": "Use SharePoint Online with Power Apps"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/delegation-overview",
-            "name": "Understand delegation in Power Apps"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/embed-teams-app",
-            "name": "Embed a canvas app as a Teams tab"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/embed-teams-app",
+          "name": "Embed a canvas app as a Teams tab"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Can I use SharePoint as a database for Power Apps?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, SharePoint is the most common data source for Power Apps in Microsoft 365 environments. You connect via the SharePoint connector and work with list items directly. For simple data entry and viewing scenarios it works well, but it has delegation limits \u2014 queries that can't be processed server-side are limited to 500\u20132000 records client-side."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I create a canvas app from a SharePoint list?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "In Power Apps, choose Create, select Start from data, connect to SharePoint, choose the SharePoint site, and pick the list. Power Apps generates a canvas app with browse, detail, and edit screens. Review the generated forms, rename controls, set delegation-safe filters, and test list permissions before publishing."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is delegation in Power Apps and why does it matter?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Delegation means the data source (SharePoint) processes a filter or sort query on the server, returning only matching records. Non-delegable functions (like Search() or most text functions) run client-side on a capped record set. If your list has more than 2000 items and you use non-delegable filters, users will see incomplete results without any warning."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between canvas apps and model-driven apps?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Canvas apps give you pixel-precise control over layout and connect to any data source. Model-driven apps are data-first: you define the data model and the app generates its UI automatically. Canvas apps suit custom interfaces; model-driven apps suit complex business data with relationships, business rules, and standard CRM-style views."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I share a Power App with users in my organisation?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "From the Power Apps portal, open the app and select Share. Enter names or groups. Users need at least a Microsoft 365 licence to run Power Apps that connect to standard connectors. For premium connectors, each user needs a Power Apps Premium (Per User) licence. Also share the underlying SharePoint list with appropriate permissions."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can Power Apps connect to data sources outside Microsoft 365?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Power Apps supports hundreds of connectors including SQL Server, Dataverse, Salesforce, ServiceNow, REST APIs via custom connectors, and on-premises data sources via the on-premises data gateway. Connectors marked 'Premium' require a Power Apps Premium licence."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Power Apps and SharePoint Guide",
-            "item": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://oceancloudconsults.com/#organization",
-        "name": "OceanCloud",
-        "url": "https://oceancloudconsults.com/"
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I use SharePoint as a database for Power Apps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, SharePoint is the most common data source for Power Apps in Microsoft 365 environments. You connect via the SharePoint connector and work with list items directly. For simple data entry and viewing scenarios it works well, but it has delegation limits — queries that can't be processed server-side are limited to 500–2000 records client-side."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I create a canvas app from a SharePoint list?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Power Apps, choose Create, select Start from data, connect to SharePoint, choose the SharePoint site, and pick the list. Power Apps generates a canvas app with browse, detail, and edit screens. Review the generated forms, rename controls, set delegation-safe filters, and test list permissions before publishing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is delegation in Power Apps and why does it matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Delegation means the data source (SharePoint) processes a filter or sort query on the server, returning only matching records. Non-delegable functions (like Search() or most text functions) run client-side on a capped record set. If your list has more than 2000 items and you use non-delegable filters, users will see incomplete results without any warning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between canvas apps and model-driven apps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Canvas apps give you pixel-precise control over layout and connect to any data source. Model-driven apps are data-first: you define the data model and the app generates its UI automatically. Canvas apps suit custom interfaces; model-driven apps suit complex business data with relationships, business rules, and standard CRM-style views."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I share a Power App with users in my organisation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From the Power Apps portal, open the app and select Share. Enter names or groups. Users need at least a Microsoft 365 licence to run Power Apps that connect to standard connectors. For premium connectors, each user needs a Power Apps Premium (Per User) licence. Also share the underlying SharePoint list with appropriate permissions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Power Apps connect to data sources outside Microsoft 365?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Power Apps supports hundreds of connectors including SQL Server, Dataverse, Salesforce, ServiceNow, REST APIs via custom connectors, and on-premises data sources via the on-premises data gateway. Connectors marked 'Premium' require a Power Apps Premium licence."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Power Apps and SharePoint Guide",
+          "item": "https://oceancloudconsults.com/articles/guide-power-apps-sharepoint"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://oceancloudconsults.com/#organization",
+      "name": "OceanCloud",
+      "url": "https://oceancloudconsults.com/"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -286,7 +285,7 @@
         <span class="art-tag">Power Platform</span>
         <span class="art-date">Updated July 13, 2026</span>
         <span class="art-read">10 min read</span>
-        <span class="art-read">Technical review: <a href="/about#team">OceanCloud</a></span>
+        <span class="art-read">Technical review: <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro"><strong>To build a Power Apps canvas app from a SharePoint list, connect the list as a data source, bind a gallery and edit form, validate delegable filters, then share both the app and the underlying SharePoint permissions.</strong> This guide walks through that sequence and explains the design choices that prevent incomplete search results, broken lookups, and access errors after publishing.</p>
@@ -518,7 +517,7 @@
         <a href="/contact" class="btn btn-primary">Talk to a Power Apps Specialist</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -601,7 +600,12 @@
         </div>
       </div>
 
-      <div class="related-section">
+
+      <div class="art-callout" data-recovery-path="true">
+        <p><strong>Implementation path:</strong> Plan delegation, environments, data policy, application lifecycle, ownership, and support before production rollout. <a href="/power-platform-consulting">Power Platform consulting &rarr;</a></p>
+      </div>
+
+<div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
           <a href="guide-power-automate-sharepoint" class="related-card">
@@ -647,6 +651,7 @@
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

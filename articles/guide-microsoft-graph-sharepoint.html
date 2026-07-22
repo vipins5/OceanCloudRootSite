@@ -43,148 +43,137 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint#article",
-        "headline": "Microsoft Graph and SharePoint: What IT Admins Need to Know About M365 Integrations",
-        "url": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint#article",
+      "headline": "Microsoft Graph and SharePoint: What IT Admins Need to Know About M365 Integrations",
+      "url": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "Microsoft Graph",
+        "SharePoint API",
+        "SharePoint webhooks",
+        "M365 integrations",
+        "Graph Explorer"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint"
+          "url": "https://developer.microsoft.com/en-us/graph",
+          "name": "Microsoft Graph Developer Portal"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://developer.microsoft.com/en-us/graph/graph-explorer",
+          "name": "Microsoft Graph Explorer"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Graph API, Power Automate HTTP connector, SharePoint webhooks, Salesforce/ServiceNow integration, and app registrations vs managed identities — explained for IT admins.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "Microsoft Graph",
-          "SharePoint API",
-          "SharePoint webhooks",
-          "M365 integrations",
-          "Graph Explorer"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://developer.microsoft.com/en-us/graph",
-            "name": "Microsoft Graph Developer Portal"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://developer.microsoft.com/en-us/graph/graph-explorer",
-            "name": "Microsoft Graph Explorer"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks",
-            "name": "SharePoint webhooks overview"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks",
+          "name": "SharePoint webhooks overview"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the Microsoft Graph API and how does it relate to SharePoint?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft Graph is the single unified REST API for all Microsoft 365 services. For SharePoint, it exposes the /sites, /drives, /lists, and /pages endpoints, giving you programmatic access to site collections, document libraries, list data, and permissions from any platform or language."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I authenticate to Microsoft Graph for SharePoint access?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Register an application in Microsoft Entra ID and grant it the necessary Graph permissions (Sites.Read.All, Sites.ReadWrite.All, etc). Use the client credentials flow for background automation or the auth code flow for user-delegated access. Get an access token from the OAuth 2.0 token endpoint and pass it as a Bearer token in the Authorization header."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between delegated and application permissions in Microsoft Graph?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Delegated permissions act as the signed-in user \u2014 the API call can only access what the user can access. Application permissions act as the app itself with tenant-wide access, requiring admin consent. For automation scripts that run without a user, use application permissions. For apps that access data on behalf of users, use delegated permissions."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use Microsoft Graph to read SharePoint list items?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Use GET /sites/{site-id}/lists/{list-id}/items with optional $select, $filter, and $expand parameters. To include column values, expand the fields property: /items?$expand=fields. For large lists, use $top and $skiptoken for server-side pagination."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Graph Explorer and how do I use it for SharePoint testing?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Graph Explorer (developer.microsoft.com/en-us/graph/graph-explorer) is a browser-based tool for testing Microsoft Graph API calls without writing code. Sign in with your Microsoft 365 account, enter a Graph endpoint URL, and see the live JSON response. It also shows required permissions and includes sample queries for common SharePoint operations."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Microsoft Graph and SharePoint",
-            "item": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Microsoft Graph API and how does it relate to SharePoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft Graph is the single unified REST API for all Microsoft 365 services. For SharePoint, it exposes the /sites, /drives, /lists, and /pages endpoints, giving you programmatic access to site collections, document libraries, list data, and permissions from any platform or language."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I authenticate to Microsoft Graph for SharePoint access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Register an application in Microsoft Entra ID and grant it the necessary Graph permissions (Sites.Read.All, Sites.ReadWrite.All, etc). Use the client credentials flow for background automation or the auth code flow for user-delegated access. Get an access token from the OAuth 2.0 token endpoint and pass it as a Bearer token in the Authorization header."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between delegated and application permissions in Microsoft Graph?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Delegated permissions act as the signed-in user — the API call can only access what the user can access. Application permissions act as the app itself with tenant-wide access, requiring admin consent. For automation scripts that run without a user, use application permissions. For apps that access data on behalf of users, use delegated permissions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use Microsoft Graph to read SharePoint list items?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Use GET /sites/{site-id}/lists/{list-id}/items with optional $select, $filter, and $expand parameters. To include column values, expand the fields property: /items?$expand=fields. For large lists, use $top and $skiptoken for server-side pagination."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Graph Explorer and how do I use it for SharePoint testing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Graph Explorer (developer.microsoft.com/en-us/graph/graph-explorer) is a browser-based tool for testing Microsoft Graph API calls without writing code. Sign in with your Microsoft 365 account, enter a Graph endpoint URL, and see the live JSON response. It also shows required permissions and includes sample queries for common SharePoint operations."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Microsoft Graph and SharePoint",
+          "item": "https://oceancloudconsults.com/articles/guide-microsoft-graph-sharepoint"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -282,6 +271,8 @@
         <span class="art-tag">Integration</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">11 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">Microsoft Graph is the single API that underpins every integration with Microsoft 365. Whether you're connecting SharePoint to Salesforce, building a custom Teams bot, pulling Microsoft Entra ID user data into a third-party HR system, or creating an automated provisioning workflow — all of these ultimately go through Graph. Understanding what Graph is, how to query it safely, and how to use it without writing traditional code puts IT admins in a position to design and own integrations rather than depending entirely on external developers.</p>
@@ -461,7 +452,7 @@
         <a href="/contact" class="btn btn-primary">Discuss Your Integration</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -577,6 +568,7 @@
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

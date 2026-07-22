@@ -43,147 +43,137 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready#article",
-        "headline": "SharePoint Copilot Readiness Checklist (2026)",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready#article",
+      "headline": "SharePoint Copilot Readiness Checklist (2026)",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Prepare SharePoint for Microsoft 365 Copilot by fixing permissions, reducing oversharing, and applying Restricted SharePoint Search.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint Copilot",
+        "Copilot readiness",
+        "SharePoint Advanced Management",
+        "Restricted SharePoint Search",
+        "Purview sensitivity labels"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready"
+          "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
+          "name": "SharePoint Advanced Management"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search",
+          "name": "Restricted SharePoint Search"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Prepare SharePoint for Microsoft 365 Copilot by fixing permissions, reducing oversharing, and applying Restricted SharePoint Search.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint Copilot",
-          "Copilot readiness",
-          "SharePoint Advanced Management",
-          "Restricted SharePoint Search",
-          "Purview sensitivity labels"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
-            "name": "SharePoint Advanced Management"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search",
-            "name": "Restricted SharePoint Search"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels",
-            "name": "Microsoft Purview Sensitivity Labels"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels",
+          "name": "Microsoft Purview Sensitivity Labels"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Why does SharePoint oversharing matter for Microsoft 365 Copilot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Copilot can surface any content a user already has permission to open. If sites and files are overshared — for example shared with \"Everyone\" or broad groups — Copilot may expose sensitive information in its answers that the user could technically access but was never meant to see. Fixing oversharing before rollout is the single most important readiness step."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Restricted SharePoint Search and when should I use it?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Restricted SharePoint Search lets you limit Copilot and organisation-wide search to an approved list of up to 100 SharePoint sites while you clean up permissions elsewhere. It is a temporary safety control for the early phase of a Copilot rollout, not a permanent fix — the goal is to remediate oversharing and then widen access."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do sensitivity labels affect what Copilot can access?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Microsoft Purview sensitivity labels can encrypt content and define usage rights. Copilot honours those rights: if a label prevents a user from extracting or viewing content, Copilot won't surface it for that user either. Applying labels to sensitive content adds a durable layer of protection on top of permissions."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What licences do I need for Microsoft 365 Copilot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft 365 Copilot is a per-user add-on that requires an eligible Microsoft 365 or Office 365 base licence. Confirm the current prerequisites and per-user pricing on Microsoft's licensing page before planning a rollout, as eligibility and entitlements are updated periodically."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How long does it take to get SharePoint Copilot-ready?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For a mid-size tenant, a structured readiness pass — oversharing audit, Restricted SharePoint Search configuration, sensitivity label deployment, and search quality checks — typically takes around four weeks. The timeline depends mostly on how much existing oversharing and stale content needs remediation."
-            }
-          }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Copilot Readiness",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does SharePoint oversharing matter for Microsoft 365 Copilot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copilot can surface any content a user already has permission to open. If sites and files are overshared — for example shared with \"Everyone\" or broad groups — Copilot may expose sensitive information in its answers that the user could technically access but was never meant to see. Fixing oversharing before rollout is the single most important readiness step."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Restricted SharePoint Search and when should I use it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Restricted SharePoint Search lets you limit Copilot and organisation-wide search to an approved list of up to 100 SharePoint sites while you clean up permissions elsewhere. It is a temporary safety control for the early phase of a Copilot rollout, not a permanent fix — the goal is to remediate oversharing and then widen access."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do sensitivity labels affect what Copilot can access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Microsoft Purview sensitivity labels can encrypt content and define usage rights. Copilot honours those rights: if a label prevents a user from extracting or viewing content, Copilot won't surface it for that user either. Applying labels to sensitive content adds a durable layer of protection on top of permissions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What licences do I need for Microsoft 365 Copilot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft 365 Copilot is a per-user add-on that requires an eligible Microsoft 365 or Office 365 base licence. Confirm the current prerequisites and per-user pricing on Microsoft's licensing page before planning a rollout, as eligibility and entitlements are updated periodically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to get SharePoint Copilot-ready?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a mid-size tenant, a structured readiness pass — oversharing audit, Restricted SharePoint Search configuration, sensitivity label deployment, and search quality checks — typically takes around four weeks. The timeline depends mostly on how much existing oversharing and stale content needs remediation."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Copilot Readiness",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-copilot-ready"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -285,6 +275,8 @@
         <span class="art-tag">Copilot</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">11 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">This SharePoint Copilot readiness checklist is designed for teams preparing Microsoft 365 Copilot rollout in production. Copilot relies on Microsoft 365 Graph permissions, so weak access control or stale content leads to oversharing risk and low-quality answers. Use this guide to execute remediation in order: permissions cleanup, sharing control, Restricted SharePoint Search, and sensitivity labeling before broad enablement.</p>
@@ -587,7 +579,12 @@ Get-SPOTenantRestrictedSearchAllowedList</pre></div>
         </div>
       </div>
 
-      <div class="related-section">
+
+      <div class="art-callout" data-recovery-path="true">
+        <p><strong>Implementation path:</strong> Turn the checklist into an evidence-backed remediation backlog with owners and rollout gates. <a href="/microsoft-365-copilot-readiness">Microsoft 365 Copilot readiness &rarr;</a></p>
+      </div>
+
+<div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
           <a href="guide-m365-copilot" class="related-card">
@@ -633,6 +630,7 @@ Get-SPOTenantRestrictedSearchAllowedList</pre></div>
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>

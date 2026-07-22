@@ -1,6 +1,6 @@
 name: Update Microsoft 365 News
 
-# Runs Monday at 08:00 UTC, or trigger manually.
+# Temporarily manual-only while Google reassesses the site's curated content.
 # AI rewrite engine: ChatGPT/OpenAI first, Gemini fallback.
 # Throttled from 3x/week -> 1x/week on 2026-07-20: the site is a 2-month-old
 # domain and Search Console showed 45/47 tracked pages either uncrawled or
@@ -9,8 +9,6 @@ name: Update Microsoft 365 News
 # thin-content footprint while Google wasn't indexing existing content, so
 # this cuts new-page velocity ~3x while trust builds.
 on:
-  schedule:
-    - cron: '0 8 * * 1'   # Monday
   workflow_dispatch:
 
 concurrency:

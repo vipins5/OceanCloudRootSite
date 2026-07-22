@@ -43,147 +43,136 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices#article",
-        "headline": "SharePoint Permissions Best Practices for Secure Microsoft 365 Sites",
-        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices",
-        "mainEntityOfPage": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices#article",
+      "headline": "SharePoint Permissions Best Practices for Secure Microsoft 365 Sites",
+      "url": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices"
+      },
+      "datePublished": "2026-05-23",
+      "dateModified": "2026-07-23",
+      "author": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "description": "Least privilege, group-based access, external sharing controls, audit methodology, and the top SharePoint permission mistakes — a security-focused guide.",
+      "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "keywords": [
+        "SharePoint permissions best practices",
+        "SharePoint security",
+        "SharePoint access control",
+        "SharePoint permissions audit"
+      ],
+      "citation": [
+        {
           "@type": "WebPage",
-          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices"
+          "url": "https://learn.microsoft.com/en-us/sharepoint/default-sharepoint-groups",
+          "name": "Default SharePoint groups"
         },
-        "datePublished": "2026-05-23",
-        "dateModified": "2026-06-04",
-        "author": {
-          "@id": "https://oceancloudconsults.com/#james-whitfield"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview",
+          "name": "External sharing overview for SharePoint"
         },
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "description": "Least privilege, group-based access, external sharing controls, audit methodology, and the top SharePoint permission mistakes — a security-focused guide.",
-        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
-        "keywords": [
-          "SharePoint permissions best practices",
-          "SharePoint security",
-          "SharePoint access control",
-          "SharePoint permissions audit"
-        ],
-        "citation": [
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/default-sharepoint-groups",
-            "name": "Default SharePoint groups"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview",
-            "name": "External sharing overview for SharePoint"
-          },
-          {
-            "@type": "WebPage",
-            "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
-            "name": "SharePoint Advanced Management"
-          }
-        ],
-        "inLanguage": "en-US",
-        "isPartOf": {
-          "@id": "https://oceancloudconsults.com/#website"
+        {
+          "@type": "WebPage",
+          "url": "https://learn.microsoft.com/en-us/sharepoint/advanced-management",
+          "name": "SharePoint Advanced Management"
         }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the least privilege principle in SharePoint permissions?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Least privilege means users receive only the minimum permission level needed to do their job. In SharePoint this means most users get Contribute or Read on their team sites, never Full Control. Site Owners should be kept to a small group, and permission changes should require documented justification."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Should I use SharePoint groups or Microsoft 365 groups to manage permissions?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For team sites connected to Microsoft Teams or Outlook, use Microsoft 365 group membership \u2014 changes in Teams membership automatically flow to SharePoint. For communication sites or standalone sites, use SharePoint groups (Owners, Members, Visitors). Avoid assigning permissions directly to individual accounts."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I conduct a SharePoint permissions audit?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Use the SharePoint admin center's Active sites report to identify sites with external sharing enabled. Run the 'Check permissions' tool on individual sites for user-level inspection. For tenant-wide auditing, use PnP PowerShell's Get-PnPSiteCollectionAdmin and Get-PnPGroupMember cmdlets, or the Microsoft 365 Purview audit log for permission change history."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How often should I review SharePoint permissions?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Microsoft recommends quarterly access reviews for sensitive sites and annually for standard sites. Use Microsoft Entra ID Access Reviews (included in Entra ID P2) to automate the review process \u2014 site owners are prompted to confirm or remove each member without IT intervention."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the risk of unique permissions on SharePoint folders and items?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Unique permissions on folders or items break inheritance and create a shadow permission model that is difficult to audit. They are invisible in the standard site permissions view. Over time, users leave the organisation but retain access to individual items. Best practice is to separate sensitive content into its own library or site rather than using item-level unique permissions."
-            }
-          }
-        ]
-      },
-
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://oceancloudconsults.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Guides",
-            "item": "https://oceancloudconsults.com/guides"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "SharePoint Permissions Best Practices",
-            "item": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://oceancloudconsults.com/#website",
-        "url": "https://oceancloudconsults.com/",
-        "name": "OceanCloud",
-        "publisher": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "Person",
-        "@id": "https://oceancloudconsults.com/#james-whitfield",
-        "name": "James Whitfield",
-        "jobTitle": "Chief Executive Officer",
-        "url": "https://oceancloudconsults.com/about#team",
-        "worksFor": {
-          "@id": "https://oceancloudconsults.com/#organization"
-        }
+      ],
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://oceancloudconsults.com/#website"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the least privilege principle in SharePoint permissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Least privilege means users receive only the minimum permission level needed to do their job. In SharePoint this means most users get Contribute or Read on their team sites, never Full Control. Site Owners should be kept to a small group, and permission changes should require documented justification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use SharePoint groups or Microsoft 365 groups to manage permissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For team sites connected to Microsoft Teams or Outlook, use Microsoft 365 group membership — changes in Teams membership automatically flow to SharePoint. For communication sites or standalone sites, use SharePoint groups (Owners, Members, Visitors). Avoid assigning permissions directly to individual accounts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I conduct a SharePoint permissions audit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the SharePoint admin center's Active sites report to identify sites with external sharing enabled. Run the 'Check permissions' tool on individual sites for user-level inspection. For tenant-wide auditing, use PnP PowerShell's Get-PnPSiteCollectionAdmin and Get-PnPGroupMember cmdlets, or the Microsoft 365 Purview audit log for permission change history."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I review SharePoint permissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft recommends quarterly access reviews for sensitive sites and annually for standard sites. Use Microsoft Entra ID Access Reviews (included in Entra ID P2) to automate the review process — site owners are prompted to confirm or remove each member without IT intervention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the risk of unique permissions on SharePoint folders and items?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unique permissions on folders or items break inheritance and create a shadow permission model that is difficult to audit. They are invisible in the standard site permissions view. Over time, users leave the organisation but retain access to individual items. Best practice is to separate sensitive content into its own library or site rather than using item-level unique permissions."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oceancloudconsults.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://oceancloudconsults.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SharePoint Permissions Best Practices",
+          "item": "https://oceancloudconsults.com/articles/guide-sharepoint-permissions-best-practices"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://oceancloudconsults.com/#website",
+      "url": "https://oceancloudconsults.com/",
+      "name": "OceanCloud",
+      "publisher": {
+        "@id": "https://oceancloudconsults.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
   </script>
 
   <style>
@@ -278,6 +267,8 @@
         <span class="art-tag">SharePoint</span>
         <span class="art-date">May 23, 2026</span>
         <span class="art-read">11 min read</span>
+
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
       </div>
 
       <p class="article-intro">SharePoint permissions are deceptively easy to get wrong. The platform makes it trivially simple to share content — which is by design — but that ease of sharing, without governance, creates the oversharing problems that result in data breaches, compliance failures, and Copilot AI surfacing documents to people who should never have seen them. This guide sets out the permission design principles, structural patterns, and audit approaches that prevent those problems.</p>
@@ -473,7 +464,7 @@ $items |
         <a href="/contact" class="btn btn-primary">Request a Permissions Audit</a>
       </div>
 
-      
+
       <div class="article-faq">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -589,6 +580,7 @@ $items |
       <h4>Company</h4>
       <ul>
         <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
         <li><a href="/case-studies">Case Studies</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/archive">News Archive</a></li>
