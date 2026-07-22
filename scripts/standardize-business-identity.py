@@ -156,7 +156,52 @@ def main() -> None:
     search_text = search_index.read_text(encoding="utf-8")
     search_text = search_text.replace("OceanCloud LLC", LEGAL_NAME)
     search_text = search_text.replace("Microsoft Solutions Partner", "Microsoft 365 consultancy")
-    search_index.write_text(search_text, encoding="utf-8")
+    search_text = search_text.replace(
+        'is a company registered in the United States with its principal office in the United States.',
+        'operates from Dallas, Texas, United States and serves clients across the United States.',
+    )
+    search_text = search_text.replace("OceanCloud Consulting", LEGAL_NAME)
+    search_text = search_text.replace(
+        "We've delivered 150+ projects with a 98% satisfaction rate.",
+        "The final scope and timeline are confirmed after discovery.",
+    )
+    search_text = search_text.replace(
+        "Everything we've learned from 150+ SharePoint and Microsoft 365 deployments, distilled into actionable guides you can apply today.",
+        "Source-backed SharePoint and Microsoft 365 guidance, distilled into practical steps you can apply today.",
+    )
+    search_text = search_text.replace(
+        "In-depth, plain-English guides written by our certified Microsoft consultants",
+        "In-depth, plain-English guides published by OceanCloud Consultants",
+    )
+    search_text = search_text.replace(
+        "Practical guides from real consultants",
+        "Practical, source-backed guidance",
+    )
+    search_text = search_text.replace(
+        "This checklist is built from 150+ migrations we've delivered over 12 years.",
+        "This checklist is organised around repeatable discovery, governance, pilot, cutover, and validation practices.",
+    )
+    search_text = search_text.replace("Zero-Downtime M365 Migration", "Controlled M365 Migration")
+    search_text = search_text.replace(
+        "in a 24/7 healthcare environment with zero data loss.",
+        "in a 24/7 healthcare environment using staged cutover and post-migration validation.",
+    )
+    search_text = search_text.replace(
+        "in a 24/7 healthcare environment. 2,400 Mailboxes Migrated 18 TB Data Migrated 0 Data Loss Incidents",
+        "using staged cutover and post-migration validation. 2,400 Mailboxes Migrated 18 TB Data Migrated Completed Validation Checks",
+    )
+    search_data = json.loads(search_text)
+    for entry in search_data:
+        if entry.get("id") == "privacy" and "+1 (469) 809-4053" not in entry.get("body", ""):
+            entry["body"] = entry.get("body", "").rstrip() + (
+                " Contact OceanCloud Consultants at oceancloudconsults@gmail.com, "
+                "call the main number +1 (469) 809-4053, or use the separate WhatsApp "
+                "number +1 (917) 675-3126. Office hours are Monday-Friday, 9 AM-6 PM EST."
+            )
+    search_index.write_text(
+        json.dumps(search_data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(f"[ok] standardized identity in {changed} HTML files")
 
 

@@ -36,18 +36,22 @@ jobs:
 
       # ── 3a. Regenerate noindex Message Center pages ─────────────────────────
       - name: Build Message Center pages
+        id: build_mc
+        continue-on-error: true
         run: |
           echo "=== Message Center pages ==="
-          python scripts/build-mc-seo-pages.py || echo "⚠ MC build skipped (endpoint unavailable)"
+          python scripts/build-mc-seo-pages.py
 
       # ── 3b. Update sitemap.xml lastmod dates from git history ───────────────
       - name: Update sitemap lastmod dates
+        id: update_sitemap
         run: |
           echo "=== Sitemap update ==="
           python scripts/update-sitemap.py
 
       # ── 4. Internal link checker ────────────────────────────────────────────
       - name: Check internal links
+        id: check_links
         run: |
           echo "=== Internal link check ==="
           python scripts/check-links.py --strict
@@ -55,6 +59,7 @@ jobs:
 
       # ── 5. Quick HTML well-formedness check with Python's html.parser ───────
       - name: Validate HTML structure
+        id: validate_html
         run: |
           echo "=== HTML validation ==="
           python - <<'PYEOF'
@@ -85,6 +90,8 @@ jobs:
           total = len(files)
           ok    = total - bad
           print(f"\n{ok}/{total} files clean,  {bad} with issues.")
+          if bad:
+              sys.exit(1)
           PYEOF
 
       # ── 6. Commit monthly content and sitemap changes ───────────────────────
@@ -105,13 +112,19 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "## Monthly Maintenance Complete" >> $GITHUB_STEP_SUMMARY
+          echo "## Monthly Maintenance Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Message Center page generation | ✅ monthly, noindex |" >> $GITHUB_STEP_SUMMARY
-          echo "| Sitemap lastmod update | ✅ |" >> $GITHUB_STEP_SUMMARY
-          echo "| Internal link check | ✅ |" >> $GITHUB_STEP_SUMMARY
-          echo "| HTML validation | ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| Message Center page generation | ${{ steps.build_mc.outcome }} (monthly, noindex) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Sitemap lastmod update | ${{ steps.update_sitemap.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Internal link check | ${{ steps.check_links.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| HTML validation | ${{ steps.validate_html.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Run date: $(date -u +%Y-%m-%d\ %H:%M\ UTC)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail when Message Center generation failed
+        if: always() && steps.build_mc.outcome == 'failure'
+        run: |
+          echo "Message Center generation failed; review the build log before publishing generated content."
+          exit 1
