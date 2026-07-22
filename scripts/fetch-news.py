@@ -1109,13 +1109,13 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
   <meta name="description" content="{desc}" />
   <meta name="keywords" content="{keywords_str}" />
     <meta name="robots" content="{'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' if INDEX_NEWS_ARTICLES else 'noindex, follow, noarchive'}" />
-  <meta name="author" content="OceanCloud" />
+  <meta name="author" content="OceanCloud Consultants" />
   <meta name="geo.region" content="US" />
   <meta name="geo.placename" content="Dallas, TX" />
   <meta name="geo.position" content="32.7767;-96.7970" />
   <link rel="canonical" href="{canonical}" />
   <meta property="og:type"        content="article" />
-  <meta property="og:site_name"   content="OceanCloud" />
+  <meta property="og:site_name"   content="OceanCloud Consultants" />
   <meta property="og:title"       content="{escape(title)}" />
   <meta property="og:description" content="{desc}" />
   <meta property="og:url"         content="{canonical}" />
@@ -1151,7 +1151,7 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
         "mainEntityOfPage": "{canonical}",
         "datePublished": "{pub_date}",
         "dateModified": "{pub_date}",
-        "author": {{ "@id": "{SITE_BASE_URL}/#james-whitfield" }},
+        "author": {{ "@id": "{SITE_BASE_URL}/#organization" }},
         "publisher": {{ "@id": "{SITE_BASE_URL}/#organization" }},
                 "description": {json_desc},
                 "image": {json_image},
@@ -1159,12 +1159,38 @@ def generate_article_page(item: dict, commentary: str, body_md: str, slug: str) 
                 "isPartOf": {{ "@id": "{SITE_BASE_URL}/#website" }}
             }},
             {{
-                "@type": "Person",
-                "@id": "{SITE_BASE_URL}/#james-whitfield",
-                "name": "James Whitfield",
-                "jobTitle": "Chief Executive Officer",
-                "url": "{SITE_BASE_URL}/about#team",
-                "worksFor": {{ "@id": "{SITE_BASE_URL}/#organization" }}
+                "@type": "Organization",
+                "@id": "{SITE_BASE_URL}/#organization",
+                "name": "OceanCloud Consultants",
+                "alternateName": "OceanCloud",
+                "legalName": "OceanCloud Consultants",
+                "url": "{SITE_BASE_URL}/",
+                "telephone": "+1-469-809-4053",
+                "email": "oceancloudconsults@gmail.com",
+                "address": {{
+                    "@type": "PostalAddress",
+                    "addressLocality": "Dallas",
+                    "addressRegion": "TX",
+                    "addressCountry": "US"
+                }},
+                "areaServed": {{ "@type": "Country", "name": "United States" }},
+                "contactPoint": [
+                    {{
+                        "@type": "ContactPoint",
+                        "name": "Main phone",
+                        "telephone": "+1-469-809-4053",
+                        "contactType": "sales and customer service",
+                        "description": "Available Monday-Friday, 9:00 AM-6:00 PM Eastern Time."
+                    }},
+                    {{
+                        "@type": "ContactPoint",
+                        "name": "WhatsApp",
+                        "telephone": "+1-917-675-3126",
+                        "contactType": "customer support",
+                        "contactOption": "WhatsApp",
+                        "description": "Available Monday-Friday, 9:00 AM-6:00 PM Eastern Time."
+                    }}
+                ]
             }},
             {{
                 "@type": "WebSite",

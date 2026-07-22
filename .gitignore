@@ -10,6 +10,8 @@ desktop.ini
 # Logs / temp
 *.log
 *.tmp
+__pycache__/
+*.pyc
 
 # Generated QA reports
 data/reports/

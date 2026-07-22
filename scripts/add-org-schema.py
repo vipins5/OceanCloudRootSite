@@ -8,49 +8,37 @@ from pathlib import Path
 org_schema = '''{
         "@type": "Organization",
         "@id": "https://oceancloudconsults.com/#organization",
-        "name": "OceanCloud",
+        "name": "OceanCloud Consultants",
+        "alternateName": "OceanCloud",
+        "legalName": "OceanCloud Consultants",
         "url": "https://oceancloudconsults.com/",
         "logo": "https://oceancloudconsults.com/assets/logo.png",
-        "foundingDate": "2013",
-        "description": "Microsoft Solutions Partner specialising in SharePoint consulting, Microsoft 365 migration, Power Platform development, and workplace transformation.",
-        "areaServed": "US",
-        "numberOfEmployees": {
-          "@type": "QuantitativeValue",
-          "value": 15
+        "description": "Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.",
+        "telephone": "+1-469-809-4053",
+        "email": "oceancloudconsults@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dallas",
+          "addressRegion": "TX",
+          "addressCountry": "US"
         },
-        "employee": [
+        "areaServed": { "@type": "Country", "name": "United States" },
+        "contactPoint": [
           {
-            "@type": "Person",
-            "name": "James Whitfield",
-            "jobTitle": "Chief Executive Officer",
-            "description": "SharePoint MVP with 18 years of enterprise Microsoft deployments. Personally oversees every client engagement.",
-            "worksFor": {
-              "@id": "https://oceancloudconsults.com/#organization"
-            }
+            "@type": "ContactPoint",
+            "name": "Main phone",
+            "telephone": "+1-469-809-4053",
+            "contactType": "sales and customer service",
+            "description": "Available Monday-Friday, 9:00 AM-6:00 PM Eastern Time."
           },
           {
-            "@type": "Person",
-            "name": "Sara Okafor",
-            "jobTitle": "Head of Architecture",
-            "description": "Microsoft Certified Solutions Architect specialising in M365 governance and Zero Trust security frameworks.",
-            "worksFor": {
-              "@id": "https://oceancloudconsults.com/#organization"
-            }
-          },
-          {
-            "@type": "Person",
-            "name": "Ben Marchetti",
-            "jobTitle": "Lead Power Platform Engineer",
-            "description": "Power Platform champion who has automated over 200 business processes across finance, legal, and retail sectors.",
-            "worksFor": {
-              "@id": "https://oceancloudconsults.com/#organization"
-            }
+            "@type": "ContactPoint",
+            "name": "WhatsApp",
+            "telephone": "+1-917-675-3126",
+            "contactType": "customer support",
+            "contactOption": "WhatsApp",
+            "description": "Available Monday-Friday, 9:00 AM-6:00 PM Eastern Time."
           }
-        ],
-        "award": [
-          "Microsoft Solutions Partner — Modern Work",
-          "Microsoft Solutions Partner — Security",
-          "ISO 27001 Certified"
         ]
       },'''
 
