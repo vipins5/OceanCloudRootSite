@@ -14,6 +14,9 @@ interface Env {
 	TURNSTILE_SECRET_KEY?: string;
 	TURNSTILE_SITE_KEY?: string;
 	ADMIN_TOKEN?: string;
+	SENDGRID_API_KEY?: string;
+	SENDGRID_FROM_EMAIL?: string;
+	CONTACT_NOTIFICATION_EMAIL?: string;
 }
 
 type ChatRole = "user" | "assistant";
@@ -81,6 +84,8 @@ const COMMENT_SESSION_TTL_SECONDS = 60 * 60 * 24 * 30;
 const COMMENT_MAX_LENGTH = 2000;
 const COMMENT_MIN_LENGTH = 3;
 const COMMENT_MAX_THREAD_DEPTH = 1;
+const CONTACT_MAX_MESSAGE_LENGTH = 5000;
+const CONTACT_MAX_FIELD_LENGTH = 200;
 const MICROSOFT_AUTHORITY = "https://login.microsoftonline.com/common/oauth2/v2.0";
 const GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
@@ -895,6 +900,131 @@ async function handleCommentsConfig(env: Env, origin: string): Promise<Response>
 	}, 200, origin);
 }
 
+function contactField(payload: Record<string, unknown>, key: string, maxLength = CONTACT_MAX_FIELD_LENGTH): string {
+	return String(payload[key] || "").trim().slice(0, maxLength);
+}
+
+function escapeEmailHtml(value: string): string {
+	return value.replace(/[&<>"']/g, (character) => ({
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		"\"": "&quot;",
+		"'": "&#39;",
+	}[character] || character));
+}
+
+async function sendContactNotification(env: Env, submission: {
+	reference: string;
+	name: string;
+	email: string;
+	company: string;
+	service: string;
+	orgSize: string;
+	message: string;
+}): Promise<boolean> {
+	if (!env.SENDGRID_API_KEY || !env.SENDGRID_FROM_EMAIL) return false;
+	const recipient = env.CONTACT_NOTIFICATION_EMAIL || "oceancloudconsults@gmail.com";
+	const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+		method: "POST",
+		headers: {
+			"Authorization": `Bearer ${env.SENDGRID_API_KEY}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			personalizations: [{ to: [{ email: recipient }] }],
+			from: { email: env.SENDGRID_FROM_EMAIL, name: "OceanCloud website" },
+			reply_to: { email: submission.email, name: submission.name },
+			subject: `${submission.reference}: New consultation request from ${submission.name}`,
+			content: [{
+				type: "text/html",
+				value: `<h2>New OceanCloud consultation request</h2>
+					<p><strong>Reference:</strong> ${escapeEmailHtml(submission.reference)}</p>
+					<p><strong>Name:</strong> ${escapeEmailHtml(submission.name)}<br>
+					<strong>Email:</strong> ${escapeEmailHtml(submission.email)}<br>
+					<strong>Company:</strong> ${escapeEmailHtml(submission.company)}<br>
+					<strong>Service:</strong> ${escapeEmailHtml(submission.service)}<br>
+					<strong>Organisation size:</strong> ${escapeEmailHtml(submission.orgSize)}</p>
+					<p><strong>Message</strong></p><p>${escapeEmailHtml(submission.message).replace(/\n/g, "<br>")}</p>`,
+			}],
+		}),
+	});
+	return response.ok;
+}
+
+async function handleContactSubmission(request: Request, env: Env, origin: string): Promise<Response> {
+	if (!env.COMMENTS_DB) return badConfig(origin);
+	let payload: Record<string, unknown>;
+	try {
+		payload = await request.json() as Record<string, unknown>;
+	} catch {
+		return jsonResponse({ error: "Invalid JSON body" }, 400, origin);
+	}
+
+	// A hidden field catches basic form bots before any database write.
+	if (contactField(payload, "website")) return jsonResponse({ success: true }, 200, origin);
+
+	const name = contactField(payload, "name");
+	const email = contactField(payload, "email").toLowerCase();
+	const company = contactField(payload, "company");
+	const service = contactField(payload, "service", 500);
+	const orgSize = contactField(payload, "orgSize", 100);
+	const message = contactField(payload, "message", CONTACT_MAX_MESSAGE_LENGTH);
+	const turnstileToken = contactField(payload, "turnstileToken", 2048);
+
+	if (name.length < 2 || company.length < 2 || service.length < 2 || message.length < 10) {
+		return jsonResponse({ error: "Please complete every required field" }, 400, origin);
+	}
+	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+		return jsonResponse({ error: "Enter a valid work email" }, 400, origin);
+	}
+	if (!await validateTurnstile(turnstileToken, request, env)) {
+		return jsonResponse({ error: "Complete the verification and try again" }, 400, origin);
+	}
+
+	const result = await env.COMMENTS_DB.prepare(
+		`INSERT INTO contact_submissions (name, email, company, service, org_size, message, source_url)
+		 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+	).bind(name, email, company, service, orgSize, message, request.headers.get("Referer") || "").run();
+	const reference = `OC-${String(result.meta.last_row_id || "NEW").padStart(6, "0")}`;
+	const notificationSent = await sendContactNotification(env, {
+		reference, name, email, company, service, orgSize, message,
+	}).catch(() => false);
+
+	return jsonResponse({ success: true, reference, notificationSent }, 201, origin);
+}
+
+async function handleAdminContacts(request: Request, env: Env, origin: string): Promise<Response> {
+	if (!env.COMMENTS_DB || !env.ADMIN_TOKEN || getAdminToken(request) !== env.ADMIN_TOKEN) {
+		return jsonResponse({ error: "Unauthorized" }, 401, origin);
+	}
+	const status = new URL(request.url).searchParams.get("status") || "new";
+	if (!["new", "read", "archived", "all"].includes(status)) {
+		return jsonResponse({ error: "Invalid status" }, 400, origin);
+	}
+	const statement = status === "all"
+		? env.COMMENTS_DB.prepare(`SELECT * FROM contact_submissions ORDER BY created_at DESC LIMIT 100`)
+		: env.COMMENTS_DB.prepare(`SELECT * FROM contact_submissions WHERE status = ? ORDER BY created_at DESC LIMIT 100`).bind(status);
+	const { results } = await statement.all();
+	return jsonResponse({ submissions: results || [] }, 200, origin);
+}
+
+async function handleAdminContactStatus(request: Request, env: Env, origin: string): Promise<Response> {
+	if (!env.COMMENTS_DB || !env.ADMIN_TOKEN || getAdminToken(request) !== env.ADMIN_TOKEN) {
+		return jsonResponse({ error: "Unauthorized" }, 401, origin);
+	}
+	const payload = await request.json().catch(() => ({})) as { id?: number; status?: string };
+	const id = Number(payload.id || 0);
+	const status = String(payload.status || "");
+	if (!id || !["new", "read", "archived"].includes(status)) {
+		return jsonResponse({ error: "Invalid contact update" }, 400, origin);
+	}
+	await env.COMMENTS_DB.prepare(
+		`UPDATE contact_submissions SET status = ?, updated_at = datetime('now') WHERE id = ?`,
+	).bind(status, id).run();
+	return jsonResponse({ success: true }, 200, origin);
+}
+
 async function handleListComments(request: Request, env: Env, origin: string): Promise<Response> {
 	if (!env.COMMENTS_DB) return badConfig(origin);
 	const slug = safeSlug(new URL(request.url).searchParams.get("slug"));
@@ -1499,6 +1629,18 @@ export default {
 
 		if (url.pathname === "/comments/admin/moderate" && request.method === "POST") {
 			return handleAdminModerate(request, env, origin);
+		}
+
+		if (url.pathname === "/contact" && request.method === "POST") {
+			return handleContactSubmission(request, env, origin);
+		}
+
+		if (url.pathname === "/contact/admin" && request.method === "GET") {
+			return handleAdminContacts(request, env, origin);
+		}
+
+		if (url.pathname === "/contact/admin/status" && request.method === "POST") {
+			return handleAdminContactStatus(request, env, origin);
 		}
 
 		if (request.method !== "POST" || !["/", "/chat"].includes(url.pathname)) {

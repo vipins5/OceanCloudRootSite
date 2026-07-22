@@ -22,6 +22,11 @@ Public pages, guides, news posts, sitemap, RSS feed, and search index may be cra
 
 - [Home](https://oceancloudconsults.com/): SharePoint consulting, Microsoft 365 migration, Power Platform, Teams, Copilot, security, and adoption services.
 - [Services](https://oceancloudconsults.com/services): Consulting service categories and engagement options.
+- [SharePoint Consulting](https://oceancloudconsults.com/sharepoint-consulting): SharePoint architecture, governance, intranet, remediation, and custom development services.
+- [Microsoft 365 Migration](https://oceancloudconsults.com/microsoft-365-migration): Exchange, SharePoint, OneDrive, file share, and tenant-to-tenant migration services.
+- [Microsoft 365 Copilot Readiness](https://oceancloudconsults.com/microsoft-365-copilot-readiness): Oversharing assessment, governance, security alignment, pilot, and measurement services.
+- [Power Platform Consulting](https://oceancloudconsults.com/power-platform-consulting): Governed Power Apps, Power Automate, Dataverse, and Power BI delivery.
+- [SharePoint Intranet Development](https://oceancloudconsults.com/sharepoint-intranet-development): Research-led intranet architecture, build, Viva Connections, governance, and adoption.
 - [Case Studies](https://oceancloudconsults.com/case-studies): Example outcomes across intranet, migration, automation, security, Teams, and governance projects.
 - [News](https://oceancloudconsults.com/news): Microsoft 365, SharePoint, Teams, Copilot, Purview, and Power Platform updates.
 - [Guides](https://oceancloudconsults.com/guides): Practical long-form Microsoft 365 and SharePoint guides.

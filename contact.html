@@ -130,13 +130,7 @@
             "contactOption": "WhatsApp",
             "availableLanguage": "English"
           }
-        ],
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "47",
-          "bestRating": "5"
-        }
+        ]
       },
       {
         "@type": "Organization",
@@ -909,6 +903,7 @@
             <div class="conv-option" data-value="Teams &amp; Viva"><span class="opt-icon">&#128101;</span>Teams &amp; Viva<span class="check">&#10003;</span></div>
             <div class="conv-option" data-value="Power Platform"><span class="opt-icon">&#9889;</span>Power Platform<span class="check">&#10003;</span></div>
             <div class="conv-option" data-value="Security &amp; Compliance"><span class="opt-icon">&#128274;</span>Security &amp; Compliance<span class="check">&#10003;</span></div>
+            <div class="conv-option" data-value="Microsoft 365 Copilot"><span class="opt-icon">&#129302;</span>Microsoft 365 Copilot<span class="check">&#10003;</span></div>
             <div class="conv-option" data-value="Not sure yet"><span class="opt-icon">&#128173;</span>Not sure yet<span class="check">&#10003;</span></div>
           </div>
           <div class="conv-actions">
@@ -941,6 +936,8 @@
           <div class="conv-question" id="q5"></div>
           <div class="conv-hint">No need to be precise — just tell us what's on your mind</div>
           <textarea class="conv-textarea" id="inp-message" placeholder="We're currently on SharePoint 2016 on-prem and want to migrate to SPO, but we're not sure where to start…" aria-label="Project message"></textarea>
+          <input id="inp-website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;" />
+          <div id="contact-turnstile" style="min-height:65px;margin-top:16px;"></div>
           <div class="conv-actions">
             <button class="btn-conv-back" id="back-5">&#8592; Back</button>
             <button class="btn-conv-next" id="next-5" disabled>Send it &#8594;</button>
@@ -1088,6 +1085,54 @@
   const dots    = Array.from({length: DOTS}, (_, i) => document.getElementById('d' + i));
   const label   = document.getElementById('progLabel');
   const success = document.getElementById('conv-success');
+  const API_BASE_URL = 'https://oceancloud-ai-proxy.oceancloud-ai-proxy.workers.dev';
+  let turnstileToken = '';
+  let turnstileWidgetId = null;
+  let turnstileStarted = false;
+
+  function updateSendState() {
+    const message = document.getElementById('inp-message')?.value.trim() || '';
+    const button = document.getElementById('next-5');
+    if (button) button.disabled = message.length < 10 || !turnstileToken;
+  }
+
+  function renderContactTurnstile(siteKey) {
+    const target = document.getElementById('contact-turnstile');
+    if (!target || !window.turnstile || turnstileWidgetId !== null) return;
+    turnstileWidgetId = window.turnstile.render(target, {
+      sitekey: siteKey,
+      theme: 'dark',
+      callback: token => { turnstileToken = token; updateSendState(); },
+      'expired-callback': () => { turnstileToken = ''; updateSendState(); },
+      'error-callback': () => { turnstileToken = ''; updateSendState(); },
+    });
+  }
+
+  async function initContactTurnstile() {
+    if (turnstileStarted) return;
+    turnstileStarted = true;
+    const hint = document.querySelector('#step-5 .conv-hint');
+    try {
+      const response = await fetch(`${API_BASE_URL}/comments/config`);
+      const config = await response.json();
+      if (!response.ok || !config.turnstileSiteKey) throw new Error('Verification is unavailable');
+      if (window.turnstile) {
+        renderContactTurnstile(config.turnstileSiteKey);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => renderContactTurnstile(config.turnstileSiteKey);
+      script.onerror = () => {
+        if (hint) hint.innerHTML = 'Verification is temporarily unavailable. Please email <a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a>.';
+      };
+      document.head.appendChild(script);
+    } catch (error) {
+      if (hint) hint.innerHTML = 'Verification is temporarily unavailable. Please email <a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a>.';
+    }
+  }
 
   /* ─── Typewriter ─── */
   function typewrite(el, text, done) {
@@ -1134,6 +1179,16 @@
   bindOptions('service-opts', 'next-3', false);
   bindOptions('size-opts',    'next-4', true);
 
+  const requestedService = new URLSearchParams(window.location.search).get('service');
+  if (requestedService) {
+    const matchingOption = Array.from(document.querySelectorAll('#service-opts .conv-option'))
+      .find(option => option.dataset.value.toLowerCase() === requestedService.toLowerCase());
+    if (matchingOption) {
+      matchingOption.classList.add('selected');
+      document.getElementById('next-3').disabled = false;
+    }
+  }
+
   /* ─── Progress dots ─── */
   function updateProgress(idx) {
     dots.forEach((d, i) => {
@@ -1173,6 +1228,7 @@
     }, 80);
 
     updateProgress(idx);
+    if (idx === steps.length - 1) initContactTurnstile();
   }
 
   /* ─── Validate & enable next button ─── */
@@ -1188,7 +1244,7 @@
   bindInput('inp-name',    'next-0', v => v.trim().length >= 2);
   bindInput('inp-email',   'next-1', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()));
   bindInput('inp-company', 'next-2', v => v.trim().length >= 2);
-  bindInput('inp-message', 'next-5', v => v.trim().length >= 10);
+  document.getElementById('inp-message')?.addEventListener('input', updateSendState);
 
   /* ─── Enter key to advance ─── */
   ['inp-name', 'inp-email', 'inp-company'].forEach((id, i) => {
@@ -1240,13 +1296,8 @@
     }
   }
 
-  /* ─── Backend Configuration ─── */
-  const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:5000'
-    : '';
-
   /* ─── Submit ─── */
-  function submitForm() {
+  async function submitForm() {
     const name    = document.getElementById('inp-name').value.trim();
     const email   = document.getElementById('inp-email').value.trim();
     const company = document.getElementById('inp-company').value.trim();
@@ -1259,70 +1310,28 @@
     const origText = sendBtn.innerHTML;
     sendBtn.innerHTML = 'Sending&hellip;';
     sendBtn.disabled = true;
-    // Call backend API
-    fetch(`${API_BASE_URL}/api/contact-submit`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      body: JSON.stringify({
-        from_name: name,
-        from_email: email,
-        from_company: company,
-        service: service,
-        org_size: size,
-        message: message,
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          showSuccessScreen(name, email, company, service, size);
-        } else {
-          throw new Error(data.error || 'Submission failed');
-        }
-      })
-      .catch((err) => {
-        // ── Error: restore button, show inline error ──
-        sendBtn.innerHTML = origText;
-        sendBtn.disabled = false;
-        const hint = document.querySelector('#step-5 .conv-hint');
-        if (hint) {
-          hint.innerHTML = '<span style="color:#f87171;">&#9888; Send failed — please try again or email us directly.</span>';
-          setTimeout(() => { hint.textContent = 'No need to be precise — just tell us what's on your mind'; }, 5000);
-        }
-        console.error('Submission error:', err);
+    try {
+      const response = await fetch(`${API_BASE_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, company, service, orgSize: size, message,
+          website: document.getElementById('inp-website').value,
+          turnstileToken,
+        }),
       });
-
-    const templateParams = {
-      from_name:    name,
-      from_email:   email,
-      from_company: company,
-      service:      service,
-      org_size:     size,
-      message:      message,
-    };
-
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, {
-      publicKey: EMAILJS_PUBLIC_KEY,
-    })
-      .then(() => {
-        showSuccessScreen(name, email, company, service, size);
-      })
-      .catch((err) => {
-        // ── Error: restore button, show inline error ──
-        sendBtn.innerHTML = origText;
-        sendBtn.disabled = false;
-        const hint = document.querySelector('#step-5 .conv-hint');
-        if (hint) {
-          hint.innerHTML = '<span style="color:#f87171;">&#9888; Send failed — please try again or email us directly.</span>';
-          setTimeout(() => { hint.textContent = 'No need to be precise — just tell us what’s on your mind'; }, 5000);
-        }
-        console.error('EmailJS error:', err);
-      });
-
-    return; // prevent fall-through to old inline success code
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) throw new Error(data.error || 'Submission failed');
+      showSuccessScreen(name, email, company, service, size);
+    } catch (error) {
+      sendBtn.innerHTML = origText;
+      const hint = document.querySelector('#step-5 .conv-hint');
+      if (hint) hint.innerHTML = '<span style="color:#f87171;">&#9888; Send failed — please try again or email us directly.</span>';
+      turnstileToken = '';
+      if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+      updateSendState();
+      console.error('Submission error:', error);
+    }
   }
 
   function showSuccessScreen(name, email, company, service, size) {

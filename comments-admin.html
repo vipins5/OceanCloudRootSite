@@ -28,8 +28,8 @@
 <body>
   <main class="admin-wrap">
     <div class="admin-head">
-      <h1>Comment Moderation</h1>
-      <p>Paste the admin token from Cloudflare Worker secrets. Approved comments appear publicly.</p>
+      <h1>OceanCloud Inbox</h1>
+      <p>Review pending comments and new website consultation requests.</p>
     </div>
     <section class="admin-panel">
       <div class="admin-token">
@@ -38,6 +38,9 @@
       </div>
       <p class="status" id="status"></p>
       <div class="comment-list" id="commentList"></div>
+      <h2 style="margin:32px 0 8px;">New consultation requests</h2>
+      <p class="status" id="contactStatus"></p>
+      <div class="comment-list" id="contactList"></div>
     </section>
   </main>
   <script src="js/consent.js?v=5"></script>

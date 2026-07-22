@@ -127,19 +127,10 @@ function animateCounter(el) {
   const target   = parseFloat(el.dataset.target);
   const suffix   = el.dataset.suffix || '';
   const prefix   = el.dataset.prefix || '';
-  const duration = 1600;
-  const steps    = 55;
-  let   current  = 0;
-  const step     = target / steps;
-
-  const timer = setInterval(() => {
-    current = Math.min(current + step, target);
-    const display = Number.isInteger(target)
-      ? Math.round(current)
-      : current.toFixed(1);
-    el.textContent = prefix + display + suffix;
-    if (current >= target) clearInterval(timer);
-  }, duration / steps);
+  const display  = Number.isInteger(target) ? String(target) : target.toFixed(1);
+  // Keep the real proof point in the DOM so search engines and assistive
+  // technology never encounter a misleading animated zero state.
+  el.textContent = prefix + display + suffix;
 }
 
 const counterObs = new IntersectionObserver((entries) => {

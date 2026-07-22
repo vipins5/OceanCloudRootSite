@@ -6,6 +6,8 @@
   var tokenInput = document.getElementById('adminToken');
   var statusEl = document.getElementById('status');
   var listEl = document.getElementById('commentList');
+  var contactStatusEl = document.getElementById('contactStatus');
+  var contactListEl = document.getElementById('contactList');
 
   function getStoredToken() {
     try {
@@ -28,7 +30,7 @@
   tokenInput.value = getStoredToken();
   document.getElementById('saveToken').addEventListener('click', function () {
     if (!setStoredToken(tokenInput.value.trim())) return;
-    loadPending();
+    Promise.all([loadPending(), loadContacts()]);
   });
 
   function escapeHtml(value) {
@@ -81,11 +83,47 @@
     }
   }
 
+  async function updateContact(id, status) {
+    await request('/contact/admin/status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, status: status })
+    });
+    await loadContacts();
+  }
+
+  async function loadContacts() {
+    contactStatusEl.textContent = 'Loading consultation requests...';
+    contactListEl.innerHTML = '';
+    try {
+      var data = await request('/contact/admin?status=new');
+      var submissions = data.submissions || [];
+      contactStatusEl.textContent = submissions.length ? submissions.length + ' new request(s).' : 'No new consultation requests.';
+      contactListEl.innerHTML = submissions.map(function (submission) {
+        return '<article class="comment-item">' +
+          '<div class="comment-meta"><strong>' + escapeHtml(submission.name) + '</strong><span>' + escapeHtml(submission.created_at) + '</span></div>' +
+          '<div class="comment-body"><strong>' + escapeHtml(submission.company) + '</strong> · ' + escapeHtml(submission.service) + ' · ' + escapeHtml(submission.org_size) + '<br>' +
+          '<a href="mailto:' + encodeURIComponent(submission.email) + '">' + escapeHtml(submission.email) + '</a><br><br>' + escapeHtml(submission.message) + '</div>' +
+          '<div class="comment-actions"><button data-contact-status="read" data-id="' + submission.id + '">Mark read</button>' +
+          '<button class="reject" data-contact-status="archived" data-id="' + submission.id + '">Archive</button></div>' +
+          '</article>';
+      }).join('');
+    } catch (error) {
+      contactStatusEl.textContent = error.message || 'Could not load consultation requests.';
+    }
+  }
+
   listEl.addEventListener('click', function (event) {
     var button = event.target.closest('button[data-action]');
     if (!button) return;
     moderate(Number(button.dataset.id), button.dataset.action);
   });
 
-  if (tokenInput.value) loadPending();
+  contactListEl.addEventListener('click', function (event) {
+    var button = event.target.closest('button[data-contact-status]');
+    if (!button) return;
+    updateContact(Number(button.dataset.id), button.dataset.contactStatus);
+  });
+
+  if (tokenInput.value) Promise.all([loadPending(), loadContacts()]);
 })();
