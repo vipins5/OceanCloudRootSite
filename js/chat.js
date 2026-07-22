@@ -56,12 +56,12 @@
     },
     {
       keywords: ['support', 'after go-live', 'hypercare', 'retainer', 'ongoing', 'maintain', 'managed service', 'help desk'],
-      text: 'Every client gets <strong>12 months of post-go-live hypercare</strong>:\n\n• Dedicated named consultant\n• Guaranteed SLA incident response\n• Monthly M365 health checks\n• Proactive monitoring & governance reviews\n\nWe also offer ongoing managed service retainers beyond the 12-month period.',
+      text: 'Post-go-live support is defined in each engagement:\n\n• Named support contact\n• Agreed response targets\n• Optional M365 health checks\n• Optional monitoring and governance reviews\n\nAsk us to include the support period and service levels you need in the written scope.',
       chips: ['Support pricing', 'Book a call', 'Contact us']
     },
     {
       keywords: ['partner', 'certified', 'microsoft partner', 'gold partner', 'solutions partner', 'certification', 'mcse', 'ms-102', 'sc-300'],
-      text: 'OceanCloud is a <strong>Microsoft Solutions Partner</strong> — Microsoft\'s highest partner tier, replacing the old Gold designation.\n\nThis requires:\n• Verified customer success metrics\n• Active certified staff (we hold <strong>40+</strong> certifications)\n• Annual audit by Microsoft\n\nOur certs include MS-102, MS-203, SC-300, SC-400, PL-400, PL-600, AZ-104 and more.',
+      text: 'OceanCloud Consultants provides SharePoint and Microsoft 365 consulting from Dallas, serving clients across the United States.\n\nCredential or partner evidence relevant to an engagement can be requested during due diligence.',
       chips: ['About OceanCloud', 'Our services', 'Book a call']
     },
     {
@@ -71,12 +71,12 @@
     },
     {
       keywords: ['about', 'who are you', 'oceancloud', 'company', 'team', 'founded', 'history'],
-      text: 'OceanCloud is a <strong>Microsoft Solutions Partner</strong> specialising in SharePoint, M365, Power Platform, and workplace transformation.\n\n• Founded: <strong>2013</strong>\n• Team: <strong>15</strong> certified consultants\n• Projects delivered: <strong>150+</strong>\n• Client satisfaction: <strong>98%</strong>\n• Based in the <strong>United States</strong>',
+      text: '<strong>OceanCloud Consultants</strong> is a Microsoft 365 consultancy operating from Dallas, Texas and serving clients across the United States.\n\nWe focus on SharePoint, Microsoft 365 migration, Power Platform, Copilot readiness, security, and adoption.',
       chips: ['Meet the team', 'Our services', 'Contact us']
     },
     {
       keywords: ['contact', 'call', 'book', 'appointment', 'speak', 'talk to', 'email', 'phone', 'reach', 'get in touch'],
-      text: 'You can reach our team here:\n\n📞 <strong>+1 (469) 809-4053</strong>\n💬 <strong>WhatsApp:</strong> +1 (917) 675-3126\n📧 <strong>oceancloudconsults@gmail.com</strong>\n⏰ Mon–Fri, 9am–6pm EST\n\nOr book a <strong>free 60-minute discovery call</strong> — no sales pressure, just a conversation.',
+      text: 'You can reach OceanCloud Consultants here:\n\n📞 <strong>Main:</strong> +1 (469) 809-4053\n💬 <strong>WhatsApp:</strong> +1 (917) 675-3126\n📧 <strong>oceancloudconsults@gmail.com</strong>\n📍 Dallas, Texas · serving clients across the United States\n⏰ Mon–Fri, 9am–6pm EST\n\nOr book a <strong>free 60-minute discovery call</strong>.',
       chips: ['Book a free call', 'Send us an email']
     },
     {
@@ -86,7 +86,7 @@
     },
     {
       keywords: ['what do you do', 'services', 'what services', 'offerings', 'capabilities'],
-      text: 'We offer end-to-end Microsoft 365 expertise:\n\n01 SharePoint Consulting\n02 M365 Migration\n03 Teams & Viva\n04 Power Platform\n05 Security & Compliance\n06 Training & Adoption\n\nAll backed by 12-month hypercare and fixed-price delivery.',
+      text: 'We offer Microsoft 365 expertise across:\n\n01 SharePoint Consulting\n02 M365 Migration\n03 Teams & Viva\n04 Power Platform\n05 Security & Compliance\n06 Training & Adoption\n\nDelivery terms and post-launch support are documented for each engagement.',
       chips: ['View all services', 'Pricing', 'Book a call']
     }
   ];

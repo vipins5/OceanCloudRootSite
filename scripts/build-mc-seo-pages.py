@@ -116,7 +116,9 @@ def page_html(m: dict[str, Any]) -> str:
         "dateModified": updated or None,
         "publisher": {
             "@type": "Organization",
-            "name": "OceanCloud",
+            "name": "OceanCloud Consultants",
+            "alternateName": "OceanCloud",
+            "legalName": "OceanCloud Consultants",
             "url": SITE,
         },
         "description": desc,
@@ -138,7 +140,7 @@ def page_html(m: dict[str, Any]) -> str:
   <meta property=\"og:title\" content=\"{esc(mcid)} | {esc(title)}\" />
   <meta property=\"og:description\" content=\"{esc(desc)}\" />
   <meta property=\"og:url\" content=\"{esc(url)}\" />
-  <meta property=\"og:site_name\" content=\"OceanCloud\" />
+  <meta property=\"og:site_name\" content=\"OceanCloud Consultants\" />
   <meta name=\"twitter:card\" content=\"summary\" />
   <meta name=\"twitter:title\" content=\"{esc(mcid)} | {esc(title)}\" />
   <meta name=\"twitter:description\" content=\"{esc(desc)}\" />

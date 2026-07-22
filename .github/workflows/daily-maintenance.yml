@@ -1,12 +1,11 @@
-name: Weekly Site Maintenance
+name: Monthly Site Maintenance
 
-# Runs weekly on Monday at 07:00 UTC.
-# Message Center page generation is intentionally paused while Google
-# reassesses the site's smaller, curated set of canonical pages.
+# Runs on the first day of each month at 07:00 UTC.
+# Message Center pages remain noindex and outside the canonical sitemap index.
 # Also triggerable manually from the Actions tab.
 on:
   schedule:
-    - cron: '0 7 * * 1'
+    - cron: '0 7 1 * *'
   workflow_dispatch:
 
 concurrency:
@@ -35,7 +34,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ── 3. Update sitemap.xml lastmod dates from git history ────────────────
+      # ── 3a. Regenerate noindex Message Center pages ─────────────────────────
+      - name: Build Message Center pages
+        run: |
+          echo "=== Message Center pages ==="
+          python scripts/build-mc-seo-pages.py || echo "⚠ MC build skipped (endpoint unavailable)"
+
+      # ── 3b. Update sitemap.xml lastmod dates from git history ───────────────
       - name: Update sitemap lastmod dates
         run: |
           echo "=== Sitemap update ==="
@@ -82,29 +87,29 @@ jobs:
           print(f"\n{ok}/{total} files clean,  {bad} with issues.")
           PYEOF
 
-      # ── 6. Commit sitemap changes if they changed ───────────────────────────
-      - name: Commit sitemap changes
+      # ── 6. Commit monthly content and sitemap changes ───────────────────────
+      - name: Commit monthly changes
         run: |
           git config user.name  "OceanCloud Maintenance Bot"
           git config user.email "bot@oceancloudconsults.com"
-          git add sitemap.xml
+          git add sitemap.xml sitemap-mc.xml mc/
           if git diff --cached --quiet; then
-            echo "Sitemap already up to date — nothing to commit."
+            echo "Monthly generated content is already up to date — nothing to commit."
           else
-            git commit -m "chore: update sitemap dates $(date -u +%Y-%m-%d)"
+            git commit -m "chore: monthly Message Center and sitemap update $(date -u +%Y-%m-%d)"
             git push
-            echo "✓ Sitemap changes committed and pushed."
+            echo "✓ Monthly changes committed and pushed."
           fi
 
       # ── 7. Print a job summary ───────────────────────────────────────────────
       - name: Summary
         if: always()
         run: |
-          echo "## Daily Maintenance Complete" >> $GITHUB_STEP_SUMMARY
+          echo "## Monthly Maintenance Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Message Center page generation | ⏸ paused for search recovery |" >> $GITHUB_STEP_SUMMARY
+          echo "| Message Center page generation | ✅ monthly, noindex |" >> $GITHUB_STEP_SUMMARY
           echo "| Sitemap lastmod update | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| Internal link check | ✅ |" >> $GITHUB_STEP_SUMMARY
           echo "| HTML validation | ✅ |" >> $GITHUB_STEP_SUMMARY
