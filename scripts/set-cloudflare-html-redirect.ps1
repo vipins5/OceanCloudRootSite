@@ -266,7 +266,7 @@ $homeDesiredRule = @{
 			status_code           = 301
 			preserve_query_string = $true
 			target_url = @{
-				expression = ('"https://' + $ZoneName + '/"')
+				value = ('https://' + $ZoneName + '/')
 			}
 		}
 	}
