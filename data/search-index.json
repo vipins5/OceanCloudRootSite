@@ -721,6 +721,32 @@
     "dateSort": "2026-07-14"
   },
   {
+    "id": "articles-guide-mcp-sharepoint-integration",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "integration",
+    "title": "MCP Server and SharePoint Integration Guide 2026",
+    "heading": "MCP Server and SharePoint Integration: 2026 Guide",
+    "excerpt": "How the Model Context Protocol connects SharePoint to Copilot Studio agents: the Work IQ SharePoint server, setup steps, authentication, and governance.",
+    "body": "MCP server SharePoint integration guide covering the Model Context Protocol in Copilot Studio, the first-party Work IQ SharePoint MCP server (mcp_SharePointRemoteServer) and its site, document library, file, list, column, and sharing tools, the MCP onboarding wizard, API key and OAuth 2.0 authentication, bring-your-own (BYO) MCP server registration via the Agent 365 CLI, admin governance in the Microsoft 365 admin center, Microsoft Defender Advanced Hunting observability, current preview limitations including the 5 MB file size cap, and when to choose MCP over a SharePoint knowledge source or custom connector.",
+    "url": "articles/guide-mcp-sharepoint-integration",
+    "dateDisplay": "July 28, 2026",
+    "dateSort": "2026-07-28"
+  },
+  {
+    "id": "articles-guide-mcp-azure-integration",
+    "type": "guide",
+    "tag": "Guide",
+    "topic": "integration",
+    "title": "MCP Server and Azure Integration Guide 2026",
+    "heading": "MCP Server and Azure Integration: 2026 Guide",
+    "excerpt": "The Azure MCP Server tool catalog, connecting it to Copilot Studio and Microsoft Foundry agents, authentication, and AI Gateway governance.",
+    "body": "MCP server Azure integration guide covering the official Azure MCP Server (azmcp): its tool categories across compute, storage, databases, DevOps, security, and management, Entra ID authentication and Azure RBAC, local developer use in VS Code and Visual Studio versus remote deployment for agents, connecting it to a Copilot Studio agent through a Power Apps custom connector with the mcp-streamable-1.0 protocol and OAuth 2.0, connecting to Microsoft Foundry Agent Service natively with require_approval controls and Foundry Toolboxes, AI Gateway governance through Azure API Management rate limiting and IP filtering, elicitation for sensitive data, and how it compares to the Work IQ SharePoint MCP server.",
+    "url": "articles/guide-mcp-azure-integration",
+    "dateDisplay": "July 28, 2026",
+    "dateSort": "2026-07-28"
+  },
+  {
     "tag": "Guide",
     "topic": "admin",
     "dateSort": "2026-06-02",
