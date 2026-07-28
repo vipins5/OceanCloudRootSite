@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>MCP Server Azure Integration Guide 2026 | OceanCloud</title>
-  <meta name="description" content="MCP server Azure integration guide: what the Azure MCP Server exposes, connecting it to Copilot Studio and Microsoft Foundry agents, and AI Gateway governance." />
+  <title>MCP Server Azure Integration: 2026 Setup Guide | OceanCloud</title>
+  <meta name="description" content="Learn how MCP server Azure integration works with the Azure MCP Server, Copilot Studio, Microsoft Foundry agents, RBAC, setup steps, and AI Gateway governance." />
   <meta name="keywords" content="MCP server Azure integration, Azure MCP Server, Model Context Protocol Azure, connect Azure MCP Server to Copilot Studio, Microsoft Foundry MCP tools, Azure AI Gateway MCP governance, azmcp" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -16,17 +16,19 @@
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="OceanCloud Consultants" />
-  <meta property="og:title" content="MCP Server and Azure Integration Guide 2026" />
-  <meta property="og:description" content="The Azure MCP Server's tool catalog, connecting MCP to Copilot Studio and Microsoft Foundry agents, authentication, and AI Gateway governance." />
+  <meta property="og:title" content="MCP Server Azure Integration: 2026 Setup Guide" />
+  <meta property="og:description" content="A practical Azure MCP Server guide covering supported tools, Copilot Studio setup, Microsoft Foundry agents, RBAC, and AI Gateway governance." />
   <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-mcp-azure-integration" />
   <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt" content="Model Context Protocol connecting an agent to Azure resources" />
   <meta property="og:locale" content="en_US" />
+  <meta property="article:published_time" content="2026-07-28" />
+  <meta property="article:modified_time" content="2026-07-28" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@oceancloud_x" />
-  <meta name="twitter:title" content="MCP Server and Azure Integration Guide 2026 | OceanCloud" />
-  <meta name="twitter:description" content="How the Azure MCP Server exposes Azure services as agent tools, and how to connect it to Copilot Studio and Foundry agents with governance." />
+  <meta name="twitter:title" content="MCP Server Azure Integration Guide 2026 | OceanCloud" />
+  <meta name="twitter:description" content="How to connect Azure MCP Server to Copilot Studio and Microsoft Foundry agents with RBAC, clear setup steps, and governance." />
   <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,7 +51,7 @@
     {
       "@type": "Article",
       "@id": "https://oceancloudconsults.com/articles/guide-mcp-azure-integration#article",
-      "headline": "MCP Server and Azure Integration Guide 2026",
+      "headline": "MCP Server Azure Integration: 2026 Setup Guide",
       "url": "https://oceancloudconsults.com/articles/guide-mcp-azure-integration",
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -63,12 +65,14 @@
       "publisher": {
         "@id": "https://oceancloudconsults.com/#organization"
       },
-      "description": "MCP server Azure integration guide: what the Azure MCP Server exposes, connecting it to Copilot Studio and Microsoft Foundry agents, and AI Gateway governance.",
+      "description": "Learn how MCP server Azure integration works with the Azure MCP Server, Copilot Studio, Microsoft Foundry agents, RBAC, setup steps, and AI Gateway governance.",
       "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "articleSection": "Integration",
       "keywords": [
         "MCP server Azure integration",
         "Azure MCP Server",
         "Model Context Protocol Azure",
+        "Azure MCP setup guide",
         "connect Azure MCP Server to Copilot Studio",
         "Microsoft Foundry MCP tools",
         "Azure AI Gateway MCP governance",
@@ -112,10 +116,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the Azure MCP Server?",
+          "name": "What is MCP server Azure integration?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Azure MCP Server (azmcp) is Microsoft's official MCP server for Azure. It exposes dozens of Azure services, from Storage and Cosmos DB to AKS, Key Vault, and Azure Monitor, as MCP tools so an AI agent or IDE assistant can query and manage Azure resources in natural language instead of through hand-written API calls."
+            "text": "MCP server Azure integration connects an AI agent or MCP-compatible client to Azure tools through the Azure MCP Server (azmcp). It lets the agent query and manage Azure services such as Storage, Cosmos DB, AKS, Key Vault, and Azure Monitor through governed tool calls backed by Microsoft Entra ID and Azure RBAC."
           }
         },
         {
@@ -123,7 +127,7 @@
           "name": "Is the Azure MCP Server the same as the Work IQ SharePoint MCP server?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Work IQ SharePoint is a Microsoft 365 Copilot / Agent 365 server scoped to SharePoint and OneDrive. The Azure MCP Server is a separate, broader server covering Azure infrastructure and platform services. A Copilot Studio agent can use both at once for scenarios that touch SharePoint content and Azure resources."
+            "text": "No. Work IQ SharePoint is a Microsoft 365 Copilot / Agent 365 server scoped to SharePoint and OneDrive. The Azure MCP Server is a separate, broader server covering Azure development, operations, and platform services. A Copilot Studio agent can use both at once for scenarios that touch SharePoint content and Azure resources."
           }
         },
         {
@@ -149,6 +153,34 @@
             "@type": "Answer",
             "text": "For Microsoft Foundry agents, route new MCP tools through an AI gateway backed by Azure API Management, where you apply rate limiting, IP filtering, and audit logging as standard API Management policies. For Copilot Studio, Power Platform data loss prevention (DLP) policies govern the custom connector the same way they govern any other connector."
           }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://oceancloudconsults.com/articles/guide-mcp-azure-integration#howto",
+      "name": "How to plan MCP server Azure integration",
+      "description": "Step-by-step approach for planning a governed Azure MCP Server integration with Copilot Studio or Microsoft Foundry.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Pick the Azure MCP user journey",
+          "text": "Decide whether the goal is local IDE use, a Copilot Studio agent, or a Microsoft Foundry agent."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Choose the smallest Azure scope",
+          "text": "Start with one subscription, resource group, and service namespace such as storage, monitor, or keyvault."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Set identity and RBAC",
+          "text": "Use the least-privilege Azure account or managed identity, and start with Reader unless the use case requires writes."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Add governance before rollout",
+          "text": "Use approvals, logging, Power Platform DLP review, and AI Gateway controls where eligible before production use."
         }
       ]
     },
@@ -251,8 +283,8 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>MCP + Azure</span></nav>
-      <h1>MCP Server and Azure Integration: <span class="grad-text">2026 Guide</span></h1>
-      <p>What the official Azure MCP Server exposes, how to connect it to a Copilot Studio or Microsoft Foundry agent, and how to govern it with an AI Gateway once it's live.</p>
+      <h1>MCP Server Azure Integration: <span class="grad-text">2026 Setup Guide</span></h1>
+      <p>A practical guide to Azure MCP Server: what it can do, how to connect it to Copilot Studio or Microsoft Foundry, and how to keep Azure access controlled from day one.</p>
     </div>
   </div>
 </section>
@@ -268,23 +300,26 @@
       </div>
 
       <div class="art-callout info">
-        <p><strong>Executive summary:</strong> The Azure MCP Server (<code>azmcp</code>) is Microsoft's first-party MCP server for Azure &mdash; one connection exposes dozens of services as agent tools, authenticated with your existing Entra ID identity and Azure RBAC. Use it locally in an IDE for developer workflows, or deploy it as a remote server so Copilot Studio and Microsoft Foundry agents can call it, then govern it with an AI Gateway once it's in production.</p>
+        <p><strong>Executive summary:</strong> The Azure MCP Server (<code>azmcp</code>) is Microsoft's first-party MCP server for Azure. It exposes Azure services as agent tools and uses Microsoft Entra ID with Azure RBAC, so access still follows the permissions assigned to the user or managed identity. Use it locally for developer workflows, or deploy it as a remote server for Copilot Studio and Microsoft Foundry agents. For production, add governance before you expand the tool scope.</p>
       </div>
 
-      <p class="article-intro">This is a companion to our <a href="guide-mcp-sharepoint-integration">MCP server and SharePoint integration guide</a>. Where that guide covers Work IQ SharePoint, this one covers the <strong>Azure MCP Server</strong> &mdash; Microsoft's official MCP server for Azure infrastructure and platform services &mdash; and how to wire it into Copilot Studio or Microsoft Foundry agents with proper governance.</p>
+      <p class="article-intro">A good <strong>MCP server Azure integration</strong> should not start by exposing every Azure tool to an agent. It should start with a narrow operating use case, a scoped identity, and a clear approval model. This guide covers the <strong>Azure MCP Server</strong>, what it exposes, how to connect it to Copilot Studio or Microsoft Foundry agents, and how to govern it with RBAC and an AI Gateway where appropriate.</p>
+
+      <h2 id="quick-answer">Quick Answer: When Should You Use Azure MCP Server?</h2>
+      <p>Use Azure MCP Server when an agent or IDE assistant needs governed access to Azure operations, such as listing resources, inspecting storage, querying logs, checking configuration, or running approved operational tasks. Start with read-only access and a small namespace. Add write-capable tools only when RBAC, approvals, logging, and ownership are clear.</p>
 
       <h2 id="what-is-it">What Is the Azure MCP Server?</h2>
-      <p>The Azure MCP Server implements the Model Context Protocol to let AI agents and MCP-compatible clients interact with Azure resources using natural language instead of hand-written SDK or REST calls. It authenticates through Microsoft Entra ID via the Azure Identity library, following standard Azure authentication practices, and is compatible with clients such as GitHub Copilot agent mode, the OpenAI Agents SDK, and Semantic Kernel.</p>
+      <p>The Azure MCP Server implements the Model Context Protocol so AI agents and MCP-compatible clients can work with Azure resources through tool calls instead of hand-written SDK or REST requests. In practice, that means a developer or agent can ask for resource groups, inspect storage, query logs, check Key Vault data with confirmation, or run supported operations through a governed Azure identity. The server authenticates through Microsoft Entra ID via the Azure Identity library and works with clients such as GitHub Copilot agent mode, the OpenAI Agents SDK, and Semantic Kernel.</p>
       <ul>
-        <li><strong>Broad service coverage:</strong> dozens of Azure services across compute, storage, databases, DevOps, security, and management &mdash; see the table below.</li>
-        <li><strong>Built-in editor support:</strong> works out of the box from Visual Studio Code, Visual Studio 2022 (17.14.30+, no separate extension needed), Cursor, Windsurf, IntelliJ, Eclipse, and Cline.</li>
-        <li><strong>Flexible server modes:</strong> run in <code>namespace</code> (default), <code>consolidated</code>, <code>all</code>, or <code>single</code> mode, and scope it to specific namespaces such as <code>storage</code>, <code>keyvault</code>, or <code>cosmos</code>.</li>
-        <li><strong>Read-only option:</strong> start the server with the read-only flag to block every write operation &mdash; useful for diagnostics-only or reporting agents.</li>
+        <li><strong>Broad Azure coverage:</strong> services across compute, storage, databases, DevOps, security, monitoring, AI, and governance.</li>
+        <li><strong>Editor-friendly setup:</strong> supported from Visual Studio Code, Visual Studio 2022 (17.14.30+), Cursor, Windsurf, IntelliJ, Eclipse, and Cline.</li>
+        <li><strong>Flexible tool exposure:</strong> run in <code>namespace</code> mode by default, or use <code>consolidated</code>, <code>all</code>, or <code>single</code> mode when the workflow needs a different shape.</li>
+        <li><strong>Read-only mode:</strong> start with read-only access for inventory, diagnostics, and reporting before allowing change operations.</li>
       </ul>
       <a href="https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: What is the Azure MCP Server? — Microsoft Learn</a>
 
       <h2 id="tools">What the Azure MCP Server Exposes</h2>
-      <p>Microsoft's tool reference groups Azure MCP Server tools into more than a dozen categories. This is a representative slice &mdash; the official page lists the complete, current set.</p>
+      <p>Microsoft's tool reference groups Azure MCP Server tools into more than a dozen categories. The table below is a practical sample, not the full catalog. Always check the official tool reference before designing a production agent.</p>
       <div class="art-table-wrap">
         <table class="art-table">
           <thead><tr><th>Category</th><th>Example services</th><th>Namespace</th></tr></thead>
@@ -300,14 +335,14 @@
           </tbody>
         </table>
       </div>
-      <p>Example natural-language prompts the tools support: "Show me all my resource groups," "List blobs in my storage container named 'documents'," "Query my log analytics workspace for errors in the last hour," or "What's the value of the 'ConnectionString' key in my app configuration?"</p>
+      <p>Typical prompts include: "Show me all my resource groups," "List blobs in my storage container named 'documents'," "Query my Log Analytics workspace for errors in the last hour," or "What's the value of the 'ConnectionString' key in my app configuration?"</p>
       <div class="art-callout warning">
-        <p><strong>Sensitive data requires confirmation.</strong> Tools that can return secrets &mdash; Key Vault values, connection strings, certificate private keys &mdash; trigger an <strong>elicitation</strong> prompt asking the user to confirm before the tool runs. A <code>disable user confirmation</code> start flag exists for automated pipelines, but Microsoft's own guidance calls it "not recommended" and warns it removes this protection entirely; avoid it outside trusted, non-interactive automation.</p>
+        <p><strong>Sensitive data requires confirmation.</strong> Tools that can return secrets, such as Key Vault values, connection strings, or certificate private keys, trigger an <strong>elicitation</strong> prompt before they run. There is a <code>disable user confirmation</code> start flag for trusted automation, but it removes an important safety check. Avoid it for production agents that handle user prompts or untrusted input.</p>
       </div>
       <a href="https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/tools/" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Azure MCP Server tools — Microsoft Learn</a>
 
       <h2 id="local-vs-remote">Local Developer Tool vs. Remote Server for Agents</h2>
-      <p>The Azure MCP Server can run two different ways, and the distinction matters for how you plan to use it.</p>
+      <p>The Azure MCP Server can run in two main ways. This choice affects authentication, hosting, networking, and how much governance you need around the agent.</p>
       <div class="art-table-wrap">
         <table class="art-table">
           <thead><tr><th>Mode</th><th>Best for</th><th>Notes</th></tr></thead>
@@ -318,8 +353,20 @@
         </table>
       </div>
 
+      <h2 id="step-by-step-azure">Step-by-Step Azure MCP Approach</h2>
+      <p>Start with the operating model before choosing a tool surface. Azure MCP can expose powerful read and write operations, so the safest implementation is deliberate and incremental.</p>
+      <ol>
+        <li><strong>Pick the user journey.</strong> Decide whether the goal is developer productivity in an IDE, an internal Copilot Studio agent, or a pro-code Microsoft Foundry agent. That choice determines whether you use local STDIO, a custom connector, or Foundry's native MCP tool support.</li>
+        <li><strong>Choose the smallest Azure scope.</strong> Select one subscription, resource group, and service namespace first, such as <code>storage</code>, <code>monitor</code>, or <code>keyvault</code>. Avoid exposing every namespace until you have a tested governance model.</li>
+        <li><strong>Set the identity and RBAC.</strong> For local use, confirm the developer's Azure account has only the roles it needs. For a remote server, assign a managed identity and keep the initial role to Reader unless the use case requires writes.</li>
+        <li><strong>Run read-only first.</strong> Start with read-only mode for inventory, diagnostics, and reporting prompts. Add write-capable tools only after the approval and audit path is proven.</li>
+        <li><strong>Connect the agent surface.</strong> Use a Power Apps custom connector for Copilot Studio, or add a remote MCP tool directly in Microsoft Foundry. For private endpoints, confirm the required VNet, subnet, and agent setup before testing.</li>
+        <li><strong>Require approval for risky calls.</strong> Keep user confirmation for secrets and require approval for changes such as configuration updates, restarts, deployments, role assignments, and delete operations.</li>
+        <li><strong>Add governance before rollout.</strong> For Foundry, route eligible new MCP tools through an AI Gateway and apply rate limits, IP filtering, logging, and correlation IDs. For Copilot Studio, review Power Platform DLP policy and connector ownership.</li>
+      </ol>
+
       <h2 id="connect-copilot-studio">Connect the Azure MCP Server to a Copilot Studio Agent</h2>
-      <p>Copilot Studio doesn't call MCP servers directly by URL for this scenario &mdash; it goes through a Power Apps custom connector configured for the MCP protocol. Microsoft provides a ready-made <code>azd</code> template for the whole path.</p>
+      <p>For the Azure MCP Server, Copilot Studio uses a Power Apps custom connector configured for the MCP protocol. Microsoft provides an <code>azd</code> template that deploys the remote server and supporting identity pieces, which makes the setup much easier to repeat across environments.</p>
       <ol>
         <li><strong>Deploy the server.</strong> Clone Microsoft's template and provision it to Azure Container Apps: <code>azd init -t azmcp-copilot-studio-aca-mi</code>, then <code>azd up</code>. This provisions the container app, a user-assigned managed identity with a Reader role, and two Entra app registrations (client and server).</li>
         <li><strong>Create the custom connector.</strong> In Power Apps, create a blank custom connector, set <strong>Host</strong> to the deployed container app URL, and in the Swagger editor expose a POST method at the root path with the custom property <code>x-ms-agentic-protocol: mcp-streamable-1.0</code> &mdash; this is what tells the connector to speak MCP.</li>
@@ -333,7 +380,7 @@
       <a href="https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/deploy-remote-mcp-server-copilot-studio" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Deploy the Azure MCP Server and connect using Copilot Studio — Microsoft Learn</a>
 
       <h2 id="connect-foundry">Connect an MCP Server to a Microsoft Foundry Agent</h2>
-      <p>Microsoft Foundry Agent Service has native MCP tool support &mdash; no custom connector needed. It accepts any remote MCP server endpoint, public or private, and lets you require approval before any tool call executes.</p>
+      <p>Microsoft Foundry Agent Service has native MCP tool support, so you do not need a Power Apps custom connector. Foundry can connect to reachable public or private MCP-compatible endpoints, subject to supported authentication and networking setup, and you can require approval before tool calls execute.</p>
       <div class="code-label">Python — add a remote MCP server as an agent tool</div>
       <div class="code-block" data-lang="text"><pre><code>from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
@@ -364,12 +411,12 @@ agent = project.agents.create_version(
         <li><strong>Approval control:</strong> <code>require_approval</code> accepts <code>always</code>, <code>never</code>, or a selective list &mdash; require approval for anything that writes or changes Azure resources.</li>
         <li><strong>Foundry Toolboxes:</strong> bundle several MCP servers and other tools (Web Search, Code Interpreter, Azure AI Search, OpenAPI tools) behind one MCP-compatible endpoint instead of wiring each tool into every agent separately.</li>
         <li><strong>Private endpoints:</strong> reaching an MCP server that isn't public requires Standard Agent Setup with private networking (BYO VNet) and a dedicated MCP subnet &mdash; Basic agent setup doesn't support it.</li>
-        <li><strong>Known limit:</strong> non-streaming MCP tool calls time out at 100 seconds; long-running operations need background mode with a supporting model such as GPT-5.4 or GPT-5.5.</li>
+        <li><strong>Known limit:</strong> synchronous MCP tool calls time out at 100 seconds; long-running operations need background mode with a model that supports it, such as GPT-5.4 or GPT-5.5.</li>
       </ul>
       <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Connect to MCP server endpoints for agents — Microsoft Foundry</a>
 
       <h2 id="governance">Govern MCP Tools with an AI Gateway</h2>
-      <p>Once an MCP server is powering production agents, route it through an AI Gateway backed by Azure API Management so you get a single governed entry point instead of agents calling the server directly.</p>
+      <p>Once an MCP server is used by production agents, route eligible tools through an AI Gateway backed by Azure API Management. That gives you one governed entry point for traffic controls, logs, and policy enforcement instead of agents calling the server directly.</p>
       <div class="code-label">API Management policy — rate limit MCP tool calls</div>
       <div class="code-block" data-lang="text"><pre><code>&lt;inbound&gt;
   &lt;base /&gt;
@@ -377,7 +424,7 @@ agent = project.agents.create_version(
       counter-key="@(context.Request.IpAddress)" /&gt;
 &lt;/inbound&gt;</code></pre></div>
       <ul>
-        <li><strong>What it adds:</strong> consistent authentication and access control, centralized traffic logs and metrics, and unified rate limiting, IP filtering, and routing policies &mdash; without touching the MCP server or agent code.</li>
+        <li><strong>What it adds:</strong> consistent authentication and access control, centralized traffic logs and metrics, plus rate limiting, IP filtering, and routing policies without changing the MCP server or agent code.</li>
         <li><strong>Scope:</strong> preview feature, and only new MCP tools created without managed OAuth are routed through the gateway automatically; existing tools must be re-created after the gateway is connected.</li>
         <li><strong>Not covered:</strong> Foundry-native tools like SharePoint, code-first MCP tools, tools using managed OAuth, and OpenAPI tools aren't eligible for AI Gateway routing.</li>
         <li><strong>Verification:</strong> confirm the tool's endpoint in Foundry shows the gateway URL (not the direct MCP server URL), then check API Management logs for 2xx success, 429 rate-limit, or 403 IP-filter responses.</li>
@@ -389,21 +436,21 @@ agent = project.agents.create_version(
         <table class="art-table">
           <thead><tr><th></th><th>Azure MCP Server</th><th>Work IQ SharePoint</th></tr></thead>
           <tbody>
-            <tr><td><strong>Scope</strong></td><td>Azure infrastructure and platform services</td><td>SharePoint sites, lists, and files</td></tr>
+            <tr><td><strong>Scope</strong></td><td>Azure development, operations, and platform services</td><td>SharePoint sites, lists, and files</td></tr>
             <tr><td><strong>Publisher</strong></td><td>Azure developer tools team</td><td>Microsoft 365 / Agent 365</td></tr>
-            <tr><td><strong>Licensing</strong></td><td>GitHub Copilot subscription + Azure RBAC permissions</td><td>Microsoft 365 Copilot license (preview)</td></tr>
+            <tr><td><strong>Licensing</strong></td><td>Depends on host: GitHub Copilot for supported editor use; Copilot Studio or Foundry licensing/billing for agent use; Azure RBAC always applies</td><td>Microsoft 365 Copilot license (preview)</td></tr>
             <tr><td><strong>Typical client</strong></td><td>VS Code, Visual Studio, Copilot Studio, Microsoft Foundry</td><td>Copilot Studio</td></tr>
             <tr><td><strong>Governance</strong></td><td>Azure RBAC, elicitation, AI Gateway (Foundry)</td><td>Microsoft 365 admin center Agent Tools registry</td></tr>
           </tbody>
         </table>
       </div>
-      <p>The two aren't competitors &mdash; a single Copilot Studio agent can hold both tools at once, for example to look up a policy document in SharePoint and then check the Azure resource it describes. See our <a href="guide-mcp-sharepoint-integration">MCP server and SharePoint integration guide</a> for the SharePoint side.</p>
+      <p>The two servers solve different problems. A single Copilot Studio agent could use SharePoint tools to read a policy document and Azure MCP tools to check the resource the policy refers to. See our <a href="guide-mcp-sharepoint-integration">MCP server SharePoint integration setup guide</a> for the SharePoint side.</p>
 
       <h2 id="limitations">Current Limitations and Watch-Outs</h2>
       <ul>
         <li><strong>Developer-scoped by design:</strong> Microsoft states the local Azure MCP Server is for developer use inside your organization, not for external-facing applications.</li>
         <li><strong>Prerequisite gate:</strong> local Azure MCP Server tools require a GitHub Copilot subscription and are disabled by default until enabled in a supported host.</li>
-        <li><strong>AI Gateway is preview:</strong> and doesn't cover every tool type &mdash; check the exclusions above before assuming a tool is governed.</li>
+        <li><strong>AI Gateway is in preview</strong> and doesn't cover every tool type &mdash; check the exclusions above before assuming a tool is governed.</li>
         <li><strong>100-second synchronous timeout</strong> on Foundry MCP tool calls; plan background mode for anything long-running.</li>
         <li><strong>Single-tenant custom connector</strong> for the Copilot Studio path unless you do the extra cross-tenant service principal work.</li>
         <li><strong>Third-party MCP servers are unverified by Microsoft.</strong> If you connect a non-Microsoft MCP server to a Foundry agent, Microsoft explicitly disclaims responsibility for that server &mdash; review data handling and prefer servers hosted by trusted providers directly, not proxies.</li>
@@ -420,12 +467,12 @@ agent = project.agents.create_version(
       <h2 id="faq">Frequently Asked Questions</h2>
       <div class="article-faq">
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">What is the Azure MCP Server?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><div class="faq-a-inner"><p>The Azure MCP Server (<code>azmcp</code>) is Microsoft's official MCP server for Azure. It exposes dozens of Azure services as MCP tools so an agent or IDE assistant can query and manage Azure resources in natural language instead of hand-written API calls.</p></div></div>
+          <button class="faq-q" aria-expanded="false">What is MCP server Azure integration?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>MCP server Azure integration connects an AI agent or MCP-compatible client to Azure tools through the Azure MCP Server (<code>azmcp</code>). It lets the agent query and manage Azure services through governed tool calls backed by Microsoft Entra ID and Azure RBAC.</p></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Is the Azure MCP Server the same as Work IQ SharePoint?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><div class="faq-a-inner"><p>No. Work IQ SharePoint is scoped to SharePoint and OneDrive under Microsoft 365 Copilot. The Azure MCP Server is a separate, broader server for Azure infrastructure. A single Copilot Studio agent can use both together.</p></div></div>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>No. Work IQ SharePoint is scoped to SharePoint and OneDrive under Microsoft 365 Copilot. The Azure MCP Server is broader and focuses on Azure development, operations, and platform services. A single Copilot Studio agent can use both when a workflow touches SharePoint content and Azure resources.</p></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">How do I connect the Azure MCP Server to a Copilot Studio agent?<span class="faq-icon" aria-hidden="true">+</span></button>
@@ -453,7 +500,7 @@ agent = project.agents.create_version(
       <div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
-          <a href="guide-mcp-sharepoint-integration" class="related-card"><span class="rc-topic">MCP &amp; SharePoint</span><span class="rc-title">MCP Server and SharePoint Integration Guide 2026</span><span class="rc-read">14 min read &rarr;</span></a>
+          <a href="guide-mcp-sharepoint-integration" class="related-card"><span class="rc-topic">MCP &amp; SharePoint</span><span class="rc-title">MCP Server SharePoint Integration Setup Guide 2026</span><span class="rc-read">14 min read &rarr;</span></a>
           <a href="guide-copilot-studio-sharepoint-integration" class="related-card"><span class="rc-topic">Copilot &amp; SharePoint</span><span class="rc-title">Copilot Studio SharePoint Integration Guide</span><span class="rc-read">15 min read &rarr;</span></a>
           <a href="guide-microsoft-graph-sharepoint" class="related-card"><span class="rc-topic">Graph</span><span class="rc-title">Microsoft Graph and SharePoint: M365 Integrations for IT Admins</span><span class="rc-read">11 min read &rarr;</span></a>
         </div>

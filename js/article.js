@@ -34,8 +34,8 @@
     { topic:'sharepoint',     tag:'SharePoint',           url:'guide-sharepoint-otp-retirement-entra-b2b',         title:'SharePoint OTP Retirement: Simple Entra B2B Guide',                               read:'21 min read' },
     { topic:'sharepoint',     tag:'SharePoint',           url:'guide-sharepoint-new-experience-app-bar',           title:'New SharePoint Experience: App Bar Redesign Guide',                               read:'16 min read' },
     { topic:'sharepoint',     tag:'SharePoint & Security', url:'guide-sharepoint-onedrive-dlp-file-quarantine',    title:'DLP File Quarantine: SharePoint & OneDrive Setup Guide',                          read:'15 min read' },
-    { topic:'integration',    tag:'Integration',          url:'guide-mcp-sharepoint-integration',              title:'MCP Server and SharePoint Integration Guide 2026',                                        read:'14 min read' },
-    { topic:'integration',    tag:'Integration',          url:'guide-mcp-azure-integration',                   title:'MCP Server and Azure Integration Guide 2026',                                             read:'13 min read' },
+    { topic:'integration',    tag:'Integration',          url:'guide-mcp-sharepoint-integration',              title:'MCP Server SharePoint Integration Setup Guide 2026',                                      read:'14 min read' },
+    { topic:'integration',    tag:'Integration',          url:'guide-mcp-azure-integration',                   title:'MCP Server Azure Integration Setup Guide 2026',                                           read:'13 min read' },
     // END:GUIDES-ARRAY
   ];
 

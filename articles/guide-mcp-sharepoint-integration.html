@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0077b6" />
 
-  <title>MCP Server SharePoint Integration Guide 2026 | OceanCloud</title>
-  <meta name="description" content="MCP server SharePoint integration guide: how Model Context Protocol connects SharePoint to Copilot Studio agents, the Work IQ SharePoint server, setup steps, and governance." />
+  <title>MCP Server SharePoint Integration: 2026 Setup Guide | OceanCloud</title>
+  <meta name="description" content="Learn how MCP server SharePoint integration works with Copilot Studio, Work IQ SharePoint, setup steps, permissions, governance, and when to use MCP vs knowledge sources." />
   <meta name="keywords" content="MCP server SharePoint integration, Model Context Protocol SharePoint, Work IQ SharePoint MCP server, Copilot Studio MCP SharePoint, MCP SharePoint benefits, connect MCP server to Copilot Studio, Agent 365 SharePoint MCP" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
@@ -16,17 +16,19 @@
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="OceanCloud Consultants" />
-  <meta property="og:title" content="MCP Server and SharePoint Integration Guide 2026" />
-  <meta property="og:description" content="Connect SharePoint to Copilot Studio agents with the Model Context Protocol: the Work IQ SharePoint server, setup steps, authentication, governance, and real benefits." />
+  <meta property="og:title" content="MCP Server SharePoint Integration: 2026 Setup Guide" />
+  <meta property="og:description" content="A practical guide to MCP server SharePoint integration: when to use Work IQ SharePoint, how to connect it to Copilot Studio, and how to govern access safely." />
   <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-mcp-sharepoint-integration" />
   <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
   <meta property="og:image:alt" content="Model Context Protocol connecting a Copilot Studio agent to SharePoint" />
   <meta property="og:locale" content="en_US" />
+  <meta property="article:published_time" content="2026-07-28" />
+  <meta property="article:modified_time" content="2026-07-28" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@oceancloud_x" />
-  <meta name="twitter:title" content="MCP Server and SharePoint Integration Guide 2026 | OceanCloud" />
-  <meta name="twitter:description" content="How the Model Context Protocol connects SharePoint to Copilot Studio agents: setup, authentication, governance, and benefits." />
+  <meta name="twitter:title" content="MCP Server SharePoint Integration Guide 2026 | OceanCloud" />
+  <meta name="twitter:description" content="How to connect SharePoint to Copilot Studio with MCP, Work IQ SharePoint, clear setup steps, permissions, and governance." />
   <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,7 +51,7 @@
     {
       "@type": "Article",
       "@id": "https://oceancloudconsults.com/articles/guide-mcp-sharepoint-integration#article",
-      "headline": "MCP Server and SharePoint Integration Guide 2026",
+      "headline": "MCP Server SharePoint Integration: 2026 Setup Guide",
       "url": "https://oceancloudconsults.com/articles/guide-mcp-sharepoint-integration",
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -63,13 +65,15 @@
       "publisher": {
         "@id": "https://oceancloudconsults.com/#organization"
       },
-      "description": "MCP server SharePoint integration guide: how Model Context Protocol connects SharePoint to Copilot Studio agents, the Work IQ SharePoint server, setup steps, and governance.",
+      "description": "Learn how MCP server SharePoint integration works with Copilot Studio, Work IQ SharePoint, setup steps, permissions, governance, and when to use MCP vs knowledge sources.",
       "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+      "articleSection": "Integration",
       "keywords": [
         "MCP server SharePoint integration",
         "Model Context Protocol SharePoint",
         "Work IQ SharePoint MCP server",
         "Copilot Studio MCP SharePoint",
+        "SharePoint MCP setup guide",
         "Agent 365 SharePoint MCP",
         "bring your own MCP server",
         "MCP onboarding wizard Copilot Studio"
@@ -117,10 +121,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is an MCP server, in plain terms?",
+          "name": "What is MCP server SharePoint integration?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Model Context Protocol (MCP) is an open standard that lets an AI agent call external tools and data sources through one consistent interface. Instead of an agent maker building a custom connector for every system, the system exposes an MCP server describing its available tools, and any MCP-compatible agent can call them the same way."
+            "text": "MCP server SharePoint integration connects a Copilot Studio agent to SharePoint tools through the Model Context Protocol. Instead of only searching documents, the agent can use approved tools to work with SharePoint sites, files, lists, folders, columns, and sharing while still respecting permissions and admin governance."
           }
         },
         {
@@ -133,7 +137,7 @@
         },
         {
           "@type": "Question",
-          "name": "How do I add an MCP server to a Copilot Studio agent?",
+          "name": "How do I connect a SharePoint MCP server to a Copilot Studio agent?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Open the agent's Tools page, select Add a tool, choose Model Context Protocol, and either pick a listed server such as Work IQ SharePoint or use the MCP onboarding wizard to connect your own server by URL. Configure authentication (None, API key, or OAuth 2.0), create a connection, and add the server to the agent."
@@ -154,6 +158,34 @@
             "@type": "Answer",
             "text": "Use a SharePoint knowledge source when the goal is grounded question answering with citations. Use the Work IQ SharePoint MCP server, or a custom MCP server, when the agent needs to take action: creating files, updating list items, managing columns, or moving and sharing content, not just retrieving answers."
           }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://oceancloudconsults.com/articles/guide-mcp-sharepoint-integration#howto",
+      "name": "How to plan MCP server SharePoint integration",
+      "description": "Step-by-step approach for planning a governed SharePoint MCP server integration with Copilot Studio.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Define the SharePoint action",
+          "text": "Decide whether the agent needs to create files, update list items, move folders, share content, or only answer questions from SharePoint documents."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Confirm the target SharePoint scope",
+          "text": "Identify the exact site, library, list, folders, and columns involved before exposing tools to the agent."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Choose Work IQ SharePoint or a custom MCP server",
+          "text": "Use Work IQ SharePoint when first-party tools cover the job, or register a BYO MCP server for custom workflows."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Test permissions and governance",
+          "text": "Test with realistic user accounts and confirm the MCP server appears in the Microsoft 365 admin center Agent Tools registry."
         }
       ]
     },
@@ -256,8 +288,8 @@
   <div class="container particle-hero-inner">
     <div class="page-hero-content">
       <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>MCP + SharePoint</span></nav>
-      <h1>MCP Server and SharePoint Integration: <span class="grad-text">2026 Guide</span></h1>
-      <p>What the Model Context Protocol actually does, how Microsoft's Work IQ SharePoint server exposes SharePoint as agent tools, and where MCP genuinely beats a knowledge source or a custom connector.</p>
+      <h1>MCP Server SharePoint Integration: <span class="grad-text">2026 Setup Guide</span></h1>
+      <p>A plain-English guide to using Model Context Protocol with SharePoint: what Work IQ SharePoint does, when MCP is worth it, and how to roll it out without opening the door too wide.</p>
     </div>
   </div>
 </section>
@@ -273,44 +305,59 @@
       </div>
 
       <div class="art-callout info">
-        <p><strong>Executive summary:</strong> MCP standardizes how an agent calls external tools. For SharePoint, that mostly means Microsoft's own Work IQ SharePoint server (preview, Microsoft 365 Copilot license required) or a custom MCP server you register through Agent 365. Use MCP when the agent needs to act on SharePoint &mdash; create a file, update a list item, move a folder &mdash; not only answer questions from it.</p>
+        <p><strong>Executive summary:</strong> MCP gives Copilot Studio agents a standard way to use external tools. For SharePoint, the main option is Microsoft's Work IQ SharePoint MCP server, currently in preview and tied to Microsoft 365 Copilot licensing. Use MCP when the agent must do something in SharePoint, such as create a file, update a list item, move a folder, or share content. If the agent only needs to answer questions from documents, a SharePoint knowledge source is usually the better fit.</p>
       </div>
 
-      <p class="article-intro">The <strong>Model Context Protocol (MCP)</strong> is now the standard way Microsoft recommends connecting a Copilot Studio agent to SharePoint when the agent needs to do more than answer questions with citations. This guide explains what MCP is, what the official <strong>Work IQ SharePoint MCP server</strong> exposes, how to connect an MCP server to an agent, how IT governs it, and where MCP fits next to the SharePoint knowledge source and custom Graph connectors.</p>
+      <p class="article-intro">A good <strong>MCP server SharePoint integration</strong> starts with one simple question: does the agent need to take action, or just retrieve answers? The <strong>Model Context Protocol (MCP)</strong> is useful when a Copilot Studio agent needs controlled access to SharePoint tools, not just document search. This guide explains what MCP is, what the official <strong>Work IQ SharePoint MCP server</strong> can do, how to connect it, and how to keep the setup governed.</p>
+
+      <h2 id="quick-answer">Quick Answer: When Should You Use MCP for SharePoint?</h2>
+      <p>Use an MCP server for SharePoint when a Copilot Studio agent needs to perform a controlled action, such as creating a file, updating a list item, moving a folder, or sharing content. Use a SharePoint knowledge source when the agent only needs to answer questions from documents with citations. Use a custom connector or direct Microsoft Graph integration when the requirement is narrow, static, and unlikely to be reused across agents.</p>
 
       <h2 id="what-is-mcp">What Is the Model Context Protocol (MCP)?</h2>
-      <p>MCP is an open protocol for connecting AI agents to external tools and data through one consistent interface. An MCP server describes the tools it exposes &mdash; name, description, and input/output schema &mdash; and any MCP-compatible client, including a Copilot Studio agent, can discover and call those tools the same way. Microsoft's Copilot Studio documentation states that each tool published by an MCP server is automatically added as an agent action and inherits its name, description, inputs, and outputs, which removes the need to hand-build a connector for every system.</p>
-      <p>Microsoft made MCP generally available in Copilot Studio in May 2025, adding a server settings page for tool visibility, Streamable transport support, and runtime tracing that shows exactly which MCP server and tool an agent invoked. Copilot Studio currently supports the Streamable transport type; the older SSE transport is deprecated and unsupported for MCP connections created after August 2025.</p>
+      <p>MCP is an open protocol that lets AI agents call tools and fetch data through a consistent interface. Think of an MCP server as a menu of approved actions. It describes each tool, the inputs it needs, and the outputs it returns. A Copilot Studio agent can then discover those tools and use them as agent actions without a maker rebuilding every API call by hand.</p>
+      <p>Microsoft made MCP generally available in Copilot Studio in May 2025, with tool visibility settings, Streamable transport support, and tracing that shows which MCP server and tool the agent invoked. Copilot Studio currently supports Streamable transport. SSE is deprecated and is no longer supported for MCP after August 2025.</p>
       <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/model-context-protocol-mcp-is-now-generally-available-in-microsoft-copilot-studio/" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: MCP is now generally available in Microsoft Copilot Studio</a>
 
       <h2 id="benefits">Why MCP Matters for SharePoint Integration</h2>
-      <p>Before MCP, giving an agent SharePoint actions meant building and maintaining a custom Power Platform connector or a set of Graph API calls by hand for every scenario. MCP changes the economics of that work:</p>
+      <p>Before MCP, adding SharePoint actions to an agent often meant building a custom Power Platform connector or wiring Microsoft Graph calls by hand. MCP does not remove the need for design and governance, but it makes repeatable SharePoint automation much easier to manage:</p>
       <ul>
-        <li><strong>One integration pattern, many tools.</strong> A single MCP connection can expose dozens of SharePoint operations &mdash; site lookup, file read/write, list CRUD, column management, sharing &mdash; instead of one connector action per operation.</li>
-        <li><strong>Tools stay current automatically.</strong> Because the agent calls the MCP server's live tool list at runtime, adding or updating a tool on the server side reaches every connected agent without republishing each one.</li>
-        <li><strong>Built-in governance surface.</strong> MCP servers appear in the Microsoft 365 admin center's Agent Tools registry, where IT can block, unblock, and monitor them the same way as any other agent tool &mdash; something a hand-rolled HTTP call to Graph does not give you for free.</li>
-        <li><strong>Less connector sprawl.</strong> Standardizing on MCP for internal line-of-business systems, not just SharePoint, means makers reuse the same authentication and discovery pattern (API key or OAuth 2.0) across every server instead of learning a new connector shape each time.</li>
-        <li><strong>User-context security by default.</strong> The first-party SharePoint MCP server calls Microsoft Graph as the signed-in user, so tool results are already scoped to what that person can access &mdash; the same permission model SharePoint has always used.</li>
+        <li><strong>One connection can expose many SharePoint tools.</strong> The agent can use site lookup, file read/write, list item updates, folder moves, sharing, and other actions without each one becoming a separate connector project.</li>
+        <li><strong>Tool changes are easier to manage.</strong> When the server exposes a new or updated tool, connected agents can discover the current tool list instead of depending on a static set of hand-built actions.</li>
+        <li><strong>Admins get a clearer control point.</strong> MCP servers appear in the Microsoft 365 admin center Agent Tools registry, where IT can review, block, unblock, and monitor agent tools.</li>
+        <li><strong>Makers get a more repeatable pattern.</strong> The same basic connection model can be used for SharePoint and other internal systems, instead of teaching every maker a different connector design.</li>
+        <li><strong>SharePoint permissions still matter.</strong> Work IQ SharePoint calls Microsoft Graph in the signed-in user's context, so users should only see or change what they already have permission to access.</li>
       </ul>
       <div class="art-callout warning">
-        <p><strong>MCP is not a shortcut around governance.</strong> Faster integration does not mean fewer controls. Every MCP server an agent can call still needs an accountable owner, a defined tool scope, and an admin-approved permission grant before it reaches production users.</p>
+        <p><strong>MCP is not a shortcut around governance.</strong> Faster setup does not mean weaker controls. Every MCP server should have an owner, a clear tool scope, documented permissions, and admin approval before production users rely on it.</p>
       </div>
 
-      <h2 id="options">Two Ways to Connect SharePoint to an Agent via MCP</h2>
-      <p>"MCP and SharePoint" usually means one of two things. Pick based on whether SharePoint access already exists as a Microsoft-built server or needs to be built.</p>
+      <h2 id="options">Choose the Right SharePoint Integration Pattern</h2>
+      <p>When people say "MCP and SharePoint," they are usually talking about action-capable tools. In practice, you have three common patterns. The right choice depends on what the agent must do with SharePoint content.</p>
       <div class="art-table-wrap">
         <table class="art-table">
           <thead><tr><th>Option</th><th>Best for</th><th>What it gives you</th><th>Watch-outs</th></tr></thead>
           <tbody>
-            <tr><td><strong>Work IQ SharePoint (first-party)</strong></td><td>Teams that want site, file, and list actions without building anything</td><td>~30 ready-made tools over Microsoft Graph, added in a few clicks</td><td>Preview; requires Microsoft 365 Copilot license; 5&nbsp;MB file limit</td></tr>
+            <tr><td><strong>Work IQ SharePoint (first-party)</strong></td><td>Teams that want site, file, and list actions without building anything</td><td>Ready-made tools over Microsoft Graph, added from the Copilot Studio tool catalog</td><td>Preview; requires Microsoft 365 Copilot license; 5&nbsp;MB file limit</td></tr>
             <tr><td><strong>Bring-your-own (BYO) MCP server</strong></td><td>Custom line-of-business logic, or SharePoint operations Work IQ doesn't cover</td><td>Full control over tool definitions, hosted anywhere reachable over HTTPS</td><td>You build, host, and register it; goes through admin approval</td></tr>
             <tr><td><strong>SharePoint knowledge source</strong> <span style="white-space:nowrap">(not MCP)</span></td><td>Grounded Q&amp;A with citations over documents</td><td>Semantic retrieval, metadata filters &mdash; see our <a href="guide-copilot-studio-sharepoint-integration">Copilot Studio SharePoint integration guide</a></td><td>Read-only by design; not the right tool for creating or updating content</td></tr>
           </tbody>
         </table>
       </div>
 
+      <h2 id="step-by-step-sharepoint">Step-by-Step SharePoint MCP Approach</h2>
+      <p>Use this sequence before you connect anything. It keeps the project small, gives admins something concrete to review, and helps makers test the agent with real SharePoint permissions.</p>
+      <ol>
+        <li><strong>Define the action.</strong> Write down the one job the agent must perform, such as creating a status file, updating a tracking list, moving a folder, or sending a sharing invite. If the job is only answering questions, use a SharePoint knowledge source instead of MCP.</li>
+        <li><strong>Confirm the target scope.</strong> Identify the exact SharePoint site, library, list, folders, and columns involved. Avoid tenant-wide access unless the use case truly requires it.</li>
+        <li><strong>Select the connection type.</strong> Use Work IQ SharePoint when its first-party tools cover the job. Build or register a BYO MCP server only when you need custom business logic, non-SharePoint systems, or a tool shape Work IQ does not expose.</li>
+        <li><strong>Check licensing and permissions.</strong> Confirm Microsoft 365 Copilot licensing for pilot users, SharePoint permissions for the signed-in users, and admin availability for Agent Tools approval.</li>
+        <li><strong>Add the tool with narrow instructions.</strong> In Copilot Studio, add the server from the Tools page and write agent instructions that name the approved actions, target locations, and confirmation rules for write or delete operations.</li>
+        <li><strong>Test with realistic accounts.</strong> Run the same prompts as a site owner, a contributor, and a read-only user. The expected result is that SharePoint permissions still control what the tool can read or change.</li>
+        <li><strong>Monitor before rollout.</strong> Confirm the server appears in the Microsoft 365 admin center Agent Tools registry and use Defender Advanced Hunting to review tool activity during the pilot.</li>
+      </ol>
+
       <h2 id="work-iq-sharepoint">Work IQ SharePoint: Microsoft's First-Party SharePoint MCP Server</h2>
-      <p>Work IQ SharePoint (server ID <code>mcp_SharePointRemoteServer</code>) is Microsoft's own MCP server for SharePoint, built directly on Microsoft Graph. Microsoft's reference documentation describes it as covering sites, lists, list items, columns, document libraries, files, folders, and file sharing, with file operations limited to files 5&nbsp;MB or smaller.</p>
+      <p>Work IQ SharePoint (server ID <code>mcp_SharePointRemoteServer</code>) is Microsoft's first-party MCP server for SharePoint. It is built on Microsoft Graph and exposes tools for sites, lists, list items, columns, document libraries, files, folders, and sharing. The important practical limit is file size: file operations are limited to files 5&nbsp;MB or smaller.</p>
       <div class="art-table-wrap">
         <table class="art-table">
           <thead><tr><th>Category</th><th>Representative tools</th><th>Notes</th></tr></thead>
@@ -318,7 +365,7 @@
             <tr><td><strong>Site discovery</strong></td><td><code>findSite</code>, <code>getSiteByPath</code>, <code>listSubsites</code></td><td>Search by name or resolve an exact hostname/path</td></tr>
             <tr><td><strong>Document libraries</strong></td><td><code>listDocumentLibrariesInSite</code>, <code>getFolderChildren</code></td><td>Folder browsing returns the top 20 items by default</td></tr>
             <tr><td><strong>Files</strong></td><td><code>readSmallTextFile</code>, <code>createSmallBinaryFile</code>, <code>moveFileOrFolder</code>, <code>copyFileOrFolder</code></td><td>5&nbsp;MB read/write ceiling; copy and move are asynchronous, tracked with <code>checkOperationStatus</code></td></tr>
-            <tr><td><strong>Lists</strong></td><td><code>listLists</code>, <code>createList</code>, <code>createListItem</code>, <code>updateListItem</code></td><td>Full CRUD on lists and items, including <code>etag</code> concurrency control</td></tr>
+            <tr><td><strong>Lists</strong></td><td><code>listLists</code>, <code>createList</code>, <code>createListItem</code>, <code>updateListItem</code></td><td>List discovery and creation/deletion, plus item create/read/update/delete with <code>etag</code> concurrency control</td></tr>
             <tr><td><strong>Columns</strong></td><td><code>createColumn</code>, <code>updateColumn</code>, <code>deleteColumn</code></td><td>Supports text, choice, lookup, calculated, and other standard column types</td></tr>
             <tr><td><strong>Sharing &amp; security</strong></td><td><code>shareFileOrFolder</code>, <code>sendInviteForList</code>, <code>setSensitivityLabelOnFile</code></td><td>Role-based invites (read/write/contribute/edit) and sensitivity label assignment</td></tr>
           </tbody>
@@ -330,7 +377,7 @@
       <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/mcp-sharepoint-work-iq" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Work IQ SharePoint reference (preview) — Microsoft Learn</a>
 
       <h2 id="connect">Connect an MCP Server to a Copilot Studio Agent</h2>
-      <p>Microsoft's documented, recommended path is the MCP onboarding wizard inside Copilot Studio. This works the same whether you're adding Work IQ SharePoint or a custom server.</p>
+      <p>Start in the Copilot Studio Tools page. From there, the path depends on what you are adding. Work IQ SharePoint is selected from the available tool catalog. A custom MCP server uses the onboarding wizard, where you enter the server URL, description, and authentication details.</p>
       <ol>
         <li>Open the agent and go to the <strong>Tools</strong> page.</li>
         <li>Select <strong>Add a tool</strong> &rarr; <strong>New tool</strong> &rarr; <strong>Model Context Protocol</strong>.</li>
@@ -355,8 +402,8 @@
       <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/mcp-add-existing-server-to-agent" target="_blank" rel="noopener noreferrer" class="ms-ref">Official source: Connect your agent to an existing MCP server — Microsoft Learn</a>
 
       <h2 id="byo">Bring Your Own (BYO) MCP Server for Custom SharePoint Logic</h2>
-      <p>When Work IQ SharePoint doesn't cover what you need &mdash; a scenario that spans SharePoint and an internal line-of-business system, for example &mdash; Microsoft's Agent 365 platform supports registering your own remote MCP server under centralized governance. This is currently a preview capability, and supported client surfaces are Copilot Studio, Visual Studio Code, Claude Code, and GitHub Copilot CLI.</p>
-      <p>The flow has four steps: a developer registers the server through the Agent 365 CLI, an IT admin reviews and approves it in the Microsoft 365 admin center (granting the required Microsoft Entra permissions), the approved server becomes available to supported clients, and a security team monitors its activity through Microsoft Defender.</p>
+      <p>Use a BYO MCP server when Work IQ SharePoint does not cover the workflow. A common example is an approval process that touches SharePoint, a CRM, and an internal database in one controlled tool call. Agent 365 supports registering these remote MCP servers under centralized governance. The capability is currently in preview, with supported client surfaces including Copilot Studio, Visual Studio Code, Claude Code, and GitHub Copilot CLI.</p>
+      <p>The flow is simple: a developer registers the server through the Agent 365 CLI, an IT admin reviews and approves it in the Microsoft 365 admin center, the required Microsoft Entra permissions are granted, and security teams monitor activity through Microsoft Defender.</p>
       <div class="code-label">Agent 365 CLI — register a SharePoint-adjacent MCP server (no-auth example)</div>
       <div class="code-block" data-lang="text"><pre><code>a365 develop-mcp register-external-mcp-server \
   --server-name "ContosoDocsServer" \
@@ -373,7 +420,7 @@
         <li><strong>Centralized registry:</strong> every MCP server, first-party or BYO, appears in the Microsoft 365 admin center under Agents &gt; Tools, with Available/Blocked status and publisher shown for each.</li>
         <li><strong>Runtime enforcement:</strong> blocking a server or tool takes effect immediately for every agent and every user &mdash; permissions always win over agent configuration.</li>
         <li><strong>Scoped consent:</strong> each MCP server is represented as a permission on the Agent 365 application; an agent only reaches the server after an admin grants that specific consent.</li>
-        <li><strong>Data policies still apply:</strong> access to MCP servers in Copilot Studio relies on Power Platform connectors for connectivity, so an existing Power Platform data loss prevention (DLP) policy governs MCP tool access exactly as it governs any other connector.</li>
+        <li><strong>Data policies still apply:</strong> custom MCP connections in Copilot Studio use Power Platform connector infrastructure, so existing Power Platform data loss prevention (DLP) policies should be reviewed before rollout.</li>
         <li><strong>Observability:</strong> security teams can query Microsoft Defender Advanced Hunting to see which agent invoked which MCP server and tool, and with what outcome.</li>
       </ul>
       <div class="code-label">KQL — MCP tool invocations via Defender Advanced Hunting</div>
@@ -385,7 +432,7 @@
       <h2 id="limitations">Current Limitations and Watch-Outs</h2>
       <ul>
         <li><strong>Preview status:</strong> Work IQ SharePoint and BYO MCP server are both preview features, covered by Microsoft's supplemental terms &mdash; plan pilots accordingly, not production dependencies.</li>
-        <li><strong>File size ceiling:</strong> file read/write tools cap out at 5&nbsp;MB; larger files need a different pattern (SharePoint knowledge source ingestion, or a custom flow).</li>
+        <li><strong>File size ceiling:</strong> Work IQ file read/write tools cap out at 5&nbsp;MB; larger files need a different pattern, such as retrieval through a SharePoint knowledge source for Q&amp;A or a custom Graph/Power Automate flow for file operations.</li>
         <li><strong>Default result limits:</strong> folder listings and search tools return the top 20 results unless you narrow the query.</li>
         <li><strong>Licensing:</strong> Work IQ MCP servers in Copilot Studio require a Microsoft 365 Copilot license for the agent's users; there is no separate consumption-only tier for this preview.</li>
         <li><strong>Regional rollout:</strong> Microsoft notes that the ability to allow or block MCP tooling in the admin center might not be available in every region yet.</li>
@@ -404,7 +451,7 @@
           </tbody>
         </table>
       </div>
-      <p>These aren't mutually exclusive. A production agent commonly pairs a SharePoint knowledge source for answering questions with the Work IQ SharePoint MCP server for the handful of actions &mdash; creating a ticket file, updating a tracking list &mdash; that follow from those answers.</p>
+      <p>These options can work together. A useful production agent might use a SharePoint knowledge source to answer questions with citations, then use Work IQ SharePoint MCP tools to create a ticket file or update the tracking list that follows from the answer.</p>
 
       <h2>Recommended Rollout Plan</h2>
       <ol>
@@ -417,15 +464,15 @@
       <h2 id="faq">Frequently Asked Questions</h2>
       <div class="article-faq">
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">What is an MCP server, in plain terms?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><div class="faq-a-inner"><p>MCP is an open standard that lets an AI agent call external tools and data sources through one consistent interface. Instead of building a custom connector for every system, the system exposes an MCP server describing its tools, and any MCP-compatible agent calls them the same way.</p></div></div>
+          <button class="faq-q" aria-expanded="false">What is MCP server SharePoint integration?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>MCP server SharePoint integration connects a Copilot Studio agent to SharePoint tools through the Model Context Protocol. Instead of only searching documents, the agent can use approved tools to work with SharePoint sites, files, lists, folders, columns, and sharing while still respecting permissions and admin governance.</p></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Is there an official Microsoft MCP server for SharePoint?<span class="faq-icon" aria-hidden="true">+</span></button>
           <div class="faq-a" role="region"><div class="faq-a-inner"><p>Yes. Work IQ SharePoint (server ID <code>mcp_SharePointRemoteServer</code>) is Microsoft's first-party MCP server, built on Microsoft Graph, exposing tools for sites, document libraries, files, lists, columns, and sharing. It is a preview feature as of mid-2026 and requires a Microsoft 365 Copilot license.</p></div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">How do I add an MCP server to a Copilot Studio agent?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <button class="faq-q" aria-expanded="false">How do I connect a SharePoint MCP server to a Copilot Studio agent?<span class="faq-icon" aria-hidden="true">+</span></button>
           <div class="faq-a" role="region"><div class="faq-a-inner"><p>Open the agent's Tools page, select Add a tool, choose Model Context Protocol, and either pick a listed server like Work IQ SharePoint or use the onboarding wizard to connect a custom server by URL. Configure authentication, create a connection, and add the server to the agent.</p></div></div>
         </div>
         <div class="faq-item">
@@ -451,7 +498,7 @@
       <div class="related-section">
         <p class="related-label">Related Guides</p>
         <div class="related-grid">
-          <a href="guide-mcp-azure-integration" class="related-card"><span class="rc-topic">MCP &amp; Azure</span><span class="rc-title">MCP Server and Azure Integration Guide 2026</span><span class="rc-read">13 min read &rarr;</span></a>
+          <a href="guide-mcp-azure-integration" class="related-card"><span class="rc-topic">MCP &amp; Azure</span><span class="rc-title">MCP Server Azure Integration Setup Guide 2026</span><span class="rc-read">13 min read &rarr;</span></a>
           <a href="guide-copilot-studio-sharepoint-integration" class="related-card"><span class="rc-topic">Copilot &amp; SharePoint</span><span class="rc-title">Copilot Studio SharePoint Integration Guide</span><span class="rc-read">15 min read &rarr;</span></a>
           <a href="guide-get-started-sharepoint-agents" class="related-card"><span class="rc-topic">SharePoint Agents</span><span class="rc-title">Copilot Agent for SharePoint: Setup, Limits, and PAYG</span><span class="rc-read">15 min read &rarr;</span></a>
         </div>
