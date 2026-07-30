@@ -101,6 +101,60 @@
       "inLanguage": "en-US"
     },
     {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-work-iq-apis-organization-insights#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Will Work IQ APIs monitor individual employees?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They should not be used for individual employee monitoring. Work IQ is user scoped and permission aware, so design reporting around transparent, aggregate, approved use cases and avoid surveillance patterns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the pricing model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft documents Work IQ API access as independent of Microsoft 365 Copilot licensing and available through usage-based billing. Validate the current licensing guide, Copilot Credit model, and tenant configuration."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often is data updated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Update frequency depends on the selected Work IQ capability, resource path, and downstream dashboard design. Do not assume real-time or daily refresh without checking the current API documentation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I export historical data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Historical access depends on Microsoft 365 retention, workspace configuration, the selected API/tool, and tenant policy. Validate the retention model before promising a reporting window."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I ensure GDPR compliance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a documented legal basis, employee notice, data minimization, retention limits, and access review. Work IQ's governance controls help, but your implementation still needs a GDPR review."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I integrate with Power BI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can build reporting through supported REST, MCP, export, or custom connector patterns. Validate connector availability before promising a native Power BI experience."
+          }
+        }
+      ]
+    },
+    {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
@@ -176,7 +230,7 @@
             <p>Work IQ is Microsoft's workplace intelligence layer for agents and applications. In plain terms, it helps agents use Microsoft 365 context, tools, and workspaces through documented A2A, MCP, and REST patterns.</p>
             <p>The practical rule is: use Work IQ to give agents better context, not to build employee surveillance reports or work around Microsoft 365 permissions.</p>
             <figure class="official-ms-image">
-                <img src="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/assets/diagrams/work-iq-api.png" alt="Microsoft Work IQ API diagram from Microsoft Learn" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                <img src="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/assets/diagrams/work-iq-api.png" alt="Microsoft Work IQ API diagram from Microsoft Learn" width="1882" height="823" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
                 <figcaption>Microsoft Learn positions Work IQ as a workplace intelligence layer for agents, with API endpoints that include A2A, a remote MCP server, and REST access.</figcaption>
             </figure>
         </section>

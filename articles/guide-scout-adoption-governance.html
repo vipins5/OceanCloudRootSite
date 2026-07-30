@@ -101,6 +101,68 @@
       "inLanguage": "en-US"
     },
     {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-scout-adoption-governance#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Scout always monitoring my work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scout activates when you ask it for help or when it detects it can provide proactive assistance. It doesn't passively monitor all your activities by default."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I opt out of Scout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Admins should control deployment through preview access, endpoint management, and permission policy. User-level opt-out behavior can change while Scout remains prerelease, so validate it during pilot planning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Scout work offline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, Scout requires internet connectivity and Microsoft 365 cloud services. It doesn't work with locally cached or offline content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to Scout data if I leave the company?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Retention depends on the workspace files, Microsoft 365 data, logs, and preview policies involved. Document offboarding and cleanup steps for Scout workspaces before production use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Scout access my email archives?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scout can work with Microsoft 365 data that the signed-in user is authorized to access. Test archive, retention, and deleted-item scenarios before relying on them in production workflows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there an additional cost for Scout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Microsoft labels Scout as Frontier preview functionality, so licensing and packaging can change. Validate preview terms, Microsoft Product Terms, and your account-team guidance before rollout."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Scout handle multi-tenant scenarios?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scout only operates within your licensed tenant. It cannot access content from other organizations or shared multi-tenant environments."
+          }
+        }
+      ]
+    },
+    {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {

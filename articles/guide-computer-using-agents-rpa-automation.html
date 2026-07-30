@@ -101,6 +101,68 @@
       "inLanguage": "en-US"
     },
     {
+      "@type": "FAQPage",
+      "@id": "https://oceancloudconsults.com/articles/guide-computer-using-agents-rpa-automation#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What if the application UI changes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Computer use can tolerate some UI changes because it uses vision and reasoning, but you should still retest when forms, buttons, navigation, or login flows change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can agents work across multiple applications?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — a single agent can open App A, extract data, switch to App B, paste data, run query in App C, all in one workflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the accuracy rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Accuracy depends on the app, instruction quality, input variability, credential flow, and exception handling. Measure accuracy in your pilot and route low-confidence cases to humans."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the computer need to be running?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Computer use runs on the machine you configure for the tool. Use dedicated, managed machines for production automation and confirm availability, patching, and monitoring before scheduling runs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to build an agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simple processes can be prototyped quickly, but production readiness depends on security review, test data, exception coverage, monitoring, and support ownership."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What about security and compliance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use least-privilege credentials, stored secrets, access allow lists, dedicated machines, logging, and human supervision. Compliance depends on your design, tenant controls, data types, and audit process."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can agents make judgment calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — agent can be trained on decision rules. If confidence is low, agent escalates to human for review rather than guessing."
+          }
+        }
+      ]
+    },
+    {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
