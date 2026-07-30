@@ -3,6 +3,8 @@ Disallow: /coming-soon.html
 Disallow: /comments-admin.html
 Disallow: /search?
 Disallow: /search/
+Disallow: /mc/
+Disallow: /articles/news-
 Allow: /
 Allow: /llms.txt
 Allow: /data/search-index.json
