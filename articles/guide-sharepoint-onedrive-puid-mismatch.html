@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>SharePoint and OneDrive PUID Mismatch Guide | OceanCloud</title>
+  <meta name="description" content="Understand and fix SharePoint and OneDrive PUID or site user ID mismatch issues caused by recreated accounts, reused UPNs, and stale UserInfo list entries." />
+  <meta name="keywords" content="PUID mismatch SharePoint, OneDrive user ID mismatch, SharePoint site user ID mismatch, UserInfo list mismatch, reused UPN SharePoint access denied, Microsoft 365 identity mismatch" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+  <meta name="author" content="OceanCloud Consultants" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="OceanCloud Consultants" />
+  <meta property="og:title" content="SharePoint and OneDrive PUID Mismatch Guide" />
+  <meta property="og:description" content="A practical admin guide to symptoms, root cause, diagnosis, repair, and prevention for SharePoint and OneDrive PUID or site user ID mismatch issues." />
+  <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch" />
+  <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt" content="SharePoint and OneDrive identity troubleshooting guide" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@oceancloud_x" />
+  <meta name="twitter:title" content="SharePoint and OneDrive PUID Mismatch Guide | OceanCloud" />
+  <meta name="twitter:description" content="Fix reused-UPN access denied errors, suffixed OneDrive URLs, and stale SharePoint UserInfo list identities." />
+  <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch#article",
+        "headline": "SharePoint and OneDrive PUID Mismatch: Symptoms, Root Cause, and Fixes",
+        "url": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch"
+        },
+        "datePublished": "2026-07-30",
+        "dateModified": "2026-07-30",
+        "author": { "@id": "https://oceancloudconsults.com/#organization" },
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "description": "A practical administrator guide to SharePoint and OneDrive site user ID mismatch issues, often called PUID mismatch by admins, caused by recreated Microsoft 365 accounts and stale UserInfo list records.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "SharePoint PUID mismatch",
+          "OneDrive user ID mismatch",
+          "UserInfo list",
+          "reused UPN",
+          "Microsoft 365 identity"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://techcommunity.microsoft.com/blog/microsoftmissioncriticalblog/sharepoint-and-onedrive-site-user-id-mismatch-explored/4496476",
+            "name": "SharePoint and OneDrive Site User ID Mismatch Explored"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/troubleshoot/sharepoint/sharing-and-permissions/fix-site-user-id-mismatch",
+            "name": "Fix site user ID mismatch in SharePoint or OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://pnp.github.io/script-samples/spo-repair-user-idmismatch/README.html?tabs=pnpps",
+            "name": "Repair ID mismatch for user across all Sites"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://oceancloudconsults.com/#website" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a SharePoint or OneDrive PUID mismatch?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft's official term is site user ID mismatch. Administrators sometimes call it PUID mismatch, but the important point is that SharePoint or OneDrive has an older site user record while a new Microsoft 365 account is using the same UPN with a different underlying identity value."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What causes site user ID mismatch in SharePoint and OneDrive?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The most common cause is deleting a Microsoft 365 account and later creating a new account with the same UPN. The new account receives a new identity value, while SharePoint and OneDrive site UserInfo lists can still reference the old account."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the recommended fix?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Microsoft recommends running the Site User Mismatch diagnostic from the Microsoft 365 admin center with a SharePoint administrator account. For SharePoint sites, the diagnostic can remove the old UserInfo list identity so the new account can be granted access again."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I fix the mismatch by changing OneDrive owners manually?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Microsoft states that manually updating OneDrive site owners or user profile properties is not the recommended solution for OneDrive mismatch repair. Use the official diagnostic and verify that the new account should own the original OneDrive."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oceancloudconsults.com" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://oceancloudconsults.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "PUID Mismatch", "item": "https://oceancloudconsults.com/articles/guide-sharepoint-onedrive-puid-mismatch" }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": { "@id": "https://oceancloudconsults.com/#organization" },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:840px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(0,180,216,.12);color:#00b4d8;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;scroll-margin-top:90px;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;scroll-margin-top:90px;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .article-wrap code{font-family:"Courier New",Courier,monospace;font-size:.88em;color:#d7f3ff;background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.16);border-radius:5px;padding:1px 5px;overflow-wrap:anywhere;}
+  .art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#c8daea;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;border:1px solid rgba(255,255,255,.06);border-radius:10px;}
+  .art-table{width:100%;min-width:640px;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(0,180,216,.25);}
+  .art-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-table td strong{color:var(--white);}
+  .script-download{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:24px 0;padding:18px 20px;background:rgba(0,180,216,.06);border:1px solid rgba(0,180,216,.18);border-radius:10px;}
+  .script-download strong{display:block;margin-bottom:3px;}
+  .script-download span{display:block;color:var(--text-mid);font-size:.9rem;line-height:1.55;}
+  .script-download a{flex:0 0 auto;font-size:.86rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#071522;background:#00b4d8;border-radius:6px;padding:10px 14px;text-decoration:none;}
+  .script-download a:hover{background:#67e8f9;color:#020b12;}
+  .script-code-block.is-collapsed{max-height:260px;}
+  .art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  @media (max-width:640px){.article-section{padding:40px 0 72px;}.art-table{min-width:580px;}.art-callout{padding:14px 16px;}.script-download{align-items:flex-start;flex-direction:column;padding:16px;}.script-download a{width:100%;text-align:center;}}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>PUID Mismatch</span></nav>
+      <h1>SharePoint and OneDrive <span class="grad-text">PUID Mismatch</span>: Symptoms, Root Cause, and Fixes</h1>
+      <p>Why a user can have the right email address, the right license, and the right permissions but still get access denied in SharePoint or OneDrive.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+      <div class="article-meta">
+        <span class="art-tag">SharePoint</span>
+        <span class="art-date">July 30, 2026</span>
+        <span class="art-read">14 min read</span>
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
+      </div>
+
+      <p class="article-intro">A SharePoint or OneDrive site user ID mismatch is frustrating because everything can look correct at first glance. The user has the right email address. They may have the right license. A site owner may even have shared the file again. Still, SharePoint says no.</p>
+
+      <p>Microsoft calls this a <strong>site user ID mismatch</strong>. Many admins call it a <strong>PUID mismatch</strong> in everyday troubleshooting. The name matters less than the pattern: a new account is using an old username, but SharePoint or OneDrive still has the previous account's ID stored in the site.</p>
+
+      <div class="art-callout"><p><strong>Short version:</strong> Same email address, different underlying identity. That is why the user can look permissioned and still be denied access.</p></div>
+
+      <h2>Common symptoms</h2>
+      <p>This usually shows up after something changes in identity: a rehire, account recreation, tenant cleanup, directory sync change, or migration. Microsoft lists the main symptoms as access denied, inconsistent behavior, and a new OneDrive URL with a number or GUID added to the expected address.</p>
+
+      <div class="art-table-wrap"><table class="art-table">
+        <thead><tr><th>Symptom</th><th>What it usually means</th></tr></thead>
+        <tbody>
+          <tr><td>Access denied in SharePoint</td><td>The site may still have a UserInfo list entry for the deleted account, not the current user object.</td></tr>
+          <tr><td>User can request access but still cannot open content</td><td>The site can still have the old ID in its UserInfo list, so adding access for the visible username may not clear the mismatch.</td></tr>
+          <tr><td>OneDrive opens with a suffixed URL</td><td>The previous OneDrive site is not deleted immediately, so a recreated account with the same UPN can receive a new OneDrive site with an added number or GUID.</td></tr>
+          <tr><td>Inconsistent behavior across sites</td><td>UserInfo list data is scoped to sites, so one site may work while another still has stale identity data.</td></tr>
+          <tr><td>Legacy user account message</td><td>Some mismatch cases show a legacy-user warning that asks the site owner or administrator to remove the old account from the site.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>PUID mismatch scenarios and examples</h2>
+      <p>Here is what this looks like in real support work. The exact message can vary by tenant, but the story is usually familiar: the user looks valid, yet SharePoint or OneDrive is still holding onto the wrong identity.</p>
+
+      <h3>Scenario 1: A rehired employee gets the same email address</h3>
+      <p><strong>Example:</strong> Maria leaves the company. Her Microsoft 365 account is deleted. Six months later, she is rehired and IT creates <code>maria@contoso.com</code> again. Maria can sign in and she is added to the right project group, but one old project site still shows access denied.</p>
+      <p><strong>What is happening:</strong> This is a new account with the old sign-in name. The project site still remembers Maria's previous identity in its UserInfo list.</p>
+      <p><strong>What to do:</strong> Run the Site User Mismatch diagnostic for Maria and the affected site. If it offers to remove the old ID, remove it, then grant Maria's new account the right access.</p>
+
+      <h3>Scenario 2: OneDrive URL gets a trailing number</h3>
+      <p><strong>Example:</strong> The user expects OneDrive at <code>https://contoso-my.sharepoint.com/personal/user_contoso_com</code>, but Microsoft 365 sends them to <code>https://contoso-my.sharepoint.com/personal/user_contoso_com1</code>.</p>
+      <p><strong>What is happening:</strong> The original OneDrive site from the deleted account was not removed immediately. The recreated account cannot take the same URL cleanly, so it gets a suffixed site.</p>
+      <p><strong>What to do:</strong> First confirm that the new account really should use the original OneDrive. Then run the Site User Mismatch diagnostic with the affected account and the original OneDrive URL. Do not fix this by manually changing OneDrive owners.</p>
+
+      <h3>Scenario 3: Site owner shares a file but the user still cannot open it</h3>
+      <p><strong>Example:</strong> A site owner shares a finance workbook with <code>alex@contoso.com</code>. The sharing dialog finds Alex, the invitation is sent, and the permissions page appears to show the right user. Alex still gets access denied.</p>
+      <p><strong>What is happening:</strong> The site may still be using an old UserInfo list record for that email address. The owner is trying to solve an identity problem as if it were a normal sharing problem.</p>
+      <p><strong>What to do:</strong> Stop resharing the same item. Run the diagnostic for Alex and the site. After the stale ID is removed, add access again through the right SharePoint or Microsoft 365 group.</p>
+
+      <h3>Scenario 4: Directory synchronization OU move triggers access issues</h3>
+      <p><strong>Example:</strong> A synchronized user has been using SharePoint for months. Later, the account is moved to a different Active Directory OU during cleanup. After sync runs, the user starts seeing inconsistent access behavior.</p>
+      <p><strong>What is happening:</strong> Microsoft notes that this issue can also happen during directory synchronization between an Active Directory OU and SharePoint, especially when the user had already signed in before the OU move.</p>
+      <p><strong>What to do:</strong> Check the sync timeline and validate the current account. Then run the Site User Mismatch diagnostic for the affected user and site. If OU moves are common in your environment, add SharePoint and OneDrive testing to that process.</p>
+
+      <h3>Scenario 5: A different person receives a reused address</h3>
+      <p><strong>Example:</strong> An employee named Jordan Smith leaves. A year later, another Jordan Smith joins and receives <code>jordan.smith@contoso.com</code>. Some old SharePoint sites appear to contain a Jordan Smith identity already.</p>
+      <p><strong>What is happening:</strong> This is where repair can become risky. The same UPN does not mean the same person. Old SharePoint or OneDrive access may belong to the previous employee.</p>
+      <p><strong>What to do:</strong> Do not reconnect the new user to the old OneDrive or preserve old site access by default. Treat the new Jordan as a new identity. Remove stale site records only where appropriate, and grant access based on the new role.</p>
+
+      <h3>Scenario 6: Guest account is removed and invited again</h3>
+      <p><strong>Example:</strong> A partner guest account is removed during external sharing cleanup. Later, the same partner email is invited again. The guest can accept the invitation, but a previously shared site behaves inconsistently.</p>
+      <p><strong>What is happening:</strong> The diagnostic supports checks for internal users and guests. A guest can also run into trouble when site-level identity records no longer match the current guest identity.</p>
+      <p><strong>What to do:</strong> Run the diagnostic for the guest and site. If the old UserInfo entry is removed, reshare the site or file intentionally with the current guest account.</p>
+
+      <h2>Why this happens</h2>
+      <p>A UPN is a sign-in name. It is not the person. When an admin deletes a Microsoft 365 account and creates a new account with the same UPN, Microsoft Entra ID gives the new account a new identity value. The email address can be the same, but the identity behind it is different.</p>
+
+      <p>SharePoint Online and OneDrive also keep their own site-level user records. Those records live in the hidden <strong>UserInfo list</strong>. That list helps SharePoint resolve people quickly, but it can also hold onto an old identity after the account has been deleted and recreated.</p>
+
+      <p>When the new user opens the site, the current account ID does not match the ID stored in the UserInfo list. Microsoft states that this mismatch causes access to be denied. It may feel inconvenient, but it protects the tenant: the same username does not always mean the same person.</p>
+
+      <h2>Why it is not just a permissions issue</h2>
+      <p>Most SharePoint access denied tickets are permissions issues. You add the user to the right group, fix the sharing link, and the problem goes away. A site user ID mismatch is different. The permission may look right, but the site is still holding the old identity record.</p>
+
+      <p>That is why resharing the file again and again usually does not help. You are adding permissions around the stale record instead of clearing the stale record.</p>
+
+      <div class="art-callout warning"><p><strong>Important:</strong> Do not assume a recreated user should get the old account's OneDrive or SharePoint access. First confirm whether this is the same person, a rehire, a renamed employee, or a different person who received a reused address.</p></div>
+
+      <h2>How to confirm the mismatch</h2>
+      <p>Start with the timeline. Ask what changed before the access issue began. Was the account deleted, recreated, restored, moved between synchronized OUs, renamed, or migrated?</p>
+
+      <ol>
+        <li>Confirm the affected user's current UPN and object status in Microsoft Entra ID.</li>
+        <li>Identify the affected SharePoint site URL or original OneDrive URL.</li>
+        <li>Check whether the account was previously deleted or recreated with the same UPN.</li>
+        <li>Look for a OneDrive URL suffix such as a trailing number or GUID.</li>
+        <li>Run Microsoft's Site User Mismatch diagnostic from the Microsoft 365 admin center.</li>
+      </ol>
+
+      <p>For OneDrive, you will need the affected user account and the original site URL. Microsoft says an admin can copy the original OneDrive web URL from the Diagnostic Information section in OneDrive settings.</p>
+
+      <h2>Recommended fix: run the Microsoft diagnostic</h2>
+      <p>The cleanest repair path is the <strong>Site User Mismatch diagnostic</strong> in the Microsoft 365 admin center. Run it with a SharePoint administrator account. Provide the affected user and the original site URL. Microsoft says the diagnostic validates access issues for both internal users and guests.</p>
+
+      <p>The diagnostic can handle the common cases:</p>
+
+      <ul>
+        <li>Reconnect a new account to the original OneDrive site after verifying ownership is appropriate.</li>
+        <li>Repair access denied errors for a user's old OneDrive site by reconfiguring the user profile and reconnecting the site.</li>
+        <li>Detect a stale UserInfo list identity on SharePoint sites and offer to remove the old ID.</li>
+      </ul>
+
+      <p>After the old ID is removed from a SharePoint site, grant the new account the access it actually needs. Do not assume the new account should inherit everything the old account had.</p>
+
+      <h2>Manual cleanup for SharePoint sites</h2>
+      <p>For SharePoint sites, and for OneDrive sites that do not belong to the affected user, Microsoft allows a manual path: remove the old user account from the UserInfo list, then grant permissions to the new account.</p>
+
+      <p>Use this carefully. Removing a user from the UserInfo list can remove site-level references and permissions for that identity. That may be exactly what you want for a stale deleted account, but log the change and regrant the correct access afterward.</p>
+
+      <h2>Tenant-wide cleanup script</h2>
+      <p>If the same stale identity appears across many sites, removing it one site at a time is slow and easy to miss. For that case, you can use a tenant-wide PnP.PowerShell cleanup script after you have confirmed the old user claim that should be removed.</p>
+
+      <div class="script-download">
+        <div>
+          <strong>Tenant-wide cleanup script</strong>
+          <span>Use report-only mode first, review the CSV, then remove the confirmed stale identity.</span>
+        </div>
+        <a href="/assets/guides/Remove-UserFromAllSites-PUIDMismatch.ps1" download>Download script</a>
+      </div>
+
+      <p>The script connects to the SharePoint admin center, enumerates active SharePoint and OneDrive sites, checks whether the target user exists on each site, and removes the user from direct site membership. It writes a CSV report with the site URL, site type, owner, template, action taken, and any group-based access risks.</p>
+
+      <p>The approach is also consistent with the <a href="https://pnp.github.io/script-samples/spo-repair-user-idmismatch/README.html?tabs=pnpps" target="_blank" rel="noopener noreferrer">PnP sample for repairing user ID mismatch across all sites</a>, which uses PnP.PowerShell to scan tenant sites, find stale UserInfo list identities, write a report, and remove the mismatched user only when report mode is disabled.</p>
+
+      <p class="code-label">Expandable PowerShell script block</p>
+      <div class="code-block script-code-block" data-lang="powershell" data-collapsible="true">
+        <pre><code># =========================
+# Prerequisites
+# =========================
+# Purpose:
+#   Tenant-wide cleanup helper for SharePoint/OneDrive site user ID mismatch
+#   remediation. Use it to find and remove an old/stale user principal from
+#   direct site membership across SharePoint sites and OneDrive sites.
+#
+# Safety:
+#   This script does not replace Microsoft&#39;s Site User Mismatch diagnostic.
+#   Run the diagnostic first where possible. Use this script only when you
+#   have confirmed which old identity should be removed. It starts in WhatIf
+#   mode by default.
+#
+# - PowerShell 7.4 or later (pwsh). PnP.PowerShell v3.x no longer supports
+#   Windows PowerShell 5.1 / the ISE - check with $PSVersionTable.PSVersion.
+# - PnP.PowerShell module, latest version:
+#     Install-Module PnP.PowerShell -Scope CurrentUser
+#     Update-Module PnP.PowerShell   (if already installed)
+# - An Entra ID App Registration (app-only / daemon app) with:
+#     - A certificate credential attached (self-signed is fine for this
+#       purpose) - see Register-PnPEntraIDApp for a guided setup, or upload
+#       a self-signed cert&#39;s .cer manually under the app&#39;s &quot;Certificates &amp;
+#       secrets&quot; blade.
+#     - SharePoint API application permission Sites.FullControl.All (or an
+#       equivalent scoped permission set), with admin consent granted.
+#     - Optional, for the group/EEEU risk-flagging section: Microsoft Graph
+#       application permissions User.Read.All and GroupMember.Read.All. The
+#       script degrades gracefully and just skips that flagging if these
+#       aren&#39;t granted.
+#     - Optional, only if $RemoveFromM365Groups (below) is set to $true:
+#       Microsoft Graph application permission Group.ReadWrite.All (or
+#       Directory.ReadWrite.All) to remove the user from a connected M365
+#       Group&#39;s membership AND ownership. Note: GroupMember.ReadWrite.All
+#       alone is enough for membership removal but NOT for ownership
+#       removal - use Group.ReadWrite.All or Directory.ReadWrite.All if you
+#       want both to work.
+# - The certificate itself, matching whichever $AuthMethod is selected below:
+#     - &quot;PFX&quot;        - the .pfx file (private key + password) on disk at
+#                      the path in $PfxPath.
+#     - &quot;Thumbprint&quot; - the same certificate imported into the local
+#                      certificate store (Cert:\CurrentUser\My or
+#                      Cert:\LocalMachine\My) on the machine running this
+#                      script.
+# - An execution policy that allows running local scripts (e.g.
+#   RemoteSigned) - Get-ExecutionPolicy / Set-ExecutionPolicy.
+# - Network access to https://*.sharepoint.com, https://*-admin.sharepoint.com,
+#   and (if using the Graph-based group check) https://graph.microsoft.com.
+
+# =========================
+# Config Variables
+# =========================
+$TenantName = &quot;contoso&quot;   # Example: contoso, fabrikam, adventureworks
+$UserID     = &quot;i:0#.f|membership|user@contoso.com&quot;   # Target stale login claim to remove
+
+# =========================
+# Authentication
+# =========================
+# &quot;PFX&quot;        - certificate file on disk + password (original method)
+# &quot;Thumbprint&quot; - certificate already imported into the local cert store
+#                (Cert:\CurrentUser\My or Cert:\LocalMachine\My), referenced
+#                by thumbprint only - no password needed at runtime.
+$AuthMethod = &quot;Thumbprint&quot;   # &quot;PFX&quot; or &quot;Thumbprint&quot;
+
+$TenantId  = &quot;00000000-0000-0000-0000-000000000000&quot;   # Replace with your Entra ID Tenant ID (GUID)
+$ClientId  = &quot;00000000-0000-0000-0000-000000000000&quot;   # Replace with your App Registration&#39;s Client ID (GUID)
+
+# --- PFX auth variables (used when $AuthMethod = &quot;PFX&quot;) ---
+$PfxPath   = &quot;C:\Cert\pnp-apponly.pfx&quot;
+
+# --- Thumbprint auth variables (used when $AuthMethod = &quot;Thumbprint&quot;) ---
+# Get this from the cert itself, e.g.:
+#   (Get-ChildItem Cert:\CurrentUser\My | Where-Object Subject -match &quot;pnp-apponly&quot;).Thumbprint
+$CertificateThumbprint = &quot;0000000000000000000000000000000000000000&quot;   # Replace with your certificate&#39;s thumbprint (used only when $AuthMethod = &quot;Thumbprint&quot;)
+# Certificates copied from certmgr.msc / certlm.msc often paste in with spaces
+# between byte pairs (e.g. &quot;3D 44 45 5C ...&quot;), which won&#39;t match anything in
+# the store. Strip whitespace so a pasted value still works.
+$CertificateThumbprint = $CertificateThumbprint -replace &#39;\s&#39;, &#39;&#39;
+
+$PlaceholderGuid = &quot;00000000-0000-0000-0000-000000000000&quot;
+if ($TenantId -eq $PlaceholderGuid -or $ClientId -eq $PlaceholderGuid) {
+    throw &quot;TenantId and/or ClientId are still set to the placeholder GUID. Replace them with your actual Entra ID Tenant ID and App Registration Client ID before running.&quot;
+}
+
+$PfxPassword = $null
+if ($AuthMethod -eq &quot;PFX&quot;) {
+    # FIX: no plaintext password in the script body. If $env:PFX_PASSWORD is set
+    # (e.g. injected by a pipeline/secret store), use it; otherwise prompt once.
+    if ($env:PFX_PASSWORD) {
+        $PfxPassword = ConvertTo-SecureString $env:PFX_PASSWORD -AsPlainText -Force
+    }
+    else {
+        $PfxPassword = Read-Host -Prompt &quot;Enter PFX certificate password&quot; -AsSecureString
+    }
+}
+elseif ($AuthMethod -eq &quot;Thumbprint&quot;) {
+    if (-not $CertificateThumbprint -or $CertificateThumbprint -eq &quot;0000000000000000000000000000000000000000&quot;) {
+        throw &quot;AuthMethod is &#39;Thumbprint&#39; but `$CertificateThumbprint is still empty/placeholder. Set it to your certificate&#39;s real thumbprint before running.&quot;
+    }
+}
+else {
+    throw &quot;Unrecognized AuthMethod &#39;$AuthMethod&#39;. Use &#39;PFX&#39; or &#39;Thumbprint&#39;.&quot;
+}
+
+# Output CSV
+$CsvPath = &quot;C:\Temp\UserRemovalReport_AllSites_PUIDMismatch.csv&quot;
+
+# Exclude target user&#39;s own OneDrive from processing
+$ExcludeUsersOwnOneDrive = $true
+
+# If $true: for any group-connected site (Team site tied to an M365 Group),
+# also remove the user as a member AND as an owner of that connected M365
+# Group - not just from direct SharePoint site membership. This is a
+# separate Entra ID/Graph operation from the SharePoint removal below, so it
+# needs the extra Graph permission noted in Prerequisites.
+# If $false (default): group-connected sites are still flagged in
+# GroupRiskNote as before, but group membership/ownership is left untouched
+# and must be cleaned up separately.
+$RemoveFromM365Groups = $false
+
+# Dry run: defaults to $true to report only, no removals.
+# Review the CSV first. Set to $false only after confirming the target identity.
+$WhatIfMode = $true
+
+# Retry policy for transient/throttling failures
+$MaxRetries       = 3
+$RetryBaseDelaySec = 5
+
+# =========================
+# Derived URLs
+# =========================
+$AdminUrl   = &quot;https://$TenantName-admin.sharepoint.com&quot;
+$MyHostUrl  = &quot;https://$TenantName-my.sharepoint.com&quot;
+$RootSpoUrl = &quot;https://$TenantName.sharepoint.com&quot;
+
+# =========================
+# Helpers
+# =========================
+function Connect-PnPWithCert {
+    param(
+        [Parameter(Mandatory = $true)][string]$Url,
+        [Parameter(Mandatory = $true)][string]$TenantId,
+        [Parameter(Mandatory = $true)][string]$ClientId,
+        [Parameter(Mandatory = $true)][ValidateSet(&quot;PFX&quot;, &quot;Thumbprint&quot;)][string]$AuthMethod,
+        [string]$PfxPath,
+        [securestring]$PfxPassword,
+        [string]$CertificateThumbprint
+    )
+
+    switch ($AuthMethod) {
+        &quot;PFX&quot; {
+            Connect-PnPOnline `
+                -Url $Url `
+                -Tenant $TenantId `
+                -ClientId $ClientId `
+                -CertificatePath $PfxPath `
+                -CertificatePassword $PfxPassword
+        }
+        &quot;Thumbprint&quot; {
+            # Requires the cert to already be imported (Cert:\CurrentUser\My or
+            # Cert:\LocalMachine\My). If Connect-PnPOnline throws
+            # &quot;Value cannot be null. Parameter name: certificate&quot;, the thumbprint
+            # doesn&#39;t match anything in either store on this machine.
+            Connect-PnPOnline `
+                -Url $Url `
+                -Tenant $TenantId `
+                -ClientId $ClientId `
+                -Thumbprint $CertificateThumbprint
+        }
+    }
+}
+
+function Disconnect-PnPSafely {
+    try {
+        Disconnect-PnPOnline -ErrorAction SilentlyContinue
+    }
+    catch {
+        # ignore
+    }
+}
+
+# FIX: retry wrapper so throttling (429) / transient network errors don&#39;t
+# get logged as a permanent &quot;Failed&quot; on the first hiccup.
+function Invoke-WithRetry {
+    param(
+        [Parameter(Mandatory = $true)][scriptblock]$Action,
+        [int]$MaxRetries = 3,
+        [int]$BaseDelaySec = 5
+    )
+
+    $attempt = 0
+    while ($true) {
+        try {
+            return &amp; $Action
+        }
+        catch {
+            $attempt++
+            $isThrottleOrTransient =
+                $_.Exception.Message -match &quot;429|throttl|timeout|temporarily unavailable|too many requests|503|500|502|service unavailable|socket|underlying connection&quot;
+
+            if ($attempt -ge $MaxRetries -or -not $isThrottleOrTransient) {
+                throw
+            }
+
+            $delay = $BaseDelaySec * [Math]::Pow(2, $attempt - 1)
+            Write-Host &quot;  Transient error, retrying in $delay sec (attempt $attempt/$MaxRetries): $($_.Exception.Message)&quot; -ForegroundColor DarkYellow
+            Start-Sleep -Seconds $delay
+        }
+    }
+}
+
+# =========================
+# Prep
+# =========================
+$Report = New-Object System.Collections.Generic.List[object]
+
+Write-Host &quot;&quot;
+Write-Host &quot;Admin URL              : $AdminUrl&quot; -ForegroundColor Cyan
+Write-Host &quot;Root SPO URL           : $RootSpoUrl&quot; -ForegroundColor Cyan
+Write-Host &quot;MySite host root       : $MyHostUrl&quot; -ForegroundColor Cyan
+Write-Host &quot;Auth method            : $AuthMethod&quot; -ForegroundColor Cyan
+Write-Host &quot;Exclude own OneDrive   : $ExcludeUsersOwnOneDrive&quot; -ForegroundColor Cyan
+Write-Host &quot;WhatIf mode            : $WhatIfMode&quot; -ForegroundColor Cyan
+Write-Host &quot;&quot;
+
+# =========================
+# Connect to Tenant Admin
+# =========================
+Write-Progress -Activity &quot;Connecting&quot; -Status &quot;Connecting to SharePoint Admin Center...&quot; -PercentComplete 0
+
+Disconnect-PnPSafely
+Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+    Connect-PnPWithCert -Url $AdminUrl -TenantId $TenantId -ClientId $ClientId -AuthMethod $AuthMethod `
+        -PfxPath $PfxPath -PfxPassword $PfxPassword -CertificateThumbprint $CertificateThumbprint
+}
+
+Write-Progress -Activity &quot;Connecting&quot; -Completed
+Write-Host &quot;Connected to admin center.&quot; -ForegroundColor Green
+Write-Host &quot;&quot;
+
+# =========================
+# Resolve the target user&#39;s OWN OneDrive URL from real tenant data
+# instead of guessing it from the UPN (FIX for bug #1 - guessed URLs
+# miss collision-suffixed personal sites, e.g. &quot;..._2&quot;).
+# =========================
+$upn = ($UserID -split &quot;\|&quot;)[-1].Trim().ToLower()
+$UserOneDriveUrl = $null
+
+try {
+    $profileUrl = Get-PnPUserProfileProperty -Account $upn -ErrorAction Stop |
+        Select-Object -ExpandProperty PersonalUrl -ErrorAction SilentlyContinue
+
+    if ($profileUrl) {
+        # PersonalUrl often comes back relative; normalize to absolute.
+        if ($profileUrl -notmatch &quot;^https?://&quot;) {
+            $profileUrl = &quot;$MyHostUrl$profileUrl&quot;.TrimEnd(&quot;/&quot;)
+        }
+        $UserOneDriveUrl = $profileUrl.TrimEnd(&quot;/&quot;)
+    }
+}
+catch {
+    Write-Host &quot;Could not resolve OneDrive URL via user profile property; will fall back to matching by Owner.&quot; -ForegroundColor Yellow
+}
+
+Write-Host &quot;User OneDrive (resolved): $UserOneDriveUrl&quot; -ForegroundColor Cyan
+Write-Host &quot;&quot;
+
+# =========================
+# Enumerate ALL sites
+# =========================
+Write-Progress -Activity &quot;Enumerating sites&quot; -Status &quot;Fetching tenant sites...&quot; -PercentComplete 10
+
+$allSitesRaw = @(Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+    Get-PnPTenantSite -IncludeOneDriveSites -Detailed
+})
+
+Write-Progress -Activity &quot;Enumerating sites&quot; -Status &quot;Filtering root, admin, and inactive sites...&quot; -PercentComplete 60
+
+# Filter out the Root SPO, MySite Host, and Admin Center
+# FIX (bug #2): also require Status -eq &quot;Active&quot; so we don&#39;t waste calls
+# connecting to Recycled / NotYetProvisioned / LockedForNewSite sites and
+# logging them as spurious failures.
+$targetSites = @(
+    $allSitesRaw | Where-Object {
+        $_.Url -and
+        $_.Url -ne $RootSpoUrl -and
+        $_.Url -ne $MyHostUrl -and
+        $_.Url -ne $AdminUrl -and
+        $_.Status -eq &quot;Active&quot;
+    }
+)
+
+if ($ExcludeUsersOwnOneDrive) {
+    $targetSites = @(
+        $targetSites | Where-Object {
+            $isOwnOneDrive = $false
+
+            if ($UserOneDriveUrl -and $_.Url -eq $UserOneDriveUrl) {
+                $isOwnOneDrive = $true
+            }
+            # Fallback / belt-and-braces: match by owner + personal path even
+            # if URL resolution above failed or didn&#39;t line up exactly.
+            elseif ($_.Url -like &quot;*/personal/*&quot; -and $_.Owner -and $_.Owner.ToLower() -eq $upn) {
+                $isOwnOneDrive = $true
+            }
+
+            -not $isOwnOneDrive
+        }
+    )
+}
+
+Write-Progress -Activity &quot;Enumerating sites&quot; -Completed
+
+Write-Host &quot;Total sites returned by Get-PnPTenantSite : $($allSitesRaw.Count)&quot; -ForegroundColor Yellow
+Write-Host &quot;Total target sites to process               : $($targetSites.Count)&quot; -ForegroundColor Yellow
+Write-Host &quot;&quot;
+
+Write-Host &quot;Sample matched URLs:&quot; -ForegroundColor Cyan
+$sampleUrls = @($targetSites | Select-Object -First 10 -ExpandProperty Url)
+if ($sampleUrls.Count -eq 0) {
+    Write-Host &quot;  No sites matched the filter.&quot; -ForegroundColor Yellow
+}
+else {
+    foreach ($u in $sampleUrls) {
+        Write-Host &quot;  $u&quot;
+    }
+}
+Write-Host &quot;&quot;
+
+if ($targetSites.Count -eq 0) {
+    Write-Host &quot;No sites matched. Check TenantName and confirm Get-PnPTenantSite is returning sites.&quot; -ForegroundColor Yellow
+}
+
+# =========================
+# Best-effort check for group-inherited access (FIX for bug #3).
+# Remove-PnPUser only strips DIRECT membership from the site&#39;s user list /
+# SharePoint groups. If access actually comes from an M365 Group (Team site)
+# or an Entra security group granted permissions on the site, the user keeps
+# access after this script runs even though the report will say &quot;Success&quot;.
+# This section flags that risk per site; it does NOT remove group-based
+# access, since that requires touching Entra ID group membership, not SPO.
+# Requires the app registration to have Graph &quot;User.Read.All&quot; and
+# &quot;GroupMember.Read.All&quot; (or equivalent) - if it doesn&#39;t, this block just
+# logs a warning once and the rest of the script still runs normally.
+#
+# NOTE: transitiveMemberOf is only read on its first page here. For a user
+# who belongs to a very large number of groups (~100+), some memberships
+# could be missed since @odata.nextLink paging isn&#39;t followed. Not an issue
+# for typical accounts, but worth knowing for heavily-grouped service
+# accounts.
+# =========================
+$userGroupIds = @()
+$graphAvailable = $true
+# Maps GroupId (string) -&gt; $true if that group&#39;s removal was clean (no
+# failures) the first time it was processed, $false if it had a failure.
+# Lets a second site referencing the same group report the real prior
+# outcome instead of just &quot;already attempted&quot;.
+$groupRemovalResults = @{}
+
+try {
+    $me = Invoke-PnPGraphMethod -Url &quot;users/$upn&quot; -ErrorAction Stop
+    $memberships = Invoke-PnPGraphMethod -Url &quot;users/$($me.id)/transitiveMemberOf&quot; -ErrorAction Stop
+    $userGroupIds = @($memberships.value | Where-Object { $_.&quot;@odata.type&quot; -match &quot;group&quot; } | Select-Object -ExpandProperty id)
+}
+catch {
+    $graphAvailable = $false
+    Write-Host &quot;Graph lookup for group memberships unavailable (missing Graph permissions or call failed).&quot; -ForegroundColor Yellow
+    Write-Host &quot;Group-inherited access will NOT be flagged in the report - review manually for M365-group-connected sites and EEEU.&quot; -ForegroundColor Yellow
+}
+
+Write-Host &quot;&quot;
+
+# =========================
+# Process each Site
+# =========================
+$index = 0
+$total = [Math]::Max($targetSites.Count, 1)
+
+foreach ($s in $targetSites) {
+    $index++
+    $percent = [int](($index / $total) * 100)
+
+    Write-Progress `
+        -Activity &quot;Removing user from sites&quot; `
+        -Status &quot;[$index/$total] Processing $($s.Url)&quot; `
+        -PercentComplete $percent
+
+    $status  = &quot;&quot;
+    $message = &quot;&quot;
+    $groupRiskNote = &quot;&quot;
+    $needsGroupReview = $false
+
+    try {
+        Write-Host &quot;Processing [$index/$total]: $($s.Url)&quot;
+
+        Disconnect-PnPSafely
+        Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+            Connect-PnPWithCert -Url $s.Url -TenantId $TenantId -ClientId $ClientId -AuthMethod $AuthMethod `
+                -PfxPath $PfxPath -PfxPassword $PfxPassword -CertificateThumbprint $CertificateThumbprint
+        }
+
+        # --- Group-inherited access risk flags ---
+        $flags = @()
+
+        if ($s.GroupId -and $s.GroupId -ne [Guid]::Empty) {
+            $groupIdStr = $s.GroupId.ToString()
+
+            if (-not $RemoveFromM365Groups) {
+                $needsGroupReview = $true
+                if ($graphAvailable -and $userGroupIds -contains $groupIdStr) {
+                    $flags += &quot;M365-Group-connected site; user is a member of the connected group ($groupIdStr) - removing from the site alone will NOT remove access. Set `$RemoveFromM365Groups = `$true to have this script remove group membership/ownership automatically.&quot;
+                }
+                else {
+                    $flags += &quot;M365-Group-connected site - verify group membership separately (set `$RemoveFromM365Groups = `$true to have this script handle it).&quot;
+                }
+            }
+            elseif ($groupRemovalResults.ContainsKey($groupIdStr)) {
+                if ($groupRemovalResults[$groupIdStr]) {
+                    $flags += &quot;M365-Group-connected site; group ($groupIdStr) membership/ownership removal already completed cleanly earlier in this run.&quot;
+                }
+                else {
+                    $needsGroupReview = $true
+                    $flags += &quot;M365-Group-connected site; group ($groupIdStr) membership/ownership removal was already attempted earlier in this run and had a failure - see the earlier entry with this GroupId for detail.&quot;
+                }
+            }
+            elseif ($WhatIfMode) {
+                $needsGroupReview = $true
+                $flags += &quot;M365-Group-connected site ($groupIdStr) - WhatIf mode: group membership/ownership removal skipped.&quot;
+            }
+            else {
+                # Best-effort: attempt both member and owner removal from the
+                # connected M365 Group. Graph returns a &quot;does not exist&quot; /
+                # Request_ResourceNotFound error when the user wasn&#39;t a
+                # member (or owner) in the first place - that&#39;s expected and
+                # treated as a no-op, not a failure. Anything else (e.g. the
+                # user being the group&#39;s sole owner, which Graph will refuse
+                # to remove) is surfaced in the note for manual follow-up.
+                $groupNotes = @()
+                $groupHadFailure = $false
+
+                try {
+                    Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+                        Remove-PnPMicrosoft365GroupMember -Identity $groupIdStr -Users $upn -ErrorAction Stop
+                    }
+                    $groupNotes += &quot;removed as group member&quot;
+                }
+                catch {
+                    if ($_.Exception.Message -notmatch &quot;does not exist|Request_ResourceNotFound&quot;) {
+                        $groupNotes += &quot;member removal failed: $($_.Exception.Message)&quot;
+                        $groupHadFailure = $true
+                    }
+                }
+
+                try {
+                    Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+                        Remove-PnPMicrosoft365GroupOwner -Identity $groupIdStr -Users $upn -ErrorAction Stop
+                    }
+                    $groupNotes += &quot;removed as group owner&quot;
+                }
+                catch {
+                    if ($_.Exception.Message -notmatch &quot;does not exist|Request_ResourceNotFound&quot;) {
+                        $groupNotes += &quot;owner removal failed: $($_.Exception.Message)&quot;
+                        $groupHadFailure = $true
+                    }
+                }
+
+                $groupRemovalResults[$groupIdStr] = -not $groupHadFailure
+                if ($groupHadFailure) { $needsGroupReview = $true }
+
+                if ($groupNotes.Count -gt 0) {
+                    $flags += &quot;M365-Group-connected site ($groupIdStr): $($groupNotes -join &#39;; &#39;).&quot;
+                }
+                else {
+                    $flags += &quot;M365-Group-connected site ($groupIdStr): user was not a member or owner of the connected group; nothing to remove there.&quot;
+                }
+            }
+        }
+
+        # EEEU can show up two ways: (a) granted directly on the web as a
+        # RoleAssignment principal with no group involved at all - the most
+        # common case - or (b) added as a member of a SharePoint group.
+        # Checking group membership alone (as the previous version did, via
+        # a Get-PnPGroup | Get-PnPGroupMember pipe that also isn&#39;t guaranteed
+        # to bind reliably) misses (a) entirely, which is the more common
+        # pattern, so both are checked explicitly here.
+        $eeeuFound = $false
+
+        try {
+            # NOTE: Get-PnPWeb -Includes &quot;RoleAssignments.Member&quot; only makes the
+            # Member reference itself accessible - it does NOT reliably populate
+            # scalar properties like LoginName/Title on that referenced object.
+            # Every working example of this pattern (PnP community docs, MS
+            # TechCommunity threads) loads those explicitly per RoleAssignment
+            # via Get-PnPProperty rather than reading them directly off a bare
+            # -Includes result, so that&#39;s what&#39;s done here.
+            $web = Get-PnPWeb -Includes &quot;RoleAssignments&quot; -ErrorAction Stop
+            foreach ($ra in $web.RoleAssignments) {
+                Get-PnPProperty -ClientObject $ra -Property Member -ErrorAction Stop | Out-Null
+                Get-PnPProperty -ClientObject $ra.Member -Property LoginName, Title -ErrorAction Stop | Out-Null
+                if ($ra.Member.LoginName -match &quot;spo-grid-all-users&quot; -or $ra.Member.Title -match &quot;Everyone except external users&quot;) {
+                    $eeeuFound = $true
+                    break
+                }
+            }
+        }
+        catch { }
+
+        if (-not $eeeuFound) {
+            try {
+                $siteGroups = Get-PnPGroup -ErrorAction Stop
+                foreach ($grp in $siteGroups) {
+                    $members = Get-PnPGroupMember -Identity $grp -ErrorAction SilentlyContinue
+                    if ($members | Where-Object { $_.LoginName -match &quot;spo-grid-all-users|Everyone except external users&quot; }) {
+                        $eeeuFound = $true
+                        break
+                    }
+                }
+            }
+            catch { }
+        }
+
+        if ($eeeuFound) {
+            $needsGroupReview = $true
+            $flags += &quot;Site grants access to &#39;Everyone except external users&#39; (EEEU) - user likely retains access regardless of this removal.&quot;
+        }
+
+        $groupRiskNote = ($flags -join &quot; | &quot;)
+
+        # Check whether user exists on the site.
+        # FIX: previously ANY exception here (throttling, permission errors,
+        # network blips) was swallowed and treated as &quot;user not found&quot;, so a
+        # transient failure could get silently logged as a clean &quot;NoAction&quot;
+        # instead of a &quot;Failed&quot; that needs review. Now only messages that
+        # actually indicate the user isn&#39;t present are treated as absence;
+        # anything else re-throws and is caught by the outer try/catch below,
+        # landing in the report as Status = Failed with the real error text.
+        $userExists = $null
+        try {
+            # Wrapped in the retry helper too: a throttled/transient failure here
+            # should be retried, not immediately treated as either &quot;not found&quot; or
+            # a hard failure.
+            $userExists = Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+                Get-PnPUser -Identity $UserID -ErrorAction Stop
+            }
+        }
+        catch {
+            if ($_.Exception.Message -match &quot;User Not Found|User cannot be found|does not exist|Invalid user|InvalidClientQueryException&quot;) {
+                $userExists = $null
+            }
+            else {
+                throw
+            }
+        }
+
+        if ($null -eq $userExists) {
+            $status  = &quot;NoAction&quot;
+            $message = &quot;User not found on site; nothing to remove.&quot;
+            Write-Host &quot;  No action: user not present.&quot; -ForegroundColor Yellow
+        }
+        else {
+            if ($WhatIfMode) {
+                $status  = &quot;WhatIf&quot;
+                $message = &quot;User found on site. Removal skipped because WhatIf mode is enabled.&quot;
+                Write-Host &quot;  WhatIf: user would be removed.&quot; -ForegroundColor Yellow
+            }
+            else {
+                Invoke-WithRetry -MaxRetries $MaxRetries -BaseDelaySec $RetryBaseDelaySec -Action {
+                    Remove-PnPUser -Identity $UserID -Force -ErrorAction Stop
+                }
+
+                # Best-effort validation.
+                # FIX: previously ANY exception here (not just &quot;user not found&quot;,
+                # which is the expected/desired outcome post-removal) was treated
+                # as confirmation of success. A throttled or otherwise-failed
+                # validation call would then silently get reported as &quot;Success&quot;
+                # even though nothing about the user&#39;s actual state was confirmed.
+                $stillThere = $null
+                $validationFailed = $false
+                $validationError = $null
+                try {
+                    $stillThere = Get-PnPUser -Identity $UserID -ErrorAction Stop
+                }
+                catch {
+                    if ($_.Exception.Message -match &quot;User Not Found|User cannot be found|does not exist|Invalid user|InvalidClientQueryException&quot;) {
+                        $stillThere = $null
+                    }
+                    else {
+                        $validationFailed = $true
+                        $validationError = $_.Exception.Message
+                    }
+                }
+
+                if ($validationFailed) {
+                    $status  = &quot;SuccessValidationFailed&quot;
+                    $message = &quot;Remove-PnPUser completed, but the post-removal check itself failed, so removal could not be confirmed: $validationError&quot;
+                    Write-Host &quot;  Removed, but could not confirm afterward (validation check error).&quot; -ForegroundColor Yellow
+                }
+                elseif ($null -eq $stillThere) {
+                    $status  = &quot;Success&quot;
+                    $message = &quot;User removed from direct site membership.&quot;
+                    if ($groupRiskNote) {
+                        $status  = &quot;SuccessWithRisk&quot;
+                        $message = &quot;User removed from direct site membership, but access may persist via group. See GroupRiskNote.&quot;
+                    }
+                    Write-Host &quot;  Removed successfully.&quot; -ForegroundColor Green
+                }
+                else {
+                    $status  = &quot;Warning&quot;
+                    $message = &quot;Remove command ran, but user still appears in the site. Possible cache/propagation or inherited access.&quot;
+                    Write-Host &quot;  Warning: user still appears after removal attempt.&quot; -ForegroundColor Yellow
+                }
+            }
+        }
+    }
+    catch {
+        $status  = &quot;Failed&quot;
+        $message = $_.Exception.Message
+        Write-Host &quot;  Failed: $message&quot; -ForegroundColor Red
+    }
+
+    # Determine if this is a OneDrive or SPO site for the report
+    $siteType = if ($s.Url -like &quot;*/personal/*&quot;) { &quot;OneDrive&quot; } else { &quot;SharePoint&quot; }
+
+    $Report.Add([PSCustomObject]@{
+        Timestamp         = (Get-Date).ToString(&quot;s&quot;)
+        SiteType          = $siteType
+        SiteUrl           = $s.Url
+        Owner             = $s.Owner
+        Template          = $s.Template
+        TargetUser        = $UserID
+        Status            = $status
+        Details           = $message
+        GroupRiskNote     = $groupRiskNote
+        NeedsGroupReview  = $needsGroupReview
+    }) | Out-Null
+}
+
+Write-Progress -Activity &quot;Removing user from sites&quot; -Completed
+
+Disconnect-PnPSafely
+
+# =========================
+# Export report
+# =========================
+$Report | Export-Csv -Path $CsvPath -NoTypeInformation -Encoding UTF8
+
+Write-Host &quot;&quot;
+Write-Host &quot;Completed.&quot; -ForegroundColor Green
+Write-Host &quot;Report written to: $CsvPath&quot; -ForegroundColor Green
+
+$riskCount = @($Report | Where-Object { $_.NeedsGroupReview }).Count
+if ($riskCount -gt 0) {
+    Write-Host &quot;&quot;
+    Write-Host &quot;$riskCount site(s) still need manual review for group-based access (see NeedsGroupReview / GroupRiskNote columns) before considering this user fully offboarded.&quot; -ForegroundColor Yellow
+}
+Write-Host &quot;&quot;
+</code></pre>
+      </div>
+
+      <div class="art-callout warning"><p><strong>Use report-only mode first.</strong> The published script defaults to <code>$WhatIfMode = $true</code>. Review the CSV output before changing it to <code>$false</code>. This is especially important in PUID mismatch cases because removing the wrong identity can break access for the wrong person.</p></div>
+
+      <p>There are two important limits. First, <code>Remove-PnPUser</code> removes direct site membership and SharePoint user references; it does not automatically remove access inherited from Microsoft 365 groups, Entra security groups, or "Everyone except external users." Second, for OneDrive sites that belong to the affected user, use Microsoft's Site User Mismatch diagnostic instead of manually reconnecting or changing OneDrive ownership.</p>
+
+      <p>Before running it, update these values in the script:</p>
+
+      <ul>
+        <li><code>$TenantName</code>: your tenant prefix, such as <code>contoso</code>.</li>
+        <li><code>$UserID</code>: the old login claim to remove, for example <code>i:0#.f|membership|user@contoso.com</code>.</li>
+        <li><code>$TenantId</code> and <code>$ClientId</code>: your Entra tenant ID and app registration client ID.</li>
+        <li><code>$AuthMethod</code>, certificate path, or certificate thumbprint.</li>
+        <li><code>$CsvPath</code>: where the report should be written.</li>
+        <li><code>$RemoveFromM365Groups</code>: leave it <code>$false</code> unless you have approved Graph permissions and intend to remove Microsoft 365 group membership too.</li>
+      </ul>
+
+      <p>A safe process is simple: run it once in WhatIf mode, review every row marked <code>WhatIf</code>, <code>SuccessWithRisk</code>, or <code>NeedsGroupReview</code>, confirm the identity with the site owner or identity team, and only then run the actual removal.</p>
+
+      <h2>OneDrive needs extra caution</h2>
+      <p>Be extra careful with OneDrive. The original OneDrive may contain personal business files from another identity. Microsoft warns admins to make sure the <code>UserName</code> of the new account matches the old account before running a OneDrive repair. Admins must not connect OneDrive sites that may have belonged to another user.</p>
+
+      <p>Also, do not fix this by manually updating OneDrive owners or user profile properties. Microsoft recommends the diagnostic for OneDrive repair. If it succeeds, changes can take about 24 hours while OneDrive tiles update and extra suffixed OneDrive sites are recycled.</p>
+
+      <h2>Prevention checklist</h2>
+      <p>The best fix is to avoid creating the mismatch in the first place. Add these checks to offboarding, rehiring, synchronization, and tenant migration work.</p>
+
+      <ul>
+        <li>Avoid reusing UPNs unless the business process explicitly requires it.</li>
+        <li>Restore soft-deleted users when appropriate instead of creating new accounts with the same UPN.</li>
+        <li>Document whether a returning worker is the same person and whether old access should carry forward.</li>
+        <li>Before recreating accounts, inventory critical SharePoint sites and OneDrive ownership.</li>
+        <li>After account recreation, test OneDrive URL behavior and access to representative SharePoint sites.</li>
+        <li>Use groups for access assignments so permission review is clearer after lifecycle changes.</li>
+        <li>Keep a support runbook for Site User Mismatch diagnostic inputs and expected outcomes.</li>
+      </ul>
+
+      <h2>Admin runbook</h2>
+      <p>Use this sequence when a ticket mentions access denied after a rehire, account recreation, or UPN reuse.</p>
+
+      <ol>
+        <li>Collect the affected user's UPN, display name, Entra object ID, and timeline of account changes.</li>
+        <li>Collect the affected SharePoint URL or original OneDrive URL.</li>
+        <li>Confirm whether this is the same person and whether old OneDrive ownership is appropriate.</li>
+        <li>Run the Site User Mismatch diagnostic as a SharePoint administrator.</li>
+        <li>For SharePoint site issues, approve removal of the stale ID if the diagnostic offers it.</li>
+        <li>Regrant the new account's required access through groups or explicit permissions.</li>
+        <li>For OneDrive issues, allow up to 24 hours for profile and tile changes to settle.</li>
+        <li>Ask the user to test access in a fresh browser session.</li>
+        <li>Record the affected site, user, action taken, and whether stale UserInfo data was removed.</li>
+      </ol>
+
+      <h2>When to escalate</h2>
+      <p>Escalate if the diagnostic says no issue was found but the symptoms still fit the pattern. Also escalate if PIM role activation happened recently, or if the same stale identity appears across many sites. Microsoft notes that SharePoint Administrator permissions activated through PIM or PIM for Groups can take up to 24 hours to propagate. During that window, the diagnostic may report no issue even though the admin role is still settling.</p>
+
+      <h2>References</h2>
+      <ul>
+        <li><a href="https://techcommunity.microsoft.com/blog/microsoftmissioncriticalblog/sharepoint-and-onedrive-site-user-id-mismatch-explored/4496476" target="_blank" rel="noopener noreferrer">Microsoft Tech Community: SharePoint and OneDrive Site User ID Mismatch Explored</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/troubleshoot/sharepoint/sharing-and-permissions/fix-site-user-id-mismatch" target="_blank" rel="noopener noreferrer">Microsoft Learn: Fix site user ID mismatch in SharePoint or OneDrive</a></li>
+        <li><a href="https://pnp.github.io/script-samples/spo-repair-user-idmismatch/README.html?tabs=pnpps" target="_blank" rel="noopener noreferrer">PnP Script Sample: Repair ID mismatch for user across all Sites</a></li>
+      </ul>
+
+      <div class="art-cta-box">
+        <h3>Need help untangling SharePoint access issues?</h3>
+        <p>OceanCloud can help diagnose stale identity records, repair SharePoint and OneDrive access, and build safer Microsoft 365 lifecycle processes.</p>
+        <a href="/contact" class="btn-primary">Book a SharePoint Support Call &rarr;</a>
+      </div>
+
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is a SharePoint or OneDrive PUID mismatch?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>Microsoft's official term is site user ID mismatch. Admins sometimes call it PUID mismatch, but the core issue is an older UserInfo list ID that does not match the recreated account's current identity.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What causes site user ID mismatch in SharePoint and OneDrive?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>The most common cause is deleting a Microsoft 365 account and later creating a new account with the same UPN. The new account receives a new identity value, while SharePoint and OneDrive site UserInfo lists can still reference the old account.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is the recommended fix?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>Microsoft recommends running the Site User Mismatch diagnostic from the Microsoft 365 admin center with a SharePoint administrator account.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Can I fix the mismatch by changing OneDrive owners manually?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" role="region"><div class="faq-a-inner"><p>No. For OneDrive mismatch repair, use the official diagnostic and verify that the new account should own the original OneDrive.</p></div></div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <div class="related-label">Related guides</div>
+        <div class="related-grid">
+          <a href="/articles/guide-sharepoint-permissions" class="related-card">SharePoint Permissions Guide</a>
+          <a href="/articles/guide-sharepoint-permissions-best-practices" class="related-card">SharePoint Permissions Best Practices</a>
+          <a href="/articles/guide-pnp-entra-app-registration" class="related-card">PnP PowerShell App Registration</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="guide-final-cta reveal">
+  <div class="cta-box">
+    <div class="cta-icon">OC</div>
+    <div class="cta-content">
+      <h3>Ready to stabilize SharePoint and Microsoft 365 access?</h3>
+      <p>OceanCloud specialises in SharePoint consulting, M365 migration, Power Platform solutions, and enterprise governance.</p>
+      <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text"><div class="logo-mark">OC</div>Ocean<span>Cloud</span></div>
+        <p>Microsoft 365 consultancy focused on SharePoint, migration, Power Platform, Copilot readiness, and workplace transformation.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services#sharepoint">SharePoint Consulting</a></li>
+          <li><a href="/services#migration">M365 Migration</a></li>
+          <li><a href="/services#power">Power Platform</a></li>
+          <li><a href="/services#security">Security &amp; Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/editorial-policy">Editorial Policy</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/guides">Guides</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:oceancloudconsults@gmail.com">oceancloudconsults@gmail.com</a></li>
+          <li><a href="tel:+14698094053">Main: +1 (469) 809-4053</a></li>
+          <li>United States</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p>
+      <div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="back-top" aria-label="Back to top">&#8679;</a>
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=5"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=3"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/code.js?v=1"></script>
+<script src="../js/article.js?v=6"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

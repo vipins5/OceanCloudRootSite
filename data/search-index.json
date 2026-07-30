@@ -672,6 +672,18 @@
     "dateSort": ""
   },
   {
+    "id": "articles-guide-sharepoint-onedrive-puid-mismatch",
+    "type": "guide",
+    "tag": "Guide",
+    "title": "SharePoint and OneDrive PUID Mismatch: Symptoms, Root Cause, and Fixes",
+    "heading": "SharePoint and OneDrive PUID Mismatch",
+    "excerpt": "Understand and fix SharePoint and OneDrive site user ID mismatch issues, often called PUID mismatch by admins, with scenarios, Microsoft diagnostic guidance, and a tenant-wide PnP.PowerShell cleanup script.",
+    "body": "SharePoint and OneDrive PUID Mismatch Guide | OceanCloud SharePoint and OneDrive PUID Mismatch: Symptoms, Root Cause, and Fixes. Why a user can have the right email address, the right license, and the right permissions but still get access denied in SharePoint or OneDrive. Microsoft's official term is site user ID mismatch. Administrators sometimes call it PUID mismatch, but the precise issue is that SharePoint or OneDrive has an older UserInfo list ID while a recreated Microsoft 365 account is using the same UPN with a different underlying identity value. Common symptoms include access denied errors, inconsistent user experience, a new OneDrive URL with a number or GUID appended to the expected address, and site-specific behavior where one SharePoint site works while another still has stale identity data. Practical scenarios include a rehired employee with the same email address, a OneDrive URL with a trailing number, a site owner resharing a file that still opens as access denied, a directory synchronization OU move, a different person receiving a reused email address, and a guest account removed and invited again. The recommended fix is to run Microsoft's Site User Mismatch diagnostic in the Microsoft 365 admin center with a SharePoint administrator account. The guide also includes a tenant-wide PnP.PowerShell cleanup script, Remove-UserFromAllSites-PUIDMismatch.ps1, for removing a confirmed stale user claim from direct site membership across active SharePoint and OneDrive sites. The script defaults to WhatIf mode and writes a CSV report with group-risk flags. For SharePoint sites, the diagnostic can remove the old ID from the UserInfo list so the new account can be granted access again. For OneDrive, administrators must confirm that the new account should own the original OneDrive and should not try to repair the issue by manually changing OneDrive owners or user profile properties. Prevention includes avoiding reused UPNs where possible, restoring soft-deleted users when appropriate, documenting rehire identity decisions, testing OneDrive URL behavior after account recreation, and using group-based access for clearer governance.",
+    "url": "articles/guide-sharepoint-onedrive-puid-mismatch",
+    "dateDisplay": "July 30, 2026",
+    "dateSort": ""
+  },
+  {
     "id": "articles-guide-sharepoint-classic-calendar-to-modern-view",
     "type": "guide",
     "tag": "Guide",
