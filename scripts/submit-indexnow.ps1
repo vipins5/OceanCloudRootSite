@@ -15,7 +15,7 @@ param(
   [string]$SitemapPath = "sitemap.xml",
 
   [Parameter(Mandatory = $false)]
-  [string[]]$AdditionalSitemapPaths = @("sitemap-mc.xml"),
+  [string[]]$AdditionalSitemapPaths = @("sitemap-guides.xml", "sitemap-mc.xml"),
 
   [Parameter(Mandatory = $false)]
   [string[]]$UrlList,
