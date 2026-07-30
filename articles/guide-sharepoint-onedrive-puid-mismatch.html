@@ -1020,6 +1020,8 @@ Write-Host &quot;&quot;
         <li><code>$RemoveFromM365Groups</code>: leave it <code>$false</code> unless you have approved Graph permissions and intend to remove Microsoft 365 group membership too.</li>
       </ul>
 
+      <div class="art-callout"><p><strong>Need the certificate setup?</strong> Use our <a href="/articles/guide-pnp-entra-app-registration">PnP PowerShell Entra app registration guide</a> to create the app registration, generate a self-signed certificate, upload the public <code>.cer</code> file to Entra, grant API permissions, and connect with PFX or thumbprint authentication. If certificate generation fails in Windows PowerShell 5.1, see the <a href="/articles/guide-powershell-self-signed-certificate-entra-app-registration">self-signed certificate troubleshooting guide</a>.</p></div>
+
       <p>A safe process is simple: run it once in WhatIf mode, review every row marked <code>WhatIf</code>, <code>SuccessWithRisk</code>, or <code>NeedsGroupReview</code>, confirm the identity with the site owner or identity team, and only then run the actual removal.</p>
 
       <h2>OneDrive needs extra caution</h2>
