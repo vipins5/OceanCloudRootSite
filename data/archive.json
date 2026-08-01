@@ -1,6 +1,46 @@
 {
   "items": [
     {
+      "title": "Microsoft 365: Control access to Learning Activities and Teach",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568370",
+      "date_friendly": "July 31, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-365-control-access-to-learning-activities-and-teac"
+    },
+    {
+      "title": "Microsoft 365: Assign Different Content to Learning Groups in a Single Assignment",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568369",
+      "date_friendly": "July 31, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-07-microsoft-365-assign-different-content-to-learning-groups-in"
+    },
+    {
+      "title": "SharePoint Showcase: 10 Custom AI Skills Every SharePoint Site Owner Should Build",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-10-custom-ai-skills-every-sharepoint-site/ba-p/4535414",
+      "date_friendly": "July 28, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-sharepoint-showcase-10-custom-ai-skills-every-sharepoint-sit"
+    },
+    {
+      "title": "Beyond Benchmarks: The Lifecycle of Measuring Agentic Quality in AI Content Management",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/beyond-benchmarks-the-lifecycle-of-measuring-agentic-quality-in/ba-p/4538319",
+      "date_friendly": "July 21, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-beyond-benchmarks-the-lifecycle-of-measuring-agentic-quality"
+    },
+    {
       "title": "Microsoft Viva: Copilot Analytics - Agent 365 dashboard for managers",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567893",
       "date_friendly": "July 17, 2026",
@@ -1429,6 +1469,16 @@
       "article_slug": "news-2026-03-microsoft-copilot-microsoft-365-mind-maps-in-copilot-noteboo"
     },
     {
+      "title": "Microsoft Edge: Security Update Alerts in the Edge management service",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558435",
+      "date_friendly": "March 18, 2026",
+      "month_sort": "2026-03",
+      "month_label": "March 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-03-microsoft-edge-security-update-alerts-in-the-edge-management"
+    },
+    {
       "title": "Microsoft Edge: Copilot New Tab Page",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558256",
       "date_friendly": "March 05, 2026",
@@ -1437,6 +1487,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-03-microsoft-edge-copilot-new-tab-page"
+    },
+    {
+      "title": "Microsoft Edge: Auto-open Copilot side pane for Outlook links",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557561",
+      "date_friendly": "February 25, 2026",
+      "month_sort": "2026-02",
+      "month_label": "February 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-02-microsoft-edge-auto-open-copilot-side-pane-for-outlook-links"
     },
     {
       "title": "Microsoft Purview: Insider Risk Management – Ability to create cases without content in IRM",
@@ -1469,5 +1529,5 @@
       "article_slug": "news-2025-10-microsoft-copilot-microsoft-365-learning-agent-in-microsoft-"
     }
   ],
-  "last_updated": "2026-07-20"
+  "last_updated": "2026-08-01"
 }
