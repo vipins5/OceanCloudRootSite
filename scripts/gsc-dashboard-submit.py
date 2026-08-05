@@ -11,6 +11,14 @@ Usage examples:
   python scripts/gsc-dashboard-submit.py
   python scripts/gsc-dashboard-submit.py --submit
   python scripts/gsc-dashboard-submit.py --days 30 --site-url https://oceancloudconsults.com/
+  python scripts/gsc-dashboard-submit.py --inspect
+  python scripts/gsc-dashboard-submit.py --inspect --inspect-url https://oceancloudconsults.com/faq
+
+Note: the Search Console API has no "Request Indexing" write endpoint for
+ordinary pages (that button in the GSC UI isn't backed by a public API;
+Google's Indexing API is restricted to JobPosting/BroadcastEvent content).
+--inspect gives you the same read-only coverage status the UI shows, so you
+can see which URLs are worth manually requesting indexing for.
 """
 
 from __future__ import annotations
@@ -33,6 +41,20 @@ DEFAULT_SITEMAPS = [
     "https://oceancloudconsults.com/sitemap-index.xml",
     "https://oceancloudconsults.com/sitemap.xml",
     "https://oceancloudconsults.com/sitemap-guides.xml",
+]
+DEFAULT_INSPECT_URLS = [
+    "https://oceancloudconsults.com/",
+    "https://oceancloudconsults.com/services",
+    "https://oceancloudconsults.com/sharepoint-consulting",
+    "https://oceancloudconsults.com/microsoft-365-migration",
+    "https://oceancloudconsults.com/microsoft-365-copilot-readiness",
+    "https://oceancloudconsults.com/power-platform-consulting",
+    "https://oceancloudconsults.com/sharepoint-intranet-development",
+    "https://oceancloudconsults.com/guides",
+    "https://oceancloudconsults.com/case-studies",
+    "https://oceancloudconsults.com/contact",
+    "https://oceancloudconsults.com/articles/guide-sharepoint-permissions",
+    "https://oceancloudconsults.com/articles/guide-m365-migration-checklist",
 ]
 SCOPES = ["https://www.googleapis.com/auth/webmasters"]
 
@@ -57,6 +79,17 @@ def parse_args() -> argparse.Namespace:
         help="Repeat to provide custom sitemap URLs.",
     )
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--inspect",
+        action="store_true",
+        help="Run URL Inspection (coverage status) against priority URLs.",
+    )
+    parser.add_argument(
+        "--inspect-url",
+        action="append",
+        dest="inspect_urls",
+        help="Repeat to override the default priority URL list for --inspect.",
+    )
     return parser.parse_args()
 
 
@@ -180,6 +213,34 @@ def analytics_summary(service: Any, site_url: str, days: int) -> dict[str, Any]:
     }
 
 
+def inspect_urls(service: Any, site_url: str, urls: list[str]) -> list[dict[str, Any]]:
+    """Read-only coverage check via URL Inspection (same data as the GSC UI panel).
+
+    Not a substitute for "Request Indexing" - the API has no write endpoint
+    for that action on ordinary pages.
+    """
+    results: list[dict[str, Any]] = []
+    for url in urls:
+        try:
+            resp = service.urlInspection().index().inspect(
+                body={"inspectionUrl": url, "siteUrl": site_url}
+            ).execute()
+            idx = resp.get("inspectionResult", {}).get("indexStatusResult", {})
+            results.append({
+                "url": url,
+                "verdict": idx.get("verdict"),
+                "coverageState": idx.get("coverageState"),
+                "lastCrawlTime": idx.get("lastCrawlTime"),
+                "robotsTxtState": idx.get("robotsTxtState"),
+                "googleCanonical": idx.get("googleCanonical"),
+                "userCanonical": idx.get("userCanonical"),
+                "error": None,
+            })
+        except HttpError as exc:
+            results.append({"url": url, "error": str(exc)})
+    return results
+
+
 def main() -> int:
     args = parse_args()
     sitemaps = args.sitemaps if args.sitemaps else list(DEFAULT_SITEMAPS)
@@ -195,6 +256,7 @@ def main() -> int:
         "analytics": None,
         "submitResults": None,
         "legacyCleanupResults": None,
+        "inspectionResults": None,
         "errors": [],
     }
 
@@ -265,6 +327,20 @@ def main() -> int:
         except HttpError as exc:
             report["errors"].append(f"Legacy sitemap cleanup failed: {exc}")
             print("[warn] Legacy sitemap cleanup failed.")
+
+    if args.inspect:
+        urls = args.inspect_urls if args.inspect_urls else list(DEFAULT_INSPECT_URLS)
+        try:
+            results = inspect_urls(service, effective_site_url, urls)
+            report["inspectionResults"] = results
+            for r in results:
+                if r.get("error"):
+                    print(f"[warn] inspect failed: {r['url']} -> {r['error']}")
+                else:
+                    print(f"[ok] {r['coverageState']:<32} {r['url']}")
+        except HttpError as exc:
+            report["errors"].append(f"URL inspection failed: {exc}")
+            print("[warn] URL inspection failed.")
 
     save_report(args.output, report)
     print(f"[ok] Report written: {args.output}")
