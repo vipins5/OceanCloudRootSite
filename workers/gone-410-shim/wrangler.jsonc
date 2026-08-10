@@ -1,0 +1,13 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "oceancloud-gone-410-shim",
+	"main": "src/index.js",
+	"compatibility_date": "2026-08-01",
+	"observability": {
+		"enabled": true
+	},
+	"routes": [
+		{ "pattern": "oceancloudconsults.com/mc/MC*", "zone_name": "oceancloudconsults.com" },
+		{ "pattern": "oceancloudconsults.com/articles/news-*", "zone_name": "oceancloudconsults.com" }
+	]
+}

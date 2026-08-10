@@ -242,12 +242,15 @@ def main() -> int:
         if re.fullmatch(r"MC\d+", str(m.get("id", "")).upper())
     }
 
-    # Union current feed IDs with previously generated and explicit seed IDs.
+    # Wanted = current live feed + explicit seed IDs only. Deliberately does
+    # NOT union in previously generated files -- that union was how this
+    # generator accumulated hundreds of pages that never left, which fed the
+    # scaled-thin-content trust hit. Pages fall out once they leave the feed
+    # and aren't seeded (see pruning step below).
     wanted_ids = set(by_id.keys())
-    wanted_ids.update(existing_ids())
     wanted_ids.update(load_seed_ids())
 
-    # For IDs not in the current feed, try direct lookup one-by-one.
+    # For wanted IDs not in the current feed (i.e. seeds), try direct lookup.
     for mcid in sorted(wanted_ids):
         if mcid in by_id:
             continue
@@ -267,10 +270,19 @@ def main() -> int:
         mcid = str(m.get("id", "")).upper()
         (MC_DIR / f"{mcid}.html").write_text(page_html(m), encoding="utf-8")
 
+    # Prune pages that fell out of the feed and aren't seeded, so the page
+    # count tracks the live feed instead of growing forever.
+    pruned = 0
+    for mcid in existing_ids():
+        if mcid not in wanted_ids:
+            (MC_DIR / f"{mcid}.html").unlink(missing_ok=True)
+            pruned += 1
+
     write_index(messages)
     write_sitemap(messages)
 
     print(f"Generated {len(messages)} noindex MC utility pages in {MC_DIR}")
+    print(f"Pruned {pruned} stale MC page(s) no longer in feed/seeds")
     print(f"Generated empty compatibility sitemap: {SITEMAP_PATH}")
     return 0
 
