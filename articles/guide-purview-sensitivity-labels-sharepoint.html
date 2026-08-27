@@ -536,7 +536,7 @@ Connect-SPOService -Url $adminUrl
 $candidateSites = Get-SPOSite -Limit All |
     Where-Object {
         $_.Url -like "https://$tenantName.sharepoint.com/sites/finance*" -and
-        $_.Template -ne "SPSPERS"
+        $_.Template -notlike "SPSPERS*"
     } |
     Select-Object Url, Title, Owner, Template, SharingCapability, SensitivityLabel
 
@@ -588,7 +588,7 @@ Get-LabelPolicy |
       <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
 
 $sites = Get-SPOSite -Limit All |
-    Where-Object { $_.Template -ne "SPSPERS" } |
+    Where-Object { $_.Template -notlike "SPSPERS*" } |
     Select-Object Url, Title, Owner, Template, SharingCapability, SensitivityLabel
 
 $sites |
