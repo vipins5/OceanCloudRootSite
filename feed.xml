@@ -66,6 +66,17 @@
 		<!-- ═══ Evergreen guides & tutorials ═══ -->
 
 		<item>
+			<title>Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance</title>
+			<link>https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint</link>
+			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint</guid>
+			<pubDate>Thu, 27 Aug 2026 00:00:00 +0000</pubDate>
+			<dc:creator>OceanCloud</dc:creator>
+			<category>Guide</category>
+			<category>SharePoint Governance</category>
+			<description><![CDATA[Implement Microsoft Purview sensitivity labels for SharePoint sites and files with PowerShell setup, validation exports, governance controls, and troubleshooting.]]></description>
+		</item>
+
+		<item>
 			<title>Implementing Copilot Cowork for Multi-Team Workflows</title>
 			<link>https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows</link>
 			<guid isPermaLink="true">https://oceancloudconsults.com/articles/guide-copilot-cowork-multi-team-workflows</guid>

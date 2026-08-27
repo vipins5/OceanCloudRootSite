@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0077b6" />
+
+  <title>Microsoft Purview Sensitivity Labels for SharePoint | OceanCloud</title>
+  <meta name="description" content="Implement Microsoft Purview sensitivity labels for SharePoint sites and files with PowerShell setup, validation checks, governance patterns, and troubleshooting." />
+  <meta name="keywords" content="Microsoft Purview sensitivity labels SharePoint, SharePoint sensitivity labels PowerShell, Purview labels governance, SharePoint container labels, Microsoft 365 compliance" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="google-adsense-account" content="ca-pub-9926554564611983" />
+  <meta name="author" content="OceanCloud Consultants" />
+  <link rel="canonical" href="https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint" />
+  <link rel="alternate" hreflang="en-US" href="https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="OceanCloud Consultants" />
+  <meta property="og:title" content="Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance" />
+  <meta property="og:description" content="A practical SharePoint admin guide to Purview sensitivity labels, including PowerShell implementation, validation, and troubleshooting." />
+  <meta property="og:url" content="https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint" />
+  <meta property="og:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+  <meta property="og:image:alt" content="Microsoft 365 governance dashboard with SharePoint security controls" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@oceancloud_x" />
+  <meta name="twitter:title" content="Microsoft Purview Sensitivity Labels for SharePoint | OceanCloud" />
+  <meta name="twitter:description" content="PowerShell setup, validation, governance, and troubleshooting for SharePoint sensitivity labels." />
+  <meta name="twitter:image" content="https://oceancloudconsults.com/assets/og-guides.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/pages.css?v=12" />
+  <link rel="stylesheet" href="../css/darkstar.css?v=3" />
+  <link rel="stylesheet" href="../css/code.css?v=1" />
+  <link rel="stylesheet" href="../css/article.css?v=8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="https://oceancloudconsults.com/assets/apple-touch-icon.png" />
+  <link rel="alternate" type="application/rss+xml" title="OceanCloud M365 News" href="https://oceancloudconsults.com/feed.xml" />
+  <link rel="alternate" type="text/markdown" title="OceanCloud LLM Discovery" href="https://oceancloudconsults.com/llms.txt" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint#article",
+        "headline": "Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance",
+        "url": "https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint"
+        },
+        "datePublished": "2026-08-27",
+        "dateModified": "2026-08-27",
+        "author": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "description": "Implement Microsoft Purview sensitivity labels for SharePoint sites and files with PowerShell setup, validation checks, governance patterns, and troubleshooting.",
+        "image": "https://oceancloudconsults.com/assets/og-guides.jpg",
+        "keywords": [
+          "Microsoft Purview sensitivity labels",
+          "SharePoint sensitivity labels",
+          "SharePoint governance",
+          "Microsoft 365 compliance",
+          "SharePoint PowerShell"
+        ],
+        "citation": [
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels-teams-groups-sites",
+            "name": "Use sensitivity labels to protect collaborative workspaces"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels-sharepoint-onedrive-files",
+            "name": "Enable sensitivity labels for files in SharePoint and OneDrive"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels-default-sharing-link",
+            "name": "Configure the default sharing link type with sensitivity labels"
+          },
+          {
+            "@type": "WebPage",
+            "url": "https://learn.microsoft.com/en-us/purview/create-sensitivity-labels",
+            "name": "Create and configure sensitivity labels and policies"
+          }
+        ],
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@id": "https://oceancloudconsults.com/#website"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do SharePoint site sensitivity labels label every document automatically?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. A site sensitivity label is a container label that can apply controls such as privacy, external sharing, unmanaged device access, authentication context, and default sharing link behavior. File labels are separate and must be applied by users, defaults, auto-labeling, or other Purview labeling policies."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I apply sensitivity labels to SharePoint sites with PowerShell?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Use SharePoint Online Management Shell cmdlets such as Set-SPOSite with the SensitivityLabel parameter for individual sites, or Set-SPOTenant with SensitivityLabel when applying the same label across a collection of sites."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take for SharePoint sensitivity labels to appear?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Allow replication time after creating or changing labels. Microsoft documentation notes that label synchronization for groups and sites can take up to 24 hours in some cases, especially after running label synchronization."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which PowerShell modules are required?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use ExchangeOnlineManagement for Security and Compliance PowerShell cmdlets such as Get-Label, Set-Label, and Execute-AzureAdLabelSync, and Microsoft.Online.SharePoint.PowerShell for SharePoint tenant and site commands such as Connect-SPOService, Set-SPOTenant, Get-SPOTenant, Get-SPOSite, and Set-SPOSite."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://oceancloudconsults.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://oceancloudconsults.com/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Purview Sensitivity Labels for SharePoint",
+            "item": "https://oceancloudconsults.com/articles/guide-purview-sensitivity-labels-sharepoint"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oceancloudconsults.com/#website",
+        "url": "https://oceancloudconsults.com/",
+        "name": "OceanCloud",
+        "publisher": {
+          "@id": "https://oceancloudconsults.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://oceancloudconsults.com/#organization",
+        "name": "OceanCloud Consultants",
+        "url": "https://oceancloudconsults.com/"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+  .article-section{padding:60px 0 100px;}
+  .article-wrap{max-width:840px;margin:0 auto;}
+  .article-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .art-tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:50px;background:rgba(0,180,216,.12);color:#00b4d8;}
+  .art-date,.art-read{font-size:.8rem;color:var(--text-dim);}
+  .article-intro{font-size:1.05rem;color:#b8cfe0;line-height:1.85;margin-bottom:0;}
+  .article-wrap h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;margin:48px 0 14px;color:var(--white);letter-spacing:-.03em;}
+  .article-wrap h3{font-size:1.05rem;font-weight:700;margin:30px 0 10px;color:#c8daea;}
+  .article-wrap p{color:var(--text-mid);line-height:1.85;margin:0 0 18px;}
+  .article-wrap ul,.article-wrap ol{color:var(--text-mid);line-height:1.85;padding-left:22px;margin:0 0 18px;}
+  .article-wrap li{margin-bottom:7px;}
+  .article-wrap strong{color:var(--white);}
+  .article-wrap a{color:#00b4d8;}
+  .art-callout{background:rgba(0,180,216,.07);border-left:3px solid #00b4d8;border-radius:0 10px 10px 0;padding:16px 22px;margin:24px 0;}
+  .art-callout p{margin:0;color:#a8d8ea;font-size:.92rem;}
+  .art-callout.warning{background:rgba(251,146,60,.07);border-left-color:#fb923c;}
+  .art-callout.warning p{color:#fed7aa;}
+  .art-table-wrap{overflow-x:auto;margin:24px 0;}
+  .art-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  .art-table th{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(0,180,216,.25);}
+  .art-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-mid);vertical-align:top;}
+  .art-table tr:last-child td{border-bottom:none;}
+  .art-steps{list-style:none;padding:0;margin:0 0 20px;}
+  .art-steps li{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .art-steps li:last-child{border-bottom:none;}
+  .art-step-num{background:rgba(0,180,216,.12);color:#00b4d8;font-weight:800;font-size:.85rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .art-step-body strong{display:block;color:var(--white);font-size:.95rem;margin-bottom:5px;}
+  .art-step-body p{margin:0;color:var(--text-mid);font-size:.9rem;line-height:1.8;}
+  .ms-ref{display:inline-block;font-size:.78rem;color:#00b4d8;text-decoration:none;margin-top:6px;}
+  .ms-ref:hover{text-decoration:underline;}
+  .art-cta-box{background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.2);border-radius:16px;padding:36px;text-align:center;margin-top:56px;}
+  .art-cta-box h3{margin:0 0 10px;font-size:1.2rem;color:var(--white);}
+  .art-cta-box p{margin:0 0 22px;color:var(--text-mid);}
+  .related-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08);}
+  .related-label{font-size:.72rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .related-card{padding:18px 20px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.07);transition:border-color .2s;}
+  .related-card:hover{border-color:rgba(0,180,216,.3);}
+  .rc-topic{font-size:.68rem;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.08em;}
+  .rc-title{font-size:.88rem;font-weight:600;color:var(--white);line-height:1.4;}
+  .rc-read{font-size:.78rem;color:var(--text-dim);margin-top:2px;}
+  .quick-points-source{display:none;}
+  @media (max-width:640px){.article-wrap{max-width:100%;}.art-cta-box{padding:26px 20px;}.article-meta{gap:10px;}.art-steps li{gap:12px;}}
+  </style>
+</head>
+<body class="guide-article">
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/"><span class="nav-num">01</span>Home</a></li>
+      <li><a href="/services"><span class="nav-num">02</span>Services</a></li>
+      <li><a href="/about"><span class="nav-num">03</span>About</a></li>
+      <li><a href="/case-studies"><span class="nav-num">04</span>Work</a></li>
+      <li><a href="/news"><span class="nav-num">05</span>News</a></li>
+      <li><a href="/guides" class="active-link"><span class="nav-num">06</span>Guides</a></li>
+      <li><a href="/status"><span class="nav-num">07</span>Status</a></li>
+      <li><a href="/message-center"><span class="nav-num">08</span>Message Center</a></li>
+      <li><a href="/contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <a href="/search" class="nav-search-btn" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="main-content" class="page-hero article-hero particle-hero">
+  <canvas data-particles='{"count":40,"color":"0,180,216","maxDist":100,"speed":0.15,"opacity":0.22}'></canvas>
+  <div class="orb orb-cyan" style="width:380px;height:380px;top:-90px;right:-70px;"></div>
+  <div class="orb orb-purple" style="width:260px;height:260px;bottom:-40px;left:10%;"></div>
+  <div class="container particle-hero-inner">
+    <div class="page-hero-content">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>Purview Labels</span></nav>
+      <h1>Microsoft Purview Sensitivity Labels for <span class="grad-text">SharePoint</span></h1>
+      <p>Setup, governance, PowerShell implementation, validation checks, and troubleshooting for SharePoint sites and files.</p>
+    </div>
+  </div>
+</section>
+
+<section class="article-section">
+  <div class="container">
+    <div class="article-wrap">
+
+      <div class="article-meta">
+        <span class="art-tag">SharePoint Governance</span>
+        <span class="art-date">August 27, 2026</span>
+        <span class="art-read">14 min read</span>
+        <span class="art-read">Published by <a href="/editorial-policy">OceanCloud</a></span>
+      </div>
+
+      <p class="article-intro">Sensitivity labels are one of the cleanest ways to turn SharePoint governance from policy text into enforceable tenant behavior. They help admins classify sites, reduce oversharing, control guest access, set safer sharing defaults, and protect sensitive files after they leave SharePoint. The implementation only works well when you separate two ideas: labels for files and labels for containers.</p>
+
+      <ul class="quick-points-source" aria-hidden="true">
+        <li>Use container labels to govern SharePoint site behavior, and file labels to protect individual documents.</li>
+        <li>Enable SharePoint and OneDrive label integration before validating file-label behavior.</li>
+        <li>Use PowerShell to discover label GUIDs, sync labels, apply site labels, and export coverage reports.</li>
+        <li>Validate sharing defaults, guest behavior, unmanaged-device controls, and unlabeled-site exceptions before broad rollout.</li>
+        <li>Troubleshoot in order: scope, publication, synchronization, site assignment, then user-facing behavior.</li>
+      </ul>
+
+      <div class="art-callout">
+        <p><strong>Quick answer:</strong> Use Microsoft Purview labels for file classification and protection, and enable the Groups &amp; sites scope when you want labels to control SharePoint site behavior such as privacy, external sharing, unmanaged device access, authentication contexts, and default sharing link settings.</p>
+      </div>
+
+      <h2>What Sensitivity Labels Do in SharePoint</h2>
+      <p>SharePoint uses sensitivity labels in two related but different ways. File labels classify and protect individual documents. Container labels classify the SharePoint site, Microsoft 365 group, or team that holds the work. That distinction matters because applying a label to a site does not automatically stamp the same label on every file inside the site.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr>
+              <th>Label type</th>
+              <th>Where it applies</th>
+              <th>What it controls</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>File label</strong></td>
+              <td>Word, Excel, PowerPoint, PDFs, emails, and supported files in SharePoint or OneDrive</td>
+              <td>Classification, visual markings, encryption, usage rights, auto-labeling, and default library labeling</td>
+            </tr>
+            <tr>
+              <td><strong>Container label</strong></td>
+              <td>SharePoint sites, Microsoft 365 groups, Teams, Viva Engage communities, and Loop workspaces where supported</td>
+              <td>Site privacy, external user access, external sharing, unmanaged device access, authentication context, and default sharing link settings</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>A mature SharePoint label strategy uses both. Container labels set the boundary for the workspace. File labels protect the content itself, especially when documents are downloaded, emailed, synchronized, or moved to another location.</p>
+
+      <a href="https://learn.microsoft.com/en-us/purview/sensitivity-labels-teams-groups-sites" target="_blank" rel="noopener noreferrer" class="ms-ref">Microsoft Learn: Sensitivity labels for collaborative workspaces</a>
+
+      <h2>Recommended Label Model for SharePoint</h2>
+      <p>Start with a small taxonomy. Too many labels slow adoption, create exceptions, and make reporting harder. For most Microsoft 365 tenants, four site labels are enough for the first rollout.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr>
+              <th>Label</th>
+              <th>Best for</th>
+              <th>Baseline SharePoint control</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Public</strong></td>
+              <td>Published material intended for broad internal access</td>
+              <td>Internal sharing allowed; no guests; organization sharing links can be acceptable</td>
+            </tr>
+            <tr>
+              <td><strong>General</strong></td>
+              <td>Normal project, department, and collaboration content</td>
+              <td>Private by default; guests allowed only where business owner approves</td>
+            </tr>
+            <tr>
+              <td><strong>Confidential</strong></td>
+              <td>Finance, HR, legal, customer, sales, and operational data</td>
+              <td>Specific people sharing default; review guest access; block Anyone links</td>
+            </tr>
+            <tr>
+              <td><strong>Highly Confidential</strong></td>
+              <td>Executive, acquisition, legal matter, regulated, or security-sensitive work</td>
+              <td>No unmanaged download, restricted sharing, stronger Conditional Access, and explicit owner review</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Implementation Plan</h2>
+      <p>Implement labels in phases. A big-bang label launch usually creates confusion because site owners see new choices before governance has decided what each label means.</p>
+
+      <ul class="art-steps">
+        <li>
+          <div class="art-step-num">1</div>
+          <div class="art-step-body">
+            <strong>Inventory sensitive SharePoint sites</strong>
+            <p>Export all active sites, owners, sharing capability, templates, storage, and activity. Identify sites with HR, finance, legal, executive, regulated, or customer data.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">2</div>
+          <div class="art-step-body">
+            <strong>Define label behavior before creating labels</strong>
+            <p>Agree which labels allow guests, which block external sharing, which require unmanaged-device restrictions, and which should change default sharing links.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">3</div>
+          <div class="art-step-body">
+            <strong>Enable SharePoint and container support</strong>
+            <p>Turn on sensitivity labels for SharePoint and OneDrive files, then synchronize labels for Microsoft 365 groups and SharePoint site use.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">4</div>
+          <div class="art-step-body">
+            <strong>Pilot with controlled sites</strong>
+            <p>Apply labels to a small set of real sites. Include at least one communication site, one team site, one guest-enabled site, and one high-sensitivity site.</p>
+          </div>
+        </li>
+        <li>
+          <div class="art-step-num">5</div>
+          <div class="art-step-body">
+            <strong>Validate behavior and publish the policy</strong>
+            <p>Confirm labels appear where expected, site settings are enforced, sharing defaults change correctly, and owners understand what each label means.</p>
+          </div>
+        </li>
+      </ul>
+
+      <h2>PowerShell Prerequisites</h2>
+      <p>Use the SharePoint Online Management Shell for SharePoint tenant and site configuration, and Exchange Online PowerShell for Microsoft Purview label operations exposed through Security &amp; Compliance PowerShell.</p>
+
+      <div class="code-label">PowerShell 7 - install and update required modules</div>
+      <div class="code-block"><pre>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Install-Module Microsoft.Online.SharePoint.PowerShell -Scope CurrentUser -Force
+Install-Module ExchangeOnlineManagement -Scope CurrentUser -Force
+
+Update-Module Microsoft.Online.SharePoint.PowerShell
+Update-Module ExchangeOnlineManagement
+
+Get-Module Microsoft.Online.SharePoint.PowerShell -ListAvailable |
+    Sort-Object Version -Descending |
+    Select-Object -First 1 Name, Version
+
+Get-Module ExchangeOnlineManagement -ListAvailable |
+    Sort-Object Version -Descending |
+    Select-Object -First 1 Name, Version</pre></div>
+
+      <p>Use an account with the right administrative roles. Global Administrator is common during initial enablement, but production operations should use least privilege roles such as Compliance Administrator, Information Protection Administrator, SharePoint Administrator, or Security Administrator where appropriate.</p>
+
+      <h2>PowerShell: Enable Labels for SharePoint Files</h2>
+      <p>First enable support for sensitivity labels in SharePoint and OneDrive. This lets the service process labeled Office files in SharePoint and OneDrive, and it is required before default document-library labels can behave as expected.</p>
+
+      <div class="code-label">PowerShell 7 - enable sensitivity label support for SharePoint and OneDrive</div>
+      <div class="code-block"><pre>$tenantName = "contoso"
+$adminUrl   = "https://$tenantName-admin.sharepoint.com"
+
+Connect-SPOService -Url $adminUrl
+
+# Enable sensitivity label integration for Office files in SharePoint and OneDrive.
+Set-SPOTenant -EnableAIPIntegration $true
+
+# Optional: enable PDF label support when your tenant and licensing support it.
+Set-SPOTenant -EnableSensitivityLabelforPDF $true
+
+Get-SPOTenant |
+    Select-Object EnableAIPIntegration, EnableSensitivityLabelforPDF</pre></div>
+
+      <div class="art-callout warning">
+        <p><strong>Change note:</strong> Run this first in a test tenant or pilot scope where possible. User-facing behavior can change in Office for the web, SharePoint document libraries, and download scenarios after the service begins processing labels.</p>
+      </div>
+
+      <a href="https://learn.microsoft.com/en-us/purview/sensitivity-labels-sharepoint-onedrive-files" target="_blank" rel="noopener noreferrer" class="ms-ref">Microsoft Learn: Enable sensitivity labels for files in SharePoint and OneDrive</a>
+
+      <h2>PowerShell: Discover Label IDs</h2>
+      <p>Most SharePoint label operations require the label GUID. Get it from Purview PowerShell before applying labels to sites in bulk.</p>
+
+      <div class="code-label">PowerShell 7 - connect to Purview and export label inventory</div>
+      <div class="code-block"><pre>Connect-IPPSSession
+
+Get-Label |
+    Select-Object DisplayName, Name, Guid, ContentType, Priority, Disabled |
+    Sort-Object Priority |
+    Format-Table -AutoSize
+
+Get-Label |
+    Select-Object DisplayName, Name, Guid, ContentType, Priority, Disabled |
+    Export-Csv .\purview-sensitivity-labels.csv -NoTypeInformation</pre></div>
+
+      <p>For labels that must be available to SharePoint sites, confirm the label scope includes Groups &amp; sites. In PowerShell output, that scope is reflected as site and unified group support in the label content type.</p>
+
+      <h2>PowerShell: Sync Labels for Sites and Groups</h2>
+      <p>After creating or changing labels for Groups &amp; sites, synchronize them so they become available for Microsoft 365 groups and SharePoint-backed workspaces. Microsoft documentation notes that availability can take time after synchronization.</p>
+
+      <div class="code-label">PowerShell 7 - synchronize labels for Microsoft 365 groups and sites</div>
+      <div class="code-block"><pre>Connect-IPPSSession
+
+# Synchronize Purview sensitivity labels to Microsoft Entra ID.
+Execute-AzureAdLabelSync
+
+# Check the label list again after sync and replication.
+Get-Label |
+    Where-Object { $_.ContentType -match "Site|UnifiedGroup" } |
+    Select-Object DisplayName, Guid, ContentType, Disabled |
+    Format-Table -AutoSize</pre></div>
+
+      <div class="art-callout">
+        <p><strong>Timing:</strong> If a new label does not appear immediately in SharePoint, wait for replication before troubleshooting. For groups and sites, Microsoft notes synchronization can take up to 24 hours in some cases.</p>
+      </div>
+
+      <h2>PowerShell: Configure Safer Sharing Defaults</h2>
+      <p>Some useful SharePoint label settings are configured through advanced label settings. A common governance pattern is to make confidential sites default to specific-people links, with view permission unless editing is explicitly needed.</p>
+
+      <div class="code-label">PowerShell 7 - set default sharing behavior on a sensitivity label</div>
+      <div class="code-block"><pre>Connect-IPPSSession
+
+$label = Get-Label -Identity "Confidential"
+
+# Default sharing links for sites using this label should target specific people.
+Set-Label -Identity $label.Guid -AdvancedSettings @{
+    DefaultSharingScope = "SpecificPeople"
+}
+
+# Default link permission should be View, not Edit.
+Set-Label -Identity $label.Guid -AdvancedSettings @{
+    DefaultShareLinkPermission = "View"
+}
+
+# Alternative: force the default sharing option to people with existing access.
+# This overrides DefaultSharingScope and DefaultShareLinkPermission.
+# Set-Label -Identity $label.Guid -AdvancedSettings @{
+#     DefaultShareLinkToExistingAccess = "True"
+# }</pre></div>
+
+      <a href="https://learn.microsoft.com/en-us/purview/sensitivity-labels-default-sharing-link" target="_blank" rel="noopener noreferrer" class="ms-ref">Microsoft Learn: Configure default sharing link types with sensitivity labels</a>
+
+      <h2>PowerShell: Apply a Label to One SharePoint Site</h2>
+      <p>Use <code>Set-SPOSite</code> when you need to label an individual site or when different sites need different labels. This is the safer rollout command for pilot work.</p>
+
+      <div class="code-label">PowerShell 7 - apply a label to a single SharePoint site</div>
+      <div class="code-block"><pre>$tenantName = "contoso"
+$adminUrl   = "https://$tenantName-admin.sharepoint.com"
+$siteUrl    = "https://$tenantName.sharepoint.com/sites/finance"
+
+Connect-SPOService -Url $adminUrl
+
+$labelId = [Guid]"00000000-0000-0000-0000-000000000000"
+
+Set-SPOSite -Identity $siteUrl -SensitivityLabel $labelId
+
+Get-SPOSite -Identity $siteUrl |
+    Select-Object Url, Title, Template, SharingCapability, SensitivityLabel</pre></div>
+
+      <h2>PowerShell: Bulk Apply Labels to Sites</h2>
+      <p>Bulk application should always start with an export and review. The script below identifies candidate sites, exports them for owner approval, then applies the label only if you remove the dry-run guard.</p>
+
+      <div class="code-label">PowerShell 7 - bulk label SharePoint sites with a dry-run guard</div>
+      <div class="code-block"><pre>$tenantName = "contoso"
+$adminUrl   = "https://$tenantName-admin.sharepoint.com"
+$labelId    = [Guid]"00000000-0000-0000-0000-000000000000"
+$dryRun     = $true
+
+Connect-SPOService -Url $adminUrl
+
+$candidateSites = Get-SPOSite -Limit All |
+    Where-Object {
+        $_.Url -like "https://$tenantName.sharepoint.com/sites/finance*" -and
+        $_.Template -ne "SPSPERS"
+    } |
+    Select-Object Url, Title, Owner, Template, SharingCapability, SensitivityLabel
+
+$candidateSites | Export-Csv .\candidate-sites-for-confidential-label.csv -NoTypeInformation
+
+if ($dryRun) {
+    $candidateSites | Format-Table Url, Title, SharingCapability, SensitivityLabel -AutoSize
+    Write-Host "Dry run only. Review the CSV, then set `$dryRun = `$false to apply the label."
+    return
+}
+
+foreach ($site in $candidateSites) {
+    Set-SPOSite -Identity $site.Url -SensitivityLabel $labelId
+    Write-Host "Applied label to $($site.Url)"
+}</pre></div>
+
+      <p>Microsoft also documents using <code>Set-SPOTenant</code> with the <code>SensitivityLabel</code> parameter when applying the same label to many sites returned from a site query. Use that approach only when the target set is well reviewed because the blast radius is larger.</p>
+
+      <h2>Validation Checklist</h2>
+      <p>Validation needs to prove both configuration and user-facing behavior. A label that appears in a report but does not enforce the expected sharing, guest, or device behavior is not complete.</p>
+
+      <h3>Tenant-level validation</h3>
+      <div class="code-label">PowerShell 7 - validate tenant-level sensitivity label support</div>
+      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+
+Get-SPOTenant |
+    Select-Object `
+        EnableAIPIntegration,
+        EnableSensitivityLabelforPDF,
+        SharingCapability,
+        DefaultSharingLinkType,
+        DefaultLinkPermission</pre></div>
+
+      <h3>Label and policy validation</h3>
+      <div class="code-label">PowerShell 7 - validate label scope and publication state</div>
+      <div class="code-block"><pre>Connect-IPPSSession
+
+Get-Label |
+    Select-Object DisplayName, Guid, ContentType, Priority, Disabled |
+    Sort-Object Priority |
+    Format-Table -AutoSize
+
+Get-LabelPolicy |
+    Select-Object Name, Labels, ExchangeLocation, SharePointLocation, ModernGroupLocation, Enabled |
+    Format-List</pre></div>
+
+      <h3>Site-level validation</h3>
+      <div class="code-label">PowerShell 7 - export labeled and unlabeled SharePoint sites</div>
+      <div class="code-block"><pre>Connect-SPOService -Url "https://contoso-admin.sharepoint.com"
+
+$sites = Get-SPOSite -Limit All |
+    Where-Object { $_.Template -ne "SPSPERS" } |
+    Select-Object Url, Title, Owner, Template, SharingCapability, SensitivityLabel
+
+$sites |
+    Export-Csv .\sharepoint-sites-label-status.csv -NoTypeInformation
+
+$sites |
+    Group-Object SensitivityLabel |
+    Sort-Object Count -Descending |
+    Select-Object Count, Name |
+    Format-Table -AutoSize
+
+$sites |
+    Where-Object { [string]::IsNullOrWhiteSpace($_.SensitivityLabel) } |
+    Export-Csv .\sharepoint-sites-without-sensitivity-label.csv -NoTypeInformation</pre></div>
+
+      <h3>User acceptance validation</h3>
+      <ul>
+        <li>Create one test site for each label and confirm the label appears in the SharePoint admin center Active sites view.</li>
+        <li>Open each test site as a site owner and confirm the selected label is visible where expected.</li>
+        <li>Test the Share button in a labeled site and confirm the default link type matches the label design.</li>
+        <li>Test guest invitation behavior from a confidential site and a general collaboration site.</li>
+        <li>Test access from an unmanaged device when the label is intended to trigger stronger access rules.</li>
+        <li>Upload labeled and unlabeled documents to a pilot library and confirm Office for the web opens them as expected.</li>
+      </ul>
+
+      <h2>Troubleshooting</h2>
+      <p>Most SharePoint sensitivity label issues come from scope, synchronization, publication, licensing, or using the wrong PowerShell session. Work through the layers in order.</p>
+
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr>
+              <th>Symptom</th>
+              <th>Likely cause</th>
+              <th>Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Label is visible for files but not sites</strong></td>
+              <td>The label scope does not include Groups &amp; sites, or labels have not synchronized to Entra ID.</td>
+              <td>Update the label scope in Purview, run <code>Execute-AzureAdLabelSync</code>, and allow replication time.</td>
+            </tr>
+            <tr>
+              <td><strong>Set-SPOSite rejects the label GUID</strong></td>
+              <td>The GUID is wrong, the label is disabled, the label is not published, or it is not scoped for sites.</td>
+              <td>Run <code>Get-Label</code>, verify <code>Guid</code>, <code>Disabled</code>, and <code>ContentType</code>, then check the label policy.</td>
+            </tr>
+            <tr>
+              <td><strong>Users cannot see a label during site creation</strong></td>
+              <td>The label policy is not assigned to those users, or replication has not completed.</td>
+              <td>Check <code>Get-LabelPolicy</code>, confirm the user is in scope, and wait up to 24 hours after major label changes.</td>
+            </tr>
+            <tr>
+              <td><strong>Default sharing link did not change</strong></td>
+              <td>The label lacks the required advanced settings, or the site has conflicting sharing restrictions.</td>
+              <td>Review <code>DefaultSharingScope</code>, <code>DefaultShareLinkPermission</code>, and tenant/site sharing settings. The more restrictive setting usually wins.</td>
+            </tr>
+            <tr>
+              <td><strong>Guests are still present after applying a restrictive label</strong></td>
+              <td>Label settings can restrict future behavior but do not replace an access review.</td>
+              <td>Export guest users, review business justification, remove inappropriate guests, and document exceptions.</td>
+            </tr>
+            <tr>
+              <td><strong>Office files do not preserve label behavior in SharePoint</strong></td>
+              <td>SharePoint and OneDrive label integration is not enabled, or clients are not current.</td>
+              <td>Check <code>(Get-SPOTenant).EnableAIPIntegration</code>, update Office clients, and test Office for the web separately.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>PowerShell troubleshooting commands</h3>
+      <div class="code-label">PowerShell 7 - collect evidence for a support ticket or internal escalation</div>
+      <div class="code-block"><pre>$tenantName = "contoso"
+$adminUrl   = "https://$tenantName-admin.sharepoint.com"
+$siteUrl    = "https://$tenantName.sharepoint.com/sites/finance"
+
+Connect-SPOService -Url $adminUrl
+Connect-IPPSSession
+
+$tenantSettings = Get-SPOTenant |
+    Select-Object EnableAIPIntegration, EnableSensitivityLabelforPDF, SharingCapability
+
+$siteSettings = Get-SPOSite -Identity $siteUrl |
+    Select-Object Url, Title, Template, SharingCapability, SensitivityLabel
+
+$labels = Get-Label |
+    Select-Object DisplayName, Guid, ContentType, Priority, Disabled
+
+$policies = Get-LabelPolicy |
+    Select-Object Name, Labels, Enabled, ExchangeLocation, SharePointLocation, ModernGroupLocation
+
+$tenantSettings | Format-List
+$siteSettings   | Format-List
+$labels         | Format-Table -AutoSize
+$policies       | Format-List</pre></div>
+
+      <h2>Governance Operating Model</h2>
+      <p>The real value of sensitivity labels is not the label name. It is the governance model around the label: who can apply it, who approves exceptions, how drift is detected, and what happens when a site changes purpose.</p>
+
+      <ul>
+        <li><strong>Label owners:</strong> Assign business and security owners for each label. Do not let IT invent the taxonomy in isolation.</li>
+        <li><strong>Creation standards:</strong> Require new sensitive sites to select a label during provisioning, ideally through a request or template process.</li>
+        <li><strong>Quarterly review:</strong> Export unlabeled sites, externally shared sites, and highly confidential sites with guests every quarter.</li>
+        <li><strong>Exception register:</strong> Keep a dated exception list for confidential sites that need guests, organization links, or relaxed device controls.</li>
+        <li><strong>Copilot readiness:</strong> Treat unlabeled high-risk sites as blockers before broad Microsoft 365 Copilot rollout.</li>
+      </ul>
+
+      <div class="art-callout warning">
+        <p><strong>Avoid the common trap:</strong> Do not change the behavior of a published site label casually after it has been applied broadly. Microsoft recommends care with published label changes because settings can take time to replicate across containers.</p>
+      </div>
+
+      <h2>Recommended Rollout Timeline</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Work</th>
+              <th>Exit criteria</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1</strong></td>
+              <td>Inventory sites, define taxonomy, document baseline controls.</td>
+              <td>Approved label matrix and pilot site list.</td>
+            </tr>
+            <tr>
+              <td><strong>2</strong></td>
+              <td>Create or update labels and policies; enable SharePoint file support; sync labels.</td>
+              <td>Labels visible in Purview, SharePoint admin center, and pilot creation flows.</td>
+            </tr>
+            <tr>
+              <td><strong>3</strong></td>
+              <td>Apply labels to pilot sites; validate sharing, guest, device, and default link behavior.</td>
+              <td>No critical behavior gaps; support desk briefed.</td>
+            </tr>
+            <tr>
+              <td><strong>4</strong></td>
+              <td>Bulk label approved sites; export exceptions; publish owner guidance.</td>
+              <td>Coverage report, exception register, and quarterly review cadence live.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="art-cta-box">
+        <h3>Need a SharePoint sensitivity label rollout?</h3>
+        <p>OceanCloud can assess SharePoint oversharing, design a Purview label model, configure label policies, run PowerShell implementation, and deliver validation evidence for your Microsoft 365 governance program.</p>
+        <a href="/contact" class="btn btn-primary">Plan a Governance Review</a>
+      </div>
+
+      <div class="article-faq">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do SharePoint site sensitivity labels label every document automatically?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>No. A site sensitivity label is a container label. It can control site-level behavior, but it does not automatically apply the same file label to every document in the site.</p>
+              <p>Use file labels, default library labels, user labeling, or auto-labeling policies to classify and protect documents.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I apply sensitivity labels to SharePoint sites with PowerShell?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Yes. Use <code>Set-SPOSite -SensitivityLabel</code> for individual sites. For carefully reviewed bulk scenarios, export candidate sites first, then apply the label to the approved list.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Why does my label not appear for SharePoint sites?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Usually the label is not scoped for Groups &amp; sites, the label policy is not assigned to the user, or synchronization has not completed. Run <code>Get-Label</code>, check the label policy, run <code>Execute-AzureAdLabelSync</code>, and allow replication time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Should confidential SharePoint sites allow guests?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              <p>Sometimes, but not by default. Confidential sites should require owner approval, a named business justification, guest expiration or review, and a quarterly access review.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <p class="related-label">Related Guides</p>
+        <div class="related-grid">
+          <a href="guide-sharepoint-permissions-best-practices" class="related-card">
+            <span class="rc-topic">SharePoint</span>
+            <span class="rc-title">SharePoint Permissions Best Practices &amp; Audit Checklist</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-copilot-ready" class="related-card">
+            <span class="rc-topic">Copilot</span>
+            <span class="rc-title">SharePoint Copilot Readiness Checklist</span>
+            <span class="rc-read">11 min read &rarr;</span>
+          </a>
+          <a href="guide-sharepoint-onedrive-dlp-file-quarantine" class="related-card">
+            <span class="rc-topic">Security</span>
+            <span class="rc-title">DLP File Quarantine: SharePoint &amp; OneDrive Setup Guide</span>
+            <span class="rc-read">12 min read &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="guide-final-cta reveal">
+  <div class="cta-box">
+    <div class="cta-icon">OC</div>
+    <div class="cta-content">
+      <h3>Ready to govern SharePoint with confidence?</h3>
+      <p>OceanCloud specialises in SharePoint consulting, Microsoft 365 migration, Power Platform solutions, and enterprise governance. Let's discuss how we can help.</p>
+      <a href="/contact" class="btn-primary">Book a Free 60-Minute Consultation &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-mark">OC</div><span class="logo-text">Ocean<span>Cloud</span></span></div>
+      <p class="footer-tagline">Microsoft 365 &amp; SharePoint consultants helping businesses work smarter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/editorial-policy">Editorial Policy</a></li>
+        <li><a href="/case-studies">Case Studies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/archive">News Archive</a></li>
+        <li><a href="/status">Service Status</a></li>
+        <li><a href="/message-center">Message Center</a></li>
+        <li><a href="/guides">Guides &amp; Tips</a></li>
+        <li><a href="../faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services">SharePoint Development</a></li>
+        <li><a href="/services">Teams Configuration</a></li>
+        <li><a href="/services">M365 Migration</a></li>
+        <li><a href="/services">Power Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/cookies">Cookie Policy</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>&copy; 2026 OceanCloud Consultants. All rights reserved.</p></div></div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="../js/main.js?v=9"></script>
+<script src="../js/consent.js?v=5"></script>
+<script src="../js/chat.js?v=7"></script>
+<script src="../js/particles.js?v=6"></script>
+<script src="../js/weather.js?v=6"></script>
+<script src="../js/share.js?v=1"></script>
+<script src="../js/code.js?v=2"></script>
+<script src="../js/article.js?v=6"></script>
+<script src="../js/comments.js?v=7"></script>
+</body>
+</html>

@@ -600,6 +600,18 @@
     "dateSort": ""
   },
   {
+    "id": "articles-guide-purview-sensitivity-labels-sharepoint",
+    "type": "guide",
+    "tag": "Guide",
+    "title": "Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance",
+    "heading": "Microsoft Purview Sensitivity Labels for SharePoint",
+    "excerpt": "Implement Microsoft Purview sensitivity labels for SharePoint sites and files with PowerShell setup, validation exports, governance controls, and troubleshooting.",
+    "body": "Microsoft Purview Sensitivity Labels for SharePoint: Setup and Governance. SharePoint governance guide covering file labels, container labels, Groups and sites scope, SharePoint and OneDrive label integration, PowerShell prerequisites, Connect-IPPSSession, Connect-SPOService, Set-SPOTenant EnableAIPIntegration, EnableSensitivityLabelforPDF, Get-Label, Execute-AzureAdLabelSync, Set-Label AdvancedSettings, DefaultSharingScope, DefaultShareLinkPermission, Set-SPOSite SensitivityLabel, bulk labeling with dry run, validation exports, troubleshooting label visibility, default sharing links, guest access, unmanaged devices, and Copilot readiness.",
+    "url": "articles/guide-purview-sensitivity-labels-sharepoint",
+    "dateDisplay": "August 27, 2026",
+    "dateSort": "2026-08-27"
+  },
+  {
     "id": "articles-guide-pnp-entra-app-registration",
     "type": "guide",
     "tag": "Guide",
