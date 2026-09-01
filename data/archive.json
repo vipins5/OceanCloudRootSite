@@ -1,6 +1,126 @@
 {
   "items": [
     {
+      "title": "SharePoint: Site Skills in Copilot in SharePoint",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570155",
+      "date_friendly": "August 31, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-08-sharepoint-site-skills-in-copilot-in-sharepoint"
+    },
+    {
+      "title": "Microsoft Teams: Enable agents for existing applications in your organization",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569608",
+      "date_friendly": "August 28, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-08-microsoft-teams-enable-agents-for-existing-applications-in-y"
+    },
+    {
+      "title": "SharePoint Showcase: 5 Ways Organizations Improve Business Processes with Copilot in SharePoint",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-5-ways-organizations-improve-business/ba-p/4549704",
+      "date_friendly": "August 27, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-08-sharepoint-showcase-5-ways-organizations-improve-business-pr"
+    },
+    {
+      "title": "Streamlining Enterprise Collaboration - ACP - SharePoint Partner Spotlight",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/streamlining-enterprise-collaboration-acp-sharepoint-partner/ba-p/4550384",
+      "date_friendly": "August 26, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-08-streamlining-enterprise-collaboration-acp-sharepoint-partner"
+    },
+    {
+      "title": "Microsoft Teams: Temporarily pause all notifications",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569205",
+      "date_friendly": "August 17, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-08-microsoft-teams-temporarily-pause-all-notifications"
+    },
+    {
+      "title": "Microsoft Teams: App centric management in Teams Admin Center to manage the Apps access for tenants, end-users, and groups in DoD",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569434",
+      "date_friendly": "August 14, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-08-microsoft-teams-app-centric-management-in-teams-admin-center"
+    },
+    {
+      "title": "Microsoft Teams: App centric management in Teams Admin Center to manage the Apps access for tenants, end-users, and groups in GCC High",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569433",
+      "date_friendly": "August 14, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-08-microsoft-teams-app-centric-management-in-teams-admin-center"
+    },
+    {
+      "title": "What's New in Copilot in SharePoint: August 2026",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/what-s-new-in-copilot-in-sharepoint-august-2026/ba-p/4535421",
+      "date_friendly": "August 06, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-08-whats-new-in-copilot-in-sharepoint-august-2026"
+    },
+    {
+      "title": "SharePoint Showcase: 10 Custom AI Skills Every SharePoint Site Owner Should Build",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-showcase-10-custom-ai-skills-every-sharepoint-site/ba-p/4535414",
+      "date_friendly": "July 28, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-sharepoint-showcase-10-custom-ai-skills-every-sharepoint-sit"
+    },
+    {
+      "title": "Beyond Benchmarks: The Lifecycle of Measuring Agentic Quality in AI Content Management",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/beyond-benchmarks-the-lifecycle-of-measuring-agentic-quality-in/ba-p/4538319",
+      "date_friendly": "July 21, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-beyond-benchmarks-the-lifecycle-of-measuring-agentic-quality"
+    },
+    {
+      "title": "What’s New in Copilot in SharePoint: July 2026",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/what-s-new-in-copilot-in-sharepoint-july-2026/ba-p/4535420",
+      "date_friendly": "July 16, 2026",
+      "month_sort": "2026-07",
+      "month_label": "July 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-07-whats-new-in-copilot-in-sharepoint-july-2026"
+    },
+    {
+      "title": "Microsoft Copilot (Microsoft 365): Chat History Filtering by Copilot Experience",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559601",
+      "date_friendly": "May 22, 2026",
+      "month_sort": "2026-05",
+      "month_label": "May 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-05-microsoft-copilot-microsoft-365-chat-history-filtering-by-co"
+    },
+    {
       "title": "Microsoft Teams: Interpreter agent support in Teams Rooms on Android",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562665",
       "date_friendly": "May 20, 2026",
@@ -109,5 +229,5 @@
       "css_tag": "tag-blog"
     }
   ],
-  "last_updated": "2026-08-10"
+  "last_updated": "2026-09-01"
 }
