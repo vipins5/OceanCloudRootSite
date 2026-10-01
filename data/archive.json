@@ -1,6 +1,116 @@
 {
   "items": [
     {
+      "title": "Dynamics 365 Business Central: Development - Page Scripting enters General Availability",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573384",
+      "date_friendly": "September 30, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-09-dynamics-365-business-central-development-page-scripting-ent"
+    },
+    {
+      "title": "Dynamics 365 Customer Service: Service tools, skills and plugins are now available for Scout",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573382",
+      "date_friendly": "September 30, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-09-dynamics-365-customer-service-service-tools-skills-and-plugi"
+    },
+    {
+      "title": "Dynamics 365 Customer Service: Service tools, skills and plugins are now available for Code",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573381",
+      "date_friendly": "September 30, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-09-dynamics-365-customer-service-service-tools-skills-and-plugi"
+    },
+    {
+      "title": "Dynamics 365 Business Central: Copilot and agents - Improve purchase order matching in Payables Agent",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573380",
+      "date_friendly": "September 30, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-09-dynamics-365-business-central-copilot-and-agents-improve-pur"
+    },
+    {
+      "title": "Dynamics 365 Business Central: Sustainability Management - Use specific method for carbon footprint calculation when enabling item tracking",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573379",
+      "date_friendly": "September 30, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-09-dynamics-365-business-central-sustainability-management-use"
+    },
+    {
+      "title": "Dynamics 365 Business Central: Sustainability Management - Track your carbon footprint with item journals and item reclassification journals",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573378",
+      "date_friendly": "September 30, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "M365 Roadmap",
+      "css_tag": "tag-roadmap",
+      "article_slug": "news-2026-09-dynamics-365-business-central-sustainability-management-trac"
+    },
+    {
+      "title": "SharePoint AI innovations hit GA, powering new Copilot app and agents",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-ai-innovations-hit-ga-powering-new-copilot-app-and/ba-p/4555724",
+      "date_friendly": "September 25, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-09-sharepoint-ai-innovations-hit-ga-powering-new-copilot-app-an"
+    },
+    {
+      "title": "SharePoint AI page authoring: Select, describe, and refine",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-ai-page-authoring-select-describe-and-refine/ba-p/4553193",
+      "date_friendly": "September 10, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-09-sharepoint-ai-page-authoring-select-describe-and-refine"
+    },
+    {
+      "title": "Introducing SharePoint News and Viva Engage cross-posting",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/introducing-sharepoint-news-and-viva-engage-cross-posting/ba-p/4548258",
+      "date_friendly": "September 03, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-09-introducing-sharepoint-news-and-viva-engage-cross-posting"
+    },
+    {
+      "title": "What's New in Copilot in SharePoint: September 2026",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/what-s-new-in-copilot-in-sharepoint-september-2026/ba-p/4535422",
+      "date_friendly": "September 02, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-09-whats-new-in-copilot-in-sharepoint-september-2026"
+    },
+    {
+      "title": "SharePoint Flexible Sections just got more predictable and easier to use",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/sharepoint-flexible-sections-just-got-more-predictable-and/ba-p/4548566",
+      "date_friendly": "September 01, 2026",
+      "month_sort": "2026-09",
+      "month_label": "September 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-09-sharepoint-flexible-sections-just-got-more-predictable-and-e"
+    },
+    {
       "title": "SharePoint: Site Skills in Copilot in SharePoint",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570155",
       "date_friendly": "August 31, 2026",
@@ -9,6 +119,16 @@
       "source": "M365 Roadmap",
       "css_tag": "tag-roadmap",
       "article_slug": "news-2026-08-sharepoint-site-skills-in-copilot-in-sharepoint"
+    },
+    {
+      "title": "Upcoming changes to classic experiences in SharePoint Online",
+      "url": "https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/upcoming-changes-to-classic-experiences-in-sharepoint-online/ba-p/4549091",
+      "date_friendly": "August 31, 2026",
+      "month_sort": "2026-08",
+      "month_label": "August 2026",
+      "source": "SharePoint Blog",
+      "css_tag": "tag-blog",
+      "article_slug": "news-2026-08-upcoming-changes-to-classic-experiences-in-sharepoint-online"
     },
     {
       "title": "Microsoft Teams: Enable agents for existing applications in your organization",
@@ -229,5 +349,5 @@
       "css_tag": "tag-blog"
     }
   ],
-  "last_updated": "2026-09-01"
+  "last_updated": "2026-10-01"
 }
