@@ -10,7 +10,7 @@ This script uses a service account to:
 Usage examples:
   python scripts/gsc-dashboard-submit.py
   python scripts/gsc-dashboard-submit.py --submit
-  python scripts/gsc-dashboard-submit.py --days 30 --site-url https://oceancloudconsults.com/
+  python scripts/gsc-dashboard-submit.py --days 30 --site-url sc-domain:oceancloudconsults.com
   python scripts/gsc-dashboard-submit.py --inspect
   python scripts/gsc-dashboard-submit.py --inspect --inspect-url https://oceancloudconsults.com/faq
 
@@ -35,7 +35,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 DEFAULT_CREDENTIALS = "oceancloud-comments-daead280e122.json"
-DEFAULT_SITE_URL = "https://oceancloudconsults.com/"
+DEFAULT_SITE_URL = "sc-domain:oceancloudconsults.com"
 DEFAULT_OUTPUT = "data/reports/gsc-dashboard-report.json"
 DEFAULT_SITEMAPS = [
     "https://oceancloudconsults.com/sitemap-index.xml",
