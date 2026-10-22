@@ -54,7 +54,7 @@ Powered by **Groq + Llama 3.3 70B** with a Cloudflare Worker proxy.
 | Tab | How it works |
 |---|---|
 | **Articles** | Client-side index of guides, articles, and key pages; keyword scoring + `<mark>` highlighting |
-| **Web Search** | Google Programmable Search (CSE) with explicit render mode |
+| **Web Search** | Direct Google `site:oceancloudconsults.com` search |
 | **AI** | Redirects to Perplexity with query prefill |
 
 URL parameter support: `/search?q=your+query` pre-fills and runs automatically.
@@ -109,12 +109,9 @@ npx wrangler secret put SENDGRID_FROM_EMAIL
 npx wrangler secret put CONTACT_NOTIFICATION_EMAIL
 ```
 
-### Google Programmable Search (Web tab)
+### Google Search (Web tab)
 
-| Detail | Value |
-|---|---|
-| CSE ID | `1245cccaad091448b` |
-| Config file | `js/search.js` |
+The Web tab opens a Google search scoped to `site:oceancloudconsults.com`.
 
 ### Perplexity (AI tab)
 Redirect target: `https://www.perplexity.ai/search?q=YOUR_QUERY`

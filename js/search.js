@@ -1,15 +1,7 @@
 /* =========================================================
    OceanCloud Search
-   Three modes: Articles (client-side), Web (Google CSE), AI (Perplexity)
+   Three modes: Articles (client-side), Web (Google), AI (Perplexity)
    ========================================================= */
-
-/* ── CONFIG ───────────────────────────────────────────────
-   Paste your Google Custom Search Engine ID below.
-   Get one free at: https://programmablesearchengine.google.com/
-   Create a search engine, add oceancloudconsults.com as the site,
-   then copy the "Search engine ID" (looks like: a1b2c3d4e5f6g7h8i)
-   ─────────────────────────────────────────────────────── */
-var GOOGLE_CSE_ID = '1245cccaad091448b';
 
 /* ── ARTICLE INDEX ───────────────────────────────────────
    Covers: News articles, Archive items, Case Studies, Site pages.
@@ -150,10 +142,6 @@ var currentQuery  = '';
 var siteIndex     = ARTICLES.slice();
 var fuseIndex     = null;
 var indexPromise  = null;
-var cseInjected   = false;
-var cseReady      = false;
-var pendingCseQ   = null;
-var CSE_GNAME     = 'oc-cse';
 
 /* ── DOM REFS (set on DOMContentLoaded) ─────────────────── */
 var inputEl, panelArticles, panelWeb, panelAI, resultsEl;
@@ -190,16 +178,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   inputEl.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
-      currentQuery = inputEl.value.trim();
-      switchTab(currentTab);
-      updateURL();
+      runSearch();
     }
   });
 
   document.getElementById('search-submit').addEventListener('click', function () {
-    currentQuery = inputEl.value.trim();
-    switchTab(currentTab);
-    updateURL();
+    runSearch();
   });
 
   /* tab buttons */
@@ -213,7 +197,10 @@ document.addEventListener('DOMContentLoaded', function () {
 /* ── STATIC SITE INDEX ────────────────────────────────────── */
 function loadSiteIndex() {
   if (indexPromise) return indexPromise;
-  indexPromise = fetch('data/search-index.json', { cache: 'no-cache' })
+  indexPromise = fetch('/data/search-index.json', { cache: 'no-cache' })
+    .catch(function () {
+      return fetch('data/search-index.json', { cache: 'no-cache' });
+    })
     .then(function (res) {
       if (!res.ok) throw new Error('Search index unavailable');
       return res.json();
@@ -274,6 +261,17 @@ function updateURL() {
   var url = window.location.pathname;
   if (currentQuery) url += '?q=' + encodeURIComponent(currentQuery);
   history.replaceState(null, '', url);
+}
+
+function runSearch() {
+  currentQuery = inputEl.value.trim();
+  updateURL();
+  if (currentTab === 'web') {
+    openGoogleSearch();
+    renderWeb();
+    return;
+  }
+  switchTab(currentTab);
 }
 
 /* ── ARTICLE SEARCH ──────────────────────────────────────── */
@@ -352,76 +350,26 @@ function renderArticles() {
   resultsEl.innerHTML = html;
 }
 
-/* ── WEB SEARCH (Google CSE) ─────────────────────────────── */
+/* ── WEB SEARCH (Google) ─────────────────────────────────── */
 function renderWeb() {
   var container = document.getElementById('gcs-container');
-
-  if (!GOOGLE_CSE_ID) {
-    container.innerHTML =
-      '<div class="gcs-setup">' +
-        '<div class="gcs-setup-icon">&#128640;</div>' +
-        '<h3>Google Custom Search — Setup Required</h3>' +
-        '<p>To enable in-page web search, create a free Google Custom Search Engine and add your ID to <code>js/search.js</code>:</p>' +
-        '<ol class="gcs-steps">' +
-          '<li>Go to <strong>programmablesearchengine.google.com</strong></li>' +
-          '<li>Click <em>Add</em>, enter <code>oceancloudconsults.com</code> as the site</li>' +
-          '<li>Copy the <em>Search engine ID</em></li>' +
-          '<li>Open <code>js/search.js</code> and set <code>GOOGLE_CSE_ID = \'your-id-here\'</code></li>' +
-        '</ol>' +
-        '<p class="gcs-fallback">For now, <a class="gcs-google-link" href="#" id="google-fallback" target="_blank" rel="noopener noreferrer">search Google &#8599;</a> for your query.</p>' +
-      '</div>';
-    var fallback = document.getElementById('google-fallback');
-    if (fallback) {
-      var gq = currentQuery || 'SharePoint consulting';
-      fallback.href = 'https://www.google.com/search?q=' + encodeURIComponent(gq + ' site:oceancloudconsults.com OR ' + gq + ' SharePoint M365');
-    }
-    return;
-  }
-
-  /* CSE element is ready — just run a new query via the API */
-  if (cseReady) {
-    executeCseQuery();
-    return;
-  }
-
-  /* CSE script is loading — update the pending query, wait for callback */
-  if (cseInjected) {
-    pendingCseQ = currentQuery || null;
-    return;
-  }
-
-  /* First call: create container div and load script with explicit init */
-  container.innerHTML = '<div id="gcs-inner"></div>';
-
-  window.__gcse = {
-    parsetags: 'explicit',
-    callback: function () {
-      try {
-        google.search.cse.element.render({ gname: CSE_GNAME, div: 'gcs-inner', tag: 'search' });
-      } catch (e) { return; }
-      cseReady = true;
-      if (pendingCseQ) {
-        var q = pendingCseQ;
-        pendingCseQ = null;
-        setTimeout(function () { executeCseQuery(q); }, 300);
-      }
-    }
-  };
-
-  var script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://cse.google.com/cse.js?cx=' + GOOGLE_CSE_ID;
-  document.head.appendChild(script);
-  cseInjected = true;
-  pendingCseQ = currentQuery || null;
+  var query = currentQuery || 'SharePoint consulting';
+  container.innerHTML =
+    '<div class="gcs-setup">' +
+      '<div class="gcs-setup-icon">&#128269;</div>' +
+      '<h3>Google Search</h3>' +
+      '<p>Search OceanCloud directly on Google for <strong>"' + escHtml(query) + '"</strong>.</p>' +
+      '<p class="gcs-fallback"><a class="gcs-google-link" href="' + escHtml(getGoogleFallbackUrl(query)) + '" target="_blank" rel="noopener noreferrer">Open Google results &#8599;</a></p>' +
+    '</div>';
 }
 
-function executeCseQuery(q) {
-  var query = q !== undefined ? q : currentQuery;
-  if (!query) return;
-  try {
-    google.search.cse.element.getElement(CSE_GNAME).execute(query);
-  } catch (e) {}
+function getGoogleFallbackUrl(query) {
+  var q = query || currentQuery || 'SharePoint consulting';
+  return 'https://www.google.com/search?q=' + encodeURIComponent(q + ' site:oceancloudconsults.com');
+}
+
+function openGoogleSearch() {
+  window.open(getGoogleFallbackUrl(), '_blank', 'noopener,noreferrer');
 }
 
 /* ── AI (Perplexity) ─────────────────────────────────────── */
