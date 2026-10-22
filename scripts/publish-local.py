@@ -3,8 +3,8 @@
 Local publish helper for OceanCloud.
 
 Run this from the repo root before committing a manual publish. It only updates:
-  - sitemap.xml lastmod entries for files changed in the working tree
-  - sitemap.xml entries for newly added HTML files
+  - sitemap.xml and sitemap-guides.xml lastmod entries for files changed in the working tree
+  - sitemap.xml and sitemap-guides.xml entries for newly added HTML files
   - feed.xml lastBuildDate
 
 It does not generate articles, fetch news, call AI APIs, create branches, or open PRs.
@@ -25,8 +25,8 @@ from pathlib import Path
 
 # Repo root path used for git and content file operations.
 ROOT = Path(__file__).parent.parent
-# Target sitemap file that receives add/remove/lastmod updates.
-SITEMAP = ROOT / "sitemap.xml"
+# Target sitemap files that receive add/remove/lastmod updates.
+SITEMAPS = [ROOT / "sitemap.xml", ROOT / "sitemap-guides.xml"]
 # Target RSS feed whose lastBuildDate is refreshed on publish.
 FEED = ROOT / "feed.xml"
 # Canonical archive data used to map RSS items to local article pages.
@@ -107,13 +107,25 @@ def changed_files() -> set[Path]:
     return files
 
 
-def update_sitemap(changed: set[Path], dry_run: bool) -> int:
-    if not SITEMAP.exists():
-        print("[skip] sitemap.xml not found")
+def sitemap_priority(loc: str, sitemap: Path) -> str:
+    if sitemap.name == "sitemap-guides.xml":
+        return "0.8"
+    return "0.7" if "/articles/" in loc else "0.8"
+
+
+def should_include_in_sitemap(loc: str, sitemap: Path) -> bool:
+    if sitemap.name == "sitemap-guides.xml":
+        return "/articles/" in loc or loc == f"{BASE_URL}/guides"
+    return "/articles/" not in loc
+
+
+def update_sitemap(sitemap: Path, changed: set[Path], dry_run: bool) -> int:
+    if not sitemap.exists():
+        print(f"[skip] {sitemap.name} not found")
         return 0
 
     ET.register_namespace("", SITEMAP_NS)
-    tree = ET.parse(SITEMAP)
+    tree = ET.parse(sitemap)
     root = tree.getroot()
     # Local ISO date string written into lastmod fields for working-tree edits.
     today = datetime.now().astimezone().strftime("%Y-%m-%d")
@@ -131,25 +143,25 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
         if loc == f"{BASE_URL}/llms.txt":
             root.remove(url_el)
             changed_count += 1
-            print(f"  [remove] {loc}")
+            print(f"  [{sitemap.name} remove] {loc}")
             continue
         file = url_to_file(loc)
         if file is None:
             root.remove(url_el)
             changed_count += 1
-            print(f"  [remove] {loc}")
+            print(f"  [{sitemap.name} remove] {loc}")
             continue
         if is_noindex_page(file):
             root.remove(url_el)
             changed_count += 1
-            print(f"  [remove noindex] {loc}")
+            print(f"  [{sitemap.name} remove noindex] {loc}")
             continue
         if file.resolve() in changed:
             lastmod_el = url_el.find(f"{{{SITEMAP_NS}}}lastmod")
             if lastmod_el is None:
                 lastmod_el = ET.SubElement(url_el, f"{{{SITEMAP_NS}}}lastmod")
             if lastmod_el.text != today:
-                print(f"  [lastmod] {loc} -> {today}")
+                print(f"  [{sitemap.name} lastmod] {loc} -> {today}")
                 lastmod_el.text = today
                 changed_count += 1
 
@@ -157,18 +169,20 @@ def update_sitemap(changed: set[Path], dry_run: bool) -> int:
         loc = file_to_url(file)
         if loc is None or loc in existing_locs or not file.exists():
             continue
+        if not should_include_in_sitemap(loc, sitemap):
+            continue
         url_el = ET.SubElement(root, f"{{{SITEMAP_NS}}}url")
         ET.SubElement(url_el, f"{{{SITEMAP_NS}}}loc").text = loc
         ET.SubElement(url_el, f"{{{SITEMAP_NS}}}lastmod").text = today
         ET.SubElement(url_el, f"{{{SITEMAP_NS}}}changefreq").text = "monthly"
-        ET.SubElement(url_el, f"{{{SITEMAP_NS}}}priority").text = "0.7" if "/articles/" in loc else "0.8"
+        ET.SubElement(url_el, f"{{{SITEMAP_NS}}}priority").text = sitemap_priority(loc, sitemap)
         changed_count += 1
-        print(f"  [add] {loc}")
+        print(f"  [{sitemap.name} add] {loc}")
 
     if changed_count and not dry_run:
         ET.indent(root, space="  ")
         xml_str = ET.tostring(root, encoding="unicode", xml_declaration=False)
-        SITEMAP.write_text('<?xml version="1.0" encoding="UTF-8"?>\n' + xml_str + "\n", encoding="utf-8")
+        sitemap.write_text('<?xml version="1.0" encoding="UTF-8"?>\n' + xml_str + "\n", encoding="utf-8")
     return changed_count
 
 
@@ -230,7 +244,7 @@ def main() -> None:
     args = parser.parse_args()
 
     changed = changed_files()
-    sitemap_changes = update_sitemap(changed, args.dry_run)
+    sitemap_changes = sum(update_sitemap(sitemap, changed, args.dry_run) for sitemap in SITEMAPS)
     feed_changed = update_feed(args.dry_run)
 
     if args.dry_run:
